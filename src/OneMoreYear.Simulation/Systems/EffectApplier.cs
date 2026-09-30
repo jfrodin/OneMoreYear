@@ -15,7 +15,7 @@ public static class EffectApplier
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
         "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
-        "ailment_add", "ailment_treat", "ailment_recover", "care_home"
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -224,6 +224,13 @@ public static class EffectApplier
                 break;
             case "disinherit":
                 if (to != null && !who.Disinherited.Contains(to.Id)) who.Disinherited.Add(to.Id);
+                break;
+            case "assaulted":
+                // Only ever done to the player, never by them (docs/design-decisions.md).
+                Hardship.Assaulted(ctx, who, null);
+                break;
+            case "homeless":
+                Hardship.BecomeHomeless(ctx, who);
                 break;
             case "care_home":
                 HousingSystem.MoveToCareHome(ctx, who);

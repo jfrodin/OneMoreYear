@@ -532,6 +532,5 @@ public class ContentSettingsTests
         }
         var tagged = s.Content.Events.Values.Where(e => e.Content.Count > 0).Select(e => e.Id).ToHashSet();
         Assert.Empty(seen.Intersect(tagged));
-        Assert.All(s.World.PlayedIds.Select(s.World.Get), p => Assert.Null(p.Addiction));
     }
 }

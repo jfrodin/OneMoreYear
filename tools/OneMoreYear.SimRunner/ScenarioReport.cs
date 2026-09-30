@@ -11,7 +11,7 @@ static class ScenarioReport
             var s = GameSession.NewGame(new NewGameOptions { ScenarioId = sc.Id });
             var w = s.World;
             var p = s.Player;
-            Console.WriteLine($"== {sc.Name} ({sc.Id}, seed {sc.Seed}) – {s.Year}");
+            Console.WriteLine($"== {sc.Name} ({sc.Id}, seed {sc.Seed} → used {s.World.Seed}) – {s.Year}");
             Console.WriteLine($"   Player: {p.FullName}, {p.Age(s.Year)}, [{string.Join(", ", p.Traits)}], money {s.Money().Money}, {p.Activity}");
             foreach (var r in s.Family().Where(r => r.Id != p.Id).Take(12))
             {

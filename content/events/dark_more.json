@@ -1,0 +1,191 @@
+// The dark themes in depth (docs/design-decisions.md). Sexual violence is only ever something that
+// happens to the player or someone close – never something the player does – and is never described,
+// only what follows. Suicide appears as grief, and as a darkest night where every choice reaches out.
+[
+  {
+    "id": "assault_player", "title": "Afterwards", "content": [ "sexual_violence" ],
+    "text": "It was someone you trusted enough to let into your flat. Afterwards you sit on the bathroom floor for a long time, and the world has changed shape.",
+    "conditions": { "minAge": 16, "maxAge": 70, "notFlags": [ "survivor" ] }, "weight": 0.25, "cooldown": 0,
+    "choices": [
+      { "text": "Go to the police", "hint": "It is your word against his. It is still worth saying.",
+        "chance": 0.35, "chanceTraits": { "brave": 0.1, "resilient": 0.05 },
+        "success": { "text": "It takes a year and every ounce of strength you have. He is convicted.",
+          "effects": [ { "type": "assaulted" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "justice", "text": "The day the court believed me", "impact": 20 } ] },
+        "failure": { "text": "The case is dropped for lack of evidence. The officer is kind, which almost makes it worse.",
+          "effects": [ { "type": "assaulted" }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Tell someone close", "effects": [ { "type": "assaulted" }, { "type": "happiness", "amount": 4 } ],
+        "result": "You call the one person you can. They come in the middle of the night and sit with you until morning." },
+      { "text": "Tell no one", "effects": [ { "type": "assaulted" }, { "type": "trait_add", "trait": "paranoid", "chance": 0.2 } ],
+        "result": "You go to work on Monday. Nobody can tell. That is the loneliest part." }
+    ]
+  },
+  {
+    "id": "loved_one_assaulted", "trigger": "situation", "content": [ "sexual_violence" ],
+    "title": "What happened to {t.name}",
+    "text": "{t.name} tells you, in a voice you've never heard before, what someone did to {t.him}.",
+    "choices": [
+      { "text": "Listen, and believe {t.him}", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 20 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "believed", "text": "{name} believed me", "impact": 25 } ],
+        "result": "You don't say much. You don't need to. {t.name} holds on to you for a long time." },
+      { "text": "Help {t.him} report it", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 12 },
+          { "type": "ailment_treat", "who": "target" } ],
+        "result": "You drive {t.him} to the police and wait outside. Then to a counsellor. Whatever the court says, {t.he} is not alone." },
+      { "text": "Ask why {t.he} went there", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 25 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "blamed_for_it", "text": "{name} asked what I had done to make it happen", "impact": -40 } ],
+        "result": "The question hangs in the air. {t.name} never brings it up with you again." }
+    ]
+  },
+  {
+    "id": "speak_out", "title": "Me too", "content": [ "sexual_violence" ],
+    "text": "Everyone is sharing their stories online. Two words, over and over. You have a story too.",
+    "conditions": { "minAge": 18, "minYear": 2017, "maxYear": 2019, "flags": [ "survivor" ] }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Tell yours, under your own name", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "trait_add", "trait": "brave", "chance": 0.3 },
+          { "type": "memory", "kind": "spoke_out", "text": "The day I told my story", "impact": 20 } ],
+        "result": "Hundreds of messages. Some from strangers who say \"me too\". One from an old friend who says \"I'm sorry I didn't see it.\"" },
+      { "text": "Read the others', and stay silent", "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "Every story is a little bit yours. That is enough, for now." }
+    ]
+  },
+  {
+    "id": "workplace_harassment", "title": "After the meeting", "content": [ "sexual_violence" ],
+    "text": "{t.name} closes the door behind you again. The comments, the hand on your shoulder that stays too long. \"Think of your career.\"",
+    "conditions": { "minAge": 18, "hasJob": true }, "weight": 0.5, "cooldown": 10,
+    "target": { "role": "boss", "conditions": { "minAge": 25 } },
+    "choices": [
+      { "text": "Report {t.him}", "chance": 0.45, "chanceTraits": { "brave": 0.1 }, "chanceAttributes": { "smarts": 0.002 },
+        "success": { "text": "Others come forward after you. {t.name} is gone by the end of the month.",
+          "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "brave", "chance": 0.2 } ] },
+        "failure": { "text": "Your word against a manager's. Six months later your position is \"restructured\".",
+          "effects": [ { "type": "fire" }, { "type": "memory", "kind": "harassed", "to": "target", "text": "What {t.name} did, and how nobody listened", "impact": -35 } ] } },
+      { "text": "Tell {t.him} to stop, to {t.his} face", "chance": 0.55, "chanceTraits": { "brave": 0.2, "conflict_averse": -0.2 },
+        "success": { "text": "{t.name} goes pale and never does it again. He is very polite to you from then on.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.2 } ] },
+        "failure": { "text": "He laughs. Your reviews get worse after that.", "effects": [ { "type": "performance", "amount": -15 } ] } },
+      { "text": "Find another job", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": -4 } ],
+        "result": "You leave without saying why. Years later you still wonder about the next person in that office." }
+    ]
+  },
+  {
+    "id": "partner_control", "title": "Just checking", "content": [ "violence" ],
+    "text": "{t.name} wants to know where you've been. Who you talked to. Why you were twelve minutes late. Your friends have stopped calling – {t.he} never liked them anyway.",
+    "conditions": { "minAge": 18 }, "weight": 1.5, "cooldown": 6,
+    "target": { "role": "partner", "conditions": { "traitsAny": [ "jealous", "manipulative", "paranoid" ] } },
+    "choices": [
+      { "text": "Leave", "hint": "It is harder than it sounds – and it is the way out.",
+        "chance": 0.6, "chanceTraits": { "brave": 0.15, "resilient": 0.1, "conflict_averse": -0.15 },
+        "success": { "text": "You pack one bag while {t.he} is at work. A friend's sofa has never felt so safe.",
+          "effects": [ { "type": "breakup" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "got_out", "to": "target", "text": "The day I left {t.name}", "impact": 15 } ] },
+        "failure": { "text": "{t.name} cries and promises. You stay. It's quiet for a few weeks.", "effects": [ { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Call your old friends anyway", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 }, { "type": "happiness", "amount": 4 } ],
+        "result": "{t.name} sulks for days. But you have a friend again, and a voice that tells you this isn't normal." },
+      { "text": "Give {t.him} what {t.he} wants", "effects": [ { "type": "happiness", "amount": -10 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.3 } ],
+        "result": "It's easier. Your world shrinks to the size of {t.his} approval." }
+    ]
+  },
+  {
+    "id": "ex_stalking", "title": "Again", "content": [ "violence" ],
+    "text": "{t.name}'s car is outside your building again. Flowers on the doorstep. Forty messages last night. \"I just want to talk.\"",
+    "conditions": { "minAge": 16 }, "weight": 0.8, "cooldown": 8,
+    "target": { "role": "ex", "conditions": { "minAge": 18, "relMin": { "bitterness": 30 } } },
+    "choices": [
+      { "text": "Go to the police", "chance": 0.6, "success": { "text": "A restraining order. The car stops coming.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "\"Unless he actually does something...\" You start taking different routes home.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.15 } ] } },
+      { "text": "Talk to {t.him} one last time", "chance": 0.4,
+        "success": { "text": "{t.name} cries, apologises – and finally lets go.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -20 } ] },
+        "failure": { "text": "It only makes it worse. Now {t.he} knows you'll answer.", "effects": [ { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Move to another city", "effects": [ { "type": "move_city" }, { "type": "happiness", "amount": -3 } ],
+        "result": "A new address that almost nobody has. It feels like freedom and like running at the same time." }
+    ]
+  },
+  {
+    "id": "relapse", "trigger": "situation", "content": [ "addiction" ],
+    "title": "Just one",
+    "text": "Years of staying clean, and then a bad week and a moment when \"just one\" sounded reasonable. It wasn't just one.",
+    "choices": [
+      { "text": "Call your sponsor tonight", "chance": 0.6, "chanceTraits": { "resilient": 0.15 },
+        "success": { "text": "A long night on the phone, a meeting the next morning. You catch it before it catches you.", "effects": [ { "type": "recover" } ] },
+        "failure": { "text": "You call. You go to the meeting. And afterwards, you drink.", "effects": [ { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Hide it", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.15 } ],
+        "result": "Mints, excuses, a bottle behind the paint tins in the garage. You know how this goes. You do it anyway." }
+    ]
+  },
+  {
+    "id": "self_rehab", "trigger": "self", "category": "life", "title": "Get treatment", "content": [ "addiction" ],
+    "conditions": { "minAge": 15, "addicted": true },
+    "choices": [ {
+      "text": "Check into treatment", "hint": "Weeks away, and hard – but it works more often than going it alone.",
+      "chance": 0.55, "chanceTraits": { "resilient": 0.15, "addictive": -0.15 },
+      "success": { "text": "You come out clean, with a phone number you can call at 3 am. You'll need it.", "effects": [ { "type": "recover" }, { "type": "money", "amount": -10000 } ] },
+      "failure": { "text": "You leave after ten days. Not yet.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": -5 } ] }
+    } ]
+  },
+  {
+    "id": "partner_drinking", "title": "The bottles", "content": [ "addiction" ],
+    "text": "You find the bottles in the laundry basket. {t.name} says it's under control. It hasn't been under control for a long time.",
+    "conditions": { "minAge": 18 }, "weight": 1.5, "cooldown": 4,
+    "target": { "role": "partner", "conditions": { "addicted": true } },
+    "choices": [
+      { "text": "Give an ultimatum: treatment or I leave", "chance": 0.5, "chanceOpinion": 0.004,
+        "success": { "text": "{t.name} goes. It's the hardest thing either of you has done.", "effects": [ { "type": "recover", "who": "target" } ] },
+        "failure": { "text": "{t.name} promises. You both know what the promise is worth.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Pour it all out", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ],
+        "result": "The sink smells of it for days. There are other bottles. There always are." },
+      { "text": "Leave", "effects": [ { "type": "breakup" }, { "type": "happiness", "amount": -4 } ],
+        "result": "You love {t.him}. You can't watch any more." }
+    ]
+  },
+  {
+    "id": "loss_by_suicide", "trigger": "situation", "content": [ "suicide" ],
+    "title": "Why",
+    "text": "{t.name} is gone, by {t.his} own hand. At the funeral everyone asks the same silent question, and none of the answers help.",
+    "choices": [
+      { "text": "Join a support group for the bereaved", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "grief_group", "text": "The Tuesday group, after {t.name}", "impact": 10 } ],
+        "result": "Rooms full of people carrying the same question. You learn it's all right not to have an answer." },
+      { "text": "Blame yourself", "effects": [ { "type": "happiness", "amount": -10 }, { "type": "ailment_add", "kind": "depression", "chance": 0.3 } ],
+        "result": "The last conversation plays over and over. If you had called. If you had seen it." },
+      { "text": "Talk about {t.name} openly", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "brave", "chance": 0.15 } ],
+        "result": "You say the word out loud at the dinner table. Your family can finally breathe." }
+    ]
+  },
+  {
+    "id": "darkest_night", "trigger": "situation", "content": [ "suicide" ],
+    "title": "The darkest night",
+    "text": "It's three in the morning and the thoughts won't stop. It feels as if nothing will ever get better, and as if everyone would be better off without you.",
+    "choices": [
+      { "text": "Call a helpline", "effects": [ { "type": "ailment_treat", "kind": "depression" }, { "type": "happiness", "amount": 8 } ],
+        "result": "A calm voice picks up. You talk until it's light. In the morning, the voice helps you book a doctor's appointment." },
+      { "text": "Wake someone up", "effects": [ { "type": "happiness", "amount": 10 }, { "type": "ailment_treat", "kind": "depression" } ],
+        "result": "They come straight away, in their coat over their pyjamas. \"You should always call. Always.\"" },
+      { "text": "Hold on until morning", "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "The night ends, the way nights do. In daylight you make one call. It's a start." }
+    ]
+  },
+  {
+    "id": "eviction", "trigger": "situation",
+    "title": "The letter from the bailiffs",
+    "text": "The debts have caught up with you. You have thirty days to leave the flat.",
+    "choices": [
+      { "text": "Move back in with your parents", "requires": { "hasRole": [ "parent" ] }, "effects": [ { "type": "move_back_home" }, { "type": "happiness", "amount": -6 } ],
+        "result": "Your old room, the same wallpaper. Your mother doesn't ask any questions, which is its own kind of kindness." },
+      { "text": "A friend's sofa", "effects": [ { "type": "happiness", "amount": -8 } ],
+        "result": "It's supposed to be for a couple of weeks. It's three months." },
+      { "text": "The street", "effects": [ { "type": "homeless" } ],
+        "result": "A sleeping bag, a bench near the station, a cup of coffee from the night shelter. You never thought it would be you." }
+    ]
+  },
+  {
+    "id": "homeless_winter", "title": "Minus fifteen",
+    "text": "It's minus fifteen and the shelter is full. Everything you own is in two plastic bags.",
+    "conditions": { "minAge": 16, "flags": [ "homeless" ] }, "weight": 5, "cooldown": 2,
+    "choices": [
+      { "text": "Swallow your pride and call your family", "chance": 0.6, "chanceOpinion": 0.004,
+        "success": { "text": "They come and get you. Nobody lectures you. Not that night, anyway.", "effects": [ { "type": "move_back_home" }, { "type": "flag_remove", "flag": "homeless" } ] },
+        "failure": { "text": "The number is disconnected. Or they don't pick up.", "effects": [ { "type": "health", "amount": -8 } ] } },
+      { "text": "Go to the church that keeps its doors open", "effects": [ { "type": "health", "amount": -3 }, { "type": "happiness", "amount": 3 } ],
+        "result": "Soup, a blanket, and a volunteer who knows your name after the third night." }
+    ]
+  }
+]

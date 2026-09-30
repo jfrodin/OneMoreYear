@@ -2,6 +2,23 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.19.0 – 2026-09-30 · The dark themes, in depth
+
+- **Sexual violence between adults** – only ever as something that happens to you or someone
+  close, never something you do, and never described (see design-decisions.md). Report it, tell
+  someone, stay silent; a relative can be the perpetrator – a secret that one day splits the family,
+  and may end in court. Harassment by a boss. #MeToo in 2017.
+- **Coercive control and stalking**: a partner who checks your phone and isolates you – leave, reach
+  out, or give in; an ex who won't let go.
+- **Addiction, deeper**: relapse after years clean, treatment you can choose yourself, a partner who drinks.
+- **Suicide as grief**: deep, long depression can take someone you love; the family is left with the
+  question why. For you, a darkest night where every choice is a way to reach for help.
+- **Losing your home**: deep debt and no income bring the bailiffs – back to your parents, a friend's
+  sofa, or the street; homelessness and the way back.
+- New content settings: **Sexual violence** (adults) and **Suicide**; *Sexual abuse of children* is its own category.
+- Test scenarios now search, in a fixed order, for a family that matches what they promise – so they
+  survive balancing changes (names can differ between versions).
+
 ## 0.18.0 – 2026-09-30 · The later years, and the mind
 
 - **Ailments that last**: depression, anxiety, burnout, trauma and dementia. They start from what

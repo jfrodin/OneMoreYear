@@ -50,22 +50,33 @@ public sealed class GameSession
             };
         string? code = options.Seed != null ? null : Core.SeedCode.Normalize(options.SeedCode ?? "") is { Length: > 0 } typed ? typed : Core.SeedCode.Random();
         ulong seed = options.Seed ?? Core.SeedCode.ToSeed(code!);
-        var world = new World
+
+        GameSession Build(ulong s)
         {
-            Seed = seed,
-            SeedCode = code,
-            ContentSettings = options.ContentSettings?.ToDictionary(kv => kv.Key, kv => kv.Value) ?? new(),
-            CountryId = options.CountryId,
-            StartYear = options.StartYear,
-            Year = options.StartYear,
-            Rng = new SimRandom(seed),
-        };
-        var session = new GameSession(world, content);
-        StartingFamily.Create(session.Ctx);
-        if (scenario != null) Scenarios.ApplyFamily(session.Ctx, scenario);
-        session.World.ActionPoints = session.ActionPointsFor(session.Player);
-        if (scenario != null) Scenarios.FastForward(session, scenario);
-        return session;
+            var world = new World
+            {
+                Seed = s,
+                SeedCode = code,
+                ContentSettings = options.ContentSettings?.ToDictionary(kv => kv.Key, kv => kv.Value) ?? new(),
+                CountryId = options.CountryId,
+                StartYear = options.StartYear,
+                Year = options.StartYear,
+                Rng = new SimRandom(s),
+            };
+            var session = new GameSession(world, content);
+            StartingFamily.Create(session.Ctx);
+            if (scenario != null) Scenarios.ApplyFamily(session.Ctx, scenario);
+            session.World.ActionPoints = session.ActionPointsFor(session.Player);
+            if (scenario != null) Scenarios.FastForward(session, scenario);
+            return session;
+        }
+
+        // A test scenario tries seeds in a fixed order until the family is what it promises, so it
+        // survives balancing changes and always gives the same result.
+        var result = Build(seed);
+        for (int attempt = 1; scenario != null && attempt < 80 && !Scenarios.Meets(result, scenario); attempt++)
+            result = Build(seed + (ulong)attempt * 7919UL);
+        return result;
     }
 
     /// <summary>Changes how a dark theme is handled from now on (content settings).</summary>
@@ -150,6 +161,7 @@ public sealed class GameSession
         SecretSystem.Update(ctx);
         DarkSystem.Update(ctx);
         AilmentSystem.Update(ctx);
+        Hardship.Update(ctx);
         CrimeSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);

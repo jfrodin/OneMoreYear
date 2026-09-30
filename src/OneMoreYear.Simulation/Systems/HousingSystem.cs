@@ -25,6 +25,7 @@ public static class HousingSystem
     {
         string city = City(ctx, p).Name;
         if (p.Flags.Contains(CareHomeFlag)) return $"Lives in a care home in {city}";
+        if (p.Flags.Contains(Hardship.HomelessFlag)) return $"Homeless in {city}";
         if (p.LivesWithParents) return $"Lives with parents in {city}";
         if (p.OwnsHome) return $"Owns a home in {city}";
         if (p.PartnerId != null && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) return $"Rents a home with their partner in {city}";

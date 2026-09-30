@@ -86,6 +86,7 @@ public static class DarkSystem
         if (p.Addiction == null) return;
         ctx.World.Log($"{p.FirstName} got clean after {Math.Max(1, ctx.Year - p.AddictionSince)} years of {What(p.Addiction)}.",
             ctx.Importance(false, p), "dark", p.Id);
+        p.Flags.Add(Hardship.RecoveredPrefix + p.Addiction);
         p.Addiction = null;
         p.Flags.Remove("addicted");
         p.Happiness += 10;

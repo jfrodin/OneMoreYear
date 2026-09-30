@@ -72,7 +72,12 @@ public static class LifeSystem
 
         bool close = p.Id == w.PlayerId || (w.Player.IsAlive && Kinship.Distances(w, w.Player, 2).ContainsKey(p.Id));
         if (p.InFamily || p.Id == w.PlayerId || close)
-            w.Log(cause == "murder" ? $"{p.FullName} was murdered, aged {age}." : $"{p.FullName} died of {cause}, aged {age}.",
+            w.Log(cause switch
+                {
+                    "murder" => $"{p.FullName} was murdered, aged {age}.",
+                    "suicide" => $"{p.FullName} took {(p.Sex == Sex.Male ? "his" : "her")} own life, aged {age}.",
+                    _ => $"{p.FullName} died of {cause}, aged {age}.",
+                },
                 ctx.Importance(true, p), "death", p.Id);
 
         // Grief.

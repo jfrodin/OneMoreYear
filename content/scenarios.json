@@ -31,21 +31,21 @@
     "description": "You are the grandfather: charming, respected, loved by everyone. Your granddaughter is 25 – and she is also your daughter. Only you and her mother know. Now she has ordered a DNA test. (Dark theme: what happened is never shown or played – only the secret and the reckoning.)",
     "seed": 148, "startYear": 1990, "age": 25,
     "grandfather": { "traits": [ "charming" ] },
-    "playAs": "grandfather", "storyline": "hidden_father"
+    "playAs": "grandfather", "storyline": "hidden_father", "requires": { "sex": "female" }
   },
   {
     "id": "the_family_secret_mother", "name": "The family secret – mother",
     "description": "The same family, seen by the mother. Your daughter's real father is your own father. You have carried it alone for 25 years. Now your daughter wants to take a DNA test. (Dark theme: only the consequences are shown.)",
     "seed": 148, "startYear": 1990, "age": 25,
     "grandfather": { "traits": [ "charming" ] },
-    "playAs": "mother", "storyline": "hidden_father"
+    "playAs": "mother", "storyline": "hidden_father", "requires": { "sex": "female" }
   },
   {
     "id": "the_family_secret_daughter", "name": "The family secret – daughter",
     "description": "The same family, seen by the granddaughter. You are 25 and curious about your roots. Mum goes pale when you mention a DNA test. Grandpa laughs a little too loudly. (Dark theme: only the consequences are shown.)",
     "seed": 148, "startYear": 1990, "age": 25,
     "grandfather": { "traits": [ "charming" ] },
-    "storyline": "hidden_father"
+    "storyline": "hidden_father", "requires": { "sex": "female" }
   },
   {
     "id": "born_bad", "name": "Born bad",
@@ -64,12 +64,14 @@
     "id": "grown_up", "name": "Grown up",
     "description": "Skip childhood: you are 26, with a job and a life. Good for testing adult life, love and money.",
     "seed": 24, "startYear": 1970, "age": 26,
-    "player": { "money": 150000 }
+    "player": { "money": 150000 },
+    "requires": { "partner": true, "minChildren": 1, "working": true }
   },
   {
     "id": "late_in_life", "name": "Late in life",
     "description": "You are 62 with grown children and grandchildren on the way. Wills, health and the end of a life.",
     "seed": 6, "startYear": 1950, "age": 62,
-    "player": { "money": 900000, "ownsHome": true }
+    "player": { "money": 900000, "ownsHome": true },
+    "requires": { "partner": true, "minChildren": 2, "minGrandchildren": 1 }
   }
 ]

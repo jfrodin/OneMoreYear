@@ -174,7 +174,7 @@ public sealed class ContentDb
                     if (!Systems.EffectApplier.KnownTypes.Contains(eff.Type)) errors.Add($"Event {e.Id}: unknown effect type '{eff.Type}'");
                     if (eff.Trait != null && !Traits.ContainsKey(eff.Trait)) errors.Add($"Event {e.Id}: unknown trait {eff.Trait}");
                     // Design rule: abusing a child is never something the player can choose to do.
-                    if (eff.Type == "crime" && eff.Kind == "child_abuse") errors.Add($"Event {e.Id}: child_abuse can never be a player choice");
+                    if (eff.Type == "crime" && eff.Kind is "child_abuse" or "sexual_assault") errors.Add($"Event {e.Id}: {eff.Kind} can never be a player choice");
                     if (eff.Var != null && !e.Vars.ContainsKey(eff.Var)) errors.Add($"Event {e.Id}: unknown variable {eff.Var}");
                     if ((eff.Who == "target" || eff.To == "target") && e.Target == null && e.Trigger != "situation") errors.Add($"Event {e.Id}: effect uses target but the event has none");
                     if ((eff.Who == "other" || eff.To == "other") && e.Other == null && e.Trigger != "situation") errors.Add($"Event {e.Id}: effect uses other but the event has none");

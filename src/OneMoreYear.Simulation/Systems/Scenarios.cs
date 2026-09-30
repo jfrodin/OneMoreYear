@@ -13,6 +13,7 @@ public static class Scenarios
     private const string GrandfatherFlag = "scenario_grandfather";
     private const string MotherFlag = "scenario_mother";
     private const string FatherFlag = "scenario_father";
+    private const string ChildFlag = "scenario_child";
 
     /// <summary>Applied right after the starting family is created.</summary>
     public static void ApplyFamily(SimContext ctx, ScenarioDef s)
@@ -42,6 +43,7 @@ public static class Scenarios
             MakeTeenager(ctx, father, player.BirthYear - 17);
             mother.PartnerStatus = father.PartnerStatus = PartnerStatus.Dating;
         }
+        player.Flags.Add(ChildFlag);
         mother?.Flags.Add(MotherFlag);
         father?.Flags.Add(FatherFlag);
     }
@@ -88,6 +90,32 @@ public static class Scenarios
             p.Addiction = t.Addiction;
             p.AddictionSince = ctx.Year;
         }
+    }
+
+    /// <summary>Whether a started scenario is what it promises (see ScenarioDef.Requires and the storyline).</summary>
+    public static bool Meets(GameSession session, ScenarioDef s)
+    {
+        var w = session.World;
+        if (session.GameOver || !session.Player.IsAlive) return false;
+        // The person the scenario was built around: the original child, even when the player took over someone else.
+        var child = w.People.FirstOrDefault(p => p.Flags.Contains(ChildFlag)) ?? session.Player;
+        if (s.Age > 0 && child.Age(session.Year) != s.Age) return false;
+        if (s.Storyline == "hidden_father")
+        {
+            // The child must be the mother's first: she was fifteen when it was born.
+            if (w.Secrets.FirstOrDefault(x => x.Kind == "origin") is not { } origin) return false;
+            var mother = w.Get(origin.VictimId!.Value);
+            if (Kinship.Children(w, mother).Any(k => k.BirthYear < child.BirthYear)) return false;
+        }
+        if (s.PlayAs != null && session.Player.Id == child.Id) return false;
+        if (s.Requires is not { } r) return true;
+        var p = child;
+        if (r.Sex is { } sex && (p.Sex == Sex.Female) != (sex == "female")) return false;
+        if (r.Partner is { } partner && (p.PartnerId != null) != partner) return false;
+        if (r.Working is { } working && (p.Activity == Activity.Working) != working) return false;
+        if (r.MinChildren is { } kids && Kinship.Children(w, p).Count(k => k.IsAlive) < kids) return false;
+        if (r.MinGrandchildren is { } gk && Kinship.Grandchildren(w, p).Count(k => k.IsAlive) < gk) return false;
+        return true;
     }
 
     /// <summary>Plays the years before the scenario's start age, then hands over and starts its storyline.</summary>

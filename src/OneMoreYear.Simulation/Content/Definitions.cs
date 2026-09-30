@@ -226,6 +226,8 @@ public sealed class ConditionDef
     /// <summary>Has at least one of these ailments / none of these.</summary>
     public List<string>? AilmentsAny { get; set; }
     public List<string>? NotAilments { get; set; }
+    /// <summary>Struggling with an addiction right now.</summary>
+    public bool? Addicted { get; set; }
 }
 
 /// <summary>Picks another participant in an event, relative to the player.</summary>
@@ -353,6 +355,8 @@ public sealed class ScenarioDef
     public string? Storyline { get; set; }
     /// <summary>Who the player plays when the scenario hands over: null (the child), "grandfather" or "mother".</summary>
     public string? PlayAs { get; set; }
+    /// <summary>What must be true when the scenario hands over; other seeds are tried in a fixed order until it is.</summary>
+    public ScenarioRequirements? Requires { get; set; }
 }
 
 public sealed class ScenarioTweak
@@ -421,4 +425,14 @@ public sealed class AilmentDef
     public double Performance { get; set; }
     public double Recovery { get; set; }
     public double TreatedRecovery { get; set; }
+}
+
+public sealed class ScenarioRequirements
+{
+    public bool? Partner { get; set; }
+    public int? MinChildren { get; set; }
+    public int? MinGrandchildren { get; set; }
+    public bool? Working { get; set; }
+    /// <summary>The player (before any play-as switch) must be of this sex ("male" / "female").</summary>
+    public string? Sex { get; set; }
 }
