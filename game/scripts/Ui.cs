@@ -25,6 +25,7 @@ public static class Ui
     public static Button Button(string text, Action onPressed, int minHeight = 48)
     {
         var b = new Button { Text = text, CustomMinimumSize = new Vector2(0, minHeight), FocusMode = Control.FocusModeEnum.All };
+        b.Pressed += () => Sound.Play("click");
         b.Pressed += onPressed;
         return b;
     }

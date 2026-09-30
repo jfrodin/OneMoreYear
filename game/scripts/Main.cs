@@ -27,6 +27,8 @@ public partial class Main : Control
         Theme = UiTheme.Build();
         SetAnchorsPreset(LayoutPreset.FullRect);
         RegisterInput();
+        Sound.Init(this);
+        Settings.Apply();
 
         _paper = new AlbumPaper();
         AddChild(_paper);
@@ -232,20 +234,114 @@ public partial class Main : Control
         SetScreen(title);
     }
 
-    public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null)
+    public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null, int? slot = null)
     {
+        SaveSystem.CurrentSlot = slot ?? SaveSystem.FirstEmptySlot() ?? 1;
         Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId, ContentSettings = Settings.Content });
         SaveSystem.Save(Session);
         ShowGame();
+        bool automated = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
+        if (!Settings.IntroSeen && !automated) ShowIntroduction();
     }
 
+    /// <summary>Opens the game saved most recently.</summary>
     public void ContinueGame()
     {
-        Session = SaveSystem.Load();
+        if (SaveSystem.LatestSlot() is { } slot) LoadSlot(slot);
+        else ShowTitle();
+    }
+
+    public void LoadSlot(int slot)
+    {
+        Session = SaveSystem.Load(slot);
         if (Session == null) { ShowTitle(); return; }
+        SaveSystem.CurrentSlot = slot;
         if (Session.GameOver) ShowGameOver();
         else if (Session.NeedsSuccession) ShowSuccession();
         else ShowGame();
+    }
+
+    /// <summary>
+    /// The save slots. <paramref name="pickForNewGame"/> lets the player choose a slot to replace for a
+    /// new life (all slots full); otherwise slots can be loaded or deleted.
+    /// </summary>
+    public void ShowSlots(System.Action<int>? pickForNewGame = null)
+    {
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.6f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+        void Close() { _overlayLayer.RemoveChild(dim); dim.QueueFree(); }
+
+        var box = Ui.VBox(12);
+        box.CustomMinimumSize = new Vector2(720, 0);
+        box.AddChild(Ui.Label(pickForNewGame != null ? "All slots are full" : "Load a life", 28, UiTheme.Accent));
+        if (pickForNewGame != null)
+            box.AddChild(Ui.Label("Choose which family to replace with the new life. That family's story will be gone.", 16, UiTheme.Muted, wrap: true));
+        Control? first = null;
+        for (int slot = 1; slot <= SaveSystem.Slots; slot++)
+        {
+            var info = SaveSystem.Info(slot);
+            var row = Ui.HBox(10);
+            var text = Ui.VBox(0);
+            text.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            text.AddChild(Ui.Label(info == null ? $"Slot {slot} – empty" : $"The {info.Family} family", 20, info == null ? UiTheme.Faint : UiTheme.Text));
+            if (info != null)
+                text.AddChild(Ui.Label($"{info.Year}  ·  {info.Player}, {info.Age}{(info.GameOver ? "  ·  the end" : "")}  ·  seed {info.SeedCode}" +
+                                       (info.SavedAt > System.DateTime.MinValue ? $"  ·  saved {info.SavedAt:d MMM HH:mm}" : ""), 14, UiTheme.Muted));
+            row.AddChild(text);
+            int s = slot;
+            if (info != null && pickForNewGame == null)
+            {
+                var load = Ui.Button("Load", () => { Close(); LoadSlot(s); }, 44);
+                row.AddChild(load);
+                first ??= load;
+                var delete = Ui.Button("Delete", () =>
+                {
+                    Close();
+                    ShowConfirm($"Delete the {info.Family} family?", "Their whole story will be gone for good.", () => { SaveSystem.Delete(s); ShowTitle(); });
+                }, 44);
+                row.AddChild(delete);
+            }
+            else if (info != null && pickForNewGame != null)
+            {
+                var replace = Ui.Button("Replace", () => { Close(); pickForNewGame(s); }, 44);
+                row.AddChild(replace);
+                first ??= replace;
+            }
+            box.AddChild(Ui.Card(row, UiTheme.Panel, UiTheme.Border));
+        }
+        var cancel = Ui.Button("Back", Close, 44);
+        cancel.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+        box.AddChild(cancel);
+        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        Ui.FocusLater(first ?? cancel);
+    }
+
+    /// <summary>A yes/no question. <paramref name="onYes"/> runs if the player confirms.</summary>
+    public void ShowConfirm(string title, string text, System.Action onYes)
+    {
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.6f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+        void Close() { _overlayLayer.RemoveChild(dim); dim.QueueFree(); }
+        var box = Ui.VBox(14);
+        box.CustomMinimumSize = new Vector2(520, 0);
+        box.AddChild(Ui.Label(title, 26, UiTheme.Accent));
+        box.AddChild(Ui.Label(text, 18, UiTheme.Text, wrap: true));
+        var buttons = Ui.HBox(10);
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        var no = Ui.Button("No", Close, 46);
+        buttons.AddChild(no);
+        buttons.AddChild(Ui.Button("Yes", () => { Close(); onYes(); }, 46));
+        box.AddChild(buttons);
+        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        Ui.FocusLater(no);
     }
 
     public void ShowGame()
@@ -342,6 +438,128 @@ public partial class Main : Control
         Ui.FocusLater(first ?? done);
     }
 
+    /// <summary>Screen, text size, sound, the newspaper – and the content settings, one click away.</summary>
+    public void ShowSettings(GameSession? game)
+    {
+        var previousFocus = GetViewport().GuiGetFocusOwner();
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.6f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+        void Close()
+        {
+            _overlayLayer.RemoveChild(dim);
+            dim.QueueFree();
+            if (IsInstanceValid(previousFocus) && previousFocus!.IsInsideTree() && previousFocus.IsVisibleInTree()) previousFocus.GrabFocus();
+        }
+
+        var box = Ui.VBox(14);
+        box.CustomMinimumSize = new Vector2(640, 0);
+        box.AddChild(Ui.Label("Settings", 28, UiTheme.Accent));
+
+        Control Row(string label, Control control)
+        {
+            var row = Ui.HBox(14);
+            var l = Ui.Label(label, 18, UiTheme.Text);
+            l.CustomMinimumSize = new Vector2(220, 0);
+            row.AddChild(l);
+            control.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            row.AddChild(control);
+            return row;
+        }
+        OptionButton Options(string[] items, int selected, System.Action<int> changed)
+        {
+            var o = new OptionButton { CustomMinimumSize = new Vector2(0, 44) };
+            foreach (var item in items) o.AddItem(item);
+            o.Selected = selected;
+            o.ItemSelected += i => changed((int)i);
+            return o;
+        }
+        HSlider Slider(double value, System.Action<double> changed)
+        {
+            var s = new HSlider { MinValue = 0, MaxValue = 1, Step = 0.05, Value = value, CustomMinimumSize = new Vector2(0, 36), FocusMode = FocusModeEnum.All };
+            s.ValueChanged += v => { changed(v); Sound.Play("click"); };
+            return s;
+        }
+
+        var screen = Options(new[] { "Window", "Fullscreen" }, Settings.Fullscreen ? 1 : 0, i => Settings.SetFullscreen(i == 1));
+        box.AddChild(Row("Screen", screen));
+        box.AddChild(Row("Text size", Options(new[] { "Small", "Normal", "Large", "Extra large" }, Settings.TextSize, Settings.SetTextSize)));
+        box.AddChild(Row("Volume", Slider(Settings.MasterVolume, Settings.SetMasterVolume)));
+        box.AddChild(Row("Sound effects", Slider(Settings.EffectsVolume, Settings.SetEffectsVolume)));
+        box.AddChild(Row("The family newspaper", Options(new[] { "Every year", "Only in big years", "Never" }, (int)Settings.Newspaper,
+            i => Settings.SetNewspaper((NewspaperMode)i))));
+
+        var buttons = Ui.HBox(10);
+        buttons.AddChild(Ui.Button("Content settings…", () => { Close(); ShowContentSettings(game); }, 46));
+        buttons.AddChild(Ui.Button("How to play", () => { Close(); ShowIntroduction(); }, 46));
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        var done = Ui.Button("Done", Close, 46);
+        UiTheme.MakePrimary(done);
+        done.AddThemeFontSizeOverride("font_size", 18);
+        buttons.AddChild(done);
+        box.AddChild(buttons);
+
+        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        Ui.FocusLater(screen);
+    }
+
+    /// <summary>A short introduction, the first time a life begins (and from Settings → How to play).</summary>
+    public void ShowIntroduction()
+    {
+        string[][] pages =
+        {
+            new[] { "Welcome to the family", "You live one life at a time – from birth to death – and then the story continues with someone you leave behind: a child, a sibling, a niece. The family is the real hero. See how far it goes." },
+            new[] { "One year at a time", "Each year, things happen. Answer them on the This Year tab – there is no right answer, only a life. You also have time for a few things of your own: see people, work, study, love, fight, make money, or break the law." },
+            new[] { "Who you are matters", "Your traits and gifts change the odds and what you notice. A charming person has other ways out than a hot-tempered one. People remember what you do to them – and they tell others." },
+            new[] { "When you're ready", "Press Next Year (N, or Y on a controller). Some years bring the family newspaper. When your life ends, choose who carries the story on. Everything is saved as you go." },
+        };
+        int page = 0;
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.55f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+        var box = Ui.VBox(16);
+        box.CustomMinimumSize = new Vector2(620, 0);
+        var title = Ui.Label("", 30, UiTheme.Accent);
+        var text = Ui.Label("", 19, UiTheme.Text, wrap: true);
+        var count = UiTheme.HandLabel("", 20, UiTheme.Muted);
+        box.AddChild(title);
+        box.AddChild(text);
+        var buttons = Ui.HBox(10);
+        buttons.AddChild(count);
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        Button next = null!;
+        void Show()
+        {
+            title.Text = pages[page][0];
+            text.Text = pages[page][1];
+            count.Text = $"{page + 1} / {pages.Length}";
+            next.Text = page == pages.Length - 1 ? "Begin" : "Next";
+        }
+        void Close()
+        {
+            Settings.MarkIntroSeen();
+            _overlayLayer.RemoveChild(dim);
+            dim.QueueFree();
+            if (_screen is GameScreen g) g.FocusAfterNewspaper();
+        }
+        buttons.AddChild(Ui.Button("Skip", Close, 46));
+        next = Ui.Button("Next", () => { if (page < pages.Length - 1) { page++; Sound.Play("page"); Show(); } else Close(); }, 46);
+        UiTheme.MakePrimary(next);
+        next.AddThemeFontSizeOverride("font_size", 18);
+        next.CustomMinimumSize = new Vector2(160, 46);
+        buttons.AddChild(next);
+        box.AddChild(buttons);
+        Show();
+        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        Ui.FocusLater(next);
+    }
+
     /// <summary>A new year begins: the family's newspaper, on top of the (already updated) game screen.</summary>
     public void ShowNewspaper(YearReport report)
     {
@@ -363,6 +581,7 @@ public partial class Main : Control
             dim.QueueFree();
             if (_screen is GameScreen game) game.FocusAfterNewspaper();
         }
+        Sound.Play("paper");
         center.AddChild(Newspaper.Build(Session, report, Close));
         // A click anywhere outside the paper closes it too.
         dim.GuiInput += e => { if (e is InputEventMouseButton { Pressed: true }) Close(); };
@@ -493,8 +712,10 @@ public partial class Main : Control
             case 70: Shot("06_tree"); if (_screen is GameScreen gt) gt.FocusTreeOnGrandfather(); break;
             case 71: Shot("06b_tree_grandfather"); break;
             case 72: ShowContentSettings(Session); break;
-            case 75: Shot("07_content"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
-            case 77: ShowSuccession(); break;
+            case 75: Shot("07_content"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowSettings(Session); break;
+            case 77: Shot("07b_settings"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowIntroduction(); break;
+            case 79: Shot("07c_intro"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
+            case 80: ShowSuccession(); break;
             case 82: Shot("08_succession"); _eraOverride = 1956; ShowGame(); break;
             case 86: Shot("09_era_1956"); _eraOverride = 1987; ShowGame(); break;
             case 90: Shot("10_era_1987"); GetTree().Quit(); break;

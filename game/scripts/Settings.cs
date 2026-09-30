@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Godot;
@@ -22,6 +23,12 @@ public static class Settings
         public bool ContentAsked { get; set; }
         public Dictionary<string, ContentLevel> Content { get; set; } = new();
         public NewspaperMode Newspaper { get; set; } = NewspaperMode.BigYears;
+        public bool IntroSeen { get; set; }
+        public bool Fullscreen { get; set; }
+        /// <summary>0 small, 1 normal, 2 large, 3 extra large.</summary>
+        public int TextSize { get; set; } = 1;
+        public double MasterVolume { get; set; } = 0.8;
+        public double EffectsVolume { get; set; } = 0.8;
     }
 
     private static Data? _data;
@@ -65,6 +72,30 @@ public static class Settings
     {
         Current.Newspaper = mode;
         Save();
+    }
+
+    public static bool IntroSeen => Current.IntroSeen;
+    public static void MarkIntroSeen() { Current.IntroSeen = true; Save(); }
+
+    public static bool Fullscreen => Current.Fullscreen;
+    public static int TextSize => Current.TextSize;
+    public static double MasterVolume => Current.MasterVolume;
+    public static double EffectsVolume => Current.EffectsVolume;
+
+    public static void SetFullscreen(bool on) { Current.Fullscreen = on; Save(); Apply(); }
+    public static void SetTextSize(int size) { Current.TextSize = Math.Clamp(size, 0, 3); Save(); Apply(); }
+    public static void SetMasterVolume(double v) { Current.MasterVolume = Math.Clamp(v, 0, 1); Save(); Apply(); }
+    public static void SetEffectsVolume(double v) { Current.EffectsVolume = Math.Clamp(v, 0, 1); Save(); Apply(); }
+
+    /// <summary>Puts the display and sound settings into effect.</summary>
+    public static void Apply()
+    {
+        if (DisplayServer.GetName() != "headless")
+            DisplayServer.WindowSetMode(Current.Fullscreen ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Windowed);
+        if (Engine.GetMainLoop() is SceneTree tree)
+            tree.Root.ContentScaleFactor = Current.TextSize switch { 0 => 0.9f, 2 => 1.12f, 3 => 1.25f, _ => 1f };
+        AudioServer.SetBusVolumeDb(0, (float)Mathf.LinearToDb(Current.MasterVolume));
+        Sound.SetEffectsVolume(Current.EffectsVolume);
     }
 
     public static void MarkContentAsked()

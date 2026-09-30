@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.22.0 – 2026-09-30 · Settings, save slots and sound
+
+- **A Settings menu**, reachable from the title screen and from the sidebar in-game: window or
+  fullscreen, four text sizes, volume and sound effects, how often the family newspaper appears, and
+  the content settings one click away.
+- **Three save slots.** "Continue" opens the one you played last. "Load game" shows all three, with
+  the family, who you are playing, their age and year. You can load, delete or replace a slot. If all
+  three are full when you start a new life, you choose which one to replace. Your old save becomes
+  slot 1 automatically.
+- **A short introduction** (four pages) the first time you start a life. You can read it again from
+  Settings → How to play.
+- **Quiet interface sounds**: a click for buttons, a turning page for tabs, rustling paper for the
+  newspaper, a small chime when a new year starts. Music will come later.
+
 ## 0.21.0 – 2026-09-30 · What your personality notices
 
 - **Passive checks**, in the spirit of Disco Elysium: your traits and gifts let you notice things

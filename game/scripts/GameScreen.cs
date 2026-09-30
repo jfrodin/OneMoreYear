@@ -147,6 +147,7 @@ public partial class GameScreen : Control
 
     private void OnTabChanged(long tab)
     {
+        Sound.Play("page");
         if (tab == TabTree) RefreshTree();
         if (tab == TabChronicle) RefreshChronicle();
         if (tab == TabFamily) RefreshPeople();
@@ -250,8 +251,8 @@ public partial class GameScreen : Control
         feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
         bottom.AddChild(feedback);
-        var content = Ui.Button("Content", () => _main.ShowContentSettings(S, onClose: RefreshAll), 42);
-        RegisterHint(content, "Choose how dark themes are handled: violence, abuse, addiction, murder, infidelity.");
+        var content = Ui.Button("Settings", () => _main.ShowSettings(S), 42);
+        RegisterHint(content, "Screen, text size, sound, the newspaper – and how dark themes are handled.");
         bottom.AddChild(content);
         var menu = Ui.Button("Save & exit", () => { _main.AutoSave(); _main.ShowTitle(); }, 42);
         menu.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -562,6 +563,7 @@ public partial class GameScreen : Control
             return;
         }
         var report = S.AdvanceYear();
+        Sound.Play("year");
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
         // The whole screen is rebuilt so the look follows the new year, then the paper arrives.

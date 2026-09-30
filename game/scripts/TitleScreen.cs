@@ -50,9 +50,15 @@ public partial class TitleScreen : Control
         Button? first = null;
         if (SaveSystem.HasSave)
         {
+            var saved = Ui.HBox(10);
             var cont = Ui.Button("Continue", () => _main.ContinueGame(), 56);
+            cont.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             UiTheme.MakePrimary(cont);
-            col.AddChild(cont);
+            saved.AddChild(cont);
+            var load = Ui.Button("Load game", () => _main.ShowSlots(), 56);
+            load.CustomMinimumSize = new Vector2(180, 56);
+            saved.AddChild(load);
+            col.AddChild(saved);
             first = cont;
         }
 
@@ -98,12 +104,12 @@ public partial class TitleScreen : Control
         options.AddChild(start);
         col.AddChild(Ui.Card(options));
 
-        var content = Ui.Button("Content settings", () => _main.ShowContentSettings(null));
+        var content = Ui.Button("Settings", () => _main.ShowSettings(null));
         col.AddChild(content);
         var quit = Ui.Button("Quit", () => GetTree().Quit());
         col.AddChild(quit);
 
-        var warning = Ui.Label("For adults (18+). Contains violence, abuse, addiction and crime – adjust in Content settings.", 15, UiTheme.Faint, wrap: true);
+        var warning = Ui.Label("For adults (18+). Contains violence, abuse, addiction and crime – adjust in Settings.", 15, UiTheme.Faint, wrap: true);
         warning.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(warning);
         var hint = Ui.Label($"Version {Main.Version}  ·  Sweden is the first country. More will follow.", 15, UiTheme.Faint);
@@ -122,7 +128,13 @@ public partial class TitleScreen : Control
     private void StartNew()
     {
         string? seed = string.IsNullOrWhiteSpace(_seed.Text) ? null : _seed.Text;
-        _main.StartNewGame(Decades[_year.Selected].Year, seed, SelectedScenario?.Id);
+        int year = Decades[_year.Selected].Year;
+        string? scenario = SelectedScenario?.Id;
+        // All slots taken: the player picks which family to replace.
+        if (SaveSystem.FirstEmptySlot() == null)
+            _main.ShowSlots(slot => _main.StartNewGame(year, seed, scenario, slot));
+        else
+            _main.StartNewGame(year, seed, scenario);
     }
 
     private ScenarioDef? SelectedScenario => _scenario.Selected > 0 ? _scenarios[_scenario.Selected - 1] : null;

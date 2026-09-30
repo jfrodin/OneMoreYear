@@ -20,7 +20,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 2. [x] **Dark themes in depth** – done in 0.19.0.
 3. [x] **Adult everyday life, work and parenthood** – done in 0.20.0 (85 events).
 4. [x] **Passive trait checks** – done in 0.21.0 (insights, trait choices, chance factors).
-5. [ ] Settings menu (fullscreen, volume, text size), several save slots, an introduction, sound.
+5. [x] **Settings, save slots, introduction, sound** – done in 0.22.0. Music (real recordings, by era) is still to come.
 
 ## Later
 

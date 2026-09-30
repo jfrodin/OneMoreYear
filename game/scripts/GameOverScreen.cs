@@ -40,7 +40,7 @@ public partial class GameOverScreen : Control
 
         var menu = Ui.Button("Back to the main menu", () =>
         {
-            SaveSystem.Delete();
+            SaveSystem.Delete(SaveSystem.CurrentSlot);
             _main.ShowTitle();
         }, 58);
         UiTheme.MakePrimary(menu);
