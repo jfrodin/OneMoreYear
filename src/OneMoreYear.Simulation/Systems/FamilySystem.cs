@@ -1,0 +1,290 @@
+using OneMoreYear.Simulation.Core;
+using OneMoreYear.Simulation.Model;
+
+namespace OneMoreYear.Simulation.Systems;
+
+/// <summary>Dating, moving in, marriage, children, break-ups and affairs.</summary>
+public static class FamilySystem
+{
+    public static void Update(SimContext ctx)
+    {
+        var w = ctx.World;
+        int count = w.People.Count; // people born this year are not processed until next year
+        for (int i = 0; i < count; i++)
+        {
+            var p = w.People[i];
+            if (!p.IsAlive || !p.InFamily) continue;
+            int age = p.Age(ctx.Year);
+            if (age < 16) continue;
+
+            if (p.PartnerId is { } pid)
+            {
+                var partner = w.Get(pid);
+                if (p.Id < pid || !partner.InFamily) UpdateCouple(ctx, p, partner);
+                if (p.Id != w.PlayerId && p.PartnerId != null) MaybeStartAffair(ctx, p);
+            }
+            else if (p.Id != w.PlayerId && age >= 18 && age <= 75)
+            {
+                SeekPartner(ctx, p);
+            }
+        }
+    }
+
+    private static void UpdateCouple(SimContext ctx, Person a, Person b)
+    {
+        var w = ctx.World;
+        var rng = ctx.Rng;
+        int years = ctx.Year - a.PartnerSinceYear;
+        double oa = w.Opinion(a.Id, b.Id), ob = w.Opinion(b.Id, a.Id);
+        bool playerCouple = a.Id == w.PlayerId || b.Id == w.PlayerId;
+
+        // --- Break-up ---
+        double baseChance = a.PartnerStatus switch
+        {
+            PartnerStatus.Dating => 0.14,
+            PartnerStatus.Cohabiting => 0.05,
+            _ => 0.022 * ctx.DivorceIndex
+        };
+        if (playerCouple)
+        {
+            var npc = a.Id == w.PlayerId ? b : a;
+            var player = a.Id == w.PlayerId ? a : b;
+            double npcOpinion = w.Opinion(npc.Id, player.Id);
+            double leave = npcOpinion < 20 ? baseChance + (20 - npcOpinion) / 150 + ctx.Mod(npc, "divorce") * 0.04 : 0;
+            if (years >= 1 && rng.Chance(leave))
+            {
+                EventSystem.QueueSituation(ctx, "partner_leaves", new() { ["target"] = npc.Id });
+                return;
+            }
+        }
+        else
+        {
+            double low = Math.Min(oa, ob);
+            double chance = baseChance + (low < 15 ? 0.08 : 0) + (low < -10 ? 0.25 : 0)
+                            + (ctx.Mod(a, "divorce") + ctx.Mod(b, "divorce")) * 0.03;
+            if (years >= 1 && rng.Chance(chance))
+            {
+                var initiator = oa < ob ? a : b;
+                BreakUp(ctx, initiator, initiator == a ? b : a);
+                return;
+            }
+        }
+
+        // --- Moving in / marriage ---
+        if (playerCouple)
+        {
+            var npc = a.Id == w.PlayerId ? b : a;
+            if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 2 && w.Opinion(npc.Id, w.PlayerId) > 40
+                && rng.Chance(0.15))
+                EventSystem.QueueSituation(ctx, "partner_proposes", new() { ["target"] = npc.Id });
+        }
+        else if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && oa > 15 && ob > 15 && rng.Chance(0.4))
+            MoveIn(ctx, a, b);
+        else if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 1 && oa > 25 && ob > 25
+                 && rng.Chance(0.14 * (ctx.Year < 1970 ? 2 : 1)))
+            Marry(ctx, a, b);
+
+        // --- Children ---
+        TryHaveChildren(ctx, a, b, playerCouple);
+    }
+
+    private static void TryHaveChildren(SimContext ctx, Person a, Person b, bool playerCouple)
+    {
+        var mother = a.Sex == Sex.Female ? a : b.Sex == Sex.Female ? b : null;
+        int kids = a.ChildIds.Intersect(b.ChildIds).Count();
+        double statusFactor = a.PartnerStatus switch
+        {
+            PartnerStatus.Dating => 0.08,
+            PartnerStatus.Cohabiting => 0.8,
+            _ => 1.0
+        };
+
+        if (a.Sex == b.Sex)
+        {
+            // Same-sex couples adopt now and then.
+            int age = Math.Min(a.Age(ctx.Year), b.Age(ctx.Year));
+            if (!playerCouple && a.PartnerStatus != PartnerStatus.Dating && age is >= 28 and <= 45 && kids < 2 && ctx.Rng.Chance(0.05))
+            {
+                var child = PersonFactory.CreateBaby(ctx, a, b);
+                child.IsAdopted = true;
+                ctx.World.Log($"{a.FirstName} and {b.FirstName} adopted {child.FirstName}.", ctx.Importance(true, a, b), "family", a.Id, b.Id, child.Id);
+            }
+            return;
+        }
+
+        if (mother == null) return;
+        double fertility = FertilityByAge(mother.Age(ctx.Year));
+        if (fertility <= 0) return;
+        double desire = kids switch { 0 => 0.22, 1 => 0.26, 2 => 0.12, 3 => 0.05, _ => 0.02 };
+        double chance = desire * fertility * statusFactor * ctx.FertilityIndex;
+        if (playerCouple) chance = 0.02 * fertility * statusFactor; // the player decides; this is an "oops"
+        if (ctx.Rng.Chance(chance)) HaveChild(ctx, a, b);
+    }
+
+    public static double FertilityByAge(int age) => age switch
+    {
+        < 18 => 0,
+        < 25 => 0.8,
+        < 35 => 1.0,
+        < 40 => 0.6,
+        < 45 => 0.25,
+        _ => 0
+    };
+
+    public static Person HaveChild(SimContext ctx, Person a, Person? b, int? biologicalFatherId = null)
+    {
+        var child = PersonFactory.CreateBaby(ctx, a, b, biologicalFatherId);
+        var w = ctx.World;
+        string parents = b == null ? a.FirstName : $"{a.FirstName} and {b.FirstName}";
+        w.Log($"{parents} had a {(child.Sex == Sex.Male ? "son" : "daughter")}, {child.FirstName}.", ctx.Importance(true, a, b, child), "family", a.Id, b?.Id ?? a.Id, child.Id);
+        RelationshipSystem.AddMemory(ctx, a, "child_born", $"{child.FirstName} was born", 30, child.Id);
+        if (b != null) RelationshipSystem.AddMemory(ctx, b, "child_born", $"{child.FirstName} was born", 30, child.Id);
+        return child;
+    }
+
+    private static void SeekPartner(SimContext ctx, Person p)
+    {
+        int age = p.Age(ctx.Year);
+        double baseChance = age switch { < 26 => 0.2, < 36 => 0.22, < 51 => 0.12, _ => 0.05 };
+        baseChance *= 1 + ctx.Mod(p, "social");
+        if (p.Flags.Contains("widowed") || p.ExPartnerIds.Count > 0) baseChance *= 0.7;
+        if (!ctx.Rng.Chance(baseChance)) return;
+        var partner = CreatePartnerFor(ctx, p);
+        StartDating(ctx, p, partner);
+    }
+
+    public static Person CreatePartnerFor(SimContext ctx, Person p, int ageOffsetMin = -4, int ageOffsetMax = 4)
+    {
+        var sex = p.AttractedToSameSex ? p.Sex : (p.Sex == Sex.Male ? Sex.Female : Sex.Male);
+        int age = Math.Max(18, p.Age(ctx.Year) + ctx.Rng.Range(ageOffsetMin, ageOffsetMax) + (p.Sex == Sex.Male ? -1 : 1));
+        var partner = PersonFactory.CreateStranger(ctx, sex, age);
+        partner.AttractedToSameSex = p.AttractedToSameSex;
+        partner.Generation = p.Generation;
+        return partner;
+    }
+
+    public static void StartDating(SimContext ctx, Person a, Person b)
+    {
+        foreach (var (x, y) in new[] { (a, b), (b, a) })
+        {
+            x.PartnerId = y.Id;
+            x.PartnerStatus = PartnerStatus.Dating;
+            x.PartnerSinceYear = ctx.Year;
+            x.FriendIds.Remove(y.Id);
+            var r = ctx.World.Rel(x.Id, y.Id);
+            r.Closeness = Math.Max(r.Closeness, 60 + ctx.Rng.Gaussian(0, 8));
+            r.Attraction = Math.Max(r.Attraction, 75 + ctx.Rng.Gaussian(0, 8));
+            r.Trust = Math.Max(r.Trust, 55);
+            r.LastContactYear = ctx.Year;
+        }
+        if (a.InFamily || b.InFamily)
+        {
+            a.InFamily = b.InFamily = true;
+            if (!b.IsBlood) b.Generation = a.Generation;
+            if (!a.IsBlood) a.Generation = b.Generation;
+        }
+        ctx.World.Log($"{a.FirstName} started dating {b.FullName}.", ctx.Importance(false, a, b), "love", a.Id, b.Id);
+    }
+
+    public static void MoveIn(SimContext ctx, Person a, Person b)
+    {
+        a.PartnerStatus = b.PartnerStatus = PartnerStatus.Cohabiting;
+        ctx.World.Log($"{a.FirstName} and {b.FirstName} moved in together.", ctx.Importance(false, a, b), "love", a.Id, b.Id);
+        if (a.OwnsHome || b.OwnsHome) a.OwnsHome = b.OwnsHome = true;
+    }
+
+    public static void Marry(SimContext ctx, Person a, Person b)
+    {
+        a.PartnerStatus = b.PartnerStatus = PartnerStatus.Married;
+        a.Flags.Add($"married_to_{b.Id}");
+        b.Flags.Add($"married_to_{a.Id}");
+        if (a.Sex != b.Sex && ctx.Rng.Chance(ctx.Country.WifeTakesNameChance))
+        {
+            var (wife, husband) = a.Sex == Sex.Female ? (a, b) : (b, a);
+            wife.LastName = husband.LastName;
+        }
+        RelationshipSystem.AddMemory(ctx, a, "wedding", $"Married {b.FirstName}", 30, b.Id);
+        RelationshipSystem.AddMemory(ctx, b, "wedding", $"Married {a.FirstName}", 30, a.Id);
+        ctx.World.Log($"{a.FirstName} and {b.FirstName} got married.", ctx.Importance(true, a, b), "love", a.Id, b.Id);
+    }
+
+    public static void BreakUp(SimContext ctx, Person initiator, Person other)
+    {
+        var w = ctx.World;
+        bool married = initiator.PartnerStatus == PartnerStatus.Married;
+        bool longTerm = initiator.PartnerStatus != PartnerStatus.Dating;
+        foreach (var (x, y) in new[] { (initiator, other), (other, initiator) })
+        {
+            x.PartnerId = null;
+            x.PartnerStatus = PartnerStatus.None;
+            if (!x.ExPartnerIds.Contains(y.Id)) x.ExPartnerIds.Add(y.Id);
+            w.Rel(x.Id, y.Id)[RelDim.Closeness] -= 30;
+        }
+
+        RelationshipSystem.AddMemory(ctx, other, married ? "divorced" : "dumped",
+            married ? $"{initiator.FirstName} wanted a divorce" : $"{initiator.FirstName} broke up with me", longTerm ? -45 : -20, initiator.Id);
+        RelationshipSystem.AddMemory(ctx, initiator, "breakup", $"Left {other.FirstName}", -10, other.Id);
+
+        var sharedKids = initiator.ChildIds.Intersect(other.ChildIds).Select(w.Get).Where(k => k.IsAlive).ToList();
+        foreach (var kid in sharedKids)
+        {
+            int age = kid.Age(ctx.Year);
+            if (age >= 25) continue;
+            RelationshipSystem.AddMemory(ctx, kid, "parents_split",
+                $"My parents split up when I was {age}", age < 18 ? -30 : -12, initiator.Id);
+        }
+
+        foreach (var (x, y) in new[] { (initiator, other), (other, initiator) })
+            if (!x.IsBlood && x.ChildIds.Count(c => y.ChildIds.Contains(c)) == 0) x.InFamily = false;
+
+        string text = married
+            ? $"{initiator.FirstName} and {other.FirstName} divorced. It was {initiator.FirstName} who wanted out."
+            : $"{initiator.FirstName} broke up with {other.FirstName}.";
+        w.Log(text, ctx.Importance(married, initiator, other), "love", initiator.Id, other.Id);
+    }
+
+    // --- Affairs ------------------------------------------------------------------------------
+
+    private static void MaybeStartAffair(SimContext ctx, Person p)
+    {
+        var w = ctx.World;
+        int age = p.Age(ctx.Year);
+        if (age < 20 || age > 65 || p.PartnerId is not { } pid) return;
+        if (w.Secrets.Any(s => s.Kind == "affair" && s.Active && s.SubjectId == p.Id)) return;
+
+        double chance = 0.004 + ctx.Mod(p, "infidelity") * 0.03 + (w.Opinion(p.Id, pid) < 15 ? 0.02 : 0);
+        if (!ctx.Rng.Chance(chance)) return;
+
+        var partner = w.Get(pid);
+        Person? lover = null;
+        var sex = p.AttractedToSameSex ? p.Sex : (p.Sex == Sex.Male ? Sex.Female : Sex.Male);
+        if (partner.Id == w.PlayerId && ctx.Rng.Chance(0.35))
+        {
+            // The cruellest option: someone the player trusts.
+            lover = partner.FriendIds.Select(w.Get)
+                .FirstOrDefault(f => f.IsAlive && f.Sex == sex && f.Age(ctx.Year) >= 18 && f.Id != p.Id);
+        }
+        lover ??= PersonFactory.CreateStranger(ctx, sex, Math.Max(18, age + ctx.Rng.Range(-8, 5)));
+        StartAffair(ctx, p, lover);
+    }
+
+    public static Secret StartAffair(SimContext ctx, Person subject, Person lover)
+    {
+        var w = ctx.World;
+        var secret = new Secret
+        {
+            Id = w.Secrets.Count + 1,
+            Kind = "affair",
+            Year = ctx.Year,
+            SubjectId = subject.Id,
+            OtherId = lover.Id,
+            VictimId = subject.PartnerId,
+            KnownBy = new List<int> { subject.Id, lover.Id },
+        };
+        w.Secrets.Add(secret);
+        w.Rel(subject.Id, lover.Id)[RelDim.Attraction] = 85;
+        w.Rel(lover.Id, subject.Id)[RelDim.Attraction] = 80;
+        w.Rel(subject.Id, lover.Id)[RelDim.Closeness] += 30;
+        return secret;
+    }
+}

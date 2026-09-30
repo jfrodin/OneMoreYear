@@ -1,0 +1,132 @@
+// Career tracks. Salaries are yearly, in 2020-kronor. "entry" levels can be hired into directly.
+// minEducation: none, primary, secondary, university.
+[
+  {
+    "id": "healthcare", "name": "Healthcare", "weight": 1.3,
+    "traitAffinity": { "generous": 1.5, "loyal": 1.3 },
+    "levels": [
+      { "title": "Care Assistant", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
+      { "title": "Assistant Nurse", "salary": 340000, "minEducation": "secondary", "entry": true, "promotionChance": 0.12 },
+      { "title": "Nurse", "salary": 440000, "minEducation": "university", "entry": true, "promotionChance": 0.08 },
+      { "title": "Ward Manager", "salary": 580000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "medicine", "name": "Medicine", "weight": 0.3,
+    "traitAffinity": { "ambitious": 2.0, "lazy": 0.2 },
+    "levels": [
+      { "title": "Junior Doctor", "salary": 480000, "minEducation": "university", "entry": true, "promotionChance": 0.2 },
+      { "title": "Specialist Physician", "salary": 800000, "minEducation": "university", "promotionChance": 0.1 },
+      { "title": "Chief Physician", "salary": 1000000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "industry", "name": "Industry", "weight": 1.4,
+    "traitAffinity": { "introvert": 1.3 },
+    "levels": [
+      { "title": "Warehouse Worker", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
+      { "title": "Machine Operator", "salary": 340000, "minEducation": "primary", "entry": true, "promotionChance": 0.1 },
+      { "title": "Technician", "salary": 420000, "minEducation": "secondary", "entry": true, "promotionChance": 0.08 },
+      { "title": "Production Manager", "salary": 650000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "academia", "name": "Academia", "weight": 0.4,
+    "traitAffinity": { "introvert": 1.5, "ambitious": 1.3 },
+    "levels": [
+      { "title": "PhD Student", "salary": 360000, "minEducation": "university", "entry": true, "promotionChance": 0.2 },
+      { "title": "Researcher", "salary": 480000, "minEducation": "university", "promotionChance": 0.1 },
+      { "title": "Associate Professor", "salary": 580000, "minEducation": "university", "promotionChance": 0.06 },
+      { "title": "Professor", "salary": 800000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "it", "name": "IT", "weight": 0.8,
+    "traitAffinity": { "introvert": 1.5 },
+    "levels": [
+      { "title": "Support Technician", "salary": 330000, "minEducation": "secondary", "entry": true, "promotionChance": 0.15 },
+      { "title": "Developer", "salary": 500000, "minEducation": "university", "entry": true, "promotionChance": 0.12 },
+      { "title": "Senior Developer", "salary": 650000, "minEducation": "university", "promotionChance": 0.06 },
+      { "title": "CTO", "salary": 900000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "trade", "name": "Retail", "weight": 1.3,
+    "traitAffinity": { "social": 1.6 },
+    "levels": [
+      { "title": "Shop Assistant", "salary": 280000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
+      { "title": "Salesperson", "salary": 360000, "minEducation": "primary", "promotionChance": 0.1 },
+      { "title": "Store Manager", "salary": 480000, "minEducation": "secondary", "promotionChance": 0.06 },
+      { "title": "Regional Manager", "salary": 720000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "public", "name": "Public Sector", "weight": 1.0,
+    "traitAffinity": { "loyal": 1.4, "conflict_averse": 1.3 },
+    "levels": [
+      { "title": "Clerk", "salary": 330000, "minEducation": "secondary", "entry": true, "promotionChance": 0.12 },
+      { "title": "Case Officer", "salary": 420000, "minEducation": "university", "entry": true, "promotionChance": 0.08 },
+      { "title": "Unit Manager", "salary": 580000, "minEducation": "university", "promotionChance": 0.05 },
+      { "title": "Department Director", "salary": 780000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "law", "name": "Law", "weight": 0.3,
+    "traitAffinity": { "ambitious": 1.8, "manipulative": 1.5 },
+    "levels": [
+      { "title": "Court Clerk", "salary": 380000, "minEducation": "university", "entry": true, "promotionChance": 0.2 },
+      { "title": "Associate Lawyer", "salary": 520000, "minEducation": "university", "promotionChance": 0.1 },
+      { "title": "Attorney", "salary": 850000, "minEducation": "university", "promotionChance": 0.04 },
+      { "title": "Law Firm Partner", "salary": 1500000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "media", "name": "Media", "weight": 0.3,
+    "traitAffinity": { "social": 1.5, "brave": 1.3 },
+    "levels": [
+      { "title": "Intern", "salary": 250000, "minEducation": "secondary", "entry": true, "promotionChance": 0.2 },
+      { "title": "Journalist", "salary": 420000, "minEducation": "university", "entry": true, "promotionChance": 0.08 },
+      { "title": "Editor", "salary": 540000, "minEducation": "university", "promotionChance": 0.05 },
+      { "title": "Editor-in-Chief", "salary": 900000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "education", "name": "Education", "weight": 0.9,
+    "traitAffinity": { "generous": 1.4, "social": 1.2 },
+    "levels": [
+      { "title": "Childcare Worker", "salary": 290000, "minEducation": "secondary", "entry": true, "promotionChance": 0.1 },
+      { "title": "Preschool Teacher", "salary": 380000, "minEducation": "university", "entry": true, "promotionChance": 0.1 },
+      { "title": "Teacher", "salary": 430000, "minEducation": "university", "entry": true, "promotionChance": 0.05 },
+      { "title": "Principal", "salary": 620000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "construction", "name": "Construction", "weight": 1.1,
+    "traitAffinity": { "brave": 1.3, "introvert": 1.1 },
+    "levels": [
+      { "title": "Construction Worker", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
+      { "title": "Carpenter", "salary": 380000, "minEducation": "secondary", "entry": true, "promotionChance": 0.1 },
+      { "title": "Foreman", "salary": 480000, "minEducation": "secondary", "promotionChance": 0.06 },
+      { "title": "Construction Manager", "salary": 680000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "business", "name": "Business", "weight": 0.35,
+    "traitAffinity": { "ambitious": 2.0, "brave": 1.8, "conflict_averse": 0.5 },
+    "levels": [
+      { "title": "Self-Employed", "salary": 320000, "minEducation": "none", "entry": true, "promotionChance": 0.1 },
+      { "title": "Small Business Owner", "salary": 520000, "minEducation": "none", "promotionChance": 0.07 },
+      { "title": "CEO of Own Company", "salary": 950000, "minEducation": "none", "promotionChance": 0.03 },
+      { "title": "Group CEO", "salary": 2200000, "minEducation": "none", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "crime", "name": "Crime", "weight": 0.06,
+    "traitAffinity": { "manipulative": 5.0, "impulsive": 3.0, "loyal": 0.3 },
+    "levels": [
+      { "title": "Petty Criminal", "salary": 150000, "minEducation": "none", "entry": true, "promotionChance": 0.12 },
+      { "title": "Drug Dealer", "salary": 320000, "minEducation": "none", "promotionChance": 0.06 },
+      { "title": "Gang Leader", "salary": 800000, "minEducation": "none", "promotionChance": 0 }
+    ]
+  }
+]

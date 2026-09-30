@@ -1,0 +1,81 @@
+using System.Text.RegularExpressions;
+using OneMoreYear.Simulation.Core;
+using OneMoreYear.Simulation.Model;
+
+namespace OneMoreYear.Simulation.Systems;
+
+/// <summary>
+/// Fills in placeholders in content text.
+/// <list type="bullet">
+/// <item><c>{name}</c>, <c>{fullname}</c>, <c>{year}</c> – the player</item>
+/// <item><c>{t.name}</c>, <c>{t.full}</c>, <c>{t.role}</c> ("your brother"), <c>{t.Role}</c>, <c>{t.age}</c>,
+/// <c>{t.he}</c> (he/she), <c>{t.him}</c> (him/her), <c>{t.his}</c> (his/her) – capitalise for sentence start.
+/// Use <c>o.</c> for the other participant and <c>p.</c> for the player's partner.</item>
+/// <item><c>{amount}</c> – any event variable, formatted as money</item>
+/// </list>
+/// </summary>
+public static partial class TextFormatter
+{
+    [GeneratedRegex(@"\{(\w+)(?:\.(\w+))?\}")]
+    private static partial Regex Token();
+
+    public static string Format(SimContext ctx, string text, PendingEvent? pending, Person? viewer = null)
+    {
+        var w = ctx.World;
+        var player = w.Player;
+        var perspective = viewer ?? player;
+        return Token().Replace(text, m =>
+        {
+            string head = m.Groups[1].Value;
+            string field = m.Groups[2].Success ? m.Groups[2].Value : "";
+
+            if (field == "")
+            {
+                return head switch
+                {
+                    "name" => player.FirstName,
+                    "fullname" => player.FullName,
+                    "year" => ctx.Year.ToString(),
+                    _ when pending != null && pending.Vars.TryGetValue(head, out var v) => EconomySystem.Format(ctx, ctx.Nominal(v)),
+                    _ => m.Value
+                };
+            }
+
+            Person? who = head.ToLowerInvariant() switch
+            {
+                "t" => w.TryGet(pending?.Roles.GetValueOrDefault("target")),
+                "o" => w.TryGet(pending?.Roles.GetValueOrDefault("other")),
+                "p" => w.TryGet(player.PartnerId),
+                _ => null
+            };
+            if (who == null)
+            {
+                // The person is gone (e.g. a partner who left earlier this year). Fall back to neutral words.
+                string fallback = field.ToLowerInvariant() switch
+                {
+                    "he" or "she" => "they",
+                    "him" or "her" => "them",
+                    "his" or "hers" => "their",
+                    "role" => "someone",
+                    _ => "someone"
+                };
+                return char.IsUpper(field[0]) || char.IsUpper(head[0]) ? Capitalize(fallback) : fallback;
+            }
+            bool male = who.Sex == Sex.Male;
+            string value = field.ToLowerInvariant() switch
+            {
+                "name" => who.FirstName,
+                "full" => who.FullName,
+                "age" => who.Age(ctx.Year).ToString(),
+                "role" => Kinship.Possessive(w, perspective, who),
+                "he" or "she" => male ? "he" : "she",
+                "him" or "her" => male ? "him" : "her",
+                "his" or "hers" => male ? "his" : "her",
+                _ => m.Value
+            };
+            return char.IsUpper(field[0]) || char.IsUpper(head[0]) ? Capitalize(value) : value;
+        });
+    }
+
+    public static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
+}

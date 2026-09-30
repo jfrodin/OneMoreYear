@@ -1,0 +1,16 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# Godot
+.godot/
+game/.godot/
+*.import
+export_presets.cfg
+mono_crash.*
+
+# OS
+Thumbs.db
+.DS_Store

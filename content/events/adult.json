@@ -1,0 +1,484 @@
+[
+  {
+    "id": "adult_promotion_move", "title": "The offer",
+    "text": "Your boss offers you a promotion – but the position is in another city.",
+    "conditions": { "minAge": 22, "maxAge": 60, "hasJob": true }, "cooldown": 8,
+    "choices": [
+      {
+        "text": "Take it",
+        "hint": "Your career first. Not everyone will be happy.",
+        "effects": [
+          { "type": "promote" },
+          { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 12 },
+          { "type": "memory", "who": "partner", "to": "player", "kind": "moved_for_career", "text": "{name} chose the career and made us move", "impact": -20 }
+        ],
+        "result": "You pack up your life and start over in a new city."
+      },
+      {
+        "text": "Turn it down",
+        "effects": [ { "type": "happiness", "amount": -4 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 8 } ],
+        "result": "You stay. Sometimes you wonder what could have been."
+      }
+    ]
+  },
+  {
+    "id": "adult_sibling_loan", "title": "A favour",
+    "text": "{t.role}, {t.name}, calls. The business is going under. \"I need to borrow {amount}. Just for a year. Please.\"",
+    "conditions": { "minAge": 22 },
+    "target": { "role": "sibling", "conditions": { "minAge": 22, "maxMoney": 100000 } },
+    "vars": { "amount": { "base": 60000, "incomeFactor": 0.2, "randomMin": 0.8, "randomMax": 1.5 } },
+    "cooldown": 8,
+    "choices": [
+      {
+        "text": "Lend {t.him} {amount}",
+        "requires": { "minMoney": 60000 },
+        "effects": [
+          { "type": "transfer", "to": "target", "var": "amount" },
+          { "type": "memory", "who": "target", "to": "player", "kind": "helped_money", "text": "{name} lent me money when the business was failing", "impact": 30 }
+        ],
+        "result": "{t.name} is almost crying with relief. Whether you'll ever see the money again is another question."
+      },
+      {
+        "text": "Lend half",
+        "requires": { "minMoney": 30000 },
+        "effects": [
+          { "type": "transfer", "to": "target", "var": "amount", "amount": 0.5 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "half_help", "text": "{name} only lent me half of what I needed", "impact": -5 }
+        ],
+        "result": "\"Thanks... I guess,\" says {t.name}."
+      },
+      {
+        "text": "Say no",
+        "hint": "{t.name} will remember this.",
+        "effects": [
+          { "type": "memory", "who": "target", "to": "player", "kind": "refused_loan", "text": "{name} refused to lend me money when I needed it most", "impact": -40 },
+          { "type": "relation", "who": "target", "to": "player", "dim": "envy", "amount": 15 }
+        ],
+        "result": "The line goes silent. Then {t.name} hangs up."
+      }
+    ]
+  },
+  {
+    "id": "adult_parent_sick", "title": "A call from the hospital",
+    "text": "{t.role} has fallen ill and can't manage alone. Someone needs to help.",
+    "conditions": { "minAge": 25 },
+    "target": { "role": "parent", "conditions": { "minAge": 60 } }, "cooldown": 6,
+    "choices": [
+      {
+        "text": "Take care of {t.him} yourself",
+        "effects": [
+          { "type": "happiness", "amount": -6 },
+          { "type": "money", "amount": -20000 },
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 15, "mutual": true },
+          { "type": "memory", "who": "target", "to": "player", "kind": "cared_for", "text": "{name} took care of me when I was ill", "impact": 35 }
+        ],
+        "result": "It's exhausting, but you get time together that you'll never regret."
+      },
+      {
+        "text": "Pay for home care",
+        "requires": { "minMoney": 60000 },
+        "effects": [
+          { "type": "money", "amount": -60000 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "paid_care", "text": "{name} paid for my care", "impact": 10 }
+        ],
+        "result": "Professionals take over. {t.name} is grateful, if a little lonely."
+      },
+      {
+        "text": "Let your siblings handle it",
+        "requires": { "hasRole": [ "sibling" ] },
+        "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "abandoned_sick", "text": "{name} never came when I was ill", "impact": -30 } ],
+        "result": "You have enough on your plate. Or so you tell yourself."
+      }
+    ]
+  },
+  {
+    "id": "adult_friend_restaurant", "title": "The restaurant",
+    "text": "{t.name} wants you to go in as a partner in a restaurant. \"All I need is {amount}. It can't fail!\"",
+    "conditions": { "minAge": 25, "minMoney": 50000 },
+    "target": { "role": "friend", "conditions": { "minAge": 22 } },
+    "vars": { "amount": { "base": 100000, "randomMin": 0.8, "randomMax": 1.4 } },
+    "cooldown": 10,
+    "choices": [
+      {
+        "text": "Invest {amount}",
+        "chance": 0.4, "chanceTraits": { "ambitious": 0.1 },
+        "effects": [ { "type": "money", "var": "amount", "amount": -1 } ],
+        "success": {
+          "text": "The restaurant is a hit! Your share pays back several times over.",
+          "effects": [ { "type": "money", "var": "amount", "amount": 2.5 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15, "mutual": true } ]
+        },
+        "failure": {
+          "text": "The restaurant closes after eight months. The money is gone – and things are awkward with {t.name}.",
+          "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 15 } ]
+        }
+      },
+      {
+        "text": "Say no politely",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ],
+        "result": "{t.name} shrugs. \"Your loss.\""
+      }
+    ]
+  },
+  {
+    "id": "adult_temptation", "title": "Temptation",
+    "text": "{t.name}, a new colleague, is flirting with you openly. The chemistry is impossible to ignore.",
+    "conditions": { "minAge": 22, "maxAge": 60, "hasPartner": true },
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -8, "ageOffsetMax": 4 },
+    "cooldown": 6,
+    "choices": [
+      {
+        "text": "Start an affair",
+        "hint": "Secrets have a way of coming out.",
+        "effects": [ { "type": "start_affair", "to": "target" }, { "type": "happiness", "amount": 8 } ],
+        "result": "It begins with a drink after work. It doesn't end there."
+      },
+      {
+        "text": "Keep it professional",
+        "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.15 } ],
+        "result": "You go home to {p.name}. It's the right choice, you think."
+      },
+      {
+        "text": "Tell {p.name} about it",
+        "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "trust", "amount": 10 } ],
+        "result": "{p.name} laughs a little nervously, but appreciates your honesty."
+      }
+    ]
+  },
+  {
+    "id": "adult_burnout", "title": "Running on empty",
+    "text": "You've been working too much for too long. You wake up tired and go to bed exhausted.",
+    "conditions": { "minAge": 28, "maxAge": 64, "hasJob": true }, "cooldown": 8,
+    "choices": [
+      {
+        "text": "Take sick leave",
+        "effects": [ { "type": "health", "amount": 8 }, { "type": "happiness", "amount": 6 } ],
+        "result": "A few months of rest. The world keeps turning without you."
+      },
+      {
+        "text": "Grit your teeth",
+        "chance": 0.35, "chanceTraits": { "ambitious": 0.15, "lazy": -0.2 },
+        "effects": [ { "type": "health", "amount": -10 } ],
+        "success": { "text": "It pays off. Your boss notices your effort.", "effects": [ { "type": "promote" } ] },
+        "failure": { "text": "Your body says stop. You collapse at the office.", "effects": [ { "type": "health", "amount": -8 } ] }
+      }
+    ]
+  },
+  {
+    "id": "adult_meet_someone", "title": "A spark",
+    "text": "At a friend's party you end up talking to {t.name} all evening. Something clicks.",
+    "conditions": { "minAge": 18, "maxAge": 70, "hasPartner": false },
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -5, "ageOffsetMax": 5 },
+    "weight": 2, "cooldown": 2,
+    "choices": [
+      {
+        "text": "Ask for {t.his} number",
+        "chance": 0.6, "chanceTraits": { "social": 0.15, "introvert": -0.1 },
+        "success": {
+          "text": "You go on a date the next week. Then another. And another.",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
+        },
+        "failure": {
+          "text": "{t.name} smiles, but says {t.he} is seeing someone.",
+          "effects": [ { "type": "happiness", "amount": -4 } ]
+        }
+      },
+      {
+        "text": "Go home",
+        "effects": [],
+        "result": "Maybe another time."
+      }
+    ]
+  },
+  {
+    "id": "adult_child_shoplifting", "title": "The police call",
+    "text": "{t.role}, {t.name}, has been caught shoplifting.",
+    "conditions": { "minAge": 28 },
+    "target": { "role": "child", "conditions": { "minAge": 12, "maxAge": 19 } }, "cooldown": 6,
+    "choices": [
+      {
+        "text": "Be strict",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 10 },
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 12 }
+        ],
+        "result": "Grounded for a month. {t.name} slams {t.his} door so hard the house shakes."
+      },
+      {
+        "text": "Listen and support",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "supported", "text": "{name} listened instead of yelling", "impact": 20 }
+        ],
+        "result": "It turns out {t.name} has been having a hard time. You talk until late."
+      },
+      {
+        "text": "Blame the friends",
+        "effects": [ { "type": "trait_add", "trait": "manipulative", "who": "target", "chance": 0.2 } ],
+        "result": "\"It's that crowd you hang out with.\" {t.name} learns that it's always someone else's fault."
+      }
+    ]
+  },
+  {
+    "id": "adult_child_needs_money", "title": "The deposit",
+    "text": "{t.name} wants to buy a flat and asks to borrow {amount} for the deposit.",
+    "conditions": { "minAge": 42 },
+    "target": { "role": "child", "conditions": { "minAge": 20, "maxAge": 40, "ownsHome": false } },
+    "vars": { "amount": { "base": 150000, "randomMin": 0.7, "randomMax": 1.3 } },
+    "cooldown": 8,
+    "choices": [
+      {
+        "text": "Give {t.him} the money",
+        "requires": { "minMoney": 150000 },
+        "effects": [
+          { "type": "transfer", "to": "target", "var": "amount" },
+          { "type": "memory", "who": "target", "to": "player", "kind": "helped_home", "text": "{name} helped me buy my first home", "impact": 30 }
+        ],
+        "result": "{t.name} hugs you. \"I'll pay you back, I promise.\""
+      },
+      {
+        "text": "Say no",
+        "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "refused_home", "text": "{name} wouldn't help me with the deposit", "impact": -20 } ],
+        "result": "\"Fine. I'll manage on my own.\""
+      }
+    ]
+  },
+  {
+    "id": "adult_house_offer", "title": "The house",
+    "text": "A house in a nice neighbourhood is up for sale. Rent is money down the drain...",
+    "conditions": { "minAge": 25, "ownsHome": false, "minMoney": 450000 }, "cooldown": 5,
+    "choices": [
+      {
+        "text": "Buy it",
+        "effects": [ { "type": "buy_home" }, { "type": "happiness", "amount": 8 } ],
+        "result": "You get the keys. It's all yours – and the bank's."
+      },
+      {
+        "text": "Keep renting",
+        "effects": [],
+        "result": "Maybe the prices will drop. They won't."
+      }
+    ]
+  },
+  {
+    "id": "adult_headhunted", "title": "Headhunted",
+    "text": "A competitor calls and offers you a better position. Higher pay, but no guarantees.",
+    "conditions": { "minAge": 25, "maxAge": 60, "hasJob": true }, "cooldown": 8,
+    "choices": [
+      {
+        "text": "Switch jobs",
+        "chance": 0.6, "chanceTraits": { "ambitious": 0.15 },
+        "success": { "text": "It's a step up. You fit right in.", "effects": [ { "type": "promote" } ] },
+        "failure": {
+          "text": "The new job is a nightmare. After six months you're let go.",
+          "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -10 } ]
+        }
+      },
+      {
+        "text": "Stay where you are",
+        "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.1 } ],
+        "result": "Better the devil you know."
+      }
+    ]
+  },
+  {
+    "id": "adult_parent_moves_in", "title": "Moving in",
+    "text": "{t.role} can no longer manage alone and asks if {t.he} can move in with you.",
+    "conditions": { "minAge": 35 },
+    "target": { "role": "parent", "conditions": { "minAge": 72 } }, "cooldown": 10,
+    "choices": [
+      {
+        "text": "Yes, of course",
+        "effects": [
+          { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 10 },
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 15, "mutual": true },
+          { "type": "memory", "who": "target", "to": "player", "kind": "took_me_in", "text": "{name} let me move in when I got old", "impact": 40 },
+          { "type": "happiness", "amount": -4 }
+        ],
+        "result": "It's cramped. Some evenings are wonderful, others are not."
+      },
+      {
+        "text": "Find a care home",
+        "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "care_home", "text": "{name} put me in a home", "impact": -30 } ],
+        "result": "The home is nice enough. {t.name} doesn't say much when you visit."
+      }
+    ]
+  },
+  {
+    "id": "adult_ex_encounter", "title": "An old flame",
+    "text": "You bump into {t.name} – your ex – at the supermarket. The past comes rushing back.",
+    "conditions": { "minAge": 20 },
+    "target": { "role": "ex" }, "cooldown": 5,
+    "choices": [
+      {
+        "text": "Grab a coffee together",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": -15, "mutual": true },
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true }
+        ],
+        "result": "You laugh about old times. It feels surprisingly good."
+      },
+      {
+        "text": "Rekindle things",
+        "requires": { "hasPartner": false },
+        "chance": 0.4, "chanceOpinion": 0.006,
+        "success": { "text": "One coffee turns into dinner. You're back together.", "effects": [ { "type": "start_dating", "to": "target" } ] },
+        "failure": { "text": "{t.name} gently says no. Some doors should stay closed.", "effects": [ { "type": "happiness", "amount": -5 } ] }
+      },
+      {
+        "text": "Pretend you didn't see {t.him}",
+        "effects": [],
+        "result": "You hide behind the cereal aisle until {t.he} is gone."
+      }
+    ]
+  },
+  {
+    "id": "adult_stock_tip", "title": "A sure thing",
+    "text": "{t.name} has a stock tip that \"can't go wrong\". {t.He} is putting everything in.",
+    "conditions": { "minAge": 25, "minMoney": 40000 },
+    "target": { "role": "known", "conditions": { "minAge": 25 } },
+    "vars": { "amount": { "base": 50000, "randomMin": 0.8, "randomMax": 1.5 } },
+    "cooldown": 8,
+    "choices": [
+      {
+        "text": "Invest {amount}",
+        "chance": 0.4,
+        "effects": [ { "type": "money", "var": "amount", "amount": -1 } ],
+        "success": { "text": "The stock triples. You feel like a genius.", "effects": [ { "type": "money", "var": "amount", "amount": 3 } ] },
+        "failure": {
+          "text": "The company goes bankrupt. You'll never take advice from {t.name} again.",
+          "effects": [ { "type": "memory", "kind": "bad_tip", "to": "target", "text": "Lost money on {t.name}'s stock tip", "impact": -20 } ]
+        }
+      },
+      {
+        "text": "Pass",
+        "effects": [],
+        "result": "You'll never know."
+      }
+    ]
+  },
+  {
+    "id": "adult_partner_wants_child", "title": "A question",
+    "text": "{t.name} looks at you over breakfast. \"I want us to have a baby.\"",
+    "conditions": { "minAge": 22, "maxAge": 48 },
+    "target": { "role": "partner", "conditions": { "minAge": 22, "maxAge": 44 } },
+    "cooldown": 3,
+    "choices": [
+      {
+        "text": "Yes, let's do it",
+        "chance": 0.55,
+        "success": { "text": "Nine months later, your family grows.", "effects": [ { "type": "child" }, { "type": "happiness", "amount": 10 } ] },
+        "failure": {
+          "text": "You try for a year. It doesn't happen – not yet.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ]
+        }
+      },
+      {
+        "text": "Not now",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "no_child", "text": "{name} didn't want a child with me", "impact": -20 }
+        ],
+        "result": "{t.name} nods, but something in {t.his} eyes goes out."
+      }
+    ]
+  },
+  {
+    "id": "adult_partner_dream_job", "title": "The dream job",
+    "text": "{t.name} has been offered {t.his} dream job – on the other side of the country.",
+    "conditions": { "minAge": 22, "maxAge": 60 },
+    "target": { "role": "partner", "conditions": { "hasJob": true } }, "cooldown": 10,
+    "choices": [
+      {
+        "text": "Move with {t.him}",
+        "effects": [
+          { "type": "job_quit" },
+          { "type": "promote", "who": "target" },
+          { "type": "memory", "who": "target", "to": "player", "kind": "sacrificed", "text": "{name} gave up everything so I could take my dream job", "impact": 35 }
+        ],
+        "result": "You start over in a new city. {t.name} glows."
+      },
+      {
+        "text": "Ask {t.him} to say no",
+        "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "held_back", "text": "I turned down my dream job for {name}'s sake", "impact": -35 } ],
+        "result": "{t.name} turns it down. {t.He} never mentions it again. That's almost worse."
+      },
+      {
+        "text": "Try long distance",
+        "effects": [
+          { "type": "promote", "who": "target" },
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -15 },
+          { "type": "breakup", "who": "target", "chance": 0.25 }
+        ],
+        "result": "Weekend trains and late-night phone calls."
+      }
+    ]
+  },
+  {
+    "id": "adult_midlife", "title": "Is this it?",
+    "text": "You look in the mirror and wonder where the years went.",
+    "conditions": { "minAge": 40, "maxAge": 55 }, "cooldown": 0,
+    "choices": [
+      {
+        "text": "Buy a motorbike",
+        "effects": [ { "type": "money", "amount": -80000 }, { "type": "happiness", "amount": 10 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.2 } ],
+        "result": "Wind in what's left of your hair."
+      },
+      {
+        "text": "Start running marathons",
+        "effects": [ { "type": "health", "amount": 10 }, { "type": "happiness", "amount": 5 } ],
+        "result": "Your knees complain. Your heart thanks you."
+      },
+      {
+        "text": "Quit your job and follow your dream",
+        "requires": { "hasJob": true },
+        "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 15 }, { "type": "trait_add", "trait": "brave", "chance": 0.5 } ],
+        "result": "Everyone thinks you're mad. Maybe you are."
+      }
+    ]
+  },
+  {
+    "id": "adult_health_scare", "title": "The X-ray",
+    "text": "The doctor has found something on your X-ray. They recommend surgery.",
+    "conditions": { "minAge": 45 }, "cooldown": 10,
+    "choices": [
+      {
+        "text": "Have the surgery",
+        "chance": 0.8,
+        "success": { "text": "It was caught in time. You recover well.", "effects": [ { "type": "health", "amount": 5 } ] },
+        "failure": { "text": "There are complications. Recovery takes a long time.", "effects": [ { "type": "health", "amount": -20 } ] }
+      },
+      {
+        "text": "Wait and see",
+        "chance": 0.5,
+        "success": { "text": "It turns out to be nothing.", "effects": [] },
+        "failure": { "text": "It wasn't nothing.", "effects": [ { "type": "health", "amount": -30 } ] }
+      }
+    ]
+  },
+  {
+    "id": "adult_lottery", "title": "Scratch card",
+    "text": "You buy a scratch card at the petrol station, just for fun.",
+    "conditions": { "minAge": 18 }, "weight": 0.5, "cooldown": 5,
+    "choices": [
+      {
+        "text": "Scratch it",
+        "chance": 0.15,
+        "success": { "text": "You win 100,000! You have to sit down.", "effects": [ { "type": "money", "amount": 100000 }, { "type": "happiness", "amount": 10 } ] },
+        "failure": { "text": "Nothing. As usual.", "effects": [] }
+      }
+    ]
+  },
+  {
+    "id": "adult_car_crash", "title": "Black ice",
+    "text": "The car skids on black ice on the way home.",
+    "conditions": { "minAge": 18 }, "weight": 0.5, "cooldown": 10,
+    "choices": [
+      {
+        "text": "Brace yourself",
+        "chance": 0.6, "chanceTraits": { "impulsive": -0.15 },
+        "success": { "text": "The car is a write-off, but you walk away with bruises.", "effects": [ { "type": "money", "amount": -20000 } ] },
+        "failure": { "text": "You wake up in hospital. It's a long road back.", "effects": [ { "type": "health", "amount": -25 }, { "type": "money", "amount": -20000 } ] }
+      }
+    ]
+  }
+]

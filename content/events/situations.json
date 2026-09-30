@@ -1,0 +1,250 @@
+// Situations are created by the simulation when it detects something (trigger: "situation").
+// Roles "target" and "other" are filled in by code.
+// Text placeholders: {name} (player), {t.name}, {t.full}, {t.role} ("your brother"), {t.he}/{t.him}/{t.his},
+// capitalise the field or prefix for sentence start: {t.He}, {T.role}. Event variables like {amount} become money.
+[
+  {
+    "id": "after_primary", "trigger": "situation",
+    "title": "The last day of school",
+    "text": "Your classmates talk about upper secondary school, summer jobs and the future. What do you want to do now?",
+    "choices": [
+      {
+        "text": "Go on to upper secondary school",
+        "hint": "Opens up more careers, but takes three years.",
+        "effects": [ { "type": "study", "level": "secondary" } ],
+        "result": "You'll start in the autumn."
+      },
+      {
+        "text": "Start working right away",
+        "hint": "Your own money now – but fewer doors later.",
+        "effects": [ { "type": "job_find" }, { "type": "happiness", "amount": 5 } ],
+        "result": "You find a job and earn your first real pay cheque."
+      },
+      {
+        "text": "Take a year to think",
+        "hint": "The question comes back next year.",
+        "effects": [ { "type": "happiness", "amount": 8 } ],
+        "result": "You sleep late, hang out with friends and put the decision off."
+      }
+    ]
+  },
+  {
+    "id": "after_secondary", "trigger": "situation",
+    "title": "Graduation!",
+    "text": "You run out of school to banners with your baby photos and screaming relatives. Adult life is waiting.",
+    "choices": [
+      {
+        "text": "Go to university",
+        "hint": "Three to five years of student loans – but the best jobs require a degree.",
+        "effects": [ { "type": "study", "level": "university" } ]
+      },
+      {
+        "text": "Start working",
+        "effects": [ { "type": "job_find" } ],
+        "result": "You look for work and step into working life."
+      },
+      {
+        "text": "Travel the world for a year",
+        "hint": "Costs money, but gives memories for life.",
+        "effects": [
+          { "type": "money", "amount": -40000 },
+          { "type": "happiness", "amount": 15 },
+          { "type": "memory", "kind": "travel", "text": "The year I travelled the world", "impact": 35 }
+        ],
+        "result": "Thailand, Australia, a beach in Mexico. You come home tanned, broke and a little wiser."
+      }
+    ]
+  },
+  {
+    "id": "partner_leaves", "trigger": "situation",
+    "title": "A difficult conversation",
+    "text": "{t.name} sits down across from you at the kitchen table. \"I'm not happy anymore. I think we should go our separate ways.\"",
+    "choices": [
+      {
+        "text": "Accept it",
+        "effects": [ { "type": "breakup", "who": "target" }, { "type": "happiness", "amount": -10 } ],
+        "result": "You divide the furniture in silence."
+      },
+      {
+        "text": "Ask {t.him} to stay",
+        "hint": "Depends on how {t.name} feels about you.",
+        "chance": 0.35, "chanceOpinion": 0.006, "chanceTraits": { "social": 0.1, "manipulative": 0.15 },
+        "success": {
+          "text": "{t.name} hesitates for a long time, but promises to give you one more chance.",
+          "effects": [
+            { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15 },
+            { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -15 }
+          ]
+        },
+        "failure": {
+          "text": "{t.name} has already made up {t.his} mind. The door closes behind {t.him}.",
+          "effects": [ { "type": "breakup", "who": "target" }, { "type": "happiness", "amount": -15 } ]
+        }
+      },
+      {
+        "text": "Explode",
+        "effects": [
+          { "type": "breakup", "who": "target" },
+          { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 25 },
+          { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 20 }
+        ],
+        "result": "You say things you can never take back."
+      }
+    ]
+  },
+  {
+    "id": "partner_proposes", "trigger": "situation",
+    "title": "A proposal",
+    "text": "In the middle of dinner, {t.name} gets down on one knee. \"Will you marry me?\"",
+    "choices": [
+      {
+        "text": "Yes!",
+        "effects": [ { "type": "marry" }, { "type": "happiness", "amount": 15 } ]
+      },
+      {
+        "text": "Not yet",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "proposal_delayed", "text": "{name} didn't want to get married yet", "impact": -15 }
+        ],
+        "result": "{t.name} smiles stiffly and says it's fine."
+      },
+      {
+        "text": "No",
+        "effects": [
+          { "type": "memory", "who": "target", "to": "player", "kind": "proposal_rejected", "text": "{name} said no when I proposed", "impact": -35 },
+          { "type": "breakup", "who": "target", "chance": 0.4 }
+        ],
+        "result": "The silence afterwards is deafening."
+      }
+    ]
+  },
+  {
+    "id": "discovered_partner_affair", "trigger": "situation",
+    "title": "The messages",
+    "text": "The phone is lying unlocked on the kitchen counter. You see the messages before you can stop yourself. {t.name} is having an affair with {o.full}.",
+    "choices": [
+      {
+        "text": "Leave {t.name}",
+        "effects": [ { "type": "reveal_secret" }, { "type": "breakup" } ],
+        "result": "You pack a bag that same night."
+      },
+      {
+        "text": "Forgive – but demand that it ends",
+        "hint": "Trust will take time to rebuild.",
+        "effects": [
+          { "type": "reveal_secret" },
+          { "type": "end_affair" },
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 },
+          { "type": "trait_add", "trait": "loyal", "chance": 0.3 }
+        ],
+        "result": "{t.name} cries and promises it will never happen again."
+      },
+      {
+        "text": "Confront {o.name}",
+        "chance": 0.5, "chanceTraits": { "brave": 0.2, "conflict_averse": -0.3 },
+        "effects": [ { "type": "reveal_secret" } ],
+        "success": {
+          "text": "{o.name} is ashamed and promises to stay away. The affair ends.",
+          "effects": [ { "type": "end_affair" }, { "type": "relation", "who": "other", "to": "player", "dim": "fear", "amount": 30 } ]
+        },
+        "failure": {
+          "text": "It ends in a screaming match in the street. The neighbours watch. You leave {t.name}.",
+          "effects": [ { "type": "breakup" }, { "type": "happiness", "amount": -10 } ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "learned_affair", "trigger": "situation",
+    "title": "A secret",
+    "text": "At a restaurant in town you see {t.name} kissing someone who isn't {o.name}. {t.He} hasn't seen you. {o.name} is {o.role}.",
+    "choices": [
+      {
+        "text": "Tell {o.name}",
+        "hint": "{t.name} will never forgive you.",
+        "effects": [
+          { "type": "reveal_secret", "who": "other" },
+          { "type": "memory", "who": "target", "to": "player", "kind": "exposed", "text": "{name} exposed my affair", "impact": -50 },
+          { "type": "relation", "who": "other", "to": "player", "dim": "trust", "amount": 15 }
+        ],
+        "result": "You tell {o.name} everything. {o.He} goes completely quiet."
+      },
+      {
+        "text": "Confront {t.name} in private",
+        "chance": 0.55, "chanceTraits": { "brave": 0.15, "manipulative": 0.15 },
+        "success": {
+          "text": "{t.name} turns pale and promises to end it. Now {t.he} owes you.",
+          "effects": [ { "type": "end_affair" }, { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 30 } ]
+        },
+        "failure": {
+          "text": "{t.name} denies everything and accuses you of lying. Something breaks between you.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 30 } ]
+        }
+      },
+      {
+        "text": "Keep quiet",
+        "hint": "If it ever comes out that you knew...",
+        "effects": [ { "type": "flag", "flag": "keeps_secret" } ],
+        "result": "You say nothing. But you look at {t.name} differently now."
+      }
+    ]
+  },
+  {
+    "id": "paternity_revealed_child", "trigger": "situation",
+    "title": "The DNA test",
+    "text": "The results of a genealogy test arrive in the mail. Your biological father is not who you thought. It's {t.full}. {o.name} knew all along.",
+    "choices": [
+      {
+        "text": "Look up {t.name}",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 25, "mutual": true },
+          { "type": "memory", "kind": "met_father", "text": "Met my biological father, {t.full}", "impact": 20 }
+        ],
+        "result": "You meet at a café. He has your eyes."
+      },
+      {
+        "text": "Confront {o.name}",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "other", "dim": "bitterness", "amount": 25 },
+          { "type": "relation", "who": "other", "to": "player", "dim": "closeness", "amount": -10 }
+        ],
+        "result": "\"I wanted to protect you,\" says {o.name}. It isn't enough."
+      },
+      {
+        "text": "Pretend nothing happened",
+        "effects": [ { "type": "happiness", "amount": -10 } ],
+        "result": "You put the envelope at the very back of a drawer."
+      }
+    ]
+  },
+  {
+    "id": "paternity_revealed_father", "trigger": "situation",
+    "title": "Not your child",
+    "text": "A DNA test shows that {o.name} is not your biological child. {t.name} has lied for all these years.",
+    "choices": [
+      {
+        "text": "{o.name} is my child, blood or not",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "other", "dim": "closeness", "amount": 20, "mutual": true },
+          { "type": "memory", "who": "other", "to": "player", "kind": "chosen", "text": "{name} said I will always be his child", "impact": 40 }
+        ],
+        "result": "You hug {o.name} a little longer than usual."
+      },
+      {
+        "text": "Leave {t.name}",
+        "requires": { "hasPartner": true },
+        "effects": [ { "type": "breakup" } ],
+        "result": "The lie was too big."
+      },
+      {
+        "text": "Distance yourself from {o.name}",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "other", "dim": "closeness", "amount": -40 },
+          { "type": "memory", "who": "other", "to": "player", "kind": "rejected_by_father", "text": "{name} turned his back on me when it turned out we weren't related", "impact": -60 }
+        ],
+        "result": "You stop calling. {o.name} doesn't understand why."
+      }
+    ]
+  }
+]

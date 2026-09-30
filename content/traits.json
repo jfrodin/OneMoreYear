@@ -1,0 +1,69 @@
+// Traits are mechanics, not labels. Modifiers are read by the simulation:
+//   career      – job performance and promotions        social    – finding partners and friends
+//   spending    – lower savings rate (negative = saves)  conflict  – starts fights
+//   infidelity  – chance to have affairs                loyalty   – forgives, stays, reconciles
+//   divorce     – chance to leave a partner             grudge    – bitterness fades slower
+//   envy        – envy towards richer relatives         health    – yearly health change
+//   risk        – accidents and mortality
+[
+  {
+    "id": "ambitious", "name": "Ambitious", "opposite": "lazy",
+    "description": "Always wants more. Performs better at work, but compares themselves to others.",
+    "modifiers": { "career": 0.5, "envy": 0.3 }
+  },
+  {
+    "id": "lazy", "name": "Lazy", "opposite": "ambitious",
+    "description": "Takes it easy. Rarely climbs the career ladder.",
+    "modifiers": { "career": -0.5, "health": -0.2 }
+  },
+  {
+    "id": "stingy", "name": "Stingy", "opposite": "generous",
+    "description": "Saves every penny and hates lending money.",
+    "modifiers": { "spending": -0.15, "envy": 0.2 }
+  },
+  {
+    "id": "generous", "name": "Generous", "opposite": "stingy",
+    "description": "Happy to share – sometimes more than the wallet can take.",
+    "modifiers": { "spending": 0.1, "loyalty": 0.2 }
+  },
+  {
+    "id": "loyal", "name": "Loyal", "opposite": "unfaithful",
+    "description": "Stays when things get rough. Forgives more easily and rarely leaves.",
+    "modifiers": { "loyalty": 1.0, "divorce": -1.0, "infidelity": -1.0 }
+  },
+  {
+    "id": "impulsive", "name": "Impulsive", "opposite": null,
+    "description": "Acts first, thinks later. Exciting, but risky.",
+    "modifiers": { "risk": 0.5, "divorce": 0.5, "spending": 0.15, "conflict": 0.5, "infidelity": 0.3 }
+  },
+  {
+    "id": "social", "name": "Social", "opposite": "introvert",
+    "description": "Thrives around people and easily finds new friends and partners.",
+    "modifiers": { "social": 0.5 }
+  },
+  {
+    "id": "introvert", "name": "Introverted", "opposite": "social",
+    "description": "Needs peace and quiet. Few but deep relationships.",
+    "modifiers": { "social": -0.4, "conflict": -0.3 }
+  },
+  {
+    "id": "brave", "name": "Brave", "opposite": "conflict_averse",
+    "description": "Dares to fight and take chances.",
+    "modifiers": { "risk": 0.3, "conflict": 0.2 }
+  },
+  {
+    "id": "conflict_averse", "name": "Conflict-averse", "opposite": "brave",
+    "description": "Avoids fights – but swallows the anger, and it lingers for a long time.",
+    "modifiers": { "conflict": -0.7, "grudge": 0.5, "loyalty": 0.2 }
+  },
+  {
+    "id": "manipulative", "name": "Manipulative", "opposite": null,
+    "description": "Gets others to do what they want. Trust is a tool.",
+    "modifiers": { "conflict": 0.5, "loyalty": -0.5, "grudge": 0.3, "infidelity": 0.3 }
+  },
+  {
+    "id": "unfaithful", "name": "Unfaithful", "opposite": "loyal",
+    "description": "Finds temptation hard to resist.",
+    "modifiers": { "infidelity": 1.2, "divorce": 0.8 }
+  }
+]

@@ -1,0 +1,61 @@
+[
+  {
+    "id": "senior_will", "title": "The will",
+    "text": "Your lawyer says it's time to write a will. {t.name} has always been there for you. The others... less so.",
+    "conditions": { "minAge": 60, "minChildren": 2, "notFlags": [ "will_written" ] },
+    "target": { "role": "child", "conditions": { "minAge": 18 } },
+    "cooldown": 0,
+    "choices": [
+      {
+        "text": "Split everything equally",
+        "effects": [ { "type": "will_favorite" }, { "type": "flag", "flag": "will_written" } ],
+        "result": "Fair is fair."
+      },
+      {
+        "text": "Give {t.name} a larger share",
+        "hint": "The others will find out when you're gone.",
+        "effects": [ { "type": "will_favorite", "to": "target" }, { "type": "flag", "flag": "will_written" } ],
+        "result": "You sign. Nobody else needs to know. Not yet."
+      },
+      {
+        "text": "Cut {t.name} out entirely",
+        "effects": [ { "type": "disinherit", "to": "target" }, { "type": "flag", "flag": "will_written" } ],
+        "result": "Your hand doesn't shake as you sign."
+      }
+    ]
+  },
+  {
+    "id": "relative_grudge", "title": "The family dinner",
+    "text": "At a family dinner, {t.role} {t.name} suddenly turns to you. Everyone goes quiet. \"You know exactly what you did.\"",
+    "conditions": { "minAge": 16 },
+    "target": { "role": "relative", "conditions": { "minAge": 16, "relMin": { "bitterness": 40 } } },
+    "cooldown": 5,
+    "choices": [
+      {
+        "text": "Apologise in front of everyone",
+        "chance": 0.5, "chanceOpinion": 0.004, "chanceTraits": { "loyal": 0.1 },
+        "success": {
+          "text": "{t.name} blinks, then nods. The ice starts to melt.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -25 } ]
+        },
+        "failure": {
+          "text": "\"Too little, too late.\" {t.name} leaves the table.",
+          "effects": [ { "type": "happiness", "amount": -6 } ]
+        }
+      },
+      {
+        "text": "Hit back",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 15, "mutual": true },
+          { "type": "memory", "who": "target", "to": "player", "kind": "dinner_fight", "text": "{name} humiliated me at the family dinner", "impact": -25 }
+        ],
+        "result": "The rest of the dinner is eaten in silence."
+      },
+      {
+        "text": "Leave the dinner",
+        "effects": [ { "type": "happiness", "amount": -4 } ],
+        "result": "You get your coat. Nobody stops you."
+      }
+    ]
+  }
+]

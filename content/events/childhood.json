@@ -1,0 +1,239 @@
+[
+  {
+    "id": "child_bully", "title": "In the schoolyard",
+    "text": "A bigger kid in your class has decided you're an easy target. Every break, the same thing.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      {
+        "text": "Tell a grown-up",
+        "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "The teacher talks to the parents. It gets calmer, but you're called a snitch for a while."
+      },
+      {
+        "text": "Hit back",
+        "chance": 0.45, "chanceTraits": { "brave": 0.25, "conflict_averse": -0.2 },
+        "success": {
+          "text": "One punch. After that, they leave you alone.",
+          "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.5 }, { "type": "happiness", "amount": 8 } ]
+        },
+        "failure": {
+          "text": "You end up with a black eye and a trip to the headteacher.",
+          "effects": [ { "type": "health", "amount": -4 }, { "type": "happiness", "amount": -10 } ]
+        }
+      },
+      {
+        "text": "Endure it and hope it stops",
+        "effects": [
+          { "type": "happiness", "amount": -10 },
+          { "type": "trait_add", "trait": "conflict_averse", "chance": 0.4 },
+          { "type": "memory", "kind": "bullied", "text": "Was bullied at school", "impact": -25 }
+        ],
+        "result": "It stops eventually. But you learn to make yourself small."
+      }
+    ]
+  },
+  {
+    "id": "child_parents_fight", "title": "Through the wall",
+    "text": "You hear {t.name} and {o.name} shouting in the kitchen again. The words are hard to make out, but the tone isn't.",
+    "conditions": { "minAge": 5, "maxAge": 14 },
+    "target": { "role": "parent", "conditions": { "hasPartner": true } },
+    "other": { "role": "partner_of_target" },
+    "cooldown": 4,
+    "choices": [
+      {
+        "text": "Walk in and tell them to stop",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 10 },
+          { "type": "relation", "who": "other", "to": "player", "dim": "respect", "amount": 10 },
+          { "type": "trait_add", "trait": "brave", "chance": 0.2 }
+        ],
+        "result": "They go quiet. {o.name} looks ashamed. The evening stays calm."
+      },
+      {
+        "text": "Pull the covers over your head",
+        "effects": [
+          { "type": "memory", "kind": "parents_fighting", "text": "Lying awake listening to {t.name} and {o.name} fight", "impact": -15 },
+          { "type": "happiness", "amount": -8 }
+        ],
+        "result": "You fall asleep eventually. You always do."
+      },
+      {
+        "text": "Comfort your siblings",
+        "requires": { "hasRole": [ "sibling" ] },
+        "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.3 }, { "type": "happiness", "amount": -3 } ],
+        "result": "You huddle together and whisper about other things."
+      }
+    ]
+  },
+  {
+    "id": "child_talent", "title": "A talent",
+    "text": "Your teacher says you have an unusual feel for music. \"You should take lessons.\"",
+    "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      {
+        "text": "Practise every day",
+        "effects": [
+          { "type": "flag", "flag": "musical" },
+          { "type": "trait_add", "trait": "ambitious", "chance": 0.3 },
+          { "type": "memory", "kind": "talent", "text": "Discovered music", "impact": 20 }
+        ],
+        "result": "The neighbours are less thrilled than you, but you get really good."
+      },
+      {
+        "text": "Rather play football with friends",
+        "effects": [ { "type": "happiness", "amount": 5 } ],
+        "result": "You soon forget about it."
+      }
+    ]
+  },
+  {
+    "id": "child_pet", "title": "A puppy",
+    "text": "{t.name} comes home with a puppy in {t.his} arms. \"But you have to look after it!\"",
+    "conditions": { "minAge": 5, "maxAge": 12 }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      {
+        "text": "Promise to walk it every day",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true },
+          { "type": "memory", "kind": "pet", "text": "Got a dog from {t.name}", "impact": 25, "to": "target" },
+          { "type": "happiness", "amount": 10 }
+        ],
+        "result": "You name him Buster. You become inseparable."
+      },
+      {
+        "text": "You're allergic",
+        "effects": [ { "type": "happiness", "amount": -5 } ],
+        "result": "The puppy moves in with the neighbours. Sometimes you hear him bark."
+      }
+    ]
+  },
+  {
+    "id": "child_grandparent_summer", "title": "Summer in the countryside",
+    "text": "You're spending all of July with {t.role}. No internet, just forest, a lake and old comic books.",
+    "conditions": { "minAge": 5, "maxAge": 13 },
+    "target": { "role": "grandparent", "conditions": { "maxAge": 85 } },
+    "cooldown": 4,
+    "choices": [
+      {
+        "text": "Help out with everything",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 18, "mutual": true },
+          { "type": "memory", "kind": "summer", "to": "target", "text": "The summers with {t.name}", "impact": 30 }
+        ],
+        "result": "You fish, pull weeds and listen to the radio. It becomes one of your best summers."
+      },
+      {
+        "text": "Sulk and count the days",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -8 } ],
+        "result": "{t.name} really tries, but you just want to go home."
+      }
+    ]
+  },
+  {
+    "id": "child_candy", "title": "The sweets shelf",
+    "text": "The cashier is looking the other way. The pick-and-mix is right there.",
+    "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      {
+        "text": "Stuff a handful in your pocket",
+        "chance": 0.6, "chanceTraits": { "impulsive": 0.1 },
+        "success": {
+          "text": "Nobody notices. Sweets have never tasted better.",
+          "effects": [ { "type": "trait_add", "trait": "impulsive", "chance": 0.25 } ]
+        },
+        "failure": {
+          "text": "A hand on your shoulder. Your parents have to come and get you. The shame lingers.",
+          "effects": [ { "type": "happiness", "amount": -12 }, { "type": "memory", "kind": "caught", "text": "Got caught shoplifting as a kid", "impact": -20 } ]
+        }
+      },
+      {
+        "text": "Leave it",
+        "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.1 } ],
+        "result": "You buy a small bag with your pocket money instead."
+      }
+    ]
+  },
+  {
+    "id": "child_sibling_blame", "title": "The vase",
+    "text": "Grandma's old vase lies in pieces. {t.name} immediately points at you.",
+    "conditions": { "minAge": 5, "maxAge": 14 },
+    "target": { "role": "sibling", "conditions": { "minAge": 4, "maxAge": 18 } },
+    "cooldown": 5,
+    "choices": [
+      {
+        "text": "\"It was {t.name}!\"",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 12 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "snitched", "text": "{name} told on me", "impact": -12 }
+        ],
+        "result": "{t.name} is grounded. The look {t.he} gives you says it all."
+      },
+      {
+        "text": "Take the blame",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "covered", "text": "{name} took the blame for me", "impact": 25 },
+          { "type": "trait_add", "trait": "loyal", "chance": 0.3 }
+        ],
+        "result": "You get told off. But that night {t.name} slips a chocolate bar under your door."
+      },
+      {
+        "text": "Wrestle about it",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 8, "mutual": true },
+          { "type": "health", "amount": -2 }
+        ],
+        "result": "You both end up getting told off."
+      }
+    ]
+  },
+  {
+    "id": "child_new_kid", "title": "The new kid",
+    "text": "A new student, {t.name}, joins your class. {t.He} sits alone at lunch.",
+    "conditions": { "minAge": 6, "maxAge": 15 },
+    "target": { "role": "new_person", "ageOffsetMin": 0, "ageOffsetMax": 0 },
+    "cooldown": 3,
+    "choices": [
+      {
+        "text": "Sit down next to {t.him}",
+        "effects": [
+          { "type": "friend_add", "to": "target" },
+          { "type": "memory", "who": "target", "to": "player", "kind": "welcomed", "text": "{name} was the first one to talk to me", "impact": 25 }
+        ],
+        "result": "You talk about comics all lunch. A new friend."
+      },
+      {
+        "text": "Stay with your usual friends",
+        "effects": [],
+        "result": "Someone else can deal with it."
+      }
+    ]
+  },
+  {
+    "id": "child_parent_absent", "title": "End of term",
+    "text": "All the parents sit in rows, singing along at the end-of-term assembly. But {t.role} never came. Work, again.",
+    "conditions": { "minAge": 7, "maxAge": 15 },
+    "target": { "role": "parent", "conditions": { "hasJob": true } },
+    "cooldown": 6,
+    "choices": [
+      {
+        "text": "Say that it hurt",
+        "chance": 0.55, "chanceOpinion": 0.004,
+        "success": {
+          "text": "{t.name} apologises and takes the next day off. You eat ice cream together.",
+          "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true } ]
+        },
+        "failure": {
+          "text": "\"Someone has to pay the bills,\" {t.name} says wearily.",
+          "effects": [ { "type": "memory", "kind": "absent_parent", "to": "target", "text": "{t.name} always put work first", "impact": -18 } ]
+        }
+      },
+      {
+        "text": "Pretend it doesn't matter",
+        "effects": [ { "type": "memory", "kind": "absent_parent", "to": "target", "text": "{t.name} missed my end-of-term assembly", "impact": -15 } ],
+        "result": "You learn not to expect too much."
+      }
+    ]
+  }
+]

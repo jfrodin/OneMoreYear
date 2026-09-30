@@ -1,0 +1,294 @@
+// Player actions. trigger "action" = done towards a person (target role), "self" = about your own life.
+// Each costs one action point per year. Only the first choice is used.
+[
+  {
+    "id": "act_spend_time", "trigger": "action", "title": "Spend time together",
+    "target": { "role": "known" },
+    "conditions": { "minAge": 3 },
+    "choices": [ {
+      "text": "Spend time", "hint": "Closeness grows with both of you.",
+      "effects": [
+        { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true },
+        { "type": "happiness", "amount": 2 }
+      ],
+      "result": "You spend an afternoon with {t.name}. It's nice."
+    } ]
+  },
+  {
+    "id": "act_deep_talk", "trigger": "action", "title": "Have a heart-to-heart",
+    "target": { "role": "known", "conditions": { "minAge": 12 } },
+    "conditions": { "minAge": 12 },
+    "choices": [ {
+      "text": "Talk", "hint": "Builds trust.",
+      "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": 8, "mutual": true } ],
+      "result": "You talk about things you normally never say out loud."
+    } ]
+  },
+  {
+    "id": "act_argue", "trigger": "action", "title": "Pick a fight",
+    "target": { "role": "known", "conditions": { "minAge": 6 } },
+    "conditions": { "minAge": 6 },
+    "choices": [ {
+      "text": "Argue", "hint": "Sometimes things need to be said. It will be remembered.",
+      "effects": [
+        { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 12, "mutual": true },
+        { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 5 },
+        { "type": "memory", "who": "target", "to": "player", "kind": "argued", "text": "Big argument with {name}", "impact": -15 }
+      ],
+      "result": "Voices are raised. Doors are slammed."
+    } ]
+  },
+  {
+    "id": "act_apologize", "trigger": "action", "title": "Try to make amends",
+    "target": { "role": "known", "conditions": { "relMin": { "bitterness": 20 } } },
+    "conditions": { "minAge": 6 },
+    "choices": [ {
+      "text": "Apologise", "hint": "Works better if they still like you.",
+      "chance": 0.45, "chanceOpinion": 0.004, "chanceTraits": { "loyal": 0.1, "social": 0.05, "manipulative": 0.1 },
+      "success": {
+        "text": "{t.name} softens. \"Let's put it behind us.\"",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -30 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "reconciled", "text": "{name} came and apologised", "impact": 20 }
+        ]
+      },
+      "failure": {
+        "text": "{t.name} isn't ready to forgive.",
+        "effects": [ { "type": "happiness", "amount": -4 } ]
+      }
+    } ]
+  },
+  {
+    "id": "act_ask_money", "trigger": "action", "title": "Ask for money",
+    "target": { "role": "family", "conditions": { "minAge": 25, "minMoney": 50000 } },
+    "conditions": { "minAge": 16 },
+    "vars": { "amount": { "base": 25000, "incomeFactor": 0.05 } },
+    "choices": [ {
+      "text": "Ask", "hint": "Asking for {amount}.",
+      "chance": 0.35, "chanceOpinion": 0.005, "chanceTraits": { "manipulative": 0.15 },
+      "success": {
+        "text": "{t.name} sighs, but transfers {amount}.",
+        "effects": [
+          { "type": "transfer", "who": "target", "to": "player", "var": "amount" },
+          { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": -5 }
+        ]
+      },
+      "failure": {
+        "text": "\"Get a job,\" says {t.name}.",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": -8 } ]
+      }
+    } ]
+  },
+  {
+    "id": "act_give_money", "trigger": "action", "title": "Give money",
+    "target": { "role": "known", "conditions": { "minAge": 16 } },
+    "conditions": { "minAge": 18, "minMoney": 30000 },
+    "vars": { "amount": { "base": 20000 } },
+    "choices": [ {
+      "text": "Give", "hint": "Give {amount}.",
+      "effects": [
+        { "type": "transfer", "to": "target", "var": "amount" },
+        { "type": "memory", "who": "target", "to": "player", "kind": "gift", "text": "{name} helped me out with money", "impact": 20 }
+      ],
+      "result": "{t.name} is touched."
+    } ]
+  },
+  {
+    "id": "act_ask_out", "trigger": "action", "title": "Ask out",
+    "target": { "role": "known", "conditions": { "compatibleWithPlayer": true, "hasPartner": false } },
+    "conditions": { "minAge": 15, "hasPartner": false },
+    "choices": [ {
+      "text": "Ask out", "hint": "Could turn a friendship into something more – or make it awkward.",
+      "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05 },
+      "success": {
+        "text": "{t.name} says yes!",
+        "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
+      },
+      "failure": {
+        "text": "{t.name} says {t.he} doesn't see you that way. Awkward.",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -8 }, { "type": "happiness", "amount": -6 } ]
+      }
+    } ]
+  },
+  {
+    "id": "act_move_in", "trigger": "action", "title": "Suggest moving in",
+    "target": { "role": "partner", "conditions": { "partnerStatus": "dating" } },
+    "conditions": { "minAge": 18 },
+    "choices": [ {
+      "text": "Move in together",
+      "chance": 0.6, "chanceOpinion": 0.005,
+      "success": { "text": "{t.name} says yes. You find a place together.", "effects": [ { "type": "move_in" } ] },
+      "failure": { "text": "\"I'm not ready yet,\" says {t.name}.", "effects": [ { "type": "happiness", "amount": -4 } ] }
+    } ]
+  },
+  {
+    "id": "act_propose", "trigger": "action", "title": "Propose",
+    "target": { "role": "partner", "conditions": { "married": false } },
+    "conditions": { "minAge": 18 },
+    "choices": [ {
+      "text": "Propose",
+      "chance": 0.5, "chanceOpinion": 0.006,
+      "success": { "text": "{t.name} says yes!", "effects": [ { "type": "marry" }, { "type": "happiness", "amount": 12 } ] },
+      "failure": {
+        "text": "{t.name} says no. The ring goes back in your pocket.",
+        "effects": [
+          { "type": "memory", "kind": "rejected_proposal", "to": "target", "text": "{t.name} said no when I proposed", "impact": -25 },
+          { "type": "happiness", "amount": -12 }
+        ]
+      }
+    } ]
+  },
+  {
+    "id": "act_try_baby_m", "trigger": "action", "title": "Try for a baby",
+    "target": { "role": "partner", "conditions": { "sex": "female", "minAge": 18, "maxAge": 44 } },
+    "conditions": { "sex": "male", "minAge": 18 },
+    "choices": [ {
+      "text": "Try for a baby",
+      "chance": 0.45,
+      "success": { "text": "It worked! A baby arrives within the year.", "effects": [ { "type": "child" } ] },
+      "failure": { "text": "Not this year.", "effects": [] }
+    } ]
+  },
+  {
+    "id": "act_try_baby_f", "trigger": "action", "title": "Try for a baby",
+    "target": { "role": "partner", "conditions": { "sex": "male", "minAge": 18 } },
+    "conditions": { "sex": "female", "minAge": 18, "maxAge": 44 },
+    "choices": [ {
+      "text": "Try for a baby",
+      "chance": 0.45,
+      "success": { "text": "It worked! A baby arrives within the year.", "effects": [ { "type": "child" } ] },
+      "failure": { "text": "Not this year.", "effects": [] }
+    } ]
+  },
+  {
+    "id": "act_adopt", "trigger": "action", "title": "Adopt a child",
+    "target": { "role": "partner", "conditions": { "sameSexAsPlayer": true } },
+    "conditions": { "minAge": 25, "maxAge": 55 },
+    "choices": [ {
+      "text": "Apply to adopt",
+      "chance": 0.35,
+      "success": { "text": "After a long process, a child joins your family.", "effects": [ { "type": "child" } ] },
+      "failure": { "text": "The process drags on. Maybe next year.", "effects": [] }
+    } ]
+  },
+  {
+    "id": "act_break_up", "trigger": "action", "title": "Break up",
+    "target": { "role": "partner" },
+    "conditions": { "minAge": 13 },
+    "choices": [ {
+      "text": "End the relationship", "hint": "This will hurt – and be remembered.",
+      "effects": [ { "type": "breakup" } ],
+      "result": "It's over."
+    } ]
+  },
+  {
+    "id": "act_end_friendship", "trigger": "action", "title": "End the friendship",
+    "target": { "role": "friend" },
+    "conditions": { "minAge": 8 },
+    "choices": [ {
+      "text": "Cut ties",
+      "effects": [
+        { "type": "friend_remove", "to": "target" },
+        { "type": "memory", "who": "target", "to": "player", "kind": "dropped", "text": "{name} dropped me as a friend", "impact": -25 }
+      ],
+      "result": "You stop answering {t.name}'s calls."
+    } ]
+  },
+  {
+    "id": "self_look_love", "trigger": "self", "title": "Look for love",
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -5, "ageOffsetMax": 5 },
+    "conditions": { "minAge": 16, "hasPartner": false },
+    "choices": [ {
+      "text": "Go out and meet people",
+      "chance": 0.4, "chanceTraits": { "social": 0.15, "introvert": -0.1 },
+      "success": { "text": "You meet {t.full}. There's a spark – you start seeing each other.", "effects": [ { "type": "start_dating", "to": "target" } ] },
+      "failure": { "text": "A few awkward dates, but nobody special.", "effects": [] }
+    } ]
+  },
+  {
+    "id": "self_make_friend", "trigger": "self", "title": "Make a new friend",
+    "target": { "role": "new_person", "ageOffsetMin": -3, "ageOffsetMax": 3 },
+    "conditions": { "minAge": 6 },
+    "choices": [ {
+      "text": "Be social",
+      "chance": 0.6, "chanceTraits": { "social": 0.2, "introvert": -0.2 },
+      "success": { "text": "You hit it off with {t.full}.", "effects": [ { "type": "friend_add", "to": "target" } ] },
+      "failure": { "text": "Nobody you really click with.", "effects": [] }
+    } ]
+  },
+  {
+    "id": "self_find_job", "trigger": "self", "title": "Look for a job",
+    "conditions": { "minAge": 16, "maxAge": 66, "activity": "unemployed" },
+    "choices": [ {
+      "text": "Apply for jobs",
+      "chance": 0.55, "chanceTraits": { "ambitious": 0.15, "lazy": -0.15 },
+      "success": { "text": "An offer arrives!", "effects": [ { "type": "job_find" } ] },
+      "failure": { "text": "Rejection after rejection.", "effects": [ { "type": "happiness", "amount": -4 } ] }
+    } ]
+  },
+  {
+    "id": "self_change_job", "trigger": "self", "title": "Change jobs",
+    "conditions": { "minAge": 18, "hasJob": true },
+    "choices": [ {
+      "text": "Try something new", "hint": "You might end up in a completely different field.",
+      "chance": 0.5,
+      "success": { "text": "You land something new.", "effects": [ { "type": "job_quit" }, { "type": "job_find" } ] },
+      "failure": { "text": "Nothing better turns up.", "effects": [] }
+    } ]
+  },
+  {
+    "id": "self_ask_raise", "trigger": "self", "title": "Ask for a promotion",
+    "conditions": { "minAge": 18, "hasJob": true },
+    "choices": [ {
+      "text": "Knock on the boss's door",
+      "chance": 0.25, "chanceTraits": { "ambitious": 0.15, "brave": 0.05, "manipulative": 0.1 },
+      "success": { "text": "Your boss agrees you deserve it.", "effects": [ { "type": "promote" } ] },
+      "failure": { "text": "\"Maybe next year.\"", "effects": [ { "type": "happiness", "amount": -4 } ] }
+    } ]
+  },
+  {
+    "id": "self_quit_job", "trigger": "self", "title": "Quit your job",
+    "conditions": { "minAge": 16, "hasJob": true },
+    "choices": [ {
+      "text": "Hand in your notice",
+      "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 5 } ],
+      "result": "Freedom – for now."
+    } ]
+  },
+  {
+    "id": "self_study", "trigger": "self", "title": "Go to university",
+    "conditions": { "minAge": 18, "maxAge": 50, "minEducation": "secondary", "maxEducation": "secondary" },
+    "choices": [ {
+      "text": "Enrol", "hint": "Years of studying without a salary.",
+      "effects": [ { "type": "study", "level": "university" } ],
+      "result": "You're a student again."
+    } ]
+  },
+  {
+    "id": "self_train", "trigger": "self", "title": "Exercise",
+    "conditions": { "minAge": 8 },
+    "choices": [ {
+      "text": "Train hard this year",
+      "effects": [ { "type": "health", "amount": 5 }, { "type": "happiness", "amount": 2 } ],
+      "result": "You feel stronger."
+    } ]
+  },
+  {
+    "id": "self_buy_home", "trigger": "self", "title": "Buy a home",
+    "conditions": { "minAge": 20, "ownsHome": false, "minMoney": 450000 },
+    "choices": [ {
+      "text": "Buy", "hint": "A deposit of 15 % of the home price.",
+      "effects": [ { "type": "buy_home" }, { "type": "happiness", "amount": 6 } ],
+      "result": "The keys are yours."
+    } ]
+  },
+  {
+    "id": "self_write_will", "trigger": "self", "title": "Write a will",
+    "conditions": { "minAge": 50, "minChildren": 2 },
+    "choices": [ {
+      "text": "Divide everything equally",
+      "effects": [ { "type": "will_favorite" }, { "type": "flag", "flag": "will_written" } ],
+      "result": "Everything will be split equally between your children. No favourites."
+    } ]
+  }
+]

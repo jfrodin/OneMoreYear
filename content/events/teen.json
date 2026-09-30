@@ -1,0 +1,192 @@
+[
+  {
+    "id": "teen_party", "title": "The party",
+    "text": "Someone's parents are away. The whole year is invited – and there's alcohol.",
+    "conditions": { "minAge": 14, "maxAge": 18 }, "cooldown": 2,
+    "choices": [
+      {
+        "text": "Go and party hard",
+        "chance": 0.7, "chanceTraits": { "social": 0.1 },
+        "success": {
+          "text": "The night becomes legendary. Everyone talks about it for weeks.",
+          "effects": [ { "type": "happiness", "amount": 10 }, { "type": "trait_add", "trait": "social", "chance": 0.2 } ]
+        },
+        "failure": {
+          "text": "You wake up on the bathroom floor. Your parents pick you up. It's a long talk.",
+          "effects": [ { "type": "health", "amount": -3 }, { "type": "happiness", "amount": -8 } ]
+        }
+      },
+      {
+        "text": "Go, but stay sober",
+        "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "You watch everyone else embarrass themselves. It's almost as fun."
+      },
+      {
+        "text": "Stay home",
+        "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.15 } ],
+        "result": "You play video games and look at the photos afterwards."
+      }
+    ]
+  },
+  {
+    "id": "teen_first_love", "title": "Head over heels",
+    "text": "You can't stop thinking about {t.name} from the other class. Your heart races every time {t.he} walks past.",
+    "conditions": { "minAge": 13, "maxAge": 18, "hasPartner": false },
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": 0, "ageOffsetMax": 1 },
+    "cooldown": 2,
+    "choices": [
+      {
+        "text": "Ask {t.him} out",
+        "chance": 0.45, "chanceTraits": { "social": 0.15, "brave": 0.1, "introvert": -0.1 },
+        "success": {
+          "text": "{t.name} blushes and says yes. You're together!",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 15 } ]
+        },
+        "failure": {
+          "text": "{t.name} giggles and says {t.he} just wants to be friends. It stings.",
+          "effects": [ { "type": "happiness", "amount": -12 } ]
+        }
+      },
+      {
+        "text": "Admire from a distance",
+        "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "You write secret poems. Nobody will ever read them."
+      }
+    ]
+  },
+  {
+    "id": "teen_summer_job", "title": "Summer job",
+    "text": "The local council is offering summer jobs in elderly care. The pay is low, but money is money.",
+    "conditions": { "minAge": 15, "maxAge": 18 }, "cooldown": 2,
+    "choices": [
+      {
+        "text": "Take the job",
+        "effects": [
+          { "type": "money", "amount": 18000 },
+          { "type": "trait_add", "trait": "ambitious", "chance": 0.15 }
+        ],
+        "result": "You wash, make beds and listen to old stories. The pay cheque feels fantastic."
+      },
+      {
+        "text": "Lie on the beach",
+        "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "lazy", "chance": 0.15 } ],
+        "result": "Sunburnt and broke, but happy."
+      }
+    ]
+  },
+  {
+    "id": "teen_curfew", "title": "Curfew",
+    "text": "You and {t.role} are arguing about how late you can stay out. \"As long as you live under my roof...\"",
+    "conditions": { "minAge": 13, "maxAge": 17 },
+    "target": { "role": "parent" }, "cooldown": 3,
+    "choices": [
+      {
+        "text": "Slam the door",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 10, "mutual": true },
+          { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": -5 }
+        ],
+        "result": "The pictures in the hallway shake."
+      },
+      {
+        "text": "Compromise",
+        "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": 8, "mutual": true } ],
+        "result": "Midnight on weekends. You shake on it."
+      },
+      {
+        "text": "Sneak out of the window anyway",
+        "chance": 0.5, "chanceTraits": { "impulsive": 0.1, "manipulative": 0.15 },
+        "success": {
+          "text": "Nobody notices. The night is yours.",
+          "effects": [ { "type": "happiness", "amount": 8 } ]
+        },
+        "failure": {
+          "text": "{t.name} is sitting in the kitchen waiting when you get home at three.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -20 } ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "teen_smoking", "title": "Behind the gym",
+    "text": "Your friends are smoking behind the gym. Someone holds out the pack.",
+    "conditions": { "minAge": 13, "maxAge": 18, "notFlags": [ "smoker" ] }, "cooldown": 0,
+    "choices": [
+      {
+        "text": "Take a drag",
+        "effects": [ { "type": "flag", "flag": "smoker", "chance": 0.5 }, { "type": "health", "amount": -2 } ],
+        "result": "You cough, but try to look unimpressed."
+      },
+      {
+        "text": "No thanks",
+        "effects": [],
+        "result": "Nobody really cares."
+      }
+    ]
+  },
+  {
+    "id": "teen_exams", "title": "Exam week",
+    "text": "Three exams in the same week and you haven't opened a book.",
+    "conditions": { "minAge": 13, "maxAge": 19 }, "cooldown": 3,
+    "choices": [
+      {
+        "text": "Study day and night",
+        "effects": [ { "type": "trait_add", "trait": "ambitious", "chance": 0.25 }, { "type": "health", "amount": -2 }, { "type": "flag", "flag": "good_grades" } ],
+        "result": "You ace all three."
+      },
+      {
+        "text": "Wing it",
+        "chance": 0.5,
+        "success": { "text": "It went better than it should have.", "effects": [] },
+        "failure": {
+          "text": "Failed. Your parents are not pleased.",
+          "effects": [ { "type": "trait_add", "trait": "lazy", "chance": 0.2 }, { "type": "happiness", "amount": -6 } ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "teen_friend_bullied", "title": "The mockery",
+    "text": "The popular kids have started openly mocking {t.name}. Everyone is watching to see what you'll do.",
+    "conditions": { "minAge": 11, "maxAge": 18 },
+    "target": { "role": "friend", "conditions": { "maxAge": 20 } }, "cooldown": 4,
+    "choices": [
+      {
+        "text": "Stand next to {t.name}",
+        "chance": 0.55, "chanceTraits": { "brave": 0.25, "social": 0.1 },
+        "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "defended", "text": "{name} stood up for me when everyone else laughed", "impact": 35 } ],
+        "success": { "text": "They back off. {t.name} never forgets it.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.3 } ] },
+        "failure": { "text": "Now they mock both of you. But there are two of you.", "effects": [ { "type": "happiness", "amount": -8 } ] }
+      },
+      {
+        "text": "Look away",
+        "effects": [
+          { "type": "memory", "who": "target", "to": "player", "kind": "abandoned", "text": "{name} looked away when I was being mocked", "impact": -35 },
+          { "type": "trait_add", "trait": "conflict_averse", "chance": 0.2 }
+        ],
+        "result": "You say nothing. {t.name} stops sitting next to you."
+      }
+    ]
+  },
+  {
+    "id": "teen_sibling_lie", "title": "The alibi",
+    "text": "{t.name} comes home at dawn. \"Please, say I slept at yours,\" {t.he} whispers.",
+    "conditions": { "minAge": 12, "maxAge": 25 },
+    "target": { "role": "sibling", "conditions": { "minAge": 14, "maxAge": 25 } }, "cooldown": 5,
+    "choices": [
+      {
+        "text": "Lie to your parents",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 15 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "covered", "text": "{name} covered for me", "impact": 20 }
+        ],
+        "result": "You make up a whole story. {t.name} owes you one."
+      },
+      {
+        "text": "Refuse",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 12 } ],
+        "result": "\"Thanks for nothing,\" {t.name} hisses."
+      }
+    ]
+  }
+]

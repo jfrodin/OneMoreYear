@@ -1,0 +1,65 @@
+// Sweden – reference country (Swedish names). Money amounts are in 2020-kronor; priceIndex converts them to
+// the nominal level of each year (wages and prices together).
+{
+  "id": "sweden",
+  "name": "Sweden",
+  "currencySymbol": "kr",
+  "minStartYear": 1950,
+  "maxStartYear": 2020,
+  "maleNames": [
+    "Erik", "Lars", "Karl", "Anders", "Johan", "Per", "Nils", "Mikael", "Jan", "Hans",
+    "Lennart", "Olof", "Peter", "Gunnar", "Sven", "Fredrik", "Bengt", "Daniel", "Stefan", "Bo",
+    "Göran", "Magnus", "Mats", "Ulf", "Thomas", "Andreas", "Leif", "Björn", "Oskar", "Henrik",
+    "Axel", "Gustav", "Viktor", "Emil", "Filip", "Hugo", "Ali", "Mohammed", "Kent", "Rolf",
+    "Joakim", "Tobias", "Sebastian", "Linus", "Arvid", "Elias", "Kjell", "Åke", "Stig", "Roger"
+  ],
+  "femaleNames": [
+    "Anna", "Eva", "Maria", "Karin", "Kristina", "Lena", "Sara", "Kerstin", "Emma", "Ingrid",
+    "Marie", "Malin", "Birgitta", "Jenny", "Inger", "Ulla", "Linda", "Elisabeth", "Monica", "Susanne",
+    "Johanna", "Hanna", "Elin", "Sofia", "Annika", "Gunilla", "Camilla", "Margareta", "Helena", "Ida",
+    "Astrid", "Maja", "Elsa", "Alice", "Julia", "Ebba", "Wilma", "Fatima", "Agneta", "Britt",
+    "Therese", "Lisa", "Frida", "Matilda", "Klara", "Signe", "Gun", "Marianne", "Yvonne", "Ronja"
+  ],
+  "lastNames": [
+    "Andersson", "Johansson", "Karlsson", "Nilsson", "Eriksson", "Larsson", "Olsson", "Persson",
+    "Svensson", "Gustafsson", "Pettersson", "Jonsson", "Jansson", "Hansson", "Bengtsson", "Jönsson",
+    "Lindberg", "Jakobsson", "Magnusson", "Lindström", "Olofsson", "Lindqvist", "Lindgren", "Berg",
+    "Axelsson", "Bergström", "Lundberg", "Lind", "Lundgren", "Lundqvist", "Mattsson", "Berglund",
+    "Fredriksson", "Sandberg", "Henriksson", "Forsberg", "Sjöberg", "Wallin", "Engström", "Eklund",
+    "Danielsson", "Håkansson", "Lundin", "Björk", "Bergman", "Gunnarsson", "Holm", "Wikström", "Samuelsson", "Fransson"
+  ],
+  "priceIndex": {
+    "1950": 0.025, "1960": 0.045, "1970": 0.09, "1975": 0.14, "1980": 0.22, "1985": 0.32,
+    "1990": 0.45, "1995": 0.52, "2000": 0.6, "2005": 0.7, "2010": 0.8, "2015": 0.9, "2020": 1.0
+  },
+  "divorceIndex": { "1950": 0.4, "1965": 0.7, "1974": 1.5, "1990": 1.3, "2020": 1.1 },
+  "fertilityIndex": { "1950": 1.1, "1965": 1.15, "1980": 0.85, "1990": 1.05, "2000": 0.8, "2010": 0.95, "2020": 0.85 },
+  "taxRate": 0.32,
+  "livingCostAdult": 150000,
+  "livingCostChild": 40000,
+  "homePrice": 3000000,
+  "unemploymentIncome": 160000,
+  "studentIncome": 120000,
+  "pensionAge": 65,
+  "pensionRate": 0.65,
+  "minimumPension": 110000,
+  "mortalityScale": 1.0,
+  "savingsReturn": 0.035,
+  "debtInterest": 0.06,
+  "spouseInheritanceShare": 0.5,
+  "sameSexCoupleChance": 0.04,
+  "wifeTakesNameChance": 0.7,
+  "historicalEvents": [
+    { "year": 1956, "text": "Television arrives in Swedish homes." },
+    { "year": 1967, "text": "Dagen H: Sweden switches from driving on the left to the right." },
+    { "year": 1969, "text": "Man lands on the Moon. The whole family gathers in front of the TV." },
+    { "year": 1974, "text": "The oil crisis hits industry hard.", "jobLossChance": 0.02 },
+    { "year": 1986, "text": "Prime Minister Olof Palme is assassinated in Stockholm. The country is in shock." },
+    { "year": 1992, "text": "Financial crisis: the krona collapses, interest rates spike to 500 percent and many lose their jobs.", "jobLossChance": 0.06, "savingsFactor": 0.85 },
+    { "year": 1994, "text": "The MS Estonia sinks. Almost everyone knows someone who knew someone on board." },
+    { "year": 1995, "text": "Sweden joins the European Union." },
+    { "year": 2004, "text": "The Indian Ocean tsunami strikes thousands of Swedish holidaymakers." },
+    { "year": 2008, "text": "The financial crisis spreads across the world. The stock market crashes.", "jobLossChance": 0.03, "savingsFactor": 0.8 },
+    { "year": 2020, "text": "The pandemic shuts down the world. The elderly are told to isolate.", "jobLossChance": 0.02, "savingsFactor": 0.95 }
+  ]
+}
