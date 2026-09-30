@@ -2,6 +2,12 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.7.2 – 2026-09-30 · A taste for age gaps
+
+- New adult traits that appear at 18: **Likes them younger** (more common among men) and **Likes them
+  older** (more common among women). They go for partners 8–25 years younger or older – always adults.
+- The family still talks: big age gaps set tongues wagging and upset the younger one's parents.
+
 ## 0.7.1 – 2026-09-30 · Family ties
 
 - Close relatives (parents, children, siblings, half-siblings, grandparents, aunts/uncles,

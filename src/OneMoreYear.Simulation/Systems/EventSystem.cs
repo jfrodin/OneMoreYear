@@ -109,7 +109,7 @@ public static class EventSystem
                 _ => ctx.Rng.Chance(0.5) ? Sex.Male : Sex.Female
             };
             int age = Math.Max(1, player.Age(ctx.Year) + ctx.Rng.Range(role.AgeOffsetMin, role.AgeOffsetMax));
-            if (role.Sex == "attracted") age = RomanticAge(ctx, player.Age(ctx.Year), age);
+            if (role.Sex == "attracted") age = RomanticAge(ctx, player, age);
             var p = PersonFactory.CreateStranger(ctx, sex, age);
             if (role.Sex == "attracted") p.AttractedToSameSex = player.AttractedToSameSex;
             return p;
@@ -188,6 +188,15 @@ public static class EventSystem
     }
 
     /// <summary>Keeps a generated love interest within the ages <see cref="Compatible"/> allows.</summary>
+    /// <summary>Like <see cref="RomanticAge(SimContext,int,int)"/>, but adults who like much younger or older partners get them.</summary>
+    public static int RomanticAge(SimContext ctx, Person p, int wanted)
+    {
+        int age = p.Age(ctx.Year);
+        if (age >= ctx.Country.AdultAge + 8 && ctx.Mod(p, "prefers_younger") > 0) wanted = age - ctx.Rng.Range(8, 25);
+        else if (age >= ctx.Country.AdultAge && ctx.Mod(p, "prefers_older") > 0) wanted = age + ctx.Rng.Range(8, 25);
+        return RomanticAge(ctx, age, wanted);
+    }
+
     public static int RomanticAge(SimContext ctx, int playerAge, int wanted)
     {
         var c = ctx.Country;

@@ -65,3 +65,7 @@ This is a firm line (and it also keeps the game releasable on Steam, consoles an
 - **Cousins** can become a couple where the country's law allows it (`cousinMarriageAllowed`) –
   rare, and the family talks about it.
 - **Step-siblings who grew up together** do not become couples. Step-siblings who meet as adults can.
+- **Age gaps**: adults can be with anyone – some prefer much younger or much older partners (a trait,
+  more common among men for younger, women for older). Big gaps make the family react. Under 18 the
+  age rules above apply; an adult with a minor is never a normal romance – if it appears at all, it is
+  as exploitation in the dark storylines, shown through its consequences.

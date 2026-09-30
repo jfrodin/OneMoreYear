@@ -36,6 +36,7 @@ public static class PersonFactory
         p.BirthLastName = p.LastName;
         AssignTraits(ctx, p, Array.Empty<Person>());
         Appearance.Generate(ctx, p, Array.Empty<Person>());
+        if (age >= ctx.Country.AdultAge) RollAdultTraits(ctx, p);
         p.Grades = Math.Clamp(ctx.Rng.Gaussian(45 + (p.Smarts - 50) * 0.6, 12), 5, 100);
         ctx.World.AddPerson(p);
         SetUpLifeStage(ctx, p);
@@ -104,20 +105,31 @@ public static class PersonFactory
         r.LastContactYear = ctx.Year;
     }
 
-    /// <summary>Gives 2–3 traits, partly inherited from the given parents. Opposites never combine.</summary>
+    /// <summary>Gives 1–4 traits, partly inherited from the given parents. Opposites never combine.</summary>
     public static void AssignTraits(SimContext ctx, Person p, IReadOnlyList<Person> parents)
     {
         var rng = ctx.Rng;
         // Most people have two or three traits; some are simple, some complicated.
         int count = rng.PickWeighted(new[] { 1, 2, 3, 4 }, n => n switch { 1 => 0.15, 2 => 0.4, 3 => 0.35, _ => 0.1 });
-        var pool = ctx.Content.Traits.Values.OrderBy(t => t.Id, StringComparer.Ordinal).ToList();
+        var pool = ctx.Content.Traits.Values.Where(t => !t.AdultOnly).OrderBy(t => t.Id, StringComparer.Ordinal).ToList();
 
         foreach (var parent in parents)
             foreach (var t in parent.Traits)
-                if (p.Traits.Count < count && rng.Chance(0.3)) TryAddTrait(ctx, p, t);
+                if (p.Traits.Count < count && ctx.Content.Traits.TryGetValue(t, out var def) && !def.AdultOnly && rng.Chance(0.3))
+                    TryAddTrait(ctx, p, t);
 
         int guard = 0;
         while (p.Traits.Count < count && guard++ < 50) TryAddTrait(ctx, p, rng.PickWeighted(pool, t => t.Weight)!.Id);
+    }
+
+    /// <summary>Traits that only show in adulthood, like partner preferences. Rolled once, at 18.</summary>
+    public static void RollAdultTraits(SimContext ctx, Person p)
+    {
+        foreach (var def in ctx.Content.Traits.Values.Where(t => t.AdultOnly).OrderBy(t => t.Id, StringComparer.Ordinal))
+        {
+            double sexWeight = p.Sex == Sex.Male ? def.MaleWeight : def.FemaleWeight;
+            if (ctx.Rng.Chance(def.Weight * sexWeight * 0.12)) TryAddTrait(ctx, p, def.Id);
+        }
     }
 
     public static bool TryAddTrait(SimContext ctx, Person p, string trait)

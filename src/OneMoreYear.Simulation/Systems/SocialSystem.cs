@@ -127,6 +127,8 @@ public static class SocialSystem
         {
             ctx.World.Rel(other.Id, p.Id).Attraction = Math.Clamp(ctx.Rng.Gaussian(20 + (p.Looks - 50) * 0.6, 15), 0, 100);
             ctx.World.Rel(p.Id, other.Id).Attraction = Math.Clamp(ctx.Rng.Gaussian(20 + (other.Looks - 50) * 0.6, 15), 0, 100);
+            ctx.World.Rel(other.Id, p.Id).Attraction += AgeTaste(ctx, other, p);
+            ctx.World.Rel(p.Id, other.Id).Attraction += AgeTaste(ctx, p, other);
         }
         return a;
     }
@@ -143,13 +145,21 @@ public static class SocialSystem
         bool romantic = p.PartnerId == null && ctx.Rng.Chance(0.6);
         var sex = romantic ? (p.AttractedToSameSex ? p.Sex : (p.Sex == Sex.Male ? Sex.Female : Sex.Male))
             : ctx.Rng.Chance(0.5) ? Sex.Male : Sex.Female;
-        int theirAge = romantic ? EventSystem.RomanticAge(ctx, age, age + ctx.Rng.Range(-4, 4)) : Math.Max(12, age + ctx.Rng.Range(-5, 5));
+        int theirAge = romantic ? EventSystem.RomanticAge(ctx, p, age + ctx.Rng.Range(-4, 4)) : Math.Max(12, age + ctx.Rng.Range(-5, 5));
         var person = PersonFactory.CreateStranger(ctx, sex, theirAge);
         if (romantic) person.AttractedToSameSex = p.AttractedToSameSex;
         PersonFactory.SetBond(ctx, friend, person, 60, 60);
         PersonFactory.SetBond(ctx, person, friend, 60, 60);
         Meet(ctx, p, person, "friend_of_friend", friend.Id);
         return person;
+    }
+
+    /// <summary>Extra attraction when someone is the age you go for (much younger or much older adults).</summary>
+    private static double AgeTaste(SimContext ctx, Person who, Person other)
+    {
+        int gap = other.Age(ctx.Year) - who.Age(ctx.Year);
+        if (other.Age(ctx.Year) < ctx.Country.AdultAge || Math.Abs(gap) < 8) return 0;
+        return (gap < 0 ? ctx.Mod(who, "prefers_younger") : ctx.Mod(who, "prefers_older")) * 20;
     }
 
     public static Acquaintance? Find(Person p, int otherId) => p.Acquaintances.FirstOrDefault(a => a.Id == otherId);

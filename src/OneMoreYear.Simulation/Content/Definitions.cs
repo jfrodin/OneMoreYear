@@ -12,6 +12,11 @@ public sealed class TraitDef
     public string Tone { get; set; } = "light";
     /// <summary>How common the trait is when people are born (1 = normal).</summary>
     public double Weight { get; set; } = 1;
+    /// <summary>Only appears in adulthood (e.g. partner preferences); rolled at 18 instead of at birth.</summary>
+    public bool AdultOnly { get; set; }
+    /// <summary>Extra weight by sex, e.g. more men than women prefer much younger partners.</summary>
+    public double MaleWeight { get; set; } = 1;
+    public double FemaleWeight { get; set; } = 1;
     /// <summary>
     /// Named modifiers read by the simulation, e.g. "career", "social", "infidelity".
     /// Summed over a person's traits.

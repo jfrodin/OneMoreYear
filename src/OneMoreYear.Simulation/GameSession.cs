@@ -94,6 +94,7 @@ public sealed class GameSession
             if (!p.IsAlive) continue;
             LifeSystem.UpdateHealth(ctx, p);
             if (LifeSystem.CheckDeath(ctx, p)) continue;
+            if (p.Age(ctx.Year) == ctx.Country.AdultAge) PersonFactory.RollAdultTraits(ctx, p);
             CareerSystem.Update(ctx, p, jobLoss);
             EconomySystem.Update(ctx, p, savingsFactor);
             p.PeakNetWorth = Math.Max(p.PeakNetWorth, EconomySystem.NetWorth(ctx, p));

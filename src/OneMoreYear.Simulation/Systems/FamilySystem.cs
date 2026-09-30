@@ -232,6 +232,8 @@ public static class FamilySystem
     {
         var sex = p.AttractedToSameSex ? p.Sex : (p.Sex == Sex.Male ? Sex.Female : Sex.Male);
         int age = Math.Max(18, p.Age(ctx.Year) + ctx.Rng.Range(ageOffsetMin, ageOffsetMax) + (p.Sex == Sex.Male ? -1 : 1));
+        // Some adults go for much younger or much older partners (always adults).
+        age = Math.Max(ctx.Country.AdultAge, EventSystem.RomanticAge(ctx, p, age));
         var partner = PersonFactory.CreateStranger(ctx, sex, age);
         partner.AttractedToSameSex = p.AttractedToSameSex;
         partner.Generation = p.Generation;
