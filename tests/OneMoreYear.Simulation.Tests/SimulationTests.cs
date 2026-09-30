@@ -355,11 +355,31 @@ public class CrimeTests
             var again = GameSession.NewGame(new NewGameOptions { ScenarioId = sc.Id });
             Assert.Equal(s.Player.FullName, again.Player.FullName);
         }
-        var secret = GameSession.NewGame(new NewGameOptions { ScenarioId = "the_family_secret" });
-        // You play the grandfather; the grandchild is an adult who was abused as a child. You never choose it.
-        var abuse = Assert.Single(secret.World.Secrets, x => x.Kind == "abuse" && x.SubjectId == secret.Player.Id);
-        Assert.True(secret.World.Get(abuse.VictimId!.Value).Age(secret.Year) >= 18);
-        Assert.Contains(secret.CurrentEvents(), e => e.Title == "Sunday dinner");
+        // "The family secret" from three sides: the same family, the same hidden father.
+        foreach (var (id, opening) in new[] { ("the_family_secret", "Roots"), ("the_family_secret_mother", "The DNA kit"), ("the_family_secret_daughter", "Roots") })
+        {
+            var secret = GameSession.NewGame(new NewGameOptions { ScenarioId = id });
+            var w = secret.World;
+            var origin = Assert.Single(w.Secrets, x => x.Kind == "origin");
+            var father = w.Get(origin.SubjectId);
+            var mother = w.Get(origin.VictimId!.Value);
+            var child = w.Get(origin.ChildId!.Value);
+            Assert.Contains(father.Id, mother.ParentIds);
+            Assert.Equal(father.Id, child.BiologicalFatherId);
+            Assert.Equal(Sex.Female, child.Sex);
+            Assert.Equal(25, child.Age(secret.Year));
+            Assert.Contains(w.Secrets, x => x.Kind == "abuse" && x.SubjectId == father.Id && x.VictimId == mother.Id && !x.Revealed);
+            Assert.Contains(secret.CurrentEvents(), e => e.Title == opening);
+            int expectedPlayer = id.EndsWith("mother") ? mother.Id : id.EndsWith("daughter") ? child.Id : father.Id;
+            Assert.Equal(expectedPlayer, secret.Player.Id);
+        }
+
+        // Telling the truth reveals both secrets, and the grandfather faces the police.
+        var gf = GameSession.NewGame(new NewGameOptions { ScenarioId = "the_family_secret" });
+        var roots = gf.CurrentEvents().First(e => e.Title == "Roots");
+        gf.Choose(roots.Uid, roots.Choices.Single(c => c.Text == "Tell them the truth").Index);
+        Assert.All(gf.World.Secrets.Where(x => x.Kind is "origin" or "abuse"), x => Assert.True(x.Revealed));
+        Assert.Contains(gf.CurrentEvents(), e => e.Title == "Everyone knows");
         var poor = GameSession.NewGame(new NewGameOptions { ScenarioId = "nothing_to_lose" });
         Assert.Contains(Kinship.Parents(poor.World, poor.Player), p => p.Addiction == "alcohol");
     }

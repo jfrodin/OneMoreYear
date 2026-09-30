@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.9.3 – 2026-09-30 · The family secret, three sides
+
+- **The family secret** is now a hidden father: the grandfather is also the biological father of his
+  granddaughter, born from his abuse of his daughter decades earlier. Only he and the mother know,
+  and now the granddaughter has ordered a DNA test. The act is never shown or played.
+- Three scenarios for the same family: play the **grandfather**, the **mother** or the **granddaughter**.
+- New situations: *Roots* and *The DNA kit* (buy silence, threaten, stop the test, tell the truth),
+  *The results* and *It's out* (go to Mum, report to the police, cut everyone off, leave town).
+- The truth can also come out by itself (DNA tests from 2000 onwards, the mother telling the family),
+  and it brings the abuse and the police with it.
+- Replaces the 0.9.2 version of the scenario (grandfather and the abused grandson).
+
 ## 0.9.2 – 2026-09-30 · The family secret, from the other side
 
 - The scenario **The family secret** is now played as the grandfather, aged 72. His grandchild,

@@ -16,7 +16,9 @@ The scenarios are defined in [content/scenarios.json](../content/scenarios.json)
 | **Old money** | `old_money` | 1001 | 1965, newborn | Rich, greedy parents with a home of their own and a very rich grandfather. You are ambitious and charming. Inheritance, spoiled children, extreme wealth. |
 | **Nothing to lose** | `nothing_to_lose` | 1002 | 1975, newborn | Poor parents in debt, both unemployed. Your father drinks and has a temper. Poverty, addiction, violence at home, breaking the pattern. |
 | **Sunshine** | `sunshine` | 1003 | 1980, newborn | Kind, cheerful, devoted parents, and you are kind and resilient. The good life: does it last? |
-| **The family secret** | `the_family_secret` | 1004 | 1990, you are the grandfather (72) | You play the grandfather. Years ago he abused his grandchild Elias, who is 22 now. It happened before you take over, and it is never shown or played. What you play is the secret, the guilt and the reckoning: Sunday dinner, confessing or keeping quiet, the family finding out, the police, prison or denial. **Dark theme.** |
+| **The family secret – grandfather** | `the_family_secret` | 37 | 2015, you are the grandfather (73) | Your granddaughter Frida (25) is also your daughter. Her mother Helena is your daughter, and you abused her from when she was a child. It happened before you take over and is never shown or played. Frida has just ordered a DNA test: buy silence, threaten, talk her out of it or confess. **Dark theme.** |
+| **The family secret – mother** | `the_family_secret_mother` | 37 | 2015, you are the mother (49) | The same family, as Helena. You have carried it alone for 25 years, and now your daughter wants to take a DNA test. Stop her, confront your father, tell her yourself or keep quiet. **Dark theme.** |
+| **The family secret – daughter** | `the_family_secret_daughter` | 37 | 2015, you are the granddaughter (25) | The same family, as Frida. Mum goes pale when you mention a DNA test. Find out, go to Mum, report Grandpa or cut them all off. **Dark theme.** |
 | **Born bad** | `born_bad` | 1005 | 1995, age 17 | You are cruel, hot-tempered and criminal-minded. Crime, temptations, the police, prison, a way back. |
 | **Scandal** | `scandal` | 1006 | 1997, age 12 | Both parents are unfaithful, dishonest or jealous. Affairs, revealed secrets, divorce, a half-sibling. |
 | **Grown up** | `grown_up` | 1007 | 1996, age 26 | Skips childhood. You have a partner, 150,000 kr and job offers waiting. Adult life, love, money and work. |
@@ -25,7 +27,7 @@ The scenarios are defined in [content/scenarios.json](../content/scenarios.json)
 ## Tips
 
 - *Nothing to lose* and *Born bad* are good for the crime system. Try the actions under *Crime*.
-- *The family secret*: the grandchild may tell the family any year. Try confessing, denying and moving away.
+- *The family secret*: play it from all three sides. The truth can also come out by itself (DNA test, Helena telling the family), and then the police get involved.
 - *Late in life* is the quickest way to test death, the will and choosing an heir.
 - Found something? Press F1 in the game and write it down, as usual. The note gets the scenario's save file.
 

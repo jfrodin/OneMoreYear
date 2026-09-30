@@ -14,7 +14,7 @@ public static class EffectApplier
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
-        "crime", "parole", "convicted"
+        "crime", "parole", "convicted", "reveal_origin"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -127,6 +127,10 @@ public static class EffectApplier
                 break;
             case "violence":
                 if (to != null) DarkSystem.Hit(ctx, who, to);
+                break;
+            case "reveal_origin":
+                if (w.Secrets.FirstOrDefault(s => s.Kind == "origin" && !s.Revealed && (s.SubjectId == who.Id || s.VictimId == who.Id || s.ChildId == who.Id)) is { } origin)
+                    DarkSystem.RevealOrigin(ctx, origin, confessed: e.Kind == "confess");
                 break;
             case "reveal_abuse":
             {

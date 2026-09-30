@@ -62,6 +62,12 @@ repeated. Characters are not abusers while the player plays them. What gets play
 the silence and the reckoning: confessing, denying, the family's reaction, the police and prison.
 A content check stops the crime from ever being used as a player choice.
 
+*Addition 2026-09-30 (2):* the producer wanted a 15-year-old granddaughter currently pregnant by
+her grandfather, with the player as the grandfather. Declined: it makes the player the perpetrator
+of ongoing abuse of a child. What was built instead is the *Chinatown* structure: the abuse of the
+daughter lies decades back, the grandchild born from it is an adult, and the story is played from
+the grandfather's, the mother's or the grandchild's side.
+
 ## Relationships within the family – 2026-09-30
 
 - **Close relatives never become couples** – parents and children, siblings and half-siblings,

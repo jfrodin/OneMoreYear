@@ -9,7 +9,7 @@ if (args.FirstOrDefault(a => a.StartsWith("--load=")) is { } loadArg)
     Inspect.Run(loadArg["--load=".Length..], args.FirstOrDefault(a => a.StartsWith("--who="))?["--who=".Length..] ?? "");
     return;
 }
-if (args.FirstOrDefault(a => a.StartsWith("--find-seed=")) is { } fs) { SeedSearch.Run(fs["--find-seed=".Length..], 30); return; }
+if (args.FirstOrDefault(a => a.StartsWith("--find-seed=")) is { } fs) { SeedSearch.Run(fs["--find-seed=".Length..], 60); return; }
 if (args.Contains("--scenarios")) { ScenarioReport.Run(); return; }
 ulong? givenSeed = args.Length > 0 && ulong.TryParse(args[0], out var s) ? s : null;
 int years = args.Length > 1 && int.TryParse(args[1], out var y) ? y : 120;

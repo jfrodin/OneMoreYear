@@ -14,7 +14,9 @@ static class SeedSearch
             int kids = Kinship.Children(w, p).Count(k => k.IsAlive);
             int grandkids = Kinship.Grandchildren(w, p).Count(k => k.IsAlive);
             var grandparents = Kinship.Grandparents(w, p).Count(g => g.IsAlive);
-            Console.WriteLine($"seed {seed,4}: {p.FullName}, {p.Age(s.Year)}, gen {p.Generation}, partner={w.TryGet(p.PartnerId)?.FirstName ?? "-"} " +
+            var origin = w.Secrets.FirstOrDefault(x => x.Kind == "origin");
+            var child = w.TryGet(origin?.ChildId);
+            Console.WriteLine($"seed {seed,4}: {p.FullName} ({p.Sex}), {p.Age(s.Year)}, gen {p.Generation}, origin={(origin != null ? $"{child!.FirstName} ({child.Sex}, {child.Age(s.Year)}), legal father alive={w.TryGet(origin.OtherId)?.IsAlive}" : "-")}, partner={w.TryGet(p.PartnerId)?.FirstName ?? "-"} " +
                               $"kids={kids} grandkids={grandkids} grandparents={grandparents} job={p.Activity} prison={p.CriminalRecord.Count}");
         }
     }

@@ -316,9 +316,9 @@ public sealed class ScenarioDef
     public ScenarioTweak? Father { get; set; }
     public ScenarioTweak? Mother { get; set; }
     public ScenarioTweak? Grandfather { get; set; }
-    /// <summary>A storyline started when the scenario hands over ("abuse_past": the grandfather's old secret comes back).</summary>
+    /// <summary>A storyline started when the scenario hands over ("hidden_father": the grandfather is also the father of his grandchild).</summary>
     public string? Storyline { get; set; }
-    /// <summary>Who the player plays when the scenario hands over: null (the child) or "grandfather".</summary>
+    /// <summary>Who the player plays when the scenario hands over: null (the child), "grandfather" or "mother".</summary>
     public string? PlayAs { get; set; }
 }
 

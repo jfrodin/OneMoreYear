@@ -195,28 +195,155 @@
     ]
   },
 
-  // When the player is the one who did it (scenario "The family secret"). It happened long before the
-  // player took over and is never described – only the guilt, the silence and the reckoning are played.
+  // Scenario "The family secret": the grandfather is also the biological father of his grandchild,
+  // born from abuse of his daughter that began when she was a child. It happened long before the player
+  // takes over and is never described. Played from three sides – only the secret, the guilt and the
+  // reckoning. The player never commits abuse (docs/design-decisions.md).
   {
-    "id": "abuse_past", "trigger": "situation",
-    "title": "Sunday dinner",
-    "text": "The whole family is at the table. {t.name} is grown up now. {t.He} doesn't look at you once, and leaves before dessert. You both know why. Nobody else does – yet.",
+    "id": "origin_start_grandfather", "trigger": "situation",
+    "title": "Roots",
+    "text": "At {t.name}'s birthday dinner {t.he} tells everyone about the DNA kit {t.he} has ordered – \"to find out where we really come from\". Everyone laughs. Everyone except {o.name}, {t.his} mother, who puts down her fork and looks straight at you. You are the only two people alive who know who {t.name}'s father really is.",
     "choices": [
       {
-        "text": "Act as if nothing happened",
-        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ],
-        "result": "You tell a story about the old days and everyone laughs. Everyone except {t.name}."
+        "text": "Give {o.name} money to keep the past buried",
+        "effects": [
+          { "type": "transfer", "to": "other", "amount": 200000 },
+          { "type": "relation", "who": "other", "to": "player", "dim": "bitterness", "amount": 25 },
+          { "type": "memory", "who": "other", "to": "player", "kind": "silence_bought", "text": "{name} tried to pay for my silence", "impact": -30 }
+        ],
+        "result": "She takes the envelope without a word. You can't tell whether that means yes."
       },
       {
-        "text": "Stay away from family dinners",
-        "effects": [ { "type": "happiness", "amount": -8 } ],
-        "result": "You stop coming. People start asking why. You don't answer."
+        "text": "Talk {t.name} out of the test",
+        "chance": 0.5, "chanceTraits": { "charming": 0.15, "manipulative": 0.15 },
+        "success": { "text": "\"You're right, Grandpa, it's just a silly trend.\" The kit ends up in a drawer. For now." },
+        "failure": { "text": "{t.He} gives you a strange look. Why would Grandpa care so much?",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -20 } ] }
       },
       {
-        "text": "Tell the family the truth",
+        "text": "Threaten {o.name}",
+        "effects": [
+          { "type": "relation", "who": "other", "to": "player", "dim": "fear", "amount": 30 },
+          { "type": "relation", "who": "other", "to": "player", "dim": "bitterness", "amount": 30 }
+        ],
+        "result": "You remind her, quietly, who the family has always believed. She has heard it before."
+      },
+      {
+        "text": "Tell them the truth",
         "hint": "There is no taking it back.",
-        "effects": [ { "type": "reveal_abuse", "kind": "confess" } ],
-        "result": "You say it. Somebody gets up and walks out without a word. {t.name} finally looks at you."
+        "effects": [ { "type": "reveal_origin", "kind": "confess" } ],
+        "result": "You say it. For a long moment nobody moves. Then {t.name} stands up and walks out."
+      }
+    ]
+  },
+  {
+    "id": "origin_start_mother", "trigger": "situation",
+    "title": "The DNA kit",
+    "text": "{t.name} shows you the DNA kit {t.he} has ordered. \"Don't you want to know where we come from, Mum?\" {t.He} has no idea that the man {t.he} calls Dad is not {t.his} father. {t.His} father is {o.name} – your own father. For {t.age} years you have carried it alone.",
+    "choices": [
+      {
+        "text": "Ask {t.him} not to send it",
+        "chance": 0.5,
+        "success": { "text": "{t.He} shrugs and puts it in a drawer. For now." },
+        "failure": { "text": "\"Why are you being so weird about it?\" {t.He} sends it the next day.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -15 } ] }
+      },
+      {
+        "text": "Go to {o.name}",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "other", "dim": "bitterness", "amount": 20 },
+          { "type": "happiness", "amount": -10 }
+        ],
+        "result": "\"Nobody would believe you,\" {o.name} says, the way he always has. But his hands are shaking."
+      },
+      {
+        "text": "Tell {t.name} the truth yourself",
+        "hint": "Better from you than from a letter.",
+        "effects": [ { "type": "reveal_origin" } ],
+        "result": "You sit {t.him} down in the kitchen and tell {t.him} everything. It takes an hour. It has taken {t.age} years."
+      },
+      {
+        "text": "Say nothing",
+        "effects": [ { "type": "happiness", "amount": -8 } ],
+        "result": "You smile and say it sounds fun. You don't sleep that night."
+      }
+    ]
+  },
+  {
+    "id": "origin_start_child", "trigger": "situation",
+    "title": "Roots",
+    "text": "You've ordered a DNA kit to learn more about the family. When you tell Mum, {t.name} goes white and leaves the room. Grandpa {o.name} laughs a little too loudly and says it's a waste of money.",
+    "choices": [
+      {
+        "text": "Send the test",
+        "chance": 0.7,
+        "success": { "text": "Six weeks later the results arrive.", "effects": [ { "type": "reveal_origin" } ] },
+        "failure": { "text": "The sample gets lost in the mail. You don't order another one – not yet." }
+      },
+      {
+        "text": "Ask Mum what's wrong",
+        "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 5, "mutual": true } ],
+        "result": "She holds you for a long time and says nothing. Over her shoulder you can see Grandpa watching."
+      },
+      {
+        "text": "Throw the kit away",
+        "result": "Some things are better not knowing. You tell yourself that, anyway."
+      }
+    ]
+  },
+  {
+    "id": "origin_revealed_child", "trigger": "situation",
+    "title": "The results",
+    "text": "At first the DNA match makes no sense. Then it does. Your biological father is {t.name} – your grandfather. {o.name}, your mother, was only a child when it started. She has carried it your whole life.",
+    "choices": [
+      {
+        "text": "Go to Mum",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "other", "dim": "closeness", "amount": 20, "mutual": true },
+          { "type": "memory", "kind": "origin_mother", "to": "other", "text": "Mum and I finally talked about it", "impact": 15 }
+        ],
+        "result": "She has waited {age} years for this conversation. You both cry until it gets light outside."
+      },
+      {
+        "text": "Report {t.name} to the police",
+        "chance": 0.7,
+        "success": { "text": "The DNA is all the evidence they need.",
+          "effects": [ { "type": "convicted", "who": "target", "kind": "child_abuse", "to": "other" } ] },
+        "failure": { "text": "The prosecutor says it was too long ago. {t.name} walks free. The family doesn't." }
+      },
+      {
+        "text": "Confront {t.name}",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 30 } ],
+        "result": "He says it was \"a different time\". You leave before you do something you'll regret."
+      },
+      {
+        "text": "Cut them all off",
+        "effects": [ { "type": "happiness", "amount": -15 }, { "type": "move_city" } ],
+        "result": "You move away and change your number. You don't know who you are anymore – but you know who you're not."
+      }
+    ]
+  },
+  {
+    "id": "origin_revealed_mother", "trigger": "situation",
+    "title": "It's out",
+    "text": "{t.name} knows. Soon the whole family knows. For {t.age} years it was yours alone to carry. Now everyone is looking at you – and at {o.name}.",
+    "choices": [
+      {
+        "text": "Hold on to {t.name}",
+        "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 20, "mutual": true } ],
+        "result": "\"None of it was your fault,\" {t.he} says. You have waited your whole life to hear it."
+      },
+      {
+        "text": "Report {o.name} to the police",
+        "chance": 0.7,
+        "success": { "text": "This time, somebody believes you.",
+          "effects": [ { "type": "convicted", "who": "other", "kind": "child_abuse", "to": "player" } ] },
+        "failure": { "text": "The prosecutor says it was too long ago. {o.name} walks free." }
+      },
+      {
+        "text": "Leave town",
+        "effects": [ { "type": "move_city" }, { "type": "happiness", "amount": -5 } ],
+        "result": "You pack one suitcase and leave. For the first time in years you can breathe."
       }
     ]
   },

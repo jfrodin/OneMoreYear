@@ -11,6 +11,8 @@ namespace OneMoreYear.Simulation.Systems;
 public static class Scenarios
 {
     private const string GrandfatherFlag = "scenario_grandfather";
+    private const string MotherFlag = "scenario_mother";
+    private const string FatherFlag = "scenario_father";
 
     /// <summary>Applied right after the starting family is created.</summary>
     public static void ApplyFamily(SimContext ctx, ScenarioDef s)
@@ -20,7 +22,7 @@ public static class Scenarios
         var parents = Kinship.Parents(w, player).ToList();
         var father = parents.FirstOrDefault(p => p.Sex == Sex.Male);
         var mother = parents.FirstOrDefault(p => p.Sex == Sex.Female);
-        // The mother's father if he lives, otherwise any living grandfather.
+        // The mother's father if he lives, otherwise any living grandfather (storylines check which one it is).
         var grandfather = (mother == null ? null : Kinship.Parents(w, mother).FirstOrDefault(p => p.Sex == Sex.Male && p.IsAlive))
                           ?? Kinship.Grandparents(w, player).FirstOrDefault(p => p.Sex == Sex.Male && p.IsAlive);
 
@@ -31,6 +33,8 @@ public static class Scenarios
         Apply(ctx, mother, s.Mother);
         Apply(ctx, grandfather, s.Grandfather);
         grandfather?.Flags.Add(GrandfatherFlag);
+        mother?.Flags.Add(MotherFlag);
+        father?.Flags.Add(FatherFlag);
     }
 
     private static void Apply(SimContext ctx, Person? p, ScenarioTweak? t)
@@ -65,25 +69,27 @@ public static class Scenarios
         if (s.Player is { } pt) Apply(session.Ctx, session.Player, new ScenarioTweak { Money = pt.Money, OwnsHome = pt.OwnsHome, Unemployed = pt.Unemployed });
 
         var ctx = session.Ctx;
+        var w = ctx.World;
         var child = session.Player;
-        var grandfather = ctx.World.People.FirstOrDefault(p => p.Flags.Contains(GrandfatherFlag) && p.IsAlive);
-        if (s.PlayAs == "grandfather" && grandfather != null)
-        {
-            session.TakeOver(grandfather);
-            EventSystem.GenerateRandomEvents(ctx);
-        }
-        if (s.Storyline == "abuse_past" && grandfather != null) AbusePast(ctx, grandfather, child);
-    }
+        var grandfather = w.People.FirstOrDefault(p => p.Flags.Contains(GrandfatherFlag) && p.IsAlive);
+        var mother = w.People.FirstOrDefault(p => p.Flags.Contains(MotherFlag) && p.IsAlive);
+        var legalFather = w.People.FirstOrDefault(p => p.Flags.Contains(FatherFlag));
 
-    /// <summary>
-    /// The grandfather abused the grandchild years ago (never shown). The player – the grandfather –
-    /// starts with the secret and lives with the consequences. The player never makes the choice to abuse.
-    /// </summary>
-    private static void AbusePast(SimContext ctx, Person grandfather, Person grandchild)
-    {
-        int when = Math.Min(ctx.Year - 1, grandchild.BirthYear + 9);
-        var secret = DarkSystem.StartAbuse(ctx, grandfather, grandchild, when);
-        if (grandfather.Id == ctx.World.PlayerId)
-            EventSystem.QueueSituation(ctx, "abuse_past", new() { ["target"] = grandchild.Id }, new() { ["secret"] = secret.Id });
+        if (s.Storyline == "hidden_father" && grandfather != null && mother != null && mother.ParentIds.Contains(grandfather.Id))
+        {
+            var origin = DarkSystem.StartOrigin(ctx, grandfather, mother, child, legalFather);
+            // The mother's "carry the secret" moment is this scenario's opening, not a separate event.
+            foreach (var abuse in w.Secrets.Where(x => x.Kind == "abuse" && x.VictimId == mother.Id)) mother.Flags.Add($"carried_secret_{abuse.Id}");
+            var playAs = s.PlayAs switch { "grandfather" => grandfather, "mother" => mother, _ => null };
+            if (playAs != null)
+            {
+                session.TakeOver(playAs);
+                EventSystem.GenerateRandomEvents(ctx);
+            }
+            var vars = new Dictionary<string, double> { ["secret"] = origin.Id };
+            if (playAs == grandfather) EventSystem.QueueSituation(ctx, "origin_start_grandfather", new() { ["target"] = child.Id, ["other"] = mother.Id }, vars);
+            else if (playAs == mother) EventSystem.QueueSituation(ctx, "origin_start_mother", new() { ["target"] = child.Id, ["other"] = grandfather.Id }, vars);
+            else EventSystem.QueueSituation(ctx, "origin_start_child", new() { ["target"] = mother.Id, ["other"] = grandfather.Id }, vars);
+        }
     }
 }

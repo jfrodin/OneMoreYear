@@ -27,6 +27,7 @@ public static class DarkSystem
             if (age >= 60 && ctx.Rng.Chance(0.03)) Mellow(ctx, p);
         }
         RevealAbuse(ctx);
+        RevealOrigins(ctx);
     }
 
     // --- Addiction --------------------------------------------------------------------------
@@ -209,7 +210,7 @@ public static class DarkSystem
     /// The victim tells the family – or the abuser confesses. Relatives turn against the abuser,
     /// and the police may get involved.
     /// </summary>
-    public static void Reveal(SimContext ctx, Secret s, bool confessed = false)
+    public static void Reveal(SimContext ctx, Secret s, bool confessed = false, bool followsOrigin = false)
     {
         var w = ctx.World;
         if (s.Revealed) return;
@@ -217,17 +218,23 @@ public static class DarkSystem
         var victim = w.Get(s.VictimId!.Value);
         var predator = w.Get(s.SubjectId);
         string him = victim.Sex == Sex.Male ? "him" : "her";
-        w.Log(confessed
-                ? $"{predator.FullName} confessed to the family that {(predator.Sex == Sex.Male ? "he" : "she")} had abused {victim.FirstName} when {victim.FirstName} was a child."
-                : $"{victim.FirstName} revealed that {predator.FullName} abused {him} as a child.",
-            3, "secret", victim.Id, predator.Id);
-        if (!confessed) RelationshipSystem.AddMemory(ctx, victim, "told_family", "Finally told the family what happened", 15);
+        string she = victim.Sex == Sex.Male ? "he" : "she";
+        string text = confessed
+            ? $"{predator.FullName} confessed to the family that {(predator.Sex == Sex.Male ? "he" : "she")} had abused {victim.FirstName} when {victim.FirstName} was a child."
+            : followsOrigin
+                ? $"With it came the rest: {predator.FullName} had abused {victim.FirstName} since {she} was a child."
+                : $"{victim.FirstName} revealed that {predator.FullName} abused {him} as a child.";
+        w.Log(text, 3, "secret", victim.Id, predator.Id);
+        if (!confessed && !followsOrigin) RelationshipSystem.AddMemory(ctx, victim, "told_family", "Finally told the family what happened", 15);
         foreach (var relative in Kinship.Distances(w, victim, 2).Keys.Select(w.Get).Where(r => r.IsAlive && r.Id != predator.Id))
         {
             if (!s.KnownBy.Contains(relative.Id)) s.KnownBy.Add(relative.Id);
             RelationshipSystem.AddMemory(ctx, relative, "learned_abuse", $"Found out what {predator.FirstName} did to {victim.FirstName}", -50, predator.Id);
             RelationshipSystem.Change(ctx, relative.Id, victim.Id, RelDim.Closeness, 10);
         }
+        // An abuse secret can hide another one: a child born from it (see StartOrigin).
+        if (w.Secrets.FirstOrDefault(o => o.Kind == "origin" && !o.Revealed && o.SubjectId == s.SubjectId && o.VictimId == s.VictimId) is { } origin)
+            RevealOrigin(ctx, origin, confessed);
         if (!predator.IsAlive) return;
         if (w.TryGet(predator.PartnerId) is { } partner && ctx.Rng.Chance(0.5))
             FamilySystem.BreakUp(ctx, partner, predator);
@@ -235,6 +242,74 @@ public static class DarkSystem
             EventSystem.QueueSituation(ctx, "abuse_revealed", new() { ["target"] = victim.Id });
         else if (predator.Activity != Activity.Prison && ctx.Rng.Chance(0.4))
             CrimeSystem.Arrest(ctx, predator, ctx.Content.Crimes["child_abuse"], victim, false);
+    }
+
+    // --- A child born from abuse (scenario "The family secret") ---------------------------
+
+    /// <summary>
+    /// Backstory: <paramref name="father"/> abused his daughter <paramref name="mother"/> from when she was a
+    /// child, and <paramref name="child"/> was born from it. The family believes <paramref name="legal"/> is
+    /// the father. Only the father and the mother know. Never shown – only what it does to the family.
+    /// </summary>
+    public static Secret StartOrigin(SimContext ctx, Person father, Person mother, Person child, Person? legal)
+    {
+        var w = ctx.World;
+        StartAbuse(ctx, father, mother, Math.Min(mother.BirthYear + 10, child.BirthYear - 1));
+        child.BiologicalFatherId = father.Id;
+        var origin = new Secret
+        {
+            Id = w.Secrets.Count + 1,
+            Kind = "origin",
+            Year = child.BirthYear,
+            SubjectId = father.Id,
+            VictimId = mother.Id,
+            ChildId = child.Id,
+            OtherId = legal?.Id,
+            KnownBy = new List<int> { father.Id, mother.Id },
+        };
+        w.Secrets.Add(origin);
+        return origin;
+    }
+
+    /// <summary>A DNA test, a slip, a diary – sooner or later the child finds out.</summary>
+    private static void RevealOrigins(SimContext ctx)
+    {
+        var w = ctx.World;
+        foreach (var s in w.Secrets.Where(s => s.Kind == "origin" && !s.Revealed).ToList())
+        {
+            if (w.TryGet(s.ChildId) is not { IsAlive: true }) continue;
+            double chance = s.ChildId == w.PlayerId ? 0.03 : ctx.Year >= 2000 ? 0.06 : 0.03;
+            if (ctx.Rng.Chance(chance)) RevealOrigin(ctx, s);
+        }
+    }
+
+    public static void RevealOrigin(SimContext ctx, Secret s, bool confessed = false)
+    {
+        var w = ctx.World;
+        if (s.Revealed) return;
+        s.Revealed = true;
+        var father = w.Get(s.SubjectId);
+        var mother = w.Get(s.VictimId!.Value);
+        var child = w.Get(s.ChildId!.Value);
+        var legal = w.TryGet(s.OtherId);
+        foreach (var p in new[] { child, legal }.OfType<Person>()) if (!s.KnownBy.Contains(p.Id)) s.KnownBy.Add(p.Id);
+
+        w.Log($"The truth came out: {father.FullName} is not only {Kinship.Genitive(child.FirstName)} grandfather – he is {(child.Sex == Sex.Male ? "his" : "her")} biological father.",
+            3, "secret", child.Id, father.Id, mother.Id);
+        RelationshipSystem.AddMemory(ctx, child, "origin", $"Found out that {father.FirstName} is not just my grandfather but my father", -80, father.Id);
+        w.Rel(child.Id, father.Id)[RelDim.Bitterness] += 50;
+        Traumatize(ctx, child, 0.4);
+        if (legal is { IsAlive: true })
+            RelationshipSystem.AddMemory(ctx, legal, "origin_legal", $"Found out that {child.FirstName} is {Kinship.Genitive(father.FirstName)} child, not mine", -50, father.Id);
+
+        // It cannot come out without the abuse coming out too.
+        if (w.Secrets.FirstOrDefault(a => a.Kind == "abuse" && !a.Revealed && a.SubjectId == father.Id && a.VictimId == mother.Id) is { } abuse)
+            Reveal(ctx, abuse, confessed, followsOrigin: true);
+
+        if (child.Id == w.PlayerId)
+            EventSystem.QueueSituation(ctx, "origin_revealed_child", new() { ["target"] = father.Id, ["other"] = mother.Id });
+        else if (mother.Id == w.PlayerId)
+            EventSystem.QueueSituation(ctx, "origin_revealed_mother", new() { ["target"] = child.Id, ["other"] = father.Id });
     }
 
     // --- Traits change with life ------------------------------------------------------------

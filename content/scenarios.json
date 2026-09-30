@@ -27,11 +27,25 @@
     "player": { "traits": [ "kind", "cheerful", "resilient" ] }
   },
   {
-    "id": "the_family_secret", "name": "The family secret",
-    "description": "You are the grandfather – charming, respected, loved by everyone. Long ago you abused your grandchild, who is an adult now. It has never been said out loud. You live with the secret, and with what happens when it comes out. (Dark theme: the abuse itself is never shown or played – only the consequences.)",
-    "seed": 1004, "startYear": 1968, "age": 22,
+    "id": "the_family_secret", "name": "The family secret – grandfather",
+    "description": "You are the grandfather: charming, respected, loved by everyone. Your granddaughter is 25 – and she is also your daughter. Only you and her mother know. Now she has ordered a DNA test. (Dark theme: what happened is never shown or played – only the secret and the reckoning.)",
+    "seed": 37, "startYear": 1990, "age": 25,
     "grandfather": { "traits": [ "charming" ] },
-    "playAs": "grandfather", "storyline": "abuse_past"
+    "playAs": "grandfather", "storyline": "hidden_father"
+  },
+  {
+    "id": "the_family_secret_mother", "name": "The family secret – mother",
+    "description": "The same family, seen by the mother. Your daughter's real father is your own father. You have carried it alone for 25 years. Now your daughter wants to take a DNA test. (Dark theme: only the consequences are shown.)",
+    "seed": 37, "startYear": 1990, "age": 25,
+    "grandfather": { "traits": [ "charming" ] },
+    "playAs": "mother", "storyline": "hidden_father"
+  },
+  {
+    "id": "the_family_secret_daughter", "name": "The family secret – daughter",
+    "description": "The same family, seen by the granddaughter. You are 25 and curious about your roots. Mum goes pale when you mention a DNA test. Grandpa laughs a little too loudly. (Dark theme: only the consequences are shown.)",
+    "seed": 37, "startYear": 1990, "age": 25,
+    "grandfather": { "traits": [ "charming" ] },
+    "storyline": "hidden_father"
   },
   {
     "id": "born_bad", "name": "Born bad",
