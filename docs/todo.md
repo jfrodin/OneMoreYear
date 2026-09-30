@@ -17,6 +17,13 @@ Backlog for One More Year. Newest ideas at the top of each section.
   consequences and how people react. It is never depicted in sexually explicit detail. (This is also
   what keeps the game within PEGI 18 and Steam's rules.)
 
+- **Relationships follow the country's law.** In Sweden the age of consent is 15, so that is where
+  romantic/sexual relationships can start (pregnancy, living together etc. still follow their own ages;
+  marriage from 18). Below that only innocent crushes and "going steady" between kids of similar age.
+  Stored per country (`ageOfConsent`, `marriageAge`) so other countries follow their own laws. No
+  romance between an adult and someone under the age of consent – that belongs only to the dark
+  themes above (abuse), never to normal dating.
+
 ## From playtesting
 
 - [x] **Show relations next to names in all text.** It's hard to tell who is who when reading –
@@ -24,6 +31,29 @@ Backlog for One More Year. Newest ideas at the top of each section.
   "Anna (your sister) and Erik (your brother-in-law) got married." Applies to the year's news,
   event texts, the chronicle and memories. The chronicle should probably store person ids and render
   the relation at display time (relative to the current player, since that changes across generations).
+
+### Playtest 1 (2026-09-30) – bugs
+
+- [x] "Go to university" is offered again while already studying (self_study needs "not studying").
+- [x] University graduates often end up as shop assistants – job matching must prefer jobs that use the education.
+- [x] "The alibi" (sibling sneaking home) fires for 25-year-olds and repeats – childhood/teen events should
+  be once per person and age-appropriate. General rule needed: some events only once per target.
+- [x] Family tree shows the same people twice (once under each set of grandparents).
+
+### Playtest 1 – ideas
+
+- [ ] **Appearance and attributes**: height, build, hair, eyes (inherited), plus more bars – e.g. Looks,
+  Smarts, Fitness, Stress. They should matter: smarts for school/career, looks for dating, etc.
+- [ ] **Relationships while young**: innocent crushes and "going steady" between kids of similar age,
+  real relationships from the age of consent (15 in Sweden) – see design decision above.
+- [ ] **Finding love among people you know**: classmates, colleagues and friends-of-friends as a pool of
+  acquaintances who can become friends or partners – not only a random "Look for love" button.
+- [ ] **School & career tab**: grades, programme/major, current job, performance, boss and colleagues,
+  job offers to choose between.
+- [ ] **Economy tab**: income, taxes, living costs, student loans, savings, debt, home – and a yearly
+  breakdown of why the money changed.
+- [ ] **Deeper study/work loop**: choose a programme and major that leads to specific careers, part-time
+  jobs while studying, applying for jobs, events at work.
 
 ## Known issues / balancing
 

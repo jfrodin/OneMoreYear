@@ -124,3 +124,43 @@ public class AnnotationTests
         Assert.Equal($"Your mother, {mother.FirstName}, called.", session.Annotate($"Your mother, {mother.FirstName}, called.", new[] { mother.Id }));
     }
 }
+
+public class AgeLawTests
+{
+    private static (GameSession S, OneMoreYear.Simulation.Model.Person A, OneMoreYear.Simulation.Model.Person B) Pair(int ageA, int ageB)
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 9, StartYear = 1990 });
+        var a = PersonFactory.CreateStranger(s.Ctx, OneMoreYear.Simulation.Model.Sex.Male, ageA);
+        var b = PersonFactory.CreateStranger(s.Ctx, OneMoreYear.Simulation.Model.Sex.Female, ageB);
+        a.AttractedToSameSex = b.AttractedToSameSex = false;
+        return (s, a, b);
+    }
+
+    [Theory]
+    [InlineData(13, 13, true)]   // innocent "going steady" between kids of the same age
+    [InlineData(13, 16, false)]  // under the age of consent with someone older
+    [InlineData(10, 10, false)]  // too young for any of it
+    [InlineData(15, 17, true)]
+    [InlineData(16, 20, false)]  // minor with a much older partner
+    [InlineData(25, 14, false)]  // adult and child – never
+    [InlineData(30, 45, true)]
+    public void CouplesFollowTheLaw(int ageA, int ageB, bool allowed)
+    {
+        var (s, a, b) = Pair(ageA, ageB);
+        Assert.Equal(allowed, EventSystem.Compatible(s.Ctx, a, b));
+    }
+
+    [Fact]
+    public void NobodyBecomesAParentBelowTheAgeOfConsent()
+    {
+        var session = GameSession.NewGame(new NewGameOptions { Seed = 21, StartYear = 1950 });
+        var bot = new AutoPlayer(21);
+        for (int i = 0; i < 150 && bot.PlayYear(session); i++) { }
+        int consent = session.Country.AgeOfConsent;
+        foreach (var child in session.World.People.Where(p => p.ParentIds.Count > 0 && !p.IsAdopted))
+        {
+            var mother = child.ParentIds.Select(session.World.Get).FirstOrDefault(p => p.Sex == OneMoreYear.Simulation.Model.Sex.Female);
+            if (mother != null) Assert.True(child.BirthYear - mother.BirthYear >= consent, $"{mother.FullName} was {child.BirthYear - mother.BirthYear}");
+        }
+    }
+}

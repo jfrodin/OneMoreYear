@@ -75,10 +75,12 @@ public static class FamilySystem
         {
             var npc = a.Id == w.PlayerId ? b : a;
             if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 2 && w.Opinion(npc.Id, w.PlayerId) > 40
+                && a.Age(ctx.Year) >= ctx.Country.MarriageAge && b.Age(ctx.Year) >= ctx.Country.MarriageAge
                 && rng.Chance(0.15))
                 EventSystem.QueueSituation(ctx, "partner_proposes", new() { ["target"] = npc.Id });
         }
-        else if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && oa > 15 && ob > 15 && rng.Chance(0.4))
+        else if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && oa > 15 && ob > 15 && rng.Chance(0.4)
+                 && a.Age(ctx.Year) >= ctx.Country.AdultAge && b.Age(ctx.Year) >= ctx.Country.AdultAge)
             MoveIn(ctx, a, b);
         else if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 1 && oa > 25 && ob > 25
                  && rng.Chance(0.14 * (ctx.Year < 1970 ? 2 : 1)))
@@ -113,7 +115,7 @@ public static class FamilySystem
         }
 
         if (mother == null) return;
-        double fertility = FertilityByAge(mother.Age(ctx.Year));
+        double fertility = FertilityByAge(ctx, mother.Age(ctx.Year));
         if (fertility <= 0) return;
         double desire = kids switch { 0 => 0.22, 1 => 0.26, 2 => 0.12, 3 => 0.05, _ => 0.02 };
         double chance = desire * fertility * statusFactor * ctx.FertilityIndex;
@@ -121,9 +123,14 @@ public static class FamilySystem
         if (ctx.Rng.Chance(chance)) HaveChild(ctx, a, b);
     }
 
-    public static double FertilityByAge(int age) => age switch
+    /// <summary>
+    /// Chance factor for pregnancy in a normal relationship. Starts at the age of consent and is low
+    /// in the teens; it is possible from about 12 biologically, but below the age of consent it only
+    /// belongs to the abuse storylines, never to normal life.
+    /// </summary>
+    public static double FertilityByAge(SimContext ctx, int age) => age < ctx.Country.AgeOfConsent ? 0 : age switch
     {
-        < 18 => 0,
+        < 18 => 0.12,
         < 25 => 0.8,
         < 35 => 1.0,
         < 40 => 0.6,
@@ -188,6 +195,7 @@ public static class FamilySystem
 
     public static void MoveIn(SimContext ctx, Person a, Person b)
     {
+        if (!OldEnoughToMoveIn(ctx, a) || !OldEnoughToMoveIn(ctx, b)) return;
         a.PartnerStatus = b.PartnerStatus = PartnerStatus.Cohabiting;
         ctx.World.Log($"{a.FirstName} and {b.FirstName} moved in together.", ctx.Importance(false, a, b), "love", a.Id, b.Id);
         if (a.OwnsHome || b.OwnsHome) a.OwnsHome = b.OwnsHome = true;
@@ -195,6 +203,7 @@ public static class FamilySystem
 
     public static void Marry(SimContext ctx, Person a, Person b)
     {
+        if (a.Age(ctx.Year) < ctx.Country.MarriageAge || b.Age(ctx.Year) < ctx.Country.MarriageAge) return;
         a.PartnerStatus = b.PartnerStatus = PartnerStatus.Married;
         a.Flags.Add($"married_to_{b.Id}");
         b.Flags.Add($"married_to_{a.Id}");
@@ -207,6 +216,9 @@ public static class FamilySystem
         RelationshipSystem.AddMemory(ctx, b, "wedding", $"Married {a.FirstName}", 30, a.Id);
         ctx.World.Log($"{a.FirstName} and {b.FirstName} got married.", ctx.Importance(true, a, b), "love", a.Id, b.Id);
     }
+
+    /// <summary>Adults decide for themselves; from CohabitWithConsentAge it needs the parents' consent (handled by the event).</summary>
+    public static bool OldEnoughToMoveIn(SimContext ctx, Person p) => p.Age(ctx.Year) >= ctx.Country.CohabitWithConsentAge;
 
     public static void BreakUp(SimContext ctx, Person initiator, Person other)
     {

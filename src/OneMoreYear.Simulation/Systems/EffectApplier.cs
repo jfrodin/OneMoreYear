@@ -105,7 +105,7 @@ public static class EffectApplier
                 w.Log($"{who.FirstName} started {(e.Level == EducationLevel.Secondary ? "upper secondary school" : "university")}.", ctx.Importance(false, who), "education", who.Id);
                 break;
             case "start_dating":
-                if (to == null) return;
+                if (to == null || !EventSystem.Compatible(ctx, who, to)) return;
                 if (who.PartnerId is { } oldA) FamilySystem.BreakUp(ctx, who, w.Get(oldA));
                 if (to.PartnerId is { } oldB) FamilySystem.BreakUp(ctx, to, w.Get(oldB));
                 FamilySystem.StartDating(ctx, who, to);

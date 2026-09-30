@@ -423,27 +423,32 @@ public sealed class GameSession
         var founders = World.People.Where(p => p.IsBlood && p.ParentIds.Count == 0).ToList();
         var roots = new List<TreeNode>();
         var used = new HashSet<int>();
+        var shown = new HashSet<int>();
         foreach (var f in founders)
         {
             if (used.Contains(f.Id)) continue;
             used.Add(f.Id);
             foreach (var partnerId in f.ExPartnerIds.Append(f.PartnerId ?? 0))
                 if (founders.Any(x => x.Id == partnerId)) used.Add(partnerId);
-            roots.Add(BuildNode(f, 0));
+            roots.Add(BuildNode(f, 0, shown));
         }
         return roots;
     }
 
-    private TreeNode BuildNode(Person p, int depth)
+    private TreeNode BuildNode(Person p, int depth, HashSet<int> shown)
     {
         string Years(Person x) => x.IsAlive ? $"b. {x.BirthYear}" : $"{x.BirthYear}–{x.DeathYear}";
+        // Someone who descends from two founder couples (e.g. you) is shown in full only once.
+        if (!shown.Add(p.Id))
+            return new TreeNode(p.Id, $"{p.FullName} ({Years(p)})", p.IsAlive, p.Id == World.PlayerId, World.PlayedIds.Contains(p.Id),
+                Array.Empty<string>(), Array.Empty<TreeNode>(), IsReference: true);
         var partners = p.ExPartnerIds.Select(World.Get)
             .Concat(World.TryGet(p.PartnerId) is { } cur && !p.ExPartnerIds.Contains(cur.Id) ? new[] { cur } : Array.Empty<Person>())
             .Where(x => x.ChildIds.Intersect(p.ChildIds).Any() || x.Id == p.PartnerId || p.Flags.Contains($"married_to_{x.Id}"))
             .Select(x => $"{x.FullName} ({Years(x)})")
             .ToList();
         var children = depth > 12 ? new List<TreeNode>() :
-            p.ChildIds.Select(World.Get).OrderBy(c => c.BirthYear).Select(c => BuildNode(c, depth + 1)).ToList();
+            p.ChildIds.Select(World.Get).OrderBy(c => c.BirthYear).Select(c => BuildNode(c, depth + 1, shown)).ToList();
         return new TreeNode(p.Id, $"{p.FullName} ({Years(p)})", p.IsAlive, p.Id == World.PlayerId, World.PlayedIds.Contains(p.Id),
             partners, children);
     }

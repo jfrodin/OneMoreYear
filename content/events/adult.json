@@ -22,7 +22,7 @@
     ]
   },
   {
-    "id": "adult_sibling_loan", "title": "A favour",
+    "id": "adult_sibling_loan", "oncePerTarget": true, "title": "A favour",
     "text": "{t.role}, {t.name}, calls. The business is going under. \"I need to borrow {amount}. Just for a year. Please.\"",
     "conditions": { "minAge": 22 },
     "target": { "role": "sibling", "conditions": { "minAge": 22, "maxMoney": 100000 } },
@@ -59,7 +59,7 @@
     ]
   },
   {
-    "id": "adult_parent_sick", "title": "A call from the hospital",
+    "id": "adult_parent_sick", "oncePerTarget": true, "title": "A call from the hospital",
     "text": "{t.role} has fallen ill and can't manage alone. Someone needs to help.",
     "conditions": { "minAge": 25 },
     "target": { "role": "parent", "conditions": { "minAge": 60 } }, "cooldown": 6,
@@ -190,7 +190,7 @@
     ]
   },
   {
-    "id": "adult_child_shoplifting", "title": "The police call",
+    "id": "adult_child_shoplifting", "oncePerTarget": true, "title": "The police call",
     "text": "{t.role}, {t.name}, has been caught shoplifting.",
     "conditions": { "minAge": 28 },
     "target": { "role": "child", "conditions": { "minAge": 12, "maxAge": 19 } }, "cooldown": 6,
@@ -219,7 +219,7 @@
     ]
   },
   {
-    "id": "adult_child_needs_money", "title": "The deposit",
+    "id": "adult_child_needs_money", "oncePerTarget": true, "title": "The deposit",
     "text": "{t.name} wants to buy a flat and asks to borrow {amount} for the deposit.",
     "conditions": { "minAge": 42 },
     "target": { "role": "child", "conditions": { "minAge": 20, "maxAge": 40, "ownsHome": false } },
@@ -281,7 +281,7 @@
     ]
   },
   {
-    "id": "adult_parent_moves_in", "title": "Moving in",
+    "id": "adult_parent_moves_in", "oncePerTarget": true, "title": "Moving in",
     "text": "{t.role} can no longer manage alone and asks if {t.he} can move in with you.",
     "conditions": { "minAge": 35 },
     "target": { "role": "parent", "conditions": { "minAge": 72 } }, "cooldown": 10,
@@ -304,7 +304,7 @@
     ]
   },
   {
-    "id": "adult_ex_encounter", "title": "An old flame",
+    "id": "adult_ex_encounter", "oncePerTarget": true, "title": "An old flame",
     "text": "You bump into {t.name} – your ex – at the supermarket. The past comes rushing back.",
     "conditions": { "minAge": 20 },
     "target": { "role": "ex" }, "cooldown": 5,

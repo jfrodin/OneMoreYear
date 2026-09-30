@@ -25,7 +25,7 @@
     ]
   },
   {
-    "id": "relative_grudge", "title": "The family dinner",
+    "id": "relative_grudge", "oncePerTarget": true, "title": "The family dinner",
     "text": "At a family dinner, {t.role} {t.name} suddenly turns to you. Everyone goes quiet. \"You know exactly what you did.\"",
     "conditions": { "minAge": 16 },
     "target": { "role": "relative", "conditions": { "minAge": 16, "relMin": { "bitterness": 40 } } },

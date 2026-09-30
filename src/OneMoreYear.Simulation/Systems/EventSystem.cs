@@ -58,17 +58,21 @@ public static class EventSystem
             if (w.Year - last < e.Cooldown) return false;
         }
         if (!Matches(ctx, e.Conditions, player, player)) return false;
-        if (e.Target != null && e.Target.Role != "new_person" && !Candidates(ctx, e.Target, player, distances).Any()) return false;
+        if (e.Target != null && e.Target.Role != "new_person" && !Candidates(ctx, e.Target, player, distances, e).Any()) return false;
         return true;
     }
 
-    public static IEnumerable<Person> Candidates(SimContext ctx, RoleDef role, Person player, Dictionary<int, int> distances)
+    public static IEnumerable<Person> Candidates(SimContext ctx, RoleDef role, Person player, Dictionary<int, int> distances,
+        EventDef? oncePer = null)
     {
         var w = ctx.World;
         return Kinship.Circle(w, player)
             .Where(p => Kinship.MatchesRole(w, player, p, role.Role, distances))
-            .Where(p => Matches(ctx, role.Conditions, p, player));
+            .Where(p => Matches(ctx, role.Conditions, p, player))
+            .Where(p => oncePer is not { OncePerTarget: true } || !w.EventHistory.ContainsKey(OnceKey(oncePer.Id, p.Id)));
     }
+
+    private static string OnceKey(string eventId, int targetId) => $"{eventId}#{targetId}";
 
     public static PendingEvent? CreatePending(SimContext ctx, EventDef def, Person player, Dictionary<int, int> distances,
         int? fixedTarget = null)
@@ -77,9 +81,10 @@ public static class EventSystem
         var pending = new PendingEvent { Uid = w.NextEventUid++, EventId = def.Id };
         if (def.Target != null)
         {
-            var target = fixedTarget is { } ft ? w.Get(ft) : ResolveRole(ctx, def.Target, player, distances, null);
+            var target = fixedTarget is { } ft ? w.Get(ft) : ResolveRole(ctx, def.Target, player, distances, null, def);
             if (target == null) return null;
             pending.Roles["target"] = target.Id;
+            if (def.OncePerTarget) w.EventHistory[OnceKey(def.Id, target.Id)] = w.Year;
         }
         if (def.Other != null)
         {
@@ -91,7 +96,8 @@ public static class EventSystem
         return pending;
     }
 
-    private static Person? ResolveRole(SimContext ctx, RoleDef role, Person player, Dictionary<int, int> distances, Person? target)
+    private static Person? ResolveRole(SimContext ctx, RoleDef role, Person player, Dictionary<int, int> distances, Person? target,
+        EventDef? oncePer = null)
     {
         if (role.Role == "new_person")
         {
@@ -103,6 +109,7 @@ public static class EventSystem
                 _ => ctx.Rng.Chance(0.5) ? Sex.Male : Sex.Female
             };
             int age = Math.Max(1, player.Age(ctx.Year) + ctx.Rng.Range(role.AgeOffsetMin, role.AgeOffsetMax));
+            if (role.Sex == "attracted") age = RomanticAge(ctx, player.Age(ctx.Year), age);
             var p = PersonFactory.CreateStranger(ctx, sex, age);
             if (role.Sex == "attracted") p.AttractedToSameSex = player.AttractedToSameSex;
             return p;
@@ -110,7 +117,7 @@ public static class EventSystem
         if (role.Role == "partner_of_target")
             return target?.PartnerId is { } pid && ctx.World.Get(pid) is { IsAlive: true } partner && partner.Id != player.Id ? partner : null;
 
-        var list = Candidates(ctx, role, player, distances).ToList();
+        var list = Candidates(ctx, role, player, distances, oncePer).ToList();
         return list.Count == 0 ? null : ctx.Rng.Pick(list);
     }
 
@@ -144,6 +151,7 @@ public static class EventSystem
         if (c.CompatibleWithPlayer is { } cwp && Compatible(ctx, p, player) != cwp) return false;
         if (c.HasJob is { } hj && (p.Activity == Activity.Working) != hj) return false;
         if (c.Activity is { } act && p.Activity != act) return false;
+        if (c.NotActivity is { } notAct && notAct.Contains(p.Activity)) return false;
         if (c.MinEducation is { } minEd && p.Education < minEd) return false;
         if (c.MaxEducation is { } maxEd && p.Education > maxEd) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
@@ -177,10 +185,37 @@ public static class EventSystem
         return true;
     }
 
-    /// <summary>Could these two become a couple? (Orientation, both 16+, not close family.)</summary>
+    /// <summary>Keeps a generated love interest within the ages <see cref="Compatible"/> allows.</summary>
+    public static int RomanticAge(SimContext ctx, int playerAge, int wanted)
+    {
+        var c = ctx.Country;
+        if (playerAge < c.AgeOfConsent)
+            return Math.Clamp(wanted, Math.Max(12, playerAge - 2), Math.Min(c.AgeOfConsent - 1, playerAge + 2));
+        if (playerAge < c.AdultAge)
+            return Math.Clamp(wanted, Math.Max(c.AgeOfConsent, playerAge - 3), playerAge + 3);
+        return Math.Max(wanted, c.AdultAge);
+    }
+
+    /// <summary>
+    /// Could these two become a couple? Follows the country's law: real relationships from the age of
+    /// consent (with a small age gap while one of them is under age), innocent "going steady" between
+    /// kids of almost the same age below it, never between an adult and a child. Orientation must
+    /// match and they must not be close family.
+    /// </summary>
     public static bool Compatible(SimContext ctx, Person a, Person b)
     {
-        if (a.Id == b.Id || a.Age(ctx.Year) < 16 || b.Age(ctx.Year) < 16) return false;
+        if (a.Id == b.Id || !a.IsAlive || !b.IsAlive) return false;
+        var c = ctx.Country;
+        int ageA = a.Age(ctx.Year), ageB = b.Age(ctx.Year);
+        int gap = Math.Abs(ageA - ageB);
+        bool bothConsent = ageA >= c.AgeOfConsent && ageB >= c.AgeOfConsent;
+        bool bothYoung = ageA is >= 12 && ageB >= 12 && ageA < c.AgeOfConsent && ageB < c.AgeOfConsent;
+        if (bothConsent)
+        {
+            if ((ageA < c.AdultAge || ageB < c.AdultAge) && gap > 3) return false;
+        }
+        else if (!bothYoung || gap > 2) return false;
+
         bool aLikes = a.AttractedToSameSex ? a.Sex == b.Sex : a.Sex != b.Sex;
         bool bLikes = b.AttractedToSameSex ? b.Sex == a.Sex : b.Sex != a.Sex;
         if (!aLikes || !bLikes) return false;

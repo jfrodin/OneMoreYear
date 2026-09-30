@@ -112,7 +112,7 @@
   },
   {
     "id": "act_move_in", "trigger": "action", "title": "Suggest moving in",
-    "target": { "role": "partner", "conditions": { "partnerStatus": "dating" } },
+    "target": { "role": "partner", "conditions": { "partnerStatus": "dating", "minAge": 18 } },
     "conditions": { "minAge": 18 },
     "choices": [ {
       "text": "Move in together",
@@ -122,8 +122,25 @@
     } ]
   },
   {
+    "id": "act_move_in_young", "trigger": "action", "title": "Ask to move in together",
+    "target": { "role": "partner", "conditions": { "partnerStatus": "dating", "minAge": 16 } },
+    "conditions": { "minAge": 16, "maxAge": 17 },
+    "choices": [ {
+      "text": "Ask your parents", "hint": "You are under 18 – your parents have to agree.",
+      "chance": 0.3, "chanceTraits": { "manipulative": 0.15, "social": 0.05 },
+      "success": {
+        "text": "After a long talk at the kitchen table, your parents reluctantly agree. You and {t.name} move in together.",
+        "effects": [ { "type": "move_in" } ]
+      },
+      "failure": {
+        "text": "\"Absolutely not. You're far too young.\" The answer is no.",
+        "effects": [ { "type": "happiness", "amount": -6 } ]
+      }
+    } ]
+  },
+  {
     "id": "act_propose", "trigger": "action", "title": "Propose",
-    "target": { "role": "partner", "conditions": { "married": false } },
+    "target": { "role": "partner", "conditions": { "married": false, "minAge": 18 } },
     "conditions": { "minAge": 18 },
     "choices": [ {
       "text": "Propose",
@@ -257,7 +274,7 @@
   },
   {
     "id": "self_study", "trigger": "self", "title": "Go to university",
-    "conditions": { "minAge": 18, "maxAge": 50, "minEducation": "secondary", "maxEducation": "secondary" },
+    "conditions": { "minAge": 18, "maxAge": 50, "minEducation": "secondary", "maxEducation": "secondary", "notActivity": [ "studying" ] },
     "choices": [ {
       "text": "Enrol", "hint": "Years of studying without a salary.",
       "effects": [ { "type": "study", "level": "university" } ],

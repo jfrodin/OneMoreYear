@@ -66,5 +66,6 @@ public sealed record LifeSummary(string Name, int BirthYear, int DeathYear, int 
 public sealed record FamilyStats(int Generations, int FamilyMembers, int Characters, string LargestFortune,
     string LargestFortuneOwner, int Divorces, int Affairs, int Years);
 
+/// <summary>A person in the family tree. <paramref name="IsReference"/> marks a repeat: shown in full elsewhere.</summary>
 public sealed record TreeNode(int Id, string Label, bool Alive, bool IsPlayer, bool Played, IReadOnlyList<string> Partners,
-    IReadOnlyList<TreeNode> Children);
+    IReadOnlyList<TreeNode> Children, bool IsReference = false);

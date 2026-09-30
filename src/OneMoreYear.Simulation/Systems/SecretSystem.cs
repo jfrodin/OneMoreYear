@@ -70,7 +70,7 @@ public static class SecretSystem
         // A child from the affair, raised by the betrayed partner.
         var husband = w.TryGet(s.VictimId);
         if (subject.Sex == Sex.Female && lover.Sex == Sex.Male && husband is { Sex: Sex.Male }
-            && FamilySystem.FertilityByAge(subject.Age(ctx.Year)) > 0 && ctx.Rng.Chance(0.06))
+            && FamilySystem.FertilityByAge(ctx, subject.Age(ctx.Year)) > 0 && ctx.Rng.Chance(0.06))
         {
             var child = PersonFactory.CreateBaby(ctx, subject, husband, lover.Id);
             w.Log($"{subject.FirstName} and {husband.FirstName} had a {(child.Sex == Sex.Male ? "son" : "daughter")}, {child.FirstName}.", ctx.Importance(true, subject, husband, child), "family", subject.Id, husband.Id, child.Id);

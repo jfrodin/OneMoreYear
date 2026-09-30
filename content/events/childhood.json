@@ -155,7 +155,7 @@
     ]
   },
   {
-    "id": "child_sibling_blame", "title": "The vase",
+    "id": "child_sibling_blame", "oncePerTarget": true, "title": "The vase",
     "text": "Grandma's old vase lies in pieces. {t.name} immediately points at you.",
     "conditions": { "minAge": 5, "maxAge": 14 },
     "target": { "role": "sibling", "conditions": { "minAge": 4, "maxAge": 18 } },
@@ -211,7 +211,7 @@
     ]
   },
   {
-    "id": "child_parent_absent", "title": "End of term",
+    "id": "child_parent_absent", "oncePerTarget": true, "title": "End of term",
     "text": "All the parents sit in rows, singing along at the end-of-term assembly. But {t.role} never came. Work, again.",
     "conditions": { "minAge": 7, "maxAge": 15 },
     "target": { "role": "parent", "conditions": { "hasJob": true } },

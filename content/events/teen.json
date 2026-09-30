@@ -146,7 +146,7 @@
     ]
   },
   {
-    "id": "teen_friend_bullied", "title": "The mockery",
+    "id": "teen_friend_bullied", "oncePerTarget": true, "title": "The mockery",
     "text": "The popular kids have started openly mocking {t.name}. Everyone is watching to see what you'll do.",
     "conditions": { "minAge": 11, "maxAge": 18 },
     "target": { "role": "friend", "conditions": { "maxAge": 20 } }, "cooldown": 4,
@@ -169,10 +169,10 @@
     ]
   },
   {
-    "id": "teen_sibling_lie", "title": "The alibi",
+    "id": "teen_sibling_lie", "oncePerTarget": true, "title": "The alibi",
     "text": "{t.name} comes home at dawn. \"Please, say I slept at yours,\" {t.he} whispers.",
-    "conditions": { "minAge": 12, "maxAge": 25 },
-    "target": { "role": "sibling", "conditions": { "minAge": 14, "maxAge": 25 } }, "cooldown": 5,
+    "conditions": { "minAge": 12, "maxAge": 19 },
+    "target": { "role": "sibling", "conditions": { "minAge": 14, "maxAge": 19 } }, "cooldown": 3,
     "choices": [
       {
         "text": "Lie to your parents",

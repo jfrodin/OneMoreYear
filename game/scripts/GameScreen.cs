@@ -548,10 +548,12 @@ public partial class GameScreen : Control
     {
         var item = _tree.CreateItem(parent);
         string text = node.Label + (node.IsPlayer ? "   (you)" : node.Played ? "   (played)" : "");
+        if (node.IsReference) text += "   – shown above";
         if (node.Partners.Count > 0) text += "     with " + string.Join(", ", node.Partners);
         item.SetText(0, text);
         item.SetMetadata(0, node.Id);
-        var color = node.IsPlayer ? UiTheme.Accent : node.Played ? new Color("f0d9a8") : node.Alive ? UiTheme.Text : UiTheme.Muted;
+        var color = node.IsReference ? UiTheme.Faint
+            : node.IsPlayer ? UiTheme.Accent : node.Played ? new Color("f0d9a8") : node.Alive ? UiTheme.Text : UiTheme.Muted;
         item.SetCustomColor(0, color);
         foreach (var child in node.Children) AddTreeNode(item, child);
     }

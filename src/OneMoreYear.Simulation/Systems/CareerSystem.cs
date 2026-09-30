@@ -162,9 +162,10 @@ public static class CareerSystem
             double w = o.Weight;
             foreach (var t in p.Traits)
                 if (o.TraitAffinity.TryGetValue(t, out var m)) w *= m;
-            // People tend to use their education.
-            var best = o.Levels.Where(l => l.Entry).Max(l => l.MinEducation);
-            if (best == p.Education) w *= 2;
+            // People mostly take jobs that use their education; a degree rarely ends in a job that needs none.
+            var best = o.Levels.Where(l => l.Entry && l.MinEducation <= p.Education).Max(l => l.MinEducation);
+            int unused = (int)p.Education - (int)best;
+            w *= unused switch { 0 => 4, 1 => 0.4, 2 => 0.1, _ => 0.03 };
             return w;
         })!;
 

@@ -48,6 +48,13 @@ public sealed class CountryDef
     public double HomePrice { get; set; }
     public double UnemploymentIncome { get; set; }
     public double StudentIncome { get; set; }
+    /// <summary>Age of consent: romantic/sexual relationships and pregnancy in normal life start here.</summary>
+    public int AgeOfConsent { get; set; } = 15;
+    /// <summary>Legal adulthood: own decisions such as moving in together without parents' consent.</summary>
+    public int AdultAge { get; set; } = 18;
+    /// <summary>Youngest age to move in with a partner, and then only with the parents' consent.</summary>
+    public int CohabitWithConsentAge { get; set; } = 16;
+    public int MarriageAge { get; set; } = 18;
     public int PensionAge { get; set; } = 65;
     public double PensionRate { get; set; } = 0.6;
     public double MinimumPension { get; set; }
@@ -99,6 +106,7 @@ public sealed class ConditionDef
     public bool? SameSexAsPlayer { get; set; }
     public bool? HasJob { get; set; }
     public Activity? Activity { get; set; }
+    public List<Activity>? NotActivity { get; set; }
     public EducationLevel? MinEducation { get; set; }
     public EducationLevel? MaxEducation { get; set; }
     public int? MinChildren { get; set; }
@@ -203,6 +211,8 @@ public sealed class EventDef
     public double Weight { get; set; } = 1;
     /// <summary>Years before it can fire again for the same player. 0 = only once per player.</summary>
     public int Cooldown { get; set; } = 10;
+    /// <summary>Never happens twice with the same target person (e.g. a sibling's alibi).</summary>
+    public bool OncePerTarget { get; set; }
     public ConditionDef? Conditions { get; set; }
     public RoleDef? Target { get; set; }
     public RoleDef? Other { get; set; }
