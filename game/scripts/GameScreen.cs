@@ -194,7 +194,7 @@ public partial class GameScreen : Control
         var p = S.Describe(S.Player.Id);
 
         var top = Ui.HBox(14);
-        top.AddChild(Portrait.Create(p.Id, p.Name, p.Alive, true, 84));
+        top.AddChild(Portrait.Create(S.Portrait(p.Id), true, 84));
         var nameCol = Ui.VBox(2);
         nameCol.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         nameCol.AddChild(Ui.Label(p.Name, 24, UiTheme.Text, wrap: true));
@@ -483,7 +483,7 @@ public partial class GameScreen : Control
         {
             var t = S.Describe(tid);
             var who = Ui.HBox(10);
-            who.AddChild(Portrait.Create(t.Id, t.Name, t.Alive, false, 36));
+            who.AddChild(Portrait.Create(S.Portrait(t.Id), false, 36));
             var whoLabel = Ui.Label($"{t.Name}  ·  {t.RoleLabel}, {t.Age}", 16, UiTheme.Muted);
             whoLabel.SizeFlagsVertical = SizeFlags.ShrinkCenter;
             who.AddChild(whoLabel);
@@ -602,7 +602,7 @@ public partial class GameScreen : Control
             b.AddThemeStyleboxOverride("normal", UiTheme.Box(UiTheme.PanelHover, 8, UiTheme.AccentDark, 1));
 
         var row = Ui.HBox(12);
-        row.AddChild(Portrait.Create(p.Id, p.Name, p.Alive, p.Id == S.Player.Id, 48));
+        row.AddChild(Portrait.Create(S.Portrait(p.Id), p.Id == S.Player.Id, 48));
         var col = Ui.VBox(2);
         col.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         col.AddChild(Ui.Label(p.Name, 18, UiTheme.Text));
@@ -648,7 +648,7 @@ public partial class GameScreen : Control
         bool isPlayer = id == S.Player.Id;
 
         var header = Ui.HBox(16);
-        header.AddChild(Portrait.Create(p.Id, p.Name, p.Alive, isPlayer, 96));
+        header.AddChild(Portrait.Create(S.Portrait(p.Id), isPlayer, 96));
         var col = Ui.VBox(3);
         col.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         col.AddChild(Ui.Label(p.Name, 28, UiTheme.Text, wrap: true));
@@ -658,6 +658,9 @@ public partial class GameScreen : Control
         col.AddChild(Ui.Label(p.AppearanceText, 15, UiTheme.Faint, wrap: true));
         if (p.Condition != null) col.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad));
         header.AddChild(col);
+        var figure = Figure.Create(S.Portrait(p.Id), 150);
+        figure.TooltipText = p.AppearanceText;
+        header.AddChild(figure);
         _personDetail.AddChild(header);
 
         // Close family as buttons: jump straight to a partner, parent, sibling or child.

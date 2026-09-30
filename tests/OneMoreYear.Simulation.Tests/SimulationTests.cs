@@ -386,3 +386,31 @@ public class CrimeTests
         Assert.Contains(Kinship.Parents(poor.World, poor.Player), p => p.Addiction == "alcohol");
     }
 }
+
+public class FaceTests
+{
+    private static double Distance(Face a, Face b) =>
+        Math.Abs(a.Width - b.Width) + Math.Abs(a.Jaw - b.Jaw) + Math.Abs(a.Nose - b.Nose) + Math.Abs(a.Eyes - b.Eyes)
+        + Math.Abs(a.Mouth - b.Mouth) + Math.Abs(a.Skin - b.Skin) + Math.Abs(a.Curl - b.Curl);
+
+    [Fact]
+    public void ChildrenLookLikeTheirParentsAndFacesAreStable()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 8, StartYear = 1950 });
+        var bot = new AutoPlayer(8);
+        for (int i = 0; i < 80; i++) bot.PlayYear(s);
+        var w = s.World;
+        var children = w.People.Where(p => Kinship.BiologicalParents(w, p).Count() == 2).Take(60).ToList();
+        Assert.True(children.Count >= 20);
+
+        double related = children.Average(c => Kinship.BiologicalParents(w, c).Average(p => Distance(Faces.Of(w, c), Faces.Of(w, p))));
+        var rng = new Random(1);
+        double strangers = children.Average(c => Distance(Faces.Of(w, c), Faces.Of(w, w.People[rng.Next(w.People.Count)])));
+        Assert.True(related < strangers * 0.8, $"related {related:0.00} vs strangers {strangers:0.00}");
+
+        // The same face after saving and loading, and for a fresh copy of the world.
+        var again = GameSession.Load(s.Save());
+        foreach (var c in children.Take(5))
+            Assert.Equal(Faces.Of(w, c).Nose, Faces.Of(again.World, again.World.Get(c.Id)).Nose);
+    }
+}

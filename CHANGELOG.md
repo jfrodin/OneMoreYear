@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.10.0 – 2026-09-30 · Faces
+
+- **Generated portraits** replace the coloured initials everywhere: face shape, jaw, chin, nose,
+  eyes, mouth, lips, brows, ears, skin, hair and eye colour, curls and freckles.
+- **Inherited**: children get a mix of their biological parents' features – siblings and cousins
+  look related, and a hidden father shows in the child's face.
+- **Ageing**: babies and children have their own proportions; hair greys and thins (earlier for
+  some than others), wrinkles come, glasses appear – for some as children, for others later in life.
+- Men may wear stubble, a beard or a moustache; women's hairstyles vary. Heavier people get fuller
+  faces, and the mouth follows the mood. The dead are shown in grey.
+- **Full-body figure** on the person page, drawn to scale: height, build and weight.
+- Faces are created from the world seed and the person, so they are stable, work with old saves
+  and never change what happens in the game.
+
 ## 0.9.4 – 2026-09-30 · The family secret: ages
 
 - The mother in *The family secret* was 15 when her daughter was born (not 24, as the generated

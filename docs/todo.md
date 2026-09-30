@@ -5,10 +5,8 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Portraits**: simple generated portraits (and a full-body figure) where looks come from the
-   parents' genes – hair, eyes, skin, height, build, ageing.
-2. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).
-3. [ ] **Investments**: stocks and funds, home values that change, mortgages.
+1. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).
+2. [ ] **Investments**: stocks and funds, home values that change, mortgages.
 
 ## Before release
 

@@ -125,3 +125,25 @@ public sealed record MoneyView
     public IReadOnlyList<LedgerView> LastYear { get; init; } = Array.Empty<LedgerView>();
     public string LastYearTotal { get; init; } = "";
 }
+
+/// <summary>Everything needed to draw a person's portrait and figure. Genes are 0–1.</summary>
+public sealed record PortraitView
+{
+    public int Id { get; init; }
+    public bool Male { get; init; }
+    public int Age { get; init; }
+    public bool Alive { get; init; }
+    public string HairColor { get; init; } = "";
+    public string EyeColor { get; init; } = "";
+    /// <summary>0–1: how grey / how bald at this age.</summary>
+    public double Grey { get; init; }
+    public double Bald { get; init; }
+    /// <summary>0 = thin, 0.5 = normal, 1 = heavy (from height, weight and build).</summary>
+    public double Heaviness { get; init; }
+    /// <summary>-1 = miserable, 0 = neutral, 1 = happy.</summary>
+    public double Mood { get; init; }
+    public bool Glasses { get; init; }
+    public int HeightCm { get; init; }
+    public double Fitness { get; init; }
+    public Model.Face Face { get; init; } = new();
+}

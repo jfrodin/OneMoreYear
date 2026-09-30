@@ -58,6 +58,8 @@ public sealed class Person
     public string Build { get; set; } = "";
     public string HairColor { get; set; } = "";
     public string EyeColor { get; set; } = "";
+    /// <summary>Facial genes; created on first use (Systems.Faces).</summary>
+    public Face? Face { get; set; }
 
     // State
     public double Health { get; set; } = 90;

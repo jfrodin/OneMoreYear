@@ -326,6 +326,33 @@ public sealed class GameSession
         return 3 + dist.GetValueOrDefault(p.Id, 5);
     }
 
+    /// <summary>What someone looks like right now (or when they died).</summary>
+    public PortraitView Portrait(int id)
+    {
+        var p = World.Get(id);
+        var face = Faces.Of(World, p);
+        int age = p.Age(Year);
+        double bmi = Appearance.WeightAt(p, age) / Math.Pow(Math.Max(0.5, Appearance.HeightAt(p, age) / 100.0), 2);
+        double normal = age < 12 ? 16 : age < 18 ? 19 : 22.5;
+        return new PortraitView
+        {
+            Id = p.Id,
+            Male = p.Sex == Sex.Male,
+            Age = age,
+            Alive = p.IsAlive,
+            HairColor = p.HairColor,
+            EyeColor = p.EyeColor,
+            Grey = Faces.GreyAt(face, age),
+            Bald = Faces.BaldAt(face, p.Sex, age),
+            Heaviness = Math.Clamp(0.5 + (bmi - normal) / 16, 0, 1),
+            Mood = Math.Clamp((p.Happiness - 50) / 35, -1, 1),
+            Glasses = age >= face.GlassesFromAge,
+            HeightCm = Appearance.HeightAt(p, age),
+            Fitness = p.Fitness,
+            Face = face,
+        };
+    }
+
     public PersonView Describe(int id)
     {
         var p = World.Get(id);

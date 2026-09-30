@@ -33,7 +33,7 @@ public partial class SuccessionScreen : Control
 
         left.AddChild(Ui.Label("IN MEMORIAM", 16, UiTheme.Muted));
         var header = Ui.HBox(20);
-        header.AddChild(Portrait.Create(dead.Id, life.Name, false, true, 110));
+        header.AddChild(Portrait.Create(s.Portrait(dead.Id), true, 110));
         var names = Ui.VBox(4);
         names.AddChild(Ui.Label(life.Name, 40, UiTheme.Accent));
         names.AddChild(Ui.Label($"{life.BirthYear} – {life.DeathYear}", 24, UiTheme.Text));
@@ -79,7 +79,7 @@ public partial class SuccessionScreen : Control
                 var id = h.Id;
                 var b = new Button { CustomMinimumSize = new Vector2(0, 76), FocusMode = FocusModeEnum.All };
                 var row = Ui.HBox(12);
-                row.AddChild(Portrait.Create(h.Id, h.Name, true, false, 52));
+                row.AddChild(Portrait.Create(s.Portrait(h.Id), false, 52));
                 var col = Ui.VBox(2);
                 col.AddChild(Ui.Label(h.Name, 19, UiTheme.Text));
                 col.AddChild(Ui.Label($"{owner} {h.Relation.ToLowerInvariant()}, {h.Age}  ·  {h.Occupation}  ·  {h.Money}", 15, UiTheme.Muted));
