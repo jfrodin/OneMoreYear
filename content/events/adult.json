@@ -246,7 +246,7 @@
   {
     "id": "adult_house_offer", "title": "The house",
     "text": "A house in a nice neighbourhood is up for sale. Rent is money down the drain...",
-    "conditions": { "minAge": 25, "ownsHome": false, "minMoney": 450000 }, "cooldown": 5,
+    "conditions": { "minAge": 25, "canBuyHome": true }, "cooldown": 5,
     "choices": [
       {
         "text": "Buy it",

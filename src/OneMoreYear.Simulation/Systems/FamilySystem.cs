@@ -306,7 +306,7 @@ public static class FamilySystem
         a.PartnerStatus = b.PartnerStatus = PartnerStatus.Cohabiting;
         HousingSystem.MoveInTogether(ctx, a, b);
         ctx.World.Log($"{a.FirstName} and {b.FirstName} moved in together.", ctx.Importance(false, a, b), "love", a.Id, b.Id);
-        if (a.OwnsHome || b.OwnsHome) a.OwnsHome = b.OwnsHome = true;
+        EconomySystem.MergeHomes(ctx, a, b);
     }
 
     public static void Marry(SimContext ctx, Person a, Person b)

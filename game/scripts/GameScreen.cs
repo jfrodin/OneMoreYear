@@ -426,14 +426,18 @@ public partial class GameScreen : Control
         _moneyContent.AddChild(Ui.Label("Money", 32, UiTheme.Accent));
 
         var summary = Ui.VBox(8);
-        summary.AddChild(StatRow(m.InDebt ? "Debt" : "Savings", m.Money, m.InDebt ? UiTheme.Bad : UiTheme.Text));
-        summary.AddChild(StatRow("Net worth", m.NetWorth, UiTheme.Text));
+        summary.AddChild(StatRow(m.InDebt ? "Debt" : "In the bank", m.Money, m.InDebt ? UiTheme.Bad : UiTheme.Text));
+        foreach (var (label, amount) in m.Assets)
+            summary.AddChild(StatRow(label, amount, amount.StartsWith("-") ? UiTheme.Bad : UiTheme.Text));
+        summary.AddChild(StatRow("Net worth", m.NetWorth, UiTheme.Accent));
         summary.AddChild(StatRow("Income", m.YearlyIncome, UiTheme.Text));
         if (m.Home != null) summary.AddChild(Ui.Label(m.Home, 16, UiTheme.Muted, wrap: true));
+        summary.AddChild(Ui.Label(m.MarketNote, 15, UiTheme.Muted, wrap: true));
         summary.AddChild(Ui.Label(
-            $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs are paid first. Of what is left, you save about " +
-            $"{m.SaveRatePercent}% – your personality decides how careful you are. If your income doesn't cover the basics, " +
-            "welfare pays half the gap and the rest becomes debt, which grows with interest.", 15, UiTheme.Faint, wrap: true));
+            $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs (and a mortgage) are paid first. Of what is left, you save about " +
+            $"{m.SaveRatePercent}% – your personality decides how careful you are. Money in the bank keeps its value; funds and shares " +
+            "grow more over time but can crash. If your income doesn't cover the basics, savings pay first, then welfare pays half the gap " +
+            "and the rest becomes debt.", 15, UiTheme.Faint, wrap: true));
         _moneyContent.AddChild(Ui.Card(summary));
 
         _moneyContent.AddChild(LedgerCard($"This year ({m.Year})", m.ThisYear, m.ThisYearTotal));

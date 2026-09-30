@@ -430,3 +430,46 @@ public class EmployerTests
         Assert.All(working.Where(p => p.Employer != null), p => Assert.DoesNotContain("{", p.Employer));
     }
 }
+
+public class InvestmentTests
+{
+    [Fact]
+    public void MarketIsStablePerSeedAndCrashesInCrises()
+    {
+        var a = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1950 });
+        var b = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1950 });
+        Assert.Equal(Market.For(a.Ctx, 1987), Market.For(b.Ctx, 1987));
+        Assert.True(Market.For(a.Ctx, 2008).Stocks < -0.2, "2008 should be a crash");
+    }
+
+    [Fact]
+    public void BuyingInvestingAndSellingMoveMoneyCorrectly()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 4, StartYear = 1990 });
+        var p = s.Player;
+        p.Money = 2_000_000;
+        p.Income = 600_000;
+        p.LivesWithParents = false;
+        Assert.True(EconomySystem.CanBuyHome(s.Ctx, p));
+        double before = EconomySystem.NetWorth(s.Ctx, p);
+        EconomySystem.BuyHome(s.Ctx, p);
+        Assert.True(p.Mortgage > 0 && p.HomeValue > p.Mortgage);
+        Assert.Equal(before, EconomySystem.NetWorth(s.Ctx, p), 3);
+
+        double invested = EconomySystem.Invest(s.Ctx, p, "funds", 0.5);
+        Assert.Equal(invested, p.Funds, 3);
+        EconomySystem.SellInvestments(s.Ctx, p);
+        Assert.Equal(0, p.Funds);
+        Assert.Equal(before, EconomySystem.NetWorth(s.Ctx, p), 3);
+    }
+
+    [Fact]
+    public void FortunesDoNotExplodeOverGenerations()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 1, StartYear = 1950 });
+        var bot = new AutoPlayer(1);
+        for (int i = 0; i < 150 && bot.PlayYear(s); i++) { }
+        double richest = s.World.People.Where(p => p.IsAlive).Max(p => s.Ctx.Real(EconomySystem.NetWorth(s.Ctx, p)));
+        Assert.True(richest < 150_000_000, $"Richest has {richest / 1e6:0} million in 2020-kronor");
+    }
+}

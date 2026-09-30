@@ -87,6 +87,14 @@ public sealed class Person
     /// <summary>Highest net worth reached, nominal kronor.</summary>
     public double PeakNetWorth { get; set; }
     public bool OwnsHome { get; set; }
+    /// <summary>Market value of the home this person holds (0 when living in a partner's home), nominal.</summary>
+    public double HomeValue { get; set; }
+    /// <summary>What is left of the loan on the home, and what it was at the start (for amortization).</summary>
+    public double Mortgage { get; set; }
+    public double MortgageStart { get; set; }
+    /// <summary>Savings in index funds, and in single company shares (riskier), nominal.</summary>
+    public double Funds { get; set; }
+    public double Stocks { get; set; }
     /// <summary>Which city the person lives in (country content).</summary>
     public string? CityId { get; set; }
     /// <summary>Still living in the parents' home.</summary>

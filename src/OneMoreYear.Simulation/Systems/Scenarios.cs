@@ -59,7 +59,8 @@ public static class Scenarios
         p.ProgrammeId = null;
         p.StudyingFor = null;
         p.StudyYearsLeft = 0;
-        p.Money = 0;
+        if (p.HomeValue > 0) EconomySystem.SellHome(ctx, p, log: false);
+        p.Money = p.Funds = p.Stocks = 0;
         p.OwnsHome = false;
         p.SharesFlat = false;
         p.LivesWithParents = true;
@@ -79,7 +80,8 @@ public static class Scenarios
         if (t.Looks is { } looks) p.Looks = looks;
         if (t.Fitness is { } fitness) p.Fitness = fitness;
         if (t.Money is { } money) p.Money = ctx.Nominal(money);
-        if (t.OwnsHome is { } owns) p.OwnsHome = owns;
+        if (t.OwnsHome == true && p.HomeValue <= 0) EconomySystem.GiveHome(p, HousingSystem.HomePrice(ctx, p), HousingSystem.HomePrice(ctx, p) * 0.3);
+        if (t.OwnsHome == false && p.HomeValue > 0) EconomySystem.SellHome(ctx, p, log: false);
         if (t.Unemployed == true && p.Age(ctx.Year) >= 16) CareerSystem.BecomeJobSeeker(p, ctx);
         if (t.Addiction != null)
         {

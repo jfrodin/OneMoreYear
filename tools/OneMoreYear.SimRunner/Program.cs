@@ -43,6 +43,7 @@ Console.WriteLine($"Seed {seed}: {stats.Years} years, {stats.Generations} genera
                   $"richest {stats.LargestFortuneOwner} ({stats.LargestFortune}), people simulated {session.World.People.Count}, " +
                   $"game over: {session.GameOver}, {watch.ElapsedMilliseconds} ms");
 
+if (args.Contains("--wealth")) WealthReport.Run(session);
 if (args.Contains("--debug-end"))
 {
     var w = session.World;

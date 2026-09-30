@@ -384,11 +384,53 @@
   },
   {
     "id": "self_buy_home", "trigger": "self", "category": "money", "title": "Buy a home",
-    "conditions": { "minAge": 20, "ownsHome": false, "livesWithParents": false, "minMoney": 450000 },
+    "conditions": { "minAge": 20, "canBuyHome": true },
     "choices": [ {
-      "text": "Buy", "hint": "A deposit of 15 % of the home price.",
+      "text": "Buy", "hint": "You pay 15 % of the price; the bank lends you the rest. Interest and paying off the loan come out of your income every year.",
       "effects": [ { "type": "buy_home" }, { "type": "happiness", "amount": 6 } ],
       "result": "The keys are yours."
+    } ]
+  },
+  {
+    "id": "self_sell_home", "trigger": "self", "category": "money", "title": "Sell your home",
+    "conditions": { "minAge": 18, "holdsHome": true },
+    "choices": [ {
+      "text": "Put it on the market", "hint": "You get what it is worth now, minus what is left of the loan. Then you rent.",
+      "effects": [ { "type": "sell_home" } ],
+      "result": "Strangers walk through your rooms. A week later it is sold."
+    } ]
+  },
+  {
+    "id": "self_repay_mortgage", "trigger": "self", "category": "money", "title": "Pay off the mortgage",
+    "conditions": { "minAge": 18, "hasMortgage": true, "minMoney": 50000 },
+    "choices": [
+      { "text": "Put a quarter of your savings into it", "effects": [ { "type": "repay_mortgage", "amount": 0.25 } ], "result": "A smaller loan means less interest every year." },
+      { "text": "As much as you can", "effects": [ { "type": "repay_mortgage", "amount": 1 } ], "result": "Your savings account looks empty. Your loan looks smaller." }
+    ]
+  },
+  {
+    "id": "self_invest_funds", "trigger": "self", "category": "money", "title": "Invest in funds",
+    "conditions": { "minAge": 18, "minMoney": 20000 },
+    "choices": [
+      { "text": "A tenth of your savings", "hint": "Funds follow the whole stock market: up most years, down in a crash.", "effects": [ { "type": "invest", "kind": "funds", "amount": 0.1 } ] },
+      { "text": "Half of your savings", "effects": [ { "type": "invest", "kind": "funds", "amount": 0.5 } ] },
+      { "text": "All of it", "hint": "Nothing left in the bank if something happens.", "effects": [ { "type": "invest", "kind": "funds", "amount": 1 } ] }
+    ]
+  },
+  {
+    "id": "self_invest_stocks", "trigger": "self", "category": "money", "title": "Buy shares in a company",
+    "conditions": { "minAge": 18, "minMoney": 20000 },
+    "choices": [
+      { "text": "A tenth of your savings", "hint": "One company: it can double – or go bankrupt.", "effects": [ { "type": "invest", "kind": "stocks", "amount": 0.1 } ] },
+      { "text": "Half of your savings", "effects": [ { "type": "invest", "kind": "stocks", "amount": 0.5 } ] }
+    ]
+  },
+  {
+    "id": "self_sell_investments", "trigger": "self", "category": "money", "title": "Sell your investments",
+    "conditions": { "minAge": 18, "hasInvestments": true },
+    "choices": [ {
+      "text": "Sell everything", "hint": "Funds and shares back into your bank account.",
+      "effects": [ { "type": "sell_investments" } ]
     } ]
   },
   {

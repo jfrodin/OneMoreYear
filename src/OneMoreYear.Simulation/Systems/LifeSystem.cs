@@ -121,8 +121,16 @@ public static class LifeSystem
     public static void Inherit(SimContext ctx, Person dead, int? spouseId)
     {
         var w = ctx.World;
+        // A partner who lived there keeps the home (and the loan); otherwise it is sold with the rest.
+        if (dead.HomeValue > 0 && w.TryGet(spouseId) is { IsAlive: true, HomeValue: <= 0 } widow && widow.CityId == dead.CityId)
+        {
+            EconomySystem.GiveHome(widow, dead.HomeValue, dead.Mortgage);
+            widow.MortgageStart = dead.MortgageStart;
+            dead.HomeValue = dead.Mortgage = dead.MortgageStart = 0;
+        }
         double estate = EconomySystem.NetWorth(ctx, dead);
-        dead.Money = 0;
+        dead.Money = dead.Funds = dead.Stocks = 0;
+        dead.HomeValue = dead.Mortgage = dead.MortgageStart = 0;
         dead.OwnsHome = false;
         if (estate <= 0)
         {

@@ -5,7 +5,8 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Investments**: stocks and funds, home values that change, mortgages.
+1. [ ] **Balancing** – the open items below.
+2. [ ] **Readable seed codes** and **content settings** (under Before release).
 
 ## Before release
 
@@ -37,8 +38,6 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Balancing
 
-- [ ] Some family members become extremely rich after many generations – rebalance savings, returns
-  and inheritance.
 - [ ] Many relationships drift towards "Neutral" over the decades – check drift and contact rules.
 - [ ] The abuse storyline can pile up in one family (seed 1008 from 1950: six abuse secrets in 65 years) –
   check how the predatory trait is inherited and how often it strikes.

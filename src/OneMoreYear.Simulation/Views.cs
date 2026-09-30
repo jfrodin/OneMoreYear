@@ -117,6 +117,10 @@ public sealed record MoneyView
     public bool InDebt { get; init; }
     public string NetWorth { get; init; } = "";
     public string? Home { get; init; }
+    /// <summary>Investments and the home, as label and amount; empty rows are left out.</summary>
+    public IReadOnlyList<(string Label, string Amount)> Assets { get; init; } = Array.Empty<(string, string)>();
+    /// <summary>"The stock market rose 12 % last year, homes 3 %, inflation 2 %."</summary>
+    public string MarketNote { get; init; } = "";
     public string YearlyIncome { get; init; } = "";
     public int SaveRatePercent { get; init; }
     public int TaxPercent { get; init; }

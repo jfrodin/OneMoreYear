@@ -24,7 +24,7 @@ The scenarios are defined in [content/scenarios.json](../content/scenarios.json)
 | **Born bad** | `born_bad` | 1005 | 1995, age 17 | You are cruel, hot-tempered and criminal-minded. Crime, temptations, the police, prison, a way back. |
 | **Scandal** | `scandal` | 1006 | 1997, age 12 | Both parents are unfaithful, dishonest or jealous. Affairs, revealed secrets, divorce, a half-sibling. |
 | **Grown up** | `grown_up` | 1007 | 1996, age 26 | Skips childhood. You have a partner, 150,000 kr and job offers waiting. Adult life, love, money and work. |
-| **Late in life** | `late_in_life` | 28 | 2014, age 62 | Married, with two grown children and grandchildren. 900,000 kr and a home of your own. Retirement, wills, health, death and succession. |
+| **Late in life** | `late_in_life` | 57 | 2015, age 62 | With a partner, three grown children and five grandchildren. 900,000 kr and a home of your own. Retirement, wills, health, death and succession. |
 
 ## Tips
 

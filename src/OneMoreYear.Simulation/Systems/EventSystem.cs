@@ -167,6 +167,10 @@ public static class EventSystem
         if (c.MinHealth is { } minH && p.Health < minH) return false;
         if (c.MaxHealth is { } maxH && p.Health > maxH) return false;
         if (c.OwnsHome is { } oh && p.OwnsHome != oh) return false;
+        if (c.CanBuyHome is { } cb && EconomySystem.CanBuyHome(ctx, p) != cb) return false;
+        if (c.HasInvestments is { } hi && (p.Funds + p.Stocks >= 1) != hi) return false;
+        if (c.HasMortgage is { } hm && (p.Mortgage >= 1) != hm) return false;
+        if (c.HoldsHome is { } hh && (p.HomeValue > 0) != hh) return false;
         if (c.LivesWithParents is { } lwp && p.LivesWithParents != lwp) return false;
         if (c.TraitsAny is { Count: > 0 } any && !any.Any(p.HasTrait)) return false;
         if (c.TraitsNone is { Count: > 0 } none && none.Any(p.HasTrait)) return false;

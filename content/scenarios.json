@@ -69,7 +69,7 @@
   {
     "id": "late_in_life", "name": "Late in life",
     "description": "You are 62 with grown children and grandchildren on the way. Wills, health and the end of a life.",
-    "seed": 28, "startYear": 1950, "age": 62,
+    "seed": 57, "startYear": 1950, "age": 62,
     "player": { "money": 900000, "ownsHome": true }
   }
 ]

@@ -10,7 +10,7 @@ namespace OneMoreYear.Simulation.Model;
 /// </summary>
 public sealed class World
 {
-    public const int CurrentSaveVersion = 1;
+    public const int CurrentSaveVersion = 2;
 
     public int SaveVersion { get; set; } = CurrentSaveVersion;
     public ulong Seed { get; set; }

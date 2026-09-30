@@ -85,8 +85,22 @@ public sealed class CountryDef
     public double PensionRate { get; set; } = 0.6;
     public double MinimumPension { get; set; }
     public double MortalityScale { get; set; } = 1;
-    public double SavingsReturn { get; set; } = 0.03;
-    public double DebtInterest { get; set; } = 0.06;
+    // Money markets, as real returns on top of inflation (from priceIndex). See Systems.Market.
+    /// <summary>Real interest on money in the bank (about zero: savings keep their value, no more).</summary>
+    public double SavingsRealReturn { get; set; } = 0.005;
+    /// <summary>Real interest on unsecured debt.</summary>
+    public double DebtRealInterest { get; set; } = 0.06;
+    /// <summary>Average real return of the stock market, and its yearly spread.</summary>
+    public double MarketRealReturn { get; set; } = 0.05;
+    public double MarketVolatility { get; set; } = 0.16;
+    /// <summary>Average real growth of home prices, and its yearly spread.</summary>
+    public double HousingRealGrowth { get; set; } = 0.015;
+    public double HousingVolatility { get; set; } = 0.05;
+    public double MortgageRealRate { get; set; } = 0.025;
+    /// <summary>Share of the original loan paid off each year.</summary>
+    public double Amortization { get; set; } = 0.02;
+    /// <summary>Share of the home price you must pay yourself.</summary>
+    public double DownPayment { get; set; } = 0.15;
     /// <summary>Share of the estate that goes to a surviving spouse.</summary>
     public double SpouseInheritanceShare { get; set; } = 0.5;
     public double SameSexCoupleChance { get; set; } = 0.04;
@@ -181,6 +195,12 @@ public sealed class ConditionDef
     public double? MinHealth { get; set; }
     public double? MaxHealth { get; set; }
     public bool? OwnsHome { get; set; }
+    public bool? HasInvestments { get; set; }
+    /// <summary>Has the down payment and an income the bank accepts.</summary>
+    public bool? CanBuyHome { get; set; }
+    public bool? HasMortgage { get; set; }
+    /// <summary>Owns the home themselves (not just living in a partner's).</summary>
+    public bool? HoldsHome { get; set; }
     public bool? LivesWithParents { get; set; }
     public List<string>? TraitsAny { get; set; }
     public List<string>? TraitsNone { get; set; }

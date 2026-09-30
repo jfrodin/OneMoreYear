@@ -14,7 +14,7 @@ public static class EffectApplier
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
-        "crime", "parole", "convicted", "reveal_origin"
+        "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -223,6 +223,20 @@ public static class EffectApplier
                 break;
             case "disinherit":
                 if (to != null && !who.Disinherited.Contains(to.Id)) who.Disinherited.Add(to.Id);
+                break;
+            case "invest":
+                if (EconomySystem.Invest(ctx, who, e.Kind ?? "funds", amount) is var invested && invested > 0)
+                    pending.ExtraText.Add($"{EconomySystem.Format(ctx, invested)} goes into {(e.Kind == "stocks" ? "shares" : "funds")}.");
+                break;
+            case "sell_investments":
+                pending.ExtraText.Add($"You get {EconomySystem.Format(ctx, EconomySystem.SellInvestments(ctx, who))}.");
+                break;
+            case "repay_mortgage":
+                if (EconomySystem.RepayMortgage(ctx, who, amount) is var repaid && repaid > 0)
+                    pending.ExtraText.Add($"You pay {EconomySystem.Format(ctx, repaid)} off the loan. {EconomySystem.Format(ctx, who.Mortgage)} is left.");
+                break;
+            case "sell_home":
+                pending.ExtraText.Add($"After paying off the loan, you keep {EconomySystem.Format(ctx, EconomySystem.SellHome(ctx, who))}.");
                 break;
             case "buy_home":
                 if (EconomySystem.CanBuyHome(ctx, who)) EconomySystem.BuyHome(ctx, who);

@@ -215,6 +215,11 @@ public static class PersonFactory
 
         double yearsOfSaving = Math.Max(0, age - 22);
         p.Money = ctx.Nominal(rng.Range(-0.05, 0.25) * yearsOfSaving * 40000);
-        p.OwnsHome = age > 30 && rng.Chance(0.55);
+        if (age > 30 && rng.Chance(0.55))
+        {
+            // Bought some years ago; part of the loan is paid off.
+            double price = HousingSystem.HomePrice(ctx, p);
+            EconomySystem.GiveHome(p, price, price * (1 - ctx.Country.DownPayment) * Math.Max(0.2, 1 - (age - 30) * 0.03));
+        }
     }
 }

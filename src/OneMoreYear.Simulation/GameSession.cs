@@ -69,9 +69,20 @@ public sealed class GameSession
                     ?? throw new InvalidDataException("Tom sparfil.");
         if (world.SaveVersion > World.CurrentSaveVersion)
             throw new InvalidDataException("The save file comes from a newer version of the game.");
-        // Future: migrate older save versions here, one version step at a time.
+        var session = new GameSession(world, content ?? ContentDb.Embedded);
+        // Older save versions are migrated here, one version step at a time.
+        if (world.SaveVersion < 2)
+        {
+            // 0.12: homes got a market value and a mortgage (they used to count as half the price).
+            foreach (var p in world.People.Where(p => p.IsAlive && p.OwnsHome && p.HomeValue <= 0))
+            {
+                if (world.TryGet(p.PartnerId) is { HomeValue: > 0 }) continue;
+                double price = HousingSystem.HomePrice(session.Ctx, p);
+                EconomySystem.GiveHome(p, price, price * 0.5);
+            }
+        }
         world.SaveVersion = World.CurrentSaveVersion;
-        return new GameSession(world, content ?? ContentDb.Embedded);
+        return session;
     }
 
     // --- The yearly loop ---------------------------------------------------------------------
@@ -88,14 +99,17 @@ public sealed class GameSession
         w.ActionsThisYear.Clear();
         w.Ledger.RemoveAll(l => l.Year < w.Year - 1);
 
-        double jobLoss = 0, savingsFactor = 1;
+        double jobLoss = 0;
         foreach (var h in Country.HistoricalEvents.Where(h => h.Year == w.Year))
         {
             w.Log(h.Text, 2, "world");
             jobLoss += h.JobLossChance;
-            savingsFactor *= h.SavingsFactor;
         }
 
+        // The markets move for everyone; big moves make the news.
+        var market = Market.For(ctx, w.Year);
+        if (Math.Abs(market.Stocks - market.Inflation) >= 0.18)
+            w.Log(market.Stocks > market.Inflation ? $"A boom year: the stock market rose {Math.Round(market.Stocks * 100)} percent." : $"The stock market fell {Math.Round(-market.Stocks * 100)} percent.", 2, "world");
         int count = w.People.Count;
         for (int i = 0; i < count; i++)
         {
@@ -106,7 +120,7 @@ public sealed class GameSession
             if (p.Age(ctx.Year) == ctx.Country.AdultAge) PersonFactory.RollAdultTraits(ctx, p);
             CareerSystem.Update(ctx, p, jobLoss);
             HousingSystem.Update(ctx, p);
-            EconomySystem.Update(ctx, p, savingsFactor);
+            EconomySystem.Update(ctx, p, market);
             p.PeakNetWorth = Math.Max(p.PeakNetWorth, EconomySystem.NetWorth(ctx, p));
             if (p.InFamily) LifeSystem.UpdateWill(ctx, p);
         }
@@ -491,6 +505,34 @@ public sealed class GameSession
         };
     }
 
+    private string? HomeText(Person p)
+    {
+        if (!p.OwnsHome) return null;
+        if (p.HomeValue <= 0)
+            return World.TryGet(p.PartnerId) is { } partner ? $"You live in {Kinship.Genitive(partner.FirstName)} home." : null;
+        return p.Mortgage > 0
+            ? $"Your home is worth about {EconomySystem.Format(Ctx, p.HomeValue)}; {EconomySystem.Format(Ctx, p.Mortgage)} of the loan is left."
+            : $"Your home is worth about {EconomySystem.Format(Ctx, p.HomeValue)}, and it is paid off.";
+    }
+
+    private List<(string, string)> Assets(Person p)
+    {
+        var rows = new List<(string, string)>();
+        if (p.Funds >= 1) rows.Add(("Funds", EconomySystem.Format(Ctx, p.Funds)));
+        if (p.Stocks >= 1) rows.Add(("Shares", EconomySystem.Format(Ctx, p.Stocks)));
+        if (p.HomeValue > 0) rows.Add(("Home", EconomySystem.Format(Ctx, p.HomeValue)));
+        if (p.Mortgage >= 1) rows.Add(("Mortgage", "-" + EconomySystem.Format(Ctx, p.Mortgage)));
+        return rows;
+    }
+
+    private string MarketNote()
+    {
+        var m = Market.For(Ctx, Year);
+        string Pct(double v) => $"{(v >= 0 ? "+" : "")}{Math.Round(v * 100)} %";
+        return $"This year: stock market {Pct(m.Stocks)}, home prices {Pct(m.Housing)}, inflation {Pct(m.Inflation)}. " +
+               $"The bank pays {Pct(m.Bank)} on savings; mortgages cost {Pct(m.MortgageRate)}.";
+    }
+
     public MoneyView Money()
     {
         var p = Player;
@@ -507,7 +549,9 @@ public sealed class GameSession
             Money = EconomySystem.Format(Ctx, p.Money),
             InDebt = p.Money < 0,
             NetWorth = EconomySystem.Format(Ctx, EconomySystem.NetWorth(Ctx, p)),
-            Home = p.OwnsHome ? $"You own your home (your share is worth about {EconomySystem.Format(Ctx, EconomySystem.HomeEquity(Ctx, p))})" : null,
+            Home = HomeText(p),
+            Assets = Assets(p),
+            MarketNote = MarketNote(),
             YearlyIncome = EconomySystem.FormatPay(Ctx, EconomySystem.GrossIncome(Ctx, p)) + " before tax",
             SaveRatePercent = (int)Math.Round(EconomySystem.SaveRate(Ctx, p) * 100),
             TaxPercent = (int)Math.Round(Country.TaxRate * 100),

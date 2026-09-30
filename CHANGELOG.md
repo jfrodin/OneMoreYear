@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.12.0 – 2026-09-30 · Money that works
+
+- **A real market**: inflation follows history, the stock market goes up most years and crashes in
+  the crises (1992, 2008, 2020), home prices rise slowly and fall in bad times. Big market years
+  make the news. The same seed always has the same market.
+- **Invest**: put savings into funds (the whole market) or shares in a single company (can double,
+  can go bankrupt); sell whenever you like. Money in the bank now just keeps its value.
+- **Homes and mortgages**: a home has a market value and a loan. You pay 15 % down, the bank lends
+  the rest if your income is enough, and interest and paying off the loan come out of your income.
+  Pay extra on the loan, or sell the home and keep the difference.
+- A widowed partner keeps the home; otherwise it is sold with the estate. Couples who move in
+  together keep one home.
+- Other people invest (risk-takers in shares) and buy homes when they can afford it.
+- **Balancing**: people with money now live on it, a few percent of their wealth a year. Fortunes no
+  longer grow to hundreds of millions over the generations (the richest after 150 years now have
+  tens of millions in today's money).
+- The Money tab shows bank, funds, shares, home and mortgage, and what the markets did this year.
+- Old saves are converted: homes get a value and a loan.
+
 ## 0.11.0 – 2026-09-30 · Workplaces
 
 - Jobs now have **employers**: "Assistant Nurse at Uppsala University Hospital", "Carpenter at
