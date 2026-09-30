@@ -35,6 +35,8 @@ public static class PersonFactory
         };
         p.BirthLastName = p.LastName;
         AssignTraits(ctx, p, Array.Empty<Person>());
+        Appearance.Generate(ctx, p, Array.Empty<Person>());
+        p.Grades = Math.Clamp(ctx.Rng.Gaussian(45 + (p.Smarts - 50) * 0.6, 12), 5, 100);
         ctx.World.AddPerson(p);
         SetUpLifeStage(ctx, p);
         return p;
@@ -72,6 +74,8 @@ public static class PersonFactory
             geneticParents.Add(ctx.World.Get(bio));
         }
         AssignTraits(ctx, p, geneticParents);
+        Appearance.Generate(ctx, p, geneticParents);
+        p.Grades = Math.Clamp(45 + (p.Smarts - 50) * 0.6 + ctx.Rng.Gaussian(0, 10), 5, 100);
         ctx.World.AddPerson(p);
 
         foreach (var parent in new[] { parentA, parentB })
@@ -131,34 +135,55 @@ public static class PersonFactory
         int age = p.Age(ctx.Year);
         if (age < 7) { p.Activity = Activity.Child; return; }
         if (age < 16) { p.Activity = Activity.School; return; }
-        if (age < 19) { p.Activity = Activity.School; p.Education = EducationLevel.Primary; return; }
+        p.Education = EducationLevel.Primary;
+        if (age < 19)
+        {
+            if (CareerSystem.ChooseProgramme(ctx, p, EducationLevel.Secondary) is { } teenProg)
+            {
+                CareerSystem.StartStudies(ctx, p, teenProg.Id);
+                p.StudyYearsLeft = 19 - age;
+            }
+            else p.Activity = Activity.School;
+            return;
+        }
 
         // Higher education became much more common during the 1900s.
-        double uni = 0.08 + Math.Clamp((p.BirthYear - 1930) * 0.005, 0, 0.35) + ctx.Mod(p, "career") * 0.2;
-        p.Education = rng.Chance(uni) ? EducationLevel.University
-            : rng.Chance(0.75) ? EducationLevel.Secondary : EducationLevel.Primary;
+        double uniChance = 0.08 + Math.Clamp((p.BirthYear - 1930) * 0.005, 0, 0.35) + ctx.Mod(p, "career") * 0.2
+                           + (p.Grades - 50) / 200;
+        if (rng.Chance(0.8) && CareerSystem.ChooseProgramme(ctx, p, EducationLevel.Secondary) is { } sec)
+        {
+            p.Education = EducationLevel.Secondary;
+            p.Degrees.Add(sec.Id);
+            if (rng.Chance(uniChance) && CareerSystem.ChooseProgramme(ctx, p, EducationLevel.University) is { } major)
+            {
+                if (age < 19 + major.Years)
+                {
+                    CareerSystem.StartStudies(ctx, p, major.Id);
+                    p.StudyYearsLeft = 19 + major.Years - age;
+                }
+                else
+                {
+                    p.Education = EducationLevel.University;
+                    p.Degrees.Add(major.Id);
+                }
+            }
+        }
 
-        if (age >= ctx.Country.PensionAge)
+        if (p.Activity == Activity.Studying) { }
+        else if (age >= ctx.Country.PensionAge)
         {
             p.Activity = Activity.Retired;
             p.Income = Math.Max(ctx.Country.MinimumPension, 300000 * ctx.Country.PensionRate);
         }
-        else if (p.Education == EducationLevel.University && age < 23)
+        else if (rng.Chance(0.9) && CareerSystem.Hire(ctx, p))
         {
-            p.Activity = Activity.Studying;
-            p.StudyYearsLeft = 23 - age;
-            p.Income = ctx.Country.StudentIncome;
-        }
-        else if (rng.Chance(0.9))
-        {
-            CareerSystem.Hire(ctx, p);
             // Experienced people have usually climbed a bit.
             var occ = ctx.Content.Occupation(p.OccupationId)!;
             int climbs = rng.Next(1 + (age - 20) / 8);
             for (int i = 0; i < climbs; i++)
             {
                 if (p.OccupationLevel + 1 >= occ.Levels.Count) break;
-                if (occ.Levels[p.OccupationLevel + 1].MinEducation > p.Education) break;
+                if (!CareerSystem.QualifiesFor(p, occ.Levels[p.OccupationLevel + 1])) break;
                 p.OccupationLevel++;
             }
             p.Income = occ.Levels[p.OccupationLevel].Salary;

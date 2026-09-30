@@ -32,19 +32,7 @@ public sealed class AutoPlayer
             session.ChooseHeir(heirs[0].Id);
         }
 
-        int guard = 0;
-        while (!session.NeedsSuccession && session.CurrentEvents().FirstOrDefault(e => !e.Resolved) is { } ev)
-        {
-            if (++guard > 50)
-                throw new InvalidOperationException($"Event loop stuck on {string.Join(", ", session.World.PendingEvents.Select(p => $"{p.EventId}#{p.Uid} resolved={p.Resolved}"))}");
-            OnText?.Invoke(ev.Title);
-            OnText?.Invoke(ev.Text);
-            foreach (var c in ev.Choices) { OnText?.Invoke(c.Text); if (c.Hint != null) OnText?.Invoke(c.Hint); }
-            var options = ev.Choices.Where(c => c.Available).ToList();
-            var choice = options[_rng.Next(options.Count)];
-            var outcome = session.Choose(ev.Uid, choice.Index);
-            OnText?.Invoke(outcome);
-        }
+        AnswerEvents(session);
 
         if (_useActions && !session.NeedsSuccession)
         {
@@ -62,8 +50,28 @@ public sealed class AutoPlayer
             }
         }
 
+        // Actions can create new events (job offers, university applications).
+        AnswerEvents(session);
+
         if (session.NeedsSuccession) return true;
         session.AdvanceYear();
         return true;
+    }
+
+    private void AnswerEvents(GameSession session)
+    {
+        int guard = 0;
+        while (!session.NeedsSuccession && session.CurrentEvents().FirstOrDefault(e => !e.Resolved) is { } ev)
+        {
+            if (++guard > 50)
+                throw new InvalidOperationException($"Event loop stuck on {string.Join(", ", session.World.PendingEvents.Select(p => $"{p.EventId}#{p.Uid} resolved={p.Resolved}"))}");
+            OnText?.Invoke(ev.Title);
+            OnText?.Invoke(ev.Text);
+            foreach (var c in ev.Choices) { OnText?.Invoke(c.Text); if (c.Hint != null) OnText?.Invoke(c.Hint); }
+            var options = ev.Choices.Where(c => c.Available).ToList();
+            var choice = options[_rng.Next(options.Count)];
+            var outcome = session.Choose(ev.Uid, choice.Index);
+            OnText?.Invoke(outcome);
+        }
     }
 }

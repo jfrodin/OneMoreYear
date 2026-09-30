@@ -12,7 +12,7 @@ public static class EffectApplier
         "money", "transfer", "health", "happiness", "relation", "memory", "trait_add", "trait_remove",
         "flag", "flag_remove", "log", "job_find", "job_quit", "promote", "fire", "study", "start_dating",
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
-        "buy_home", "death", "start_affair", "reveal_secret", "end_affair"
+        "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -39,11 +39,14 @@ public static class EffectApplier
         {
             case "money":
                 who.Money += ctx.Nominal(amount);
+                EconomySystem.Record(ctx, who, EventTitle(ctx, pending), ctx.Nominal(amount));
                 break;
             case "transfer":
                 if (to == null) return;
                 who.Money -= ctx.Nominal(amount);
                 to.Money += ctx.Nominal(amount);
+                EconomySystem.Record(ctx, who, $"To {to.FirstName}: {EventTitle(ctx, pending)}", -ctx.Nominal(amount));
+                EconomySystem.Record(ctx, to, $"From {who.FirstName}: {EventTitle(ctx, pending)}", ctx.Nominal(amount));
                 break;
             case "health":
                 who.Health = Math.Clamp(who.Health + amount, 1, 100);
@@ -81,7 +84,23 @@ public static class EffectApplier
                 break;
             }
             case "job_find":
-                CareerSystem.Hire(ctx, who);
+                // The player gets offers to choose between; everyone else just finds something.
+                if (who.Id == w.PlayerId) CareerSystem.QueueJobOffers(ctx, who);
+                else CareerSystem.Hire(ctx, who);
+                break;
+            case "grades":
+                who.Grades = Math.Clamp(who.Grades + amount, 0, 100);
+                break;
+            case "attribute":
+                switch (e.Kind)
+                {
+                    case "smarts": who.Smarts = Math.Clamp(who.Smarts + amount, 1, 100); break;
+                    case "looks": who.Looks = Math.Clamp(who.Looks + amount, 1, 100); break;
+                    case "fitness": who.Fitness = Math.Clamp(who.Fitness + amount, 1, 100); break;
+                }
+                break;
+            case "queue_event":
+                if (e.Event != null) EventSystem.QueueSituation(ctx, e.Event);
                 break;
             case "job_quit":
                 if (who.Activity == Activity.Working)
@@ -101,9 +120,17 @@ public static class EffectApplier
                 }
                 break;
             case "study":
-                CareerSystem.StartStudies(ctx, who, e.Level ?? EducationLevel.University);
-                w.Log($"{who.FirstName} started {(e.Level == EducationLevel.Secondary ? "upper secondary school" : "university")}.", ctx.Importance(false, who), "education", who.Id);
+            {
+                var prog = ctx.Content.Programme(e.Programme)
+                           ?? CareerSystem.ChooseProgramme(ctx, who, e.Level ?? EducationLevel.University);
+                if (prog == null || !CareerSystem.CanEnter(ctx, who, prog)) return;
+                CareerSystem.StartStudies(ctx, who, prog.Id);
+                w.Log(prog.Level == EducationLevel.University
+                        ? $"{who.FirstName} started studying {prog.Name} at university."
+                        : $"{who.FirstName} started the {prog.Name.ToLowerInvariant()}.",
+                    ctx.Importance(false, who), "education", who.Id);
                 break;
+            }
             case "start_dating":
                 if (to == null || !EventSystem.Compatible(ctx, who, to)) return;
                 if (who.PartnerId is { } oldA) FamilySystem.BreakUp(ctx, who, w.Get(oldA));
@@ -170,6 +197,9 @@ public static class EffectApplier
             }
         }
     }
+
+    private static string EventTitle(SimContext ctx, PendingEvent pending) =>
+        ctx.Content.Events.TryGetValue(pending.EventId, out var def) ? TextFormatter.Format(ctx, def.Title, pending) : "Other";
 
     private static Secret? SecretFrom(SimContext ctx, PendingEvent pending) =>
         pending.Vars.TryGetValue("secret", out var sid) ? ctx.World.Secrets.FirstOrDefault(s => s.Id == (int)sid) : null;

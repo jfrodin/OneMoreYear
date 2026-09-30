@@ -172,7 +172,7 @@
     "choices": [
       {
         "text": "Ask for {t.his} number",
-        "chance": 0.6, "chanceTraits": { "social": 0.15, "introvert": -0.1 },
+        "chance": 0.6, "chanceTraits": { "social": 0.15, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.005 },
         "success": {
           "text": "You go on a date the next week. Then another. And another.",
           "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
@@ -443,7 +443,7 @@
     "choices": [
       {
         "text": "Have the surgery",
-        "chance": 0.8,
+        "chance": 0.8, "chanceAttributes": { "fitness": 0.003 },
         "success": { "text": "It was caught in time. You recover well.", "effects": [ { "type": "health", "amount": 5 } ] },
         "failure": { "text": "There are complications. Recovery takes a long time.", "effects": [ { "type": "health", "amount": -20 } ] }
       },

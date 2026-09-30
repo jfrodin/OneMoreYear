@@ -154,6 +154,7 @@ public static class FamilySystem
         int age = p.Age(ctx.Year);
         double baseChance = age switch { < 26 => 0.2, < 36 => 0.22, < 51 => 0.12, _ => 0.05 };
         baseChance *= 1 + ctx.Mod(p, "social");
+        baseChance *= 0.7 + p.Looks / 100 * 0.6;
         if (p.Flags.Contains("widowed") || p.ExPartnerIds.Count > 0) baseChance *= 0.7;
         if (!ctx.Rng.Chance(baseChance)) return;
         var partner = CreatePartnerFor(ctx, p);

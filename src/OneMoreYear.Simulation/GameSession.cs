@@ -77,6 +77,7 @@ public sealed class GameSession
         w.Year++;
         w.PendingEvents.Clear();
         w.ActionsThisYear.Clear();
+        w.Ledger.RemoveAll(l => l.Year < w.Year - 1);
 
         double jobLoss = 0, savingsFactor = 1;
         foreach (var h in Country.HistoricalEvents.Where(h => h.Year == w.Year))
@@ -172,12 +173,32 @@ public sealed class GameSession
     public EventView DescribeEvent(PendingEvent pending)
     {
         var def = Content.Events[pending.EventId];
-        var choices = def.Choices.Select((c, i) => new ChoiceView(
-            i,
-            TextFormatter.Format(Ctx, c.Text, pending),
-            c.Hint == null ? null : TextFormatter.Format(Ctx, c.Hint, pending),
-            c.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, c, pending) * 100) : null,
-            EventSystem.IsChoiceAvailable(Ctx, c, pending))).ToList();
+        var choices = new List<ChoiceView>();
+
+        // Generated choices first (job offers), then the event's own.
+        for (int i = 0; i < pending.Options.Count; i++)
+        {
+            if (CareerSystem.ParseOffer(Ctx, pending.Options[i]) is not { } offer) continue;
+            var (occ, level) = offer;
+            var lvl = occ.Levels[level];
+            string fit = CareerSystem.FitsDegree(Ctx, Player, occ) ? "Uses your education." : "Doesn't use your education.";
+            choices.Add(new ChoiceView(i, $"{lvl.Title}  ·  {occ.Name}  ·  {EconomySystem.Format(Ctx, Ctx.Nominal(lvl.Salary))} / year",
+                $"{fit} Top of this career: {occ.Levels[^1].Title}.", null, true));
+        }
+        int offset = pending.Options.Count;
+        for (int i = 0; i < def.Choices.Count; i++)
+        {
+            var c = def.Choices[i];
+            string? hint = c.Hint == null ? null : TextFormatter.Format(Ctx, c.Hint, pending);
+            if (EventSystem.StudyProgramme(Ctx, c) is { } prog)
+            {
+                double need = CareerSystem.RequiredGrades(Ctx, Player, prog);
+                hint ??= prog.Description + (need > 0 ? $" Needs grades {need:0} – yours are {Player.Grades:0}." : "");
+            }
+            choices.Add(new ChoiceView(offset + i, TextFormatter.Format(Ctx, c.Text, pending), hint,
+                c.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, c, pending) * 100) : null,
+                EventSystem.IsChoiceAvailable(Ctx, c, pending)));
+        }
         var involved = pending.Roles.Values.ToList();
         return new EventView(pending.Uid, TextFormatter.Format(Ctx, def.Title, pending),
             Annotate(TextFormatter.Format(Ctx, def.Text, pending), involved),
@@ -190,7 +211,8 @@ public sealed class GameSession
         var pending = World.PendingEvents.First(e => e.Uid == eventUid);
         if (pending.Resolved) throw new InvalidOperationException("The event has already been answered.");
         var def = Content.Events[pending.EventId];
-        if (!EventSystem.IsChoiceAvailable(Ctx, def.Choices[choiceIndex], pending))
+        int own = choiceIndex - pending.Options.Count;
+        if (own >= 0 && !EventSystem.IsChoiceAvailable(Ctx, def.Choices[own], pending))
             throw new InvalidOperationException("That choice is not available.");
         return EventSystem.Resolve(Ctx, pending, choiceIndex);
     }
@@ -227,7 +249,7 @@ public sealed class GameSession
             bool used = World.ActionsThisYear.Contains(ActionKey(def.Id, targetId));
             result.Add(new ActionView(def.Id, TextFormatter.Format(Ctx, def.Title, probe),
                 choice.Hint == null ? null : TextFormatter.Format(Ctx, choice.Hint, probe), chance,
-                !used && World.ActionPoints > 0 && CanAdvanceOrActionsAllowed()));
+                !used && World.ActionPoints > 0 && CanAdvanceOrActionsAllowed(), def.Category));
         }
         return result;
     }
@@ -328,6 +350,11 @@ public sealed class GameSession
             FromPlayer = p.Id == player.Id ? null : RelView(World.FindRel(player.Id, p.Id)),
             Memories = memories,
             Generation = p.Generation,
+            Smarts = p.Smarts,
+            Looks = p.Looks,
+            Fitness = p.Fitness,
+            Grades = p.Grades,
+            AppearanceText = Appearance.Describe(p, Year),
         };
     }
 
@@ -337,6 +364,92 @@ public sealed class GameSession
         return new RelationView(r.Closeness, r.Respect, r.Trust, r.Attraction, r.Fear, r.Envy, r.Bitterness, r.Opinion,
             RelationshipSystem.OpinionLabel(r.Opinion));
     }
+
+    // --- School & work, money ---------------------------------------------------------------
+
+    public CareerView Career()
+    {
+        var p = Player;
+        var prog = Content.Programme(p.ProgrammeId);
+        var occ = Content.Occupation(p.OccupationId);
+        var ladder = occ == null ? new List<LadderStep>() : occ.Levels.Select((l, i) =>
+        {
+            var req = new List<string>();
+            if (l.MinEducation > EducationLevel.None) req.Add(CareerSystem.EducationName(l.MinEducation));
+            if (l.RequiresDegree is { Count: > 0 } degrees)
+                req.Add(string.Join(" or ", degrees.Select(d => Content.Programme(d)?.Name ?? d)));
+            return new LadderStep(l.Title, EconomySystem.Format(Ctx, Ctx.Nominal(l.Salary)) + " / year",
+                req.Count == 0 ? "No requirements" : "Needs " + string.Join(", ", req),
+                i == p.OccupationLevel, CareerSystem.QualifiesFor(p, l));
+        }).ToList();
+
+        string? promotionNote = null;
+        if (occ != null && p.OccupationLevel + 1 < occ.Levels.Count)
+        {
+            var next = occ.Levels[p.OccupationLevel + 1];
+            promotionNote = !CareerSystem.QualifiesFor(p, next) ? $"To become {CareerSystem.Article(next.Title)} you need more education."
+                : p.YearsInJob < 2 ? "Promotions come after at least two years in the role."
+                : "Your chance depends on your performance.";
+        }
+        else if (occ != null) promotionNote = "You are at the top of this career.";
+
+        return new CareerView
+        {
+            Status = CareerSystem.ActivityText(Ctx, p),
+            EducationLevel = p.Education switch
+            {
+                EducationLevel.University => "University degree",
+                EducationLevel.Secondary => "Upper secondary school",
+                EducationLevel.Primary => "Primary school",
+                _ => p.Age(Year) < 7 ? "Not in school yet" : "In school"
+            },
+            Programme = prog?.Name,
+            ProgrammeDescription = prog?.Description,
+            YearsLeft = p.Activity == Activity.Studying ? p.StudyYearsLeft : 0,
+            Grades = p.Age(Year) >= 7 ? p.Grades : null,
+            PartTimeJob = p.Flags.Contains(CareerSystem.PartTimeFlag),
+            Degrees = p.Degrees.Select(d => Content.Programme(d)?.Name ?? d).ToList(),
+            JobTitle = occ == null ? null : CareerSystem.Title(Ctx, p),
+            Field = occ?.Name,
+            Salary = occ == null ? null : EconomySystem.Format(Ctx, Ctx.Nominal(p.Income)) + " / year",
+            YearsInJob = p.YearsInJob,
+            Performance = occ == null ? null : p.Performance,
+            PromotionChancePercent = (int)Math.Round(CareerSystem.PromotionChance(Ctx, p) * 100),
+            PromotionNote = promotionNote,
+            Ladder = ladder,
+        };
+    }
+
+    public MoneyView Money()
+    {
+        var p = Player;
+        List<LedgerView> Lines(int year) => World.Ledger.Where(l => l.Year == year)
+            .GroupBy(l => l.Label)
+            .Select(g => new LedgerView(g.Key, Signed(g.Sum(l => l.Amount)), g.Sum(l => l.Amount)))
+            .OrderByDescending(l => l.Raw)
+            .ToList();
+        string Signed(double v) => (v > 0 ? "+" : "") + EconomySystem.Format(Ctx, v);
+        var thisYear = Lines(Year);
+        var lastYear = Lines(Year - 1);
+        return new MoneyView
+        {
+            Money = EconomySystem.Format(Ctx, p.Money),
+            InDebt = p.Money < 0,
+            NetWorth = EconomySystem.Format(Ctx, EconomySystem.NetWorth(Ctx, p)),
+            Home = p.OwnsHome ? $"You own your home (your share is worth about {EconomySystem.Format(Ctx, EconomySystem.HomeEquity(Ctx))})" : null,
+            YearlyIncome = EconomySystem.Format(Ctx, Ctx.Nominal(EconomySystem.GrossIncome(Ctx, p))) + " / year before tax",
+            SaveRatePercent = (int)Math.Round(EconomySystem.SaveRate(Ctx, p) * 100),
+            TaxPercent = (int)Math.Round(Country.TaxRate * 100),
+            Year = Year,
+            ThisYear = thisYear,
+            ThisYearTotal = Signed(thisYear.Sum(l => l.Raw)),
+            LastYear = lastYear,
+            LastYearTotal = Signed(lastYear.Sum(l => l.Raw)),
+        };
+    }
+
+    /// <summary>Everything that has happened to the player's circle so far this year.</summary>
+    public IReadOnlyList<ChronicleLine> NewsThisYear() => RelevantLines(World.Chronicle.Where(e => e.Year == Year));
 
     // --- Chronicle ---------------------------------------------------------------------------
 
@@ -351,7 +464,8 @@ public sealed class GameSession
     public IReadOnlyList<HeirCandidate> HeirCandidates()
     {
         var dead = Player;
-        var dist = Kinship.Distances(World, dead, 4);
+        // Search the whole family (closest first) so the story goes on as long as the bloodline lives.
+        var dist = Kinship.Distances(World, dead, 16);
         int Priority(Person p)
         {
             if (dead.ChildIds.Contains(p.Id)) return 0;

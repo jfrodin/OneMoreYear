@@ -42,18 +42,18 @@ Backlog for One More Year. Newest ideas at the top of each section.
 
 ### Playtest 1 – ideas
 
-- [ ] **Appearance and attributes**: height, build, hair, eyes (inherited), plus more bars – e.g. Looks,
+- [x] **Appearance and attributes**: height, build, hair, eyes (inherited), plus more bars – e.g. Looks,
   Smarts, Fitness, Stress. They should matter: smarts for school/career, looks for dating, etc.
 - [ ] **Relationships while young**: innocent crushes and "going steady" between kids of similar age,
   real relationships from the age of consent (15 in Sweden) – see design decision above.
 - [ ] **Finding love among people you know**: classmates, colleagues and friends-of-friends as a pool of
   acquaintances who can become friends or partners – not only a random "Look for love" button.
-- [ ] **School & career tab**: grades, programme/major, current job, performance, boss and colleagues,
+- [x] **School & career tab**: grades, programme/major, current job, performance, boss and colleagues,
   job offers to choose between.
-- [ ] **Economy tab**: income, taxes, living costs, student loans, savings, debt, home – and a yearly
+- [x] **Economy tab**: income, taxes, living costs, student loans, savings, debt, home – and a yearly
   breakdown of why the money changed.
-- [ ] **Deeper study/work loop**: choose a programme and major that leads to specific careers, part-time
-  jobs while studying, applying for jobs, events at work.
+- [x] **Deeper study/work loop**: choose a programme and major that leads to specific careers, part-time
+  jobs while studying, applying for jobs. (Still to do: events at work, boss and colleagues – comes with acquaintances.)
 
 ## Known issues / balancing
 

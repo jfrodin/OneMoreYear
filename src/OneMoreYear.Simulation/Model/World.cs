@@ -33,6 +33,9 @@ public sealed class World
     /// <summary>"eventId" → last year it fired for the current player.</summary>
     public Dictionary<string, int> EventHistory { get; set; } = new();
 
+    /// <summary>Where the player's money came from and went, this year and last year.</summary>
+    public List<LedgerLine> Ledger { get; set; } = new();
+
     public int ActionPoints { get; set; }
     public List<string> ActionsThisYear { get; set; } = new();
 
@@ -109,4 +112,14 @@ public sealed class PendingEvent
     public bool Resolved { get; set; }
     public int? ChosenIndex { get; set; }
     public string? OutcomeText { get; set; }
+    /// <summary>Generated options for events with dynamic choices (e.g. "healthcare:2" job offers).</summary>
+    public List<string> Options { get; set; } = new();
+}
+
+/// <summary>One line in the player's money breakdown (nominal kronor, + in, − out).</summary>
+public sealed class LedgerLine
+{
+    public int Year { get; set; }
+    public string Label { get; set; } = "";
+    public double Amount { get; set; }
 }

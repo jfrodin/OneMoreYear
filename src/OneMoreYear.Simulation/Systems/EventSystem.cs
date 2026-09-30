@@ -154,6 +154,7 @@ public static class EventSystem
         if (c.NotActivity is { } notAct && notAct.Contains(p.Activity)) return false;
         if (c.MinEducation is { } minEd && p.Education < minEd) return false;
         if (c.MaxEducation is { } maxEd && p.Education > maxEd) return false;
+        if (c.MinGrades is { } minGr && p.Grades < minGr) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;
         if (c.MaxChildren is { } maxK && kids > maxK) return false;
@@ -227,12 +228,23 @@ public static class EventSystem
     public static bool IsChoiceAvailable(SimContext ctx, ChoiceDef choice, PendingEvent pending)
     {
         var player = ctx.World.Player;
-        if (Matches(ctx, choice.Requires, player, player)) return true;
+        if (Meets(ctx, choice, player)) return true;
         // Never leave the player stuck: if nothing is available (the situation changed since the
         // event was created), every choice becomes available.
         var def = ctx.Content.Events[pending.EventId];
-        return !def.Choices.Any(c => Matches(ctx, c.Requires, player, player));
+        return pending.Options.Count == 0 && !def.Choices.Any(c => Meets(ctx, c, player));
     }
+
+    private static bool Meets(SimContext ctx, ChoiceDef choice, Person player)
+    {
+        if (!Matches(ctx, choice.Requires, player, player)) return false;
+        // Choosing a programme also needs admission (e.g. grades for Medicine).
+        return StudyProgramme(ctx, choice) is not { } prog || CareerSystem.CanEnter(ctx, player, prog);
+    }
+
+    /// <summary>The programme a choice enrols you in, if any – used to check admission requirements.</summary>
+    public static ProgrammeDef? StudyProgramme(SimContext ctx, ChoiceDef choice) =>
+        choice.Effects.FirstOrDefault(e => e.Type == "study" && e.Programme != null) is { } eff ? ctx.Content.Programme(eff.Programme) : null;
 
     public static double SuccessChance(SimContext ctx, ChoiceDef choice, PendingEvent pending)
     {
@@ -242,6 +254,18 @@ public static class EventSystem
             if (player.HasTrait(trait)) chance += bonus;
         if (choice.ChanceOpinion != 0 && pending.Roles.TryGetValue("target", out var tid))
             chance += ctx.World.Opinion(tid, player.Id) * choice.ChanceOpinion;
+        foreach (var (attr, perPoint) in choice.ChanceAttributes)
+        {
+            double value = attr switch
+            {
+                "smarts" => player.Smarts,
+                "looks" => player.Looks,
+                "fitness" => player.Fitness,
+                "grades" => player.Grades,
+                _ => 50
+            };
+            chance += (value - 50) * perPoint;
+        }
         return Math.Clamp(chance, 0.03, 0.97);
     }
 
@@ -249,8 +273,24 @@ public static class EventSystem
     public static string Resolve(SimContext ctx, PendingEvent pending, int choiceIndex)
     {
         var def = ctx.Content.Events[pending.EventId];
-        var choice = def.Choices[choiceIndex];
         var texts = new List<string>();
+
+        // Generated choices (job offers) come first, then the event's own choices.
+        if (choiceIndex < pending.Options.Count)
+        {
+            var player = ctx.World.Player;
+            if (def.DynamicChoices == "job_offers" && CareerSystem.ParseOffer(ctx, pending.Options[choiceIndex]) is { } offer)
+            {
+                var (occ, level) = offer;
+                CareerSystem.Hire(ctx, player, occ.Id, level);
+                texts.Add($"You accept. You start as {CareerSystem.Article(occ.Levels[level].Title)}.");
+            }
+            pending.Resolved = true;
+            pending.ChosenIndex = choiceIndex;
+            pending.OutcomeText = string.Join(" ", texts);
+            return pending.OutcomeText;
+        }
+        var choice = def.Choices[choiceIndex - pending.Options.Count];
 
         foreach (var eff in choice.Effects) EffectApplier.Apply(ctx, eff, pending);
         if (!string.IsNullOrWhiteSpace(choice.Result)) texts.Add(TextFormatter.Format(ctx, choice.Result, pending));

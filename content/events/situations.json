@@ -6,19 +6,18 @@
   {
     "id": "after_primary", "trigger": "situation",
     "title": "The last day of school",
-    "text": "Your classmates talk about upper secondary school, summer jobs and the future. What do you want to do now?",
+    "text": "Your classmates talk about upper secondary school, summer jobs and the future. Which programme do you apply for?",
     "choices": [
-      {
-        "text": "Go on to upper secondary school",
-        "hint": "Opens up more careers, but takes three years.",
-        "effects": [ { "type": "study", "level": "secondary" } ],
-        "result": "You'll start in the autumn."
-      },
+      { "text": "Academic programme", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_academic" } ], "result": "You start the academic programme in the autumn." },
+      { "text": "Health and social care programme", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_care" } ], "result": "You start the health and social care programme in the autumn." },
+      { "text": "Building and construction programme", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_construction" } ], "result": "You start the building and construction programme in the autumn." },
+      { "text": "Industrial technology programme", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_industry" } ], "result": "You start the industrial technology programme in the autumn." },
+      { "text": "Business and administration programme", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_business" } ], "result": "You start the business and administration programme in the autumn." },
       {
         "text": "Start working right away",
         "hint": "Your own money now – but fewer doors later.",
         "effects": [ { "type": "job_find" }, { "type": "happiness", "amount": 5 } ],
-        "result": "You find a job and earn your first real pay cheque."
+        "result": "You start applying for jobs."
       },
       {
         "text": "Take a year to think",
@@ -34,14 +33,15 @@
     "text": "You run out of school to banners with your baby photos and screaming relatives. Adult life is waiting.",
     "choices": [
       {
-        "text": "Go to university",
-        "hint": "Three to five years of student loans – but the best jobs require a degree.",
-        "effects": [ { "type": "study", "level": "university" } ]
+        "text": "Apply to university",
+        "hint": "Choose a programme – what you can get into depends on your grades.",
+        "effects": [ { "type": "queue_event", "event": "choose_university" } ],
+        "result": "You look through the university catalogue."
       },
       {
         "text": "Start working",
         "effects": [ { "type": "job_find" } ],
-        "result": "You look for work and step into working life."
+        "result": "You start applying for jobs."
       },
       {
         "text": "Travel the world for a year",
@@ -53,6 +53,31 @@
         ],
         "result": "Thailand, Australia, a beach in Mexico. You come home tanned, broke and a little wiser."
       }
+    ]
+  },
+  {
+    "id": "choose_university", "trigger": "situation",
+    "title": "Applying to university",
+    "text": "Your grades are {grades}. Which programme do you apply for?",
+    "choices": [
+      { "text": "Medicine", "effects": [ { "type": "study", "level": "university", "programme": "uni_medicine" } ], "result": "You're in! Five years until you're a doctor." },
+      { "text": "Law", "effects": [ { "type": "study", "level": "university", "programme": "uni_law" } ], "result": "You're in. Law school starts in the autumn." },
+      { "text": "Computer science and engineering", "effects": [ { "type": "study", "level": "university", "programme": "uni_engineering" } ], "result": "You're in. Time to learn to code." },
+      { "text": "Natural sciences", "effects": [ { "type": "study", "level": "university", "programme": "uni_science" } ], "result": "You're in. Labs, formulas and late nights." },
+      { "text": "Media and journalism", "effects": [ { "type": "study", "level": "university", "programme": "uni_journalism" } ], "result": "You're in. Your first byline is waiting." },
+      { "text": "Business and economics", "effects": [ { "type": "study", "level": "university", "programme": "uni_economics" } ], "result": "You're in. Spreadsheets await." },
+      { "text": "Nursing", "effects": [ { "type": "study", "level": "university", "programme": "uni_nursing" } ], "result": "You're in. Three years to become a nurse." },
+      { "text": "Teacher education", "effects": [ { "type": "study", "level": "university", "programme": "uni_teaching" } ], "result": "You're in. One day you'll stand in front of a class." },
+      { "text": "Social sciences", "effects": [ { "type": "study", "level": "university", "programme": "uni_social" } ], "result": "You're in. Society, people and big questions." },
+      { "text": "Not now", "result": "Maybe another year." }
+    ]
+  },
+  {
+    "id": "job_offers", "trigger": "situation", "dynamicChoices": "job_offers",
+    "title": "Job offers",
+    "text": "You've sent out applications. These employers want you:",
+    "choices": [
+      { "text": "Keep looking", "hint": "Something better might come along next year.", "result": "You say no thanks and keep looking." }
     ]
   },
   {

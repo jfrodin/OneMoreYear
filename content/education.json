@@ -1,0 +1,76 @@
+// Education programmes. "secondary" programmes follow primary school; "university" programmes need a
+// secondary diploma. minGrades is the grade (0–100) needed to get in; vocational secondary programmes
+// need +10 extra for university. leadsTo lists occupation ids the degree qualifies for or favours.
+[
+  {
+    "id": "sec_academic", "name": "Academic programme", "level": "secondary", "years": 3,
+    "description": "Natural and social sciences. The road to university.",
+    "academic": true, "leadsTo": [], "traitAffinity": { "ambitious": 1.8, "lazy": 0.5 }
+  },
+  {
+    "id": "sec_care", "name": "Health and social care programme", "level": "secondary", "years": 3,
+    "description": "Leads straight to work in healthcare and elderly care.",
+    "leadsTo": [ "healthcare" ], "traitAffinity": { "generous": 1.6, "loyal": 1.3 }
+  },
+  {
+    "id": "sec_construction", "name": "Building and construction programme", "level": "secondary", "years": 3,
+    "description": "Carpentry, construction and trades.",
+    "leadsTo": [ "construction" ], "traitAffinity": { "brave": 1.3, "introvert": 1.2 }
+  },
+  {
+    "id": "sec_industry", "name": "Industrial technology programme", "level": "secondary", "years": 3,
+    "description": "Machines, production and technology.",
+    "leadsTo": [ "industry" ], "traitAffinity": { "introvert": 1.3 }
+  },
+  {
+    "id": "sec_business", "name": "Business and administration programme", "level": "secondary", "years": 3,
+    "description": "Sales, retail and office work.",
+    "leadsTo": [ "trade", "public" ], "traitAffinity": { "social": 1.5 }
+  },
+
+  {
+    "id": "uni_medicine", "name": "Medicine", "level": "university", "years": 5, "minGrades": 85,
+    "description": "The hardest programme to get into. Leads to becoming a doctor.",
+    "leadsTo": [ "medicine" ], "traitAffinity": { "ambitious": 2.0 }
+  },
+  {
+    "id": "uni_nursing", "name": "Nursing", "level": "university", "years": 3, "minGrades": 50,
+    "description": "Registered nurse.",
+    "leadsTo": [ "healthcare" ], "traitAffinity": { "generous": 1.6 }
+  },
+  {
+    "id": "uni_law", "name": "Law", "level": "university", "years": 5, "minGrades": 75,
+    "description": "Courts, law firms and a lot of reading.",
+    "leadsTo": [ "law" ], "traitAffinity": { "ambitious": 1.6, "manipulative": 1.5 }
+  },
+  {
+    "id": "uni_engineering", "name": "Computer science and engineering", "level": "university", "years": 5, "minGrades": 65,
+    "description": "Software, engineering and technology.",
+    "leadsTo": [ "it", "industry" ], "traitAffinity": { "introvert": 1.5 }
+  },
+  {
+    "id": "uni_economics", "name": "Business and economics", "level": "university", "years": 3, "minGrades": 55,
+    "description": "Management, finance and business.",
+    "leadsTo": [ "business", "public", "trade" ], "traitAffinity": { "ambitious": 1.4, "social": 1.2 }
+  },
+  {
+    "id": "uni_teaching", "name": "Teacher education", "level": "university", "years": 4, "minGrades": 45,
+    "description": "Preschool and school teachers.",
+    "leadsTo": [ "education" ], "traitAffinity": { "generous": 1.4, "social": 1.3 }
+  },
+  {
+    "id": "uni_journalism", "name": "Media and journalism", "level": "university", "years": 3, "minGrades": 60,
+    "description": "Newspapers, TV and radio.",
+    "leadsTo": [ "media" ], "traitAffinity": { "social": 1.4, "brave": 1.3 }
+  },
+  {
+    "id": "uni_science", "name": "Natural sciences", "level": "university", "years": 4, "minGrades": 60,
+    "description": "Physics, chemistry, biology – and a possible research career.",
+    "leadsTo": [ "academia", "it" ], "traitAffinity": { "introvert": 1.4, "ambitious": 1.2 }
+  },
+  {
+    "id": "uni_social", "name": "Social sciences", "level": "university", "years": 3, "minGrades": 45,
+    "description": "Sociology, political science, psychology.",
+    "leadsTo": [ "public", "academia" ], "traitAffinity": { "social": 1.2 }
+  }
+]

@@ -11,6 +11,7 @@ public sealed class ContentDb
     public Dictionary<string, TraitDef> Traits { get; } = new();
     public Dictionary<string, CountryDef> Countries { get; } = new();
     public List<OccupationDef> Occupations { get; } = new();
+    public Dictionary<string, ProgrammeDef> Programmes { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
 
@@ -63,6 +64,10 @@ public sealed class ContentDb
                 {
                     foreach (var t in Deserialize<List<TraitDef>>(json)) db.Traits[t.Id] = t;
                 }
+                else if (path.EndsWith("education.json"))
+                {
+                    foreach (var p in Deserialize<List<ProgrammeDef>>(json)) db.Programmes[p.Id] = p;
+                }
                 else if (path.EndsWith("occupations.json"))
                 {
                     db.Occupations.AddRange(Deserialize<List<OccupationDef>>(json));
@@ -81,6 +86,8 @@ public sealed class ContentDb
         JsonSerializer.Deserialize<T>(json, JsonOptions) ?? throw new InvalidDataException("Empty content file");
 
     public OccupationDef? Occupation(string? id) => id == null ? null : Occupations.FirstOrDefault(o => o.Id == id);
+
+    public ProgrammeDef? Programme(string? id) => id != null && Programmes.TryGetValue(id, out var p) ? p : null;
 
     public double TraitModifier(Person p, string key)
     {
@@ -105,7 +112,14 @@ public sealed class ContentDb
             if (!o.Levels.Any(l => l.Entry)) errors.Add($"Occupation {o.Id} has no entry level.");
             foreach (var t in o.TraitAffinity.Keys)
                 if (!Traits.ContainsKey(t)) errors.Add($"Occupation {o.Id}: unknown trait {t}");
+            foreach (var l in o.Levels)
+                foreach (var d in l.RequiresDegree ?? new())
+                    if (!Programmes.ContainsKey(d)) errors.Add($"Occupation {o.Id}: unknown degree {d}");
         }
+        if (Programmes.Count == 0) errors.Add("No education programmes loaded.");
+        foreach (var p in Programmes.Values)
+            foreach (var o in p.LeadsTo)
+                if (Occupation(o) == null) errors.Add($"Programme {p.Id}: unknown occupation {o}");
         foreach (var e in Events.Values)
         {
             if (e.Choices.Count == 0) errors.Add($"Event {e.Id} has no choices.");

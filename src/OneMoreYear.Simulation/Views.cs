@@ -15,7 +15,7 @@ public sealed record ChoiceView(int Index, string Text, string? Hint, int? Chanc
 public sealed record EventView(int Uid, string Title, string Text, IReadOnlyList<ChoiceView> Choices,
     bool Resolved, string? OutcomeText, int? TargetId);
 
-public sealed record ActionView(string Id, string Title, string? Hint, int? ChancePercent, bool Enabled);
+public sealed record ActionView(string Id, string Title, string? Hint, int? ChancePercent, bool Enabled, string Category = "life");
 
 public sealed record RelationView(double Closeness, double Respect, double Trust, double Attraction,
     double Fear, double Envy, double Bitterness, double Opinion, string OpinionLabel);
@@ -51,6 +51,11 @@ public sealed record PersonView
     public RelationView? FromPlayer { get; init; }
     public IReadOnlyList<MemoryView> Memories { get; init; } = Array.Empty<MemoryView>();
     public int Generation { get; init; }
+    public double Smarts { get; init; }
+    public double Looks { get; init; }
+    public double Fitness { get; init; }
+    public double Grades { get; init; }
+    public string AppearanceText { get; init; } = "";
 }
 
 public sealed record ChronicleLine(int Year, string Text, int Importance, string Category, IReadOnlyList<int> PersonIds);
@@ -69,3 +74,45 @@ public sealed record FamilyStats(int Generations, int FamilyMembers, int Charact
 /// <summary>A person in the family tree. <paramref name="IsReference"/> marks a repeat: shown in full elsewhere.</summary>
 public sealed record TreeNode(int Id, string Label, bool Alive, bool IsPlayer, bool Played, IReadOnlyList<string> Partners,
     IReadOnlyList<TreeNode> Children, bool IsReference = false);
+
+public sealed record LadderStep(string Title, string Salary, string Requirement, bool IsCurrent, bool Qualified);
+
+/// <summary>Everything the School &amp; Work tab shows.</summary>
+public sealed record CareerView
+{
+    public string Status { get; init; } = "";
+    public string EducationLevel { get; init; } = "";
+    public string? Programme { get; init; }
+    public string? ProgrammeDescription { get; init; }
+    public int YearsLeft { get; init; }
+    public double? Grades { get; init; }
+    public bool PartTimeJob { get; init; }
+    public IReadOnlyList<string> Degrees { get; init; } = Array.Empty<string>();
+    public string? JobTitle { get; init; }
+    public string? Field { get; init; }
+    public string? Salary { get; init; }
+    public int YearsInJob { get; init; }
+    public double? Performance { get; init; }
+    public int PromotionChancePercent { get; init; }
+    public string? PromotionNote { get; init; }
+    public IReadOnlyList<LadderStep> Ladder { get; init; } = Array.Empty<LadderStep>();
+}
+
+public sealed record LedgerView(string Label, string Amount, double Raw);
+
+/// <summary>Everything the Money tab shows.</summary>
+public sealed record MoneyView
+{
+    public string Money { get; init; } = "";
+    public bool InDebt { get; init; }
+    public string NetWorth { get; init; } = "";
+    public string? Home { get; init; }
+    public string YearlyIncome { get; init; } = "";
+    public int SaveRatePercent { get; init; }
+    public int TaxPercent { get; init; }
+    public int Year { get; init; }
+    public IReadOnlyList<LedgerView> ThisYear { get; init; } = Array.Empty<LedgerView>();
+    public string ThisYearTotal { get; init; } = "";
+    public IReadOnlyList<LedgerView> LastYear { get; init; } = Array.Empty<LedgerView>();
+    public string LastYearTotal { get; init; } = "";
+}

@@ -164,3 +164,38 @@ public class AgeLawTests
         }
     }
 }
+
+public class CareerAndMoneyTests
+{
+    [Fact]
+    public void EveryoneWorkingIsQualifiedForTheirJob()
+    {
+        var session = GameSession.NewGame(new NewGameOptions { Seed = 33, StartYear = 1960 });
+        var bot = new AutoPlayer(33);
+        for (int i = 0; i < 120 && bot.PlayYear(session); i++) { }
+        foreach (var p in session.World.People.Where(p => p.IsAlive && p.Activity == OneMoreYear.Simulation.Model.Activity.Working))
+        {
+            var occ = session.Content.Occupation(p.OccupationId)!;
+            Assert.True(CareerSystem.QualifiesFor(p, occ.Levels[p.OccupationLevel]),
+                $"{p.FullName} works as {occ.Levels[p.OccupationLevel].Title} without the right education");
+        }
+    }
+
+    [Fact]
+    public void LedgerExplainsEveryYearsChangeInMoney()
+    {
+        var session = GameSession.NewGame(new NewGameOptions { Seed = 44, StartYear = 1970 });
+        var bot = new AutoPlayer(44, useActions: false);
+        for (int i = 0; i < 60; i++)
+        {
+            if (session.NeedsSuccession || session.GameOver || session.HasUnresolvedEvents) { bot.PlayYear(session); continue; }
+            var player = session.Player;
+            double before = player.Money;
+            session.AdvanceYear();
+            if (!player.IsAlive || session.Player.Id != player.Id) continue;
+            double explained = session.World.Ledger.Where(l => l.Year == session.Year).Sum(l => l.Amount);
+            Assert.True(Math.Abs(player.Money - before - explained) < 1,
+                $"{session.Year}: money changed by {player.Money - before:0} but the ledger explains {explained:0}");
+        }
+    }
+}

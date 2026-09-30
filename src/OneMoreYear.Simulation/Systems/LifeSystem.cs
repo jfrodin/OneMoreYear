@@ -18,9 +18,11 @@ public static class LifeSystem
             _ => rng.Gaussian(-2.2, 2.2)
         };
         change += ctx.Mod(p, "health");
+        change += (p.Fitness - 50) / 60;
         if (p.Happiness < 25) change -= 1;
         p.Health = Math.Clamp(p.Health + change, 1, 100);
         p.Happiness = Math.Clamp(p.Happiness + (60 - p.Happiness) * 0.1, 0, 100);
+        Appearance.UpdateYear(ctx, p);
 
         // Serious illness.
         double illness = age < 30 ? 0.004 : 0.004 + (age - 30) * 0.0009;
@@ -154,6 +156,7 @@ public static class LifeSystem
         {
             var heir = w.Get(id);
             heir.Money += amount;
+            EconomySystem.Record(ctx, heir, $"Inheritance from {dead.FirstName}", amount);
             if (heir.InFamily && amount > ctx.Nominal(10000))
                 w.Log($"{heir.FirstName} inherited {EconomySystem.Format(ctx, amount)} from {dead.FirstName}.", ctx.Importance(false, heir), "economy", id, dead.Id);
         }

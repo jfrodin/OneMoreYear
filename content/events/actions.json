@@ -99,7 +99,7 @@
     "conditions": { "minAge": 15, "hasPartner": false },
     "choices": [ {
       "text": "Ask out", "hint": "Could turn a friendship into something more – or make it awkward.",
-      "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05 },
+      "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05 }, "chanceAttributes": { "looks": 0.005 },
       "success": {
         "text": "{t.name} says yes!",
         "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
@@ -217,7 +217,7 @@
     "conditions": { "minAge": 16, "hasPartner": false },
     "choices": [ {
       "text": "Go out and meet people",
-      "chance": 0.4, "chanceTraits": { "social": 0.15, "introvert": -0.1 },
+      "chance": 0.4, "chanceTraits": { "social": 0.15, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.006 },
       "success": { "text": "You meet {t.full}. There's a spark – you start seeing each other.", "effects": [ { "type": "start_dating", "to": "target" } ] },
       "failure": { "text": "A few awkward dates, but nobody special.", "effects": [] }
     } ]
@@ -234,37 +234,35 @@
     } ]
   },
   {
-    "id": "self_find_job", "trigger": "self", "title": "Look for a job",
+    "id": "self_find_job", "trigger": "self", "category": "career", "title": "Look for a job",
     "conditions": { "minAge": 16, "maxAge": 66, "activity": "unemployed" },
     "choices": [ {
-      "text": "Apply for jobs",
-      "chance": 0.55, "chanceTraits": { "ambitious": 0.15, "lazy": -0.15 },
-      "success": { "text": "An offer arrives!", "effects": [ { "type": "job_find" } ] },
-      "failure": { "text": "Rejection after rejection.", "effects": [ { "type": "happiness", "amount": -4 } ] }
+      "text": "Send out applications", "hint": "Offers depend on your education and grades.",
+      "effects": [ { "type": "job_find" } ],
+      "result": "You send out applications and wait."
     } ]
   },
   {
-    "id": "self_change_job", "trigger": "self", "title": "Change jobs",
+    "id": "self_change_job", "trigger": "self", "category": "career", "title": "Look for a new job",
     "conditions": { "minAge": 18, "hasJob": true },
     "choices": [ {
-      "text": "Try something new", "hint": "You might end up in a completely different field.",
-      "chance": 0.5,
-      "success": { "text": "You land something new.", "effects": [ { "type": "job_quit" }, { "type": "job_find" } ] },
-      "failure": { "text": "Nothing better turns up.", "effects": [] }
+      "text": "Apply elsewhere", "hint": "You keep your current job unless you accept an offer.",
+      "effects": [ { "type": "job_find" } ],
+      "result": "You quietly send out a few applications."
     } ]
   },
   {
-    "id": "self_ask_raise", "trigger": "self", "title": "Ask for a promotion",
+    "id": "self_ask_raise", "trigger": "self", "category": "career", "title": "Ask for a promotion",
     "conditions": { "minAge": 18, "hasJob": true },
     "choices": [ {
-      "text": "Knock on the boss's door",
+      "text": "Knock on the boss's door", "hint": "Only works if you have what the next step requires.",
       "chance": 0.25, "chanceTraits": { "ambitious": 0.15, "brave": 0.05, "manipulative": 0.1 },
       "success": { "text": "Your boss agrees you deserve it.", "effects": [ { "type": "promote" } ] },
       "failure": { "text": "\"Maybe next year.\"", "effects": [ { "type": "happiness", "amount": -4 } ] }
     } ]
   },
   {
-    "id": "self_quit_job", "trigger": "self", "title": "Quit your job",
+    "id": "self_quit_job", "trigger": "self", "category": "career", "title": "Quit your job",
     "conditions": { "minAge": 16, "hasJob": true },
     "choices": [ {
       "text": "Hand in your notice",
@@ -273,12 +271,48 @@
     } ]
   },
   {
-    "id": "self_study", "trigger": "self", "title": "Go to university",
-    "conditions": { "minAge": 18, "maxAge": 50, "minEducation": "secondary", "maxEducation": "secondary", "notActivity": [ "studying" ] },
+    "id": "self_study", "trigger": "self", "category": "career", "title": "Apply to university",
+    "conditions": { "minAge": 18, "maxAge": 55, "minEducation": "secondary", "notActivity": [ "studying" ] },
     "choices": [ {
-      "text": "Enrol", "hint": "Years of studying without a salary.",
-      "effects": [ { "type": "study", "level": "university" } ],
-      "result": "You're a student again."
+      "text": "Look at programmes", "hint": "What you can get into depends on your grades.",
+      "effects": [ { "type": "queue_event", "event": "choose_university" } ],
+      "result": "You look through the university catalogue."
+    } ]
+  },
+  {
+    "id": "self_study_hard", "trigger": "self", "category": "career", "title": "Study hard",
+    "conditions": { "minAge": 7, "activity": "studying" },
+    "choices": [ {
+      "text": "Hit the books", "hint": "Better grades, a little less fun.",
+      "effects": [ { "type": "grades", "amount": 6 }, { "type": "happiness", "amount": -2 } ],
+      "result": "Late nights at the library pay off."
+    } ]
+  },
+  {
+    "id": "self_study_hard_school", "trigger": "self", "category": "career", "title": "Do your homework",
+    "conditions": { "minAge": 7, "activity": "school" },
+    "choices": [ {
+      "text": "Really try", "hint": "Better grades now open doors later.",
+      "effects": [ { "type": "grades", "amount": 5 }, { "type": "happiness", "amount": -1 } ],
+      "result": "Your teacher notices the difference."
+    } ]
+  },
+  {
+    "id": "self_part_time", "trigger": "self", "category": "career", "title": "Get a part-time job",
+    "conditions": { "minAge": 16, "activity": "studying", "notFlags": [ "part_time_job" ] },
+    "choices": [ {
+      "text": "Work evenings and weekends", "hint": "Extra money every year, but your grades will suffer a little.",
+      "effects": [ { "type": "flag", "flag": "part_time_job" } ],
+      "result": "You start working in a café on evenings and weekends."
+    } ]
+  },
+  {
+    "id": "self_quit_part_time", "trigger": "self", "category": "career", "title": "Quit the part-time job",
+    "conditions": { "flags": [ "part_time_job" ] },
+    "choices": [ {
+      "text": "Focus on your studies",
+      "effects": [ { "type": "flag_remove", "flag": "part_time_job" } ],
+      "result": "Less money, more time."
     } ]
   },
   {
@@ -286,12 +320,12 @@
     "conditions": { "minAge": 8 },
     "choices": [ {
       "text": "Train hard this year",
-      "effects": [ { "type": "health", "amount": 5 }, { "type": "happiness", "amount": 2 } ],
+      "effects": [ { "type": "health", "amount": 3 }, { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "happiness", "amount": 2 } ],
       "result": "You feel stronger."
     } ]
   },
   {
-    "id": "self_buy_home", "trigger": "self", "title": "Buy a home",
+    "id": "self_buy_home", "trigger": "self", "category": "money", "title": "Buy a home",
     "conditions": { "minAge": 20, "ownsHome": false, "minMoney": 450000 },
     "choices": [ {
       "text": "Buy", "hint": "A deposit of 15 % of the home price.",
@@ -300,7 +334,7 @@
     } ]
   },
   {
-    "id": "self_write_will", "trigger": "self", "title": "Write a will",
+    "id": "self_write_will", "trigger": "self", "category": "money", "title": "Write a will",
     "conditions": { "minAge": 50, "minChildren": 2 },
     "choices": [ {
       "text": "Divide everything equally",

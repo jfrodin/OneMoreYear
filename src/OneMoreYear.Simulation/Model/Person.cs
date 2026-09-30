@@ -40,6 +40,17 @@ public sealed class Person
     // Personality
     public List<string> Traits { get; set; } = new();
 
+    // Attributes (0–100). Partly inherited; they shape school, work and love.
+    public double Smarts { get; set; } = 50;
+    public double Looks { get; set; } = 50;
+    public double Fitness { get; set; } = 50;
+
+    // Appearance
+    public int HeightCm { get; set; }
+    public string Build { get; set; } = "";
+    public string HairColor { get; set; } = "";
+    public string EyeColor { get; set; } = "";
+
     // State
     public double Health { get; set; } = 90;
     public double Happiness { get; set; } = 60;
@@ -47,6 +58,12 @@ public sealed class Person
     public Activity Activity { get; set; }
     public int StudyYearsLeft { get; set; }
     public EducationLevel? StudyingFor { get; set; }
+    /// <summary>The programme currently being studied.</summary>
+    public string? ProgrammeId { get; set; }
+    /// <summary>Completed programmes (ids from education content).</summary>
+    public List<string> Degrees { get; set; } = new();
+    /// <summary>School results 0–100.</summary>
+    public double Grades { get; set; } = 50;
     public string? OccupationId { get; set; }
     public int OccupationLevel { get; set; }
     public double Performance { get; set; } = 50;

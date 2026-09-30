@@ -341,18 +341,13 @@ public partial class Main : Control
             case 32: if (_screen is GameScreen g1) g1.ShowTab(1); break;
             case 40: Shot("03_family"); break;
             case 42: if (_screen is GameScreen g2) g2.ShowTab(2); break;
-            case 50: Shot("04_tree"); break;
+            case 50: Shot("04_work"); break;
             case 52: if (_screen is GameScreen g3) g3.ShowTab(3); break;
-            case 60: Shot("05_chronicle"); break;
-            case 62: ShowFeedback(); break;
-            case 64:
-                if (FindChild<TextEdit>(_overlayLayer) is { } te) te.Text = "Screenshot tour test note – please ignore.";
-                Shot("07_feedback");
-                break;
-            case 66: if (FindButtonNamed(_overlayLayer, "Save note") is { } sb) sb.EmitSignal(BaseButton.SignalName.Pressed); break;
-            case 68: Shot("08_saved"); break;
-            case 70: Ui.Clear(_overlayLayer); ShowSuccession(); break;
-            case 78: Shot("06_succession"); GetTree().Quit(); break;
+            case 60: Shot("05_money"); break;
+            case 62: if (_screen is GameScreen g4) g4.ShowTab(4); break;
+            case 70: Shot("06_tree"); break;
+            case 72: ShowSuccession(); break;
+            case 80: Shot("07_succession"); GetTree().Quit(); break;
         }
     }
 

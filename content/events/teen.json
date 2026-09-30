@@ -37,7 +37,7 @@
     "choices": [
       {
         "text": "Ask {t.him} out",
-        "chance": 0.45, "chanceTraits": { "social": 0.15, "brave": 0.1, "introvert": -0.1 },
+        "chance": 0.45, "chanceTraits": { "social": 0.15, "brave": 0.1, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.006 },
         "success": {
           "text": "{t.name} blushes and says yes. You're together!",
           "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 15 } ]
@@ -131,7 +131,7 @@
     "choices": [
       {
         "text": "Study day and night",
-        "effects": [ { "type": "trait_add", "trait": "ambitious", "chance": 0.25 }, { "type": "health", "amount": -2 }, { "type": "flag", "flag": "good_grades" } ],
+        "effects": [ { "type": "trait_add", "trait": "ambitious", "chance": 0.25 }, { "type": "health", "amount": -2 }, { "type": "grades", "amount": 8 } ],
         "result": "You ace all three."
       },
       {
@@ -140,7 +140,7 @@
         "success": { "text": "It went better than it should have.", "effects": [] },
         "failure": {
           "text": "Failed. Your parents are not pleased.",
-          "effects": [ { "type": "trait_add", "trait": "lazy", "chance": 0.2 }, { "type": "happiness", "amount": -6 } ]
+          "effects": [ { "type": "grades", "amount": -6 }, { "type": "trait_add", "trait": "lazy", "chance": 0.2 }, { "type": "happiness", "amount": -6 } ]
         }
       }
     ]

@@ -26,11 +26,12 @@ public partial class GameScreen : Control
     private OptionButton _chronicleFilter = null!;
     private Label _hint = null!;
 
-    private YearReport? _lastReport;
     private int? _selectedId;
     private readonly Dictionary<int, Button> _personButtons = new();
 
-    private const int TabYear = 0, TabFamily = 1, TabTree = 2, TabChronicle = 3;
+    private const int TabYear = 0, TabFamily = 1, TabWork = 2, TabMoney = 3, TabTree = 4, TabChronicle = 5;
+    private VBoxContainer _workContent = null!;
+    private VBoxContainer _moneyContent = null!;
 
     public void Init(Main main) => _main = main;
 
@@ -73,6 +74,16 @@ public partial class GameScreen : Control
         split.AddChild(Ui.Scroll(Ui.Margin(_personDetail, 8)));
         _tabs.AddChild(split);
         _tabs.SetTabTitle(TabFamily, "Family & Friends");
+
+        // School & work
+        _workContent = Ui.VBox(14);
+        _tabs.AddChild(Ui.Scroll(Ui.Margin(_workContent, 4)));
+        _tabs.SetTabTitle(TabWork, "School & Work");
+
+        // Money
+        _moneyContent = Ui.VBox(14);
+        _tabs.AddChild(Ui.Scroll(Ui.Margin(_moneyContent, 4)));
+        _tabs.SetTabTitle(TabMoney, "Money");
 
         // Family tree
         _tree = new Tree { HideRoot = true, SizeFlagsVertical = SizeFlags.ExpandFill, FocusMode = FocusModeEnum.All };
@@ -127,6 +138,8 @@ public partial class GameScreen : Control
         RefreshSidebar();
         RefreshYear();
         RefreshPeople();
+        if (_tabs.CurrentTab == TabWork) RefreshWork();
+        if (_tabs.CurrentTab == TabMoney) RefreshMoney();
         if (_tabs.CurrentTab == TabTree) RefreshTree();
         if (_tabs.CurrentTab == TabChronicle) RefreshChronicle();
     }
@@ -136,6 +149,8 @@ public partial class GameScreen : Control
         if (tab == TabTree) RefreshTree();
         if (tab == TabChronicle) RefreshChronicle();
         if (tab == TabFamily) RefreshPeople();
+        if (tab == TabWork) RefreshWork();
+        if (tab == TabMoney) RefreshMoney();
         FocusDefault();
     }
 
@@ -145,6 +160,8 @@ public partial class GameScreen : Control
         {
             TabYear => FirstEnabledButton(_yearContent, "choice") ?? (_nextYear.Disabled ? null : _nextYear),
             TabFamily => _selectedId is { } id && _personButtons.TryGetValue(id, out var b) ? b : _personButtons.Values.FirstOrDefault(),
+            TabWork => FirstEnabledButton(_workContent, "action") ?? (Control?)_nextYear,
+            TabMoney => FirstEnabledButton(_moneyContent, "action") ?? (Control?)_nextYear,
             TabTree => _tree,
             TabChronicle => _chronicleFilter,
             _ => null
@@ -202,10 +219,12 @@ public partial class GameScreen : Control
 
         _sidebar.AddChild(Ui.Bar("Health", p.Health, p.Health >= 50 ? UiTheme.Good : UiTheme.Bad, p.HealthLabel));
         _sidebar.AddChild(Ui.Bar("Happiness", p.Happiness, UiTheme.Info, $"{p.Happiness:0}"));
+        _sidebar.AddChild(Ui.Bar("Smarts", p.Smarts, new Color("9b8ad9"), $"{p.Smarts:0}"));
+        _sidebar.AddChild(Ui.Bar("Looks", p.Looks, new Color("d98cb3"), $"{p.Looks:0}"));
+        _sidebar.AddChild(Ui.Bar("Fitness", p.Fitness, new Color("5fb3a6"), $"{p.Fitness:0}"));
 
         _sidebar.AddChild(StatRow("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text));
         _sidebar.AddChild(StatRow("Income", p.Income, UiTheme.Text));
-        _sidebar.AddChild(StatRow("Education", p.Education, UiTheme.Text));
         _sidebar.AddChild(StatRow("Home", p.OwnsHome ? "Owns a home" : "Renting", UiTheme.Text));
 
         _sidebar.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
@@ -260,9 +279,7 @@ public partial class GameScreen : Control
         _yearContent.AddChild(header);
 
         // What happened
-        var news = _lastReport?.Year == S.Year
-            ? _lastReport.News
-            : S.Chronicle().Where(l => l.Year == S.Year).ToList();
+        var news = S.NewsThisYear();
         if (news.Count > 0)
         {
             var newsBox = Ui.VBox(6);
@@ -288,14 +305,157 @@ public partial class GameScreen : Control
             _yearContent.AddChild(Ui.Label("A quiet year. Spend your time on something below, visit your family – or let the year pass.", 18, UiTheme.Muted, wrap: true));
 
         // Your own life
-        var actions = S.Actions(null);
+        var actions = S.Actions(null).Where(a => a.Category == "life").ToList();
         if (actions.Count > 0)
         {
             var box = Ui.VBox(10);
             box.AddChild(Ui.Label("Your life", 20, UiTheme.Text));
             box.AddChild(ActionButtons(actions, null));
+            box.AddChild(Ui.Label("School, work and money have their own tabs. People are in Family & Friends.", 15, UiTheme.Faint));
             _yearContent.AddChild(Ui.Card(box));
         }
+    }
+
+    // --- School & work ------------------------------------------------------------------------
+
+    private void RefreshWork()
+    {
+        Ui.Clear(_workContent);
+        var c = S.Career();
+
+        var header = Ui.HBox(16);
+        header.AddChild(Ui.Label("School & Work", 32, UiTheme.Accent));
+        var status = Ui.Label(c.Status, 20, UiTheme.Muted);
+        status.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        header.AddChild(status);
+        _workContent.AddChild(header);
+
+        // Education
+        var edu = Ui.VBox(8);
+        edu.AddChild(Ui.Label("Education", 21, UiTheme.Text));
+        edu.AddChild(StatRow("Level", c.EducationLevel, UiTheme.Text));
+        if (c.Programme != null)
+        {
+            edu.AddChild(StatRow("Studying", $"{c.Programme}  ·  {c.YearsLeft} year{(c.YearsLeft == 1 ? "" : "s")} left", UiTheme.Text));
+            if (c.ProgrammeDescription != null) edu.AddChild(Ui.Label(c.ProgrammeDescription, 15, UiTheme.Muted, wrap: true));
+        }
+        if (c.Degrees.Count > 0) edu.AddChild(StatRow("Diplomas", string.Join(", ", c.Degrees), UiTheme.Text));
+        if (c.Grades is { } grades)
+        {
+            edu.AddChild(Ui.Bar("Grades", grades, grades >= 60 ? UiTheme.Good : grades >= 40 ? UiTheme.Accent : UiTheme.Bad, $"{grades:0}"));
+            edu.AddChild(Ui.Label("Grades decide which programmes you can get into – Medicine needs about 85, Law 75.", 15, UiTheme.Faint, wrap: true));
+        }
+        if (c.PartTimeJob) edu.AddChild(Ui.Label("You have a part-time job next to your studies.", 15, UiTheme.Muted));
+        _workContent.AddChild(Ui.Card(edu));
+
+        // Work
+        var work = Ui.VBox(8);
+        work.AddChild(Ui.Label("Work", 21, UiTheme.Text));
+        if (c.JobTitle != null)
+        {
+            work.AddChild(StatRow("Job", $"{c.JobTitle}  ·  {c.Field}", UiTheme.Text));
+            work.AddChild(StatRow("Salary", c.Salary ?? "", UiTheme.Text));
+            work.AddChild(StatRow("In the job", $"{c.YearsInJob} year{(c.YearsInJob == 1 ? "" : "s")}", UiTheme.Text));
+            if (c.Performance is { } perf)
+                work.AddChild(Ui.Bar("Performance", perf, perf >= 60 ? UiTheme.Good : perf >= 35 ? UiTheme.Accent : UiTheme.Bad, $"{perf:0}"));
+            string promo = c.PromotionChancePercent > 0 ? $"Chance of promotion this year: about {c.PromotionChancePercent}%. " : "";
+            if (c.PromotionNote != null || promo != "")
+                work.AddChild(Ui.Label(promo + (c.PromotionNote ?? ""), 15, UiTheme.Muted, wrap: true));
+
+            work.AddChild(Ui.Spacer(4));
+            work.AddChild(Ui.Label("Career path", 18, UiTheme.Text));
+            foreach (var step in c.Ladder)
+            {
+                var row = Ui.HBox(12);
+                var marker = Ui.Label(step.IsCurrent ? "You" : "", 15, UiTheme.Accent);
+                marker.CustomMinimumSize = new Vector2(44, 0);
+                row.AddChild(marker);
+                var title = Ui.Label(step.Title, 17, step.IsCurrent ? UiTheme.Accent : step.Qualified ? UiTheme.Text : UiTheme.Muted);
+                title.CustomMinimumSize = new Vector2(240, 0);
+                row.AddChild(title);
+                var salary = Ui.Label(step.Salary, 16, UiTheme.Muted);
+                salary.CustomMinimumSize = new Vector2(190, 0);
+                row.AddChild(salary);
+                row.AddChild(Ui.Label(step.Requirement, 15, step.Qualified ? UiTheme.Faint : UiTheme.Bad, wrap: true));
+                work.AddChild(row);
+            }
+        }
+        else
+        {
+            work.AddChild(Ui.Label(c.Status == "Looking for work"
+                ? "You don't have a job. Look for one below – offers depend on your education and grades."
+                : "No job right now.", 16, UiTheme.Muted, wrap: true));
+        }
+        _workContent.AddChild(Ui.Card(work));
+
+        var actions = S.Actions(null).Where(a => a.Category == "career").ToList();
+        if (actions.Count > 0)
+        {
+            var box = Ui.VBox(10);
+            box.AddChild(Ui.Label("What do you want to do?", 19, UiTheme.Text));
+            box.AddChild(ActionButtons(actions, null));
+            _workContent.AddChild(Ui.Card(box));
+        }
+    }
+
+    // --- Money --------------------------------------------------------------------------------
+
+    private void RefreshMoney()
+    {
+        Ui.Clear(_moneyContent);
+        var m = S.Money();
+
+        _moneyContent.AddChild(Ui.Label("Money", 32, UiTheme.Accent));
+
+        var summary = Ui.VBox(8);
+        summary.AddChild(StatRow(m.InDebt ? "Debt" : "Savings", m.Money, m.InDebt ? UiTheme.Bad : UiTheme.Text));
+        summary.AddChild(StatRow("Net worth", m.NetWorth, UiTheme.Text));
+        summary.AddChild(StatRow("Income", m.YearlyIncome, UiTheme.Text));
+        if (m.Home != null) summary.AddChild(Ui.Label(m.Home, 16, UiTheme.Muted, wrap: true));
+        summary.AddChild(Ui.Label(
+            $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs are paid first. Of what is left, you save about " +
+            $"{m.SaveRatePercent}% – your personality decides how careful you are. If your income doesn't cover the basics, " +
+            "welfare pays half the gap and the rest becomes debt, which grows with interest.", 15, UiTheme.Faint, wrap: true));
+        _moneyContent.AddChild(Ui.Card(summary));
+
+        _moneyContent.AddChild(LedgerCard($"This year ({m.Year})", m.ThisYear, m.ThisYearTotal));
+        if (m.LastYear.Count > 0) _moneyContent.AddChild(LedgerCard($"Last year ({m.Year - 1})", m.LastYear, m.LastYearTotal));
+
+        var actions = S.Actions(null).Where(a => a.Category == "money").ToList();
+        if (actions.Count > 0)
+        {
+            var box = Ui.VBox(10);
+            box.AddChild(Ui.Label("What do you want to do?", 19, UiTheme.Text));
+            box.AddChild(ActionButtons(actions, null));
+            _moneyContent.AddChild(Ui.Card(box));
+        }
+    }
+
+    private static Control LedgerCard(string title, IReadOnlyList<LedgerView> lines, string total)
+    {
+        var box = Ui.VBox(6);
+        box.AddChild(Ui.Label(title, 20, UiTheme.Text));
+        if (lines.Count == 0) box.AddChild(Ui.Label("Nothing yet.", 16, UiTheme.Muted));
+        foreach (var line in lines)
+        {
+            var row = Ui.HBox(12);
+            var label = Ui.Label(line.Label, 17, UiTheme.Text, wrap: true);
+            row.AddChild(label);
+            var amount = Ui.Label(line.Amount, 17, line.Raw >= 0 ? UiTheme.Good : UiTheme.Bad);
+            amount.HorizontalAlignment = HorizontalAlignment.Right;
+            amount.CustomMinimumSize = new Vector2(160, 0);
+            row.AddChild(amount);
+            box.AddChild(row);
+        }
+        box.AddChild(Ui.Separator());
+        var totalRow = Ui.HBox(12);
+        totalRow.AddChild(Ui.Label("Change in your money", 17, UiTheme.Text, wrap: true));
+        var t = Ui.Label(total, 18, total.StartsWith("+") ? UiTheme.Good : UiTheme.Bad);
+        t.HorizontalAlignment = HorizontalAlignment.Right;
+        t.CustomMinimumSize = new Vector2(160, 0);
+        totalRow.AddChild(t);
+        box.AddChild(totalRow);
+        return Ui.Card(box);
     }
 
     private Control BuildEventCard(EventView ev)
@@ -358,7 +518,7 @@ public partial class GameScreen : Control
             }
             return;
         }
-        _lastReport = S.AdvanceYear();
+        S.AdvanceYear();
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
         _tabs.CurrentTab = TabYear;
@@ -396,6 +556,8 @@ public partial class GameScreen : Control
         _main.ShowMessage(title, result, () =>
         {
             if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
+            // Some actions lead to a decision (job offers, university applications).
+            if (S.HasUnresolvedEvents) _tabs.CurrentTab = TabYear;
             RefreshAll();
             FocusDefault();
         });
@@ -476,6 +638,7 @@ public partial class GameScreen : Control
         col.AddChild(Ui.Label(p.Alive ? $"{p.RoleLabel}  ·  Age {p.Age}" : $"{p.RoleLabel}  ·  {p.BirthYear}–{p.DeathYear}", 18, UiTheme.Accent));
         col.AddChild(Ui.Label(p.Occupation, 16, UiTheme.Muted, wrap: true));
         if (!string.IsNullOrEmpty(p.Partner)) col.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
+        col.AddChild(Ui.Label(p.AppearanceText, 15, UiTheme.Faint, wrap: true));
         header.AddChild(col);
         _personDetail.AddChild(header);
 
@@ -576,7 +739,7 @@ public partial class GameScreen : Control
 
     public void SmokeStep(int step)
     {
-        _tabs.CurrentTab = step % 4;
+        _tabs.CurrentTab = step % _tabs.GetTabCount();
         if (FirstEnabledButton(_yearContent, "choice") is { } choice) { choice.EmitSignal(BaseButton.SignalName.Pressed); return; }
         if (step % 3 == 0 && FirstEnabledButton(_personDetail, "action") is { } action) { action.EmitSignal(BaseButton.SignalName.Pressed); return; }
         OnNextYear();
