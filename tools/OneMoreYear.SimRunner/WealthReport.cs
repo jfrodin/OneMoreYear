@@ -23,6 +23,8 @@ static class WealthReport
             .Concat(Kinship.Siblings(s.World, c).Where(sb => sb.IsAlive).Select(sb => s.World.Opinion(c.Id, sb.Id)))).ToList();
         Console.WriteLine($"  Parents→adult children and siblings ({pairs.Count}): " +
                           string.Join(", ", pairs.GroupBy(RelationshipSystem.OpinionLabel).OrderBy(g => g.Key).Select(g => $"{g.Key} {g.Count()}")));
+        int years = s.Year - s.World.StartYear, big = s.World.Chronicle.Where(l => YearReport.IsFrontPage(new ChronicleLine(l.Year, l.Text, l.Importance, l.Category, l.PersonIds))).Select(l => l.Year).Distinct().Count();
+        Console.WriteLine($"  Front-page years: {big} of {years} ({100 * big / Math.Max(1, years)} %)");
         var peak = s.World.People.OrderByDescending(p => p.PeakNetWorth).First();
         Console.WriteLine($"  Highest ever: {peak.FullName} {EconomySystem.Format(ctx, peak.PeakNetWorth)} (nominal)");
     }

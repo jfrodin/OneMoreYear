@@ -2,6 +2,14 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.17.2 – 2026-09-30 · A paper worth reading
+
+- The family newspaper now only comes in **big years** – births, deaths, illness, weddings and
+  divorces, secrets, crime, inheritances and history. Quiet years go straight on (about two years
+  in three).
+- Choose at the bottom of the paper: every year, only in big years (default) or never.
+- Close it by clicking anywhere outside it, or with Esc / B.
+
 ## 0.17.1 – 2026-09-30 · Choose a decade
 
 - The start year is no longer a number to type: you choose a decade to begin in, from "The 1950s –

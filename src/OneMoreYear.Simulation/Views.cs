@@ -72,7 +72,18 @@ public sealed record PersonLink(int Id, string Relation, string Name, bool Alive
 
 public sealed record ChronicleLine(int Year, string Text, int Importance, string Category, IReadOnlyList<int> PersonIds);
 
-public sealed record YearReport(int Year, int PlayerAge, IReadOnlyList<ChronicleLine> News, bool PlayerDied);
+public sealed record YearReport(int Year, int PlayerAge, IReadOnlyList<ChronicleLine> News, bool PlayerDied)
+{
+    private static readonly HashSet<string> BigCategories = new() { "family", "death", "health", "succession", "inheritance", "secret", "crime", "dark", "world" };
+
+    /// <summary>News worth a front page: births, deaths, illness, wills, secrets, crime, history – and love that changes a life.</summary>
+    public static bool IsFrontPage(ChronicleLine l) =>
+        l.Importance >= 3 && (BigCategories.Contains(l.Category)
+            || l.Category == "love" && (l.Text.Contains("married") || l.Text.Contains("divorc") || l.Text.Contains("broke up") || l.Text.Contains(" left ")));
+
+    /// <summary>A year with at least one front-page story.</summary>
+    public bool IsBigYear => News.Any(IsFrontPage);
+}
 
 public sealed record HeirCandidate(int Id, string Name, string Relation, int Age, string Money, string Occupation);
 

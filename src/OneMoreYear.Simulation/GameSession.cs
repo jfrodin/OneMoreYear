@@ -123,7 +123,7 @@ public sealed class GameSession
         double jobLoss = 0;
         foreach (var h in Country.HistoricalEvents.Where(h => h.Year == w.Year))
         {
-            w.Log(h.Text, 2, "world");
+            w.Log(h.Text, 3, "world"); // history is front-page news
             jobLoss += h.JobLossChance;
         }
 

@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using OneMoreYear.Simulation;
 using OneMoreYear.Simulation.Model;
@@ -344,18 +345,27 @@ public partial class Main : Control
     /// <summary>A new year begins: the family's newspaper, on top of the (already updated) game screen.</summary>
     public void ShowNewspaper(YearReport report)
     {
-        if (Session == null) return;
+        if (Session == null || Settings.Newspaper == NewspaperMode.Never) return;
+        // By default only years with front-page news: big family events or history.
+        if (Settings.Newspaper == NewspaperMode.BigYears && !report.IsBigYear) return;
+
         var dim = new ColorRect { Color = new Color(0, 0, 0, 0.55f), MouseFilter = MouseFilterEnum.Stop };
         dim.SetAnchorsPreset(LayoutPreset.FullRect);
         var center = new CenterContainer();
         center.SetAnchorsPreset(LayoutPreset.FullRect);
         dim.AddChild(center);
-        center.AddChild(Newspaper.Build(Session, report, () =>
+        bool closed = false;
+        void Close()
         {
+            if (closed) return;
+            closed = true;
             _overlayLayer.RemoveChild(dim);
             dim.QueueFree();
             if (_screen is GameScreen game) game.FocusAfterNewspaper();
-        }));
+        }
+        center.AddChild(Newspaper.Build(Session, report, Close));
+        // A click anywhere outside the paper closes it too.
+        dim.GuiInput += e => { if (e is InputEventMouseButton { Pressed: true }) Close(); };
         _overlayLayer.AddChild(dim);
     }
 
@@ -505,7 +515,8 @@ public partial class Main : Control
     {
         foreach (var child in root.GetChildren())
         {
-            if (child is Button { Disabled: false } b) return b;
+            // Plain buttons only: pressing a drop-down (OptionButton) would just open it.
+            if (child is Button { Disabled: false } b && b is not OptionButton) return b;
             if (FindButton(child) is { } found) return found;
         }
         return null;

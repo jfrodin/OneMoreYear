@@ -17,7 +17,7 @@ public static class Newspaper
 
     public static Control Build(GameSession s, YearReport report, System.Action onClose)
     {
-        var family = report.News.Where(l => l.Category != "world").OrderByDescending(l => l.Importance).ToList();
+        var family = report.News.Where(l => l.Category != "world").OrderByDescending(YearReport.IsFrontPage).ThenByDescending(l => l.Importance).ToList();
         var world = report.News.Where(l => l.Category == "world").ToList();
         var lead = family.FirstOrDefault();
 
@@ -71,7 +71,7 @@ public static class Newspaper
         page.AddChild(Rule(1));
 
         var button = Ui.Button("Turn the page", onClose, 48);
-        button.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+
         button.CustomMinimumSize = new Vector2(220, 48);
         var style = UiTheme.Box(Ink, 2, null, 0, 12);
         button.AddThemeStyleboxOverride("normal", style);
@@ -81,7 +81,24 @@ public static class Newspaper
         button.AddThemeColorOverride("font_hover_color", Newsprint);
         button.AddThemeColorOverride("font_focus_color", Newsprint);
         button.AddThemeFontOverride("font", UiTheme.Masthead);
-        page.AddChild(button);
+        // Esc / B closes the paper as well.
+        button.GuiInput += e => { if (e.IsActionPressed("ui_cancel")) { button.AcceptEvent(); onClose(); } };
+
+        // How often the paper comes – so it never becomes a chore.
+        var footer = Ui.HBox(12);
+        footer.AddChild(Label("The paper comes", UiTheme.Body, 15, Grey));
+        var mode = new OptionButton { CustomMinimumSize = new Vector2(200, 40) };
+        mode.AddItem("every year");
+        mode.AddItem("only in big years");
+        mode.AddItem("never");
+        mode.Selected = (int)Settings.Newspaper;
+        mode.ItemSelected += i => Settings.SetNewspaper((NewspaperMode)(int)i);
+        mode.AddThemeColorOverride("font_color", Ink);
+        mode.AddThemeStyleboxOverride("normal", UiTheme.Box(Newsprint.Darkened(0.05f), 2, Grey, 1, 8));
+        footer.AddChild(mode);
+        footer.AddChild(new Control { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill });
+        footer.AddChild(button);
+        page.AddChild(footer);
 
         var sheet = new PanelContainer();
         var box = UiTheme.Box(Newsprint, 1, new Color("cfc8b8"), 1, 34);

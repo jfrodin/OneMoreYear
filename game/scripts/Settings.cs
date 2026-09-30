@@ -5,9 +5,13 @@ using OneMoreYear.Simulation.Model;
 
 namespace OneMoreYear.Game;
 
+/// <summary>When the family newspaper is shown at the start of a year.</summary>
+public enum NewspaperMode { EveryYear, BigYears, Never }
+
 /// <summary>
-/// Player preferences that are not part of a save: the content settings new games start with, and
-/// whether the player has been asked about them yet. Stored in user://settings.json.
+/// Player preferences that are not part of a save: the content settings new games start with,
+/// whether the player has been asked about them yet, and when the newspaper appears.
+/// Stored in user://settings.json.
 /// </summary>
 public static class Settings
 {
@@ -17,6 +21,7 @@ public static class Settings
     {
         public bool ContentAsked { get; set; }
         public Dictionary<string, ContentLevel> Content { get; set; } = new();
+        public NewspaperMode Newspaper { get; set; } = NewspaperMode.BigYears;
     }
 
     private static Data? _data;
@@ -51,6 +56,14 @@ public static class Settings
     {
         if (level == ContentLevel.On) Current.Content.Remove(category);
         else Current.Content[category] = level;
+        Save();
+    }
+
+    public static NewspaperMode Newspaper => Current.Newspaper;
+
+    public static void SetNewspaper(NewspaperMode mode)
+    {
+        Current.Newspaper = mode;
         Save();
     }
 
