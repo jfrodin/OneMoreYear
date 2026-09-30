@@ -1,0 +1,307 @@
+// The later years: retirement, grandchildren, health, loss, love again, looking back. Ages 60+.
+[
+  {
+    "id": "old_last_day_at_work", "title": "The last day",
+    "text": "Cake in the staff room, a speech that's a little too long, a card signed by people you've never met. After all these years, it's over.",
+    "conditions": { "minAge": 60, "maxAge": 68, "activity": "retired" }, "cooldown": 0, "weight": 6,
+    "choices": [
+      { "text": "Give a speech of your own", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "retired", "text": "My last day at work", "impact": 12 } ],
+        "result": "You thank them, and to your own surprise your voice breaks." },
+      { "text": "Slip out quietly", "effects": [ { "type": "happiness", "amount": 2 } ],
+        "result": "You take the long way home. Tomorrow nobody expects anything of you." }
+    ]
+  },
+  {
+    "id": "old_empty_days", "title": "Monday, again",
+    "text": "The first months of retirement were a holiday. Now it's Monday again, and there is nothing you have to do. Nothing at all.",
+    "conditions": { "minAge": 62, "activity": "retired" }, "cooldown": 0,
+    "choices": [
+      { "text": "Join the choir", "effects": [ { "type": "trait_add", "trait": "social", "chance": 0.3 }, { "type": "happiness", "amount": 8 } ],
+        "result": "You can't sing. Nobody minds. Tuesday evenings become the best part of the week." },
+      { "text": "Build something", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.3 }, { "type": "happiness", "amount": 6 } ],
+        "result": "A boat, a shed, a family tree on the wall. It takes years. That's the point." },
+      { "text": "Watch the world from the window", "effects": [ { "type": "happiness", "amount": -6 } ],
+        "result": "You know all the neighbours' routines now. They don't know yours." }
+    ]
+  },
+  {
+    "id": "old_grandchild_sleepover", "title": "Grandparent weekend",
+    "text": "{t.name} is staying the whole weekend. {t.He} wants pancakes for breakfast, lunch and dinner.",
+    "conditions": { "minAge": 50 }, "cooldown": 3,
+    "target": { "role": "grandchild", "conditions": { "minAge": 3, "maxAge": 12 } },
+    "choices": [
+      { "text": "Pancakes it is", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12, "mutual": true },
+          { "type": "memory", "who": "target", "to": "player", "kind": "grandparent_weekend", "text": "Pancake weekends with {name}", "impact": 18 } ],
+        "result": "Rules are for parents. You are a grandparent." },
+      { "text": "Teach {t.him} something you know", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 12 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "taught_by_grandparent", "text": "{name} taught me to fish", "impact": 15 } ],
+        "result": "Fishing, card tricks, how to whistle with a blade of grass. {t.He} will remember it all." }
+    ]
+  },
+  {
+    "id": "old_grandchild_money", "title": "Just this once",
+    "text": "{t.name} calls. It's been a while. {t.He} is short of money – \"just this once, I promise\".",
+    "conditions": { "minAge": 60, "minMoney": 20000 }, "cooldown": 4,
+    "target": { "role": "grandchild", "conditions": { "minAge": 18 } },
+    "choices": [
+      { "text": "Send it", "effects": [ { "type": "transfer", "to": "target", "amount": 15000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 } ],
+        "result": "{t.He} thanks you warmly. You wonder whether {t.he}'ll call again when {t.he} doesn't need anything." },
+      { "text": "Say no, but invite {t.him} for dinner", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 5 } ],
+        "result": "{t.He} comes. You talk for four hours. Money never comes up." }
+    ]
+  },
+  {
+    "id": "old_alone", "title": "The other side of the bed",
+    "text": "It's been a while now. You still make coffee for two some mornings, and then stand there with the second cup.",
+    "conditions": { "minAge": 55, "hasPartner": false, "flags": [ "widowed" ] }, "cooldown": 5,
+    "choices": [
+      { "text": "Call the children", "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "They say you can call any time. You try to believe it." },
+      { "text": "Go to the widows' dinner at church", "effects": [ { "type": "trait_add", "trait": "social", "chance": 0.2 }, { "type": "happiness", "amount": 6 } ],
+        "result": "Everyone there knows exactly how it feels. Nobody needs to explain anything." },
+      { "text": "Keep everything as it was", "effects": [ { "type": "happiness", "amount": -6 } ],
+        "result": "The coat is still on the hook. You can't move it. Not yet." }
+    ]
+  },
+  {
+    "id": "old_new_love", "title": "At the dance",
+    "text": "Thursday dance at the community hall. {t.name} asks you to dance three times in a row – and on the third, you say yes.",
+    "conditions": { "minAge": 60, "hasPartner": false },
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -6, "ageOffsetMax": 6 }, "cooldown": 4,
+    "choices": [
+      { "text": "Dance all night", "chance": 0.65, "chanceTraits": { "charming": 0.15, "social": 0.1 },
+        "success": { "text": "Your knees complain for days. Your heart doesn't.", "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 12 } ] },
+        "failure": { "text": "A lovely evening. {t.name} moves to be near a daughter in Malmö the week after.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "\"At my age?\"", "result": "You go home early. You think about it for a long time." }
+    ]
+  },
+  {
+    "id": "old_children_move_in_question", "title": "The worried children",
+    "text": "{t.name} has been talking to the others. \"We think you shouldn't live alone any more.\"",
+    "conditions": { "minAge": 78, "hasPartner": false, "notFlags": [ "care_home" ] }, "cooldown": 4,
+    "target": { "role": "child", "conditions": { "minAge": 30 } },
+    "choices": [
+      { "text": "Move into a care home", "effects": [ { "type": "care_home" }, { "type": "happiness", "amount": -4 } ],
+        "result": "A small room, a view of the birch trees, dinner at five. You make a friend on the first day." },
+      { "text": "Refuse – this is your home", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 5 }, { "type": "trait_add", "trait": "brave", "chance": 0.1 } ],
+        "result": "\"Over my dead body,\" you say. They look at each other. Nobody laughs." },
+      { "text": "Ask if you can live with {t.him}", "chance": 0.5, "chanceOpinion": 0.006,
+        "success": { "text": "{t.name} clears out the study. It's cramped, loud and full of life.",
+          "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 12, "mutual": true } ] },
+        "failure": { "text": "{t.name} looks at the floor. \"It's just not a good time.\"",
+          "effects": [ { "type": "memory", "kind": "not_welcome", "to": "target", "text": "{t.name} didn't have room for me", "impact": -20 } ] } }
+    ]
+  },
+  {
+    "id": "old_car_keys", "title": "The car keys",
+    "text": "You scraped the gatepost again. {t.name} holds out a hand. \"Give me the keys. Please.\"",
+    "conditions": { "minAge": 76, "notFlags": [ "stopped_driving" ] }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 25 } },
+    "choices": [
+      { "text": "Hand them over", "effects": [ { "type": "flag", "flag": "stopped_driving" }, { "type": "happiness", "amount": -5 } ],
+        "result": "It's only a car. It's also every summer trip you ever took." },
+      { "text": "Refuse", "chance": 0.7,
+        "success": { "text": "You drive a little slower after that. Nobody mentions it again.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -5 } ] },
+        "failure": { "text": "A week later you hit a parked car. Nobody is hurt. You hand over the keys yourself.",
+          "effects": [ { "type": "flag", "flag": "stopped_driving" }, { "type": "money", "amount": -15000 } ] } }
+    ]
+  },
+  {
+    "id": "old_fall", "title": "On the floor",
+    "text": "Your foot catches the edge of the rug. Then you are on the floor, and you can't get up.",
+    "conditions": { "minAge": 72 }, "cooldown": 5,
+    "choices": [
+      { "text": "Crawl to the phone", "chance": 0.7, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "An ambulance, a cast, six weeks with a walking frame. You were lucky.", "effects": [ { "type": "health", "amount": -8 } ] },
+        "failure": { "text": "A neighbour finds you the next morning. The hip takes months to heal – and your confidence longer.",
+          "effects": [ { "type": "health", "amount": -18 }, { "type": "happiness", "amount": -8 } ] } }
+    ]
+  },
+  {
+    "id": "old_doctor_news", "title": "The test results",
+    "text": "The doctor takes off her glasses before she speaks. That's never a good sign.",
+    "conditions": { "minAge": 60, "maxHealth": 55 }, "cooldown": 6,
+    "choices": [
+      { "text": "Take every treatment there is", "chance": 0.55, "chanceAttributes": { "fitness": 0.003 },
+        "success": { "text": "Months of hospitals and tiredness. Then: clear. You have been given more time.", "effects": [ { "type": "health", "amount": 20 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "It works for a while.", "effects": [ { "type": "health", "amount": 5 } ] } },
+      { "text": "Live the time you have", "effects": [ { "type": "happiness", "amount": 10 }, { "type": "health", "amount": -5 } ],
+        "result": "You book the trip you always postponed, and call people you haven't spoken to in years." }
+    ]
+  },
+  {
+    "id": "old_reunion", "title": "Fifty years later",
+    "text": "An invitation: fifty years since you finished school. A photo of the class is printed on the card. You recognise almost no one.",
+    "conditions": { "minAge": 65, "maxAge": 72 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "reunion", "text": "The school reunion, fifty years later", "impact": 10 } ],
+        "result": "The class bully is a retired vicar. The quiet girl from the back row ran a company. Everyone has a story." },
+      { "text": "Stay home", "result": "Some doors are fine to leave closed." }
+    ]
+  },
+  {
+    "id": "old_golden_wedding", "title": "Fifty years",
+    "text": "Fifty years married to {p.name}. The children are planning a party and pretending you don't know.",
+    "conditions": { "minAge": 65, "married": true, "minPartnerYears": 50 }, "cooldown": 0,
+    "choices": [
+      { "text": "Dance with {p.name} in front of everyone", "effects": [
+          { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 10, "mutual": true },
+          { "type": "memory", "kind": "golden_wedding", "to": "partner", "text": "Our golden wedding", "impact": 25 } ],
+        "result": "The same song you danced to at the wedding. Slower now. Better." },
+      { "text": "Give a speech about the hard years too", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "respect", "amount": 12 } ],
+        "result": "You tell them about the times it almost ended. The room goes very quiet. {p.name} squeezes your hand." }
+    ]
+  },
+  {
+    "id": "old_downsize", "title": "Too many rooms",
+    "text": "The house has more rooms than people now. The stairs are steeper every year.",
+    "conditions": { "minAge": 68, "holdsHome": true }, "cooldown": 6,
+    "choices": [
+      { "text": "Sell and buy a flat in town", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -3 } ],
+        "result": "Forty years of things into a van. You walk through the empty rooms one last time." },
+      { "text": "Stay – the grandchildren need a place to come to", "effects": [ { "type": "happiness", "amount": 2 } ],
+        "result": "Christmas is still at your place. That's worth the stairs." }
+    ]
+  },
+  {
+    "id": "old_christmas", "title": "Everyone's coming",
+    "text": "Christmas, and for once everyone can come. Children, grandchildren, a new partner nobody has met.",
+    "conditions": { "minAge": 60, "minChildren": 2 }, "cooldown": 4,
+    "choices": [
+      { "text": "Cook for everyone", "effects": [ { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "family_christmas", "text": "The Christmas when everyone came", "impact": 18 } ],
+        "result": "Twenty-one people around a table meant for eight. Somebody cries, somebody sings. It's perfect." },
+      { "text": "Let the children host", "effects": [ { "type": "happiness", "amount": 5 } ],
+        "result": "For the first time you are a guest at Christmas. It is strange and very restful." }
+    ]
+  },
+  {
+    "id": "old_scam", "title": "A friendly voice",
+    "text": "A polite young man calls from \"the bank\". There is a problem with your account. He just needs your code to protect your money.",
+    "conditions": { "minAge": 70, "minYear": 1995, "minMoney": 20000 }, "cooldown": 8,
+    "choices": [
+      { "text": "Give him the code", "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": -10 }, { "type": "memory", "kind": "scammed", "text": "The man who took my savings", "impact": -25 } ],
+        "result": "By the time your daughter calls, the money is gone. You feel more ashamed than anything else." },
+      { "text": "Hang up and call the bank yourself", "effects": [ { "type": "trait_add", "trait": "paranoid", "chance": 0.1 } ],
+        "result": "The real bank has never heard of him. You feel very, very sharp for the rest of the day." }
+    ]
+  },
+  {
+    "id": "old_smartphone", "title": "Swipe",
+    "text": "{t.name} has given you a smartphone and is showing you how to swipe. \"It's easy!\" It is not easy.",
+    "conditions": { "minAge": 65, "minYear": 2010 }, "cooldown": 0,
+    "target": { "role": "grandchild", "conditions": { "minAge": 10 } },
+    "choices": [
+      { "text": "Learn it properly", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true } ],
+        "result": "A week later you send {t.him} forty-three photos of your garden. {t.He} replies with a heart." },
+      { "text": "Keep the old phone", "result": "It works. It has buttons. It's fine." }
+    ]
+  },
+  {
+    "id": "old_memoir", "title": "For the family",
+    "text": "{t.name} asks what it was like when you were young. You realise that one day nobody will know, if you don't tell them.",
+    "conditions": { "minAge": 70 }, "cooldown": 0,
+    "target": { "role": "grandchild", "conditions": { "minAge": 12 } },
+    "choices": [
+      { "text": "Write it all down", "effects": [
+          { "type": "happiness", "amount": 8 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "memoir", "text": "The notebooks {name} wrote for us", "impact": 20 } ],
+        "result": "Three notebooks in your careful handwriting. The good parts, the hard parts. Most of it true." },
+      { "text": "Tell {t.him}, a little at a time", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ],
+        "result": "Every visit, a new story. {t.He} starts recording them on {t.his} phone." }
+    ]
+  },
+  {
+    "id": "old_friends_funerals", "title": "Another funeral",
+    "text": "The third funeral this year. You know the hymns by heart now, and the coffee afterwards, and the sentences people say.",
+    "conditions": { "minAge": 75 }, "cooldown": 5,
+    "choices": [
+      { "text": "Make new friends, younger ones", "effects": [ { "type": "trait_add", "trait": "social", "chance": 0.2 }, { "type": "happiness", "amount": 4 } ],
+        "result": "The neighbour's son comes for coffee on Wednesdays. He's sixty. Just a boy." },
+      { "text": "Stop going", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "trait_add", "trait": "gloomy", "chance": 0.15 } ],
+        "result": "You send flowers instead. It's easier. It isn't." }
+    ]
+  },
+  {
+    "id": "old_travel", "title": "The trip",
+    "text": "You always said \"when I retire\". Well. You've retired.",
+    "conditions": { "minAge": 62, "activity": "retired", "minMoney": 60000 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go far – very far", "effects": [ { "type": "money", "amount": -50000 }, { "type": "happiness", "amount": 12 }, { "type": "memory", "kind": "big_trip", "text": "The trip of a lifetime, finally", "impact": 22 } ],
+        "result": "Temples, markets, a sunset you'll describe to anyone who stands still long enough." },
+      { "text": "A week at the coast", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 6 } ],
+        "result": "Grey sea, good fish, early nights. Exactly right." }
+    ]
+  },
+  {
+    "id": "old_looking_back", "title": "Looking back",
+    "text": "Some evenings, in the armchair by the window, you go through it all. The children. The mistakes. The years that went too fast.",
+    "conditions": { "minAge": 78 }, "cooldown": 0,
+    "choices": [
+      { "text": "\"I would do it all again\"", "effects": [ { "type": "happiness", "amount": 10 } ],
+        "result": "Every bit of it. Even the hard parts. Especially the hard parts, maybe." },
+      { "text": "\"I wish I had...\"", "effects": [ { "type": "happiness", "amount": -4 } ],
+        "result": "The list is not long. But it is heavy." },
+      { "text": "Call someone you hurt", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "kind", "chance": 0.2 } ],
+        "result": "The phone rings for a long time. Then a voice you haven't heard in thirty years." }
+    ]
+  },
+  {
+    "id": "old_ex_peace", "title": "Old wounds",
+    "text": "You meet {t.name} – your ex – in the pharmacy queue. You're both old now. Neither of you pretends not to see the other.",
+    "conditions": { "minAge": 60 }, "cooldown": 0,
+    "target": { "role": "ex", "conditions": { "minAge": 55 } },
+    "choices": [
+      { "text": "Suggest a coffee", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -30, "mutual": true },
+          { "type": "memory", "kind": "made_peace", "to": "target", "text": "Coffee with {t.name}, all those years later", "impact": 12 } ],
+        "result": "You talk for two hours. About the children, mostly. Something that was knotted comes loose." },
+      { "text": "Nod and look away", "result": "Some things are better left where they are." }
+    ]
+  },
+  {
+    "id": "old_care_home_life", "title": "Room 12",
+    "text": "Life in the care home has its rhythm: coffee at ten, bingo on Thursdays, and the woman in room 14 who thinks it's 1962.",
+    "conditions": { "minAge": 70, "flags": [ "care_home" ] }, "cooldown": 3,
+    "choices": [
+      { "text": "Start a card club", "effects": [ { "type": "trait_add", "trait": "social", "chance": 0.2 }, { "type": "happiness", "amount": 8 } ],
+        "result": "Whist on Tuesdays. The stakes are chocolate. The rivalry is deadly." },
+      { "text": "Wait for visits", "effects": [ { "type": "happiness", "amount": -5 } ],
+        "result": "You sit where you can see the car park. Sundays are the best days." }
+    ]
+  },
+  {
+    "id": "old_great_grandchild", "title": "Four generations",
+    "text": "{t.name} puts the baby in your arms – your great-grandchild. Someone takes a photo: four generations on one sofa.",
+    "conditions": { "minAge": 70 }, "cooldown": 0,
+    "target": { "role": "grandchild", "conditions": { "minAge": 18, "minChildren": 1 } },
+    "choices": [
+      { "text": "Hold on and don't let go", "effects": [ { "type": "happiness", "amount": 12 }, { "type": "memory", "kind": "four_generations", "text": "Four generations on one sofa", "impact": 25 } ],
+        "result": "The baby grips your finger. The photo ends up on every fridge in the family." }
+    ]
+  },
+  {
+    "id": "old_last_summer", "title": "The last summer",
+    "text": "Somehow you know this is the last summer. The light over the lake is the same as when you were a child.",
+    "conditions": { "minAge": 80, "maxHealth": 30 }, "cooldown": 0,
+    "choices": [
+      { "text": "Gather the family", "effects": [ { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "last_summer", "text": "The last summer, with everyone", "impact": 20 } ],
+        "result": "Everyone comes. Nobody says why. They don't need to." },
+      { "text": "Sit by the water alone", "effects": [ { "type": "happiness", "amount": 6 } ],
+        "result": "Just you and the lake. It feels like saying goodbye to an old friend." }
+    ]
+  },
+  {
+    "id": "old_pension_worry", "title": "Every krona",
+    "text": "The pension doesn't stretch as far as it used to. You've started comparing prices on things you never used to think about.",
+    "conditions": { "minAge": 65, "activity": "retired", "maxMoney": 20000 }, "cooldown": 5,
+    "choices": [
+      { "text": "Ask the children for help", "chance": 0.6, "chanceOpinion": 0.005,
+        "success": { "text": "They help, without making a fuss. It still costs something to ask.", "effects": [ { "type": "money", "amount": 15000 } ] },
+        "failure": { "text": "\"We're a bit stretched ourselves right now.\"", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Tighten the belt", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "trait_add", "trait": "stingy", "chance": 0.15 } ],
+        "result": "Coffee at home, no more newspapers. You manage. You always have." }
+    ]
+  }
+]

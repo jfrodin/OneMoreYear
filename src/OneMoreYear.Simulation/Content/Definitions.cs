@@ -218,6 +218,14 @@ public sealed class ConditionDef
     public List<string>? JobTags { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
+    /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>
+    public int? MinYear { get; set; }
+    public int? MaxYear { get; set; }
+    /// <summary>Years together with the current partner.</summary>
+    public int? MinPartnerYears { get; set; }
+    /// <summary>Has at least one of these ailments / none of these.</summary>
+    public List<string>? AilmentsAny { get; set; }
+    public List<string>? NotAilments { get; set; }
 }
 
 /// <summary>Picks another participant in an event, relative to the player.</summary>
@@ -398,4 +406,19 @@ public sealed class NameGroupDef
     public int From { get; set; }
     public int To { get; set; }
     public List<string> Names { get; set; } = new();
+}
+
+/// <summary>A lasting health state such as depression or dementia (content/ailments.json).</summary>
+public sealed class AilmentDef
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    public string Description { get; set; } = "";
+    /// <summary>Content-settings category that governs it (e.g. "mental_health"), if any.</summary>
+    public string? Content { get; set; }
+    public double Happiness { get; set; }
+    public double Health { get; set; }
+    public double Performance { get; set; }
+    public double Recovery { get; set; }
+    public double TreatedRecovery { get; set; }
 }

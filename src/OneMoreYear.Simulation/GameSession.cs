@@ -149,6 +149,7 @@ public sealed class GameSession
         FamilySystem.Update(ctx);
         SecretSystem.Update(ctx);
         DarkSystem.Update(ctx);
+        AilmentSystem.Update(ctx);
         CrimeSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);
@@ -441,7 +442,9 @@ public sealed class GameSession
             Partner = partnerText,
             Traits = p.Traits.Where(Content.Traits.ContainsKey)
                 .Select(t => (Content.Traits[t].Name, Content.Traits[t].Description, Content.Traits[t].Tone)).ToList(),
-            Condition = p.Addiction != null && p.IsAlive ? $"Struggling with {DarkSystem.What(p.Addiction)}" : null,
+            Condition = !p.IsAlive ? null
+                : string.Join("  ·  ", new[] { p.Addiction != null ? $"Struggling with {DarkSystem.What(p.Addiction)}" : null, AilmentSystem.Describe(Ctx, p) }
+                    .Where(x => x != null)) is { Length: > 0 } c ? c : null,
             Health = p.Health,
             HealthLabel = p.Health switch { >= 80 => "Excellent", >= 60 => "Good", >= 40 => "Fair", >= 20 => "Poor", _ => "Critical" },
             Happiness = p.Happiness,

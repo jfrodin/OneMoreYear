@@ -2,6 +2,21 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.18.0 – 2026-09-30 · The later years, and the mind
+
+- **Ailments that last**: depression, anxiety, burnout, trauma and dementia. They start from what
+  happens in a life – low mood, losses, stress, personality, violence, age – cost happiness, health
+  and work performance every year, and pass with a chance that treatment raises. Shown on the person page.
+- You choose what to do when it hits you (see a doctor, tell someone, push through); the new action
+  *Get help* is there while you carry something. Your partner's depression and a parent's dementia
+  become your story too.
+- **25 events for the later years**: the last day at work, empty Mondays, grandparent weekends,
+  the other side of the bed, dancing again at 70, the car keys, a fall, the test results, the golden
+  wedding, a phone scam, a smartphone, writing it all down, the last summer – and more.
+- **Care homes**: very old or ill people who live alone move into one; you decide for yourself.
+- New content setting: **Mental illness** (on, mentioned only, off).
+- Events can now depend on the calendar year, years together with a partner, and ailments.
+
 ## 0.17.2 – 2026-09-30 · A paper worth reading
 
 - The family newspaper now only comes in **big years** – births, deaths, illness, weddings and

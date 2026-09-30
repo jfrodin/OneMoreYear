@@ -32,7 +32,7 @@ public static class LifeSystem
         {
             double hit = rng.Range(15, 40);
             p.Health = Math.Max(1, p.Health - hit);
-            string what = rng.Pick(new[] { "cancer", "a heart attack", "a stroke", "severe pneumonia", "diabetes", "depression" });
+            string what = rng.Pick(new[] { "cancer", "a heart attack", "a stroke", "severe pneumonia", "diabetes" });
             if (p.InFamily || p.Id == ctx.World.PlayerId)
                 ctx.World.Log($"{p.FirstName} was struck by {what}.", ctx.Importance(false, p), "health", p.Id);
             p.Happiness -= 10;

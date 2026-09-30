@@ -14,7 +14,8 @@ public static class EffectApplier
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
-        "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home"
+        "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -223,6 +224,19 @@ public static class EffectApplier
                 break;
             case "disinherit":
                 if (to != null && !who.Disinherited.Contains(to.Id)) who.Disinherited.Add(to.Id);
+                break;
+            case "care_home":
+                HousingSystem.MoveToCareHome(ctx, who);
+                break;
+            case "ailment_add":
+                if (e.Kind != null) AilmentSystem.Begin(ctx, who, e.Kind);
+                break;
+            case "ailment_treat":
+                // Treatment (therapy, medication, rest): recovery becomes much more likely.
+                foreach (var id in who.Ailments.Keys.Where(id => e.Kind == null || id == e.Kind)) who.Flags.Add(AilmentSystem.TreatedPrefix + id);
+                break;
+            case "ailment_recover":
+                if (e.Kind != null) AilmentSystem.Recover(ctx, who, e.Kind);
                 break;
             case "invest":
                 if (EconomySystem.Invest(ctx, who, e.Kind ?? "funds", amount) is var invested && invested > 0)

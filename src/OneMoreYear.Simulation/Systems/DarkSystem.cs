@@ -124,6 +124,7 @@ public static class DarkSystem
         RelationshipSystem.AddMemory(ctx, victim, "hit", $"{abuser.FirstName} hit me", -45, abuser.Id);
         w.Rel(victim.Id, abuser.Id)[RelDim.Fear] += 35;
         victim.Health = Math.Max(1, victim.Health - 4);
+        AilmentSystem.MaybeTrauma(ctx, victim, 0.15);
         foreach (var kid in Kinship.Children(w, abuser).Where(k => k.IsAlive && k.Id != victim.Id && k.Age(ctx.Year) is >= 4 and < 18))
             RelationshipSystem.AddMemory(ctx, kid, "witnessed_violence", $"Saw {abuser.FirstName} hit {victim.FirstName}", -25, abuser.Id);
         w.Log($"{abuser.FirstName} hit {victim.FirstName} in a fit of rage.", ctx.Importance(true, abuser, victim), "dark", abuser.Id, victim.Id);
@@ -179,6 +180,7 @@ public static class DarkSystem
         w.Rel(child.Id, predator.Id)[RelDim.Fear] += 50;
         child.Happiness = Math.Max(0, child.Happiness - 20);
         Traumatize(ctx, child, 0.6);
+        AilmentSystem.MaybeTrauma(ctx, child, 0.5);
 
         if (child.Id == w.PlayerId)
             EventSystem.QueueSituation(ctx, "abuse_child", new() { ["target"] = predator.Id });

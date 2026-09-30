@@ -1,0 +1,20 @@
+// Lasting health states. Each year they cost happiness, health and job performance, and pass with
+// a chance of recovery – much higher with treatment. When they start is decided by AilmentSystem
+// (low mood, losses, personality, stress, age). "content" is the content-settings category.
+[
+  { "id": "depression", "name": "Depression", "content": "mental_health",
+    "description": "Everything is heavy. Getting out of bed is an achievement.",
+    "happiness": -8, "health": -1, "performance": -8, "recovery": 0.12, "treatedRecovery": 0.35 },
+  { "id": "anxiety", "name": "Anxiety", "content": "mental_health",
+    "description": "A constant alarm that nobody else can hear.",
+    "happiness": -5, "health": 0, "performance": -4, "recovery": 0.1, "treatedRecovery": 0.3 },
+  { "id": "burnout", "name": "Burnout", "content": "mental_health",
+    "description": "Ran too fast for too long. The body finally said no.",
+    "happiness": -6, "health": -2, "performance": -15, "recovery": 0.25, "treatedRecovery": 0.45 },
+  { "id": "trauma", "name": "Trauma", "content": "mental_health",
+    "description": "Something that happened keeps happening, over and over, inside.",
+    "happiness": -5, "health": -1, "performance": -5, "recovery": 0.07, "treatedRecovery": 0.22 },
+  { "id": "dementia", "name": "Dementia",
+    "description": "Memories are slipping away, the newest first.",
+    "happiness": -2, "health": -3, "performance": -20, "recovery": 0, "treatedRecovery": 0 }
+]

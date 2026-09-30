@@ -19,6 +19,7 @@ public static class ContentCategories
     public const string Murder = "murder";
     public const string Addiction = "addiction";
     public const string Infidelity = "infidelity";
+    public const string MentalHealth = "mental_health";
 
     public static readonly IReadOnlyList<(string Id, string Name, string Description)> All = new[]
     {
@@ -27,5 +28,6 @@ public static class ContentCategories
         (Murder, "Murder", "Killing someone, and murders being solved."),
         (Addiction, "Addiction", "Alcohol, drugs and gambling taking over a life."),
         (Infidelity, "Infidelity", "Affairs, betrayal and children with a hidden father."),
+        (MentalHealth, "Mental illness", "Depression, anxiety, burnout and trauma – and living with them."),
     };
 }

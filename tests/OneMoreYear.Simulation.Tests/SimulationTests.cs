@@ -514,6 +514,7 @@ public class ContentSettingsTests
         var w = s.World;
         Assert.DoesNotContain(w.Secrets, x => x.Kind is "abuse" or "affair" or "paternity" or "murder" or "origin");
         Assert.DoesNotContain(w.People, p => p.Traits.Contains("predatory") || p.Addiction != null);
+        Assert.DoesNotContain(w.People, p => p.Ailments.Keys.Any(k => k != "dementia"));
         Assert.DoesNotContain(w.People, p => p.Memories.Any(m => m.Kind is "hit" or "abused" or "betrayed" or "addicted_parent"));
         Assert.DoesNotContain(w.People, p => p.CriminalRecord.Any(r => s.Content.Crimes[r.CrimeId].Violent));
     }

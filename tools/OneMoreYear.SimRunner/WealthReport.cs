@@ -25,6 +25,8 @@ static class WealthReport
                           string.Join(", ", pairs.GroupBy(RelationshipSystem.OpinionLabel).OrderBy(g => g.Key).Select(g => $"{g.Key} {g.Count()}")));
         int years = s.Year - s.World.StartYear, big = s.World.Chronicle.Where(l => YearReport.IsFrontPage(new ChronicleLine(l.Year, l.Text, l.Importance, l.Category, l.PersonIds))).Select(l => l.Year).Distinct().Count();
         Console.WriteLine($"  Front-page years: {big} of {years} ({100 * big / Math.Max(1, years)} %)");
+        Console.WriteLine("  Ailments now: " + string.Join(", ", s.World.People.Where(p => p.IsAlive).SelectMany(p => p.Ailments.Keys).GroupBy(k => k).Select(g => $"{g.Key} {g.Count()}"))
+                          + $"  · ever (chronicle): depression {s.World.Chronicle.Count(l => l.Text.Contains("struck by depression"))}, dementia {s.World.Chronicle.Count(l => l.Text.Contains("started to forget"))}, burnout {s.World.Chronicle.Count(l => l.Text.Contains("struck by burnout"))}");
         var peak = s.World.People.OrderByDescending(p => p.PeakNetWorth).First();
         Console.WriteLine($"  Highest ever: {peak.FullName} {EconomySystem.Format(ctx, peak.PeakNetWorth)} (nominal)");
     }

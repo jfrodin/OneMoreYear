@@ -24,6 +24,7 @@ public static class HousingSystem
     public static string Describe(SimContext ctx, Person p)
     {
         string city = City(ctx, p).Name;
+        if (p.Flags.Contains(CareHomeFlag)) return $"Lives in a care home in {city}";
         if (p.LivesWithParents) return $"Lives with parents in {city}";
         if (p.OwnsHome) return $"Owns a home in {city}";
         if (p.PartnerId != null && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) return $"Rents a home with their partner in {city}";
@@ -31,8 +32,14 @@ public static class HousingSystem
     }
 
     /// <summary>Young adults move out of their parents' home – the player decides through an event.</summary>
+    public const string CareHomeFlag = "care_home";
+
     public static void Update(SimContext ctx, Person p)
     {
+        // Very old or ill people who live alone move into a care home (the player decides through events).
+        if (p.Id != ctx.World.PlayerId && !p.Flags.Contains(CareHomeFlag) && p.Age(ctx.Year) >= 80 && p.PartnerId == null
+            && (p.Ailments.ContainsKey("dementia") || p.Health < 35) && ctx.Rng.Chance(0.25))
+            MoveToCareHome(ctx, p);
         if (!p.LivesWithParents) return;
         int age = p.Age(ctx.Year);
         if (age < ctx.Country.AdultAge) return;
@@ -51,6 +58,15 @@ public static class HousingSystem
         double chance = age switch { < 20 => 0.2, < 25 => 0.4, _ => 0.25 };
         if (p.Activity == Activity.Unemployed) chance *= 0.5;
         if (ctx.Rng.Chance(chance)) MoveOut(ctx, p, share: age < 25 && ctx.Rng.Chance(0.4));
+    }
+
+    public static void MoveToCareHome(SimContext ctx, Person p)
+    {
+        p.Flags.Add(CareHomeFlag);
+        if (p.HomeValue > 0) EconomySystem.SellHome(ctx, p, log: false);
+        p.OwnsHome = false;
+        if (p.InFamily || p.Id == ctx.World.PlayerId)
+            ctx.World.Log($"{p.FirstName} moved into a care home.", ctx.Importance(false, p), "home", p.Id);
     }
 
     public static void MoveOut(SimContext ctx, Person p, bool share)

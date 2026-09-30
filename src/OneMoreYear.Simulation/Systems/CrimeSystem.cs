@@ -40,6 +40,7 @@ public static class CrimeSystem
                 RelationshipSystem.AddMemory(ctx, victim, "assaulted", $"{p.FirstName} beat me up", -50, p.Id);
                 w.Rel(victim.Id, p.Id)[RelDim.Fear] += 40;
                 victim.Health = Math.Max(1, victim.Health - rng.Range(8, 25));
+                AilmentSystem.MaybeTrauma(ctx, victim, 0.25);
                 texts.Add($"{victimName} ends up in hospital.");
                 break;
             case "blackmail" when victim != null:

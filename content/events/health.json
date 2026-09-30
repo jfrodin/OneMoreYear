@@ -1,0 +1,110 @@
+// Living with lasting health states (content/ailments.json) – your own and your family's.
+// Mental illness is tagged so players can turn it down in the content settings.
+[
+  {
+    "id": "ailment_depression", "trigger": "situation", "content": [ "mental_health" ],
+    "title": "Grey",
+    "text": "It came slowly. Now everything is grey – food has no taste, friends feel far away, and mornings are the worst part of the day.",
+    "choices": [
+      { "text": "See a doctor", "hint": "Treatment makes it far more likely to pass.",
+        "effects": [ { "type": "ailment_treat", "kind": "depression" }, { "type": "money", "amount": -3000 } ],
+        "result": "It takes all your strength to make the call. The doctor listens. It's a start." },
+      { "text": "Tell someone close", "effects": [ { "type": "happiness", "amount": 5 } ],
+        "result": "You say it out loud. They don't fix it – but you're not alone with it any more." },
+      { "text": "Push through on your own", "effects": [ { "type": "happiness", "amount": -4 } ],
+        "result": "You keep going. On the outside, nobody can tell." }
+    ]
+  },
+  {
+    "id": "ailment_anxiety", "trigger": "situation", "content": [ "mental_health" ],
+    "title": "The alarm",
+    "text": "Your heart races in the supermarket queue. Your hands shake before meetings. Something is always about to go wrong.",
+    "choices": [
+      { "text": "Get help", "effects": [ { "type": "ailment_treat", "kind": "anxiety" }, { "type": "money", "amount": -3000 } ],
+        "result": "A therapist teaches you to breathe through it. It doesn't vanish, but it gets smaller." },
+      { "text": "Avoid what scares you", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.3 } ],
+        "result": "Fewer parties, fewer phone calls. Your world gets quieter – and smaller." }
+    ]
+  },
+  {
+    "id": "ailment_burnout", "trigger": "situation", "content": [ "mental_health" ],
+    "title": "Empty",
+    "text": "One Tuesday you sit down at your desk and simply can't. The words on the screen don't mean anything any more.",
+    "choices": [
+      { "text": "Go on sick leave", "effects": [ { "type": "ailment_treat", "kind": "burnout" }, { "type": "performance", "amount": -10 } ],
+        "result": "Months of walks and sleep. Slowly, the colours come back." },
+      { "text": "Keep going", "effects": [ { "type": "health", "amount": -8 } ],
+        "result": "You keep going. Your body keeps the score." },
+      { "text": "Quit", "effects": [ { "type": "job_quit" }, { "type": "ailment_treat", "kind": "burnout" } ],
+        "result": "You hand in your notice the same week. Terrifying. And a relief." }
+    ]
+  },
+  {
+    "id": "ailment_trauma", "trigger": "situation", "content": [ "mental_health" ],
+    "title": "It comes back",
+    "text": "A smell, a voice, a sound in the dark – and you're back there again. You sleep badly. You jump at nothing.",
+    "choices": [
+      { "text": "Find a therapist", "effects": [ { "type": "ailment_treat", "kind": "trauma" }, { "type": "money", "amount": -4000 } ],
+        "result": "Slowly you learn to put it into words. It becomes something that happened, not something that is happening." },
+      { "text": "Bury it", "effects": [ { "type": "trait_add", "trait": "paranoid", "chance": 0.15 } ],
+        "result": "You build walls. They hold. Mostly." }
+    ]
+  },
+  {
+    "id": "ailment_dementia", "trigger": "situation",
+    "title": "Where are my keys?",
+    "text": "You find the keys in the fridge. Yesterday you forgot what you went into the kitchen for, three times. Your family has started to exchange looks.",
+    "choices": [
+      { "text": "Get it checked", "effects": [ { "type": "happiness", "amount": -5 } ],
+        "result": "The doctor confirms it. At least now there's a word for it, and a plan." },
+      { "text": "Write everything down", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.1 } ],
+        "result": "Notes on the fridge, the door, the mirror. The house fills with your handwriting." },
+      { "text": "Laugh it off", "result": "\"We all get older.\" You say it a lot these days." }
+    ]
+  },
+  {
+    "id": "self_get_help", "trigger": "self", "category": "life", "title": "Get help", "content": [ "mental_health" ],
+    "conditions": { "minAge": 13, "ailmentsAny": [ "depression", "anxiety", "burnout", "trauma" ] },
+    "choices": [ {
+      "text": "See a therapist", "hint": "Makes recovery from what you're carrying much more likely.",
+      "effects": [ { "type": "ailment_treat" }, { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": 3 } ],
+      "result": "An hour a week in a quiet room. It's harder work than you thought – and it helps."
+    } ]
+  },
+  {
+    "id": "partner_depressed", "title": "Behind the curtains", "content": [ "mental_health" ],
+    "text": "{t.name} hasn't really got out of bed for a week. The curtains stay closed. Anything you say seems to make it worse.",
+    "conditions": { "minAge": 18 }, "cooldown": 4,
+    "target": { "role": "partner", "conditions": { "ailmentsAny": [ "depression", "burnout" ] } },
+    "choices": [
+      { "text": "Take {t.him} to a doctor", "effects": [
+          { "type": "ailment_treat", "who": "target" },
+          { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 12 } ],
+        "result": "You sit with {t.him} in the waiting room, holding {t.his} hand. It's the first step." },
+      { "text": "Be patient and stay close", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 }, { "type": "happiness", "amount": -4 } ],
+        "result": "You bring tea and don't ask for anything back. It's lonely – but it matters." },
+      { "text": "\"Pull yourself together\"", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 15 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "not_understood", "text": "{name} told me to pull myself together", "impact": -25 } ],
+        "result": "{t.name} turns to the wall. You regret it the moment you say it." }
+    ]
+  },
+  {
+    "id": "parent_dementia", "title": "Who are you?",
+    "text": "{t.name} looks at you for a long time over the coffee cups, friendly and puzzled. \"And whose child are you, then?\"",
+    "conditions": { "minAge": 25 }, "cooldown": 3,
+    "target": { "role": "parent", "conditions": { "ailmentsAny": [ "dementia" ] } },
+    "choices": [
+      { "text": "Take care of {t.him} at home", "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true },
+          { "type": "happiness", "amount": -8 }, { "type": "performance", "amount": -10 },
+          { "type": "memory", "kind": "cared_for_parent", "to": "target", "text": "The years I cared for {t.name}", "impact": 10 } ],
+        "result": "Your life shrinks to medicines, meals and the same stories, over and over. Some days {t.he} knows you. Those days are gold." },
+      { "text": "Find a good care home", "effects": [ { "type": "care_home", "who": "target" }, { "type": "happiness", "amount": -3 } ],
+        "result": "The staff are kind. You visit on Sundays. The guilt comes along every time." },
+      { "text": "Visit when you can", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ],
+        "result": "Life is busy. When you do come, {t.he} smiles as if you were a nice stranger." }
+    ]
+  }
+]

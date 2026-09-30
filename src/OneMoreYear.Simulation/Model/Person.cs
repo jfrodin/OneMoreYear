@@ -118,6 +118,8 @@ public sealed class Person
     public List<Memory> Memories { get; set; } = new();
     /// <summary>Sorted, so a saved and reloaded game continues exactly the same way.</summary>
     public SortedSet<string> Flags { get; set; } = new(StringComparer.Ordinal);
+    /// <summary>Lasting health states (content/ailments.json) and the year each began.</summary>
+    public SortedDictionary<string, int> Ailments { get; set; } = new(StringComparer.Ordinal);
 
     [JsonIgnore] public bool IsAlive => DeathYear is null;
     [JsonIgnore] public string FullName => $"{FirstName} {LastName}";

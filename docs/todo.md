@@ -16,7 +16,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Content sprint (before more countries)
 
-1. [ ] **Old age** (~25 events): retirement, grandchildren, illness, widowhood, loneliness, a care home, looking back.
+1. [x] **Old age** – done in 0.18.0 (with ailments: depression, anxiety, burnout, trauma, dementia).
 2. [ ] **Dark themes in depth** (see design-decisions.md): sexual violence between adults (the player only ever
    as survivor or next of kin), coercive control, stalking and harassment, relapse and treatment,
    mental illness, suicide and self-harm as grief, dementia, eviction. New content-settings categories.
