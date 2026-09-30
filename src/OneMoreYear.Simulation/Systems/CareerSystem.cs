@@ -201,6 +201,7 @@ public static class CareerSystem
         p.YearsInJob = 0;
         p.Performance = Math.Clamp(ctx.Rng.Gaussian(50, 10), 20, 80);
         p.Income = occ.Levels[lvl].Salary;
+        if (p.Id == ctx.World.PlayerId) SocialSystem.OnNewJob(p, ctx.Year);
         if (p.InFamily && p.Age(ctx.Year) >= 16)
             ctx.World.Log($"{p.FirstName} got a job as {Article(Title(ctx, p))}.", ctx.Importance(false, p), "career", p.Id);
         return true;
@@ -283,7 +284,11 @@ public static class CareerSystem
         var occ = ctx.Content.Occupation(p.OccupationId);
         if (occ == null || p.Activity != Activity.Working || p.OccupationLevel + 1 >= occ.Levels.Count || p.YearsInJob < 2) return 0;
         if (!QualifiesFor(p, occ.Levels[p.OccupationLevel + 1])) return 0;
-        return occ.Levels[p.OccupationLevel].PromotionChance * Math.Pow(p.Performance / 50.0, 2);
+        double chance = occ.Levels[p.OccupationLevel].PromotionChance * Math.Pow(p.Performance / 50.0, 2);
+        // A boss who likes you helps; one who doesn't, holds you back.
+        if (p.Acquaintances.FirstOrDefault(a => a.Current && a.Kind == "boss") is { } boss)
+            chance *= Math.Clamp(1 + ctx.World.Opinion(boss.Id, p.Id) / 80, 0.3, 1.8);
+        return chance;
     }
 
     public static void Promote(SimContext ctx, Person p)

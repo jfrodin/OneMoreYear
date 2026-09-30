@@ -12,7 +12,8 @@ public static class EffectApplier
         "money", "transfer", "health", "happiness", "relation", "memory", "trait_add", "trait_remove",
         "flag", "flag_remove", "log", "job_find", "job_quit", "promote", "fire", "study", "start_dating",
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
-        "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event"
+        "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
+        "meet_through_friend", "performance"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -98,6 +99,12 @@ public static class EffectApplier
                     case "looks": who.Looks = Math.Clamp(who.Looks + amount, 1, 100); break;
                     case "fitness": who.Fitness = Math.Clamp(who.Fitness + amount, 1, 100); break;
                 }
+                break;
+            case "meet_through_friend":
+                if (SocialSystem.MeetThroughFriend(ctx, who) is { } met) pending.Roles["other"] = met.Id;
+                break;
+            case "performance":
+                who.Performance = Math.Clamp(who.Performance + amount, 0, 100);
                 break;
             case "queue_event":
                 if (e.Event != null) EventSystem.QueueSituation(ctx, e.Event);

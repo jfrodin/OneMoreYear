@@ -99,7 +99,7 @@
     "conditions": { "minAge": 15, "hasPartner": false },
     "choices": [ {
       "text": "Ask out", "hint": "Could turn a friendship into something more – or make it awkward.",
-      "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05 }, "chanceAttributes": { "looks": 0.005 },
+      "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05 }, "chanceAttributes": { "looks": 0.005 }, "chanceRelation": { "attraction": 0.006 },
       "success": {
         "text": "{t.name} says yes!",
         "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
@@ -209,6 +209,37 @@
         { "type": "memory", "who": "target", "to": "player", "kind": "dropped", "text": "{name} dropped me as a friend", "impact": -25 }
       ],
       "result": "You stop answering {t.name}'s calls."
+    } ]
+  },
+  {
+    "id": "act_befriend", "trigger": "action", "title": "Become friends",
+    "target": { "role": "acquaintance", "conditions": { "relMin": { "closeness": 30 } } },
+    "conditions": { "minAge": 5 },
+    "choices": [ {
+      "text": "Hang out more", "hint": "Works best if you already get on.",
+      "chance": 0.45, "chanceOpinion": 0.006, "chanceTraits": { "social": 0.15, "introvert": -0.05 },
+      "success": { "text": "You and {t.name} become real friends.", "effects": [ { "type": "friend_add", "to": "target" } ] },
+      "failure": { "text": "{t.name} is friendly, but keeps a bit of distance.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 5, "mutual": true } ] }
+    } ]
+  },
+  {
+    "id": "act_impress_boss", "trigger": "action", "category": "career", "title": "Try to impress",
+    "target": { "role": "boss" },
+    "conditions": { "minAge": 16, "hasJob": true },
+    "choices": [ {
+      "text": "Go the extra mile", "hint": "A boss who likes you makes promotions more likely.",
+      "chance": 0.5, "chanceTraits": { "ambitious": 0.15, "manipulative": 0.15, "lazy": -0.2 }, "chanceAttributes": { "smarts": 0.004 },
+      "success": { "text": "{t.name} notices. \"Good work.\"", "effects": [ { "type": "performance", "amount": 8 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 10 } ] },
+      "failure": { "text": "{t.name} barely looks up from the screen.", "effects": [ { "type": "happiness", "amount": -3 } ] }
+    } ]
+  },
+  {
+    "id": "self_go_out", "trigger": "self", "title": "Go out with your friends",
+    "conditions": { "minAge": 13, "hasRole": [ "friend" ] },
+    "choices": [ {
+      "text": "Meet their friends", "hint": "The best way to meet new people – friends, or maybe more.",
+      "effects": [ { "type": "meet_through_friend" }, { "type": "happiness", "amount": 4 } ],
+      "result": "You meet {o.full} ({o.role}). You get on well."
     } ]
   },
   {

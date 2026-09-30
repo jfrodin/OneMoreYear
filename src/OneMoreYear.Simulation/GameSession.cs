@@ -103,6 +103,7 @@ public sealed class GameSession
         FamilySystem.Update(ctx);
         SecretSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
+        SocialSystem.Update(ctx);
 
         if (Player.IsAlive)
         {
@@ -293,6 +294,7 @@ public sealed class GameSession
         if (Kinship.Siblings(World, pl).Any(s => s.Id == p.Id)) return 3;
         if (pl.FriendIds.Contains(p.Id)) return 6;
         if (pl.ExPartnerIds.Contains(p.Id)) return 7;
+        if (SocialSystem.Find(pl, p.Id) is { } a) return a.Current ? 8 : 9;
         return 3 + dist.GetValueOrDefault(p.Id, 5);
     }
 
@@ -509,6 +511,7 @@ public sealed class GameSession
         World.PendingEvents.Clear();
         World.ActionsThisYear.Clear();
         World.ActionPoints = ActionPointsFor(heir);
+        SocialSystem.Update(Ctx);
         World.Log($"The story continues with {heir.FullName}, {Kinship.Genitive(old.FirstName)} {relation}, aged {heir.Age(Year)}.", 3, "succession", heir.Id, old.Id);
     }
 

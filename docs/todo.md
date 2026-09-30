@@ -44,9 +44,9 @@ Backlog for One More Year. Newest ideas at the top of each section.
 
 - [x] **Appearance and attributes**: height, build, hair, eyes (inherited), plus more bars – e.g. Looks,
   Smarts, Fitness, Stress. They should matter: smarts for school/career, looks for dating, etc.
-- [ ] **Relationships while young**: innocent crushes and "going steady" between kids of similar age,
+- [x] **Relationships while young**: innocent crushes and "going steady" between kids of similar age,
   real relationships from the age of consent (15 in Sweden) – see design decision above.
-- [ ] **Finding love among people you know**: classmates, colleagues and friends-of-friends as a pool of
+- [x] **Finding love among people you know**: classmates, colleagues and friends-of-friends as a pool of
   acquaintances who can become friends or partners – not only a random "Look for love" button.
 - [x] **School & career tab**: grades, programme/major, current job, performance, boss and colleagues,
   job offers to choose between.

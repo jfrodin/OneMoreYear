@@ -73,7 +73,7 @@ public partial class GameScreen : Control
         _personDetail = Ui.VBox(14);
         split.AddChild(Ui.Scroll(Ui.Margin(_personDetail, 8)));
         _tabs.AddChild(split);
-        _tabs.SetTabTitle(TabFamily, "Family & Friends");
+        _tabs.SetTabTitle(TabFamily, "People");
 
         // School & work
         _workContent = Ui.VBox(14);
@@ -311,7 +311,7 @@ public partial class GameScreen : Control
             var box = Ui.VBox(10);
             box.AddChild(Ui.Label("Your life", 20, UiTheme.Text));
             box.AddChild(ActionButtons(actions, null));
-            box.AddChild(Ui.Label("School, work and money have their own tabs. People are in Family & Friends.", 15, UiTheme.Faint));
+            box.AddChild(Ui.Label("School, work and money have their own tabs. People are in the People tab.", 15, UiTheme.Faint));
             _yearContent.AddChild(Ui.Card(box));
         }
     }

@@ -28,6 +28,8 @@ public sealed class Person
     public int PartnerSinceYear { get; set; }
     public List<int> ExPartnerIds { get; set; } = new();
     public List<int> FriendIds { get; set; } = new();
+    /// <summary>People the player knows through school, work or friends (only kept for the player).</summary>
+    public List<Acquaintance> Acquaintances { get; set; } = new();
 
     /// <summary>Generation relative to the founding family (founders' children = 1).</summary>
     public int Generation { get; set; }
@@ -97,4 +99,17 @@ public sealed class Person
     }
 
     public bool HasTrait(string id) => Traits.Contains(id);
+}
+
+/// <summary>Someone known through a context: a classmate, colleague, boss or a friend's friend.</summary>
+public sealed class Acquaintance
+{
+    public int Id { get; set; }
+    /// <summary>classmate, colleague, boss or friend_of_friend.</summary>
+    public string Kind { get; set; } = "";
+    public int SinceYear { get; set; }
+    /// <summary>False once you have left the school or job ("old classmate").</summary>
+    public bool Current { get; set; } = true;
+    /// <summary>For friend_of_friend: the friend who introduced you.</summary>
+    public int? ViaId { get; set; }
 }

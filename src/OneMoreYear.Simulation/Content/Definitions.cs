@@ -223,6 +223,8 @@ public sealed class ChoiceDef
     public double ChanceOpinion { get; set; }
     /// <summary>Attribute ("smarts", "looks", "fitness", "grades") → added chance per point above 50.</summary>
     public Dictionary<string, double> ChanceAttributes { get; set; } = new();
+    /// <summary>How the target feels about the player → added chance per point above 40 (e.g. attraction).</summary>
+    public Dictionary<RelDim, double> ChanceRelation { get; set; } = new();
     public OutcomeDef? Success { get; set; }
     public OutcomeDef? Failure { get; set; }
 }

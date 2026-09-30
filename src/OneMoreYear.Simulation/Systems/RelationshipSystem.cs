@@ -178,7 +178,27 @@ public static class RelationshipSystem
 
         if (age < 5) return;
         int wanted = 2 + (int)Math.Round(ctx.Mod(player, "social") * 2);
-        if (player.FriendIds.Count < wanted && ctx.Rng.Chance(0.3)) AddFriend(ctx, player);
+        if (player.FriendIds.Count >= wanted) return;
+
+        // Friendships grow out of people you already know: the classmate or colleague you get on with best.
+        var closest = player.Acquaintances
+            .Where(a => w.Get(a.Id).IsAlive && player.PartnerId != a.Id && a.Kind != "boss")
+            .Select(a => (Acq: a, Closeness: w.Rel(player.Id, a.Id).Closeness + w.Rel(a.Id, player.Id).Closeness))
+            .Where(x => x.Closeness >= 80)
+            .OrderByDescending(x => x.Closeness)
+            .FirstOrDefault();
+        if (closest.Acq != null && ctx.Rng.Chance(0.5))
+        {
+            var f = w.Get(closest.Acq.Id);
+            player.FriendIds.Add(f.Id);
+            f.FriendIds.Add(player.Id);
+            player.Acquaintances.Remove(closest.Acq);
+            w.Log($"{player.FirstName} and {f.FirstName} became good friends.", 1, "relation", player.Id, f.Id);
+        }
+        else if (player.Acquaintances.Count == 0 && ctx.Rng.Chance(0.2))
+        {
+            AddFriend(ctx, player);
+        }
     }
 
     public static Person AddFriend(SimContext ctx, Person p)

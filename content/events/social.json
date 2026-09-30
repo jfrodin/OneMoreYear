@@ -1,0 +1,165 @@
+// Events with the people you know: classmates, colleagues, your boss and friends of friends.
+[
+  {
+    "id": "school_crush", "oncePerTarget": true, "title": "Butterflies",
+    "text": "{t.name} in your class keeps looking at you, and you can't stop looking back. Everyone says {t.he} likes you.",
+    "conditions": { "minAge": 12, "maxAge": 14, "hasPartner": false },
+    "target": { "role": "classmate", "conditions": { "compatibleWithPlayer": true, "hasPartner": false } },
+    "cooldown": 2,
+    "choices": [
+      {
+        "text": "Ask {t.him} to go steady",
+        "chance": 0.45, "chanceTraits": { "brave": 0.1, "social": 0.1, "introvert": -0.1 },
+        "chanceRelation": { "attraction": 0.006 }, "chanceAttributes": { "looks": 0.004 },
+        "success": {
+          "text": "{t.name} says yes. You hold hands at the school disco and everyone knows.",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 12 } ]
+        },
+        "failure": {
+          "text": "{t.name} turns bright red and runs off. The whole class knows by lunch.",
+          "effects": [ { "type": "happiness", "amount": -10 } ]
+        }
+      },
+      {
+        "text": "Just be friends",
+        "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 12, "mutual": true } ],
+        "result": "You start hanging out after school."
+      }
+    ]
+  },
+  {
+    "id": "admirer", "oncePerTarget": true, "title": "Someone likes you",
+    "text": "{t.name} has been finding excuses to talk to you for weeks. Tonight {t.he} finally asks: \"Do you want to go out sometime?\"",
+    "conditions": { "minAge": 15, "hasPartner": false },
+    "target": { "role": "acquaintance", "conditions": { "compatibleWithPlayer": true, "hasPartner": false, "relMin": { "attraction": 50 } } },
+    "weight": 2, "cooldown": 2,
+    "choices": [
+      {
+        "text": "Say yes",
+        "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ],
+        "result": "You go out the next weekend. Then again. And again."
+      },
+      {
+        "text": "Let {t.him} down gently",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "attraction", "amount": -25 },
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 5 }
+        ],
+        "result": "{t.name} smiles bravely. \"No worries.\""
+      }
+    ]
+  },
+  {
+    "id": "office_romance", "oncePerTarget": true, "title": "After work",
+    "text": "The after-work drinks with {t.name} keep getting longer. Tonight you're the last two left in the bar.",
+    "conditions": { "minAge": 18, "hasJob": true, "hasPartner": false },
+    "target": { "role": "colleague", "conditions": { "compatibleWithPlayer": true, "hasPartner": false, "relMin": { "attraction": 40 } } },
+    "cooldown": 4,
+    "choices": [
+      {
+        "text": "Kiss {t.him}",
+        "chance": 0.55, "chanceRelation": { "attraction": 0.006 }, "chanceAttributes": { "looks": 0.004 },
+        "success": {
+          "text": "{t.name} kisses you back. Monday at the office will be interesting.",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
+        },
+        "failure": {
+          "text": "{t.name} pulls back. \"I don't think that's a good idea.\" The walk home is long.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -10 }, { "type": "happiness", "amount": -8 } ]
+        }
+      },
+      {
+        "text": "Call it a night",
+        "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true } ],
+        "result": "You share a taxi and talk all the way home."
+      }
+    ]
+  },
+  {
+    "id": "colleague_credit", "oncePerTarget": true, "title": "Stolen credit",
+    "text": "In the big meeting, {t.name} presents your work as {t.his} own. The boss is impressed – with {t.name}.",
+    "conditions": { "minAge": 18, "hasJob": true },
+    "target": { "role": "colleague" }, "cooldown": 5,
+    "choices": [
+      {
+        "text": "Call it out in the meeting",
+        "chance": 0.5, "chanceTraits": { "brave": 0.2, "conflict_averse": -0.25 },
+        "success": {
+          "text": "You calmly show your drafts. The boss notices. {t.name} doesn't look at you for a month.",
+          "effects": [
+            { "type": "performance", "amount": 10 },
+            { "type": "memory", "who": "target", "to": "player", "kind": "exposed_at_work", "text": "{name} humiliated me in front of the boss", "impact": -30 }
+          ]
+        },
+        "failure": {
+          "text": "It comes out wrong. You look petty, and {t.name} looks wounded.",
+          "effects": [ { "type": "performance", "amount": -5 }, { "type": "happiness", "amount": -5 } ]
+        }
+      },
+      {
+        "text": "Talk to {t.name} privately",
+        "chance": 0.5, "chanceOpinion": 0.005,
+        "success": {
+          "text": "{t.name} apologises and makes sure the boss knows it was your idea.",
+          "effects": [ { "type": "performance", "amount": 6 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 10 } ]
+        },
+        "failure": {
+          "text": "\"Prove it,\" says {t.name}, and walks away.",
+          "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 20 } ]
+        }
+      },
+      {
+        "text": "Let it go",
+        "effects": [
+          { "type": "memory", "kind": "credit_stolen", "to": "target", "text": "{t.name} stole the credit for my work", "impact": -20 },
+          { "type": "trait_add", "trait": "conflict_averse", "chance": 0.15 }
+        ],
+        "result": "You bite your tongue. You won't forget it."
+      }
+    ]
+  },
+  {
+    "id": "boss_overtime", "title": "The deadline",
+    "text": "{t.name}, your boss, stops by your desk at five. \"I need this done by Monday. I'm counting on you.\"",
+    "conditions": { "minAge": 18, "hasJob": true },
+    "target": { "role": "boss" }, "cooldown": 3,
+    "choices": [
+      {
+        "text": "Work all weekend",
+        "effects": [
+          { "type": "performance", "amount": 8 },
+          { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 10 },
+          { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -6 },
+          { "type": "happiness", "amount": -5 }
+        ],
+        "result": "It gets done. {t.name} nods at you on Monday – high praise, from {t.him}."
+      },
+      {
+        "text": "Say no – you have plans",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": -8 }, { "type": "happiness", "amount": 3 } ],
+        "result": "{t.name} raises an eyebrow and walks off."
+      }
+    ]
+  },
+  {
+    "id": "classmate_party", "oncePerTarget": true, "title": "The invitation",
+    "text": "{t.name} from your class is having a party and invites you.",
+    "conditions": { "minAge": 13, "maxAge": 30 },
+    "target": { "role": "classmate" }, "cooldown": 3,
+    "choices": [
+      {
+        "text": "Go",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 15, "mutual": true },
+          { "type": "happiness", "amount": 5 }
+        ],
+        "result": "You end up in the kitchen talking to {t.name} until three in the morning."
+      },
+      {
+        "text": "Stay home",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ],
+        "result": "You see the photos on Monday. It looked fun."
+      }
+    ]
+  }
+]

@@ -60,3 +60,7 @@ _playtest-saves/2026-09-30_114338.png · playtest-saves/2026-09-30_114338.json_
 Blir erbjuden jobb, fast jag iten verkar ha något utan ska studera egentligen. Behöver verkligen bygga ut studier/arbete på något vis för att det ska bli kul
 
 _playtest-saves/2026-09-30_114453.png · playtest-saves/2026-09-30_114453.json_
+
+---
+
+_Notes above were processed into docs/todo.md on 2026-09-30._

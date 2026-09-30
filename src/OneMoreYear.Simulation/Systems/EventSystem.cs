@@ -254,6 +254,11 @@ public static class EventSystem
             if (player.HasTrait(trait)) chance += bonus;
         if (choice.ChanceOpinion != 0 && pending.Roles.TryGetValue("target", out var tid))
             chance += ctx.World.Opinion(tid, player.Id) * choice.ChanceOpinion;
+        if (choice.ChanceRelation.Count > 0 && pending.Roles.TryGetValue("target", out var relTarget))
+        {
+            var rel = ctx.World.FindRel(relTarget, player.Id);
+            foreach (var (dim, perPoint) in choice.ChanceRelation) chance += ((rel?[dim] ?? 0) - 40) * perPoint;
+        }
         foreach (var (attr, perPoint) in choice.ChanceAttributes)
         {
             double value = attr switch

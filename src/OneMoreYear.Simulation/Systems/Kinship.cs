@@ -61,6 +61,7 @@ public static class Kinship
         var ids = new SortedSet<int>(Distances(w, p, 3).Keys);
         foreach (var f in p.FriendIds) ids.Add(f);
         foreach (var e in p.ExPartnerIds) ids.Add(e);
+        foreach (var a in p.Acquaintances) ids.Add(a.Id);
         ids.Remove(p.Id);
         return ids.Select(w.Get).Where(x => includeDead || x.IsAlive).ToList();
     }
@@ -78,6 +79,9 @@ public static class Kinship
             case "grandchild": return Grandchildren(w, player).Any(s => s.Id == other.Id);
             case "friend": return player.FriendIds.Contains(other.Id);
             case "ex": return player.ExPartnerIds.Contains(other.Id);
+            case "acquaintance": return SocialSystem.Find(player, other.Id) != null;
+            case "classmate" or "colleague" or "boss":
+                return SocialSystem.Find(player, other.Id) is { Current: true } a && a.Kind == role;
             case "relative":
             {
                 distances ??= Distances(w, player, 3);
@@ -91,7 +95,8 @@ public static class Kinship
             case "known":
             {
                 distances ??= Distances(w, player, 3);
-                return distances.ContainsKey(other.Id) || player.FriendIds.Contains(other.Id) || player.ExPartnerIds.Contains(other.Id);
+                return distances.ContainsKey(other.Id) || player.FriendIds.Contains(other.Id) || player.ExPartnerIds.Contains(other.Id)
+                       || SocialSystem.Find(player, other.Id) != null;
             }
             default: return false;
         }
@@ -183,6 +188,7 @@ public static class Kinship
         }
 
         if (viewer.FriendIds.Contains(other.Id)) return "friend";
+        if (SocialSystem.Label(w, viewer, other) is { } known) return known;
 
         // Partners and exes of relatives: "Oskar's girlfriend", "Mats's ex-wife".
         foreach (var (relId, _) in Distances(w, viewer, 3).OrderBy(kv => kv.Value).ThenBy(kv => kv.Key))
