@@ -5,14 +5,12 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Where you live**: live with your parents as a child, decide to move out, rent/share/buy,
-   cities and moves ("a new city" should say which).
-2. [ ] **Crime**: police, arrests, court, prison and a criminal career – built on the new traits.
+1. [ ] **Crime**: police, arrests, court, prison and a criminal career – built on the new traits.
    The player can choose to commit crimes; personality sets temptation and risk (see design-decisions.md).
-3. [ ] **Portraits**: simple generated portraits (and a full-body figure) where looks come from the
+2. [ ] **Portraits**: simple generated portraits (and a full-body figure) where looks come from the
    parents' genes – hair, eyes, skin, height, build, ageing.
-4. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).
-5. [ ] **Investments**: stocks and funds, home values that change, mortgages.
+3. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).
+4. [ ] **Investments**: stocks and funds, home values that change, mortgages.
 
 ## Later
 

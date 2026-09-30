@@ -235,6 +235,8 @@ public static class FamilySystem
         // Some adults go for much younger or much older partners (always adults).
         age = Math.Max(ctx.Country.AdultAge, EventSystem.RomanticAge(ctx, p, age));
         var partner = PersonFactory.CreateStranger(ctx, sex, age);
+        partner.CityId = p.CityId;
+        partner.LivesWithParents = false;
         partner.AttractedToSameSex = p.AttractedToSameSex;
         partner.Generation = p.Generation;
         return partner;
@@ -302,6 +304,7 @@ public static class FamilySystem
     {
         if (!OldEnoughToMoveIn(ctx, a) || !OldEnoughToMoveIn(ctx, b)) return;
         a.PartnerStatus = b.PartnerStatus = PartnerStatus.Cohabiting;
+        HousingSystem.MoveInTogether(ctx, a, b);
         ctx.World.Log($"{a.FirstName} and {b.FirstName} moved in together.", ctx.Importance(false, a, b), "love", a.Id, b.Id);
         if (a.OwnsHome || b.OwnsHome) a.OwnsHome = b.OwnsHome = true;
     }

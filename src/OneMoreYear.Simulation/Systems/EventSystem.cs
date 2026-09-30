@@ -20,6 +20,8 @@ public static class EventSystem
         var pending = new PendingEvent { Uid = w.NextEventUid++, EventId = eventId, Roles = roles ?? new() };
         foreach (var (name, v) in def.Vars) pending.Vars[name] = ComputeVar(ctx, v, pending);
         if (vars != null) foreach (var (k, v) in vars) pending.Vars[k] = v;
+        if (def.DynamicChoices == "cities")
+            pending.Options = ctx.Country.Cities.Where(c => c.Id != w.Player.CityId).Select(c => c.Id).ToList();
         w.PendingEvents.Add(pending);
         w.EventHistory[eventId] = w.Year;
         return pending;
@@ -164,6 +166,7 @@ public static class EventSystem
         if (c.MinHealth is { } minH && p.Health < minH) return false;
         if (c.MaxHealth is { } maxH && p.Health > maxH) return false;
         if (c.OwnsHome is { } oh && p.OwnsHome != oh) return false;
+        if (c.LivesWithParents is { } lwp && p.LivesWithParents != lwp) return false;
         if (c.TraitsAny is { Count: > 0 } any && !any.Any(p.HasTrait)) return false;
         if (c.TraitsNone is { Count: > 0 } none && none.Any(p.HasTrait)) return false;
         if (c.Flags is { } flags && !flags.All(p.Flags.Contains)) return false;
@@ -306,6 +309,11 @@ public static class EventSystem
                 var (occ, level) = offer;
                 CareerSystem.Hire(ctx, player, occ.Id, level);
                 texts.Add($"You accept. You start as {CareerSystem.Article(occ.Levels[level].Title)}.");
+            }
+            else if (def.DynamicChoices == "cities")
+            {
+                HousingSystem.MoveTo(ctx, player, pending.Options[choiceIndex]);
+                texts.Add($"You pack everything and move to {HousingSystem.City(ctx, player).Name}.");
             }
             else if (def.DynamicChoices == "baby_names" && ctx.World.TryGet(pending.Roles.GetValueOrDefault("target")) is { } baby)
             {

@@ -124,6 +124,9 @@ public static class RelationshipSystem
             bool friend = from.FriendIds.Contains(to.Id);
             r.Closeness = Math.Max(warmth * 0.4, r.Closeness - (friend ? 3 : 1));
         }
+        // Living in different cities makes it harder to stay close.
+        if (!partners && from.CityId != null && from.CityId != to.CityId && to.Age(ctx.Year) >= 18 && from.Age(ctx.Year) >= 18)
+            r.Closeness = Math.Max(warmth * 0.4, r.Closeness - 1);
 
         // Siblings and cousins compare themselves with each other.
         if (from.InFamily && to.InFamily && from.Age(ctx.Year) >= 25 && from.Generation == to.Generation)

@@ -96,6 +96,7 @@ public sealed class GameSession
             if (LifeSystem.CheckDeath(ctx, p)) continue;
             if (p.Age(ctx.Year) == ctx.Country.AdultAge) PersonFactory.RollAdultTraits(ctx, p);
             CareerSystem.Update(ctx, p, jobLoss);
+            HousingSystem.Update(ctx, p);
             EconomySystem.Update(ctx, p, savingsFactor);
             p.PeakNetWorth = Math.Max(p.PeakNetWorth, EconomySystem.NetWorth(ctx, p));
             if (p.InFamily) LifeSystem.UpdateWill(ctx, p);
@@ -184,6 +185,12 @@ public sealed class GameSession
             if (def.DynamicChoices == "baby_names")
             {
                 choices.Add(new ChoiceView(i, pending.Options[i], i == 0 ? "The name you had in mind." : null, null, true));
+                continue;
+            }
+            if (def.DynamicChoices == "cities" && Country.Cities.FirstOrDefault(c => c.Id == pending.Options[i]) is { } city)
+            {
+                string size = city.Size switch { "village" => "A small village", "town" => "A town", _ => "A big city" };
+                choices.Add(new ChoiceView(i, city.Name, $"{size}. Homes cost about {EconomySystem.Format(Ctx, Ctx.Nominal(Country.HomePrice) * city.PriceFactor)}.", null, true));
                 continue;
             }
             if (CareerSystem.ParseOffer(Ctx, pending.Options[i]) is not { } offer) continue;
@@ -376,7 +383,7 @@ public sealed class GameSession
             Fitness = p.Fitness,
             Grades = p.Grades,
             AppearanceText = Appearance.Describe(p, Year),
-            Home = p.OwnsHome ? "Owns a home" : age < 18 || p.Flags.Contains("lives_at_home") ? "Lives with parents" : "Renting",
+            Home = HousingSystem.Describe(Ctx, p),
             Links = links,
         };
     }
@@ -459,7 +466,7 @@ public sealed class GameSession
             Money = EconomySystem.Format(Ctx, p.Money),
             InDebt = p.Money < 0,
             NetWorth = EconomySystem.Format(Ctx, EconomySystem.NetWorth(Ctx, p)),
-            Home = p.OwnsHome ? $"You own your home (your share is worth about {EconomySystem.Format(Ctx, EconomySystem.HomeEquity(Ctx))})" : null,
+            Home = p.OwnsHome ? $"You own your home (your share is worth about {EconomySystem.Format(Ctx, EconomySystem.HomeEquity(Ctx, p))})" : null,
             YearlyIncome = EconomySystem.FormatPay(Ctx, EconomySystem.GrossIncome(Ctx, p)) + " before tax",
             SaveRatePercent = (int)Math.Round(EconomySystem.SaveRate(Ctx, p) * 100),
             TaxPercent = (int)Math.Round(Country.TaxRate * 100),

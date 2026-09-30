@@ -83,6 +83,12 @@ public sealed class Person
     /// <summary>Highest net worth reached, nominal kronor.</summary>
     public double PeakNetWorth { get; set; }
     public bool OwnsHome { get; set; }
+    /// <summary>Which city the person lives in (country content).</summary>
+    public string? CityId { get; set; }
+    /// <summary>Still living in the parents' home.</summary>
+    public bool LivesWithParents { get; set; }
+    /// <summary>Shares a rented flat with others (cheaper than renting alone).</summary>
+    public bool SharesFlat { get; set; }
     /// <summary>A child who is favoured in this person's will (gets a larger share).</summary>
     public int? WillFavoriteId { get; set; }
     public List<int> Disinherited { get; set; } = new();

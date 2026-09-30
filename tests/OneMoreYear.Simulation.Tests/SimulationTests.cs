@@ -282,3 +282,24 @@ public class FamilyTieTests
                 Assert.NotEqual(OneMoreYear.Simulation.Model.BloodTie.Close, Kinship.Blood(w, p, partner));
     }
 }
+
+public class HousingTests
+{
+    [Fact]
+    public void ChildrenLiveWithParentsAndFamiliesMoveTogether()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 8, StartYear = 1970 });
+        var w = s.World;
+        var p = s.Player;
+        var father = w.Get(p.ParentIds[0]);
+        Assert.True(p.LivesWithParents);
+        Assert.Equal(father.CityId, p.CityId);
+
+        var mother = w.Get(p.ParentIds[1]);
+        string target = s.Country.Cities.First(c => c.Id != father.CityId).Id;
+        HousingSystem.MoveTo(s.Ctx, father, target);
+        Assert.Equal(target, mother.CityId);
+        Assert.Equal(target, p.CityId);
+        Assert.StartsWith("Lives with parents in", s.Describe(p.Id).Home);
+    }
+}

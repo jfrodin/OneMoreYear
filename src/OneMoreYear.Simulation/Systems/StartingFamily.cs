@@ -18,6 +18,7 @@ public static class StartingFamily
         var mother = PersonFactory.CreateStranger(ctx, Sex.Female, Math.Max(20, father.Age(ctx.Year) + rng.Range(-5, 2)));
         father.AttractedToSameSex = mother.AttractedToSameSex = false;
         w.FamilyName = father.LastName;
+        mother.CityId = father.CityId;
 
         foreach (var parent in new[] { father, mother })
         {
@@ -63,6 +64,7 @@ public static class StartingFamily
         var gm = PersonFactory.CreateStranger(ctx, Sex.Female, Math.Max(parentAge + 18, gf.Age(ctx.Year) + rng.Range(-5, 1)), parent.BirthLastName);
         gf.AttractedToSameSex = gm.AttractedToSameSex = false;
         gm.BirthLastName = rng.Pick(ctx.Country.LastNames);
+        gf.CityId = gm.CityId = rng.Chance(0.7) ? parent.CityId : HousingSystem.RandomCityId(ctx);
         MarkFamily(gf, 0, true);
         MarkFamily(gm, 0, true);
         FamilySystem.StartDating(ctx, gf, gm);
@@ -79,11 +81,13 @@ public static class StartingFamily
         {
             int age = Math.Clamp(parentAge + rng.Range(-7, 7), 16, gm.Age(ctx.Year) - 18);
             var aunt = PersonFactory.CreateStranger(ctx, rng.Chance(0.5) ? Sex.Male : Sex.Female, age, gf.LastName);
+            aunt.CityId = rng.Chance(0.6) ? gf.CityId : HousingSystem.RandomCityId(ctx);
             MarkFamily(aunt, 1, true);
             Link(ctx, gf, gm, aunt);
             if (age >= 22 && rng.Chance(0.7))
             {
                 var partner = FamilySystem.CreatePartnerFor(ctx, aunt);
+                partner.CityId = aunt.CityId;
                 FamilySystem.StartDating(ctx, aunt, partner);
                 aunt.PartnerSinceYear = partner.PartnerSinceYear = ctx.Year - rng.Range(1, Math.Max(2, age - 20));
                 FamilySystem.MoveIn(ctx, aunt, partner);

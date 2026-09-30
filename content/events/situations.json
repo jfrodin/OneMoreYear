@@ -79,6 +79,37 @@
     "choices": []
   },
   {
+    "id": "moving_out", "trigger": "situation",
+    "title": "A place of your own?",
+    "text": "You're {age} and still living with your parents in {city}. Your friends are moving out one by one.",
+    "choices": [
+      {
+        "text": "Rent a flat of your own",
+        "hint": "Freedom – and every bill is yours.",
+        "effects": [ { "type": "move_out", "kind": "rent" }, { "type": "happiness", "amount": 8 } ],
+        "result": "The first night in your own flat you eat pizza on the floor. It's perfect."
+      },
+      {
+        "text": "Share a flat with friends",
+        "hint": "Cheaper, louder, more fun.",
+        "effects": [ { "type": "move_out", "kind": "share" }, { "type": "happiness", "amount": 6 } ],
+        "result": "Three people, one bathroom and a fridge full of labelled food."
+      },
+      {
+        "text": "Stay at home a while longer",
+        "hint": "Save money – but it gets a bit cramped.",
+        "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "Your parents sigh, but they don't mind the company."
+      }
+    ]
+  },
+  {
+    "id": "choose_city", "trigger": "situation", "dynamicChoices": "cities",
+    "title": "Somewhere new",
+    "text": "You live in {city}. Where do you want to go?",
+    "choices": [ { "text": "Stay in {city}", "result": "Home is home." } ]
+  },
+  {
     "id": "job_offers", "trigger": "situation", "dynamicChoices": "job_offers",
     "title": "Job offers",
     "text": "You've sent out applications. These employers want you:",

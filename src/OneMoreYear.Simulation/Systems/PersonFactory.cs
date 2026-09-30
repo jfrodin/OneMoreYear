@@ -33,6 +33,9 @@ public static class PersonFactory
             Health = Math.Clamp(rng.Gaussian(92 - Math.Max(0, age - 30) * 0.6, 6), 20, 100),
             Happiness = rng.Range(45, 75),
         };
+        // Strangers mostly live where the player lives – that is where the player meets them.
+        p.CityId = ctx.World.TryGet(ctx.World.PlayerId) is { } pl && rng.Chance(0.8) ? pl.CityId : HousingSystem.RandomCityId(ctx);
+        p.LivesWithParents = age < 20;
         p.BirthLastName = p.LastName;
         AssignTraits(ctx, p, Array.Empty<Person>());
         Appearance.Generate(ctx, p, Array.Empty<Person>());
@@ -66,6 +69,8 @@ public static class PersonFactory
             IsBlood = parentA.IsBlood || (parentB?.IsBlood ?? false),
             Generation = Math.Max(parentA.Generation, parentB?.Generation ?? 0) + 1,
             BiologicalFatherId = biologicalFatherId,
+            CityId = parentA.CityId,
+            LivesWithParents = true,
         };
         var geneticParents = new List<Person> { parentA };
         if (parentB != null) geneticParents.Add(parentB);

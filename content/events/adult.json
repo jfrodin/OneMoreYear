@@ -1,7 +1,7 @@
 [
   {
     "id": "adult_promotion_move", "title": "The offer",
-    "text": "Your boss offers you a promotion – but the position is in another city.",
+    "text": "Your boss offers you a promotion – but the position is in another city. You would have to leave {city}.",
     "conditions": { "minAge": 22, "maxAge": 60, "hasJob": true }, "cooldown": 8,
     "choices": [
       {
@@ -9,10 +9,11 @@
         "hint": "Your career first. Not everyone will be happy.",
         "effects": [
           { "type": "promote" },
+          { "type": "move_city" },
           { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 12 },
           { "type": "memory", "who": "partner", "to": "player", "kind": "moved_for_career", "text": "{name} chose the career and made us move", "impact": -20 }
         ],
-        "result": "You pack up your life and start over in a new city."
+        "result": "You pack up your life and start over in {city}."
       },
       {
         "text": "Turn it down",
@@ -384,7 +385,7 @@
   },
   {
     "id": "adult_partner_dream_job", "title": "The dream job",
-    "text": "{t.name} has been offered {t.his} dream job – on the other side of the country.",
+    "text": "{t.name} has been offered {t.his} dream job – but it's far from {city}.",
     "conditions": { "minAge": 22, "maxAge": 60 },
     "target": { "role": "partner", "conditions": { "hasJob": true } }, "cooldown": 10,
     "choices": [
@@ -393,9 +394,10 @@
         "effects": [
           { "type": "job_quit" },
           { "type": "promote", "who": "target" },
+          { "type": "move_city" },
           { "type": "memory", "who": "target", "to": "player", "kind": "sacrificed", "text": "{name} gave up everything so I could take my dream job", "impact": 35 }
         ],
-        "result": "You start over in a new city. {t.name} glows."
+        "result": "You start over in {city}. {t.name} glows."
       },
       {
         "text": "Ask {t.him} to say no",

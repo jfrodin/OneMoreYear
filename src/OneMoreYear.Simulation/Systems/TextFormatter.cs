@@ -37,6 +37,8 @@ public static partial class TextFormatter
                     "fullname" => player.FullName,
                     "year" => ctx.Year.ToString(),
                     "grades" => player.Grades.ToString("0"),
+                    "age" => player.Age(ctx.Year).ToString(),
+                    "city" => HousingSystem.City(ctx, player).Name,
                     _ when pending != null && pending.Vars.TryGetValue(head, out var v) => EconomySystem.Format(ctx, ctx.Nominal(v)),
                     _ => m.Value
                 };

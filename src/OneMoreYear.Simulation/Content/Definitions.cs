@@ -34,6 +34,17 @@ public sealed class HistoricalEventDef
     public double SavingsFactor { get; set; } = 1;
 }
 
+public sealed class CityDef
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    /// <summary>"city", "town" or "village".</summary>
+    public string Size { get; set; } = "city";
+    public double Weight { get; set; } = 1;
+    /// <summary>How expensive housing is compared to the country average (1 = average).</summary>
+    public double PriceFactor { get; set; } = 1;
+}
+
 public sealed class CountryDef
 {
     public string Id { get; set; } = "";
@@ -80,6 +91,7 @@ public sealed class CountryDef
     public double SpouseInheritanceShare { get; set; } = 0.5;
     public double SameSexCoupleChance { get; set; } = 0.04;
     public double WifeTakesNameChance { get; set; } = 0.7;
+    public List<CityDef> Cities { get; set; } = new();
     public List<HistoricalEventDef> HistoricalEvents { get; set; } = new();
 }
 
@@ -150,6 +162,7 @@ public sealed class ConditionDef
     public double? MinHealth { get; set; }
     public double? MaxHealth { get; set; }
     public bool? OwnsHome { get; set; }
+    public bool? LivesWithParents { get; set; }
     public List<string>? TraitsAny { get; set; }
     public List<string>? TraitsNone { get; set; }
     public List<string>? Flags { get; set; }

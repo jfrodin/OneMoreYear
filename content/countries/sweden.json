@@ -55,6 +55,18 @@
   "spouseInheritanceShare": 0.5,
   "sameSexCoupleChance": 0.04,
   "wifeTakesNameChance": 0.7,
+  "cities": [
+    { "id": "stockholm", "name": "Stockholm", "size": "city", "weight": 3.0, "priceFactor": 1.6 },
+    { "id": "goteborg", "name": "Göteborg", "size": "city", "weight": 2.0, "priceFactor": 1.25 },
+    { "id": "malmo", "name": "Malmö", "size": "city", "weight": 1.6, "priceFactor": 1.15 },
+    { "id": "uppsala", "name": "Uppsala", "size": "city", "weight": 1.0, "priceFactor": 1.2 },
+    { "id": "linkoping", "name": "Linköping", "size": "city", "weight": 0.8, "priceFactor": 1.0 },
+    { "id": "umea", "name": "Umeå", "size": "town", "weight": 0.6, "priceFactor": 0.9 },
+    { "id": "sundsvall", "name": "Sundsvall", "size": "town", "weight": 0.5, "priceFactor": 0.8 },
+    { "id": "hudiksvall", "name": "Hudiksvall", "size": "town", "weight": 0.4, "priceFactor": 0.65 },
+    { "id": "kiruna", "name": "Kiruna", "size": "town", "weight": 0.25, "priceFactor": 0.6 },
+    { "id": "vimmerby", "name": "Vimmerby", "size": "village", "weight": 0.35, "priceFactor": 0.55 }
+  ],
   "historicalEvents": [
     { "year": 1956, "text": "Television arrives in Swedish homes." },
     { "year": 1967, "text": "Dagen H: Sweden switches from driving on the left to the right." },

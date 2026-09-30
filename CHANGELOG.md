@@ -2,6 +2,19 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.8.0 – 2026-09-30 · Where you live
+
+- Ten Swedish cities, from Stockholm to Kiruna and Vimmerby. Housing costs depend on the city.
+- Children live with their parents. As a young adult you decide when to move out: a flat of your
+  own, a shared flat with friends (cheaper) or staying at home a while longer (cheapest).
+- **Move to another city** whenever you like – see what homes cost before you choose. Move back home
+  if money gets tight.
+- A promotion in another city or a partner's dream job now says which city – and moves you there.
+  Your partner and children come along.
+- Couples who move in together end up in the same city.
+- Relatives in other cities slowly drift apart unless you keep in touch.
+- Homes, where you live and your living costs are shown everywhere: "Rents a flat in Malmö".
+
 ## 0.7.2 – 2026-09-30 · A taste for age gaps
 
 - New adult traits that appear at 18: **Likes them younger** (more common among men) and **Likes them

@@ -347,6 +347,33 @@
     } ]
   },
   {
+    "id": "self_move_out", "trigger": "self", "category": "money", "title": "Move out",
+    "conditions": { "minAge": 18, "livesWithParents": true },
+    "choices": [ {
+      "text": "Find your own place", "hint": "You pay rent and bills from now on.",
+      "effects": [ { "type": "move_out", "kind": "rent" }, { "type": "happiness", "amount": 6 } ],
+      "result": "You carry the last box up the stairs. Your own place."
+    } ]
+  },
+  {
+    "id": "self_move_city", "trigger": "self", "category": "money", "title": "Move to another city",
+    "conditions": { "minAge": 18 },
+    "choices": [ {
+      "text": "Look at other cities", "hint": "Housing costs differ a lot between cities.",
+      "effects": [ { "type": "queue_event", "event": "choose_city" } ],
+      "result": "You start looking at other places to live."
+    } ]
+  },
+  {
+    "id": "self_move_back", "trigger": "self", "category": "money", "title": "Move back home",
+    "conditions": { "minAge": 18, "maxAge": 40, "livesWithParents": false, "hasPartner": false, "hasRole": [ "parent" ] },
+    "choices": [ {
+      "text": "Ask to move back in", "hint": "Saves a lot of money. Costs a little pride.",
+      "effects": [ { "type": "move_back_home" }, { "type": "happiness", "amount": -4 } ],
+      "result": "Your old room looks smaller than you remember."
+    } ]
+  },
+  {
     "id": "self_train", "trigger": "self", "title": "Exercise",
     "conditions": { "minAge": 8 },
     "choices": [ {
@@ -357,7 +384,7 @@
   },
   {
     "id": "self_buy_home", "trigger": "self", "category": "money", "title": "Buy a home",
-    "conditions": { "minAge": 20, "ownsHome": false, "minMoney": 450000 },
+    "conditions": { "minAge": 20, "ownsHome": false, "livesWithParents": false, "minMoney": 450000 },
     "choices": [ {
       "text": "Buy", "hint": "A deposit of 15 % of the home price.",
       "effects": [ { "type": "buy_home" }, { "type": "happiness", "amount": 6 } ],
