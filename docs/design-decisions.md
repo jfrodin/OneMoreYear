@@ -1,0 +1,45 @@
+# Design decisions
+
+Decisions that shape the whole game. Add new ones at the bottom with a date.
+
+## Age rating 18+ (PEGI 18 / Mature) – 2026-09-30
+
+The game is made for adults, so content can be graphic and mature: sex, violence, drugs, crime,
+abuse, addiction and dark family secrets can be shown openly rather than toned down. Affects event
+writing, text, images and store pages (Steam mature content survey, age gate). Consider a content
+option for players who want to tone it down.
+
+## Full tonal range: from sunshine to pitch black – 2026-09-30
+
+Family happiness, love, weddings, grandchildren and roses – but also drugs, violent crime, addiction
+and a grandfather who abuses his grandchildren. Both ends should exist in the same family, often in
+the same life. The light moments matter as much as the dark ones; the contrast is what makes the
+family feel real.
+
+## How the darkest themes are handled – 2026-09-30
+
+Abuse of children exists as a story element – a secret, a trauma, memories that shape a life, a
+revelation that splits the family – shown through its consequences and how people react. It is
+never depicted in sexually explicit detail. (This is also what keeps the game within PEGI 18 and
+Steam's rules.)
+
+## Relationships follow the country's law – 2026-09-30
+
+In Sweden the age of consent is 15, so that is where romantic and sexual relationships – and
+pregnancy in normal life – can start. Below that only innocent crushes and "going steady" between
+kids of similar age. Moving in together from 16 with the parents' consent, from 18 on your own;
+marriage from 18. Stored per country (`ageOfConsent`, `adultAge`, `cohabitWithConsentAge`,
+`marriageAge`) so other countries follow their own laws. No romance between an adult and someone
+under the age of consent – that belongs only to the dark themes above (abuse), never to normal dating.
+
+## English first – 2026-09-30
+
+All game text is English. Localization (Swedish and more) comes later; keep text in content files
+where possible.
+
+## Workflow – 2026-09-30
+
+- Playtest notes go in `docs/playtest-notes.md` (F1 in the game).
+- They are triaged into `docs/todo.md`, which only holds what is still open.
+- When something is done it leaves the to-do list and is described in `CHANGELOG.md` under the
+  version it shipped in. Each version is tagged in git (`v0.5.0`).

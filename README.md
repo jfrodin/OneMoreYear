@@ -4,7 +4,7 @@ A generational life and family simulator.
 
 > "Live a life. Build a family. Leave a legacy."
 
-See [docs/kravspec.md](docs/kravspec.md) for the requirements specification and game concept (Swedish).
+See [docs/kravspec.md](docs/kravspec.md) for the requirements specification and game concept (Swedish), [CHANGELOG.md](CHANGELOG.md) for what changed in each version, [docs/todo.md](docs/todo.md) for what is next and [docs/design-decisions.md](docs/design-decisions.md) for the big decisions.
 
 ## Playing
 

@@ -11,6 +11,9 @@ public partial class Main : Control
 {
     public GameSession? Session { get; private set; }
 
+    /// <summary>The game version from project.godot (application/config/version).</summary>
+    public static string Version => ProjectSettings.GetSetting("application/config/version").AsString();
+
     private Control? _screen;
     private Control _overlayLayer = null!;
 
@@ -145,7 +148,7 @@ public partial class Main : Control
         if (Session == null) return $"Screen: {_screen?.GetType().Name}";
         var p = Session.Player;
         string where = _screen is GameScreen g ? g.CurrentTabName : _screen?.GetType().Name ?? "";
-        return $"{Session.Year}  ·  {p.FullName}, {p.Age(Session.Year)}  ·  {where}  ·  seed {Session.World.Seed}";
+        return $"v{Version}  ·  {Session.Year}  ·  {p.FullName}, {p.Age(Session.Year)}  ·  {where}  ·  seed {Session.World.Seed}";
     }
 
     /// <summary>Appends the note to the notes file. Returns where it was written.</summary>

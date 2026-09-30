@@ -3,6 +3,11 @@
 using OneMoreYear.Simulation;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
+if (args.FirstOrDefault(a => a.StartsWith("--load=")) is { } loadArg)
+{
+    Inspect.Run(loadArg["--load=".Length..], args.FirstOrDefault(a => a.StartsWith("--who="))?["--who=".Length..] ?? "");
+    return;
+}
 ulong seed = args.Length > 0 && ulong.TryParse(args[0], out var s) ? s : 1;
 int years = args.Length > 1 && int.TryParse(args[1], out var y) ? y : 120;
 int startYear = args.Length > 2 && int.TryParse(args[2], out var sy) ? sy : 1950;

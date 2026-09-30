@@ -63,7 +63,7 @@ public partial class TitleScreen : Control
         var quit = Ui.Button("Quit", () => GetTree().Quit());
         col.AddChild(quit);
 
-        var hint = Ui.Label("Sweden is the first country. More will follow.", 15, UiTheme.Faint);
+        var hint = Ui.Label($"Version {Main.Version}  ·  Sweden is the first country. More will follow.", 15, UiTheme.Faint);
         hint.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(hint);
 
