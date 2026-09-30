@@ -82,3 +82,11 @@ fact of the backstory, never depicted.)
   more common among men for younger, women for older). Big gaps make the family react. Under 18 the
   age rules above apply; an adult with a minor is never a normal romance – if it appears at all, it is
   as exploitation in the dark storylines, shown through its consequences.
+
+## Shareable seeds, no ready-made scenarios – 2026-09-30
+
+Like Balatro: every game has a seed, and players can share it ("play 7LB2WVPK – what a family!").
+The same seed gives the same starting family and the same luck; your choices take it from there.
+The game ships with **no** ready-made scenarios or seed lists – the test scenarios are a
+development tool only. To do: a short, readable seed code (letters and digits instead of a long
+number), shown in the game menu and on the game-over screen, typed in on the title screen.
