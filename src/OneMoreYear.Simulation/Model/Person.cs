@@ -27,6 +27,12 @@ public sealed class Person
     public PartnerStatus PartnerStatus { get; set; }
     public int PartnerSinceYear { get; set; }
     public List<int> ExPartnerIds { get; set; } = new();
+    /// <summary>The most recent break-up: when, with whom, and whether the other person left.</summary>
+    public int? LastSplitYear { get; set; }
+    public int? LastSplitWithId { get; set; }
+    public bool LastSplitByThem { get; set; }
+    /// <summary>A baby on the way (born next year), or an adoption being processed.</summary>
+    public ExpectedChild? Expecting { get; set; }
     public List<int> FriendIds { get; set; } = new();
     /// <summary>People the player knows through school, work or friends (only kept for the player).</summary>
     public List<Acquaintance> Acquaintances { get; set; } = new();
@@ -112,4 +118,13 @@ public sealed class Acquaintance
     public bool Current { get; set; } = true;
     /// <summary>For friend_of_friend: the friend who introduced you.</summary>
     public int? ViaId { get; set; }
+}
+
+/// <summary>A child who arrives the year after the decision: pregnancy or adoption.</summary>
+public sealed class ExpectedChild
+{
+    public int ParentAId { get; set; }
+    public int? ParentBId { get; set; }
+    public int DueYear { get; set; }
+    public bool Adoption { get; set; }
 }

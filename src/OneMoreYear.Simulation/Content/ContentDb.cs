@@ -122,7 +122,7 @@ public sealed class ContentDb
                 if (Occupation(o) == null) errors.Add($"Programme {p.Id}: unknown occupation {o}");
         foreach (var e in Events.Values)
         {
-            if (e.Choices.Count == 0) errors.Add($"Event {e.Id} has no choices.");
+            if (e.Choices.Count == 0 && e.DynamicChoices == null) errors.Add($"Event {e.Id} has no choices.");
             CheckConditions(e.Id, e.Conditions, errors);
             CheckConditions(e.Id, e.Target?.Conditions, errors);
             CheckConditions(e.Id, e.Other?.Conditions, errors);

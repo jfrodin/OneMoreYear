@@ -2,6 +2,21 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.6.0 – 2026-09-30 · Babies, lovers and loose ends
+
+- Babies are born the year after you decide to try (adoptions too) – and **you choose the name**.
+- Saying yes to someone new while you're in a relationship no longer dumps your partner: it becomes
+  a secret affair, and the choice tells you so beforehand.
+- Lovers show up in **People**, labelled as your lover.
+- Your parents' partners and exes stay in **People** after a break-up ("your father's ex").
+- "Single – Monica broke up with him in 1984", "Widowed – Erik died in 2001" instead of just "Single".
+- Which side of the family: paternal and maternal grandparents, aunts and uncles.
+- Pay is shown per month, as people talk about it in Sweden.
+- Click a partner, parent, sibling or child in someone's profile to jump to them.
+- Height and weight for everyone, children included.
+- Children live with their parents instead of "renting".
+- Office events only happen to people with office jobs; the boss's weekend request fits any job.
+
 ## 0.5.0 – 2026-09-30 · People you know
 
 - Classmates in school, colleagues and a boss at work. When you move on they become old

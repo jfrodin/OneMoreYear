@@ -44,6 +44,7 @@
   "adultAge": 18,
   "cohabitWithConsentAge": 16,
   "marriageAge": 18,
+  "monthlyPay": true,
   "pensionAge": 65,
   "pensionRate": 0.65,
   "minimumPension": 110000,

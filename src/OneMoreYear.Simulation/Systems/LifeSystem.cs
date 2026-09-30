@@ -89,6 +89,9 @@ public static class LifeSystem
             partner.PartnerId = null;
             partner.PartnerStatus = PartnerStatus.None;
             partner.Flags.Add("widowed");
+            partner.LastSplitYear = ctx.Year;
+            partner.LastSplitWithId = p.Id;
+            partner.LastSplitByThem = false;
             if (!partner.ExPartnerIds.Contains(p.Id)) partner.ExPartnerIds.Add(p.Id);
         }
         foreach (var fid in p.FriendIds) w.Get(fid).FriendIds.Remove(p.Id);

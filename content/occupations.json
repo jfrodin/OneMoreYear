@@ -2,7 +2,7 @@
 // minEducation: none, primary, secondary, university.
 [
   {
-    "id": "healthcare", "name": "Healthcare", "weight": 1.3,
+    "id": "healthcare", "name": "Healthcare", "tags": [ "care" ], "weight": 1.3,
     "traitAffinity": { "generous": 1.5, "loyal": 1.3 },
     "levels": [
       { "title": "Care Assistant", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "medicine", "name": "Medicine", "weight": 0.3,
+    "id": "medicine", "name": "Medicine", "tags": [ "care" ], "weight": 0.3,
     "traitAffinity": { "ambitious": 2.0, "lazy": 0.2 },
     "levels": [
       { "title": "Junior Doctor", "salary": 480000, "minEducation": "university", "entry": true, "promotionChance": 0.2, "requiresDegree": [ "uni_medicine" ] },
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "id": "industry", "name": "Industry", "weight": 1.4,
+    "id": "industry", "name": "Industry", "tags": [ "manual" ], "weight": 1.4,
     "traitAffinity": { "introvert": 1.3 },
     "levels": [
       { "title": "Warehouse Worker", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
@@ -31,7 +31,7 @@
     ]
   },
   {
-    "id": "academia", "name": "Academia", "weight": 0.4,
+    "id": "academia", "name": "Academia", "tags": [ "office" ], "weight": 0.4,
     "traitAffinity": { "introvert": 1.5, "ambitious": 1.3 },
     "levels": [
       { "title": "PhD Student", "salary": 360000, "minEducation": "university", "entry": true, "promotionChance": 0.2, "requiresDegree": [ "uni_science", "uni_social" ] },
@@ -41,7 +41,7 @@
     ]
   },
   {
-    "id": "it", "name": "IT", "weight": 0.8,
+    "id": "it", "name": "IT", "tags": [ "office" ], "weight": 0.8,
     "traitAffinity": { "introvert": 1.5 },
     "levels": [
       { "title": "Support Technician", "salary": 330000, "minEducation": "secondary", "entry": true, "promotionChance": 0.15 },
@@ -51,7 +51,7 @@
     ]
   },
   {
-    "id": "trade", "name": "Retail", "weight": 1.3,
+    "id": "trade", "name": "Retail", "tags": [ "shop" ], "weight": 1.3,
     "traitAffinity": { "social": 1.6 },
     "levels": [
       { "title": "Shop Assistant", "salary": 280000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
@@ -61,7 +61,7 @@
     ]
   },
   {
-    "id": "public", "name": "Public Sector", "weight": 1.0,
+    "id": "public", "name": "Public Sector", "tags": [ "office" ], "weight": 1.0,
     "traitAffinity": { "loyal": 1.4, "conflict_averse": 1.3 },
     "levels": [
       { "title": "Clerk", "salary": 330000, "minEducation": "secondary", "entry": true, "promotionChance": 0.12 },
@@ -71,7 +71,7 @@
     ]
   },
   {
-    "id": "law", "name": "Law", "weight": 0.3,
+    "id": "law", "name": "Law", "tags": [ "office" ], "weight": 0.3,
     "traitAffinity": { "ambitious": 1.8, "manipulative": 1.5 },
     "levels": [
       { "title": "Court Clerk", "salary": 380000, "minEducation": "university", "entry": true, "promotionChance": 0.2, "requiresDegree": [ "uni_law" ] },
@@ -81,7 +81,7 @@
     ]
   },
   {
-    "id": "media", "name": "Media", "weight": 0.3,
+    "id": "media", "name": "Media", "tags": [ "office" ], "weight": 0.3,
     "traitAffinity": { "social": 1.5, "brave": 1.3 },
     "levels": [
       { "title": "Intern", "salary": 250000, "minEducation": "secondary", "entry": true, "promotionChance": 0.2 },
@@ -91,7 +91,7 @@
     ]
   },
   {
-    "id": "education", "name": "Education", "weight": 0.9,
+    "id": "education", "name": "Education", "tags": [ "school" ], "weight": 0.9,
     "traitAffinity": { "generous": 1.4, "social": 1.2 },
     "levels": [
       { "title": "Childcare Worker", "salary": 290000, "minEducation": "secondary", "entry": true, "promotionChance": 0.1 },
@@ -101,7 +101,7 @@
     ]
   },
   {
-    "id": "construction", "name": "Construction", "weight": 1.1,
+    "id": "construction", "name": "Construction", "tags": [ "manual" ], "weight": 1.1,
     "traitAffinity": { "brave": 1.3, "introvert": 1.1 },
     "levels": [
       { "title": "Construction Worker", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
@@ -111,7 +111,7 @@
     ]
   },
   {
-    "id": "business", "name": "Business", "weight": 0.35,
+    "id": "business", "name": "Business", "tags": [ "office" ], "weight": 0.35,
     "traitAffinity": { "ambitious": 2.0, "brave": 1.8, "conflict_averse": 0.5 },
     "levels": [
       { "title": "Self-Employed", "salary": 320000, "minEducation": "none", "entry": true, "promotionChance": 0.1 },
@@ -121,7 +121,7 @@
     ]
   },
   {
-    "id": "crime", "name": "Crime", "weight": 0.06,
+    "id": "crime", "name": "Crime", "tags": [ "crime" ], "weight": 0.06,
     "traitAffinity": { "manipulative": 5.0, "impulsive": 3.0, "loyal": 0.3 },
     "levels": [
       { "title": "Petty Criminal", "salary": 150000, "minEducation": "none", "entry": true, "promotionChance": 0.12 },

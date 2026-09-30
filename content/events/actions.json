@@ -158,33 +158,33 @@
   {
     "id": "act_try_baby_m", "trigger": "action", "title": "Try for a baby",
     "target": { "role": "partner", "conditions": { "sex": "female", "minAge": 18, "maxAge": 44 } },
-    "conditions": { "sex": "male", "minAge": 18 },
+    "conditions": { "sex": "male", "minAge": 18, "notFlags": [ "expecting" ] },
     "choices": [ {
       "text": "Try for a baby",
       "chance": 0.45,
-      "success": { "text": "It worked! A baby arrives within the year.", "effects": [ { "type": "child" } ] },
+      "success": { "text": "It worked! You're expecting a baby – due next year.", "effects": [ { "type": "child" } ] },
       "failure": { "text": "Not this year.", "effects": [] }
     } ]
   },
   {
     "id": "act_try_baby_f", "trigger": "action", "title": "Try for a baby",
     "target": { "role": "partner", "conditions": { "sex": "male", "minAge": 18 } },
-    "conditions": { "sex": "female", "minAge": 18, "maxAge": 44 },
+    "conditions": { "sex": "female", "minAge": 18, "maxAge": 44, "notFlags": [ "expecting" ] },
     "choices": [ {
       "text": "Try for a baby",
       "chance": 0.45,
-      "success": { "text": "It worked! A baby arrives within the year.", "effects": [ { "type": "child" } ] },
+      "success": { "text": "It worked! You're expecting a baby – due next year.", "effects": [ { "type": "child" } ] },
       "failure": { "text": "Not this year.", "effects": [] }
     } ]
   },
   {
     "id": "act_adopt", "trigger": "action", "title": "Adopt a child",
     "target": { "role": "partner", "conditions": { "sameSexAsPlayer": true } },
-    "conditions": { "minAge": 25, "maxAge": 55 },
+    "conditions": { "minAge": 25, "maxAge": 55, "notFlags": [ "expecting" ] },
     "choices": [ {
       "text": "Apply to adopt",
       "chance": 0.35,
-      "success": { "text": "After a long process, a child joins your family.", "effects": [ { "type": "child" } ] },
+      "success": { "text": "You're approved! Your child will come home next year.", "effects": [ { "type": "child" } ] },
       "failure": { "text": "The process drags on. Maybe next year.", "effects": [] }
     } ]
   },

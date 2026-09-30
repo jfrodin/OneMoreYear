@@ -140,6 +140,13 @@ public static class EffectApplier
             }
             case "start_dating":
                 if (to == null || !EventSystem.Compatible(ctx, who, to)) return;
+                // Already with someone? Then this is an affair, not a new relationship.
+                if (who.PartnerId is { } current && current != to.Id && who.Id == w.PlayerId)
+                {
+                    FamilySystem.StartAffair(ctx, who, to);
+                    pending.Vars["became_affair"] = current;
+                    return;
+                }
                 if (who.PartnerId is { } oldA) FamilySystem.BreakUp(ctx, who, w.Get(oldA));
                 if (to.PartnerId is { } oldB) FamilySystem.BreakUp(ctx, to, w.Get(oldB));
                 FamilySystem.StartDating(ctx, who, to);
@@ -155,9 +162,8 @@ public static class EffectApplier
                 break;
             case "child":
             {
-                var partner = w.TryGet(who.PartnerId);
-                var child = FamilySystem.HaveChild(ctx, who, partner);
-                if (partner != null && partner.Sex == who.Sex) child.IsAdopted = true;
+                // The baby (or adopted child) arrives next year.
+                FamilySystem.Expect(ctx, who, w.TryGet(who.PartnerId));
                 break;
             }
             case "friend_add":

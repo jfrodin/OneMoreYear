@@ -359,14 +359,14 @@
   {
     "id": "adult_partner_wants_child", "title": "A question",
     "text": "{t.name} looks at you over breakfast. \"I want us to have a baby.\"",
-    "conditions": { "minAge": 22, "maxAge": 48 },
+    "conditions": { "minAge": 22, "maxAge": 48, "notFlags": [ "expecting" ] },
     "target": { "role": "partner", "conditions": { "minAge": 22, "maxAge": 44 } },
     "cooldown": 3,
     "choices": [
       {
         "text": "Yes, let's do it",
         "chance": 0.55,
-        "success": { "text": "Nine months later, your family grows.", "effects": [ { "type": "child" }, { "type": "happiness", "amount": 10 } ] },
+        "success": { "text": "A few weeks later: two lines on the test. The baby is due next year.", "effects": [ { "type": "child" }, { "type": "happiness", "amount": 10 } ] },
         "failure": {
           "text": "You try for a year. It doesn't happen – not yet.",
           "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ]

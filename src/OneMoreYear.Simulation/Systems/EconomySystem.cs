@@ -119,6 +119,12 @@ public static class EconomySystem
             ctx.World.Log($"{p.FirstName} bought a home.", ctx.Importance(false, p), "economy", p.Id);
     }
 
+    /// <summary>Pay (2020-kronor per year) the way people talk about it in the country: "32,000 kr / month".</summary>
+    public static string FormatPay(SimContext ctx, double yearly2020) =>
+        ctx.Country.MonthlyPay
+            ? Format(ctx, ctx.Nominal(yearly2020) / 12) + " / month"
+            : Format(ctx, ctx.Nominal(yearly2020)) + " / year";
+
     /// <summary>Formats a nominal amount the way the UI shows money: "12,500 kr".</summary>
     public static string Format(SimContext ctx, double nominal)
     {

@@ -62,6 +62,14 @@ public static class Kinship
         foreach (var f in p.FriendIds) ids.Add(f);
         foreach (var e in p.ExPartnerIds) ids.Add(e);
         foreach (var a in p.Acquaintances) ids.Add(a.Id);
+        // Lovers, and the partners and exes of your parents (a stepmother doesn't vanish after a break-up).
+        foreach (var s in w.Secrets.Where(s => s.Kind == "affair" && (s.SubjectId == p.Id || s.OtherId == p.Id)))
+            ids.Add(s.SubjectId == p.Id ? s.OtherId ?? p.Id : s.SubjectId);
+        foreach (var parent in Parents(w, p))
+        {
+            if (parent.PartnerId is { } pp) ids.Add(pp);
+            foreach (var ex in parent.ExPartnerIds) ids.Add(ex);
+        }
         ids.Remove(p.Id);
         return ids.Select(w.Get).Where(x => includeDead || x.IsAlive).ToList();
     }
@@ -142,7 +150,8 @@ public static class Kinship
 
         foreach (var parent in Parents(w, viewer))
         {
-            if (parent.ParentIds.Contains(other.Id)) return G("grandfather", "grandmother");
+            string side = parent.Sex == Sex.Male ? "paternal" : "maternal";
+            if (parent.ParentIds.Contains(other.Id)) return G($"{side} grandfather", $"{side} grandmother");
             foreach (var gp in Parents(w, parent))
                 if (gp.ParentIds.Contains(other.Id)) return G("great-grandfather", "great-grandmother");
         }
@@ -167,8 +176,9 @@ public static class Kinship
             if (parent.PartnerId == other.Id) return G("stepfather", "stepmother");
             foreach (var aunt in Siblings(w, parent))
             {
-                if (aunt.Id == other.Id) return G("uncle", "aunt");
-                if (aunt.PartnerId == other.Id && aunt.PartnerStatus == PartnerStatus.Married) return G("uncle", "aunt");
+                string side = parent.Sex == Sex.Male ? "paternal" : "maternal";
+                if (aunt.Id == other.Id) return G($"{side} uncle", $"{side} aunt");
+                if (aunt.PartnerId == other.Id && aunt.PartnerStatus == PartnerStatus.Married) return G($"{side} uncle", $"{side} aunt");
                 if (aunt.ChildIds.Contains(other.Id)) return "cousin";
             }
         }
@@ -187,6 +197,8 @@ public static class Kinship
             if (Siblings(w, partner).Any(s => s.Id == other.Id)) return G("brother-in-law", "sister-in-law");
         }
 
+        if (w.Secrets.FirstOrDefault(s => s.Kind == "affair" && (s.SubjectId == viewer.Id && s.OtherId == other.Id || s.OtherId == viewer.Id && s.SubjectId == other.Id)) is { } affair)
+            return affair.Active ? "lover" : "former lover";
         if (viewer.FriendIds.Contains(other.Id)) return "friend";
         if (SocialSystem.Label(w, viewer, other) is { } known) return known;
 
@@ -194,8 +206,9 @@ public static class Kinship
         foreach (var (relId, _) in Distances(w, viewer, 3).OrderBy(kv => kv.Value).ThenBy(kv => kv.Key))
         {
             var rel = w.Get(relId);
-            if (!rel.IsBlood && relId != viewer.PartnerId) continue;
-            string owner = Genitive(rel.FirstName);
+            bool isParent = viewer.ParentIds.Contains(relId);
+            if (!rel.IsBlood && relId != viewer.PartnerId && !isParent) continue;
+            string owner = isParent ? (rel.Sex == Sex.Male ? "your father's" : "your mother's") : Genitive(rel.FirstName);
             if (rel.PartnerId == other.Id)
             {
                 string noun = rel.PartnerStatus switch

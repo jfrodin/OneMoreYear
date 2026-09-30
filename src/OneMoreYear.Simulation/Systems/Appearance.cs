@@ -60,16 +60,28 @@ public static class Appearance
     public static string HairText(Person p, int age) =>
         age >= 78 ? "white" : age >= 60 ? "grey" : age >= 50 ? $"greying {p.HairColor}" : p.HairColor;
 
-    /// <summary>"186 cm, athletic build, dark blond hair and blue eyes."</summary>
+    // Share of adult height reached at each age (0–18), roughly following Swedish growth charts.
+    private static readonly double[] Growth =
+        { 0.29, 0.43, 0.49, 0.54, 0.58, 0.62, 0.66, 0.70, 0.73, 0.76, 0.79, 0.82, 0.86, 0.90, 0.94, 0.97, 0.99, 1.0, 1.0 };
+
+    public static int HeightAt(Person p, int age) =>
+        (int)Math.Round(p.HeightCm * Growth[Math.Clamp(age, 0, Growth.Length - 1)]);
+
+    /// <summary>Weight follows height, build and fitness; children follow a child's body mass index.</summary>
+    public static int WeightAt(Person p, int age)
+    {
+        double h = HeightAt(p, age) / 100.0;
+        double bmi = age < 2 ? 16.5 : age < 12 ? 16 : age < 18 ? 19 : 22.5;
+        bmi += p.Build switch { "slim" => -2, "stocky" => 2.5, _ => 0 } * (age < 12 ? 0.4 : 1);
+        if (age >= 18) bmi += (50 - p.Fitness) * 0.06 + Math.Min(age - 18, 40) * 0.05;
+        return (int)Math.Round(bmi * h * h);
+    }
+
+    /// <summary>"186 cm · 82 kg · athletic build · dark blond hair · blue eyes"</summary>
     public static string Describe(Person p, int year)
     {
         int age = p.Age(year);
-        if (age < 16)
-        {
-            string size = age < 3 ? "A baby" : age < 12 ? "A child" : "A teenager";
-            return $"{size} with {HairText(p, age)} hair and {p.EyeColor} eyes.";
-        }
-        string height = p.HeightCm >= (p.Sex == Sex.Male ? 188 : 174) ? "Tall" : p.HeightCm <= (p.Sex == Sex.Male ? 172 : 158) ? "Short" : "Average height";
-        return $"{height} ({p.HeightCm} cm), {BuildText(p)} build, {HairText(p, age)} hair and {p.EyeColor} eyes.";
+        string build = age < 3 ? "" : $" · {BuildText(p)} build";
+        return $"{HeightAt(p, age)} cm · {WeightAt(p, age)} kg{build} · {HairText(p, age)} hair · {p.EyeColor} eyes";
     }
 }

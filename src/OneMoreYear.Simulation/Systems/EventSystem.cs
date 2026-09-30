@@ -155,6 +155,7 @@ public static class EventSystem
         if (c.MinEducation is { } minEd && p.Education < minEd) return false;
         if (c.MaxEducation is { } maxEd && p.Education > maxEd) return false;
         if (c.MinGrades is { } minGr && p.Grades < minGr) return false;
+        if (c.JobTags is { Count: > 0 } tags && ctx.Content.Occupation(p.OccupationId)?.Tags.Any(tags.Contains) != true) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;
         if (c.MaxChildren is { } maxK && kids > maxK) return false;
@@ -290,6 +291,11 @@ public static class EventSystem
                 CareerSystem.Hire(ctx, player, occ.Id, level);
                 texts.Add($"You accept. You start as {CareerSystem.Article(occ.Levels[level].Title)}.");
             }
+            else if (def.DynamicChoices == "baby_names" && ctx.World.TryGet(pending.Roles.GetValueOrDefault("target")) is { } baby)
+            {
+                FamilySystem.Rename(ctx, baby, pending.Options[choiceIndex]);
+                texts.Add($"Welcome to the world, {baby.FirstName}.");
+            }
             pending.Resolved = true;
             pending.ChosenIndex = choiceIndex;
             pending.OutcomeText = string.Join(" ", texts);
@@ -311,9 +317,16 @@ public static class EventSystem
             }
         }
 
+        if (pending.Vars.TryGetValue("became_affair", out var partnerId) && ctx.World.TryGet((int)partnerId) is { } partner)
+            texts.Add($"But you're still with {partner.FirstName} – this is an affair now. Nobody can find out.");
+
         pending.Resolved = true;
         pending.ChosenIndex = choiceIndex;
         pending.OutcomeText = string.Join(" ", texts);
         return pending.OutcomeText;
     }
+
+    /// <summary>Whether a choice would start a relationship (used to warn that it would be an affair).</summary>
+    public static bool StartsRomance(ChoiceDef c) =>
+        c.Effects.Concat(c.Success?.Effects ?? new()).Any(e => e.Type == "start_dating");
 }

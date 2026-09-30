@@ -179,11 +179,16 @@ public sealed class GameSession
         // Generated choices first (job offers), then the event's own.
         for (int i = 0; i < pending.Options.Count; i++)
         {
+            if (def.DynamicChoices == "baby_names")
+            {
+                choices.Add(new ChoiceView(i, pending.Options[i], i == 0 ? "The name you had in mind." : null, null, true));
+                continue;
+            }
             if (CareerSystem.ParseOffer(Ctx, pending.Options[i]) is not { } offer) continue;
             var (occ, level) = offer;
             var lvl = occ.Levels[level];
             string fit = CareerSystem.FitsDegree(Ctx, Player, occ) ? "Uses your education." : "Doesn't use your education.";
-            choices.Add(new ChoiceView(i, $"{lvl.Title}  ·  {occ.Name}  ·  {EconomySystem.Format(Ctx, Ctx.Nominal(lvl.Salary))} / year",
+            choices.Add(new ChoiceView(i, $"{lvl.Title}  ·  {occ.Name}  ·  {EconomySystem.FormatPay(Ctx, lvl.Salary)}",
                 $"{fit} Top of this career: {occ.Levels[^1].Title}.", null, true));
         }
         int offset = pending.Options.Count;
@@ -196,6 +201,8 @@ public sealed class GameSession
                 double need = CareerSystem.RequiredGrades(Ctx, Player, prog);
                 hint ??= prog.Description + (need > 0 ? $" Needs grades {need:0} – yours are {Player.Grades:0}." : "");
             }
+            if (EventSystem.StartsRomance(c) && World.TryGet(Player.PartnerId) is { } partner)
+                hint = $"You're with {partner.FirstName} – this would be an affair." + (hint == null ? "" : " " + hint);
             choices.Add(new ChoiceView(offset + i, TextFormatter.Format(Ctx, c.Text, pending), hint,
                 c.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, c, pending) * 100) : null,
                 EventSystem.IsChoiceAvailable(Ctx, c, pending)));
@@ -310,7 +317,16 @@ public sealed class GameSession
             PartnerStatus.Cohabiting => $"Living with {partner.FullName}",
             _ => $"Dating {partner.FullName}"
         };
-        if (p.IsAlive && partner == null) partnerText = p.Flags.Contains("widowed") ? (p.Sex == Sex.Male ? "Widower" : "Widow") : "Single";
+        if (p.IsAlive && partner == null) partnerText = SingleText(p);
+
+        // Close family as links, so you can jump between them.
+        var links = new List<PersonLink>();
+        void Link(Person? x) { if (x != null && links.All(l => l.Id != x.Id)) links.Add(new PersonLink(x.Id, TextFormatter.Capitalize(Kinship.Label(World, p, x)), x.FullName, x.IsAlive)); }
+        Link(partner);
+        foreach (var x in Kinship.Parents(World, p)) Link(x);
+        foreach (var x in Kinship.Siblings(World, p).OrderBy(x => x.BirthYear)) Link(x);
+        foreach (var x in Kinship.Children(World, p).OrderBy(x => x.BirthYear)) Link(x);
+        foreach (var x in p.ExPartnerIds.Select(World.Get).TakeLast(3)) Link(x);
 
         var memories = p.Memories
             .Where(m => p.Id == player.Id || m.AboutId == player.Id || Math.Abs(m.Impact) >= 30)
@@ -346,7 +362,7 @@ public sealed class GameSession
             HealthLabel = p.Health switch { >= 80 => "Excellent", >= 60 => "Good", >= 40 => "Fair", >= 20 => "Poor", _ => "Critical" },
             Happiness = p.Happiness,
             Money = EconomySystem.Format(Ctx, p.Money),
-            Income = p.Income > 0 ? EconomySystem.Format(Ctx, Ctx.Nominal(p.Income)) + " / year" : "–",
+            Income = p.Income > 0 ? EconomySystem.FormatPay(Ctx, p.Income) : "–",
             OwnsHome = p.OwnsHome,
             TowardsPlayer = p.Id == player.Id ? null : RelView(World.FindRel(p.Id, player.Id)),
             FromPlayer = p.Id == player.Id ? null : RelView(World.FindRel(player.Id, p.Id)),
@@ -357,6 +373,8 @@ public sealed class GameSession
             Fitness = p.Fitness,
             Grades = p.Grades,
             AppearanceText = Appearance.Describe(p, Year),
+            Home = p.OwnsHome ? "Owns a home" : age < 18 || p.Flags.Contains("lives_at_home") ? "Lives with parents" : "Renting",
+            Links = links,
         };
     }
 
@@ -380,7 +398,7 @@ public sealed class GameSession
             if (l.MinEducation > EducationLevel.None) req.Add(CareerSystem.EducationName(l.MinEducation));
             if (l.RequiresDegree is { Count: > 0 } degrees)
                 req.Add(string.Join(" or ", degrees.Select(d => Content.Programme(d)?.Name ?? d)));
-            return new LadderStep(l.Title, EconomySystem.Format(Ctx, Ctx.Nominal(l.Salary)) + " / year",
+            return new LadderStep(l.Title, EconomySystem.FormatPay(Ctx, l.Salary),
                 req.Count == 0 ? "No requirements" : "Needs " + string.Join(", ", req),
                 i == p.OccupationLevel, CareerSystem.QualifiesFor(p, l));
         }).ToList();
@@ -413,7 +431,7 @@ public sealed class GameSession
             Degrees = p.Degrees.Select(d => Content.Programme(d)?.Name ?? d).ToList(),
             JobTitle = occ == null ? null : CareerSystem.Title(Ctx, p),
             Field = occ?.Name,
-            Salary = occ == null ? null : EconomySystem.Format(Ctx, Ctx.Nominal(p.Income)) + " / year",
+            Salary = occ == null ? null : EconomySystem.FormatPay(Ctx, p.Income),
             YearsInJob = p.YearsInJob,
             Performance = occ == null ? null : p.Performance,
             PromotionChancePercent = (int)Math.Round(CareerSystem.PromotionChance(Ctx, p) * 100),
@@ -439,7 +457,7 @@ public sealed class GameSession
             InDebt = p.Money < 0,
             NetWorth = EconomySystem.Format(Ctx, EconomySystem.NetWorth(Ctx, p)),
             Home = p.OwnsHome ? $"You own your home (your share is worth about {EconomySystem.Format(Ctx, EconomySystem.HomeEquity(Ctx))})" : null,
-            YearlyIncome = EconomySystem.Format(Ctx, Ctx.Nominal(EconomySystem.GrossIncome(Ctx, p))) + " / year before tax",
+            YearlyIncome = EconomySystem.FormatPay(Ctx, EconomySystem.GrossIncome(Ctx, p)) + " before tax",
             SaveRatePercent = (int)Math.Round(EconomySystem.SaveRate(Ctx, p) * 100),
             TaxPercent = (int)Math.Round(Country.TaxRate * 100),
             Year = Year,
@@ -454,6 +472,18 @@ public sealed class GameSession
     public IReadOnlyList<ChronicleLine> NewsThisYear() => RelevantLines(World.Chronicle.Where(e => e.Year == Year));
 
     // --- Chronicle ---------------------------------------------------------------------------
+
+    /// <summary>"Single – Monica broke up with him in 1984", "Widowed – Erik died in 2001" ...</summary>
+    private string SingleText(Person p)
+    {
+        var ex = World.TryGet(p.LastSplitWithId);
+        if (ex == null || p.LastSplitYear is not { } year || Year - year > 10)
+            return p.Flags.Contains("widowed") ? (p.Sex == Sex.Male ? "Widower" : "Widow") : "Single";
+        if (p.Flags.Contains("widowed") && !ex.IsAlive && ex.DeathYear == year)
+            return $"Widowed – {ex.FirstName} died in {year}";
+        string pronoun = p.Id == Player.Id ? "you" : p.Sex == Sex.Male ? "him" : "her";
+        return p.LastSplitByThem ? $"Single – {ex.FirstName} broke up with {pronoun} in {year}" : $"Single – left {ex.FirstName} in {year}";
+    }
 
     public IReadOnlyList<ChronicleLine> Chronicle(int minImportance = 1, int? personId = null) =>
         World.Chronicle

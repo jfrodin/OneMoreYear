@@ -50,6 +50,8 @@ public sealed class CountryDef
     public double StudentIncome { get; set; }
     /// <summary>Extra yearly income from a part-time job while studying, 2020-kronor.</summary>
     public double PartTimeIncome { get; set; } = 70000;
+    /// <summary>Show pay per month (as people talk about it in Sweden) instead of per year.</summary>
+    public bool MonthlyPay { get; set; }
     /// <summary>Age of consent: romantic/sexual relationships and pregnancy in normal life start here.</summary>
     public int AgeOfConsent { get; set; } = 15;
     /// <summary>Legal adulthood: own decisions such as moving in together without parents' consent.</summary>
@@ -106,6 +108,8 @@ public sealed class OccupationDef
     /// <summary>Trait id → weight multiplier when choosing this track.</summary>
     public Dictionary<string, double> TraitAffinity { get; set; } = new();
     public List<OccupationLevelDef> Levels { get; set; } = new();
+    /// <summary>Kind of workplace, used by events: "office", "manual", "care", "school" ...</summary>
+    public List<string> Tags { get; set; } = new();
 }
 
 /// <summary>
@@ -145,6 +149,8 @@ public sealed class ConditionDef
     public Dictionary<RelDim, double>? RelMax { get; set; }
     /// <summary>For the player: requires a living person in this role (e.g. "sibling").</summary>
     public List<string>? HasRole { get; set; }
+    /// <summary>The person's job must have one of these workplace tags.</summary>
+    public List<string>? JobTags { get; set; }
     public double? MinGrades { get; set; }
 }
 

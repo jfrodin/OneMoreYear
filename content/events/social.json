@@ -78,7 +78,7 @@
   {
     "id": "colleague_credit", "oncePerTarget": true, "title": "Stolen credit",
     "text": "In the big meeting, {t.name} presents your work as {t.his} own. The boss is impressed – with {t.name}.",
-    "conditions": { "minAge": 18, "hasJob": true },
+    "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "office" ] },
     "target": { "role": "colleague" }, "cooldown": 5,
     "choices": [
       {
@@ -120,12 +120,12 @@
   },
   {
     "id": "boss_overtime", "title": "The deadline",
-    "text": "{t.name}, your boss, stops by your desk at five. \"I need this done by Monday. I'm counting on you.\"",
+    "text": "{t.name}, your boss, catches you on your way out on Friday. \"I need you to work this weekend. I'm counting on you.\"",
     "conditions": { "minAge": 18, "hasJob": true },
     "target": { "role": "boss" }, "cooldown": 3,
     "choices": [
       {
-        "text": "Work all weekend",
+        "text": "Work the weekend",
         "effects": [
           { "type": "performance", "amount": 8 },
           { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 10 },

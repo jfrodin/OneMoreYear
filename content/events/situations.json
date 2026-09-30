@@ -73,6 +73,12 @@
     ]
   },
   {
+    "id": "name_baby", "trigger": "situation", "dynamicChoices": "baby_names",
+    "title": "A new baby",
+    "text": "{T.role} is here – healthy, loud and perfect. What do you call {t.him}?",
+    "choices": []
+  },
+  {
     "id": "job_offers", "trigger": "situation", "dynamicChoices": "job_offers",
     "title": "Job offers",
     "text": "You've sent out applications. These employers want you:",

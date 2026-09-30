@@ -9,6 +9,7 @@ public static class FamilySystem
     public static void Update(SimContext ctx)
     {
         var w = ctx.World;
+        DeliverExpected(ctx);
         int count = w.People.Count; // people born this year are not processed until next year
         for (int i = 0; i < count; i++)
         {
@@ -119,7 +120,13 @@ public static class FamilySystem
         if (fertility <= 0) return;
         double desire = kids switch { 0 => 0.22, 1 => 0.26, 2 => 0.12, 3 => 0.05, _ => 0.02 };
         double chance = desire * fertility * statusFactor * ctx.FertilityIndex;
-        if (playerCouple) chance = 0.02 * fertility * statusFactor; // the player decides; this is an "oops"
+        if (playerCouple)
+        {
+            // The player decides; this is an "oops" – and it arrives next year like any pregnancy.
+            var player = a.Id == ctx.World.PlayerId ? a : b;
+            if (player.Expecting == null && ctx.Rng.Chance(0.02 * fertility * statusFactor)) Expect(ctx, player, player == a ? b : a);
+            return;
+        }
         if (ctx.Rng.Chance(chance)) HaveChild(ctx, a, b);
     }
 
@@ -128,6 +135,65 @@ public static class FamilySystem
     /// in the teens; it is possible from about 12 biologically, but below the age of consent it only
     /// belongs to the abuse storylines, never to normal life.
     /// </summary>
+    /// <summary>A baby on the way (or an adoption being processed) – it arrives next year.</summary>
+    public static void Expect(SimContext ctx, Person parent, Person? other)
+    {
+        if (parent.Expecting != null) return;
+        bool adoption = other != null && other.Sex == parent.Sex;
+        parent.Expecting = new ExpectedChild { ParentAId = parent.Id, ParentBId = other?.Id, DueYear = ctx.Year + 1, Adoption = adoption };
+        parent.Flags.Add("expecting");
+        string who = other == null ? parent.FirstName : $"{parent.FirstName} and {other.FirstName}";
+        ctx.World.Log(adoption ? $"{who} were approved to adopt a child." : $"{who} are expecting a baby.",
+            ctx.Importance(false, parent, other), "family", parent.Id, other?.Id ?? parent.Id);
+    }
+
+    /// <summary>Babies (and adopted children) that were expected last year arrive.</summary>
+    private static void DeliverExpected(SimContext ctx)
+    {
+        var w = ctx.World;
+        foreach (var p in w.People.Where(p => p.Expecting is { } e && e.DueYear <= ctx.Year).ToList())
+        {
+            var e = p.Expecting!;
+            p.Expecting = null;
+            p.Flags.Remove("expecting");
+            if (!p.IsAlive) continue;
+            var other = w.TryGet(e.ParentBId);
+            var child = HaveChild(ctx, p, other);
+            child.IsAdopted = e.Adoption;
+            if (p.Id == w.PlayerId || other?.Id == w.PlayerId)
+            {
+                var pending = EventSystem.QueueSituation(ctx, "name_baby", new() { ["target"] = child.Id });
+                if (pending != null) pending.Options = BabyNames(ctx, child);
+            }
+        }
+    }
+
+    /// <summary>Name suggestions for the player's baby: the one it was given plus three more.</summary>
+    public static List<string> BabyNames(SimContext ctx, Person child)
+    {
+        var names = new List<string> { child.FirstName };
+        for (int i = 0; i < 20 && names.Count < 4; i++)
+        {
+            var n = PersonFactory.RandomFirstName(ctx, child.Sex);
+            if (!names.Contains(n)) names.Add(n);
+        }
+        return names;
+    }
+
+    /// <summary>Gives a child a new first name and updates what has been written about them.</summary>
+    public static void Rename(SimContext ctx, Person child, string name)
+    {
+        string old = child.FirstName;
+        if (old == name) return;
+        child.FirstName = name;
+        var pattern = new System.Text.RegularExpressions.Regex($@"\b{System.Text.RegularExpressions.Regex.Escape(old)}\b");
+        foreach (var entry in ctx.World.Chronicle.Where(l => l.PersonIds.Contains(child.Id)))
+            entry.Text = pattern.Replace(entry.Text, name);
+        foreach (var parent in child.ParentIds.Select(ctx.World.Get))
+            foreach (var m in parent.Memories.Where(m => m.AboutId == child.Id || m.MentionId == child.Id))
+                m.Text = pattern.Replace(m.Text, name);
+    }
+
     public static double FertilityByAge(SimContext ctx, int age) => age < ctx.Country.AgeOfConsent ? 0 : age switch
     {
         < 18 => 0.12,
@@ -232,6 +298,9 @@ public static class FamilySystem
             x.PartnerStatus = PartnerStatus.None;
             if (!x.ExPartnerIds.Contains(y.Id)) x.ExPartnerIds.Add(y.Id);
             w.Rel(x.Id, y.Id)[RelDim.Closeness] -= 30;
+            x.LastSplitYear = ctx.Year;
+            x.LastSplitWithId = y.Id;
+            x.LastSplitByThem = x == other;
         }
 
         RelationshipSystem.AddMemory(ctx, other, married ? "divorced" : "dumped",

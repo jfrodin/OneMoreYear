@@ -225,7 +225,7 @@ public partial class GameScreen : Control
 
         _sidebar.AddChild(StatRow("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text));
         _sidebar.AddChild(StatRow("Income", p.Income, UiTheme.Text));
-        _sidebar.AddChild(StatRow("Home", p.OwnsHome ? "Owns a home" : "Renting", UiTheme.Text));
+        _sidebar.AddChild(StatRow("Home", p.Home, UiTheme.Text));
 
         _sidebar.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
 
@@ -641,6 +641,24 @@ public partial class GameScreen : Control
         col.AddChild(Ui.Label(p.AppearanceText, 15, UiTheme.Faint, wrap: true));
         header.AddChild(col);
         _personDetail.AddChild(header);
+
+        // Close family as buttons: jump straight to a partner, parent, sibling or child.
+        if (p.Links.Count > 0)
+        {
+            var links = new HFlowContainer();
+            links.AddThemeConstantOverride("h_separation", 6);
+            links.AddThemeConstantOverride("v_separation", 6);
+            foreach (var link in p.Links)
+            {
+                int linkId = link.Id;
+                var b = Ui.Button($"{link.Relation}: {link.Name}{(link.Alive ? "" : " †")}", () => SelectPerson(linkId), 38);
+                b.AddThemeFontSizeOverride("font_size", 15);
+                if (!link.Alive) b.AddThemeColorOverride("font_color", UiTheme.Muted);
+                RegisterHint(b, $"Show {link.Name}.");
+                links.AddChild(b);
+            }
+            _personDetail.AddChild(links);
+        }
 
         // Personality – descriptions are always visible, not hidden in tooltips.
         var traitBox = Ui.VBox(4);

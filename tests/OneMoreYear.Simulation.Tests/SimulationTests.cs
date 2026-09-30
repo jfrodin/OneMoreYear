@@ -104,7 +104,7 @@ public class KinshipTests
             var label = Kinship.Label(w, player, w.Get(parentId));
             Assert.Contains(label, new[] { "father", "mother" });
             foreach (var gp in w.Get(parentId).ParentIds)
-                Assert.Contains(Kinship.Label(w, player, w.Get(gp)), new[] { "grandfather", "grandmother" });
+                Assert.Matches("^(paternal|maternal) (grandfather|grandmother)$", Kinship.Label(w, player, w.Get(gp)));
         }
     }
 }
@@ -197,5 +197,56 @@ public class CareerAndMoneyTests
             Assert.True(Math.Abs(player.Money - before - explained) < 1,
                 $"{session.Year}: money changed by {player.Money - before:0} but the ledger explains {explained:0}");
         }
+    }
+}
+
+public class FamilyLifeTests
+{
+    private static GameSession AdultPlayerWithPartner(ulong seed)
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1960 });
+        var p = s.Player;
+        p.BirthYear = s.Year - 28;
+        p.AttractedToSameSex = false;
+        var partner = PersonFactory.CreateStranger(s.Ctx, p.Sex == OneMoreYear.Simulation.Model.Sex.Male
+            ? OneMoreYear.Simulation.Model.Sex.Female : OneMoreYear.Simulation.Model.Sex.Male, 27);
+        partner.AttractedToSameSex = false;
+        FamilySystem.StartDating(s.Ctx, p, partner);
+        return s;
+    }
+
+    [Fact]
+    public void BabyArrivesNextYearAndCanBeNamed()
+    {
+        var s = AdultPlayerWithPartner(3);
+        var p = s.Player;
+        int kidsBefore = p.ChildIds.Count;
+        FamilySystem.Expect(s.Ctx, p, s.World.Get(p.PartnerId!.Value));
+        Assert.Equal(kidsBefore, p.ChildIds.Count);
+
+        s.World.PendingEvents.Clear();
+        s.AdvanceYear();
+        Assert.Equal(kidsBefore + 1, p.ChildIds.Count);
+        var naming = s.CurrentEvents().Single(e => e.Title == "A new baby");
+        var chosen = naming.Choices[2];
+        s.Choose(naming.Uid, chosen.Index);
+        Assert.Equal(chosen.Text, s.World.Get(p.ChildIds.Last()).FirstName);
+    }
+
+    [Fact]
+    public void NewRomanceWhileTakenBecomesAnAffair()
+    {
+        var s = AdultPlayerWithPartner(4);
+        var p = s.Player;
+        int partner = p.PartnerId!.Value;
+        var other = PersonFactory.CreateStranger(s.Ctx, s.World.Get(partner).Sex, 28);
+        other.AttractedToSameSex = false;
+        var pending = new OneMoreYear.Simulation.Model.PendingEvent { EventId = "admirer", Roles = { ["target"] = other.Id } };
+        EffectApplier.Apply(s.Ctx, new OneMoreYear.Simulation.Content.EffectDef { Type = "start_dating", To = "target" }, pending);
+
+        Assert.Equal(partner, p.PartnerId);
+        Assert.Contains(s.World.Secrets, x => x.Kind == "affair" && x.SubjectId == p.Id && x.OtherId == other.Id);
+        Assert.Equal("lover", Kinship.Label(s.World, p, other));
+        Assert.Contains(Kinship.Circle(s.World, p), x => x.Id == other.Id);
     }
 }

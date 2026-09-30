@@ -56,7 +56,11 @@ public sealed record PersonView
     public double Fitness { get; init; }
     public double Grades { get; init; }
     public string AppearanceText { get; init; } = "";
+    public string Home { get; init; } = "";
+    public IReadOnlyList<PersonLink> Links { get; init; } = Array.Empty<PersonLink>();
 }
+
+public sealed record PersonLink(int Id, string Relation, string Name, bool Alive);
 
 public sealed record ChronicleLine(int Year, string Text, int Importance, string Category, IReadOnlyList<int> PersonIds);
 
