@@ -21,7 +21,9 @@ public static class LifeSystem
         change += (p.Fitness - 50) / 60;
         if (p.Happiness < 25) change -= 1;
         p.Health = Math.Clamp(p.Health + change, 1, 100);
-        p.Happiness = Math.Clamp(p.Happiness + (60 - p.Happiness) * 0.1, 0, 100);
+        // Mood drifts back towards a baseline that depends on personality (cheerful, gloomy ...).
+        double baseline = Math.Clamp(60 + ctx.Mod(p, "happiness"), 20, 90);
+        p.Happiness = Math.Clamp(p.Happiness + (baseline - p.Happiness) * (0.1 + ctx.Mod(p, "resilience") * 0.1), 0, 100);
         Appearance.UpdateYear(ctx, p);
 
         // Serious illness.
@@ -166,6 +168,10 @@ public static class LifeSystem
 
         // Unequal wills breed resentment among siblings.
         var allKids = Kinship.Children(w, dead).Where(k => k.IsAlive).ToList();
+        // Greedy heirs resent every krona that went to someone else.
+        foreach (var k in allKids.Where(k => ctx.Mod(k, "greed") > 0))
+            foreach (var sib in allKids.Where(s => s.Id != k.Id))
+                w.Rel(k.Id, sib.Id)[RelDim.Envy] += 15 * ctx.Mod(k, "greed");
         if (dead.WillFavoriteId is { } fav && allKids.Any(k => k.Id == fav))
         {
             var favorite = w.Get(fav);

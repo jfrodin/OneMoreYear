@@ -101,6 +101,12 @@ public static class SocialSystem
         int level = boss ? Math.Min(occ.Levels.Count - 1, p.OccupationLevel + 1) : Math.Max(0, p.OccupationLevel + ctx.Rng.Range(-1, 0));
         int age = Math.Clamp(p.Age(ctx.Year) + ctx.Rng.Range(boss ? 3 : -8, boss ? 20 : 12), 20, ctx.Country.PensionAge - 1);
         var c = PersonFactory.CreateStranger(ctx, ctx.Rng.Chance(0.5) ? Sex.Male : Sex.Female, age);
+        // Colleagues have the education their job needs.
+        var needs = occ.Levels[level];
+        if (c.Education < needs.MinEducation) c.Education = needs.MinEducation;
+        if (needs.RequiresDegree is { Count: > 0 } degrees && !degrees.Any(c.Degrees.Contains)) c.Degrees.Add(degrees[0]);
+        c.ProgrammeId = null;
+        c.StudyingFor = null;
         c.Activity = Activity.Working;
         c.OccupationId = occ.Id;
         c.OccupationLevel = level;

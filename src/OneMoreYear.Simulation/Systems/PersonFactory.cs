@@ -108,15 +108,16 @@ public static class PersonFactory
     public static void AssignTraits(SimContext ctx, Person p, IReadOnlyList<Person> parents)
     {
         var rng = ctx.Rng;
-        int count = rng.Chance(0.5) ? 2 : 3;
-        var pool = ctx.Content.Traits.Keys.OrderBy(k => k, StringComparer.Ordinal).ToList();
+        // Most people have two or three traits; some are simple, some complicated.
+        int count = rng.PickWeighted(new[] { 1, 2, 3, 4 }, n => n switch { 1 => 0.15, 2 => 0.4, 3 => 0.35, _ => 0.1 });
+        var pool = ctx.Content.Traits.Values.OrderBy(t => t.Id, StringComparer.Ordinal).ToList();
 
         foreach (var parent in parents)
             foreach (var t in parent.Traits)
                 if (p.Traits.Count < count && rng.Chance(0.3)) TryAddTrait(ctx, p, t);
 
         int guard = 0;
-        while (p.Traits.Count < count && guard++ < 50) TryAddTrait(ctx, p, rng.Pick(pool));
+        while (p.Traits.Count < count && guard++ < 50) TryAddTrait(ctx, p, rng.PickWeighted(pool, t => t.Weight)!.Id);
     }
 
     public static bool TryAddTrait(SimContext ctx, Person p, string trait)

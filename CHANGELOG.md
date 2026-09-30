@@ -2,6 +2,26 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.7.0 – 2026-09-30 · Light and dark
+
+- 31 traits instead of 12 – light (Kind, Cheerful, Charming, Devoted parent, Resilient …), dark
+  (Hot-tempered, Addictive personality, Dishonest, Jealous, Greedy, Cruel, Criminal-minded …) and
+  odd ones (Paranoid, Vain, Eccentric, Hypochondriac). Trait colours: gold, red and blue.
+- People have one to four traits, not always three.
+- Traits do things: cheerful and gloomy people have different everyday moods, kind people draw others
+  closer, paranoid people trust less and less, devoted parents are closer to their children, jealous
+  partners grow bitter, greedy heirs fight over inheritances, dishonest people get caught stealing
+  and hide affairs longer, charming people do better in love.
+- **Addiction** – alcohol, drugs or gambling can take hold, cost money and health, hurt the family
+  and scar the children. People can get clean; drugs can kill.
+- **Violence at home** – hot-tempered or cruel people may hit a partner or child. Everyone in the
+  home remembers. If it happens to you, you decide what to do.
+- **Abuse as a family secret** – shown only through its consequences: a memory that can't be spoken
+  of, fear, trauma. Years later it may come out and split the family.
+- Deep traumas can leave new traits behind (gloomy, paranoid, addictive, hot-tempered) – unless the
+  person is resilient. Old age softens some tempers.
+- Fixed: generated colleagues sometimes had jobs they weren't qualified for.
+
 ## 0.6.0 – 2026-09-30 · Babies, lovers and loose ends
 
 - Babies are born the year after you decide to try (adoptions too) – and **you choose the name**.

@@ -87,6 +87,10 @@ public sealed class Person
     public int? WillFavoriteId { get; set; }
     public List<int> Disinherited { get; set; } = new();
 
+    /// <summary>"alcohol", "drugs" or "gambling" while an addiction is active.</summary>
+    public string? Addiction { get; set; }
+    public int AddictionSince { get; set; }
+
     public List<Memory> Memories { get; set; } = new();
     public HashSet<string> Flags { get; set; } = new();
 

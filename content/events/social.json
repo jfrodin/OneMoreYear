@@ -9,7 +9,7 @@
     "choices": [
       {
         "text": "Ask {t.him} to go steady",
-        "chance": 0.45, "chanceTraits": { "brave": 0.1, "social": 0.1, "introvert": -0.1 },
+        "chance": 0.45, "chanceTraits": { "brave": 0.1, "social": 0.1, "introvert": -0.1, "charming": 0.1 },
         "chanceRelation": { "attraction": 0.006 }, "chanceAttributes": { "looks": 0.004 },
         "success": {
           "text": "{t.name} says yes. You hold hands at the school disco and everyone knows.",

@@ -3,7 +3,7 @@
 [
   {
     "id": "healthcare", "name": "Healthcare", "tags": [ "care" ], "weight": 1.3,
-    "traitAffinity": { "generous": 1.5, "loyal": 1.3 },
+    "traitAffinity": { "generous": 1.5, "loyal": 1.3, "kind": 1.8 },
     "levels": [
       { "title": "Care Assistant", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
       { "title": "Assistant Nurse", "salary": 340000, "minEducation": "secondary", "entry": true, "promotionChance": 0.12, "requiresDegree": [ "sec_care", "uni_nursing" ] },
@@ -32,7 +32,7 @@
   },
   {
     "id": "academia", "name": "Academia", "tags": [ "office" ], "weight": 0.4,
-    "traitAffinity": { "introvert": 1.5, "ambitious": 1.3 },
+    "traitAffinity": { "introvert": 1.5, "ambitious": 1.3, "creative": 1.6 },
     "levels": [
       { "title": "PhD Student", "salary": 360000, "minEducation": "university", "entry": true, "promotionChance": 0.2, "requiresDegree": [ "uni_science", "uni_social" ] },
       { "title": "Researcher", "salary": 480000, "minEducation": "university", "promotionChance": 0.1 },
@@ -52,7 +52,7 @@
   },
   {
     "id": "trade", "name": "Retail", "tags": [ "shop" ], "weight": 1.3,
-    "traitAffinity": { "social": 1.6 },
+    "traitAffinity": { "social": 1.6, "charming": 1.5 },
     "levels": [
       { "title": "Shop Assistant", "salary": 280000, "minEducation": "none", "entry": true, "promotionChance": 0.15 },
       { "title": "Salesperson", "salary": 360000, "minEducation": "primary", "promotionChance": 0.1 },
@@ -82,7 +82,7 @@
   },
   {
     "id": "media", "name": "Media", "tags": [ "office" ], "weight": 0.3,
-    "traitAffinity": { "social": 1.5, "brave": 1.3 },
+    "traitAffinity": { "social": 1.5, "brave": 1.3, "creative": 2.5, "charming": 1.4 },
     "levels": [
       { "title": "Intern", "salary": 250000, "minEducation": "secondary", "entry": true, "promotionChance": 0.2 },
       { "title": "Journalist", "salary": 420000, "minEducation": "university", "entry": true, "promotionChance": 0.08, "requiresDegree": [ "uni_journalism", "uni_social" ] },
@@ -92,7 +92,7 @@
   },
   {
     "id": "education", "name": "Education", "tags": [ "school" ], "weight": 0.9,
-    "traitAffinity": { "generous": 1.4, "social": 1.2 },
+    "traitAffinity": { "generous": 1.4, "social": 1.2, "kind": 1.5, "devoted_parent": 1.3 },
     "levels": [
       { "title": "Childcare Worker", "salary": 290000, "minEducation": "secondary", "entry": true, "promotionChance": 0.1 },
       { "title": "Preschool Teacher", "salary": 380000, "minEducation": "university", "entry": true, "promotionChance": 0.1, "requiresDegree": [ "uni_teaching" ] },
@@ -112,7 +112,7 @@
   },
   {
     "id": "business", "name": "Business", "tags": [ "office" ], "weight": 0.35,
-    "traitAffinity": { "ambitious": 2.0, "brave": 1.8, "conflict_averse": 0.5 },
+    "traitAffinity": { "ambitious": 2.0, "brave": 1.8, "conflict_averse": 0.5, "greedy": 1.6, "charming": 1.5 },
     "levels": [
       { "title": "Self-Employed", "salary": 320000, "minEducation": "none", "entry": true, "promotionChance": 0.1 },
       { "title": "Small Business Owner", "salary": 520000, "minEducation": "none", "promotionChance": 0.07 },
@@ -122,7 +122,7 @@
   },
   {
     "id": "crime", "name": "Crime", "tags": [ "crime" ], "weight": 0.06,
-    "traitAffinity": { "manipulative": 5.0, "impulsive": 3.0, "loyal": 0.3 },
+    "traitAffinity": { "manipulative": 5.0, "impulsive": 3.0, "loyal": 0.3, "criminal": 8.0, "dishonest": 3.0, "greedy": 1.5 },
     "levels": [
       { "title": "Petty Criminal", "salary": 150000, "minEducation": "none", "entry": true, "promotionChance": 0.12 },
       { "title": "Drug Dealer", "salary": 320000, "minEducation": "none", "promotionChance": 0.06 },

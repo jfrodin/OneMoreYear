@@ -204,13 +204,14 @@ public partial class GameScreen : Control
         _sidebar.AddChild(top);
 
         if (!string.IsNullOrEmpty(p.Partner)) _sidebar.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
+        if (p.Condition != null) _sidebar.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad, wrap: true));
 
         var traits = new HFlowContainer();
         traits.AddThemeConstantOverride("h_separation", 6);
         traits.AddThemeConstantOverride("v_separation", 6);
-        foreach (var (name, description) in p.Traits)
+        foreach (var (name, description, tone) in p.Traits)
         {
-            var chip = Ui.Chip(name, UiTheme.Accent);
+            var chip = Ui.Chip(name, Ui.ToneColor(tone));
             chip.TooltipText = description;
             traits.AddChild(chip);
         }
@@ -639,6 +640,7 @@ public partial class GameScreen : Control
         col.AddChild(Ui.Label(p.Occupation, 16, UiTheme.Muted, wrap: true));
         if (!string.IsNullOrEmpty(p.Partner)) col.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
         col.AddChild(Ui.Label(p.AppearanceText, 15, UiTheme.Faint, wrap: true));
+        if (p.Condition != null) col.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad));
         header.AddChild(col);
         _personDetail.AddChild(header);
 
@@ -662,10 +664,10 @@ public partial class GameScreen : Control
 
         // Personality – descriptions are always visible, not hidden in tooltips.
         var traitBox = Ui.VBox(4);
-        foreach (var (name, description) in p.Traits)
+        foreach (var (name, description, tone) in p.Traits)
         {
             var row = Ui.HBox(10);
-            row.AddChild(Ui.Chip(name, UiTheme.Accent));
+            row.AddChild(Ui.Chip(name, Ui.ToneColor(tone)));
             var d = Ui.Label(description, 15, UiTheme.Muted, wrap: true);
             d.SizeFlagsVertical = SizeFlags.ShrinkCenter;
             row.AddChild(d);

@@ -260,6 +260,13 @@ public static class CareerSystem
         double target = 50 + ctx.Mod(p, "career") * 30 + (p.Smarts - 50) * 0.3 + (p.Health < 40 ? -15 : 0) + rng.Gaussian(0, 15);
         p.Performance = Math.Clamp(p.Performance * 0.7 + target * 0.3, 0, 100);
 
+        if (rng.Chance(0.015 * ctx.Mod(p, "dishonesty")))
+        {
+            if (p.InFamily) ctx.World.Log($"{p.FirstName} was caught stealing at work and fired.", ctx.Importance(false, p), "career", p.Id);
+            p.Happiness -= 15;
+            BecomeJobSeeker(p, ctx);
+            return;
+        }
         double fireChance = 0.015 + (p.Performance < 30 ? 0.08 : 0) + extraJobLossChance;
         if (rng.Chance(fireChance))
         {

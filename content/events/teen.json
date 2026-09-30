@@ -37,7 +37,7 @@
     "choices": [
       {
         "text": "Ask {t.him} out",
-        "chance": 0.45, "chanceTraits": { "social": 0.15, "brave": 0.1, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.006 },
+        "chance": 0.45, "chanceTraits": { "social": 0.15, "brave": 0.1, "introvert": -0.1, "charming": 0.15 }, "chanceAttributes": { "looks": 0.006 },
         "success": {
           "text": "{t.name} blushes and says yes. You're together!",
           "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 15 } ]

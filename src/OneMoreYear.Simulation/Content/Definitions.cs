@@ -8,6 +8,10 @@ public sealed class TraitDef
     public string Name { get; set; } = "";
     public string Description { get; set; } = "";
     public string? Opposite { get; set; }
+    /// <summary>"light", "dark" or "odd" – shown as a colour in the UI.</summary>
+    public string Tone { get; set; } = "light";
+    /// <summary>How common the trait is when people are born (1 = normal).</summary>
+    public double Weight { get; set; } = 1;
     /// <summary>
     /// Named modifiers read by the simulation, e.g. "career", "social", "infidelity".
     /// Summed over a person's traits.

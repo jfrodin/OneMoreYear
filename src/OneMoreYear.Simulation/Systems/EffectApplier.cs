@@ -13,7 +13,7 @@ public static class EffectApplier
         "flag", "flag_remove", "log", "job_find", "job_quit", "promote", "fire", "study", "start_dating",
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
-        "meet_through_friend", "performance"
+        "meet_through_friend", "performance", "recover", "violence", "reveal_abuse"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -100,6 +100,19 @@ public static class EffectApplier
                     case "fitness": who.Fitness = Math.Clamp(who.Fitness + amount, 1, 100); break;
                 }
                 break;
+            case "recover":
+                DarkSystem.Recover(ctx, who);
+                break;
+            case "violence":
+                if (to != null) DarkSystem.Hit(ctx, who, to);
+                break;
+            case "reveal_abuse":
+            {
+                var abuse = pending.Vars.TryGetValue("secret", out var sid) ? w.Secrets.FirstOrDefault(s => s.Id == (int)sid)
+                    : w.Secrets.FirstOrDefault(s => s.Kind == "abuse" && s.VictimId == who.Id && !s.Revealed);
+                if (abuse != null) DarkSystem.Reveal(ctx, abuse);
+                break;
+            }
             case "meet_through_friend":
                 if (SocialSystem.MeetThroughFriend(ctx, who) is { } met) pending.Roles["other"] = met.Id;
                 break;

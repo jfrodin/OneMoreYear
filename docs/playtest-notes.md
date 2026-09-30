@@ -176,3 +176,21 @@ _playtest-saves/2026-09-30_125706.png · playtest-saves/2026-09-30_125706.json_
 ---
 
 _Notes above were processed into docs/todo.md on 2026-09-30 (playtest 2)._
+
+### 2026-09-30 13:39 · v0.6.0  ·  1970  ·  Ali Pettersson, 0  ·  This Year  ·  seed 639263651229415415
+
+Ska vi ha olika färger på traits? Flör att man ska förstår om negativ elelr positivt elelr ska det var aen gråzon?
+
+_playtest-saves/2026-09-30_133929.png · playtest-saves/2026-09-30_133929.json_
+
+### 2026-09-30 13:50 · v0.6.0  ·  1978  ·  Ali Pettersson, 8  ·  People  ·  seed 639263651229415415
+
+Ali som förnamn av föräldrar som heter jan och elsa i sverige på 70talet är inte speciellt sannolikt? Oklart hur viktigt sånt här är
+
+_playtest-saves/2026-09-30_135024.png · playtest-saves/2026-09-30_135024.json_
+
+### 2026-09-30 13:50 · v0.6.0  ·  1979  ·  Ali Pettersson, 9  ·  This Year  ·  seed 639263651229415415
+
+Vi behöver skapa många fler event som barn, har redan blivit repetativt att växa upp.
+
+_playtest-saves/2026-09-30_135055.png · playtest-saves/2026-09-30_135055.json_

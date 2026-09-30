@@ -15,6 +15,8 @@ public static class RelationshipSystem
         var m = new Memory { Year = ctx.Year, Kind = kind, Text = text, Impact = impact, AboutId = aboutId, MentionId = mentionId };
         holder.Memories.Add(m);
         holder.Happiness = Math.Clamp(holder.Happiness + impact * 0.15, 0, 100);
+        // Deep wounds can change who you are (the abuse storyline handles its own).
+        if (impact <= -45 && kind != "abused") DarkSystem.Traumatize(ctx, holder, 0.12);
         if (aboutId is { } about && about != holder.Id)
         {
             var r = ctx.World.Rel(holder.Id, about);
@@ -53,7 +55,7 @@ public static class RelationshipSystem
         {
             if (!p.IsAlive) continue;
             foreach (var m in p.Memories)
-                m.Strength *= Math.Abs(m.Impact) >= 50 ? 0.96 : 0.9;
+                m.Strength *= (Math.Abs(m.Impact) >= 50 ? 0.96 : 0.9) * (m.Impact < 0 ? 1 - ctx.Mod(p, "resilience") * 0.08 : 1);
         }
 
         // Natural contact: children living at home and couples living together.
@@ -103,6 +105,15 @@ public static class RelationshipSystem
 
         bool partners = from.PartnerId == to.Id;
         int sinceContact = ctx.Year - r.LastContactYear;
+        // Personality: kind people draw others closer, paranoid people trust less and less.
+        if (sinceContact <= 2) r.Closeness = Math.Clamp(r.Closeness + ctx.Mod(to, "warmth") * 1.5, 0, 100);
+        r.Trust = Math.Clamp(r.Trust - ctx.Mod(from, "trust_decay") * 2, 0, 100);
+        if (to.Age(ctx.Year) < 18 && to.ParentIds.Contains(from.Id))
+            r.Closeness = Math.Clamp(r.Closeness + ctx.Mod(from, "parenting") * 3, 0, 100);
+        if (from.Age(ctx.Year) < 18 && from.ParentIds.Contains(to.Id))
+            r.Closeness = Math.Clamp(r.Closeness + ctx.Mod(to, "parenting") * 2, 0, 100);
+        if (partners && ctx.Mod(from, "jealousy") > 0)
+            r.Bitterness = Math.Clamp(r.Bitterness + ctx.Mod(from, "jealousy") * (to.FriendIds.Count > 0 ? 3 : 1), 0, 100);
         if (partners)
         {
             r.Attraction = Math.Max(10, r.Attraction - 1.5);

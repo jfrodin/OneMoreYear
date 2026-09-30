@@ -7,8 +7,8 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 1. [ ] **Where you live**: live with your parents as a child, decide to move out, rent/share/buy,
    cities and moves ("a new city" should say which).
-2. [ ] **More traits**, including negative and strange ones that can lead to crime, addiction,
-   violence and abuse storylines. Not everyone should have exactly three (1–4).
+2. [ ] **Crime**: police, arrests, court, prison and a criminal career – built on the new traits.
+   (Waiting for a design decision: can the player choose to commit crimes? See design-decisions.md.)
 3. [ ] **Portraits**: simple generated portraits (and a full-body figure) where looks come from the
    parents' genes – hair, eyes, skin, height, build, ageing.
 4. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).

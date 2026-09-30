@@ -1,69 +1,110 @@
 // Traits are mechanics, not labels. Modifiers are read by the simulation:
-//   career      – job performance and promotions        social    – finding partners and friends
-//   spending    – lower savings rate (negative = saves)  conflict  – starts fights
-//   infidelity  – chance to have affairs                loyalty   – forgives, stays, reconciles
-//   divorce     – chance to leave a partner             grudge    – bitterness fades slower
-//   envy        – envy towards richer relatives         health    – yearly health change
-//   risk        – accidents and mortality
+//   career      – job performance and promotions        social     – finding partners and friends
+//   spending    – lower savings rate (negative = saves)  conflict   – starts fights
+//   infidelity  – chance to have affairs                loyalty    – forgives, stays, reconciles
+//   divorce     – chance to leave a partner             grudge     – bitterness fades slower
+//   envy        – envy towards richer relatives         health     – yearly health change
+//   risk        – accidents and mortality               happiness  – shifts everyday mood (points)
+//   warmth      – people grow closer to them            trust_decay – slowly trusts everyone less
+//   parenting   – closer bond with their children       resilience – shrugs off trauma, heals faster
+//   addiction   – risk of alcohol, drugs, gambling      violence   – may hurt partner or children
+//   predatory   – danger to children (abuse storylines) crime      – drawn to crime
+//   dishonesty  – lies, steals, hides things            jealousy   – possessive about a partner
+//   greed       – fights over money and inheritance     charm      – good at winning people over
+// tone: light, dark or odd (colour in the UI). weight: how common the trait is (default 1).
 [
-  {
-    "id": "ambitious", "name": "Ambitious", "opposite": "lazy",
+  { "id": "ambitious", "name": "Ambitious", "opposite": "lazy", "tone": "light",
     "description": "Always wants more. Performs better at work, but compares themselves to others.",
-    "modifiers": { "career": 0.5, "envy": 0.3 }
-  },
-  {
-    "id": "lazy", "name": "Lazy", "opposite": "ambitious",
+    "modifiers": { "career": 0.5, "envy": 0.3 } },
+  { "id": "lazy", "name": "Lazy", "opposite": "ambitious", "tone": "dark",
     "description": "Takes it easy. Rarely climbs the career ladder.",
-    "modifiers": { "career": -0.5, "health": -0.2 }
-  },
-  {
-    "id": "stingy", "name": "Stingy", "opposite": "generous",
+    "modifiers": { "career": -0.5, "health": -0.2 } },
+  { "id": "stingy", "name": "Stingy", "opposite": "generous", "tone": "odd",
     "description": "Saves every penny and hates lending money.",
-    "modifiers": { "spending": -0.15, "envy": 0.2 }
-  },
-  {
-    "id": "generous", "name": "Generous", "opposite": "stingy",
+    "modifiers": { "spending": -0.15, "envy": 0.2 } },
+  { "id": "generous", "name": "Generous", "opposite": "stingy", "tone": "light",
     "description": "Happy to share – sometimes more than the wallet can take.",
-    "modifiers": { "spending": 0.1, "loyalty": 0.2 }
-  },
-  {
-    "id": "loyal", "name": "Loyal", "opposite": "unfaithful",
+    "modifiers": { "spending": 0.1, "loyalty": 0.2, "warmth": 0.3 } },
+  { "id": "loyal", "name": "Loyal", "opposite": "unfaithful", "tone": "light",
     "description": "Stays when things get rough. Forgives more easily and rarely leaves.",
-    "modifiers": { "loyalty": 1.0, "divorce": -1.0, "infidelity": -1.0 }
-  },
-  {
-    "id": "impulsive", "name": "Impulsive", "opposite": null,
+    "modifiers": { "loyalty": 1.0, "divorce": -1.0, "infidelity": -1.0 } },
+  { "id": "impulsive", "name": "Impulsive", "tone": "odd",
     "description": "Acts first, thinks later. Exciting, but risky.",
-    "modifiers": { "risk": 0.5, "divorce": 0.5, "spending": 0.15, "conflict": 0.5, "infidelity": 0.3 }
-  },
-  {
-    "id": "social", "name": "Social", "opposite": "introvert",
+    "modifiers": { "risk": 0.5, "divorce": 0.5, "spending": 0.15, "conflict": 0.5, "infidelity": 0.3, "addiction": 0.3 } },
+  { "id": "social", "name": "Social", "opposite": "introvert", "tone": "light",
     "description": "Thrives around people and easily finds new friends and partners.",
-    "modifiers": { "social": 0.5 }
-  },
-  {
-    "id": "introvert", "name": "Introverted", "opposite": "social",
+    "modifiers": { "social": 0.5 } },
+  { "id": "introvert", "name": "Introverted", "opposite": "social", "tone": "odd",
     "description": "Needs peace and quiet. Few but deep relationships.",
-    "modifiers": { "social": -0.4, "conflict": -0.3 }
-  },
-  {
-    "id": "brave", "name": "Brave", "opposite": "conflict_averse",
+    "modifiers": { "social": -0.4, "conflict": -0.3 } },
+  { "id": "brave", "name": "Brave", "opposite": "conflict_averse", "tone": "light",
     "description": "Dares to fight and take chances.",
-    "modifiers": { "risk": 0.3, "conflict": 0.2 }
-  },
-  {
-    "id": "conflict_averse", "name": "Conflict-averse", "opposite": "brave",
+    "modifiers": { "risk": 0.3, "conflict": 0.2 } },
+  { "id": "conflict_averse", "name": "Conflict-averse", "opposite": "brave", "tone": "odd",
     "description": "Avoids fights – but swallows the anger, and it lingers for a long time.",
-    "modifiers": { "conflict": -0.7, "grudge": 0.5, "loyalty": 0.2 }
-  },
-  {
-    "id": "manipulative", "name": "Manipulative", "opposite": null,
+    "modifiers": { "conflict": -0.7, "grudge": 0.5, "loyalty": 0.2 } },
+  { "id": "manipulative", "name": "Manipulative", "tone": "dark",
     "description": "Gets others to do what they want. Trust is a tool.",
-    "modifiers": { "conflict": 0.5, "loyalty": -0.5, "grudge": 0.3, "infidelity": 0.3 }
-  },
-  {
-    "id": "unfaithful", "name": "Unfaithful", "opposite": "loyal",
+    "modifiers": { "conflict": 0.5, "loyalty": -0.5, "grudge": 0.3, "infidelity": 0.3, "dishonesty": 0.4 } },
+  { "id": "unfaithful", "name": "Unfaithful", "opposite": "loyal", "tone": "dark",
     "description": "Finds temptation hard to resist.",
-    "modifiers": { "infidelity": 1.2, "divorce": 0.8 }
-  }
+    "modifiers": { "infidelity": 1.2, "divorce": 0.8 } },
+
+  { "id": "kind", "name": "Kind", "opposite": "cruel", "tone": "light",
+    "description": "Warm to everyone. People slowly grow fond of them.",
+    "modifiers": { "warmth": 1.0, "loyalty": 0.3, "conflict": -0.3 } },
+  { "id": "cruel", "name": "Cruel", "opposite": "kind", "tone": "dark", "weight": 0.5,
+    "description": "Enjoys other people's pain. Keeps score and makes people afraid.",
+    "modifiers": { "warmth": -1.0, "conflict": 0.6, "violence": 0.5, "grudge": 0.3 } },
+  { "id": "cheerful", "name": "Cheerful", "opposite": "gloomy", "tone": "light",
+    "description": "Sees the bright side. Happier, healthier and nice to be around.",
+    "modifiers": { "happiness": 12, "health": 0.2, "warmth": 0.4 } },
+  { "id": "gloomy", "name": "Gloomy", "opposite": "cheerful", "tone": "dark",
+    "description": "A dark cloud follows them. Unhappier, and more likely to drown it in something.",
+    "modifiers": { "happiness": -12, "social": -0.2, "addiction": 0.3 } },
+  { "id": "charming", "name": "Charming", "tone": "light",
+    "description": "Wins people over – in love, at work and at the dinner table.",
+    "modifiers": { "social": 0.4, "charm": 1.0, "warmth": 0.3 } },
+  { "id": "creative", "name": "Creative", "tone": "light",
+    "description": "Full of ideas. Drawn to art, media and research.",
+    "modifiers": { "happiness": 4 } },
+  { "id": "devoted_parent", "name": "Devoted parent", "tone": "light",
+    "description": "Children come first. Their kids feel it all their lives.",
+    "modifiers": { "parenting": 1.0, "loyalty": 0.3 } },
+  { "id": "resilient", "name": "Resilient", "tone": "light",
+    "description": "Bends but doesn't break. Recovers from trauma and loss faster.",
+    "modifiers": { "resilience": 1.0, "happiness": 4 } },
+  { "id": "hot_tempered", "name": "Hot-tempered", "tone": "dark",
+    "description": "Explodes over small things. Sometimes words aren't enough.",
+    "modifiers": { "conflict": 0.8, "violence": 1.0, "divorce": 0.4 } },
+  { "id": "addictive", "name": "Addictive personality", "tone": "dark",
+    "description": "Never just one drink. Alcohol, drugs or gambling can take over.",
+    "modifiers": { "addiction": 1.0, "spending": 0.1 } },
+  { "id": "dishonest", "name": "Dishonest", "tone": "dark",
+    "description": "Lies easily – about money, about love, about everything.",
+    "modifiers": { "dishonesty": 1.0, "loyalty": -0.3, "infidelity": 0.3 } },
+  { "id": "jealous", "name": "Jealous", "tone": "dark",
+    "description": "Can't stand the thought of their partner with anyone else.",
+    "modifiers": { "jealousy": 1.0, "envy": 0.4, "divorce": 0.3 } },
+  { "id": "greedy", "name": "Greedy", "tone": "dark",
+    "description": "Money matters most. Inheritances turn into wars.",
+    "modifiers": { "greed": 1.0, "envy": 0.4, "spending": -0.1, "crime": 0.3 } },
+  { "id": "criminal", "name": "Criminal-minded", "tone": "dark", "weight": 0.5,
+    "description": "Rules are for other people. Drawn to easy money and the wrong crowd.",
+    "modifiers": { "crime": 1.0, "risk": 0.3, "dishonesty": 0.4 } },
+  { "id": "predatory", "name": "Predatory", "tone": "dark", "weight": 0.08,
+    "description": "Hides something dark behind a friendly face. A danger to the children around them.",
+    "modifiers": { "predatory": 1.0, "dishonesty": 0.5 } },
+  { "id": "paranoid", "name": "Paranoid", "tone": "odd",
+    "description": "Sure that people are plotting. Trusts less and less.",
+    "modifiers": { "trust_decay": 1.0, "social": -0.3 } },
+  { "id": "vain", "name": "Vain", "tone": "odd",
+    "description": "Looks matter. Mirrors, clothes and what people think.",
+    "modifiers": { "spending": 0.15, "envy": 0.2 } },
+  { "id": "eccentric", "name": "Eccentric", "tone": "odd",
+    "description": "Does things their own way. Odd, but rarely bored.",
+    "modifiers": { "social": -0.1, "happiness": 3 } },
+  { "id": "hypochondriac", "name": "Hypochondriac", "tone": "odd",
+    "description": "Every cough is cancer. Worries about their health all the time.",
+    "modifiers": { "happiness": -4 } }
 ]

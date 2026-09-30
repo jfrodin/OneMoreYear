@@ -25,7 +25,8 @@ public static class SecretSystem
                 if (s.Active) AffairYear(ctx, s, subject);
                 if (victim == null || !victim.IsAlive || !subject.IsAlive) { s.Active = false; continue; }
 
-                double discover = s.Active ? 0.12 : 0.02;
+                // Good liars hide it longer.
+                double discover = (s.Active ? 0.12 : 0.02) * Math.Clamp(1 - ctx.Mod(subject, "dishonesty") * 0.4, 0.3, 1);
                 if (ctx.Rng.Chance(discover))
                 {
                     if (victim.Id == w.PlayerId)

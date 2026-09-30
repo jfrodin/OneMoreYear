@@ -1,0 +1,197 @@
+// The dark side, driven by traits. See docs/design-decisions.md: abuse is shown through its
+// consequences and never described in detail. The player is never asked to abuse anyone.
+[
+  {
+    "id": "addiction_begins", "trigger": "situation",
+    "title": "Just one more",
+    "text": "It started as a way to cope. Now you think about it when you wake up, and it's the last thing on your mind at night.",
+    "choices": [
+      {
+        "text": "Get help now, before it gets worse",
+        "chance": 0.5, "chanceTraits": { "resilient": 0.25, "addictive": -0.2 },
+        "success": { "text": "It's hard, but you stop in time.", "effects": [ { "type": "recover" } ] },
+        "failure": { "text": "You try. You slip. It's still there.", "effects": [ { "type": "happiness", "amount": -6 } ] }
+      },
+      {
+        "text": "It's under control",
+        "effects": [ { "type": "happiness", "amount": 5 } ],
+        "result": "Everyone needs something to take the edge off. Right?"
+      }
+    ]
+  },
+  {
+    "id": "addiction_crossroads", "title": "Rock bottom",
+    "text": "The money is disappearing, your body hurts and the people around you have stopped believing your excuses.",
+    "conditions": { "flags": [ "addicted" ] }, "weight": 3, "cooldown": 2,
+    "choices": [
+      {
+        "text": "Check into rehab",
+        "hint": "Costs money and time – and it doesn't always work the first time.",
+        "effects": [ { "type": "money", "amount": -40000 } ],
+        "chance": 0.55, "chanceTraits": { "resilient": 0.2, "addictive": -0.15 },
+        "success": { "text": "Eight weeks later you walk out clean. The world looks sharper.", "effects": [ { "type": "recover" }, { "type": "health", "amount": 8 } ] },
+        "failure": { "text": "You leave after two weeks. You're not ready.", "effects": [ { "type": "happiness", "amount": -8 } ] }
+      },
+      {
+        "text": "Ask your family for help",
+        "chance": 0.4, "chanceTraits": { "social": 0.1, "resilient": 0.15 },
+        "success": { "text": "They don't give up on you. Slowly, you climb out.", "effects": [ { "type": "recover" } ] },
+        "failure": { "text": "They've heard the promises before.", "effects": [ { "type": "happiness", "amount": -6 } ] }
+      },
+      {
+        "text": "Keep going",
+        "effects": [ { "type": "health", "amount": -6 }, { "type": "happiness", "amount": 4 } ],
+        "result": "One more year like this."
+      }
+    ]
+  },
+  {
+    "id": "violence_by_partner", "trigger": "situation",
+    "title": "The bruise",
+    "text": "It happened again. {t.name} hit you – and afterwards {t.he} cried and said it would never happen again.",
+    "choices": [
+      {
+        "text": "Leave {t.him}",
+        "chance": 0.7, "chanceTraits": { "brave": 0.15, "resilient": 0.1, "conflict_averse": -0.2 },
+        "success": { "text": "You take what you can carry and go. It's the bravest thing you've ever done.", "effects": [ { "type": "breakup" }, { "type": "trait_add", "trait": "resilient", "chance": 0.3 } ] },
+        "failure": { "text": "You pack a bag, then unpack it again. Not yet.", "effects": [ { "type": "happiness", "amount": -10 } ] }
+      },
+      {
+        "text": "Report {t.him} to the police",
+        "effects": [
+          { "type": "log", "text": "{name} reported {t.name} to the police for assault.", "importance": 3 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "reported", "text": "{name} reported me to the police", "impact": -40 },
+          { "type": "breakup" }
+        ],
+        "result": "The police take your statement. {t.name} is not allowed to come near you."
+      },
+      {
+        "text": "Forgive {t.him}",
+        "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": -15 }, { "type": "happiness", "amount": -8 } ],
+        "result": "You want to believe {t.him}. You really do."
+      }
+    ]
+  },
+  {
+    "id": "violence_by_parent", "trigger": "situation",
+    "title": "Behind closed doors",
+    "text": "{T.role} hit you again tonight. You've learned to read the signs, but it doesn't help.",
+    "choices": [
+      {
+        "text": "Tell a teacher",
+        "chance": 0.5, "chanceTraits": { "brave": 0.15, "conflict_averse": -0.15 },
+        "success": {
+          "text": "Your teacher believes you. Social services come to the house. Things change.",
+          "effects": [
+            { "type": "log", "text": "Social services stepped in after {name} told a teacher about {t.name}.", "importance": 3 },
+            { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 20 }
+          ]
+        },
+        "failure": { "text": "The teacher calls home. {t.name} is furious.", "effects": [ { "type": "happiness", "amount": -10 } ] }
+      },
+      {
+        "text": "Keep it to yourself",
+        "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.3 }, { "type": "happiness", "amount": -6 } ],
+        "result": "You go to school with long sleeves."
+      }
+    ]
+  },
+  {
+    "id": "losing_temper", "title": "The rage",
+    "text": "{t.name} says the wrong thing at the wrong moment. The anger comes from nowhere and fills the whole room.",
+    "conditions": { "minAge": 18, "hasPartner": true, "traitsAny": [ "hot_tempered", "cruel" ] },
+    "target": { "role": "partner" }, "cooldown": 3,
+    "choices": [
+      {
+        "text": "Walk out and cool down",
+        "chance": 0.6, "chanceTraits": { "hot_tempered": -0.2, "resilient": 0.1 },
+        "success": { "text": "You walk around the block until your hands stop shaking.", "effects": [] },
+        "failure": { "text": "You don't make it to the door.", "effects": [ { "type": "violence", "to": "target" } ] }
+      },
+      {
+        "text": "Smash something",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 20 } ],
+        "result": "The plate shatters against the wall. {t.name} looks at you like a stranger."
+      },
+      {
+        "text": "Lash out",
+        "hint": "There is no taking this back.",
+        "effects": [ { "type": "violence", "to": "target" } ],
+        "result": "Afterwards the house is very quiet."
+      }
+    ]
+  },
+  {
+    "id": "jealous_partner", "title": "Who were you texting?",
+    "text": "{t.name} has been through your phone again. \"Who is this? Why are you always talking to them?\"",
+    "conditions": { "minAge": 16, "hasPartner": true },
+    "target": { "role": "partner", "conditions": { "traitsAny": [ "jealous" ] } }, "cooldown": 3,
+    "choices": [
+      {
+        "text": "Reassure {t.him}",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 10 } ],
+        "result": "It takes all evening, but {t.he} calms down."
+      },
+      {
+        "text": "Promise to see less of your friends",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -10 }, { "type": "happiness", "amount": -6 } ],
+        "result": "{t.name} is happy. Your friends stop calling."
+      },
+      {
+        "text": "\"You're not my prison guard\"",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 15 } ],
+        "result": "A door slams. It's not the last time."
+      }
+    ]
+  },
+  {
+    "id": "abuse_child", "trigger": "situation",
+    "title": "A secret",
+    "text": "After the weekend at {t.name}'s you feel sick and scared, and you don't know why. {t.He} said it was your special secret – and that nobody would believe you anyway.",
+    "choices": [
+      {
+        "text": "Tell someone you trust",
+        "chance": 0.45, "chanceTraits": { "brave": 0.15, "social": 0.05 },
+        "success": {
+          "text": "They believe you. Everything falls apart – and you are safe.",
+          "effects": [ { "type": "reveal_abuse" } ]
+        },
+        "failure": {
+          "text": "\"Don't say things like that about {t.name}.\" You never try again.",
+          "effects": [ { "type": "happiness", "amount": -10 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.3 } ]
+        }
+      },
+      {
+        "text": "Keep the secret",
+        "effects": [ { "type": "happiness", "amount": -6 } ],
+        "result": "You carry it alone."
+      }
+    ]
+  },
+  {
+    "id": "carry_secret", "trigger": "situation",
+    "title": "What you carry",
+    "text": "You have carried it since you were a child – what {t.name} did. Nobody in the family knows.",
+    "choices": [
+      {
+        "text": "Tell the family",
+        "hint": "Nothing will be the same.",
+        "effects": [ { "type": "reveal_abuse" } ],
+        "result": "You say it out loud for the first time. The room goes silent."
+      },
+      {
+        "text": "Confront {t.name}",
+        "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 40 },
+          { "type": "memory", "kind": "confronted_abuser", "to": "target", "text": "I told {t.name} I remember everything", "impact": 10 }
+        ],
+        "result": "{t.name} goes pale and says nothing. For once, you are the one who isn't afraid."
+      },
+      {
+        "text": "Keep carrying it",
+        "effects": [ { "type": "happiness", "amount": -8 } ],
+        "result": "Maybe one day."
+      }
+    ]
+  }
+]

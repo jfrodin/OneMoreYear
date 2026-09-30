@@ -38,7 +38,9 @@ public sealed record PersonView
     public string Occupation { get; init; } = "";
     public string Education { get; init; } = "";
     public string Partner { get; init; } = "";
-    public IReadOnlyList<(string Name, string Description)> Traits { get; init; } = Array.Empty<(string, string)>();
+    public IReadOnlyList<(string Name, string Description, string Tone)> Traits { get; init; } = Array.Empty<(string, string, string)>();
+    /// <summary>Something serious going on, e.g. "Struggling with alcohol".</summary>
+    public string? Condition { get; init; }
     public double Health { get; init; }
     public string HealthLabel { get; init; } = "";
     public double Happiness { get; init; }

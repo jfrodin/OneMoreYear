@@ -99,7 +99,7 @@
     "conditions": { "minAge": 15, "hasPartner": false },
     "choices": [ {
       "text": "Ask out", "hint": "Could turn a friendship into something more – or make it awkward.",
-      "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05 }, "chanceAttributes": { "looks": 0.005 }, "chanceRelation": { "attraction": 0.006 },
+      "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05, "charming": 0.15 }, "chanceAttributes": { "looks": 0.005 }, "chanceRelation": { "attraction": 0.006 },
       "success": {
         "text": "{t.name} says yes!",
         "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
@@ -248,7 +248,7 @@
     "conditions": { "minAge": 16, "hasPartner": false },
     "choices": [ {
       "text": "Go out and meet people",
-      "chance": 0.4, "chanceTraits": { "social": 0.15, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.006 },
+      "chance": 0.4, "chanceTraits": { "social": 0.15, "introvert": -0.1, "charming": 0.15 }, "chanceAttributes": { "looks": 0.006 },
       "success": { "text": "You meet {t.full}. There's a spark – you start seeing each other.", "effects": [ { "type": "start_dating", "to": "target" } ] },
       "failure": { "text": "A few awkward dates, but nobody special.", "effects": [] }
     } ]

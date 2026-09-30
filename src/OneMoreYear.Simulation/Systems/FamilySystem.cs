@@ -130,11 +130,6 @@ public static class FamilySystem
         if (ctx.Rng.Chance(chance)) HaveChild(ctx, a, b);
     }
 
-    /// <summary>
-    /// Chance factor for pregnancy in a normal relationship. Starts at the age of consent and is low
-    /// in the teens; it is possible from about 12 biologically, but below the age of consent it only
-    /// belongs to the abuse storylines, never to normal life.
-    /// </summary>
     /// <summary>A baby on the way (or an adoption being processed) – it arrives next year.</summary>
     public static void Expect(SimContext ctx, Person parent, Person? other)
     {
@@ -194,6 +189,11 @@ public static class FamilySystem
                 m.Text = pattern.Replace(m.Text, name);
     }
 
+    /// <summary>
+    /// Chance factor for pregnancy in a normal relationship. Starts at the age of consent and is low
+    /// in the teens; it is possible from about 12 biologically, but below the age of consent it only
+    /// belongs to the abuse storylines, never to normal life.
+    /// </summary>
     public static double FertilityByAge(SimContext ctx, int age) => age < ctx.Country.AgeOfConsent ? 0 : age switch
     {
         < 18 => 0.12,
@@ -221,6 +221,7 @@ public static class FamilySystem
         double baseChance = age switch { < 26 => 0.2, < 36 => 0.22, < 51 => 0.12, _ => 0.05 };
         baseChance *= 1 + ctx.Mod(p, "social");
         baseChance *= 0.7 + p.Looks / 100 * 0.6;
+        baseChance *= 1 + ctx.Mod(p, "charm") * 0.3;
         if (p.Flags.Contains("widowed") || p.ExPartnerIds.Count > 0) baseChance *= 0.7;
         if (!ctx.Rng.Chance(baseChance)) return;
         var partner = CreatePartnerFor(ctx, p);
