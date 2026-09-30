@@ -52,6 +52,7 @@ public sealed class ContentDb
     public static ContentDb Load(IEnumerable<(string Path, string Json)> files)
     {
         var db = new ContentDb();
+        var patches = new List<EventPatchDef>();
         foreach (var (path, json) in files)
         {
             try
@@ -87,6 +88,10 @@ public sealed class ContentDb
                 {
                     foreach (var p in Deserialize<List<ProgrammeDef>>(json)) db.Programmes[p.Id] = p;
                 }
+                else if (path.EndsWith("insights.json"))
+                {
+                    patches.AddRange(Deserialize<List<EventPatchDef>>(json));
+                }
                 else if (path.EndsWith("ailments.json"))
                 {
                     foreach (var a in Deserialize<List<AilmentDef>>(json)) db.Ailments[a.Id] = a;
@@ -104,6 +109,13 @@ public sealed class ContentDb
             {
                 throw new InvalidDataException($"Could not read content file {path}: {ex.Message}", ex);
             }
+        }
+        // Passive checks and trait choices live in their own file and are added to the events here.
+        foreach (var patch in patches)
+        {
+            if (!db.Events.TryGetValue(patch.Event, out var target)) throw new InvalidDataException($"insights.json: unknown event {patch.Event}");
+            target.Insights.AddRange(patch.Insights);
+            target.Choices.AddRange(patch.Choices);
         }
         db.RandomEvents.AddRange(db.Events.Values.Where(e => e.Trigger == "random").OrderBy(e => e.Id, StringComparer.Ordinal));
         return db;
@@ -160,6 +172,12 @@ public sealed class ContentDb
         foreach (var e in Events.Values)
         {
             if (e.Choices.Count == 0 && e.DynamicChoices == null) errors.Add($"Event {e.Id} has no choices.");
+            foreach (var i in e.Insights)
+                if (i.Trait != null ? !Traits.ContainsKey(i.Trait) : i.Attribute is not ("smarts" or "looks" or "fitness"))
+                    errors.Add($"Event {e.Id}: insight needs a known trait or attribute");
+            foreach (var c in e.Choices.Where(c => c.Trait != null && !Traits.ContainsKey(c.Trait)))
+                errors.Add($"Event {e.Id}: unknown choice trait {c.Trait}");
+            if (e.Choices.Count > 0 && e.Choices.All(c => c.Trait != null)) errors.Add($"Event {e.Id}: every choice needs a trait – someone could have none");
             CheckConditions(e.Id, e.Conditions, errors);
             CheckConditions(e.Id, e.Target?.Conditions, errors);
             CheckConditions(e.Id, e.Other?.Conditions, errors);

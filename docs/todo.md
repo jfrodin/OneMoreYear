@@ -19,7 +19,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 1. [x] **Old age** – done in 0.18.0 (with ailments: depression, anxiety, burnout, trauma, dementia).
 2. [x] **Dark themes in depth** – done in 0.19.0.
 3. [x] **Adult everyday life, work and parenthood** – done in 0.20.0 (85 events).
-4. [ ] **Passive trait checks**: personality reveals things in event texts ("[Paranoid] He turns his phone away").
+4. [x] **Passive trait checks** – done in 0.21.0 (insights, trait choices, chance factors).
 5. [ ] Settings menu (fullscreen, volume, text size), several save slots, an introduction, sound.
 
 ## Later

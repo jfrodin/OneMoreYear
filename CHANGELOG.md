@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.21.0 – 2026-09-30 · What your personality notices
+
+- **Passive checks**, in the spirit of Disco Elysium: your traits and gifts let you notice things
+  others don't, written in the margin of an event – *Paranoid: The bank never calls.* *Kind: She is
+  crying, very quietly, so you won't hear.* *Smarts: The "sure thing" has had three CEOs in a year.*
+- **Trait choices**: some options only occur to certain people – *[Charming] Smile, and tell the story
+  about the sick aunt*, *[Hot-tempered] Bang on the wall with a saucepan*, *[Creative] Write them a song
+  instead*, *[Manipulative] Pass it on to the right people*.
+- **Chances explained**: under each risky choice you see what moves the odds – "Charming +20 ·
+  Fitness −6 · Anna's feelings +8".
+- 35 events got insights or trait choices (content/insights.json – easy to add more).
+
 ## 0.20.0 – 2026-09-30 · Everyday life, work and parenthood
 
 - **40 events of everyday adult life**: neighbours through the wall, Midsummer, charter trips,

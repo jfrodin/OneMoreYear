@@ -298,6 +298,8 @@ public sealed class ChoiceDef
     /// <summary>Short explanation shown under the choice (why it is available / what it risks).</summary>
     public string? Hint { get; set; }
     public ConditionDef? Requires { get; set; }
+    /// <summary>A choice only people with this trait even think of ("[Charming] Talk your way out of it"). Hidden for others.</summary>
+    public string? Trait { get; set; }
     /// <summary>Plain effects that always happen.</summary>
     public List<EffectDef> Effects { get; set; } = new();
     public string? Result { get; set; }
@@ -333,6 +335,8 @@ public sealed class EventDef
     public string? DynamicChoices { get; set; }
     /// <summary>Dark themes the event is about (Model.ContentCategories); hidden when the player turned them down.</summary>
     public List<string> Content { get; set; } = new();
+    /// <summary>What the player's personality or gifts let them notice (passive checks, shown under the text).</summary>
+    public List<InsightDef> Insights { get; set; } = new();
     public ConditionDef? Conditions { get; set; }
     public RoleDef? Target { get; set; }
     public RoleDef? Other { get; set; }
@@ -439,4 +443,25 @@ public sealed class ScenarioRequirements
     public bool? Working { get; set; }
     /// <summary>The player (before any play-as switch) must be of this sex ("male" / "female").</summary>
     public string? Sex { get; set; }
+}
+
+/// <summary>
+/// A passive check: something in an event only a person with this trait (or enough of an attribute)
+/// notices – "[Paranoid] He turns his phone away when you come in."
+/// </summary>
+public sealed class InsightDef
+{
+    public string? Trait { get; set; }
+    /// <summary>"smarts", "looks" or "fitness", with the lowest value that notices.</summary>
+    public string? Attribute { get; set; }
+    public double Min { get; set; }
+    public string Text { get; set; } = "";
+}
+
+/// <summary>Insights and trait choices added to an existing event (content/insights.json).</summary>
+public sealed class EventPatchDef
+{
+    public string Event { get; set; } = "";
+    public List<InsightDef> Insights { get; set; } = new();
+    public List<ChoiceDef> Choices { get; set; } = new();
 }

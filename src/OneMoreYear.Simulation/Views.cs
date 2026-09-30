@@ -16,10 +16,14 @@ public sealed record NewGameOptions
     public IReadOnlyDictionary<string, Model.ContentLevel>? ContentSettings { get; init; }
 }
 
-public sealed record ChoiceView(int Index, string Text, string? Hint, int? ChancePercent, bool Available);
+/// <summary>A choice. <paramref name="Tag"/> names the trait that makes it possible ("Charming"); <paramref name="Factors"/> explains the chance.</summary>
+public sealed record ChoiceView(int Index, string Text, string? Hint, int? ChancePercent, bool Available, string? Tag = null, string? Factors = null);
+
+/// <summary>Something the player's personality lets them notice: "Paranoid" – "He turns his phone away."</summary>
+public sealed record InsightView(string Label, string Text, string Tone);
 
 public sealed record EventView(int Uid, string Title, string Text, IReadOnlyList<ChoiceView> Choices,
-    bool Resolved, string? OutcomeText, int? TargetId);
+    bool Resolved, string? OutcomeText, int? TargetId, IReadOnlyList<InsightView>? Insights = null);
 
 public sealed record ActionView(string Id, string Title, string? Hint, int? ChancePercent, bool Enabled, string Category = "life");
 

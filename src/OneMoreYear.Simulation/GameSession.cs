@@ -262,6 +262,9 @@ public sealed class GameSession
         for (int i = 0; i < def.Choices.Count; i++)
         {
             var c = def.Choices[i];
+            // Trait choices only exist for people with the trait.
+            if (c.Trait != null && !Player.HasTrait(c.Trait)) continue;
+            string? tag = c.Trait != null && Content.Traits.TryGetValue(c.Trait, out var traitDef) ? traitDef.Name : null;
             string? hint = c.Hint == null ? null : TextFormatter.Format(Ctx, c.Hint, pending);
             if (EventSystem.StudyProgramme(Ctx, c) is { } prog)
             {
@@ -272,13 +275,14 @@ public sealed class GameSession
                 hint = $"You're with {partner.FirstName} – this would be an affair." + (hint == null ? "" : " " + hint);
             choices.Add(new ChoiceView(offset + i, TextFormatter.Format(Ctx, c.Text, pending), hint,
                 c.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, c, pending) * 100) : null,
-                EventSystem.IsChoiceAvailable(Ctx, c, pending)));
+                EventSystem.IsChoiceAvailable(Ctx, c, pending), tag, EventSystem.ChanceFactors(Ctx, c, pending)));
         }
         var involved = pending.Roles.Values.ToList();
         return new EventView(pending.Uid, TextFormatter.Format(Ctx, def.Title, pending),
             Annotate(TextFormatter.Format(Ctx, def.Text, pending), involved),
             choices, pending.Resolved, pending.OutcomeText == null ? null : Annotate(pending.OutcomeText, involved),
-            pending.Roles.TryGetValue("target", out var t) ? t : null);
+            pending.Roles.TryGetValue("target", out var t) ? t : null,
+            EventSystem.Insights(Ctx, def, pending));
     }
 
     public string Choose(int eventUid, int choiceIndex)

@@ -265,11 +265,12 @@ public static class EventSystem
     public static bool IsChoiceAvailable(SimContext ctx, ChoiceDef choice, PendingEvent pending)
     {
         var player = ctx.World.Player;
+        if (choice.Trait != null && !player.HasTrait(choice.Trait)) return false;
         if (Meets(ctx, choice, player)) return true;
         // Never leave the player stuck: if nothing is available (the situation changed since the
         // event was created), every choice becomes available.
         var def = ctx.Content.Events[pending.EventId];
-        return pending.Options.Count == 0 && !def.Choices.Any(c => Meets(ctx, c, player));
+        return pending.Options.Count == 0 && !def.Choices.Any(c => (c.Trait == null || player.HasTrait(c.Trait)) && Meets(ctx, c, player));
     }
 
     private static bool Meets(SimContext ctx, ChoiceDef choice, Person player)
@@ -282,6 +283,47 @@ public static class EventSystem
     /// <summary>The programme a choice enrols you in, if any – used to check admission requirements.</summary>
     public static ProgrammeDef? StudyProgramme(SimContext ctx, ChoiceDef choice) =>
         choice.Effects.FirstOrDefault(e => e.Type == "study" && e.Programme != null) is { } eff ? ctx.Content.Programme(eff.Programme) : null;
+
+    /// <summary>What moves the chance, for the player to see: "Charming +15 · Smarts −6".</summary>
+    public static string? ChanceFactors(SimContext ctx, ChoiceDef choice, PendingEvent pending)
+    {
+        if (choice.Chance == null) return null;
+        var player = ctx.World.Player;
+        var parts = new List<string>();
+        string Signed(double v) => (v >= 0 ? "+" : "−") + Math.Round(Math.Abs(v) * 100);
+        foreach (var (trait, bonus) in choice.ChanceTraits)
+            if (player.HasTrait(trait) && ctx.Content.Traits.TryGetValue(trait, out var def)) parts.Add($"{def.Name} {Signed(bonus)}");
+        foreach (var (attr, perPoint) in choice.ChanceAttributes)
+        {
+            double value = attr switch { "smarts" => player.Smarts, "looks" => player.Looks, "fitness" => player.Fitness, "grades" => player.Grades, _ => 50 };
+            double delta = (value - 50) * perPoint;
+            if (Math.Abs(delta) >= 0.02) parts.Add($"{char.ToUpperInvariant(attr[0])}{attr[1..]} {Signed(delta)}");
+        }
+        if (choice.ChanceOpinion != 0 && pending.Roles.TryGetValue("target", out var tid))
+        {
+            double delta = ctx.World.Opinion(tid, player.Id) * choice.ChanceOpinion;
+            if (Math.Abs(delta) >= 0.02) parts.Add($"{ctx.World.Get(tid).FirstName}'s feelings {Signed(delta)}");
+        }
+        return parts.Count == 0 ? null : string.Join("  ·  ", parts);
+    }
+
+    /// <summary>The insights (passive checks) this player gets in an event.</summary>
+    public static List<InsightView> Insights(SimContext ctx, EventDef def, PendingEvent pending)
+    {
+        var player = ctx.World.Player;
+        var result = new List<InsightView>();
+        foreach (var i in def.Insights)
+        {
+            if (i.Trait != null && player.HasTrait(i.Trait) && ctx.Content.Traits.TryGetValue(i.Trait, out var t))
+                result.Add(new InsightView(t.Name, TextFormatter.Format(ctx, i.Text, pending), t.Tone));
+            else if (i.Attribute != null)
+            {
+                double value = i.Attribute switch { "smarts" => player.Smarts, "looks" => player.Looks, "fitness" => player.Fitness, _ => 0 };
+                if (value >= i.Min) result.Add(new InsightView($"{char.ToUpperInvariant(i.Attribute[0])}{i.Attribute[1..]}", TextFormatter.Format(ctx, i.Text, pending), "odd"));
+            }
+        }
+        return result;
+    }
 
     public static double SuccessChance(SimContext ctx, ChoiceDef choice, PendingEvent pending)
     {

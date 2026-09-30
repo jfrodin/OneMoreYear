@@ -534,3 +534,29 @@ public class ContentSettingsTests
         Assert.Empty(seen.Intersect(tagged));
     }
 }
+
+public class InsightTests
+{
+    [Fact]
+    public void TraitsRevealInsightsAndUnlockChoices()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 5, StartYear = 1980 });
+        var p = s.Player;
+        p.Traits.Clear();
+        var pending = EventSystem.QueueSituation(s.Ctx, "life_speeding")!;
+        var plain = s.DescribeEvent(pending);
+        Assert.DoesNotContain(plain.Choices, c => c.Tag != null);
+
+        p.Traits.Add("charming");
+        var charming = s.DescribeEvent(pending);
+        var tagged = Assert.Single(charming.Choices, c => c.Tag == "Charming");
+        Assert.True(tagged.Available);
+
+        var scam = EventSystem.QueueSituation(s.Ctx, "old_scam")!;
+        p.Traits.Add("paranoid");
+        Assert.Contains(s.DescribeEvent(scam).Insights!, i => i.Label == "Paranoid");
+        // A trait choice can be chosen only with the trait.
+        p.Traits.Remove("charming");
+        Assert.Throws<InvalidOperationException>(() => s.Choose(pending.Uid, tagged.Index));
+    }
+}

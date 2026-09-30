@@ -501,11 +501,23 @@ public partial class GameScreen : Control
         }
         box.AddChild(Ui.Label(ev.Text, 19, UiTheme.Text, wrap: true));
 
+        // What your personality lets you notice – written in the margin, in the trait's colour.
+        foreach (var insight in ev.Insights ?? System.Array.Empty<InsightView>())
+        {
+            var row = Ui.HBox(10);
+            var tag = Ui.Label(insight.Label.ToUpperInvariant(), 13, Ui.ToneColor(insight.Tone));
+            tag.SizeFlagsVertical = SizeFlags.ShrinkBegin;
+            tag.CustomMinimumSize = new Vector2(110, 0);
+            row.AddChild(tag);
+            row.AddChild(UiTheme.HandLabel(insight.Text, 21, Ui.ToneColor(insight.Tone).Darkened(0.2f), wrap: true));
+            box.AddChild(row);
+        }
+
         if (!ev.Resolved)
         {
             foreach (var c in ev.Choices)
             {
-                string text = c.Text + (c.ChancePercent is { } pc ? $"     {pc}% chance" : "");
+                string text = (c.Tag != null ? $"[{c.Tag}]  " : "") + c.Text + (c.ChancePercent is { } pc ? $"     {pc}% chance" : "");
                 var uid = ev.Uid;
                 var index = c.Index;
                 var b = Ui.Button(text, () => OnChoose(uid, index), 52);
@@ -513,8 +525,12 @@ public partial class GameScreen : Control
                 b.AutowrapMode = TextServer.AutowrapMode.WordSmart;
                 b.Disabled = !c.Available;
                 b.SetMeta("choice", true);
-                RegisterHint(b, c.Available ? c.Hint : "Not possible right now.");
+                if (c.Tag != null) b.AddThemeColorOverride("font_color", UiTheme.AccentDark);
+                string? hint = c.Factors == null ? c.Hint : (c.Hint == null ? c.Factors : $"{c.Hint}   ({c.Factors})");
+                RegisterHint(b, c.Available ? hint : "Not possible right now.");
                 box.AddChild(b);
+                // The chance is explained right under the choice, not only in the hint.
+                if (c.Factors != null && c.Available) box.AddChild(Ui.Label("      " + c.Factors, 13, UiTheme.Muted));
             }
         }
         else if (!string.IsNullOrWhiteSpace(ev.OutcomeText))

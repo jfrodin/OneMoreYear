@@ -471,7 +471,17 @@ public partial class Main : Control
                 if (Session!.NeedsSuccession) ShowSuccession(); else ShowGame();
                 break;
             case 24: ShowNewspaper(new YearReport(Session!.Year, Session.Player.Age(Session.Year), Session.NewsThisYear(), false)); break;
-            case 27: Shot("02_newspaper"); Ui.Clear(_overlayLayer); break;
+            case 27:
+                Shot("02_newspaper");
+                Ui.Clear(_overlayLayer);
+                // Show passive checks and a trait choice in the year view.
+                Session!.World.PendingEvents.Clear();
+                Session.Player.Traits.Add("paranoid");
+                Session.Player.Traits.Add("charming");
+                OneMoreYear.Simulation.Systems.EventSystem.QueueSituation(Session.Ctx, "old_scam");
+                OneMoreYear.Simulation.Systems.EventSystem.QueueSituation(Session.Ctx, "life_speeding");
+                ShowGame();
+                break;
             case 30: Shot("02_year"); break;
             case 32: if (_screen is GameScreen g1) g1.ShowTab(1); break;
             case 40: Shot("03_family"); break;
