@@ -1,0 +1,432 @@
+// Everyday adult life: neighbours, holidays, friends, the house, and moments of their time. Ages 18–65.
+[
+  {
+    "id": "life_neighbour_noise", "title": "Through the wall",
+    "text": "The new neighbours play music until two every night. Tonight the bass is making your glasses rattle.",
+    "conditions": { "minAge": 18, "livesWithParents": false }, "cooldown": 8,
+    "choices": [
+      { "text": "Knock and ask nicely", "chance": 0.6, "chanceTraits": { "charming": 0.2, "social": 0.1 },
+        "success": { "text": "They're mortified, and invite you to the next party. The music goes quieter. Mostly.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "The door slams. The music gets louder.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Write a furious note for the stairwell", "effects": [ { "type": "trait_add", "trait": "hot_tempered", "chance": 0.05 } ],
+        "result": "Your note gets a reply. The reply gets a reply. The whole building takes sides." },
+      { "text": "Buy earplugs", "effects": [ { "type": "money", "amount": -100 } ], "result": "Peace, of a sort." }
+    ]
+  },
+  {
+    "id": "life_midsummer", "title": "Midsummer",
+    "text": "Midsummer's Eve: herring, strawberries, a maypole, and more schnapps than anyone planned.",
+    "conditions": { "minAge": 18 }, "cooldown": 3,
+    "choices": [
+      { "text": "Sing every drinking song", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "social", "chance": 0.05 } ],
+        "result": "You wake up in a hammock with a wreath of flowers in your hair and no memory of the frog dance." },
+      { "text": "Lie in the grass and watch the light that never goes", "effects": [ { "type": "happiness", "amount": 5 } ],
+        "result": "At two in the morning it's still light. Some nights you understand why people stay in this country." }
+    ]
+  },
+  {
+    "id": "life_charter_trip", "title": "Charter",
+    "text": "Everyone at work is going to the Canary Islands this winter. Two weeks of sun, all inclusive.",
+    "conditions": { "minAge": 20, "minYear": 1965, "minMoney": 15000 }, "cooldown": 5,
+    "choices": [
+      { "text": "Book it", "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "charter", "text": "Two weeks of sun in the Canaries", "impact": 10 } ],
+        "result": "You come back sunburnt, rested, and with a straw donkey nobody asked for." },
+      { "text": "Stay home and save", "effects": [ { "type": "money", "amount": 2000 } ], "result": "February is long. Your savings account is grateful." }
+    ]
+  },
+  {
+    "id": "life_flat_pack", "title": "Flat pack",
+    "text": "A wardrobe in 214 pieces, instructions with no words, and {p.name} holding the wrong screw.",
+    "conditions": { "minAge": 20, "hasPartner": true, "minYear": 1965 }, "cooldown": 6,
+    "choices": [
+      { "text": "Do it together", "chance": 0.5, "chanceTraits": { "conflict_averse": 0.1, "hot_tempered": -0.2 },
+        "success": { "text": "It stands. It leans slightly. You're very proud of it.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 5, "mutual": true } ] },
+        "failure": { "text": "The worst fight of the year, over a wardrobe.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 8 } ] } },
+      { "text": "Pay someone to do it", "effects": [ { "type": "money", "amount": -800 } ], "result": "Worth every krona." }
+    ]
+  },
+  {
+    "id": "life_dinner_party", "title": "Dinner party",
+    "text": "You've invited six people to dinner. The recipe said forty minutes. It has been two hours.",
+    "conditions": { "minAge": 22, "livesWithParents": false }, "cooldown": 5,
+    "choices": [
+      { "text": "Order pizza and laugh about it", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ],
+        "result": "It becomes the dinner everyone remembers. \"The one with the pizza.\"" },
+      { "text": "Keep cooking", "chance": 0.5, "success": { "text": "At ten o'clock, a triumph. Everyone is starving and it's the best thing they've ever eaten.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Charred on the outside, raw in the middle. People are very polite.", "effects": [ { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "life_dog", "title": "Those eyes",
+    "text": "The rescue centre has a dog with one floppy ear who has been waiting for a home for a year.",
+    "conditions": { "minAge": 22, "livesWithParents": false, "notFlags": [ "has_dog" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Take him home", "effects": [ { "type": "flag", "flag": "has_dog" }, { "type": "happiness", "amount": 8 }, { "type": "attribute", "kind": "fitness", "amount": 4 },
+          { "type": "memory", "kind": "dog", "text": "The dog with one floppy ear", "impact": 15 } ],
+        "result": "Walks at six every morning, hair on everything, and someone who is always, always happy to see you." },
+      { "text": "Not now", "result": "You think about the ear for weeks." }
+    ]
+  },
+  {
+    "id": "life_old_friend_online", "title": "A friend request",
+    "text": "A friend request from someone you haven't thought about since school. The profile picture shows a stranger with a familiar smile.",
+    "conditions": { "minAge": 30, "minYear": 2008 }, "cooldown": 0,
+    "choices": [
+      { "text": "Accept and suggest a coffee", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.1 } ],
+        "result": "Two coffees become a whole afternoon. It's as if twenty years were a weekend." },
+      { "text": "Accept, and scroll through their life instead", "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "Holidays, children, a sailing boat. You close the app feeling slightly worse." }
+    ]
+  },
+  {
+    "id": "life_best_man", "title": "The speech",
+    "text": "{t.name} is getting married and wants you to give a speech. In front of a hundred and twenty people.",
+    "conditions": { "minAge": 20 }, "cooldown": 6,
+    "target": { "role": "friend", "conditions": { "minAge": 20 } },
+    "choices": [
+      { "text": "Tell the embarrassing stories", "chance": 0.55, "chanceTraits": { "charming": 0.2, "social": 0.1 },
+        "success": { "text": "The room roars. {t.name} laughs until {t.he} cries. It's the best speech of the evening.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ] },
+        "failure": { "text": "One story too far. {t.name}'s new in-laws stop smiling.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 6 } ] } },
+      { "text": "Keep it short and sincere", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true } ],
+        "result": "Two minutes. {t.name}'s mother is in tears." }
+    ]
+  },
+  {
+    "id": "life_burglary", "title": "The window",
+    "text": "You come home to a broken window. The TV is gone, the drawers are on the floor, and your grandmother's ring is missing.",
+    "conditions": { "minAge": 20, "livesWithParents": false }, "cooldown": 15, "weight": 0.6,
+    "choices": [
+      { "text": "Call the insurance company", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": -5 } ],
+        "result": "They pay for the TV. Nobody can pay for the ring." },
+      { "text": "Install every lock there is", "effects": [ { "type": "money", "amount": -6000 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.15 } ],
+        "result": "Three locks, an alarm, a sticker about the alarm. You still check the door twice at night." }
+    ]
+  },
+  {
+    "id": "life_speeding", "title": "Blue lights",
+    "text": "Blue lights in the mirror. You were doing 112 on a 70 road.",
+    "conditions": { "minAge": 18, "notFlags": [ "stopped_driving" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Apologise", "chance": 0.3, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "A warning. You drive home at exactly 70.", "effects": [] },
+        "failure": { "text": "A fine and a lecture.", "effects": [ { "type": "money", "amount": -3000 } ] } },
+      { "text": "Argue", "effects": [ { "type": "money", "amount": -4000 } ], "result": "The fine goes up while you're talking." }
+    ]
+  },
+  {
+    "id": "life_allotment", "title": "The allotment",
+    "text": "A plot has come free at the allotments. Ten square metres of soil, a shed, and an old man next door who has opinions about potatoes.",
+    "conditions": { "minAge": 30 }, "cooldown": 0,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "health", "amount": 3 }, { "type": "memory", "kind": "allotment", "text": "The allotment, and the old man's potatoes", "impact": 10 } ],
+        "result": "Your first tomatoes taste like nothing you've ever bought. The old man approves, eventually." },
+      { "text": "Let someone else have it", "result": "You buy basil in a pot instead. It dies in a week." }
+    ]
+  },
+  {
+    "id": "life_renovation", "title": "The kitchen",
+    "text": "The kitchen hasn't been touched since the seventies. Orange tiles, brown cupboards. It's time.",
+    "conditions": { "minAge": 25, "holdsHome": true, "minMoney": 80000 }, "cooldown": 10,
+    "choices": [
+      { "text": "Do it yourself", "chance": 0.5, "chanceAttributes": { "smarts": 0.003 },
+        "success": { "text": "Four months of weekends. It's beautiful, and yours.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "The plumber you call afterwards laughs, then charges double.", "effects": [ { "type": "money", "amount": -90000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Hire a firm", "effects": [ { "type": "money", "amount": -120000 }, { "type": "happiness", "amount": 6 } ],
+        "result": "Three months late, twenty percent over budget – and it's lovely." },
+      { "text": "Paint the cupboards and call it retro", "effects": [ { "type": "money", "amount": -2000 } ], "result": "Retro is in again, you tell your friends." }
+    ]
+  },
+  {
+    "id": "life_friend_loan", "title": "Between friends",
+    "text": "{t.name} needs to borrow money. A lot. \"You'll get it back by Christmas, I swear.\"",
+    "conditions": { "minAge": 20, "minMoney": 30000 }, "cooldown": 6,
+    "target": { "role": "friend", "conditions": { "minAge": 20 } },
+    "choices": [
+      { "text": "Lend it", "chance": 0.55, "chanceOpinion": 0.004,
+        "success": { "text": "It comes back in March, with a bottle of wine and an apology for the wait.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 10, "mutual": true } ] },
+        "failure": { "text": "Christmas comes and goes. So does the friendship.", "effects": [ { "type": "money", "amount": -25000 }, { "type": "friend_remove", "to": "target" } ] } },
+      { "text": "Say no", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -8 } ],
+        "result": "Things are a bit stiff for a while. The money is still yours." }
+    ]
+  },
+  {
+    "id": "life_fence", "title": "The fence",
+    "text": "Your neighbour claims the fence is half a metre onto his land. He's hired a surveyor.",
+    "conditions": { "minAge": 25, "holdsHome": true }, "cooldown": 12,
+    "choices": [
+      { "text": "Fight it", "chance": 0.5, "success": { "text": "The surveyor agrees with you. Your neighbour never says hello again.", "effects": [ { "type": "money", "amount": -5000 } ] },
+        "failure": { "text": "You lose, pay for the survey and move the fence.", "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Give him the half metre", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.1 } ],
+        "result": "He brings you a bottle of wine. You're fairly sure you've been had." }
+    ]
+  },
+  {
+    "id": "life_friends_divorce", "title": "Choosing sides",
+    "text": "Your two best friends are getting divorced, and both of them want you on their side.",
+    "conditions": { "minAge": 28 }, "cooldown": 10,
+    "choices": [
+      { "text": "Stay friends with both", "chance": 0.4, "chanceTraits": { "charming": 0.15, "loyal": 0.1 },
+        "success": { "text": "It takes tact and separate birthday dinners. It works.", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.1 } ] },
+        "failure": { "text": "In the end neither of them trusts you.", "effects": [ { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Pick one", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You keep one friend and lose the other. It feels like a divorce of your own." }
+    ]
+  },
+  {
+    "id": "life_moon_landing", "title": "One small step",
+    "text": "It's the middle of the night and everyone you know is up, gathered around a flickering television. A man is about to walk on the moon.",
+    "conditions": { "minAge": 5, "minYear": 1969, "maxYear": 1969 }, "weight": 20, "cooldown": 0,
+    "choices": [
+      { "text": "Watch every second", "effects": [ { "type": "memory", "kind": "moon_landing", "text": "Watching the moon landing on television", "impact": 15 }, { "type": "happiness", "amount": 5 } ],
+        "result": "Grainy pictures, a crackling voice. You will tell people where you were for the rest of your life." }
+    ]
+  },
+  {
+    "id": "life_waterloo", "title": "Waterloo",
+    "text": "Four Swedes in platform boots and glitter have just won the Eurovision Song Contest. The whole country is singing.",
+    "conditions": { "minAge": 6, "minYear": 1974, "maxYear": 1974 }, "weight": 20, "cooldown": 0,
+    "choices": [
+      { "text": "Buy the single", "effects": [ { "type": "money", "amount": -20 }, { "type": "happiness", "amount": 5 } ],
+        "result": "You play it until the needle wears through. Your parents learn all the words against their will." },
+      { "text": "Pretend you prefer serious music", "effects": [ { "type": "trait_add", "trait": "eccentric", "chance": 0.1 } ],
+        "result": "You hum it in the shower when nobody can hear." }
+    ]
+  },
+  {
+    "id": "life_palme", "title": "The morning after",
+    "text": "The radio says the prime minister was shot dead on a Stockholm street last night, walking home from the cinema.",
+    "conditions": { "minAge": 8, "minYear": 1986, "maxYear": 1986 }, "weight": 20, "cooldown": 0,
+    "choices": [
+      { "text": "Lay a rose at the place", "effects": [ { "type": "memory", "kind": "palme", "text": "The morning they said Palme had been shot", "impact": -12 } ],
+        "result": "A sea of red roses on Sveavägen. People you've never met hold each other." },
+      { "text": "Try to carry on as normal", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "Nothing feels normal. The country has lost something it can't name." }
+    ]
+  },
+  {
+    "id": "life_first_mobile", "title": "Everyone can reach you",
+    "text": "Your first mobile phone: the size of a brick, a green screen and a game with a snake. Now everyone can reach you. Everywhere.",
+    "conditions": { "minAge": 16, "minYear": 1995, "maxYear": 2002 }, "cooldown": 0, "weight": 3,
+    "choices": [
+      { "text": "Love it", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "social", "chance": 0.05 } ],
+        "result": "Snake high score: 2,340. You text in abbreviations nobody over forty understands." },
+      { "text": "Turn it off on weekends", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.05 } ], "result": "The world survives without you for two days a week." }
+    ]
+  },
+  {
+    "id": "life_y2k", "title": "Midnight",
+    "text": "The year 2000. The papers say planes will fall and banks will crash when the computers reach midnight.",
+    "conditions": { "minAge": 12, "minYear": 1999, "maxYear": 1999 }, "weight": 20, "cooldown": 0,
+    "choices": [
+      { "text": "Stock up on tinned food", "effects": [ { "type": "money", "amount": -1500 } ], "result": "Midnight comes. Nothing happens. You eat tinned soup until March." },
+      { "text": "Party like it's 1999", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "millennium", "text": "The millennium night", "impact": 10 } ],
+        "result": "Fireworks, champagne, strangers kissing. The lights stay on. The future arrives on time." }
+    ]
+  },
+  {
+    "id": "life_storm", "title": "The storm",
+    "text": "A storm tore through the forests last night. Millions of trees down, and the power is out – maybe for weeks.",
+    "conditions": { "minAge": 18, "minYear": 2005, "maxYear": 2005 }, "weight": 15, "cooldown": 0,
+    "choices": [
+      { "text": "Help the neighbours", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.1 } ],
+        "result": "Chainsaws, candles, a shared camping stove. You get to know the street better in a week than in ten years." },
+      { "text": "Wait it out", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "Cold dinners by torchlight. You never take a light switch for granted again." }
+    ]
+  },
+  {
+    "id": "life_pandemic_home", "title": "Kitchen table office",
+    "text": "The office is closed. Your workplace is now the kitchen table, and you haven't seen your colleagues' legs in months.",
+    "conditions": { "minAge": 20, "hasJob": true, "minYear": 2020, "maxYear": 2021 }, "weight": 10, "cooldown": 0,
+    "choices": [
+      { "text": "Embrace it – sweatpants forever", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "No commute, lunch walks, the neighbour's cat on your video calls." },
+      { "text": "Go slowly mad", "effects": [ { "type": "happiness", "amount": -6 } ], "result": "The walls get closer every week." }
+    ]
+  },
+  {
+    "id": "life_fortieth", "title": "Forty",
+    "text": "You're turning forty. Your friends want to throw a party. The number feels strange in your mouth.",
+    "conditions": { "minAge": 40, "maxAge": 40 }, "weight": 8, "cooldown": 0,
+    "choices": [
+      { "text": "A big party", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "fortieth", "text": "My fortieth birthday party", "impact": 12 } ],
+        "result": "Old friends, new friends, a slideshow of terrible photos. Forty looks good on you, everyone says." },
+      { "text": "Run away to the mountains", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ],
+        "result": "A tent, a mountain, silence. You come back feeling twenty-five and fifty at the same time." }
+    ]
+  },
+  {
+    "id": "life_marathon", "title": "Forty-two kilometres",
+    "text": "A friend has signed you both up for the marathon. You've never run further than the bus stop.",
+    "conditions": { "minAge": 22, "maxAge": 60 }, "cooldown": 10,
+    "choices": [
+      { "text": "Train for it", "chance": 0.5, "chanceAttributes": { "fitness": 0.008 },
+        "success": { "text": "Four hours and fifty-one minutes. You cry at the finish line and can't walk for three days.",
+          "effects": [ { "type": "attribute", "kind": "fitness", "amount": 10 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "marathon", "text": "Crossing the marathon finish line", "impact": 18 } ] },
+        "failure": { "text": "Your knee gives up at kilometre 28. You limp to the bus.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 4 }, { "type": "health", "amount": -3 } ] } },
+      { "text": "Cheer from the pavement", "result": "Someone has to hold the banana." }
+    ]
+  },
+  {
+    "id": "life_night_course", "title": "Evening classes",
+    "text": "The folk high school offers evening courses: Italian, pottery, philosophy, car mechanics.",
+    "conditions": { "minAge": 25 }, "cooldown": 6,
+    "choices": [
+      { "text": "Philosophy", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 3 } ], "result": "You leave with more questions than you came with. That's the point, the teacher says." },
+      { "text": "Italian", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "social", "chance": 0.1 } ], "result": "Ciao, grazie, and a whole class of new friends." },
+      { "text": "Pottery", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.2 } ], "result": "Your mugs are lopsided. Your family uses them anyway." }
+    ]
+  },
+  {
+    "id": "life_stray_cat", "title": "A visitor",
+    "text": "A thin grey cat has been sitting outside your door every evening for a week.",
+    "conditions": { "minAge": 18, "livesWithParents": false, "notFlags": [ "has_cat" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Let it in", "effects": [ { "type": "flag", "flag": "has_cat" }, { "type": "happiness", "amount": 6 } ],
+        "result": "It moves in as if it always lived there. You are, it turns out, its staff." },
+      { "text": "Take it to a shelter", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 } ], "result": "They find it a home. You check the website twice." }
+    ]
+  },
+  {
+    "id": "life_lost_wallet", "title": "Empty pocket",
+    "text": "Your wallet is gone. Cards, licence, the photo you've carried for years.",
+    "conditions": { "minAge": 16 }, "cooldown": 8,
+    "choices": [
+      { "text": "Retrace your steps", "chance": 0.4, "success": { "text": "A bus driver has it. Every krona still inside. Faith in humanity restored.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Gone. A day of phone calls to the bank.", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "life_summer_cottage", "title": "A red cottage",
+    "text": "A little red cottage by a lake is for sale. No running water, a wood stove, and a jetty that's seen better days.",
+    "conditions": { "minAge": 30, "minMoney": 300000, "notFlags": [ "summer_cottage" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Buy it", "effects": [ { "type": "money", "amount": -250000 }, { "type": "flag", "flag": "summer_cottage" }, { "type": "happiness", "amount": 10 },
+          { "type": "memory", "kind": "cottage", "text": "Summers at the red cottage", "impact": 20 } ],
+        "result": "Every summer from now on: the lake, the mosquitoes, the smell of the wood stove. The family's place." },
+      { "text": "Dream about it", "result": "You look at the photo on your phone sometimes." }
+    ]
+  },
+  {
+    "id": "life_blood_donation", "title": "A pint",
+    "text": "The blood bus is parked outside the supermarket. There's a sign: \"Someone needs you today.\"",
+    "conditions": { "minAge": 18, "maxAge": 65, "minHealth": 60 }, "cooldown": 0,
+    "choices": [
+      { "text": "Donate", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.1 }, { "type": "happiness", "amount": 4 } ],
+        "result": "A text message a week later: your blood has helped someone. You keep the message." },
+      { "text": "Not today", "result": "Needles. Maybe next time." }
+    ]
+  },
+  {
+    "id": "life_volunteer", "title": "Christmas Eve",
+    "text": "The church needs volunteers to serve Christmas dinner to people who have nowhere else to go.",
+    "conditions": { "minAge": 18 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go and serve", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.15 }, { "type": "happiness", "amount": 6 },
+          { "type": "memory", "kind": "volunteer", "text": "Christmas Eve serving dinner at the church", "impact": 12 } ],
+        "result": "An old man tells you about his life at sea. It's the best Christmas conversation you've had in years." },
+      { "text": "Donate money instead", "effects": [ { "type": "money", "amount": -1000 }, { "type": "trait_add", "trait": "generous", "chance": 0.05 } ], "result": "It's something." }
+    ]
+  },
+  {
+    "id": "life_tax_refund", "title": "A letter from the Tax Agency",
+    "text": "An envelope from the Tax Agency. You open it with your heart in your throat.",
+    "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 4,
+    "choices": [
+      { "text": "Read it", "chance": 0.6,
+        "success": { "text": "A refund! Unexpected money is the best money.", "effects": [ { "type": "money", "amount": 6000 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "Back taxes. You check the numbers three times. They don't change.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "life_car_breaks", "title": "Smoke",
+    "text": "The car dies on the motorway in the rain. Smoke from the bonnet, lorries roaring past.",
+    "conditions": { "minAge": 20, "minYear": 1955, "notFlags": [ "stopped_driving" ] }, "cooldown": 7,
+    "choices": [
+      { "text": "Fix it", "effects": [ { "type": "money", "amount": -12000 } ], "result": "The mechanic sucks his teeth and names a number. You pay it." },
+      { "text": "Buy a new one", "requires": { "minMoney": 150000 }, "effects": [ { "type": "money", "amount": -140000 }, { "type": "happiness", "amount": 5 } ], "result": "New car smell. For a week you take the long way everywhere." },
+      { "text": "Go without a car", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 4 }, { "type": "happiness", "amount": -3 } ], "result": "Buses, a bicycle, and a lot of walking. Your legs thank you. Your schedule doesn't." }
+    ]
+  },
+  {
+    "id": "life_church_or_not", "title": "A letter from the church",
+    "text": "A letter from the Church of Sweden: the church tax, and whether you want to stay a member.",
+    "conditions": { "minAge": 25, "minYear": 2000 }, "cooldown": 0,
+    "choices": [
+      { "text": "Stay – for the funerals, the weddings, the bells", "effects": [ { "type": "money", "amount": -2000 } ], "result": "You haven't been inside in years. But you like knowing it's there." },
+      { "text": "Leave", "effects": [ { "type": "money", "amount": 2000 } ], "result": "One form, and it's done. Your grandmother would have had something to say about it." }
+    ]
+  },
+  {
+    "id": "life_wrong_number", "title": "Wrong number",
+    "text": "A stranger calls by mistake, looking for someone who used to have your number. You end up talking for an hour.",
+    "conditions": { "minAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Suggest meeting for a coffee", "chance": 0.5, "chanceTraits": { "social": 0.15 },
+        "success": { "text": "They turn out to be exactly as funny in person. You have a new friend – from a wrong number.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "They never show up. Some things are best left on the phone.", "effects": [] } },
+      { "text": "Say goodbye", "result": "You think about the conversation for days." }
+    ]
+  },
+  {
+    "id": "life_sibling_birthday", "title": "Your sibling's party",
+    "text": "{t.name} is turning fifty and has invited the whole family. Old tensions sit around the table with everyone else.",
+    "conditions": { "minAge": 30 }, "cooldown": 10,
+    "target": { "role": "sibling", "conditions": { "minAge": 45 } },
+    "choices": [
+      { "text": "Give a warm speech", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ],
+        "result": "You tell the story about the summer you both ran away to grandma's. {t.name} has to leave the table for a moment." },
+      { "text": "Bring up the old argument", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 12 } ],
+        "result": "It was always going to come up. It just didn't have to be tonight." }
+    ]
+  },
+  {
+    "id": "life_parent_needs_help", "title": "The gutter",
+    "text": "{t.name} has been trying to clean the gutters again. At {t.age}. On a ladder.",
+    "conditions": { "minAge": 30 }, "cooldown": 6,
+    "target": { "role": "parent", "conditions": { "minAge": 70 } },
+    "choices": [
+      { "text": "Drive over every Saturday", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": -2 } ],
+        "result": "Gutters, lightbulbs, the computer. And coffee afterwards, which is the real reason." },
+      { "text": "Pay someone to help", "effects": [ { "type": "money", "amount": -5000 } ], "result": "{t.name} complains the man does it wrong. But nobody's on a ladder." }
+    ]
+  },
+  {
+    "id": "life_house_party_neighbours", "title": "The street party",
+    "text": "Someone has put a note in every letterbox: a street party on Saturday. Bring a dish and a chair.",
+    "conditions": { "minAge": 20, "livesWithParents": false }, "cooldown": 6,
+    "choices": [
+      { "text": "Bring your best dish", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.1 } ],
+        "result": "You meet the couple from number 12 who turn out to be the best people on the street." },
+      { "text": "Stay behind the curtains", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.05 } ], "result": "It looks fun. From here." }
+    ]
+  },
+  {
+    "id": "life_insomnia", "title": "Four in the morning",
+    "text": "You've been waking at four every morning for weeks, thinking about everything and nothing.",
+    "conditions": { "minAge": 25, "maxHealth": 80 }, "cooldown": 6,
+    "choices": [
+      { "text": "Get up and write", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.1 } ], "result": "The notebook fills up. Some of it is even good." },
+      { "text": "Go to the doctor", "effects": [ { "type": "health", "amount": 3 } ], "result": "Less coffee, more walks, no screens at night. It works, annoyingly." },
+      { "text": "Lie there and worry", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "The ceiling knows all your secrets now." }
+    ]
+  },
+  {
+    "id": "life_lottery_syndicate", "title": "The pool",
+    "text": "The whole office is in a lottery pool. Every week, a small stake. Everyone except you.",
+    "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 8,
+    "choices": [
+      { "text": "Join", "chance": 0.05,
+        "success": { "text": "Five numbers and the bonus ball. Your share: enough for a new car. The office is chaos for a week.", "effects": [ { "type": "money", "amount": 150000 }, { "type": "happiness", "amount": 10 } ] },
+        "failure": { "text": "Years of small stakes and one win of forty kronor. But you were part of it.", "effects": [ { "type": "money", "amount": -1500 } ] } },
+      { "text": "Stay out", "result": "If they ever win, you'll never hear the end of it." }
+    ]
+  },
+  {
+    "id": "life_reunion_first_love", "title": "An old flame",
+    "text": "In the supermarket queue: your first love. Older, still with that laugh.",
+    "conditions": { "minAge": 35, "hasPartner": true }, "cooldown": 0,
+    "choices": [
+      { "text": "Catch up over coffee", "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "Two hours of old stories. You go home a little lighter, and very glad of the life you have." },
+      { "text": "Pretend not to see them", "result": "Your heart beats fast all the way to the car. How silly." }
+    ]
+  }
+]

@@ -1,0 +1,279 @@
+// Life at work: colleagues, bosses, change, and the jobs themselves (jobTags: office, care, manual, school, shop).
+[
+  {
+    "id": "work_office_party", "title": "The Christmas party",
+    "text": "The office Christmas party. Free drinks, a DJ, and {t.name} from accounts heading your way with a gleam in their eye.",
+    "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 3,
+    "target": { "role": "colleague", "conditions": { "minAge": 20 } },
+    "choices": [
+      { "text": "Dance on the table", "chance": 0.5, "chanceTraits": { "charming": 0.15, "social": 0.1 },
+        "success": { "text": "Legendary. People will talk about it for years – in a good way.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "Someone filmed it. HR would like a word.", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "One glass and home by ten", "effects": [ { "type": "performance", "amount": 2 } ], "result": "On Monday you're the only one who remembers everything. Useful." },
+      { "text": "Talk to {t.name} all evening", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true } ],
+        "result": "You find out you both collect old records. A work friend, maybe more than that." }
+    ]
+  },
+  {
+    "id": "work_reorganisation", "title": "Reorganisation",
+    "text": "An email with the subject \"Exciting changes ahead\". Everyone knows what that means.",
+    "conditions": { "minAge": 20, "hasJob": true, "minYear": 1985 }, "cooldown": 6,
+    "choices": [
+      { "text": "Volunteer for the new team", "chance": 0.5, "chanceTraits": { "ambitious": 0.15 },
+        "success": { "text": "New team, new boss who likes you. The change works in your favour.", "effects": [ { "type": "performance", "amount": 10 } ] },
+        "failure": { "text": "The new team is dissolved six months later.", "effects": [ { "type": "performance", "amount": -5 } ] } },
+      { "text": "Keep your head down", "chance": 0.75,
+        "success": { "text": "When the dust settles you still have a desk. Several people don't.", "effects": [] },
+        "failure": { "text": "Your position is one of the ones that \"goes away\".", "effects": [ { "type": "fire" } ] } }
+    ]
+  },
+  {
+    "id": "work_young_boss", "title": "The new boss",
+    "text": "Your new boss is twenty-nine, calls everyone \"team\" and has ideas about how you should do the job you've done for fifteen years.",
+    "conditions": { "minAge": 42, "hasJob": true }, "cooldown": 8,
+    "choices": [
+      { "text": "Give them a chance", "effects": [ { "type": "performance", "amount": 5 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ],
+        "result": "Some of the ideas are good. You'd never tell them, but some are good." },
+      { "text": "Resist every change", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -3 } ],
+        "result": "You win most of the battles. You lose the war." }
+    ]
+  },
+  {
+    "id": "work_reply_all", "title": "Reply all",
+    "text": "You meant to send the message about your boss to one colleague. You pressed \"reply all\". Four hundred people.",
+    "conditions": { "minAge": 20, "hasJob": true, "jobTags": [ "office" ], "minYear": 1996 }, "cooldown": 0,
+    "choices": [
+      { "text": "Apologise to everyone, sincerely", "chance": 0.6, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "Your boss has a sense of humour, it turns out. Barely.", "effects": [ { "type": "performance", "amount": -3 } ] },
+        "failure": { "text": "Your boss does not have a sense of humour.", "effects": [ { "type": "performance", "amount": -15 } ] } },
+      { "text": "Try to recall the message", "result": "It does not recall. Nothing ever recalls." }
+    ]
+  },
+  {
+    "id": "work_trainee", "title": "The trainee",
+    "text": "A nervous trainee has been put at the desk next to yours, and they're looking at you as if you know everything.",
+    "conditions": { "minAge": 30, "hasJob": true }, "cooldown": 5,
+    "choices": [
+      { "text": "Take them under your wing", "effects": [ { "type": "performance", "amount": 4 }, { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "Ten years later they're your boss's boss, and they still send you a card every Christmas." },
+      { "text": "Let them figure it out", "result": "Like you had to. They manage. They don't send cards." }
+    ]
+  },
+  {
+    "id": "work_conference", "title": "The conference",
+    "text": "Three days at a conference hotel. Workshops in the day, the bar in the evening, and nobody from home.",
+    "conditions": { "minAge": 25, "hasJob": true, "jobTags": [ "office" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Network like your career depends on it", "effects": [ { "type": "performance", "amount": 8 }, { "type": "trait_add", "trait": "social", "chance": 0.05 } ],
+        "result": "Forty business cards and one person you'll actually call." },
+      { "text": "Skip the bar and swim in the hotel pool", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Honestly, the best part of the conference." }
+    ]
+  },
+  {
+    "id": "work_strike", "title": "The strike",
+    "text": "The union has called a strike. Your colleagues are gathering by the gate with banners. Your boss is watching from the window.",
+    "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "manual", "care", "school" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Stand with your colleagues", "chance": 0.6,
+        "success": { "text": "Three weeks of cold coffee on the picket line – and a better agreement at the end of it.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "loyal", "chance": 0.1 } ] },
+        "failure": { "text": "The strike fails. Your boss remembers who stood at the gate.", "effects": [ { "type": "performance", "amount": -10 } ] } },
+      { "text": "Keep working", "effects": [ { "type": "performance", "amount": 5 }, { "type": "happiness", "amount": -5 } ],
+        "result": "Nobody at the gate says hello to you for a year." }
+    ]
+  },
+  {
+    "id": "work_accident", "title": "The machine",
+    "text": "A moment's lapse at the machine. A crunch, then a pain that arrives a second later.",
+    "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "manual" ] }, "cooldown": 10, "weight": 0.6,
+    "choices": [
+      { "text": "Report it properly", "effects": [ { "type": "health", "amount": -10 }, { "type": "money", "amount": 8000 } ],
+        "result": "Stitches, sick leave, and compensation. The machine gets a new guard." },
+      { "text": "Tape it up and keep going", "effects": [ { "type": "health", "amount": -15 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 } ],
+        "result": "It heals crooked. You can tell the weather by it now." }
+    ]
+  },
+  {
+    "id": "work_night_shifts", "title": "Nights",
+    "text": "Another month of night shifts. You sleep when the world is awake and eat breakfast at six in the evening.",
+    "conditions": { "minAge": 20, "hasJob": true, "jobTags": [ "care", "manual" ] }, "cooldown": 5,
+    "choices": [
+      { "text": "Ask for days", "chance": 0.5, "success": { "text": "Days it is. You see the sun again.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "\"Everyone wants days.\"", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "health", "amount": -3 } ] } },
+      { "text": "Take the night supplement and keep going", "effects": [ { "type": "money", "amount": 6000 }, { "type": "health", "amount": -4 } ], "result": "The money is good. The tiredness is permanent." }
+    ]
+  },
+  {
+    "id": "work_patient", "title": "Room 4",
+    "text": "The old man in room 4 has no visitors. He holds your hand every time you check on him and tells you about a dance hall in 1947.",
+    "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "care" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Stay a few minutes longer than you should", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "kind", "chance": 0.1 },
+          { "type": "memory", "kind": "patient", "text": "The old man in room 4 and his dance hall", "impact": 12 } ],
+        "result": "He dies a week later, peacefully, on your shift. His hand was in yours." },
+      { "text": "Keep to the schedule", "effects": [ { "type": "performance", "amount": 3 } ], "result": "There are twelve other rooms. There always are." }
+    ]
+  },
+  {
+    "id": "work_pupil", "title": "The pupil at the back",
+    "text": "A pupil in the back row has stopped doing homework, stopped talking, stopped looking up.",
+    "conditions": { "minAge": 22, "hasJob": true, "jobTags": [ "school" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Stay behind after class and ask", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "pupil", "text": "The pupil I didn't give up on", "impact": 15 } ],
+        "result": "It takes weeks before the child talks. Then it all comes out. You call the right people. Years later a letter arrives: \"You saw me.\"" },
+      { "text": "Report it to the principal and move on", "effects": [ { "type": "performance", "amount": 2 } ], "result": "The report is filed. You wonder about the back row sometimes." }
+    ]
+  },
+  {
+    "id": "work_shop_robbery", "title": "The till", "content": [ "violence" ],
+    "text": "A man in a hood points something at you across the counter. \"Open the till. Now.\"",
+    "conditions": { "minAge": 16, "hasJob": true, "jobTags": [ "shop" ] }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Give him the money", "effects": [ { "type": "ailment_add", "kind": "trauma", "chance": 0.25 }, { "type": "happiness", "amount": -6 } ],
+        "result": "Forty seconds. The police say you did exactly the right thing. You don't sleep for a week." },
+      { "text": "Press the alarm under the counter", "chance": 0.5, "chanceTraits": { "brave": 0.2 },
+        "success": { "text": "He runs. The police catch him two streets away. You're in the local paper.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.2 } ] },
+        "failure": { "text": "He sees you do it. It ends with you on the floor and him gone.", "effects": [ { "type": "health", "amount": -10 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.4 } ] } }
+    ]
+  },
+  {
+    "id": "work_customer", "title": "The customer from hell",
+    "text": "A customer is shouting at you over a receipt from 2009. The queue behind him is getting longer and angrier.",
+    "conditions": { "minAge": 16, "hasJob": true, "jobTags": [ "shop" ] }, "cooldown": 3,
+    "choices": [
+      { "text": "Smile and give him what he wants", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "performance", "amount": 3 } ], "result": "The customer is always right. The customer is also wrong." },
+      { "text": "Tell him no, firmly", "chance": 0.6, "chanceTraits": { "brave": 0.15 },
+        "success": { "text": "He leaves. The queue applauds. You'll dine out on this for years.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "He demands your manager. Your manager gives him what he wants.", "effects": [ { "type": "performance", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "work_rumours", "title": "Rumours",
+    "text": "The rumour at the coffee machine: layoffs before summer. Nobody knows who.",
+    "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 7,
+    "choices": [
+      { "text": "Start looking for another job, just in case", "effects": [ { "type": "trait_add", "trait": "paranoid", "chance": 0.05 } ],
+        "result": "You don't need it in the end. But it's good to know you could." },
+      { "text": "Work harder than ever", "effects": [ { "type": "performance", "amount": 8 }, { "type": "health", "amount": -2 } ], "result": "Late nights, early mornings. Your name isn't on the list." }
+    ]
+  },
+  {
+    "id": "work_farewell", "title": "Forty years",
+    "text": "{t.name} is retiring after forty years in the same place. There's a card going round. Nobody knows what to write.",
+    "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 6,
+    "target": { "role": "colleague", "conditions": { "minAge": 60 } },
+    "choices": [
+      { "text": "Write something real", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 } ],
+        "result": "{t.name} reads it at the party and has to stop for a moment. \"Thank you. That meant something.\"" },
+      { "text": "\"Enjoy your retirement!\"", "result": "Like everyone else. It's fine." }
+    ]
+  },
+  {
+    "id": "work_sick_colleague", "title": "Covering",
+    "text": "{t.name} has been off sick for months. Their work lands on your desk, on top of your own.",
+    "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 5,
+    "target": { "role": "colleague", "conditions": { "minAge": 20 } },
+    "choices": [
+      { "text": "Cover without complaining", "effects": [ { "type": "performance", "amount": 5 }, { "type": "health", "amount": -3 }, { "type": "ailment_add", "kind": "burnout", "chance": 0.08 } ],
+        "result": "Your boss notices. Your body notices more." },
+      { "text": "Tell your boss it's too much", "chance": 0.6, "success": { "text": "They hire a temp. You breathe again.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "\"We all have to pull together right now.\"", "effects": [ { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "work_own_business", "title": "Your own thing",
+    "text": "You've had the idea for years. A small business of your own – no boss, no meetings, all the risk.",
+    "conditions": { "minAge": 28, "maxAge": 60, "hasJob": true, "minMoney": 150000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Take the plunge", "chance": 0.4, "chanceTraits": { "ambitious": 0.15, "creative": 0.1, "lazy": -0.2 }, "chanceAttributes": { "smarts": 0.003 },
+        "success": { "text": "Two terrible years, then customers. Then more customers. It's yours.",
+          "effects": [ { "type": "money", "amount": 400000 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "own_business", "text": "Building my own company", "impact": 20 } ] },
+        "failure": { "text": "It doesn't work. You lose the savings and go back to working for someone else.",
+          "effects": [ { "type": "money", "amount": -140000 }, { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Keep the idea for later", "result": "Later has a way of never coming. But maybe." }
+    ]
+  },
+  {
+    "id": "work_abroad", "title": "Abroad",
+    "text": "Your company wants someone to run the office abroad for two years. They've asked you first.",
+    "conditions": { "minAge": 25, "maxAge": 55, "hasJob": true, "jobTags": [ "office" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": 150000 }, { "type": "performance", "amount": 10 }, { "type": "memory", "kind": "abroad", "text": "The two years abroad", "impact": 15 } ],
+        "result": "New language, new food, a view of a different sea. You come back changed." },
+      { "text": "Stay – life is here", "result": "Someone else goes. You wonder, sometimes." }
+    ]
+  },
+  {
+    "id": "work_gossip", "title": "Did you hear?",
+    "text": "{t.name} leans over. \"Did you hear about the boss and the new consultant?\"",
+    "conditions": { "minAge": 18, "hasJob": true }, "cooldown": 4,
+    "target": { "role": "colleague", "conditions": { "minAge": 18 } },
+    "choices": [
+      { "text": "Lean in", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "trait_add", "trait": "dishonest", "chance": 0.03 } ],
+        "result": "The story is better every time it's told. By Friday it's barely recognisable." },
+      { "text": "\"Not my business\"", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 5 } ], "result": "{t.name} looks slightly ashamed, and slightly annoyed." }
+    ]
+  },
+  {
+    "id": "work_interview", "title": "The interview",
+    "text": "An internal job has opened – one step up. Three people from your team have applied. So have you.",
+    "conditions": { "minAge": 23, "hasJob": true }, "cooldown": 5,
+    "choices": [
+      { "text": "Prepare like never before", "chance": 0.45, "chanceTraits": { "ambitious": 0.15, "charming": 0.1 }, "chanceAttributes": { "smarts": 0.003 },
+        "success": { "text": "You get it. The others congratulate you through their teeth.", "effects": [ { "type": "promote" }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "They pick someone from outside. Nobody from the team gets it.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Withdraw and support a colleague", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.1 } ], "result": "Your colleague gets it, and never forgets that you stepped aside." }
+    ]
+  },
+  {
+    "id": "work_ethics", "title": "The figures",
+    "text": "Your boss asks you to \"adjust\" some figures before the audit. Just this once. Everyone does it.",
+    "conditions": { "minAge": 22, "hasJob": true, "jobTags": [ "office" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Refuse", "chance": 0.6, "chanceTraits": { "brave": 0.15 },
+        "success": { "text": "Your boss backs down. A year later he's under investigation – and you're a witness, not a suspect.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.1 } ] },
+        "failure": { "text": "Your boss makes your life difficult until you leave.", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Do it", "effects": [ { "type": "performance", "amount": 6 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.2 } ], "result": "Nobody notices. You check the news every morning for a year." }
+    ]
+  },
+  {
+    "id": "work_friend", "title": "Lunch every day",
+    "text": "You and {t.name} have had lunch together every day for a year. You know about {t.his} divorce; {t.he} knows about your mother.",
+    "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 6,
+    "target": { "role": "colleague", "conditions": { "minAge": 20, "relMin": { "closeness": 40 } } },
+    "choices": [
+      { "text": "Invite {t.him} home for dinner", "effects": [ { "type": "friend_add", "to": "target" }, { "type": "happiness", "amount": 4 } ],
+        "result": "A work friend becomes a real friend. You'll be at each other's sixtieth birthdays." },
+      { "text": "Keep it at work", "result": "Some friendships live best by the coffee machine." }
+    ]
+  },
+  {
+    "id": "work_bored", "title": "Tuesday",
+    "text": "It's Tuesday. It has been Tuesday for about eleven years.",
+    "conditions": { "minAge": 35, "hasJob": true }, "cooldown": 8,
+    "choices": [
+      { "text": "Retrain for something new", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 5 } ],
+        "result": "Terrifying. Freeing. Your family thinks you've lost your mind. Maybe you have. It's great." },
+      { "text": "Find meaning outside work", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "creative", "chance": 0.1 } ],
+        "result": "The job pays for the life. The life is where you live." }
+    ]
+  },
+  {
+    "id": "work_pay_gap", "title": "The payslips",
+    "text": "A colleague shows you their payslip by accident. Same job, same years – and they earn a lot more than you.",
+    "conditions": { "minAge": 22, "hasJob": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Take it to your boss", "chance": 0.5, "chanceTraits": { "brave": 0.1, "charming": 0.1 },
+        "success": { "text": "An \"adjustment\" on next month's salary. Nobody calls it what it was.", "effects": [ { "type": "money", "amount": 20000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "\"Salaries are individual.\" Nothing changes except how you feel about the place.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Swallow it", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "You work exactly as hard as you're paid for, from now on." }
+    ]
+  },
+  {
+    "id": "work_award", "title": "Employee of the year",
+    "text": "Your name is read out at the staff meeting: employee of the year. Everyone turns to look at you.",
+    "conditions": { "minAge": 20, "hasJob": true }, "weight": 0.6, "cooldown": 10,
+    "choices": [
+      { "text": "Thank your team", "effects": [ { "type": "performance", "amount": 8 }, { "type": "happiness", "amount": 6 } ], "result": "A glass trophy, a gift card and, briefly, a parking space." }
+    ]
+  }
+]

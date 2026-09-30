@@ -2,6 +2,22 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.20.0 – 2026-09-30 · Everyday life, work and parenthood
+
+- **40 events of everyday adult life**: neighbours through the wall, Midsummer, charter trips,
+  flat-pack fights, dinner parties, a dog, a speech at a friend's wedding, a burglary, the allotment,
+  the kitchen renovation, choosing sides in a friend's divorce, a red summer cottage – and moments
+  of their time: the moon landing, Waterloo, the morning after Palme, the first mobile phone, Y2K,
+  the storm of 2005, working from the kitchen table in 2020.
+- **25 work events**, many tied to the kind of job: the Christmas party, reorganisation, a boss half
+  your age, reply-all, strikes, night shifts, the patient in room 4, the pupil at the back, a robbery
+  at the till, starting your own business, being asked to cook the books, the payslip that shows
+  you're paid less.
+- **20 parenthood events**: sleepless nights, the first word, preschool, fever, a child who is bullied
+  – or who bullies, the teenager out at two in the morning, a child who comes out, graduation, the
+  empty room, the empty nest, the grown child who moves back home, a grandchild on the way.
+- The game now has almost 300 events.
+
 ## 0.19.0 – 2026-09-30 · The dark themes, in depth
 
 - **Sexual violence between adults** – only ever as something that happens to you or someone

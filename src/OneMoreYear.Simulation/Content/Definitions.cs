@@ -228,6 +228,10 @@ public sealed class ConditionDef
     public List<string>? NotAilments { get; set; }
     /// <summary>Struggling with an addiction right now.</summary>
     public bool? Addicted { get; set; }
+    /// <summary>Attracted to people of the same sex.</summary>
+    public bool? SameSexAttraction { get; set; }
+    /// <summary>At most this many children still living at home.</summary>
+    public int? MaxChildrenAtHome { get; set; }
 }
 
 /// <summary>Picks another participant in an event, relative to the player.</summary>

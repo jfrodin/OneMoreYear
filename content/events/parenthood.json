@@ -1,0 +1,247 @@
+// Being a parent, from the sleepless first year to the child who moves back home at thirty.
+[
+  {
+    "id": "parent_sleepless", "title": "Three in the morning",
+    "text": "{t.name} has been screaming since midnight. You've tried everything. It's three in the morning and you haven't slept properly in four months.",
+    "conditions": { "minAge": 16 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "maxAge": 1 } },
+    "choices": [
+      { "text": "Walk the floor and sing", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "health", "amount": -2 } ],
+        "result": "Round and round the kitchen table. At five, {t.he} falls asleep on your chest. You don't dare move." },
+      { "text": "Take turns with {p.name}", "requires": { "hasPartner": true }, "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 5, "mutual": true } ],
+        "result": "A schedule on the fridge, and a nod in the hallway at four in the morning. You're a team." },
+      { "text": "Cry a little yourself", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "Then it passes. It always does. Nobody warned you about this part." }
+    ]
+  },
+  {
+    "id": "parent_first_word", "title": "The first word",
+    "text": "{t.name} points at you and says something that is very nearly a word.",
+    "conditions": { "minAge": 16 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 1, "maxAge": 1 } },
+    "choices": [
+      { "text": "Call everyone you know", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "first_word", "to": "target", "text": "{t.name}'s first word", "impact": 15 } ],
+        "result": "Grandma claims it was \"granny\". It wasn't. You don't argue." }
+    ]
+  },
+  {
+    "id": "parent_preschool", "title": "The first morning",
+    "text": "The first morning at preschool. {t.name} holds on to your leg and screams as if you're leaving forever.",
+    "conditions": { "minAge": 16 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 1, "maxAge": 3 } },
+    "choices": [
+      { "text": "Leave quickly, like the staff say", "effects": [ { "type": "happiness", "amount": -3 } ],
+        "result": "You cry in the car. They call at ten: {t.he} stopped after two minutes and is painting." },
+      { "text": "Stay the first week", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 6 }, { "type": "performance", "amount": -3 } ],
+        "result": "Slowly {t.he} lets go of your hand. On Friday {t.he} doesn't look back at all." }
+    ]
+  },
+  {
+    "id": "parent_fever", "title": "Forty degrees",
+    "text": "{t.name} has a fever of forty and is listless in a way that frightens you.",
+    "conditions": { "minAge": 16 }, "cooldown": 4,
+    "target": { "role": "child", "conditions": { "maxAge": 8 } },
+    "choices": [
+      { "text": "Go to the emergency room", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 5 } ],
+        "result": "Hours in the waiting room. An ear infection. Relief so strong your legs shake." },
+      { "text": "Stay home and watch through the night", "chance": 0.8,
+        "success": { "text": "By morning the fever breaks. {t.He} asks for ice cream.", "effects": [] },
+        "failure": { "text": "At four you give up and drive to the hospital. It's pneumonia. You should have come earlier, they say.", "effects": [ { "type": "happiness", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "parent_child_bullied", "title": "Tummy ache",
+    "text": "{t.name} has had a tummy ache every school morning for a month. Tonight {t.he} finally tells you why: {t.he} is being bullied.",
+    "conditions": { "minAge": 20 }, "cooldown": 5,
+    "target": { "role": "child", "conditions": { "minAge": 7, "maxAge": 15 } },
+    "choices": [
+      { "text": "Go to the school tomorrow", "chance": 0.6,
+        "success": { "text": "The school acts. It takes a term, but it stops.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 12 } ] },
+        "failure": { "text": "\"We haven't seen anything.\" In the end you move {t.him} to another school.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 6 } ] } },
+      { "text": "Teach {t.him} to stand up for {t.him}self", "effects": [ { "type": "trait_add", "who": "target", "trait": "brave", "chance": 0.2 } ],
+        "result": "Maybe it works. Maybe {t.he} just stops telling you." }
+    ]
+  },
+  {
+    "id": "parent_child_is_bully", "title": "A phone call from school",
+    "text": "The teacher calls: {t.name} is the one doing the bullying. Another child's parents are furious.",
+    "conditions": { "minAge": 20 }, "cooldown": 6,
+    "target": { "role": "child", "conditions": { "minAge": 7, "maxAge": 15 } },
+    "choices": [
+      { "text": "Make {t.him} apologise in person", "effects": [ { "type": "trait_add", "who": "target", "trait": "kind", "chance": 0.15 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 8 } ],
+        "result": "The worst afternoon of {t.his} life so far. It may also be the most important." },
+      { "text": "Defend {t.him}", "effects": [ { "type": "trait_add", "who": "target", "trait": "cruel", "chance": 0.1 } ],
+        "result": "\"My child would never.\" Your child learns something that day, too." }
+    ]
+  },
+  {
+    "id": "parent_teacher_meeting", "title": "Parent–teacher meeting",
+    "text": "Twenty minutes on a tiny chair while the teacher talks about {t.name}.",
+    "conditions": { "minAge": 20 }, "cooldown": 3,
+    "target": { "role": "child", "conditions": { "minAge": 7, "maxAge": 16 } },
+    "choices": [
+      { "text": "Push for more homework", "effects": [ { "type": "grades", "who": "target", "amount": 6 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 4 } ],
+        "result": "{t.His} grades go up. {t.His} mood goes down." },
+      { "text": "Ask whether {t.he} is happy", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ],
+        "result": "The teacher pauses. \"You know, nobody ever asks that.\"" }
+    ]
+  },
+  {
+    "id": "parent_teen_late", "title": "Two in the morning",
+    "text": "It's two in the morning. {t.name} said midnight. {t.His} phone goes straight to voicemail.",
+    "conditions": { "minAge": 25 }, "cooldown": 3,
+    "target": { "role": "child", "conditions": { "minAge": 14, "maxAge": 17 } },
+    "choices": [
+      { "text": "Drive around looking", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 5 } ],
+        "result": "You find {t.him} outside a friend's house, laughing, fine, and furious that you came." },
+      { "text": "Wait up and have it out", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 8 } ],
+        "result": "At three the door opens. The argument wakes the whole street." },
+      { "text": "Trust {t.him} and go to bed", "chance": 0.8,
+        "success": { "text": "{t.He} comes home at half past two, a bit ashamed. You pretend to have slept.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 6 } ] },
+        "failure": { "text": "The police bring {t.him} home at five. Nothing serious. This time.", "effects": [ { "type": "happiness", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "parent_teen_drinking", "title": "The smell",
+    "text": "{t.name} comes home smelling of alcohol and trying very hard to walk in a straight line.",
+    "conditions": { "minAge": 25 }, "cooldown": 4,
+    "target": { "role": "child", "conditions": { "minAge": 14, "maxAge": 17 } },
+    "choices": [
+      { "text": "Hold {t.his} hair and talk tomorrow", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 10 } ],
+        "result": "The next day you talk – really talk. {t.He} tells you more than you expected." },
+      { "text": "Grounded for a month", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ],
+        "result": "A month of slammed doors. {t.He} gets better at hiding it." }
+    ]
+  },
+  {
+    "id": "parent_child_comes_out", "title": "Something to tell you",
+    "text": "{t.name} sits down at the kitchen table, pale. \"I need to tell you something. I'm in love with someone. It's not what you expect.\"",
+    "conditions": { "minAge": 30 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 14, "sameSexAttraction": true } },
+    "choices": [
+      { "text": "\"I love you. Tell me about them.\"", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 20, "mutual": true },
+          { "type": "memory", "who": "target", "to": "player", "kind": "accepted", "text": "The day I told {name}, and nothing changed", "impact": 30 } ],
+        "result": "{t.name} bursts into tears of relief. You hear about someone wonderful for an hour." },
+      { "text": "Need time", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -10 } ],
+        "result": "\"Give me some time.\" {t.He} nods, but {t.his} face closes." },
+      { "text": "React badly", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 35 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "rejected_for_who_i_am", "text": "How {name} reacted when I came out", "impact": -45 } ],
+        "result": "Words are said that can't be unsaid. {t.He} moves out soon after." }
+    ]
+  },
+  {
+    "id": "parent_expensive_wish", "title": "Everyone else has one",
+    "text": "\"Everyone else has one.\" {t.name} wants the thing every child at school has this year, and it costs a fortune.",
+    "conditions": { "minAge": 20 }, "cooldown": 4,
+    "target": { "role": "child", "conditions": { "minAge": 6, "maxAge": 16 } },
+    "choices": [
+      { "text": "Buy it", "effects": [ { "type": "money", "amount": -4000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ], "result": "Pure joy. For about three weeks." },
+      { "text": "\"Save up for it yourself\"", "effects": [ { "type": "trait_add", "who": "target", "trait": "ambitious", "chance": 0.1 } ],
+        "result": "It takes {t.him} eight months. {t.He} takes better care of it than anything you ever bought." }
+    ]
+  },
+  {
+    "id": "parent_graduation", "title": "Graduation",
+    "text": "{t.name} runs out of the school in a white cap while you hold up a sign with an embarrassing baby photo on it.",
+    "conditions": { "minAge": 35 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 18, "maxAge": 19 } },
+    "choices": [
+      { "text": "Cry, openly", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "graduation", "to": "target", "text": "{t.name}'s graduation day", "impact": 18 } ],
+        "result": "Everyone's parents are crying. It's allowed today." }
+    ]
+  },
+  {
+    "id": "parent_moving_out", "title": "The empty room",
+    "text": "{t.name} has moved out. The room is empty. You stand in the doorway longer than you'd admit.",
+    "conditions": { "minAge": 35 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 18, "maxAge": 25, "livesWithParents": false } },
+    "choices": [
+      { "text": "Turn it into a hobby room", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "A sewing machine and a treadmill. It's a start." },
+      { "text": "Leave it exactly as it was", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "The posters stay up. {t.He} comes home at Christmas and is embarrassed by them." },
+      { "text": "Call {t.him} every day", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 3 } ],
+        "result": "\"Mum. Dad. I'm fine. It's been twelve hours.\"" }
+    ]
+  },
+  {
+    "id": "parent_empty_nest", "title": "Just the two of you",
+    "text": "The last child has moved out. It's quiet at the dinner table. {p.name} looks at you: \"So. What now?\"",
+    "conditions": { "minAge": 40, "hasPartner": true, "minChildren": 1, "maxChildrenAtHome": 0 }, "cooldown": 0,
+    "choices": [
+      { "text": "Rediscover each other", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 12, "mutual": true },
+          { "type": "relation", "who": "player", "to": "partner", "dim": "attraction", "amount": 10, "mutual": true } ],
+        "result": "Weekend trips, long dinners, a second youth. You'd forgotten you liked each other this much." },
+      { "text": "Realise you have little left to say", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -10, "mutual": true } ],
+        "result": "The children were the conversation. Now there's the radio." }
+    ]
+  },
+  {
+    "id": "parent_child_moves_back", "title": "Back again",
+    "text": "{t.name}, twenty-nine, is standing at the door with three bags. \"Just for a few months. Until I find something.\"",
+    "conditions": { "minAge": 45, "livesWithParents": false }, "cooldown": 8,
+    "target": { "role": "child", "conditions": { "minAge": 23, "maxAge": 35, "livesWithParents": false } },
+    "choices": [
+      { "text": "Of course – come in", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 }, { "type": "happiness", "amount": -2 } ],
+        "result": "A few months becomes two years. Dirty dishes and late-night talks. You'll miss it when it's over." },
+      { "text": "Help {t.him} find a flat instead", "effects": [ { "type": "money", "amount": -10000 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 6 } ],
+        "result": "A deposit, a borrowed van. {t.He}'s on {t.his} own two feet again." }
+    ]
+  },
+  {
+    "id": "parent_grandchild_news", "title": "News",
+    "text": "{t.name} has a small wrapped box for you. Inside: a tiny pair of socks.",
+    "conditions": { "minAge": 40 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 20, "hasPartner": true, "maxChildren": 0 } },
+    "choices": [
+      { "text": "Scream with joy", "effects": [ { "type": "happiness", "amount": 10 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true } ],
+        "result": "A grandparent. You – a grandparent. You start knitting the same evening." }
+    ]
+  },
+  {
+    "id": "parent_child_wedding", "title": "Giving a speech",
+    "text": "{t.name} is getting married. You're giving the parent's speech. You've written eleven drafts.",
+    "conditions": { "minAge": 40 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 20, "married": true } },
+    "choices": [
+      { "text": "Tell the story of the day {t.he} was born", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12, "mutual": true },
+          { "type": "memory", "who": "target", "to": "player", "kind": "parent_speech", "text": "{name}'s speech at my wedding", "impact": 20 } ],
+        "result": "Half the room is crying by the end. So is the bride. So is the groom." },
+      { "text": "Keep it light and funny", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Laughter all the way through. Relief on {t.name}'s face." }
+    ]
+  },
+  {
+    "id": "parent_favourite", "title": "The favourite",
+    "text": "{t.name} says it out loud at dinner: \"Everyone knows you love my sibling more.\"",
+    "conditions": { "minAge": 30, "minChildren": 2 }, "cooldown": 8,
+    "target": { "role": "child", "conditions": { "minAge": 10 } },
+    "choices": [
+      { "text": "Take {t.him} out, just the two of you", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12 }, { "type": "relation", "who": "target", "to": "player", "dim": "envy", "amount": -15 } ],
+        "result": "A whole day, just you two. {t.He} talks more than {t.he} has in months." },
+      { "text": "\"That's ridiculous\"", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ],
+        "result": "Maybe it is. Maybe it isn't. {t.He} stops bringing it up." }
+    ]
+  },
+  {
+    "id": "parent_child_first_love", "title": "Butterflies at the dinner table",
+    "text": "{t.name} has been glued to the phone all week and blushes whenever anyone says a certain name.",
+    "conditions": { "minAge": 28 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 13, "maxAge": 16 } },
+    "choices": [
+      { "text": "Tease {t.him} mercilessly", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 4 } ], "result": "{t.He} storms off. Your partner gives you a look." },
+      { "text": "Invite the sweetheart for dinner", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 } ],
+        "result": "The most awkward dinner in family history. {t.name} secretly loves you for it." }
+    ]
+  },
+  {
+    "id": "parent_school_choice", "title": "Which school?",
+    "text": "{t.name} is choosing what to study at upper secondary school. {t.He} wants to do music. You were thinking of something more... sensible.",
+    "conditions": { "minAge": 30 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 15, "maxAge": 15 } },
+    "choices": [
+      { "text": "Support {t.his} dream", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 }, { "type": "trait_add", "who": "target", "trait": "creative", "chance": 0.2 } ],
+        "result": "Whatever happens, {t.he} will remember that you believed in {t.him}." },
+      { "text": "Push for something safe", "effects": [ { "type": "grades", "who": "target", "amount": 4 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ],
+        "result": "{t.He} does as you say. {t.He} also stops playing the guitar." }
+    ]
+  }
+]
