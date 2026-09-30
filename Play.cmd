@@ -8,4 +8,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
+rem New fonts and other assets must be imported before the game can use them (quick when nothing changed).
+echo Importing assets...
+"%GODOT%" --headless --path "%~dp0game" --import >nul 2>&1
 start "" "%GODOT%" --path "%~dp0game"

@@ -10,6 +10,8 @@ public static class Ui
     {
         var l = new Label { Text = text };
         if (size != UiTheme.FontSize) l.AddThemeFontSizeOverride("font_size", size);
+        // Headings use the era's typeface (UiTheme); body text stays in the book face.
+        if (size >= 22) l.AddThemeFontOverride("font", UiTheme.Heading);
         if (color is { } c) l.AddThemeColorOverride("font_color", c);
         if (wrap)
         {

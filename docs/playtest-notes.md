@@ -194,3 +194,15 @@ _playtest-saves/2026-09-30_135024.png · playtest-saves/2026-09-30_135024.json_
 Vi behöver skapa många fler event som barn, har redan blivit repetativt att växa upp.
 
 _playtest-saves/2026-09-30_135055.png · playtest-saves/2026-09-30_135055.json_
+
+### 2026-09-30 20:32 · v0.15.0  ·  1970  ·  Elsa Lundin, 0  ·  People  ·  seed YCL69VLD
+
+Helkroppsbilderna ser helt whack ut :). Vi får nog skippa. Porträten funkar ändå tycker jag. Ser lite cilligt ut, men va fan.
+
+_playtest-saves/2026-09-30_203208.png · playtest-saves/2026-09-30_203208.json_
+
+### 2026-09-30 20:32 · v0.15.0  ·  1970  ·  Elsa Lundin, 0  ·  Family Tree  ·  seed YCL69VLD
+
+Famileträödet måste bli snyggare. Vi kan iten ha såhär
+
+_playtest-saves/2026-09-30_203223.png · playtest-saves/2026-09-30_203223.json_

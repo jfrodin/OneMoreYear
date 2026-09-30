@@ -220,9 +220,9 @@ public partial class GameScreen : Control
 
         _sidebar.AddChild(Ui.Bar("Health", p.Health, p.Health >= 50 ? UiTheme.Good : UiTheme.Bad, p.HealthLabel));
         _sidebar.AddChild(Ui.Bar("Happiness", p.Happiness, UiTheme.Info, $"{p.Happiness:0}"));
-        _sidebar.AddChild(Ui.Bar("Smarts", p.Smarts, new Color("9b8ad9"), $"{p.Smarts:0}"));
-        _sidebar.AddChild(Ui.Bar("Looks", p.Looks, new Color("d98cb3"), $"{p.Looks:0}"));
-        _sidebar.AddChild(Ui.Bar("Fitness", p.Fitness, new Color("5fb3a6"), $"{p.Fitness:0}"));
+        _sidebar.AddChild(Ui.Bar("Smarts", p.Smarts, new Color("7b68c4"), $"{p.Smarts:0}"));
+        _sidebar.AddChild(Ui.Bar("Looks", p.Looks, new Color("c46b98"), $"{p.Looks:0}"));
+        _sidebar.AddChild(Ui.Bar("Fitness", p.Fitness, new Color("3f998b"), $"{p.Fitness:0}"));
 
         _sidebar.AddChild(StatRow("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text));
         _sidebar.AddChild(StatRow("Income", p.Income, UiTheme.Text));
@@ -294,7 +294,7 @@ public partial class GameScreen : Control
                 var (size, color) = line.Importance switch
                 {
                     3 => (19, UiTheme.Text),
-                    2 => (18, new Color("cfc8ba")),
+                    2 => (18, UiTheme.Text.Lerp(UiTheme.Muted, 0.35f)),
                     _ => (16, UiTheme.Muted)
                 };
                 if (line.Category == "world") color = UiTheme.Info;
@@ -544,11 +544,17 @@ public partial class GameScreen : Control
             }
             return;
         }
-        S.AdvanceYear();
+        var report = S.AdvanceYear();
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
+        // The whole screen is rebuilt so the look follows the new year, then the paper arrives.
+        _main.ShowGame();
+        _main.ShowNewspaper(report);
+    }
+
+    public void FocusAfterNewspaper()
+    {
         _tabs.CurrentTab = TabYear;
-        RefreshAll();
         FocusDefault();
     }
 
@@ -584,7 +590,6 @@ public partial class GameScreen : Control
             if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
             // Some actions lead to a decision (job offers, university applications).
             if (S.HasUnresolvedEvents) _tabs.CurrentTab = TabYear;
-            RefreshAll();
             FocusDefault();
         });
     }
@@ -710,7 +715,7 @@ public partial class GameScreen : Control
             relBox.AddChild(Ui.Bar("Closeness", r.Closeness, UiTheme.Good));
             relBox.AddChild(Ui.Bar("Trust", r.Trust, UiTheme.Info));
             relBox.AddChild(Ui.Bar("Respect", r.Respect, UiTheme.Accent));
-            if (r.Attraction > 1) relBox.AddChild(Ui.Bar("Attraction", r.Attraction, new Color("d98cb3")));
+            if (r.Attraction > 1) relBox.AddChild(Ui.Bar("Attraction", r.Attraction, new Color("c46b98")));
             if (r.Bitterness > 1) relBox.AddChild(Ui.Bar("Bitterness", r.Bitterness, UiTheme.Bad));
             if (r.Envy > 1) relBox.AddChild(Ui.Bar("Envy", r.Envy, UiTheme.Bad));
             if (r.Fear > 1) relBox.AddChild(Ui.Bar("Fear", r.Fear, UiTheme.Bad));
@@ -730,7 +735,7 @@ public partial class GameScreen : Control
             foreach (var m in p.Memories)
             {
                 var color = m.Impact < -3 ? UiTheme.Bad : m.Impact > 3 ? UiTheme.Good : UiTheme.Muted;
-                memBox.AddChild(Ui.Label($"{m.Year}   {m.Text}", 16, color, wrap: true));
+                memBox.AddChild(UiTheme.HandLabel($"{m.Year}   {m.Text}", 23, color, wrap: true));
             }
             _personDetail.AddChild(Ui.Card(memBox));
         }
@@ -764,7 +769,7 @@ public partial class GameScreen : Control
         item.SetText(0, text);
         item.SetMetadata(0, node.Id);
         var color = node.IsReference ? UiTheme.Faint
-            : node.IsPlayer ? UiTheme.Accent : node.Played ? new Color("f0d9a8") : node.Alive ? UiTheme.Text : UiTheme.Muted;
+            : node.IsPlayer ? UiTheme.Accent : node.Played ? UiTheme.AccentDark : node.Alive ? UiTheme.Text : UiTheme.Muted;
         item.SetCustomColor(0, color);
         foreach (var child in node.Children) AddTreeNode(item, child);
     }

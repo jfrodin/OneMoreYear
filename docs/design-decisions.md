@@ -91,3 +91,16 @@ The same seed gives the same starting family and the same luck; your choices tak
 The game ships with **no** ready-made scenarios or seed lists – the test scenarios are a
 development tool only. Seed codes are eight letters and digits (no I, O, 0, 1), shown under the
 player card and on the game-over screen, typed in on the title screen (done in 0.14.0).
+
+## The look: a family album that follows the decades – 2026-09-30
+
+Chosen from three style probes (docs/style-probes):
+
+- **The base is a family album**: paper instead of a dark app, cards like things glued into the
+  album, portraits as prints with a white edge, memories in handwriting.
+- **The look follows the decade being played**: colours blend smoothly and headings change
+  typeface – sepia and typewriter in the fifties, brown and orange in the seventies, cool with
+  magenta in the eighties, clean and flat after 2000. Photos are tinted like prints of their time.
+- **Each new year opens with the family's newspaper**: the biggest family news as the headline,
+  the rest in brief, and the world in the side column.
+- Fonts are open (OFL / Apache) and live in `game/fonts` with their licences.

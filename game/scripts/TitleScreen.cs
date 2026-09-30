@@ -26,10 +26,11 @@ public partial class TitleScreen : Control
         col.CustomMinimumSize = new Vector2(520, 0);
         center.AddChild(col);
 
-        var title = Ui.Label("ONE MORE YEAR", 64, UiTheme.Accent);
+        var title = Ui.Label("ONE MORE YEAR", 72, UiTheme.Accent);
+        title.AddThemeFontOverride("font", UiTheme.Masthead);
         title.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(title);
-        var tagline = Ui.Label("Live a life. Build a family. Leave a legacy.", 20, UiTheme.Muted);
+        var tagline = UiTheme.HandLabel("Live a life. Build a family. Leave a legacy.", 30, UiTheme.Muted);
         tagline.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(tagline);
         col.AddChild(Ui.Spacer(30));

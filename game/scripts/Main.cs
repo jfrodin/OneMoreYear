@@ -17,6 +17,9 @@ public partial class Main : Control
 
     private Control? _screen;
     private Control _overlayLayer = null!;
+    private AlbumPaper _paper = null!;
+    /// <summary>Screenshot tour only: show another decade's look.</summary>
+    private int? _eraOverride;
 
     public override void _Ready()
     {
@@ -24,9 +27,9 @@ public partial class Main : Control
         SetAnchorsPreset(LayoutPreset.FullRect);
         RegisterInput();
 
-        var bg = new ColorRect { Color = UiTheme.Background, MouseFilter = MouseFilterEnum.Ignore };
-        bg.SetAnchorsPreset(LayoutPreset.FullRect);
-        AddChild(bg);
+        _paper = new AlbumPaper();
+        AddChild(_paper);
+        _paper.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
 
         _overlayLayer = new Control { MouseFilter = MouseFilterEnum.Ignore, ZIndex = 10 };
         _overlayLayer.SetAnchorsPreset(LayoutPreset.FullRect);
@@ -205,10 +208,20 @@ public partial class Main : Control
             _screen.QueueFree();
         }
         Ui.Clear(_overlayLayer);
+        ApplyEra();
         _screen = screen;
         screen.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(screen);
         MoveChild(_overlayLayer, -1);
+    }
+
+    /// <summary>The look follows the year being played (UiTheme eras); 1970 before any game has started.</summary>
+    private void ApplyEra()
+    {
+        int year = _eraOverride ?? Session?.Year ?? 1970;
+        UiTheme.SetYear(year);
+        Theme = UiTheme.Build();
+        _paper.QueueRedraw();
     }
 
     public void ShowTitle()
@@ -328,6 +341,24 @@ public partial class Main : Control
         Ui.FocusLater(first ?? done);
     }
 
+    /// <summary>A new year begins: the family's newspaper, on top of the (already updated) game screen.</summary>
+    public void ShowNewspaper(YearReport report)
+    {
+        if (Session == null) return;
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.55f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+        center.AddChild(Newspaper.Build(Session, report, () =>
+        {
+            _overlayLayer.RemoveChild(dim);
+            dim.QueueFree();
+            if (_screen is GameScreen game) game.FocusAfterNewspaper();
+        }));
+        _overlayLayer.AddChild(dim);
+    }
+
     public void ShowMessage(string title, string text, System.Action? onClose = null)
     {
         var previousFocus = GetViewport().GuiGetFocusOwner();
@@ -429,6 +460,8 @@ public partial class Main : Control
                 }
                 if (Session!.NeedsSuccession) ShowSuccession(); else ShowGame();
                 break;
+            case 24: ShowNewspaper(new YearReport(Session!.Year, Session.Player.Age(Session.Year), Session.NewsThisYear(), false)); break;
+            case 27: Shot("02_newspaper"); Ui.Clear(_overlayLayer); break;
             case 30: Shot("02_year"); break;
             case 32: if (_screen is GameScreen g1) g1.ShowTab(1); break;
             case 40: Shot("03_family"); break;
@@ -441,7 +474,9 @@ public partial class Main : Control
             case 72: ShowContentSettings(Session); break;
             case 75: Shot("07_content"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
             case 77: ShowSuccession(); break;
-            case 82: Shot("08_succession"); GetTree().Quit(); break;
+            case 82: Shot("08_succession"); _eraOverride = 1956; ShowGame(); break;
+            case 86: Shot("09_era_1956"); _eraOverride = 1987; ShowGame(); break;
+            case 90: Shot("10_era_1987"); GetTree().Quit(); break;
         }
     }
 

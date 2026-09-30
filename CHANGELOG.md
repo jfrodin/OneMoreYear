@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.16.0 – 2026-09-30 · The family album
+
+- **A new look**: the game is now a family album on paper instead of a dark app. Cards sit on the
+  page with soft shadows, portraits are prints with a white edge, memories are handwritten.
+- **The look follows the decade**: colours and heading typefaces change smoothly as the years pass –
+  sepia and typewriter in the fifties, brown and orange in the seventies, magenta in the eighties,
+  clean after 2000. Photos are tinted like prints of their time.
+- **The family newspaper**: every new year opens with *The [Family] Chronicle* – the biggest family
+  news as the headline, the rest in brief, and what happened in the world.
+- Open fonts bundled: Lora, Playfair Display, Caveat, Special Elite, Fraunces, Rajdhani and Inter.
+- Play.cmd imports new assets before starting.
+
 ## 0.15.0 – 2026-09-30 · Content settings
 
 - **Choose how dark it gets**: sexual abuse, violence, murder, addiction and infidelity can each be

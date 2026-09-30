@@ -20,6 +20,8 @@ public partial class Portrait : Control
         var p = new Portrait { CustomMinimumSize = new Vector2(size, size), MouseFilter = MouseFilterEnum.Ignore };
         p._v = view;
         p._highlight = highlight;
+        // Photos look like prints of their time (sepia in the fifties, faded in the seventies).
+        if (view.Alive) p.Modulate = UiTheme.PhotoTint;
         return p;
     }
 
@@ -129,7 +131,7 @@ public partial class Portrait : Control
         float heavy = (float)_v.Heaviness;
 
         _clip = Ellipse(P(0.5f, 0.5f), _s / 2, _s / 2, 64);
-        Poly(_clip, new Color("2b303b"));
+        Poly(_clip, UiTheme.PhotoBackdrop);
 
         var skin = SkinColor(f.Skin);
         var skinShade = skin.Darkened(0.18f);
@@ -262,6 +264,9 @@ public partial class Portrait : Control
         // Hair on top.
         DrawHairTop(cx, cy, rx, ry, hair, style, baby, child, f.Curl);
 
+        // A print's white border; the player gets the era's accent colour instead.
+        float ring = Mathf.Max(2, _s * 0.035f);
+        DrawArc(P(0.5f, 0.5f), _s / 2 - ring / 2, 0, Mathf.Tau, 64, T(UiTheme.Panel.Lightened(0.35f)), ring, true);
         if (_highlight) DrawArc(P(0.5f, 0.5f), _s / 2 - 1.5f, 0, Mathf.Tau, 64, _v.Alive ? UiTheme.Accent : new Color("777777"), 3, true);
     }
 
