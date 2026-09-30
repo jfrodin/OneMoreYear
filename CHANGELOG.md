@@ -2,6 +2,11 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+
+## 0.17.1 – 2026-09-30 · Choose a decade
+
+- The start year is no longer a number to type: you choose a decade to begin in, from "The 1950s –
+  after the war" to "The 2010s – smartphones".
 ## 0.17.0 – 2026-09-30 · Playtest 3
 
 - **A real family tree**: photo cards in generations – grandparents, parents, siblings with your

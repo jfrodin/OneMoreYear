@@ -8,7 +8,19 @@ namespace OneMoreYear.Game;
 public partial class TitleScreen : Control
 {
     private Main _main = null!;
-    private SpinBox _year = null!;
+    private OptionButton _year = null!;
+
+    /// <summary>Where a life can begin: a decade and what Sweden felt like then.</summary>
+    private static readonly (int Year, string Name)[] Decades =
+    {
+        (1950, "The 1950s – after the war"),
+        (1960, "The 1960s – the record years"),
+        (1970, "The 1970s – the welfare state"),
+        (1980, "The 1980s – yuppies and video"),
+        (1990, "The 1990s – crisis and the EU"),
+        (2000, "The 2000s – everyone online"),
+        (2010, "The 2010s – smartphones"),
+    };
     private LineEdit _seed = null!;
     private OptionButton _scenario = null!;
     private Label _scenarioInfo = null!;
@@ -47,10 +59,12 @@ public partial class TitleScreen : Control
         // New game options
         var options = Ui.VBox(10);
         var yearRow = Ui.HBox(12);
-        var yearLabel = Ui.Label("Start year", 18, UiTheme.Muted);
+        var yearLabel = Ui.Label("Begin in", 18, UiTheme.Muted);
         yearLabel.CustomMinimumSize = new Vector2(140, 0);
         yearRow.AddChild(yearLabel);
-        _year = new SpinBox { MinValue = 1950, MaxValue = 2020, Step = 1, Value = 1970, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        _year = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+        foreach (var (_, name) in Decades) _year.AddItem(name);
+        _year.Selected = 2;
         yearRow.AddChild(_year);
         options.AddChild(yearRow);
 
@@ -108,7 +122,7 @@ public partial class TitleScreen : Control
     private void StartNew()
     {
         string? seed = string.IsNullOrWhiteSpace(_seed.Text) ? null : _seed.Text;
-        _main.StartNewGame((int)_year.Value, seed, SelectedScenario?.Id);
+        _main.StartNewGame(Decades[_year.Selected].Year, seed, SelectedScenario?.Id);
     }
 
     private ScenarioDef? SelectedScenario => _scenario.Selected > 0 ? _scenarios[_scenario.Selected - 1] : null;
@@ -116,7 +130,7 @@ public partial class TitleScreen : Control
     private void UpdateScenarioInfo()
     {
         var s = SelectedScenario;
-        _year.Editable = s == null;
+        _year.Disabled = s != null;
         _scenarioInfo.Text = s == null ? "" : $"{s.Description}\nStarts in {s.StartYear}{(s.Age > 0 ? $", aged {s.Age}" : "")}. A seed above replaces the scenario's own.";
         _scenarioInfo.Visible = s != null;
     }
