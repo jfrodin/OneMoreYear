@@ -337,4 +337,27 @@ public class CrimeTests
         s.PerformAction("crime_burglary", null);
         Assert.True(p.Happiness < before, "A kind person should feel guilty");
     }
+
+    [Fact]
+    public void Every_test_scenario_starts_where_it_promises()
+    {
+        var scenarios = GameSession.AvailableScenarios();
+        Assert.NotEmpty(scenarios);
+        foreach (var sc in scenarios)
+        {
+            var s = GameSession.NewGame(new NewGameOptions { ScenarioId = sc.Id });
+            Assert.True(s.Player.IsAlive, sc.Id);
+            Assert.False(s.GameOver, sc.Id);
+            Assert.Equal(sc.Age, s.Player.Age(s.Year));
+            foreach (var trait in sc.Player?.Traits ?? new())
+                Assert.Contains(trait, s.Player.Traits);
+            // The same scenario always gives the same start.
+            var again = GameSession.NewGame(new NewGameOptions { ScenarioId = sc.Id });
+            Assert.Equal(s.Player.FullName, again.Player.FullName);
+        }
+        var secret = GameSession.NewGame(new NewGameOptions { ScenarioId = "the_family_secret" });
+        Assert.Contains(secret.World.Secrets, x => x.Kind == "abuse" && x.VictimId == secret.Player.Id);
+        var poor = GameSession.NewGame(new NewGameOptions { ScenarioId = "nothing_to_lose" });
+        Assert.Contains(Kinship.Parents(poor.World, poor.Player), p => p.Addiction == "alcohol");
+    }
 }

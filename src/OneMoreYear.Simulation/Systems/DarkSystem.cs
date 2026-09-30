@@ -147,8 +147,13 @@ public static class DarkSystem
             .Where(c => !w.Secrets.Any(s => s.Kind == "abuse" && s.VictimId == c.Id))
             .ToList();
         if (children.Count == 0) return;
-        var child = ctx.Rng.Pick(children);
+        StartAbuse(ctx, predator, ctx.Rng.Pick(children));
+    }
 
+    /// <summary>The abuse begins and becomes a secret. Only its consequences are ever shown.</summary>
+    public static void StartAbuse(SimContext ctx, Person predator, Person child)
+    {
+        var w = ctx.World;
         w.Secrets.Add(new Secret
         {
             Id = w.Secrets.Count + 1,

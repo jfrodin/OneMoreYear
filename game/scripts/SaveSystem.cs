@@ -6,7 +6,10 @@ namespace OneMoreYear.Game;
 /// <summary>A single autosave slot in the user data folder.</summary>
 public static class SaveSystem
 {
-    private const string Path = "user://save.json";
+    // Automated runs (smoke test, screenshot tour) get their own slot so they never touch the player's save.
+    private static readonly string Path = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="))
+        ? "user://test_save.json"
+        : "user://save.json";
 
     public static bool HasSave => FileAccess.FileExists(Path);
 

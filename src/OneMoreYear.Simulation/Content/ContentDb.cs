@@ -13,6 +13,7 @@ public sealed class ContentDb
     public List<OccupationDef> Occupations { get; } = new();
     public Dictionary<string, ProgrammeDef> Programmes { get; } = new();
     public Dictionary<string, CrimeDef> Crimes { get; } = new();
+    public List<ScenarioDef> Scenarios { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
 
@@ -73,6 +74,10 @@ public sealed class ContentDb
                 {
                     foreach (var p in Deserialize<List<ProgrammeDef>>(json)) db.Programmes[p.Id] = p;
                 }
+                else if (path.EndsWith("scenarios.json"))
+                {
+                    db.Scenarios.AddRange(Deserialize<List<ScenarioDef>>(json));
+                }
                 else if (path.EndsWith("occupations.json"))
                 {
                     db.Occupations.AddRange(Deserialize<List<OccupationDef>>(json));
@@ -125,6 +130,10 @@ public sealed class ContentDb
         foreach (var p in Programmes.Values)
             foreach (var o in p.LeadsTo)
                 if (Occupation(o) == null) errors.Add($"Programme {p.Id}: unknown occupation {o}");
+        foreach (var s in Scenarios)
+            foreach (var t in new[] { s.Player, s.Parents, s.Father, s.Mother, s.Grandfather })
+                foreach (var trait in t?.Traits ?? new())
+                    if (!Traits.ContainsKey(trait)) errors.Add($"Scenario {s.Id}: unknown trait {trait}");
         foreach (var e in Events.Values)
         {
             if (e.Choices.Count == 0 && e.DynamicChoices == null) errors.Add($"Event {e.Id} has no choices.");

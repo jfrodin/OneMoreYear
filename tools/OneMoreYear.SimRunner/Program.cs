@@ -1,5 +1,6 @@
 // Headless balancing tool: plays games automatically and prints the family chronicle and stats.
 // Usage: dotnet run --project tools/OneMoreYear.SimRunner -- [seed] [years] [startYear] [--quiet]
+// Or: --scenarios (where each test scenario starts), --scenario=id (auto-play from a scenario)
 using OneMoreYear.Simulation;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -8,12 +9,17 @@ if (args.FirstOrDefault(a => a.StartsWith("--load=")) is { } loadArg)
     Inspect.Run(loadArg["--load=".Length..], args.FirstOrDefault(a => a.StartsWith("--who="))?["--who=".Length..] ?? "");
     return;
 }
-ulong seed = args.Length > 0 && ulong.TryParse(args[0], out var s) ? s : 1;
+if (args.FirstOrDefault(a => a.StartsWith("--find-seed=")) is { } fs) { SeedSearch.Run(fs["--find-seed=".Length..], 30); return; }
+if (args.Contains("--scenarios")) { ScenarioReport.Run(); return; }
+ulong? givenSeed = args.Length > 0 && ulong.TryParse(args[0], out var s) ? s : null;
 int years = args.Length > 1 && int.TryParse(args[1], out var y) ? y : 120;
 int startYear = args.Length > 2 && int.TryParse(args[2], out var sy) ? sy : 1950;
 bool quiet = args.Contains("--quiet");
+string? scenarioId = args.FirstOrDefault(a => a.StartsWith("--scenario="))?["--scenario=".Length..];
 
-var session = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = startYear });
+// A scenario brings its own seed unless one is given.
+var session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, ScenarioId = scenarioId, Seed = givenSeed ?? (scenarioId == null ? 1UL : null) });
+ulong seed = session.World.Seed;
 var bot = new AutoPlayer(seed);
 var watch = System.Diagnostics.Stopwatch.StartNew();
 

@@ -1,0 +1,61 @@
+// Test scenarios: fixed seeds with tweaks, so a playtester can jump straight into a situation.
+// Tweaks are applied after the family is created; "age" then fast-forwards the player's life
+// (events answered automatically) before the scenario hands over. Money is in 2020-kronor.
+// Groups: player, parents (both), father, mother, grandfather (mother's father).
+[
+  {
+    "id": "old_money", "name": "Old money",
+    "description": "Born into a rich family with a big inheritance waiting. Ambitious and charming. What will money do to you?",
+    "seed": 1001, "startYear": 1965, "age": 0,
+    "player": { "traits": [ "ambitious", "charming" ], "smarts": 70, "looks": 70 },
+    "parents": { "money": 6000000, "ownsHome": true, "traits": [ "greedy" ] },
+    "grandfather": { "money": 15000000 }
+  },
+  {
+    "id": "nothing_to_lose", "name": "Nothing to lose",
+    "description": "A poor family in debt. Your father drinks and has a temper. Can you break the pattern?",
+    "seed": 1002, "startYear": 1975, "age": 0,
+    "parents": { "money": -150000, "unemployed": true },
+    "father": { "traits": [ "addictive", "hot_tempered" ], "addiction": "alcohol" },
+    "player": { "smarts": 45 }
+  },
+  {
+    "id": "sunshine", "name": "Sunshine",
+    "description": "Kind, cheerful, devoted parents. You are kind too. How long does the sunshine last?",
+    "seed": 1003, "startYear": 1980, "age": 0,
+    "parents": { "traits": [ "kind", "devoted_parent", "cheerful" ] },
+    "player": { "traits": [ "kind", "cheerful", "resilient" ] }
+  },
+  {
+    "id": "the_family_secret", "name": "The family secret",
+    "description": "Your grandfather is loved by everyone – and hides something dark. You are six. (Dark theme: abuse, shown only through its consequences.)",
+    "seed": 1004, "startYear": 1970, "age": 6,
+    "grandfather": { "traits": [ "predatory", "charming" ] },
+    "storyline": "abuse"
+  },
+  {
+    "id": "born_bad", "name": "Born bad",
+    "description": "You are 17, cruel, hot-tempered and drawn to easy money. Crime, violence, prison – or a turnaround?",
+    "seed": 1005, "startYear": 1978, "age": 17,
+    "player": { "traits": [ "cruel", "hot_tempered", "criminal" ] }
+  },
+  {
+    "id": "scandal", "name": "Scandal",
+    "description": "Your parents are unfaithful and jealous. Secrets are waiting to come out. You are 12.",
+    "seed": 1006, "startYear": 1985, "age": 12,
+    "father": { "traits": [ "unfaithful", "dishonest" ] },
+    "mother": { "traits": [ "jealous", "unfaithful" ] }
+  },
+  {
+    "id": "grown_up", "name": "Grown up",
+    "description": "Skip childhood: you are 26, with a job and a life. Good for testing adult life, love and money.",
+    "seed": 1007, "startYear": 1970, "age": 26,
+    "player": { "money": 150000 }
+  },
+  {
+    "id": "late_in_life", "name": "Late in life",
+    "description": "You are 62 with grown children and grandchildren on the way. Wills, health and the end of a life.",
+    "seed": 28, "startYear": 1950, "age": 62,
+    "player": { "money": 900000, "ownsHome": true }
+  }
+]

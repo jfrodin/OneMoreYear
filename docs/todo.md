@@ -26,3 +26,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 - [ ] Some family members become extremely rich after many generations – rebalance savings, returns
   and inheritance.
 - [ ] Many relationships drift towards "Neutral" over the decades – check drift and contact rules.
+- [ ] The abuse storyline can pile up in one family (seed 1008 from 1950: six abuse secrets in 65 years) –
+  check how the predatory trait is inherited and how often it strikes.
+- [ ] Played without actions, few players find a partner or have children (see `--find-seed=late_in_life`) –
+  check how often dating happens by itself.

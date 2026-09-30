@@ -2,6 +2,16 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.9.1 – 2026-09-30 · Test scenarios
+
+- **Scenarios** on the title screen: eight fixed starting situations for testing – old money, a poor
+  home with a drinking father, a sunny family, a grandfather with a dark secret, a cruel teenager, a
+  family full of affairs, a grown-up life at 26 and a late life at 62. See docs/test-scenarios.md.
+- Scenarios that start later in life play the early years automatically; the chronicle shows the life so far.
+- A seed typed together with a scenario gives the same kind of family with other people.
+- Developers: `--scenario=id` starts one directly; SimRunner has `--scenarios` and `--find-seed=id`.
+- Fixed: the smoke test and screenshot tour no longer overwrite your autosave (they use their own slot).
+
 ## 0.9.0 – 2026-09-30 · Crime and punishment
 
 - **Outside the law**: shoplifting, burglary, car theft, drug dealing, fraud, robbery – and against

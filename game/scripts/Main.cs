@@ -39,6 +39,13 @@ public partial class Main : Control
             if (Session.NeedsSuccession) ShowSuccession(); else ShowGame();
             return;
         }
+        // --scenario=id starts a test scenario directly (see docs/test-scenarios.md).
+        var scenario = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--scenario="));
+        if (scenario != null)
+        {
+            StartNewGame(1970, null, scenario["--scenario=".Length..]);
+            return;
+        }
 
         ShowTitle();
     }
@@ -196,9 +203,9 @@ public partial class Main : Control
         SetScreen(title);
     }
 
-    public void StartNewGame(int startYear, ulong? seed)
+    public void StartNewGame(int startYear, ulong? seed, string? scenarioId = null)
     {
-        Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, Seed = seed });
+        Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, Seed = seed, ScenarioId = scenarioId });
         SaveSystem.Save(Session);
         ShowGame();
     }

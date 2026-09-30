@@ -37,6 +37,10 @@ public sealed class GameSession
     public static GameSession NewGame(NewGameOptions options, ContentDb? content = null)
     {
         content ??= ContentDb.Embedded;
+        var scenario = options.ScenarioId == null ? null
+            : content.Scenarios.FirstOrDefault(s => s.Id == options.ScenarioId)
+              ?? throw new ArgumentException($"Unknown scenario '{options.ScenarioId}'.");
+        if (scenario != null) options = options with { Seed = options.Seed ?? scenario.Seed, StartYear = scenario.StartYear };
         ulong seed = options.Seed ?? (ulong)DateTime.UtcNow.Ticks;
         var world = new World
         {
@@ -48,9 +52,14 @@ public sealed class GameSession
         };
         var session = new GameSession(world, content);
         StartingFamily.Create(session.Ctx);
+        if (scenario != null) Scenarios.ApplyFamily(session.Ctx, scenario);
         session.World.ActionPoints = session.ActionPointsFor(session.Player);
+        if (scenario != null) Scenarios.FastForward(session, scenario);
         return session;
     }
+
+    /// <summary>The test scenarios that can be started from the title screen.</summary>
+    public static IReadOnlyList<ScenarioDef> AvailableScenarios(ContentDb? content = null) => (content ?? ContentDb.Embedded).Scenarios;
 
     public string Save() => JsonSerializer.Serialize(World, ContentDb.JsonOptions);
 

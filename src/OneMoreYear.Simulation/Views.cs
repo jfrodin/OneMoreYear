@@ -8,6 +8,8 @@ public sealed record NewGameOptions
     public ulong? Seed { get; init; }
     public string CountryId { get; init; } = "sweden";
     public int StartYear { get; init; } = 1970;
+    /// <summary>A test scenario id (content/scenarios.json). Uses its start year, and its seed unless Seed is set.</summary>
+    public string? ScenarioId { get; init; }
 }
 
 public sealed record ChoiceView(int Index, string Text, string? Hint, int? ChancePercent, bool Available);

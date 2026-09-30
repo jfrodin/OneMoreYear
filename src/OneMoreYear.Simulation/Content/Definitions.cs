@@ -300,3 +300,35 @@ public sealed class EventDef
     public Dictionary<string, VarDef> Vars { get; set; } = new();
     public List<ChoiceDef> Choices { get; set; } = new();
 }
+
+/// <summary>A test scenario: a fixed seed plus tweaks to the starting family (content/scenarios.json).</summary>
+public sealed class ScenarioDef
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    public string Description { get; set; } = "";
+    public ulong Seed { get; set; }
+    public int StartYear { get; set; } = 1970;
+    /// <summary>The player's age when the scenario hands over; earlier years are played automatically.</summary>
+    public int Age { get; set; }
+    public ScenarioTweak? Player { get; set; }
+    public ScenarioTweak? Parents { get; set; }
+    public ScenarioTweak? Father { get; set; }
+    public ScenarioTweak? Mother { get; set; }
+    public ScenarioTweak? Grandfather { get; set; }
+    /// <summary>A storyline started when the scenario hands over ("abuse": the grandfather's secret).</summary>
+    public string? Storyline { get; set; }
+}
+
+public sealed class ScenarioTweak
+{
+    public List<string>? Traits { get; set; }
+    public double? Smarts { get; set; }
+    public double? Looks { get; set; }
+    public double? Fitness { get; set; }
+    /// <summary>Savings in 2020-kronor (negative = debt), per person.</summary>
+    public double? Money { get; set; }
+    public bool? OwnsHome { get; set; }
+    public bool? Unemployed { get; set; }
+    public string? Addiction { get; set; }
+}
