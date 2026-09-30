@@ -22,7 +22,16 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 - [ ] More events in general – childhood and teens got 30 in 0.17.0; adult life, work and old age next.
 - [ ] Chronicle filter per person and per generation (spec §16).
 - [ ] Localization (Swedish and more).
-- [ ] More countries.
+- [ ] **More countries**, in this order:
+  1. Prepare: move everything that is Swedish in the code into country data (welfare, schools,
+     pensions, currency, laws, holidays) – so a new country is only data and events.
+  2. **USA** – the biggest market, English, and the biggest contrast: healthcare that can ruin a
+     family, student debt, suburbs, the Vietnam draft, no parental leave.
+  3. **United Kingdom** – class, council estates, the NHS, Thatcher, the miners' strike.
+  4. **Germany** – a family split by the Wall in 1961, East and West, reunited in 1990.
+  5. Later: Poland, Italy or Spain, Japan, Finland.
+  - With several countries, **emigration** becomes a story of its own (to America in the fifties,
+    to Sweden with your names and your heritage).
 
 ## Balancing
 
