@@ -306,13 +306,20 @@ public partial class GameScreen : Control
             _yearContent.AddChild(Ui.Label("A quiet year. Spend your time on something below, visit your family – or let the year pass.", 18, UiTheme.Muted, wrap: true));
 
         // Your own life
-        var actions = S.Actions(null).Where(a => a.Category == "life").ToList();
-        if (actions.Count > 0)
+        var all = S.Actions(null);
+        foreach (var (category, title, note) in new[]
         {
+            ("prison", "Life inside", "You can't do much from a cell. Things outside go on without you."),
+            ("life", "Your life", "School, work and money have their own tabs. People are in the People tab."),
+            ("crime", "Outside the law", "Anyone can do these. Your personality decides how risky they are – and how you feel afterwards."),
+        })
+        {
+            var actions = all.Where(a => a.Category == category).ToList();
+            if (actions.Count == 0) continue;
             var box = Ui.VBox(10);
-            box.AddChild(Ui.Label("Your life", 20, UiTheme.Text));
+            box.AddChild(Ui.Label(title, 20, category == "crime" ? UiTheme.Bad : UiTheme.Text));
             box.AddChild(ActionButtons(actions, null));
-            box.AddChild(Ui.Label("School, work and money have their own tabs. People are in the People tab.", 15, UiTheme.Faint));
+            box.AddChild(Ui.Label(note, 15, UiTheme.Faint, wrap: true));
             _yearContent.AddChild(Ui.Card(box));
         }
     }
@@ -388,6 +395,15 @@ public partial class GameScreen : Control
                 : "No job right now.", 16, UiTheme.Muted, wrap: true));
         }
         _workContent.AddChild(Ui.Card(work));
+
+        if (c.CriminalRecord.Count > 0)
+        {
+            var rec = Ui.VBox(6);
+            rec.AddChild(Ui.Label("Criminal record", 21, UiTheme.Bad));
+            foreach (var line in c.CriminalRecord) rec.AddChild(Ui.Label(line, 16, UiTheme.Muted, wrap: true));
+            rec.AddChild(Ui.Label("Employers check. A record makes job offers rarer.", 15, UiTheme.Faint));
+            _workContent.AddChild(Ui.Card(rec));
+        }
 
         var actions = S.Actions(null).Where(a => a.Category == "career").ToList();
         if (actions.Count > 0)

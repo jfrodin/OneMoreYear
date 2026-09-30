@@ -130,6 +130,8 @@ public static class DarkSystem
             EventSystem.QueueSituation(ctx, eventId, new() { ["target"] = abuser.Id });
             return;
         }
+        if (abuser.Id != w.PlayerId && abuser.Age(ctx.Year) >= 15 && ctx.Rng.Chance(0.25))
+            CrimeSystem.Arrest(ctx, abuser, ctx.Content.Crimes["assault"], victim, false);
         if (abuser.PartnerId == victim.Id && ctx.Rng.Chance(0.3 + ctx.Mod(victim, "resilience") * 0.2))
             FamilySystem.BreakUp(ctx, victim, abuser);
     }
@@ -141,7 +143,7 @@ public static class DarkSystem
         var w = ctx.World;
         if (!ctx.Rng.Chance(0.07)) return;
         var children = Kinship.Distances(w, predator, 2).Keys.Select(w.Get)
-            .Where(c => c.IsAlive && c.Age(ctx.Year) is >= 5 and <= 13 && c.Id != predator.Id)
+            .Where(c => c.IsAlive && c.Age(ctx.Year) is >= 5 and <= 15 && c.Id != predator.Id)
             .Where(c => !w.Secrets.Any(s => s.Kind == "abuse" && s.VictimId == c.Id))
             .ToList();
         if (children.Count == 0) return;

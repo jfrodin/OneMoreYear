@@ -12,6 +12,7 @@ public sealed class ContentDb
     public Dictionary<string, CountryDef> Countries { get; } = new();
     public List<OccupationDef> Occupations { get; } = new();
     public Dictionary<string, ProgrammeDef> Programmes { get; } = new();
+    public Dictionary<string, CrimeDef> Crimes { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
 
@@ -63,6 +64,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("traits.json"))
                 {
                     foreach (var t in Deserialize<List<TraitDef>>(json)) db.Traits[t.Id] = t;
+                }
+                else if (path.EndsWith("crimes.json"))
+                {
+                    foreach (var c in Deserialize<List<CrimeDef>>(json)) db.Crimes[c.Id] = c;
                 }
                 else if (path.EndsWith("education.json"))
                 {

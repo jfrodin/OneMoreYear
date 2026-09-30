@@ -72,7 +72,8 @@ public static class LifeSystem
 
         bool close = p.Id == w.PlayerId || (w.Player.IsAlive && Kinship.Distances(w, w.Player, 2).ContainsKey(p.Id));
         if (p.InFamily || p.Id == w.PlayerId || close)
-            w.Log($"{p.FullName} died of {cause}, aged {age}.", ctx.Importance(true, p), "death", p.Id);
+            w.Log(cause == "murder" ? $"{p.FullName} was murdered, aged {age}." : $"{p.FullName} died of {cause}, aged {age}.",
+                ctx.Importance(true, p), "death", p.Id);
 
         // Grief.
         foreach (var other in Kinship.Circle(w, p))

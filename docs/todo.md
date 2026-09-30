@@ -5,12 +5,10 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Crime**: police, arrests, court, prison and a criminal career – built on the new traits.
-   The player can choose to commit crimes; personality sets temptation and risk (see design-decisions.md).
-2. [ ] **Portraits**: simple generated portraits (and a full-body figure) where looks come from the
+1. [ ] **Portraits**: simple generated portraits (and a full-body figure) where looks come from the
    parents' genes – hair, eyes, skin, height, build, ageing.
-3. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).
-4. [ ] **Investments**: stocks and funds, home values that change, mortgages.
+2. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).
+3. [ ] **Investments**: stocks and funds, home values that change, mortgages.
 
 ## Later
 

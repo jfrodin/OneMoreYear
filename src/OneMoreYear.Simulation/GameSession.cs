@@ -105,6 +105,7 @@ public sealed class GameSession
         FamilySystem.Update(ctx);
         SecretSystem.Update(ctx);
         DarkSystem.Update(ctx);
+        CrimeSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);
 
@@ -250,6 +251,8 @@ public sealed class GameSession
         {
             bool isSelf = def.Trigger == "self";
             if (def.Trigger != "action" && !isSelf) continue;
+            // In prison, only prison life is possible.
+            if ((player.Activity == Activity.Prison) != (def.Category == "prison")) continue;
             if (isSelf != (target == null)) continue;
             if (!EventSystem.Matches(Ctx, def.Conditions, player, player)) continue;
             if (target != null)
@@ -447,6 +450,7 @@ public sealed class GameSession
             PromotionChancePercent = (int)Math.Round(CareerSystem.PromotionChance(Ctx, p) * 100),
             PromotionNote = promotionNote,
             Ladder = ladder,
+            CriminalRecord = p.CriminalRecord.Select(r => $"{r.Year}: {Content.Crimes.GetValueOrDefault(r.CrimeId)?.Name ?? r.CrimeId} – {r.Sentence}").ToList(),
         };
     }
 

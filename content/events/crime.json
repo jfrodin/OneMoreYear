@@ -1,0 +1,109 @@
+// Crime: things the player can choose to do, temptations that come more often to some personalities,
+// and life in prison. The outcome (money, getting caught, the sentence) is decided by CrimeSystem.
+[
+  { "id": "crime_shoplift", "trigger": "self", "category": "crime", "title": "Shoplift",
+    "conditions": { "minAge": 10 },
+    "choices": [ { "text": "Pocket something", "hint": "Small money, small risk.", "effects": [ { "type": "crime", "kind": "shoplifting" } ] } ] },
+  { "id": "crime_burglary", "trigger": "self", "category": "crime", "title": "Break into a house",
+    "conditions": { "minAge": 15 },
+    "choices": [ { "text": "Do it tonight", "hint": "Could pay well – or end in prison.", "effects": [ { "type": "crime", "kind": "burglary" } ] } ] },
+  { "id": "crime_car", "trigger": "self", "category": "crime", "title": "Steal a car",
+    "conditions": { "minAge": 15 },
+    "choices": [ { "text": "Hot-wire one", "effects": [ { "type": "crime", "kind": "car_theft" } ] } ] },
+  { "id": "crime_drugs", "trigger": "self", "category": "crime", "title": "Sell drugs",
+    "conditions": { "minAge": 16 },
+    "choices": [ { "text": "Start dealing", "hint": "Big money. Prison if you're caught.", "effects": [ { "type": "crime", "kind": "drug_dealing" } ] } ] },
+  { "id": "crime_fraud", "trigger": "self", "category": "crime", "title": "Commit fraud",
+    "conditions": { "minAge": 20, "hasJob": true },
+    "choices": [ { "text": "Cook the books", "hint": "Your job gives you access to money that isn't yours.", "effects": [ { "type": "crime", "kind": "fraud" } ] } ] },
+  { "id": "crime_robbery", "trigger": "self", "category": "crime", "title": "Rob someone",
+    "conditions": { "minAge": 16 },
+    "choices": [ { "text": "Pick a victim in the dark", "hint": "Violent, and punished hard.", "effects": [ { "type": "crime", "kind": "robbery" } ] } ] },
+
+  { "id": "crime_assault", "trigger": "action", "category": "crime", "title": "Beat up",
+    "target": { "role": "known", "conditions": { "minAge": 14 } },
+    "conditions": { "minAge": 14 },
+    "choices": [ { "text": "Hurt them", "hint": "They will never forget it – and neither might the police.", "effects": [ { "type": "crime", "kind": "assault", "to": "target" } ] } ] },
+  { "id": "crime_blackmail", "trigger": "action", "category": "crime", "title": "Blackmail",
+    "target": { "role": "secret_known", "conditions": { "minAge": 18 } },
+    "conditions": { "minAge": 16 },
+    "choices": [ { "text": "\"Pay, or everyone finds out\"", "hint": "You know their secret. Some people pay. Some go to the police.", "effects": [ { "type": "crime", "kind": "blackmail", "to": "target" } ] } ] },
+  { "id": "crime_murder", "trigger": "action", "category": "crime", "title": "Kill",
+    "target": { "role": "known", "conditions": { "minAge": 18 } },
+    "conditions": { "minAge": 15 },
+    "choices": [ { "text": "End their life", "hint": "There is no coming back from this. Murders can be solved years later.", "effects": [ { "type": "crime", "kind": "murder", "to": "target" } ] } ] },
+
+  {
+    "id": "easy_money", "title": "Easy money",
+    "text": "A friend of a friend knows about a summer house where the owners are away all month. \"In and out. Nobody gets hurt.\"",
+    "conditions": { "minAge": 16, "maxAge": 50 }, "weight": 0.4, "cooldown": 6,
+    "choices": [
+      { "text": "Go along", "effects": [ { "type": "crime", "kind": "burglary" } ] },
+      { "text": "Walk away", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.05 } ], "result": "You go home. Probably the right call." }
+    ]
+  },
+  {
+    "id": "wrong_crowd", "title": "The wrong crowd",
+    "text": "The guys you've been hanging out with are making real money. They want you in.",
+    "conditions": { "minAge": 15, "maxAge": 40, "traitsAny": [ "criminal", "greedy", "dishonest", "impulsive" ] }, "weight": 2, "cooldown": 4,
+    "choices": [
+      { "text": "Join them", "effects": [ { "type": "crime", "kind": "drug_dealing" }, { "type": "trait_add", "trait": "criminal", "chance": 0.3 } ] },
+      { "text": "Say no", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "They laugh at you. You keep your distance after that." }
+    ]
+  },
+  {
+    "id": "cash_temptation", "title": "Unguarded",
+    "text": "Your boss has left the safe open – and nobody would ever check today's takings.",
+    "conditions": { "minAge": 18, "hasJob": true, "traitsAny": [ "dishonest", "greedy", "criminal", "manipulative" ] }, "weight": 1.5, "cooldown": 5,
+    "choices": [
+      { "text": "Take some", "effects": [ { "type": "crime", "kind": "fraud" } ] },
+      { "text": "Close the safe", "result": "You close it and tell your boss. They look at you a little differently." }
+    ]
+  },
+
+  {
+    "id": "prison_fight", "category": "prison", "title": "The yard",
+    "text": "In the yard, a big man with a lot of tattoos decides you're looking at him the wrong way.",
+    "conditions": { "minAge": 15 }, "cooldown": 2,
+    "choices": [
+      {
+        "text": "Stand your ground",
+        "chance": 0.5, "chanceTraits": { "brave": 0.2, "hot_tempered": 0.1 }, "chanceAttributes": { "fitness": 0.006 },
+        "success": { "text": "He backs off. After that, people leave you alone.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.3 } ] },
+        "failure": { "text": "You spend a week in the infirmary.", "effects": [ { "type": "health", "amount": -15 } ] }
+      },
+      { "text": "Look away", "effects": [ { "type": "happiness", "amount": -5 } ], "result": "You learn which corners of the yard to avoid." }
+    ]
+  },
+  {
+    "id": "prison_visit", "category": "prison", "title": "Visiting day",
+    "text": "{t.role}, {t.name}, sits on the other side of the glass.",
+    "conditions": { "minAge": 15 },
+    "target": { "role": "family", "conditions": { "minAge": 12 } }, "cooldown": 1,
+    "choices": [
+      { "text": "Say you're sorry", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 } ], "result": "{t.name} puts a hand on the glass." },
+      { "text": "Ask {t.him} not to come again", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -10 } ], "result": "You don't want {t.him} to see you here." }
+    ]
+  },
+  { "id": "prison_behave", "trigger": "self", "category": "prison", "title": "Keep your head down",
+    "conditions": { "minAge": 15 },
+    "choices": [ { "text": "Behave and hope for parole", "chance": 0.35, "chanceTraits": { "loyal": 0.1, "hot_tempered": -0.15 },
+      "success": { "text": "Good behaviour pays off: a year off your sentence.", "effects": [ { "type": "parole" } ] },
+      "failure": { "text": "The parole board says no. Not this year.", "effects": [] } } ] },
+  { "id": "prison_study", "trigger": "self", "category": "prison", "title": "Study in prison",
+    "conditions": { "minAge": 15 },
+    "choices": [ { "text": "Take the courses", "effects": [ { "type": "grades", "amount": 8 }, { "type": "attribute", "kind": "smarts", "amount": 2 } ], "result": "The library becomes your favourite place." } ] },
+  { "id": "prison_train", "trigger": "self", "category": "prison", "title": "Work out",
+    "conditions": { "minAge": 15 },
+    "choices": [ { "text": "Lift every day", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "health", "amount": 3 } ], "result": "You come out stronger than you went in." } ] },
+
+  {
+    "id": "caught_for_murder", "trigger": "situation", "category": "prison",
+    "title": "The knock on the door",
+    "text": "Years have passed. You had almost convinced yourself it never happened. Then new evidence about {t.name}'s death reached the police.",
+    "choices": [
+      { "text": "Confess", "effects": [ { "type": "parole" } ], "result": "You tell them everything. It is almost a relief." },
+      { "text": "Deny everything", "result": "The jury doesn't believe you." }
+    ]
+  }
+]

@@ -41,6 +41,7 @@ public static class EconomySystem
         if (before > 0) Record(ctx, p, savingsFactor < 1 ? "Savings (market crash)" : "Return on savings", p.Money - before);
         else Record(ctx, p, "Interest on debt", p.Money - before);
 
+        if (p.Activity == Activity.Prison) return; // the state pays for board and lodging
         if (age < 18 && p.Activity != Activity.Working) return;
 
         double gross = GrossIncome(ctx, p);

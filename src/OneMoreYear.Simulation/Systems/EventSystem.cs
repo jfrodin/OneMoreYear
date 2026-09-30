@@ -54,6 +54,7 @@ public static class EventSystem
     {
         var w = ctx.World;
         if (w.PendingEvents.Any(p => p.EventId == e.Id)) return false;
+        if ((player.Activity == Activity.Prison) != (e.Category == "prison")) return false;
         if (w.EventHistory.TryGetValue(e.Id, out var last))
         {
             if (e.Cooldown == 0) return false;
@@ -340,6 +341,8 @@ public static class EventSystem
                 if (!string.IsNullOrWhiteSpace(outcome.Text)) texts.Add(TextFormatter.Format(ctx, outcome.Text, pending));
             }
         }
+
+        texts.AddRange(pending.ExtraText.Where(t => !string.IsNullOrWhiteSpace(t)));
 
         if (pending.Vars.TryGetValue("became_affair", out var partnerId) && ctx.World.TryGet((int)partnerId) is { } partner)
             texts.Add($"But you're still with {partner.FirstName} – this is an affair now. Nobody can find out.");

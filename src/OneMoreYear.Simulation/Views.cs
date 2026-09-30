@@ -102,6 +102,7 @@ public sealed record CareerView
     public int PromotionChancePercent { get; init; }
     public string? PromotionNote { get; init; }
     public IReadOnlyList<LadderStep> Ladder { get; init; } = Array.Empty<LadderStep>();
+    public IReadOnlyList<string> CriminalRecord { get; init; } = Array.Empty<string>();
 }
 
 public sealed record LedgerView(string Label, string Amount, double Raw);

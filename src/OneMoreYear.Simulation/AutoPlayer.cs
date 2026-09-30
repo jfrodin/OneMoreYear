@@ -40,7 +40,8 @@ public sealed class AutoPlayer
             {
                 var people = session.Family().Select(p => (int?)p.Id).Append(null).ToList();
                 var target = people[_rng.Next(people.Count)];
-                var actions = session.Actions(target).Where(a => a.Enabled).ToList();
+                // Crimes only now and then, so simulations stay representative.
+                var actions = session.Actions(target).Where(a => a.Enabled && (a.Category != "crime" || _rng.Chance(0.05))).ToList();
                 if (actions.Count == 0) continue;
                 var action = actions[_rng.Next(actions.Count)];
                 OnText?.Invoke(action.Title);

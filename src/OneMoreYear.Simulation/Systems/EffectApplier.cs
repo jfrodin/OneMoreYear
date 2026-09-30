@@ -13,7 +13,8 @@ public static class EffectApplier
         "flag", "flag_remove", "log", "job_find", "job_quit", "promote", "fire", "study", "start_dating",
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
-        "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home"
+        "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
+        "crime", "parole"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -99,6 +100,13 @@ public static class EffectApplier
                     case "looks": who.Looks = Math.Clamp(who.Looks + amount, 1, 100); break;
                     case "fitness": who.Fitness = Math.Clamp(who.Fitness + amount, 1, 100); break;
                 }
+                break;
+            case "crime":
+                if (e.Kind != null && ctx.Content.Crimes.TryGetValue(e.Kind, out var crime))
+                    pending.ExtraText.Add(CrimeSystem.Commit(ctx, who, crime, to));
+                break;
+            case "parole":
+                if (who.Activity == Activity.Prison && who.PrisonYearsLeft > 1) who.PrisonYearsLeft--;
                 break;
             case "move_out":
                 HousingSystem.MoveOut(ctx, who, share: e.Kind == "share");

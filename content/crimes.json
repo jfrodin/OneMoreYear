@@ -1,0 +1,24 @@
+// Crimes. Money is in 2020-kronor. catchChance is the base chance of getting caught, changed by
+// traits (criminal-minded and dishonest people are better at it) and by how much you have done lately.
+// Sentences: a fine, or prison between prisonMin and prisonMax years (more for repeat offenders).
+// guilt: happiness lost afterwards by people who aren't criminal-minded or cruel (kind people feel it more).
+[
+  { "id": "shoplifting", "name": "Shoplifting", "did": "shoplifted", "minAge": 10,
+    "gainMin": 500, "gainMax": 3000, "catchChance": 0.25, "fine": 3000, "prisonMin": 0, "prisonMax": 0, "guilt": 3 },
+  { "id": "burglary", "name": "Burglary", "did": "broke into a house", "minAge": 15,
+    "gainMin": 20000, "gainMax": 80000, "catchChance": 0.3, "fine": 20000, "prisonMin": 0, "prisonMax": 2, "guilt": 8 },
+  { "id": "car_theft", "name": "Car theft", "did": "stole a car", "minAge": 15,
+    "gainMin": 15000, "gainMax": 60000, "catchChance": 0.3, "fine": 15000, "prisonMin": 0, "prisonMax": 1, "guilt": 6 },
+  { "id": "drug_dealing", "name": "Drug dealing", "did": "sold drugs", "minAge": 16,
+    "gainMin": 40000, "gainMax": 200000, "catchChance": 0.22, "fine": 0, "prisonMin": 1, "prisonMax": 4, "guilt": 8 },
+  { "id": "fraud", "name": "Fraud", "did": "defrauded people", "minAge": 20,
+    "gainMin": 50000, "gainMax": 500000, "catchChance": 0.25, "fine": 50000, "prisonMin": 0, "prisonMax": 3, "guilt": 6 },
+  { "id": "robbery", "name": "Robbery", "did": "robbed someone at knifepoint", "minAge": 16, "violent": true,
+    "gainMin": 5000, "gainMax": 40000, "catchChance": 0.35, "fine": 0, "prisonMin": 1, "prisonMax": 4, "guilt": 12 },
+  { "id": "assault", "name": "Assault", "did": "beat up", "minAge": 14, "targeted": true, "violent": true,
+    "gainMin": 0, "gainMax": 0, "catchChance": 0.4, "fine": 20000, "prisonMin": 0, "prisonMax": 2, "guilt": 10 },
+  { "id": "blackmail", "name": "Blackmail", "did": "blackmailed", "minAge": 16, "targeted": true,
+    "gainMin": 20000, "gainMax": 150000, "catchChance": 0.2, "fine": 30000, "prisonMin": 0, "prisonMax": 2, "guilt": 8 },
+  { "id": "murder", "name": "Murder", "did": "murdered", "minAge": 15, "targeted": true, "violent": true,
+    "gainMin": 0, "gainMax": 0, "catchChance": 0.55, "fine": 0, "prisonMin": 10, "prisonMax": 18, "guilt": 30 }
+]

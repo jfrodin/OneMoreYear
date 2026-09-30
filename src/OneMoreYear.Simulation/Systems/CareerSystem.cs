@@ -12,6 +12,7 @@ public static class CareerSystem
     public static void Update(SimContext ctx, Person p, double extraJobLossChance)
     {
         var rng = ctx.Rng;
+        if (p.Activity == Activity.Prison) return; // see CrimeSystem
         int age = p.Age(ctx.Year);
         bool isPlayer = p.Id == ctx.World.PlayerId;
 
@@ -214,6 +215,7 @@ public static class CareerSystem
         int max = 1 + (p.Education >= EducationLevel.Secondary ? 1 : 0) + (p.Education == EducationLevel.University ? 1 : 0)
                   + (p.Grades > 70 ? 1 : 0);
         double quality = 0.55 + ctx.Mod(p, "career") * 0.2 + (p.Grades - 50) / 200;
+        if (p.CriminalRecord.Count > 0) quality -= 0.25; // employers check
         int count = 0;
         for (int i = 0; i < max; i++) if (rng.Chance(quality)) count++;
         if (count == 0 && rng.Chance(0.5)) count = 1; // something simple usually turns up
@@ -368,6 +370,7 @@ public static class CareerSystem
         Activity.Working => Title(ctx, p),
         Activity.Unemployed => "Looking for work",
         Activity.Retired => "Retired",
+        Activity.Prison => $"In prison ({p.PrisonYearsLeft} year{(p.PrisonYearsLeft == 1 ? "" : "s")} left)",
         _ => ""
     };
 }

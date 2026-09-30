@@ -303,3 +303,38 @@ public class HousingTests
         Assert.StartsWith("Lives with parents in", s.Describe(p.Id).Home);
     }
 }
+
+public class CrimeTests
+{
+    [Fact]
+    public void ConvictedPlayerGoesToPrisonAndComesOut()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 12, StartYear = 1960 });
+        var p = s.Player;
+        p.BirthYear = s.Year - 30;
+        var text = CrimeSystem.Arrest(s.Ctx, p, s.Content.Crimes["robbery"], null, isPlayer: true);
+        Assert.Contains("prison", text);
+        Assert.Equal(OneMoreYear.Simulation.Model.Activity.Prison, p.Activity);
+        Assert.Single(p.CriminalRecord);
+        Assert.All(s.Actions(null), a => Assert.Equal("prison", a.Category));
+
+        var bot = new AutoPlayer(12, useActions: false);
+        for (int i = 0; i < 12 && p.Activity == OneMoreYear.Simulation.Model.Activity.Prison && p.IsAlive; i++) bot.PlayYear(s);
+        if (p.IsAlive) Assert.NotEqual(OneMoreYear.Simulation.Model.Activity.Prison, p.Activity);
+    }
+
+    [Fact]
+    public void CrimeCanBeCommittedByAnyone()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 13, StartYear = 1960 });
+        var p = s.Player;
+        p.BirthYear = s.Year - 25;
+        p.Traits.Clear();
+        p.Traits.Add("kind");
+        s.World.ActionPoints = 3;
+        Assert.Contains(s.Actions(null), a => a.Id == "crime_burglary" && a.Enabled);
+        double before = p.Happiness;
+        s.PerformAction("crime_burglary", null);
+        Assert.True(p.Happiness < before, "A kind person should feel guilty");
+    }
+}

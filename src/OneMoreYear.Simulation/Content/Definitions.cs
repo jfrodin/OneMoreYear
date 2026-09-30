@@ -108,6 +108,25 @@ public sealed class OccupationLevelDef
     public List<string>? RequiresDegree { get; set; }
 }
 
+/// <summary>A crime someone can commit (content/crimes.json).</summary>
+public sealed class CrimeDef
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    /// <summary>Past tense for the chronicle: "stole a car", "beat up" (followed by the victim).</summary>
+    public string Did { get; set; } = "";
+    public int MinAge { get; set; }
+    public double GainMin { get; set; }
+    public double GainMax { get; set; }
+    public double CatchChance { get; set; }
+    public double Fine { get; set; }
+    public int PrisonMin { get; set; }
+    public int PrisonMax { get; set; }
+    public double Guilt { get; set; }
+    public bool Targeted { get; set; }
+    public bool Violent { get; set; }
+}
+
 /// <summary>A secondary or university programme. Completing it gives a degree (its id).</summary>
 public sealed class ProgrammeDef
 {

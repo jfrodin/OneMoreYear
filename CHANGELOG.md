@@ -2,6 +2,19 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.9.0 – 2026-09-30 · Crime and punishment
+
+- **Outside the law**: shoplifting, burglary, car theft, drug dealing, fraud, robbery – and against
+  people you know: beating someone up, blackmail (if you know their secret) and murder.
+- Anyone can do it. Criminal-minded and dishonest people are better at not getting caught; kind
+  people feel guilty afterwards. Doing it again and again draws the police's attention.
+- Temptations come your way – more often if your personality leans that way.
+- Caught? A fine, or prison – longer for repeat offenders. Your family is ashamed, your partner may
+  leave, your children remember. A criminal record makes job offers rarer.
+- **Prison**: keep your head down for parole, study, work out, get into fights, receive visits.
+- Unsolved murders can be solved years later.
+- Relatives commit crimes too, and violence at home is sometimes reported to the police.
+
 ## 0.8.0 – 2026-09-30 · Where you live
 
 - Ten Swedish cities, from Stockholm to Kiruna and Vimmerby. Housing costs depend on the city.

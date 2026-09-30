@@ -93,6 +93,10 @@ public sealed class Person
     public int? WillFavoriteId { get; set; }
     public List<int> Disinherited { get; set; } = new();
 
+    /// <summary>Convictions: what, when and the sentence.</summary>
+    public List<CrimeRecord> CriminalRecord { get; set; } = new();
+    public int PrisonYearsLeft { get; set; }
+
     /// <summary>"alcohol", "drugs" or "gambling" while an addiction is active.</summary>
     public string? Addiction { get; set; }
     public int AddictionSince { get; set; }
@@ -137,4 +141,12 @@ public sealed class ExpectedChild
     public int? ParentBId { get; set; }
     public int DueYear { get; set; }
     public bool Adoption { get; set; }
+}
+
+public sealed class CrimeRecord
+{
+    public int Year { get; set; }
+    public string CrimeId { get; set; } = "";
+    /// <summary>"3 years in prison", "a fine of 5,000 kr" ...</summary>
+    public string Sentence { get; set; } = "";
 }

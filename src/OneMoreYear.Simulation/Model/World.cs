@@ -112,6 +112,8 @@ public sealed class PendingEvent
     public bool Resolved { get; set; }
     public int? ChosenIndex { get; set; }
     public string? OutcomeText { get; set; }
+    /// <summary>Extra outcome text from effects that decide things themselves (e.g. a crime).</summary>
+    public List<string> ExtraText { get; set; } = new();
     /// <summary>Generated options for events with dynamic choices (e.g. "healthcare:2" job offers).</summary>
     public List<string> Options { get; set; } = new();
 }

@@ -88,6 +88,7 @@ public static class Kinship
             case "friend": return player.FriendIds.Contains(other.Id);
             case "ex": return player.ExPartnerIds.Contains(other.Id);
             case "acquaintance": return SocialSystem.Find(player, other.Id) != null;
+            case "secret_known": return CrimeSystem.HasSecretKnownTo(w, player, other);
             case "classmate" or "colleague" or "boss":
                 return SocialSystem.Find(player, other.Id) is { Current: true } a && a.Kind == role;
             case "relative":
@@ -104,7 +105,7 @@ public static class Kinship
             {
                 distances ??= Distances(w, player, 3);
                 return distances.ContainsKey(other.Id) || player.FriendIds.Contains(other.Id) || player.ExPartnerIds.Contains(other.Id)
-                       || SocialSystem.Find(player, other.Id) != null;
+                       || SocialSystem.Find(player, other.Id) != null || CrimeSystem.HasSecretKnownTo(w, player, other);
             }
             default: return false;
         }
