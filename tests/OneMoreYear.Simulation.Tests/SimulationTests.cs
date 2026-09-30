@@ -368,6 +368,8 @@ public class CrimeTests
             Assert.Equal(father.Id, child.BiologicalFatherId);
             Assert.Equal(Sex.Female, child.Sex);
             Assert.Equal(25, child.Age(secret.Year));
+            Assert.Equal(15, child.BirthYear - mother.BirthYear);
+            Assert.DoesNotContain(Kinship.Children(w, mother), k => k.BirthYear < child.BirthYear);
             Assert.Contains(w.Secrets, x => x.Kind == "abuse" && x.SubjectId == father.Id && x.VictimId == mother.Id && !x.Revealed);
             Assert.Contains(secret.CurrentEvents(), e => e.Title == opening);
             int expectedPlayer = id.EndsWith("mother") ? mother.Id : id.EndsWith("daughter") ? child.Id : father.Id;

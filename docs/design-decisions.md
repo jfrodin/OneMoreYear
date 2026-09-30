@@ -66,7 +66,8 @@ A content check stops the crime from ever being used as a player choice.
 her grandfather, with the player as the grandfather. Declined: it makes the player the perpetrator
 of ongoing abuse of a child. What was built instead is the *Chinatown* structure: the abuse of the
 daughter lies decades back, the grandchild born from it is an adult, and the story is played from
-the grandfather's, the mother's or the grandchild's side.
+the grandfather's, the mother's or the grandchild's side. (The mother was 15 when the child was born – a
+fact of the backstory, never depicted.)
 
 ## Relationships within the family – 2026-09-30
 

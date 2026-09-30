@@ -33,8 +33,37 @@ public static class Scenarios
         Apply(ctx, mother, s.Mother);
         Apply(ctx, grandfather, s.Grandfather);
         grandfather?.Flags.Add(GrandfatherFlag);
+
+        // "The family secret": the mother was fifteen when the child was born, and her teenage
+        // boyfriend – the legal father – has always believed the child is his.
+        if (s.Storyline == "hidden_father" && mother != null && father != null)
+        {
+            MakeTeenager(ctx, mother, player.BirthYear - 15);
+            MakeTeenager(ctx, father, player.BirthYear - 17);
+            mother.PartnerStatus = father.PartnerStatus = PartnerStatus.Dating;
+        }
         mother?.Flags.Add(MotherFlag);
         father?.Flags.Add(FatherFlag);
+    }
+
+    /// <summary>Makes a generated adult a teenager living at home: no job, no degrees, no savings.</summary>
+    private static void MakeTeenager(SimContext ctx, Person p, int birthYear)
+    {
+        p.BirthYear = birthYear;
+        p.Degrees.Clear();
+        p.Education = EducationLevel.None;
+        p.OccupationId = null;
+        p.OccupationLevel = 0;
+        p.Income = 0;
+        p.YearsInJob = 0;
+        p.ProgrammeId = null;
+        p.StudyingFor = null;
+        p.StudyYearsLeft = 0;
+        p.Money = 0;
+        p.OwnsHome = false;
+        p.SharesFlat = false;
+        p.LivesWithParents = true;
+        PersonFactory.SetUpLifeStage(ctx, p);
     }
 
     private static void Apply(SimContext ctx, Person? p, ScenarioTweak? t)

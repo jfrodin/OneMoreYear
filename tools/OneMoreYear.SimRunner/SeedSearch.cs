@@ -16,7 +16,10 @@ static class SeedSearch
             var grandparents = Kinship.Grandparents(w, p).Count(g => g.IsAlive);
             var origin = w.Secrets.FirstOrDefault(x => x.Kind == "origin");
             var child = w.TryGet(origin?.ChildId);
-            Console.WriteLine($"seed {seed,4}: {p.FullName} ({p.Sex}), {p.Age(s.Year)}, gen {p.Generation}, origin={(origin != null ? $"{child!.FirstName} ({child.Sex}, {child.Age(s.Year)}), legal father alive={w.TryGet(origin.OtherId)?.IsAlive}" : "-")}, partner={w.TryGet(p.PartnerId)?.FirstName ?? "-"} " +
+            var mum = w.TryGet(origin?.VictimId);
+            int older = child == null || mum == null ? 0 : Kinship.Children(w, mum).Count(k => k.BirthYear < child.BirthYear);
+            string story = mum == null ? "" : $"mother {mum.Age(s.Year)} (had her at {child!.BirthYear - mum.BirthYear}), older siblings={older}, ";
+            Console.WriteLine($"seed {seed,4}: {story}{p.FullName} ({p.Sex}), {p.Age(s.Year)}, gen {p.Generation}, origin={(origin != null ? $"{child!.FirstName} ({child.Sex}, {child.Age(s.Year)}), legal father alive={w.TryGet(origin.OtherId)?.IsAlive}" : "-")}, partner={w.TryGet(p.PartnerId)?.FirstName ?? "-"} " +
                               $"kids={kids} grandkids={grandkids} grandparents={grandparents} job={p.Activity} prison={p.CriminalRecord.Count}");
         }
     }

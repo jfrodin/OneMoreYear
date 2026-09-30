@@ -2,6 +2,13 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.9.4 – 2026-09-30 · The family secret: ages
+
+- The mother in *The family secret* was 15 when her daughter was born (not 24, as the generated
+  family had it), and the daughter is her first child. The legal father was her 17-year-old boyfriend,
+  who has always believed the child is his. New family (seed 11): grandfather Thomas, mother Elsa,
+  daughter Sofia.
+
 ## 0.9.3 – 2026-09-30 · The family secret, three sides
 
 - **The family secret** is now a hidden father: the grandfather is also the biological father of his
