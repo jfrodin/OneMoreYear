@@ -2,6 +2,14 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.14.0 – 2026-09-30 · Shareable seeds
+
+- Every new game gets a **seed code** like `7LB2WVPK` (no I, O, 0 or 1 – easy to read out and type).
+  It is shown under the player card and on the game-over screen: give it to a friend, with the start
+  year, and they get the same family and the same luck – what happens next depends on their choices.
+- Type any text as a seed – `SVENSSON` is a world of its own. Plain numbers still work as before.
+- Playtest notes (F1) include the seed code.
+
 ## 0.13.0 – 2026-09-30 · Balancing: families
 
 - **Family stays family**: parents and grown children, siblings and grandparents no longer drift

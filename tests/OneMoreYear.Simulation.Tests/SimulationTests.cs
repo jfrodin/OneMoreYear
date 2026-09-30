@@ -473,3 +473,19 @@ public class InvestmentTests
         Assert.True(richest < 150_000_000, $"Richest has {richest / 1e6:0} million in 2020-kronor");
     }
 }
+
+public class SeedCodeTests
+{
+    [Fact]
+    public void CodesAreReadableAndGiveTheSameWorld()
+    {
+        var a = GameSession.NewGame(new NewGameOptions { StartYear = 1970 });
+        Assert.Matches("^[A-HJ-NP-Z2-9]{8}$", a.SeedCode);
+        var b = GameSession.NewGame(new NewGameOptions { StartYear = 1970, SeedCode = a.SeedCode.ToLowerInvariant() });
+        Assert.Equal(a.World.Seed, b.World.Seed);
+        Assert.Equal(a.Player.FullName, b.Player.FullName);
+        // Any text is a world; plain numbers stay the old numeric seeds.
+        Assert.Equal(12345UL, GameSession.NewGame(new NewGameOptions { SeedCode = "12345" }).World.Seed);
+        Assert.Equal(OneMoreYear.Simulation.Core.SeedCode.ToSeed("svensson"), GameSession.NewGame(new NewGameOptions { SeedCode = "Svens son" }).World.Seed);
+    }
+}

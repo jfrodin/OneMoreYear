@@ -5,8 +5,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Readable seed codes** (under Before release).
-2. [ ] **Content settings** (under Before release).
+1. [ ] **Content settings** (under Before release).
 
 ## Before release
 
@@ -18,8 +17,6 @@ Big decisions live in [design-decisions.md](design-decisions.md).
   - Asked on first start, and changeable at any time in the settings. Stored per save.
   - Events and dark systems carry content tags and check the settings.
   - Content warnings on the title screen and the store page (Steam's mature content survey).
-- [ ] **Readable seed codes** like Balatro (e.g. `7LB2WVPK`): shown in the game menu and on the
-  game-over screen, typed in on the title screen. See design-decisions.md.
 - [ ] **Strip the testing tools** from the release build.
   - Test scenarios are already hidden outside development builds; also leave `scenarios.json` out.
   - The F1 playtest notes, `--load`, `--smoke` and `--screenshots`.

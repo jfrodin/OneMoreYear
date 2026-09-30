@@ -57,7 +57,7 @@ public partial class TitleScreen : Control
         var seedLabel = Ui.Label("Seed", 18, UiTheme.Muted);
         seedLabel.CustomMinimumSize = new Vector2(140, 0);
         seedRow.AddChild(seedLabel);
-        _seed = new LineEdit { PlaceholderText = "Random", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        _seed = new LineEdit { PlaceholderText = "Random – or a code from a friend", MaxLength = 24, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         seedRow.AddChild(_seed);
         options.AddChild(seedRow);
 
@@ -95,7 +95,7 @@ public partial class TitleScreen : Control
 
     private void StartNew()
     {
-        ulong? seed = ulong.TryParse(_seed.Text.Trim(), out var s) ? s : null;
+        string? seed = string.IsNullOrWhiteSpace(_seed.Text) ? null : _seed.Text;
         _main.StartNewGame((int)_year.Value, seed, SelectedScenario?.Id);
     }
 

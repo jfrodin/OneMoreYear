@@ -6,6 +6,8 @@ namespace OneMoreYear.Simulation;
 public sealed record NewGameOptions
 {
     public ulong? Seed { get; init; }
+    /// <summary>A shareable seed code (any text). Used when Seed is not set; a new random code when neither is.</summary>
+    public string? SeedCode { get; init; }
     public string CountryId { get; init; } = "sweden";
     public int StartYear { get; init; } = 1970;
     /// <summary>A test scenario id (content/scenarios.json). Uses its start year, and its seed unless Seed is set.</summary>

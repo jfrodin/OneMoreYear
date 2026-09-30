@@ -24,6 +24,8 @@ public sealed class GameSession
     }
 
     public Person Player => World.Player;
+    /// <summary>What to tell a friend: the seed code (or number) and the start year.</summary>
+    public string SeedCode => World.SeedCode ?? World.Seed.ToString();
     public int Year => World.Year;
     public CountryDef Country => Ctx.Country;
 
@@ -40,11 +42,18 @@ public sealed class GameSession
         var scenario = options.ScenarioId == null ? null
             : content.Scenarios.FirstOrDefault(s => s.Id == options.ScenarioId)
               ?? throw new ArgumentException($"Unknown scenario '{options.ScenarioId}'.");
-        if (scenario != null) options = options with { Seed = options.Seed ?? scenario.Seed, StartYear = scenario.StartYear };
-        ulong seed = options.Seed ?? (ulong)DateTime.UtcNow.Ticks;
+        if (scenario != null)
+            options = options with
+            {
+                Seed = options.Seed ?? (string.IsNullOrWhiteSpace(options.SeedCode) ? scenario.Seed : Core.SeedCode.ToSeed(options.SeedCode)),
+                StartYear = scenario.StartYear,
+            };
+        string? code = options.Seed != null ? null : Core.SeedCode.Normalize(options.SeedCode ?? "") is { Length: > 0 } typed ? typed : Core.SeedCode.Random();
+        ulong seed = options.Seed ?? Core.SeedCode.ToSeed(code!);
         var world = new World
         {
             Seed = seed,
+            SeedCode = code,
             CountryId = options.CountryId,
             StartYear = options.StartYear,
             Year = options.StartYear,

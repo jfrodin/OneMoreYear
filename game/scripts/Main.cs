@@ -162,7 +162,7 @@ public partial class Main : Control
         if (Session == null) return $"Screen: {_screen?.GetType().Name}";
         var p = Session.Player;
         string where = _screen is GameScreen g ? g.CurrentTabName : _screen?.GetType().Name ?? "";
-        return $"v{Version}  ·  {Session.Year}  ·  {p.FullName}, {p.Age(Session.Year)}  ·  {where}  ·  seed {Session.World.Seed}";
+        return $"v{Version}  ·  {Session.Year}  ·  {p.FullName}, {p.Age(Session.Year)}  ·  {where}  ·  seed {Session.SeedCode}";
     }
 
     /// <summary>Appends the note to the notes file. Returns where it was written.</summary>
@@ -210,9 +210,9 @@ public partial class Main : Control
         SetScreen(title);
     }
 
-    public void StartNewGame(int startYear, ulong? seed, string? scenarioId = null)
+    public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null)
     {
-        Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, Seed = seed, ScenarioId = scenarioId });
+        Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId });
         SaveSystem.Save(Session);
         ShowGame();
     }
@@ -306,7 +306,7 @@ public partial class Main : Control
         {
             if (!System.Linq.Enumerable.Contains(OS.GetCmdlineUserArgs(), "--smoke")) { SetProcess(false); return; }
             _smokeStep = 0;
-            StartNewGame(1960, 12345);
+            StartNewGame(1960, "12345");
             return;
         }
         _smokeStep++;
@@ -344,7 +344,7 @@ public partial class Main : Control
 
         switch (_shotFrame)
         {
-            case 10: Shot("01_title"); StartNewGame(1970, 777); break;
+            case 10: Shot("01_title"); StartNewGame(1970, "777"); break;
             case 20:
                 for (int i = 0; i < 40 && Session is { } s; i++)
                 {

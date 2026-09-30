@@ -243,6 +243,7 @@ public partial class GameScreen : Control
             _sidebar.AddChild(Ui.Label("Answer this year's events first.", 15, UiTheme.Accent));
 
         _sidebar.AddChild(Ui.Label("N / (Y) next year  ·  Q E / LB RB switch tabs", 13, UiTheme.Faint, wrap: true));
+        _sidebar.AddChild(Ui.Label($"Seed {S.SeedCode}  ·  started {S.World.StartYear}", 13, UiTheme.Faint));
         var bottom = Ui.HBox(8);
         var feedback = Ui.Button("Feedback  (F1)", () => _main.ShowFeedback(), 42);
         feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;

@@ -14,6 +14,8 @@ public sealed class World
 
     public int SaveVersion { get; set; } = CurrentSaveVersion;
     public ulong Seed { get; set; }
+    /// <summary>The shareable code the seed came from ("7LB2WVPK"), or null for a plain number.</summary>
+    public string? SeedCode { get; set; }
     public string CountryId { get; set; } = "";
     public int StartYear { get; set; }
     public int Year { get; set; }

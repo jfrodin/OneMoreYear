@@ -88,5 +88,5 @@ fact of the backstory, never depicted.)
 Like Balatro: every game has a seed, and players can share it ("play 7LB2WVPK – what a family!").
 The same seed gives the same starting family and the same luck; your choices take it from there.
 The game ships with **no** ready-made scenarios or seed lists – the test scenarios are a
-development tool only. To do: a short, readable seed code (letters and digits instead of a long
-number), shown in the game menu and on the game-over screen, typed in on the title screen.
+development tool only. Seed codes are eight letters and digits (no I, O, 0, 1), shown under the
+player card and on the game-over screen, typed in on the title screen (done in 0.14.0).
