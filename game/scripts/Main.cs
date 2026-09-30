@@ -39,9 +39,9 @@ public partial class Main : Control
             if (Session.NeedsSuccession) ShowSuccession(); else ShowGame();
             return;
         }
-        // --scenario=id starts a test scenario directly (see docs/test-scenarios.md).
+        // --scenario=id starts a test scenario directly (development builds only, see docs/test-scenarios.md).
         var scenario = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--scenario="));
-        if (scenario != null)
+        if (scenario != null && OS.IsDebugBuild())
         {
             StartNewGame(1970, null, scenario["--scenario=".Length..]);
             return;

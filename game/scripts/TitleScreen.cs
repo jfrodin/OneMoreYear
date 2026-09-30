@@ -61,7 +61,7 @@ public partial class TitleScreen : Control
         seedRow.AddChild(_seed);
         options.AddChild(seedRow);
 
-        // Test scenarios: a fixed family and seed, sometimes starting later in life.
+        // Test scenarios (a playtesting tool, docs/test-scenarios.md): only in development builds, never in a release.
         var scenarioRow = Ui.HBox(12);
         var scenarioLabel = Ui.Label("Scenario", 18, UiTheme.Muted);
         scenarioLabel.CustomMinimumSize = new Vector2(140, 0);
@@ -72,6 +72,7 @@ public partial class TitleScreen : Control
         foreach (var s in _scenarios) _scenario.AddItem($"{s.Name}  (seed {s.Seed})");
         _scenario.ItemSelected += _ => UpdateScenarioInfo();
         scenarioRow.AddChild(_scenario);
+        scenarioRow.Visible = OS.IsDebugBuild();
         options.AddChild(scenarioRow);
         _scenarioInfo = Ui.Label("", 15, UiTheme.Faint, wrap: true);
         options.AddChild(_scenarioInfo);

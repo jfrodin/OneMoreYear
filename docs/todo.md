@@ -21,6 +21,10 @@ Big decisions live in [design-decisions.md](design-decisions.md).
   - Events and dark systems carry content tags and check the settings. Scenarios that need a theme
     that is off are greyed out.
   - Content warnings on the title screen and the store page (Steam's mature content survey).
+- [ ] **Strip the testing tools** from the release build.
+  - Test scenarios are already hidden outside development builds; also leave `scenarios.json` out.
+  - The F1 playtest notes, `--load`, `--smoke` and `--screenshots`.
+  - Decide whether players keep the seed field ("share a world") or not.
 
 ## Later
 

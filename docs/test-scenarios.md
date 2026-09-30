@@ -4,6 +4,8 @@ Fixed starting situations for playtesting. Each one is a seed plus changes to th
 and some start later in life (the years before are played automatically, and they show up in the
 chronicle as the life so far). The same scenario always gives the same family.
 
+**Development builds only** – the scenarios are hidden in a release build.
+
 **Start one:** on the title screen, choose it under *Scenario* and press *New Life*.
 If you also type a seed, it replaces the scenario's own seed: same kind of family, different people.
 
