@@ -150,28 +150,34 @@ public static class DarkSystem
         StartAbuse(ctx, predator, ctx.Rng.Pick(children));
     }
 
-    /// <summary>The abuse begins and becomes a secret. Only its consequences are ever shown.</summary>
-    public static void StartAbuse(SimContext ctx, Person predator, Person child)
+    /// <summary>
+    /// The abuse begins and becomes a secret. Only its consequences are ever shown.
+    /// <paramref name="year"/> back-dates it (a scenario that starts after it happened).
+    /// </summary>
+    public static Secret StartAbuse(SimContext ctx, Person predator, Person child, int? year = null)
     {
         var w = ctx.World;
-        w.Secrets.Add(new Secret
+        var secret = new Secret
         {
             Id = w.Secrets.Count + 1,
             Kind = "abuse",
-            Year = ctx.Year,
+            Year = year ?? ctx.Year,
             SubjectId = predator.Id,
             VictimId = child.Id,
             KnownBy = new List<int> { predator.Id, child.Id },
-        });
+        };
+        w.Secrets.Add(secret);
         string who = Kinship.Label(w, child, predator);
-        RelationshipSystem.AddMemory(ctx, child, "abused",
+        var memory = RelationshipSystem.AddMemory(ctx, child, "abused",
             $"Something happened with {predator.FirstName} ({who}) that I can never talk about", -75, predator.Id);
+        memory.Year = secret.Year;
         w.Rel(child.Id, predator.Id)[RelDim.Fear] += 50;
         child.Happiness = Math.Max(0, child.Happiness - 20);
         Traumatize(ctx, child, 0.6);
 
         if (child.Id == w.PlayerId)
             EventSystem.QueueSituation(ctx, "abuse_child", new() { ["target"] = predator.Id });
+        return secret;
     }
 
     /// <summary>Victims who grow up may one day tell the family. Then everything changes.</summary>
@@ -193,29 +199,42 @@ public static class DarkSystem
                 continue;
             }
             double chance = 0.04 + (predator.IsAlive ? 0 : 0.06) + ctx.Mod(victim, "resilience") * 0.05;
+            // When the player is the one who did it, the day of reckoning comes sooner (see the scenario "The family secret").
+            if (predator.Id == w.PlayerId) chance += 0.08;
             if (ctx.Rng.Chance(chance)) Reveal(ctx, s);
         }
     }
 
-    /// <summary>The victim tells the family. Relatives turn against the abuser.</summary>
-    public static void Reveal(SimContext ctx, Secret s)
+    /// <summary>
+    /// The victim tells the family – or the abuser confesses. Relatives turn against the abuser,
+    /// and the police may get involved.
+    /// </summary>
+    public static void Reveal(SimContext ctx, Secret s, bool confessed = false)
     {
         var w = ctx.World;
         if (s.Revealed) return;
         s.Revealed = true;
         var victim = w.Get(s.VictimId!.Value);
         var predator = w.Get(s.SubjectId);
-        w.Log($"{victim.FirstName} revealed that {predator.FullName} abused {(victim.Sex == Sex.Male ? "him" : "her")} as a child.",
+        string him = victim.Sex == Sex.Male ? "him" : "her";
+        w.Log(confessed
+                ? $"{predator.FullName} confessed to the family that {(predator.Sex == Sex.Male ? "he" : "she")} had abused {victim.FirstName} when {victim.FirstName} was a child."
+                : $"{victim.FirstName} revealed that {predator.FullName} abused {him} as a child.",
             3, "secret", victim.Id, predator.Id);
-        RelationshipSystem.AddMemory(ctx, victim, "told_family", "Finally told the family what happened", 15);
+        if (!confessed) RelationshipSystem.AddMemory(ctx, victim, "told_family", "Finally told the family what happened", 15);
         foreach (var relative in Kinship.Distances(w, victim, 2).Keys.Select(w.Get).Where(r => r.IsAlive && r.Id != predator.Id))
         {
             if (!s.KnownBy.Contains(relative.Id)) s.KnownBy.Add(relative.Id);
             RelationshipSystem.AddMemory(ctx, relative, "learned_abuse", $"Found out what {predator.FirstName} did to {victim.FirstName}", -50, predator.Id);
             RelationshipSystem.Change(ctx, relative.Id, victim.Id, RelDim.Closeness, 10);
         }
-        if (predator.IsAlive && w.TryGet(predator.PartnerId) is { } partner && ctx.Rng.Chance(0.5))
+        if (!predator.IsAlive) return;
+        if (w.TryGet(predator.PartnerId) is { } partner && ctx.Rng.Chance(0.5))
             FamilySystem.BreakUp(ctx, partner, predator);
+        if (predator.Id == w.PlayerId)
+            EventSystem.QueueSituation(ctx, "abuse_revealed", new() { ["target"] = victim.Id });
+        else if (predator.Activity != Activity.Prison && ctx.Rng.Chance(0.4))
+            CrimeSystem.Arrest(ctx, predator, ctx.Content.Crimes["child_abuse"], victim, false);
     }
 
     // --- Traits change with life ------------------------------------------------------------

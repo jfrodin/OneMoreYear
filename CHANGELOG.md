@@ -2,6 +2,15 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.9.2 – 2026-09-30 · The family secret, from the other side
+
+- The scenario **The family secret** is now played as the grandfather, aged 72. His grandchild,
+  now an adult, was abused by him years ago. The act is never shown or played; the secret, the guilt
+  and the reckoning are.
+- New situations: *Sunday dinner* (keep quiet, stay away or confess) and *Everyone knows* (admit,
+  deny or move away – with the police involved).
+- When a family member's abuse comes out, the police may now charge them too, and they can go to prison.
+
 ## 0.9.1 – 2026-09-30 · Test scenarios
 
 - **Scenarios** on the title screen: eight fixed starting situations for testing – old money, a poor

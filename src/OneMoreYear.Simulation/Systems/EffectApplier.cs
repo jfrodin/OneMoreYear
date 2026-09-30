@@ -14,7 +14,7 @@ public static class EffectApplier
         "move_in", "marry", "breakup", "child", "friend_add", "friend_remove", "will_favorite", "disinherit",
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
-        "crime", "parole"
+        "crime", "parole", "convicted"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -105,6 +105,11 @@ public static class EffectApplier
                 if (e.Kind != null && ctx.Content.Crimes.TryGetValue(e.Kind, out var crime))
                     pending.ExtraText.Add(CrimeSystem.Commit(ctx, who, crime, to));
                 break;
+            case "convicted":
+                // Found guilty of a crime committed before (e.g. after a revealed secret) – the sentence follows.
+                if (e.Kind != null && ctx.Content.Crimes.TryGetValue(e.Kind, out var convictedOf) && who.Activity != Activity.Prison)
+                    pending.ExtraText.Add(CrimeSystem.Arrest(ctx, who, convictedOf, to, who.Id == w.PlayerId).Replace("But the police find you. ", ""));
+                break;
             case "parole":
                 if (who.Activity == Activity.Prison && who.PrisonYearsLeft > 1) who.PrisonYearsLeft--;
                 break;
@@ -126,8 +131,8 @@ public static class EffectApplier
             case "reveal_abuse":
             {
                 var abuse = pending.Vars.TryGetValue("secret", out var sid) ? w.Secrets.FirstOrDefault(s => s.Id == (int)sid)
-                    : w.Secrets.FirstOrDefault(s => s.Kind == "abuse" && s.VictimId == who.Id && !s.Revealed);
-                if (abuse != null) DarkSystem.Reveal(ctx, abuse);
+                    : w.Secrets.FirstOrDefault(s => s.Kind == "abuse" && (s.VictimId == who.Id || s.SubjectId == who.Id) && !s.Revealed);
+                if (abuse != null) DarkSystem.Reveal(ctx, abuse, confessed: e.Kind == "confess");
                 break;
             }
             case "meet_through_friend":

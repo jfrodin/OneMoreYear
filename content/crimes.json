@@ -20,5 +20,8 @@
   { "id": "blackmail", "name": "Blackmail", "did": "blackmailed", "minAge": 16, "targeted": true,
     "gainMin": 20000, "gainMax": 150000, "catchChance": 0.2, "fine": 30000, "prisonMin": 0, "prisonMax": 2, "guilt": 8 },
   { "id": "murder", "name": "Murder", "did": "murdered", "minAge": 15, "targeted": true, "violent": true,
-    "gainMin": 0, "gainMax": 0, "catchChance": 0.55, "fine": 0, "prisonMin": 10, "prisonMax": 18, "guilt": 30 }
+    "gainMin": 0, "gainMax": 0, "catchChance": 0.55, "fine": 0, "prisonMin": 10, "prisonMax": 18, "guilt": 30 },
+  // Never something the player can choose (docs/design-decisions.md) – only a sentence after a revealed abuse secret.
+  { "id": "child_abuse", "name": "Child abuse", "did": "abused", "minAge": 18, "targeted": true,
+    "gainMin": 0, "gainMax": 0, "catchChance": 1, "fine": 0, "prisonMin": 2, "prisonMax": 8, "guilt": 0 }
 ]

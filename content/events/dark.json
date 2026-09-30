@@ -193,5 +193,60 @@
         "result": "Maybe one day."
       }
     ]
+  },
+
+  // When the player is the one who did it (scenario "The family secret"). It happened long before the
+  // player took over and is never described – only the guilt, the silence and the reckoning are played.
+  {
+    "id": "abuse_past", "trigger": "situation",
+    "title": "Sunday dinner",
+    "text": "The whole family is at the table. {t.name} is grown up now. {t.He} doesn't look at you once, and leaves before dessert. You both know why. Nobody else does – yet.",
+    "choices": [
+      {
+        "text": "Act as if nothing happened",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ],
+        "result": "You tell a story about the old days and everyone laughs. Everyone except {t.name}."
+      },
+      {
+        "text": "Stay away from family dinners",
+        "effects": [ { "type": "happiness", "amount": -8 } ],
+        "result": "You stop coming. People start asking why. You don't answer."
+      },
+      {
+        "text": "Tell the family the truth",
+        "hint": "There is no taking it back.",
+        "effects": [ { "type": "reveal_abuse", "kind": "confess" } ],
+        "result": "You say it. Somebody gets up and walks out without a word. {t.name} finally looks at you."
+      }
+    ]
+  },
+  {
+    "id": "abuse_revealed", "trigger": "situation",
+    "title": "Everyone knows",
+    "text": "The family knows what you did to {t.name}. The phone has stopped ringing. Your own children won't look at you. Then the police call and ask you to come in for questioning.",
+    "choices": [
+      {
+        "text": "Admit everything",
+        "effects": [ { "type": "convicted", "kind": "child_abuse", "to": "target" } ],
+        "result": "You tell them everything. The trial is short."
+      },
+      {
+        "text": "Deny it",
+        "chance": 0.45, "chanceTraits": { "manipulative": 0.15, "charming": 0.1, "dishonest": 0.1 },
+        "success": { "text": "So many years later there is no evidence. The case is dropped – but the family knows, and they always will.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 30 } ] },
+        "failure": { "text": "The court believes {t.name}.",
+          "effects": [ { "type": "convicted", "kind": "child_abuse", "to": "target" } ] }
+      },
+      {
+        "text": "Move away",
+        "hint": "The police can still find you.",
+        "chance": 0.6,
+        "success": { "text": "You move to a town where nobody knows your name. The past comes with you anyway.",
+          "effects": [ { "type": "move_city" }, { "type": "happiness", "amount": -10 } ] },
+        "failure": { "text": "They find you before you have unpacked.",
+          "effects": [ { "type": "convicted", "kind": "child_abuse", "to": "target" } ] }
+      }
+    ]
   }
 ]

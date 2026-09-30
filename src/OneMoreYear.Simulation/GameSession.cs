@@ -558,14 +558,28 @@ public sealed class GameSession
         var old = Player;
         var heir = World.Get(personId);
         string relation = Kinship.Label(World, old, heir);
-        World.PlayerId = personId;
-        World.PlayedIds.Add(personId);
+        SwitchPlayer(heir);
+        World.Log($"The story continues with {heir.FullName}, {Kinship.Genitive(old.FirstName)} {relation}, aged {heir.Age(Year)}.", 3, "succession", heir.Id, old.Id);
+    }
+
+    /// <summary>Scenarios: the player becomes someone else while the current player lives on (as an NPC).</summary>
+    internal void TakeOver(Person other)
+    {
+        var old = Player;
+        World.PlayedIds.Remove(old.Id);
+        SwitchPlayer(other);
+        World.Log($"The story follows {other.FullName}, aged {other.Age(Year)}.", 3, "succession", other.Id);
+    }
+
+    private void SwitchPlayer(Person p)
+    {
+        World.PlayerId = p.Id;
+        World.PlayedIds.Add(p.Id);
         World.EventHistory.Clear();
         World.PendingEvents.Clear();
         World.ActionsThisYear.Clear();
-        World.ActionPoints = ActionPointsFor(heir);
+        World.ActionPoints = ActionPointsFor(p);
         SocialSystem.Update(Ctx);
-        World.Log($"The story continues with {heir.FullName}, {Kinship.Genitive(old.FirstName)} {relation}, aged {heir.Age(Year)}.", 3, "succession", heir.Id, old.Id);
     }
 
     /// <summary>Ends the game when nobody is left to continue the family.</summary>

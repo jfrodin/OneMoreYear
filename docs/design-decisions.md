@@ -56,6 +56,12 @@ never forbid a choice. Chance decides the outcome (getting caught, how the famil
 exists only as something other characters do – a secret and a trauma the family has to live with.
 This is a firm line (and it also keeps the game releasable on Steam, consoles and within the law).
 
+*Addition 2026-09-30:* the player may **take over** a character who did it in the past (the scenario
+"The family secret", or an heir). The act is then backstory: never shown, never played, and never
+repeated. Characters are not abusers while the player plays them. What gets played is the guilt,
+the silence and the reckoning: confessing, denying, the family's reaction, the police and prison.
+A content check stops the crime from ever being used as a player choice.
+
 ## Relationships within the family – 2026-09-30
 
 - **Close relatives never become couples** – parents and children, siblings and half-siblings,

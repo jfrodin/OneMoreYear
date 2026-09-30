@@ -10,6 +10,8 @@ namespace OneMoreYear.Simulation.Systems;
 /// </summary>
 public static class Scenarios
 {
+    private const string GrandfatherFlag = "scenario_grandfather";
+
     /// <summary>Applied right after the starting family is created.</summary>
     public static void ApplyFamily(SimContext ctx, ScenarioDef s)
     {
@@ -28,6 +30,7 @@ public static class Scenarios
         Apply(ctx, father, s.Father);
         Apply(ctx, mother, s.Mother);
         Apply(ctx, grandfather, s.Grandfather);
+        grandfather?.Flags.Add(GrandfatherFlag);
     }
 
     private static void Apply(SimContext ctx, Person? p, ScenarioTweak? t)
@@ -52,7 +55,7 @@ public static class Scenarios
         }
     }
 
-    /// <summary>Plays the years before the scenario's start age, then starts its storyline.</summary>
+    /// <summary>Plays the years before the scenario's start age, then hands over and starts its storyline.</summary>
     public static void FastForward(GameSession session, ScenarioDef s)
     {
         var bot = new AutoPlayer(session.World.Seed, useActions: false);
@@ -60,14 +63,27 @@ public static class Scenarios
         while (session.Player.Age(session.Year) < s.Age && !session.GameOver && guard++ < 150)
             bot.PlayYear(session);
         if (s.Player is { } pt) Apply(session.Ctx, session.Player, new ScenarioTweak { Money = pt.Money, OwnsHome = pt.OwnsHome, Unemployed = pt.Unemployed });
-        StartStoryline(session.Ctx, s);
+
+        var ctx = session.Ctx;
+        var child = session.Player;
+        var grandfather = ctx.World.People.FirstOrDefault(p => p.Flags.Contains(GrandfatherFlag) && p.IsAlive);
+        if (s.PlayAs == "grandfather" && grandfather != null)
+        {
+            session.TakeOver(grandfather);
+            EventSystem.GenerateRandomEvents(ctx);
+        }
+        if (s.Storyline == "abuse_past" && grandfather != null) AbusePast(ctx, grandfather, child);
     }
 
-    private static void StartStoryline(SimContext ctx, ScenarioDef s)
+    /// <summary>
+    /// The grandfather abused the grandchild years ago (never shown). The player – the grandfather –
+    /// starts with the secret and lives with the consequences. The player never makes the choice to abuse.
+    /// </summary>
+    private static void AbusePast(SimContext ctx, Person grandfather, Person grandchild)
     {
-        if (s.Storyline != "abuse") return;
-        var w = ctx.World;
-        var predator = Kinship.Grandparents(w, w.Player).Where(p => p.IsAlive && p.HasTrait("predatory")).FirstOrDefault();
-        if (predator != null) DarkSystem.StartAbuse(ctx, predator, w.Player);
+        int when = Math.Min(ctx.Year - 1, grandchild.BirthYear + 9);
+        var secret = DarkSystem.StartAbuse(ctx, grandfather, grandchild, when);
+        if (grandfather.Id == ctx.World.PlayerId)
+            EventSystem.QueueSituation(ctx, "abuse_past", new() { ["target"] = grandchild.Id }, new() { ["secret"] = secret.Id });
     }
 }

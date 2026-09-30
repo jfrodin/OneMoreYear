@@ -28,10 +28,10 @@
   },
   {
     "id": "the_family_secret", "name": "The family secret",
-    "description": "Your grandfather is loved by everyone – and hides something dark. You are six. (Dark theme: abuse, shown only through its consequences.)",
-    "seed": 1004, "startYear": 1970, "age": 6,
-    "grandfather": { "traits": [ "predatory", "charming" ] },
-    "storyline": "abuse"
+    "description": "You are the grandfather – charming, respected, loved by everyone. Long ago you abused your grandchild, who is an adult now. It has never been said out loud. You live with the secret, and with what happens when it comes out. (Dark theme: the abuse itself is never shown or played – only the consequences.)",
+    "seed": 1004, "startYear": 1968, "age": 22,
+    "grandfather": { "traits": [ "charming" ] },
+    "playAs": "grandfather", "storyline": "abuse_past"
   },
   {
     "id": "born_bad", "name": "Born bad",

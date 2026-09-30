@@ -348,15 +348,18 @@ public class CrimeTests
             var s = GameSession.NewGame(new NewGameOptions { ScenarioId = sc.Id });
             Assert.True(s.Player.IsAlive, sc.Id);
             Assert.False(s.GameOver, sc.Id);
-            Assert.Equal(sc.Age, s.Player.Age(s.Year));
-            foreach (var trait in sc.Player?.Traits ?? new())
+            if (sc.PlayAs == null) Assert.Equal(sc.Age, s.Player.Age(s.Year));
+            foreach (var trait in sc.PlayAs == null ? sc.Player?.Traits ?? new() : new())
                 Assert.Contains(trait, s.Player.Traits);
             // The same scenario always gives the same start.
             var again = GameSession.NewGame(new NewGameOptions { ScenarioId = sc.Id });
             Assert.Equal(s.Player.FullName, again.Player.FullName);
         }
         var secret = GameSession.NewGame(new NewGameOptions { ScenarioId = "the_family_secret" });
-        Assert.Contains(secret.World.Secrets, x => x.Kind == "abuse" && x.VictimId == secret.Player.Id);
+        // You play the grandfather; the grandchild is an adult who was abused as a child. You never choose it.
+        var abuse = Assert.Single(secret.World.Secrets, x => x.Kind == "abuse" && x.SubjectId == secret.Player.Id);
+        Assert.True(secret.World.Get(abuse.VictimId!.Value).Age(secret.Year) >= 18);
+        Assert.Contains(secret.CurrentEvents(), e => e.Title == "Sunday dinner");
         var poor = GameSession.NewGame(new NewGameOptions { ScenarioId = "nothing_to_lose" });
         Assert.Contains(Kinship.Parents(poor.World, poor.Player), p => p.Addiction == "alcohol");
     }
