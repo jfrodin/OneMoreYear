@@ -12,3 +12,6 @@ public enum RelDim { Closeness, Respect, Trust, Attraction, Fear, Envy, Bitterne
 
 /// <summary>What a person is currently doing with their days.</summary>
 public enum Activity { Child, School, Studying, Working, Unemployed, Retired }
+
+/// <summary>How closely two people are related by blood.</summary>
+public enum BloodTie { None, Distant, FirstCousins, Close }

@@ -2,6 +2,15 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.7.1 – 2026-09-30 · Family ties
+
+- Close relatives (parents, children, siblings, half-siblings, grandparents, aunts/uncles,
+  nieces/nephews) never become couples – blood counts, including a hidden biological father.
+- Cousins can be together where the law allows (it does in Sweden) – and the family whispers.
+- Step-siblings who grew up together don't become couples.
+- Adults can be with anyone, but a big age gap ("half your age plus seven") sets tongues wagging:
+  the younger one's parents are angry, and a grown child the same age as the new partner takes it badly.
+
 ## 0.7.0 – 2026-09-30 · Light and dark
 
 - 31 traits instead of 12 – light (Kind, Cheerful, Charming, Devoted parent, Resilient …), dark

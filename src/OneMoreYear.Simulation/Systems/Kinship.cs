@@ -110,6 +110,70 @@ public static class Kinship
         }
     }
 
+    // --- Blood ties ---------------------------------------------------------------------------
+
+    /// <summary>
+    /// How closely two people are related by blood, using biological parents (a hidden father counts).
+    /// Close = parent/child, (half-)siblings, grandparents, aunts/uncles and nieces/nephews.
+    /// </summary>
+    public static BloodTie Blood(World w, Person a, Person b)
+    {
+        var ancestorsA = Ancestors(w, a, 3);
+        var ancestorsB = Ancestors(w, b, 3);
+        if (ancestorsA.ContainsKey(b.Id) || ancestorsB.ContainsKey(a.Id)) return BloodTie.Close;
+        int bestA = int.MaxValue, bestB = int.MaxValue;
+        foreach (var (id, genA) in ancestorsA)
+        {
+            if (!ancestorsB.TryGetValue(id, out var genB)) continue;
+            // The closest shared ancestor decides the tie.
+            if ((long)genA + genB < (long)bestA + bestB) { bestA = genA; bestB = genB; }
+        }
+        if (bestA == int.MaxValue) return BloodTie.None;
+        if (Math.Min(bestA, bestB) == 1) return BloodTie.Close;        // siblings, aunt/uncle – niece/nephew
+        if (bestA == 2 && bestB == 2) return BloodTie.FirstCousins;
+        return BloodTie.Distant;                                         // second cousins, cousins once removed ...
+    }
+
+    /// <summary>Biological ancestors up to <paramref name="depth"/> generations, id → generation (1 = parent).</summary>
+    private static Dictionary<int, int> Ancestors(World w, Person p, int depth)
+    {
+        var result = new Dictionary<int, int>();
+        var current = new List<Person> { p };
+        for (int gen = 1; gen <= depth && current.Count > 0; gen++)
+        {
+            var next = new List<Person>();
+            foreach (var person in current)
+                foreach (var parent in BiologicalParents(w, person))
+                    if (result.TryAdd(parent.Id, gen)) next.Add(parent);
+            current = next;
+        }
+        return result;
+    }
+
+    /// <summary>Legal parents, except that a hidden biological father replaces the legal one. Adoptive parents don't count.</summary>
+    public static IEnumerable<Person> BiologicalParents(World w, Person p)
+    {
+        if (p.IsAdopted) yield break;
+        foreach (var parent in Parents(w, p))
+            if (p.BiologicalFatherId == null || parent.Sex != Sex.Male) yield return parent;
+        if (w.TryGet(p.BiologicalFatherId) is { } bio) yield return bio;
+    }
+
+    /// <summary>Children of two people who were a couple while both children were growing up.</summary>
+    public static bool GrewUpAsStepSiblings(World w, Person a, Person b)
+    {
+        foreach (var pa in Parents(w, a))
+            foreach (var pb in Parents(w, b))
+            {
+                if (pa.Id == pb.Id) continue;
+                bool couple = pa.PartnerId == pb.Id || pa.ExPartnerIds.Contains(pb.Id);
+                if (couple && Math.Abs(a.BirthYear - b.BirthYear) <= 12) return true;
+            }
+        return false;
+    }
+
+    public static bool AreCousins(World w, Person a, Person b) => Blood(w, a, b) == BloodTie.FirstCousins;
+
     // --- Labels -------------------------------------------------------------------------------
 
     /// <summary>"your brother", "your granddaughter", "your friend" ...</summary>

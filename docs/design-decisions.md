@@ -43,3 +43,25 @@ where possible.
 - They are triaged into `docs/todo.md`, which only holds what is still open.
 - When something is done it leaves the to-do list and is described in `CHANGELOG.md` under the
   version it shipped in. Each version is tagged in git (`v0.5.0`).
+
+## The player can choose (almost) anything – 2026-09-30
+
+Crime, violence (also at home, also against your own children), murder, drugs, cheating,
+manipulation, abandoning your family: all of it can be the player's choice, with consequences.
+Personality decides how tempting and how risky something is – criminal-minded or greedy people get
+more opportunities and better odds, kind people can do the same things but feel guilt – but traits
+never forbid a choice. Chance decides the outcome (getting caught, how the family reacts).
+
+**The one exception:** sexual abuse of children is never something the player can choose to do. It
+exists only as something other characters do – a secret and a trauma the family has to live with.
+This is a firm line (and it also keeps the game releasable on Steam, consoles and within the law).
+
+## Relationships within the family – 2026-09-30
+
+- **Close relatives never become couples** – parents and children, siblings and half-siblings,
+  grandparents, aunts/uncles and nieces/nephews. Not the player, not anyone else. (Illegal in
+  Sweden for the closest relations, and incest themes are not accepted on Steam.) Biological
+  relations count, including hidden fathers.
+- **Cousins** can become a couple where the country's law allows it (`cousinMarriageAllowed`) –
+  rare, and the family talks about it.
+- **Step-siblings who grew up together** do not become couples. Step-siblings who meet as adults can.

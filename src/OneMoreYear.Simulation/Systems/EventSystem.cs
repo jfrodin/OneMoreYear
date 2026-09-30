@@ -221,7 +221,14 @@ public static class EventSystem
         bool aLikes = a.AttractedToSameSex ? a.Sex == b.Sex : a.Sex != b.Sex;
         bool bLikes = b.AttractedToSameSex ? b.Sex == a.Sex : b.Sex != a.Sex;
         if (!aLikes || !bLikes) return false;
-        return !Kinship.Distances(ctx.World, a, 3).ContainsKey(b.Id);
+        // Family: close relatives never, cousins only where the law allows, step-siblings not if
+        // they grew up together (see docs/design-decisions.md).
+        return Kinship.Blood(ctx.World, a, b) switch
+        {
+            BloodTie.Close => false,
+            BloodTie.FirstCousins => ctx.Country.CousinMarriageAllowed,
+            _ => !Kinship.GrewUpAsStepSiblings(ctx.World, a, b)
+        };
     }
 
     // --- Choices ------------------------------------------------------------------------------

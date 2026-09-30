@@ -259,6 +259,41 @@ public static class FamilySystem
             if (!a.IsBlood) a.Generation = b.Generation;
         }
         ctx.World.Log($"{a.FirstName} started dating {b.FullName}.", ctx.Importance(false, a, b), "love", a.Id, b.Id);
+        FamilyReacts(ctx, a, b);
+    }
+
+    /// <summary>
+    /// Some couples make the family talk: cousins, and adults with a big age gap ("half your age plus
+    /// seven"). The younger one's parents take it worst.
+    /// </summary>
+    private static void FamilyReacts(SimContext ctx, Person a, Person b)
+    {
+        var w = ctx.World;
+        if (Kinship.AreCousins(w, a, b))
+        {
+            w.Log($"The family is whispering: {a.FirstName} and {b.FirstName} are cousins.", ctx.Importance(true, a, b), "love", a.Id, b.Id);
+            foreach (var parent in Kinship.Parents(w, a).Concat(Kinship.Parents(w, b)).Where(x => x.IsAlive).Distinct())
+                foreach (var child in new[] { a, b }.Where(c => c.ParentIds.Contains(parent.Id)))
+                    RelationshipSystem.AddMemory(ctx, parent, "cousin_couple",
+                        $"{child.FirstName} got together with a cousin", -12, child.Id);
+            return;
+        }
+
+        var (older, younger) = a.BirthYear <= b.BirthYear ? (a, b) : (b, a);
+        int oldAge = older.Age(ctx.Year), youngAge = younger.Age(ctx.Year);
+        if (youngAge < ctx.Country.AdultAge || youngAge >= oldAge / 2 + 7) return;
+
+        w.Log($"The age gap between {older.FirstName} ({oldAge}) and {younger.FirstName} ({youngAge}) sets tongues wagging.",
+            ctx.Importance(true, a, b), "love", older.Id, younger.Id);
+        foreach (var parent in Kinship.Parents(w, younger).Where(x => x.IsAlive && x.Id != older.Id))
+        {
+            RelationshipSystem.AddMemory(ctx, parent, "age_gap",
+                $"{older.FirstName} is far too old for {younger.FirstName}", -30, older.Id);
+            RelationshipSystem.Change(ctx, parent.Id, younger.Id, RelDim.Trust, -10);
+        }
+        if (Kinship.Children(w, older).FirstOrDefault(c => c.IsAlive && Math.Abs(c.Age(ctx.Year) - youngAge) <= 5) is { } sameAgeChild)
+            RelationshipSystem.AddMemory(ctx, sameAgeChild, "age_gap_parent",
+                $"{older.FirstName} is dating someone my own age", -20, older.Id);
     }
 
     public static void MoveIn(SimContext ctx, Person a, Person b)

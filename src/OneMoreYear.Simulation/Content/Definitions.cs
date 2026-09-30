@@ -63,6 +63,8 @@ public sealed class CountryDef
     /// <summary>Youngest age to move in with a partner, and then only with the parents' consent.</summary>
     public int CohabitWithConsentAge { get; set; } = 16;
     public int MarriageAge { get; set; } = 18;
+    /// <summary>Whether first cousins may become a couple (legal in Sweden).</summary>
+    public bool CousinMarriageAllowed { get; set; } = true;
     public int PensionAge { get; set; } = 65;
     public double PensionRate { get; set; } = 0.6;
     public double MinimumPension { get; set; }

@@ -250,3 +250,35 @@ public class FamilyLifeTests
         Assert.Contains(Kinship.Circle(s.World, p), x => x.Id == other.Id);
     }
 }
+
+public class FamilyTieTests
+{
+    [Fact]
+    public void CloseRelativesNeverCousinsPerCountryLaw()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 17, StartYear = 1950 });
+        var w = s.World;
+        var bot = new AutoPlayer(17, useActions: false);
+        for (int i = 0; i < 60; i++) bot.PlayYear(s);
+
+        int checkedPairs = 0;
+        foreach (var a in w.People.Where(p => p.IsBlood).Take(60))
+            foreach (var b in w.People.Where(p => p.IsBlood && p.Id > a.Id).Take(60))
+            {
+                var tie = Kinship.Blood(w, a, b);
+                bool siblings = a.ParentIds.Intersect(b.ParentIds).Any() && !a.IsAdopted && !b.IsAdopted
+                                && a.BiologicalFatherId == null && b.BiologicalFatherId == null;
+                if (siblings) Assert.Equal(OneMoreYear.Simulation.Model.BloodTie.Close, tie);
+                // A legal parent is a blood relative unless the child is adopted or has a hidden biological father.
+                bool bloodParent = Kinship.BiologicalParents(w, b).Any(x => x.Id == a.Id) || Kinship.BiologicalParents(w, a).Any(x => x.Id == b.Id);
+                if (bloodParent) Assert.Equal(OneMoreYear.Simulation.Model.BloodTie.Close, tie);
+                if (tie == OneMoreYear.Simulation.Model.BloodTie.Close) checkedPairs++;
+            }
+        Assert.True(checkedPairs > 0);
+
+        // Nobody in the family ever ended up with a close relative.
+        foreach (var p in w.People.Where(p => p.PartnerId != null || p.ExPartnerIds.Count > 0))
+            foreach (var partner in p.ExPartnerIds.Append(p.PartnerId ?? 0).Where(id => id > 0).Select(w.Get))
+                Assert.NotEqual(OneMoreYear.Simulation.Model.BloodTie.Close, Kinship.Blood(w, p, partner));
+    }
+}
