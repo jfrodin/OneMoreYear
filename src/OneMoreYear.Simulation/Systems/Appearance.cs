@@ -40,8 +40,17 @@ public static class Appearance
             var idx = rng.PickWeighted(Enumerable.Range(0, options.Length).ToList(), i => weights[i]);
             return options[idx];
         }
-        p.HairColor = Pick(HairColors, HairWeights, x => x.HairColor);
-        p.EyeColor = Pick(EyeColors, EyeWeights, x => x.EyeColor);
+        // People with no parents in the world look like their heritage (content/names).
+        if (parents.Count == 0 && Names.Heritage(ctx, p.Heritage) is { } h && rng.Chance(h.DarkHair))
+        {
+            p.HairColor = rng.Chance(0.6) ? "black" : "dark brown";
+            p.EyeColor = rng.Chance(0.8) ? "brown" : "hazel";
+        }
+        else
+        {
+            p.HairColor = Pick(HairColors, HairWeights, x => x.HairColor);
+            p.EyeColor = Pick(EyeColors, EyeWeights, x => x.EyeColor);
+        }
         p.Build = rng.Pick(Builds);
     }
 

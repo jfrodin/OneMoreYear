@@ -152,12 +152,12 @@ public static class Ui
         }
     }
 
-    /// <summary>Trait chip colour: gold for light traits, red for dark, blue for odd.</summary>
+    /// <summary>Trait chip colour: green for good sides, red for dark ones, blue for the grey zone in between.</summary>
     public static Color ToneColor(string tone) => tone switch
     {
         "dark" => UiTheme.Bad,
         "odd" => UiTheme.Info,
-        _ => UiTheme.Accent
+        _ => UiTheme.Good
     };
 
     public static Color OpinionColor(double opinion) => opinion switch

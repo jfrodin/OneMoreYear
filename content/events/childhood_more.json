@@ -1,0 +1,271 @@
+// More of growing up: small moments that become memories. Ages 3–12.
+[
+  {
+    "id": "child_scared_dark", "title": "Under the bed",
+    "text": "There is something under the bed. You are almost sure of it. You call for {t.name}.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      {
+        "text": "Ask {t.him} to check",
+        "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true },
+          { "type": "memory", "kind": "comforted", "to": "target", "text": "{t.name} checked under the bed for monsters", "impact": 10 }
+        ],
+        "result": "{t.name} lies down on the floor with a torch and declares the room monster-free. You believe {t.him}."
+      },
+      {
+        "text": "Be brave and look yourself",
+        "chance": 0.5, "chanceTraits": { "brave": 0.3 },
+        "success": { "text": "Just socks. And a lost toy car. You feel enormous.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.3 } ] },
+        "failure": { "text": "You don't dare. You sleep with the light on for a month.", "effects": [ { "type": "happiness", "amount": -3 } ] }
+      }
+    ]
+  },
+  {
+    "id": "child_imaginary_friend", "title": "Someone only you can see",
+    "text": "You have a friend called Bobo. Bobo is very tall, very polite, and invisible to everyone else.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Set a place for Bobo at dinner", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.3 }, { "type": "happiness", "amount": 4 } ],
+        "result": "Your family plays along. Bobo is a very tidy eater." },
+      { "text": "Keep Bobo a secret", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.2 } ],
+        "result": "Some friends are just for you." }
+    ]
+  },
+  {
+    "id": "child_tooth", "title": "Wobbly",
+    "text": "Your first tooth is wobbling. You can move it with your tongue, and you can't stop doing it.",
+    "conditions": { "minAge": 5, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Pull it out yourself", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.15 }, { "type": "money", "amount": 20 } ],
+        "result": "A little blood, a lot of pride, and a coin under the pillow in the morning." },
+      { "text": "Wait until it falls out", "effects": [ { "type": "money", "amount": 20 } ],
+        "result": "It falls out in a sandwich. The coin under the pillow makes up for it." }
+    ]
+  },
+  {
+    "id": "child_first_school_day", "title": "The first day",
+    "text": "First day of school. Your backpack is almost as big as you are, and {t.name} is holding your hand at the gate.",
+    "conditions": { "minAge": 7, "maxAge": 7 }, "cooldown": 0, "weight": 4,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Run in without looking back", "effects": [ { "type": "trait_add", "trait": "social", "chance": 0.2 }, { "type": "happiness", "amount": 4 } ],
+        "result": "{t.name} stands at the gate a little longer than needed." },
+      { "text": "Hold on and cry", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true } ],
+        "result": "The teacher gently takes your other hand. By lunch you have forgotten you were sad." },
+      { "text": "Find the quietest corner", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.25 } ],
+        "result": "You watch the others from the corner. It takes a while. That's fine." }
+    ]
+  },
+  {
+    "id": "child_bike", "title": "No hands on the back",
+    "text": "{t.name} is running behind your bike, holding the seat. \"I've got you, I've got you...\"",
+    "conditions": { "minAge": 5, "maxAge": 9 }, "cooldown": 0,
+    "target": { "role": "parent", "conditions": { "minAge": 20 } },
+    "choices": [
+      {
+        "text": "Pedal harder",
+        "chance": 0.6, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "You look back. {t.name} is twenty metres behind you, waving. You're doing it on your own!",
+          "effects": [ { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "memory", "kind": "learned_bike", "to": "target", "text": "{t.name} taught me to ride a bike", "impact": 15 } ] },
+        "failure": { "text": "Gravel, knees, plasters. You try again tomorrow.", "effects": [ { "type": "health", "amount": -2 } ] }
+      },
+      { "text": "\"Don't let go!\"", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": 5 } ],
+        "result": "{t.name} doesn't let go. Not today." }
+    ]
+  },
+  {
+    "id": "child_broken_vase", "title": "Crash",
+    "text": "The ball wasn't supposed to be played with indoors. Now {t.name}'s favourite vase is in pieces on the floor.",
+    "conditions": { "minAge": 5, "maxAge": 11 }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Tell {t.him} what happened", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 8 } ],
+        "result": "{t.name} is angry for about a minute. Then {t.he} says {t.he} never liked that vase anyway." },
+      { "text": "Hide the pieces", "chance": 0.4, "chanceTraits": { "dishonest": 0.3 },
+        "success": { "text": "Nobody notices. Nobody asks. It feels worse than you thought.", "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.15 } ] },
+        "failure": { "text": "{t.name} finds the pieces behind the sofa. The lying is worse than the vase.",
+          "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -10 } ] } }
+    ]
+  },
+  {
+    "id": "child_blame_sibling_vase", "title": "It wasn't me",
+    "text": "Something is broken, and {t.name} is standing right next to it. You were the one who did it.",
+    "conditions": { "minAge": 5, "maxAge": 11 }, "cooldown": 0,
+    "target": { "role": "sibling", "conditions": { "minAge": 3, "maxAge": 16 } },
+    "choices": [
+      { "text": "Own up", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 8 } ],
+        "result": "{t.name} looks at you with something like respect." },
+      { "text": "Let {t.name} take the blame", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 15 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "blamed", "text": "Got punished for something {name} did", "impact": -20 } ],
+        "result": "{t.name} gets no dessert for a week. {t.He} knows. {t.He} never forgets." }
+    ]
+  },
+  {
+    "id": "child_grandparent_stories", "title": "When I was your age",
+    "text": "{t.name} has been telling the same stories all afternoon – about how everything was different, and harder, and somehow better.",
+    "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 5,
+    "target": { "role": "grandparent", "conditions": { "minAge": 55 } },
+    "choices": [
+      { "text": "Ask for more", "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true },
+          { "type": "memory", "kind": "grandparent_stories", "to": "target", "text": "{t.name}'s stories from the old days", "impact": 15 } ],
+        "result": "{t.name}'s eyes light up. You hear about a winter so cold the lake froze in a single night." },
+      { "text": "Sneak off to play", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3 } ],
+        "result": "Some day you'll wish you had listened. Not today." }
+    ]
+  },
+  {
+    "id": "child_summer_lake", "title": "The lake",
+    "text": "Summer at the lake. The water is brown and cold and the older kids are jumping from the jetty.",
+    "conditions": { "minAge": 5, "maxAge": 12 }, "cooldown": 3,
+    "choices": [
+      { "text": "Jump", "chance": 0.7, "chanceTraits": { "brave": 0.2 }, "chanceAttributes": { "fitness": 0.003 },
+        "success": { "text": "The cold takes your breath away. You come up laughing and do it again, and again.",
+          "effects": [ { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "memory", "kind": "summer", "text": "Jumping off the jetty at the lake", "impact": 12 } ] },
+        "failure": { "text": "Belly flop. Everyone saw. It stings for an hour and the story lasts all summer.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Catch fish from the jetty instead", "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "Three perch and a boot. The perch go back. The boot stays." }
+    ]
+  },
+  {
+    "id": "child_birthday_party", "title": "Party",
+    "text": "It's your birthday, and you've invited the whole class. The cake is on the table. The doorbell hasn't rung yet.",
+    "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 4,
+    "choices": [
+      { "text": "Wait by the door", "chance": 0.7, "chanceTraits": { "social": 0.2, "charming": 0.1, "introvert": -0.15 },
+        "success": { "text": "Then it rings. And rings. The flat is full of screaming children and it's perfect.",
+          "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "birthday", "text": "The birthday when everyone came", "impact": 15 } ] },
+        "failure": { "text": "Two come. Three, counting your cousin. You eat a lot of cake.",
+          "effects": [ { "type": "happiness", "amount": -8 }, { "type": "memory", "kind": "lonely_birthday", "text": "The birthday nobody came to", "impact": -20 } ] } }
+    ]
+  },
+  {
+    "id": "child_school_play", "title": "The school play",
+    "text": "The class is putting on a play and the teacher asks who wants the lead role.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Put your hand up", "chance": 0.55, "chanceTraits": { "charming": 0.15, "social": 0.1, "introvert": -0.15 }, "chanceAttributes": { "looks": 0.002 },
+        "success": { "text": "Opening night: you remember every line. The applause is the best sound in the world.",
+          "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.25 }, { "type": "happiness", "amount": 8 },
+            { "type": "memory", "kind": "school_play", "text": "The lead in the school play", "impact": 15 } ] },
+        "failure": { "text": "You get the role – and forget your lines in front of everyone's parents.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Be a tree", "result": "A very convincing tree. Your mother cries anyway." }
+    ]
+  },
+  {
+    "id": "child_chickenpox", "title": "Spots",
+    "text": "You wake up covered in red spots. Chickenpox. Two weeks at home.",
+    "conditions": { "minAge": 3, "maxAge": 10 }, "cooldown": 0,
+    "target": { "role": "grandparent", "conditions": { "minAge": 50 } },
+    "choices": [
+      { "text": "Let {t.name} look after you", "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true },
+          { "type": "memory", "kind": "sick_with_grandparent", "to": "target", "text": "{t.name} looked after me when I had chickenpox", "impact": 12 } ],
+        "result": "Card games, soup and far too much television. It is almost worth the itching." },
+      { "text": "Scratch", "effects": [ { "type": "attribute", "kind": "looks", "amount": -1 } ],
+        "result": "You get a small scar above your eyebrow. You'll have it forever." }
+    ]
+  },
+  {
+    "id": "child_found_money", "title": "Lucky day",
+    "text": "On the way home from school you find a folded banknote in the gutter. Nobody is around.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Keep it", "effects": [ { "type": "money", "amount": 100 }, { "type": "happiness", "amount": 4 } ],
+        "result": "It buys more sweets than you can eat. You eat them anyway." },
+      { "text": "Hand it in to the police", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.15 } ],
+        "result": "The officer looks surprised and writes your name in a book. Three months later nobody has claimed it – and it's yours." },
+      { "text": "Buy sweets for the whole class", "effects": [ { "type": "trait_add", "trait": "generous", "chance": 0.25 }, { "type": "trait_add", "trait": "social", "chance": 0.1 } ],
+        "result": "For one afternoon, you are the most popular person in school." }
+    ]
+  },
+  {
+    "id": "child_best_friend_moves", "title": "Moving away",
+    "text": "{t.name} comes over with red eyes. {t.His} family is moving to another city, far away.",
+    "conditions": { "minAge": 8, "maxAge": 13 }, "cooldown": 0,
+    "target": { "role": "friend", "conditions": { "maxAge": 15 } },
+    "choices": [
+      { "text": "Promise to write every week", "effects": [ { "type": "memory", "kind": "friend_moved", "to": "target", "text": "When {t.name} moved away", "impact": -10 } ],
+        "result": "You write every week. Then every month. Then at Christmas. You keep every letter." },
+      { "text": "Pretend you don't care", "effects": [ { "type": "friend_remove", "to": "target" }, { "type": "happiness", "amount": -6 } ],
+        "result": "It's easier than saying goodbye. It isn't, really." }
+    ]
+  },
+  {
+    "id": "child_library", "title": "The library",
+    "text": "The librarian says you can borrow ten books at a time. Ten!",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Take ten", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 3 }, { "type": "grades", "amount": 4 }, { "type": "trait_add", "trait": "introvert", "chance": 0.1 } ],
+        "result": "You read under the covers with a torch until the batteries die." },
+      { "text": "Just the comics", "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "Comics count as reading. Everyone says so." }
+    ]
+  },
+  {
+    "id": "child_neighbour", "title": "The house at the end of the road",
+    "text": "Everyone says the old man at the end of the road is a witch. Your friends dare you to ring his doorbell.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Ring it", "chance": 0.5, "chanceTraits": { "brave": 0.3, "conflict_averse": -0.1 },
+        "success": { "text": "He opens, looks at you – and asks if you want to see his model railway. It fills the whole basement.",
+          "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.2 }, { "type": "memory", "kind": "neighbour", "text": "The old man with the model railway", "impact": 12 } ] },
+        "failure": { "text": "You ring and run. Your friends laugh at how fast you ran. You laugh too, a bit.", "effects": [] } },
+      { "text": "Refuse", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "\"Chicken!\" It follows you around for a week." }
+    ]
+  },
+  {
+    "id": "child_sports_day", "title": "Sports day",
+    "text": "The 60-metre race. Everyone is lined up and the teacher raises the starting pistol.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 2,
+    "choices": [
+      { "text": "Run as fast as you can", "chance": 0.35, "chanceAttributes": { "fitness": 0.008 },
+        "success": { "text": "First across the line! A plastic medal, but it might as well be gold.",
+          "effects": [ { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Somewhere in the middle. You beat your best friend, at least.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 1 } ] } },
+      { "text": "Walk it, with style", "effects": [ { "type": "trait_add", "trait": "eccentric", "chance": 0.15 } ],
+        "result": "The teacher sighs. Your classmates cheer. It's a kind of victory." }
+    ]
+  },
+  {
+    "id": "child_christmas_wish", "title": "The wish list",
+    "text": "It's almost Christmas and you have written a wish list. Only one thing on it really matters.",
+    "conditions": { "minAge": 4, "maxAge": 10 }, "cooldown": 3,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Beg for the expensive thing", "chance": 0.4,
+        "success": { "text": "It's under the tree. {t.name} pretends it was Santa, but you saw the receipt.",
+          "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "christmas", "to": "target", "text": "The Christmas I got exactly what I wished for", "impact": 12 } ] },
+        "failure": { "text": "Socks. And a card from {t.name}: \"Maybe next year.\"", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Wish for something for your family", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "trait_add", "trait": "kind", "chance": 0.1 } ],
+        "result": "{t.name} reads the list twice and has to go into the kitchen for a while." }
+    ]
+  },
+  {
+    "id": "child_lost", "title": "Lost",
+    "text": "One moment {t.name} was right there in the crowd. Now there are only strangers' legs everywhere.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Stay where you are, like you were told", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 5 } ],
+        "result": "Ten minutes that feel like a year. Then {t.name} is there, hugging you far too hard." },
+      { "text": "Go looking", "effects": [ { "type": "memory", "kind": "lost", "text": "Being lost in the crowd", "impact": -10 } ],
+        "result": "A security guard finds you by the escalators. {t.name} is white in the face." }
+    ]
+  },
+  {
+    "id": "child_lunch_table", "title": "The new kid",
+    "text": "A new kid starts in your class and has to sit alone at lunch. {t.name} whispers that you shouldn't sit there either.",
+    "conditions": { "minAge": 8, "maxAge": 12 }, "cooldown": 0,
+    "target": { "role": "classmate" },
+    "choices": [
+      { "text": "Sit with the new kid", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.2 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": -5 } ],
+        "result": "The new kid talks non-stop for the whole lunch. You have a new friend, whether you wanted one or not." },
+      { "text": "Stay with your friends", "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "You look over sometimes. The new kid always looks down." }
+    ]
+  }
+]

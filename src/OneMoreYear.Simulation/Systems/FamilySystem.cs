@@ -191,7 +191,7 @@ public static class FamilySystem
         var names = new List<string> { child.FirstName };
         for (int i = 0; i < 20 && names.Count < 4; i++)
         {
-            var n = PersonFactory.RandomFirstName(ctx, child.Sex);
+            var n = PersonFactory.RandomFirstName(ctx, child.Sex, child.Heritage, child.BirthYear);
             if (!names.Contains(n)) names.Add(n);
         }
         return names;

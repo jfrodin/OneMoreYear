@@ -1,0 +1,79 @@
+// First names by era and heritage, and the heritages found in the country over time.
+// A person gets a name that was common the year they were born, in their family's heritage.
+// Children take a parent's heritage. "share" is how common each heritage is among people the
+// family meets (and the founders), by year – it follows Swedish immigration history.
+{
+  "country": "sweden",
+  "heritages": [
+    { "id": "swedish", "share": { "1950": 0.95, "1970": 0.88, "1990": 0.82, "2010": 0.74 },
+      "skin": [ 0.02, 0.22 ], "darkHair": 0.15 },
+    { "id": "finnish", "share": { "1950": 0.05, "1970": 0.08, "1990": 0.05, "2010": 0.04 },
+      "skin": [ 0.02, 0.2 ], "darkHair": 0.1,
+      "lastNames": [ "Virtanen", "Korhonen", "Nieminen", "Mäkinen", "Hämäläinen", "Laine", "Heikkinen", "Koskinen", "Järvinen", "Lehtonen" ] },
+    { "id": "balkan", "share": { "1950": 0, "1970": 0.02, "1990": 0.05, "2010": 0.07 },
+      "skin": [ 0.12, 0.35 ], "darkHair": 0.7,
+      "lastNames": [ "Hodžić", "Kovačević", "Petrović", "Jovanović", "Nikolić", "Begić", "Hadžić", "Marić", "Babić", "Delić" ] },
+    { "id": "middle_eastern", "share": { "1950": 0, "1970": 0.02, "1990": 0.08, "2010": 0.15 },
+      "skin": [ 0.3, 0.6 ], "darkHair": 0.9,
+      "lastNames": [ "Hassan", "Ali", "Mohammed", "Ahmed", "Khalil", "Haddad", "Saleh", "Nasser", "Karimi", "Abdullah" ] }
+  ],
+  "groups": [
+    { "heritage": "swedish", "sex": "male", "from": 1880, "to": 1949, "names": [
+      "Karl", "Erik", "Gustav", "Nils", "Lars", "Sven", "Bengt", "Gunnar", "Olof", "Stig", "Åke", "Rolf", "Arne",
+      "Lennart", "Bo", "Kjell", "Göran", "Hans", "Sture", "Ingvar", "Birger", "Allan", "Ragnar", "Tage", "Axel" ] },
+    { "heritage": "swedish", "sex": "male", "from": 1950, "to": 1969, "names": [
+      "Lars", "Anders", "Per", "Mats", "Peter", "Jan", "Hans", "Thomas", "Mikael", "Stefan", "Göran", "Ulf", "Kent",
+      "Leif", "Björn", "Magnus", "Bo", "Kjell", "Roger", "Tommy", "Lennart", "Håkan", "Claes", "Jonas", "Mats" ] },
+    { "heritage": "swedish", "sex": "male", "from": 1970, "to": 1989, "names": [
+      "Johan", "Andreas", "Fredrik", "Daniel", "Mikael", "Marcus", "Niklas", "Patrik", "Martin", "Jonas", "Magnus",
+      "Mattias", "Joakim", "Tobias", "Henrik", "Robert", "Anders", "Christian", "Erik", "Stefan", "Peter", "Tomas",
+      "Jimmy", "Kristoffer", "Björn" ] },
+    { "heritage": "swedish", "sex": "male", "from": 1990, "to": 2009, "names": [
+      "Erik", "Simon", "Oscar", "Jonathan", "Filip", "Alexander", "William", "Emil", "Viktor", "Anton", "Johannes",
+      "Linus", "Sebastian", "Rasmus", "Adam", "Jacob", "Gustav", "Axel", "Albin", "Hampus", "Ludvig", "Isak",
+      "Elias", "Lucas", "Oliver" ] },
+    { "heritage": "swedish", "sex": "male", "from": 2010, "to": 2100, "names": [
+      "William", "Liam", "Noah", "Hugo", "Lucas", "Oliver", "Elias", "Alexander", "Oscar", "Adam", "Vincent", "Theo",
+      "Leo", "Axel", "Nils", "Alfred", "Ludvig", "Arvid", "Edvin", "Olle", "Sixten", "Frans", "Harry", "Melvin", "Charlie" ] },
+
+    { "heritage": "swedish", "sex": "female", "from": 1880, "to": 1949, "names": [
+      "Anna", "Margareta", "Elisabeth", "Kerstin", "Karin", "Ingrid", "Birgitta", "Britt", "Gunnel", "Ulla", "Maj",
+      "Märta", "Elsa", "Astrid", "Greta", "Signe", "Ingegerd", "Sonja", "Gun", "Inga", "Barbro", "Marianne",
+      "Gunilla", "Aina", "Dagny" ] },
+    { "heritage": "swedish", "sex": "female", "from": 1950, "to": 1969, "names": [
+      "Eva", "Lena", "Maria", "Karin", "Kristina", "Annika", "Susanne", "Marie", "Helena", "Anna", "Katarina",
+      "Monica", "Agneta", "Ulrika", "Carina", "Åsa", "Anneli", "Pia", "Ann", "Gunilla", "Marianne", "Yvonne",
+      "Lotta", "Camilla", "Birgitta" ] },
+    { "heritage": "swedish", "sex": "female", "from": 1970, "to": 1989, "names": [
+      "Maria", "Sara", "Anna", "Linda", "Jenny", "Johanna", "Malin", "Emma", "Sofia", "Therese", "Jessica", "Camilla",
+      "Karolina", "Elin", "Frida", "Hanna", "Emelie", "Lisa", "Anneli", "Madeleine", "Sandra", "Ida", "Josefin",
+      "Caroline", "Veronica" ] },
+    { "heritage": "swedish", "sex": "female", "from": 1990, "to": 2009, "names": [
+      "Emma", "Julia", "Hanna", "Elin", "Ida", "Moa", "Amanda", "Linnea", "Matilda", "Johanna", "Sara", "Wilma",
+      "Ebba", "Alva", "Klara", "Felicia", "Maja", "Alice", "Tilda", "Nellie", "Olivia", "Ellen", "Isabelle", "Fanny", "Lovisa" ] },
+    { "heritage": "swedish", "sex": "female", "from": 2010, "to": 2100, "names": [
+      "Alice", "Maja", "Elsa", "Astrid", "Wilma", "Freja", "Olivia", "Selma", "Ebba", "Vera", "Alma", "Saga", "Agnes",
+      "Stella", "Signe", "Ella", "Lilly", "Ines", "Edith", "Tyra", "Majken", "Ellie", "Leah", "Nora", "Iris" ] },
+
+    { "heritage": "finnish", "sex": "male", "from": 1880, "to": 1969, "names": [
+      "Jari", "Mika", "Pekka", "Timo", "Juha", "Kari", "Matti", "Jukka", "Petri", "Antti", "Heikki", "Seppo" ] },
+    { "heritage": "finnish", "sex": "male", "from": 1970, "to": 2100, "names": [
+      "Mikko", "Janne", "Tuomas", "Ville", "Joni", "Aleksi", "Eetu", "Onni", "Leo", "Elias", "Niko", "Juho" ] },
+    { "heritage": "finnish", "sex": "female", "from": 1880, "to": 1969, "names": [
+      "Tuula", "Pirjo", "Anne", "Riitta", "Sari", "Päivi", "Tiina", "Leena", "Minna", "Satu", "Aino", "Marja" ] },
+    { "heritage": "finnish", "sex": "female", "from": 1970, "to": 2100, "names": [
+      "Johanna", "Laura", "Jenni", "Noora", "Emmi", "Aino", "Venla", "Sanni", "Iida", "Ella", "Linnea", "Aada" ] },
+
+    { "heritage": "balkan", "sex": "male", "from": 1880, "to": 2100, "names": [
+      "Dragan", "Goran", "Zoran", "Emir", "Adnan", "Nikola", "Mirza", "Haris", "Dino", "Luka", "Stefan", "Amar" ] },
+    { "heritage": "balkan", "sex": "female", "from": 1880, "to": 2100, "names": [
+      "Jasmina", "Amela", "Mirela", "Vesna", "Ivana", "Selma", "Lejla", "Amina", "Dijana", "Sara", "Ema", "Nina" ] },
+
+    { "heritage": "middle_eastern", "sex": "male", "from": 1880, "to": 2100, "names": [
+      "Ali", "Mohammed", "Ahmed", "Hassan", "Omar", "Yousef", "Karim", "Hussein", "Amir", "Samir", "Mustafa",
+      "Khalid", "Ibrahim", "Tariq", "Nabil", "Adam", "Elias", "Yasin" ] },
+    { "heritage": "middle_eastern", "sex": "female", "from": 1880, "to": 2100, "names": [
+      "Fatima", "Aisha", "Leila", "Amira", "Nour", "Yasmin", "Sara", "Mariam", "Zainab", "Hiba", "Rania", "Layla",
+      "Dina", "Salma", "Hana", "Lina" ] }
+  ]
+}

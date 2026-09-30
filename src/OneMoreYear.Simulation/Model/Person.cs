@@ -76,6 +76,8 @@ public sealed class Person
     public double Grades { get; set; } = 50;
     public string? OccupationId { get; set; }
     public int OccupationLevel { get; set; }
+    /// <summary>The family's heritage (content/names): decides names, and looks for people with no parents in the world.</summary>
+    public string Heritage { get; set; } = "";
     /// <summary>Where the person works (a fictional company, hospital, school ...).</summary>
     public string? Employer { get; set; }
     public double Performance { get; set; } = 50;
@@ -114,7 +116,8 @@ public sealed class Person
     public int AddictionSince { get; set; }
 
     public List<Memory> Memories { get; set; } = new();
-    public HashSet<string> Flags { get; set; } = new();
+    /// <summary>Sorted, so a saved and reloaded game continues exactly the same way.</summary>
+    public SortedSet<string> Flags { get; set; } = new(StringComparer.Ordinal);
 
     [JsonIgnore] public bool IsAlive => DeathYear is null;
     [JsonIgnore] public string FullName => $"{FirstName} {LastName}";

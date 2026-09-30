@@ -19,9 +19,8 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 - [ ] Type your own name for a baby (needs a controller-friendly text input).
 - [ ] Several relationships at once – secret affairs, or open relationships by agreement.
 - [ ] Events at work beyond the first few (colleagues, the boss).
-- [ ] More events in general – grow them once the core feels right.
+- [ ] More events in general – childhood and teens got 30 in 0.17.0; adult life, work and old age next.
 - [ ] Chronicle filter per person and per generation (spec §16).
-- [ ] A graphical family tree.
 - [ ] Localization (Swedish and more).
 - [ ] More countries.
 

@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.17.0 – 2026-09-30 · Playtest 3
+
+- **A real family tree**: photo cards in generations – grandparents, parents, siblings with your
+  partner, children and grandchildren – joined by lines. Choose anyone to see the family from
+  their place in it; choose the person in the middle to open their page.
+- **Names that fit**: first names follow the year you were born (a Karl in 1920, a Jimmy in 1978,
+  a Selma in 2015) and the family's heritage – Swedish, Finnish, Balkan or Middle Eastern, as common
+  as each was in Sweden at the time. Heritage also shapes surnames and looks, and children take it
+  from their parents.
+- **30 new events for growing up**: monsters under the bed, the first day of school, learning to
+  ride a bike, the lake, birthday parties, the school play, the library, try-outs, the band, a
+  diary that was read, green hair, the first broken heart, running away – and more.
+- **Trait colours** mean something: green for a good side, red for a dark side, blue for neither.
+- The full-body figures are gone; the portraits stay.
+- Content files are now read strictly: a misspelt field is an error instead of silently ignored.
+- Fixed: a saved and reloaded game could continue slightly differently (flag order).
+- Test scenarios got new seeds (The family secret: Birger, Helena and Julia; Grown up: Peter;
+  Late in life: Yvonne).
+
 ## 0.16.0 – 2026-09-30 · The family album
 
 - **A new look**: the game is now a family album on paper instead of a dark app. Cards sit on the

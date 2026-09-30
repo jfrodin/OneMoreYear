@@ -365,7 +365,7 @@ public sealed class GameSession
     public PortraitView Portrait(int id)
     {
         var p = World.Get(id);
-        var face = Faces.Of(World, p);
+        var face = Faces.Of(World, p, Content);
         int age = p.Age(Year);
         double bmi = Appearance.WeightAt(p, age) / Math.Pow(Math.Max(0.5, Appearance.HeightAt(p, age) / 100.0), 2);
         double normal = age < 12 ? 16 : age < 18 ? 19 : 22.5;
@@ -695,6 +695,30 @@ public sealed class GameSession
     }
 
     /// <summary>The family tree from the founders down. Founder couples share one root.</summary>
+    /// <summary>The family around one person, for the graphical family tree.</summary>
+    public FamilyFocusView FamilyFocus(int id)
+    {
+        var w = World;
+        var p = w.Get(id);
+        TreePerson Card(Person x, bool half = false) => new(
+            x.Id, x.FullName, x.DeathYear is { } d ? $"{x.BirthYear}–{d}" : $"b. {x.BirthYear}", x.IsAlive,
+            Kinship.Label(w, Player, x), x.Id == Player.Id, w.PlayedIds.Contains(x.Id), half);
+        IReadOnlyList<TreePerson> Cards(IEnumerable<Person> people) => people.OrderBy(x => x.BirthYear).ThenBy(x => x.Id).Select(x => Card(x)).ToList();
+
+        var parents = Kinship.Parents(w, p).OrderBy(x => x.Sex == Sex.Male ? 0 : 1).ToList();
+        var siblings = Kinship.Siblings(w, p).Append(p).OrderBy(x => x.BirthYear).ThenBy(x => x.Id)
+            .Select(x => Card(x, x.Id != p.Id && Kinship.IsHalfSibling(p, x))).ToList();
+        var children = Kinship.Children(w, p).ToList();
+        return new FamilyFocusView(
+            Card(p),
+            parents.Select(x => Card(x)).ToList(),
+            parents.ToDictionary(x => x.Id, x => Cards(Kinship.Parents(w, x).OrderBy(g => g.Sex == Sex.Male ? 0 : 1))),
+            siblings,
+            w.TryGet(p.PartnerId) is { } partner ? Card(partner) : null,
+            Cards(children),
+            children.ToDictionary(c => c.Id, c => Cards(Kinship.Children(w, c))));
+    }
+
     public IReadOnlyList<TreeNode> FamilyTree()
     {
         var founders = World.People.Where(p => p.IsBlood && p.ParentIds.Count == 0).ToList();

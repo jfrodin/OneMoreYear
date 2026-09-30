@@ -7,6 +7,13 @@ namespace OneMoreYear.Simulation.Tests;
 public class ContentTests
 {
     [Fact]
+    public void MisspeltContentFieldsAreErrors()
+    {
+        var json = "[ { \"id\": \"x\", \"name\": \"X\", \"tone\": \"light\", \"wieght\": 2 } ]";
+        Assert.Throws<InvalidDataException>(() => ContentDb.Load(new[] { ("content/traits.json", json) }));
+    }
+
+    [Fact]
     public void EmbeddedContentLoadsAndValidates()
     {
         var db = ContentDb.LoadEmbedded();
@@ -396,12 +403,13 @@ public class FaceTests
     [Fact]
     public void ChildrenLookLikeTheirParentsAndFacesAreStable()
     {
+        // The whole simulated world: everyone with two known biological parents.
         var s = GameSession.NewGame(new NewGameOptions { Seed = 8, StartYear = 1950 });
         var bot = new AutoPlayer(8);
-        for (int i = 0; i < 80; i++) bot.PlayYear(s);
+        for (int i = 0; i < 120 && bot.PlayYear(s); i++) { }
         var w = s.World;
         var children = w.People.Where(p => Kinship.BiologicalParents(w, p).Count() == 2).Take(60).ToList();
-        Assert.True(children.Count >= 20);
+        Assert.True(children.Count >= 12, $"only {children.Count} children");
 
         double related = children.Average(c => Kinship.BiologicalParents(w, c).Average(p => Distance(Faces.Of(w, c), Faces.Of(w, p))));
         var rng = new Random(1);

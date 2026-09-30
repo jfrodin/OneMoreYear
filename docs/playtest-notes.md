@@ -206,3 +206,5 @@ _playtest-saves/2026-09-30_203208.png · playtest-saves/2026-09-30_203208.json_
 Famileträödet måste bli snyggare. Vi kan iten ha såhär
 
 _playtest-saves/2026-09-30_203223.png · playtest-saves/2026-09-30_203223.json_
+
+_Notes above were processed on 2026-09-30 (playtest 3): full-body figures removed, graphical family tree, trait colours, names by era and heritage, 30 new childhood and teen events – see CHANGELOG 0.17.0._

@@ -470,7 +470,8 @@ public partial class Main : Control
             case 52: if (_screen is GameScreen g3) g3.ShowTab(3); break;
             case 60: Shot("05_money"); break;
             case 62: if (_screen is GameScreen g4) g4.ShowTab(4); break;
-            case 70: Shot("06_tree"); break;
+            case 70: Shot("06_tree"); if (_screen is GameScreen gt) gt.FocusTreeOnGrandfather(); break;
+            case 71: Shot("06b_tree_grandfather"); break;
             case 72: ShowContentSettings(Session); break;
             case 75: Shot("07_content"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
             case 77: ShowSuccession(); break;

@@ -15,6 +15,7 @@ public sealed class ContentDb
     public Dictionary<string, CrimeDef> Crimes { get; } = new();
     public List<ScenarioDef> Scenarios { get; } = new();
     public Dictionary<string, EmployerNamesDef> Employers { get; } = new();
+    public Dictionary<string, NamesDef> Names { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
 
@@ -58,6 +59,11 @@ public sealed class ContentDb
                 {
                     foreach (var e in Deserialize<List<EventDef>>(json)) db.Events[e.Id] = e;
                 }
+                else if (path.Contains("content/names/"))
+                {
+                    var n = Deserialize<NamesDef>(json);
+                    db.Names[n.Country] = n;
+                }
                 else if (path.Contains("content/employers/"))
                 {
                     var e = Deserialize<EmployerNamesDef>(json);
@@ -99,7 +105,10 @@ public sealed class ContentDb
     }
 
     private static T Deserialize<T>(string json) =>
-        JsonSerializer.Deserialize<T>(json, JsonOptions) ?? throw new InvalidDataException("Empty content file");
+        JsonSerializer.Deserialize<T>(json, ContentJsonOptions) ?? throw new InvalidDataException("Empty content file");
+
+    /// <summary>Content is read strictly: a misspelt field is an error, not silently ignored. (Saves stay lenient.)</summary>
+    private static readonly JsonSerializerOptions ContentJsonOptions = new(JsonOptions) { UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow };
 
     public OccupationDef? Occupation(string? id) => id == null ? null : Occupations.FirstOrDefault(o => o.Id == id);
 

@@ -15,7 +15,9 @@ public static class StartingFamily
         var rng = ctx.Rng;
 
         var father = PersonFactory.CreateStranger(ctx, Sex.Male, rng.Range(25, 35));
-        var mother = PersonFactory.CreateStranger(ctx, Sex.Female, Math.Max(20, father.Age(ctx.Year) + rng.Range(-5, 2)));
+        // Most couples share a heritage; some do not.
+        var mother = PersonFactory.CreateStranger(ctx, Sex.Female, Math.Max(20, father.Age(ctx.Year) + rng.Range(-5, 2)),
+            heritage: rng.Chance(0.85) ? father.Heritage : null);
         father.AttractedToSameSex = mother.AttractedToSameSex = false;
         w.FamilyName = father.LastName;
         mother.CityId = father.CityId;
@@ -60,10 +62,10 @@ public static class StartingFamily
     {
         var rng = ctx.Rng;
         int parentAge = parent.Age(ctx.Year);
-        var gf = PersonFactory.CreateStranger(ctx, Sex.Male, parentAge + rng.Range(22, 34), parent.BirthLastName);
-        var gm = PersonFactory.CreateStranger(ctx, Sex.Female, Math.Max(parentAge + 18, gf.Age(ctx.Year) + rng.Range(-5, 1)), parent.BirthLastName);
+        var gf = PersonFactory.CreateStranger(ctx, Sex.Male, parentAge + rng.Range(22, 34), parent.BirthLastName, parent.Heritage);
+        var gm = PersonFactory.CreateStranger(ctx, Sex.Female, Math.Max(parentAge + 18, gf.Age(ctx.Year) + rng.Range(-5, 1)), parent.BirthLastName, parent.Heritage);
         gf.AttractedToSameSex = gm.AttractedToSameSex = false;
-        gm.BirthLastName = rng.Pick(ctx.Country.LastNames);
+        gm.BirthLastName = Names.LastName(ctx, parent.Heritage);
         gf.CityId = gm.CityId = rng.Chance(0.7) ? parent.CityId : HousingSystem.RandomCityId(ctx);
         MarkFamily(gf, 0, true);
         MarkFamily(gm, 0, true);
@@ -80,7 +82,7 @@ public static class StartingFamily
         for (int i = 0; i < extra; i++)
         {
             int age = Math.Clamp(parentAge + rng.Range(-7, 7), 16, gm.Age(ctx.Year) - 18);
-            var aunt = PersonFactory.CreateStranger(ctx, rng.Chance(0.5) ? Sex.Male : Sex.Female, age, gf.LastName);
+            var aunt = PersonFactory.CreateStranger(ctx, rng.Chance(0.5) ? Sex.Male : Sex.Female, age, gf.LastName, gf.Heritage);
             aunt.CityId = rng.Chance(0.6) ? gf.CityId : HousingSystem.RandomCityId(ctx);
             MarkFamily(aunt, 1, true);
             Link(ctx, gf, gm, aunt);

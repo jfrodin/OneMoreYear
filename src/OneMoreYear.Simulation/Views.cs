@@ -156,3 +156,19 @@ public sealed record PortraitView
     public double Fitness { get; init; }
     public Model.Face Face { get; init; } = new();
 }
+
+/// <summary>One card in the graphical family tree.</summary>
+public sealed record TreePerson(int Id, string Name, string Years, bool Alive, string Relation, bool IsPlayer, bool Played, bool HalfSibling = false);
+
+/// <summary>
+/// The family around one person, generation by generation: grandparents (per parent), parents,
+/// siblings (in birth order, including the person), the partner, children and grandchildren (per child).
+/// </summary>
+public sealed record FamilyFocusView(
+    TreePerson Focus,
+    IReadOnlyList<TreePerson> Parents,
+    IReadOnlyDictionary<int, IReadOnlyList<TreePerson>> Grandparents,
+    IReadOnlyList<TreePerson> Siblings,
+    TreePerson? Partner,
+    IReadOnlyList<TreePerson> Children,
+    IReadOnlyDictionary<int, IReadOnlyList<TreePerson>> Grandchildren);

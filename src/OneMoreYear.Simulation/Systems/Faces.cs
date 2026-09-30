@@ -12,27 +12,31 @@ public static class Faces
 {
     public const int HairStyles = 4;
 
-    public static Face Of(World w, Person p)
+    public static Face Of(World w, Person p, Content.ContentDb? content = null)
     {
         if (p.Face != null) return p.Face;
-        var parents = Kinship.BiologicalParents(w, p).Select(x => Of(w, x)).ToList();
+        content ??= Content.ContentDb.Embedded;
+        var parents = Kinship.BiologicalParents(w, p).Select(x => Of(w, x, content)).ToList();
         var rng = new SimRandom(w.Seed * 0x9E3779B97F4A7C15UL ^ (ulong)p.Id * 0xBF58476D1CE4E5B9UL);
-        p.Face = parents.Count == 0 ? Founder(p, rng) : Child(p, parents, rng);
+        var heritage = content.Names.GetValueOrDefault(w.CountryId)?.Heritages.FirstOrDefault(h => h.Id == p.Heritage);
+        p.Face = parents.Count == 0 ? Founder(p, rng, heritage) : Child(p, parents, rng);
         Style(p, p.Face, rng);
         return p.Face;
     }
 
-    private static Face Founder(Person p, SimRandom rng)
+    private static Face Founder(Person p, SimRandom rng, Content.HeritageDef? heritage)
     {
         double G(double mean = 0.5, double sd = 0.18) => Math.Clamp(rng.Gaussian(mean, sd), 0, 1);
-        // Mostly Scandinavian, but not only. Dark hair and brown eyes make darker skin more likely.
+        // Skin follows the heritage; for older saves without one, dark hair and brown eyes make darker skin more likely.
         bool darkFeatures = p.HairColor == "black" || (p.HairColor == "dark brown" && p.EyeColor == "brown");
-        double skin = rng.NextDouble() switch
-        {
-            var r when darkFeatures && r < 0.35 => rng.Range(0.45, 0.95),
-            var r when r < 0.06 => rng.Range(0.3, 0.5),
-            _ => rng.Range(0.02, 0.25),
-        };
+        double skin = heritage is { Skin.Count: 2 } h
+            ? rng.Range(h.Skin[0], h.Skin[1])
+            : rng.NextDouble() switch
+            {
+                var r when darkFeatures && r < 0.35 => rng.Range(0.45, 0.95),
+                var r when r < 0.06 => rng.Range(0.3, 0.5),
+                _ => rng.Range(0.02, 0.25),
+            };
         return new Face
         {
             Skin = skin,

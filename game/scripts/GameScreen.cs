@@ -21,7 +21,9 @@ public partial class GameScreen : Control
     private VBoxContainer _yearContent = null!;
     private VBoxContainer _peopleList = null!;
     private VBoxContainer _personDetail = null!;
-    private Tree _tree = null!;
+    private VBoxContainer _treeTab = null!;
+    private FamilyTreeView? _treeView;
+    private int? _treeFocusId;
     private VBoxContainer _chronicleList = null!;
     private OptionButton _chronicleFilter = null!;
     private Label _hint = null!;
@@ -86,9 +88,8 @@ public partial class GameScreen : Control
         _tabs.SetTabTitle(TabMoney, "Money");
 
         // Family tree
-        _tree = new Tree { HideRoot = true, SizeFlagsVertical = SizeFlags.ExpandFill, FocusMode = FocusModeEnum.All };
-        _tree.ItemActivated += OnTreeActivated;
-        _tabs.AddChild(_tree);
+        _treeTab = Ui.VBox(8);
+        _tabs.AddChild(_treeTab);
         _tabs.SetTabTitle(TabTree, "Family Tree");
 
         // Chronicle
@@ -162,7 +163,7 @@ public partial class GameScreen : Control
             TabFamily => _selectedId is { } id && _personButtons.TryGetValue(id, out var b) ? b : _personButtons.Values.FirstOrDefault(),
             TabWork => FirstEnabledButton(_workContent, "action") ?? (Control?)_nextYear,
             TabMoney => FirstEnabledButton(_moneyContent, "action") ?? (Control?)_nextYear,
-            TabTree => _tree,
+            TabTree => _treeView?.FocusCard,
             TabChronicle => _chronicleFilter,
             _ => null
         };
@@ -672,9 +673,6 @@ public partial class GameScreen : Control
         col.AddChild(Ui.Label(p.AppearanceText, 15, UiTheme.Faint, wrap: true));
         if (p.Condition != null) col.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad));
         header.AddChild(col);
-        var figure = Figure.Create(S.Portrait(p.Id), 150);
-        figure.TooltipText = p.AppearanceText;
-        header.AddChild(figure);
         _personDetail.AddChild(header);
 
         // Close family as buttons: jump straight to a partner, parent, sibling or child.
@@ -706,6 +704,8 @@ public partial class GameScreen : Control
             row.AddChild(d);
             traitBox.AddChild(row);
         }
+        if (p.Traits.Count > 0)
+            traitBox.AddChild(UiTheme.HandLabel("green – a good side   ·   red – a dark side   ·   blue – neither, it depends", 17, UiTheme.Faint));
         _personDetail.AddChild(traitBox);
 
         if (!isPlayer && p.TowardsPlayer is { } r)
@@ -755,31 +755,38 @@ public partial class GameScreen : Control
 
     private void RefreshTree()
     {
-        _tree.Clear();
-        var root = _tree.CreateItem();
-        foreach (var node in S.FamilyTree()) AddTreeNode(root, node);
+        Ui.Clear(_treeTab);
+        int focus = _treeFocusId is { } id && S.World.TryGet(id) != null ? id : S.Player.Id;
+        var person = S.World.Get(focus);
+
+        var header = Ui.HBox(12);
+        var title = Ui.Label(focus == S.Player.Id ? "Your family" : $"The family of {person.FullName}", 26, UiTheme.Text);
+        title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        header.AddChild(title);
+        if (focus != S.Player.Id)
+        {
+            var back = Ui.Button("Back to you", () => { _treeFocusId = null; RefreshTree(); FocusDefault(); }, 42);
+            RegisterHint(back, "Show the family around yourself again.");
+            header.AddChild(back);
+        }
+        _treeTab.AddChild(header);
+        _treeTab.AddChild(Ui.Label("Choose someone to see the family from their place in it. Choose the person in the middle to open their page.",
+            15, UiTheme.Muted, wrap: true));
+
+        var scroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, SizeFlagsHorizontal = SizeFlags.ExpandFill, FollowFocus = true };
+        _treeView = new FamilyTreeView(S, focus,
+            refocus: newFocus => { _treeFocusId = newFocus; RefreshTree(); FocusDefault(); },
+            open: OpenPerson,
+            hint: (control, text) => RegisterHint(control, text));
+        var centre = new CenterContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
+        centre.AddChild(_treeView);
+        scroll.AddChild(centre);
+        _treeTab.AddChild(scroll);
     }
 
-    private void AddTreeNode(TreeItem parent, TreeNode node)
+    /// <summary>Opens someone's page on the People tab (living or dead).</summary>
+    private void OpenPerson(int id)
     {
-        var item = _tree.CreateItem(parent);
-        string text = node.Label + (node.IsPlayer ? "   (you)" : node.Played ? "   (played)" : "");
-        if (node.IsReference) text += "   – shown above";
-        if (node.Partners.Count > 0) text += "     with " + string.Join(", ", node.Partners);
-        item.SetText(0, text);
-        item.SetMetadata(0, node.Id);
-        var color = node.IsReference ? UiTheme.Faint
-            : node.IsPlayer ? UiTheme.Accent : node.Played ? UiTheme.AccentDark : node.Alive ? UiTheme.Text : UiTheme.Muted;
-        item.SetCustomColor(0, color);
-        foreach (var child in node.Children) AddTreeNode(item, child);
-    }
-
-    private void OnTreeActivated()
-    {
-        var item = _tree.GetSelected();
-        if (item == null) return;
-        int id = item.GetMetadata(0).AsInt32();
-        if (S.World.TryGet(id) is not { IsAlive: true }) return;
         _selectedId = id;
         _tabs.CurrentTab = TabFamily;
     }
@@ -787,6 +794,14 @@ public partial class GameScreen : Control
     // --- Smoke test (automated run through the real UI, see Main) ------------------------
 
     public void ShowTab(int tab) => _tabs.CurrentTab = tab;
+
+    /// <summary>Screenshot tour: the tree around the oldest played ancestor's father.</summary>
+    public void FocusTreeOnGrandfather()
+    {
+        var father = S.World.Player.ParentIds.Select(S.World.Get).FirstOrDefault();
+        _treeFocusId = father?.ParentIds.FirstOrDefault() is { } g and > 0 ? g : father?.Id;
+        RefreshTree();
+    }
 
     public string CurrentTabName => _tabs.GetTabTitle(_tabs.CurrentTab);
 

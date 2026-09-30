@@ -161,6 +161,7 @@ public static class EventSystem
         if (c.MinEducation is { } minEd && p.Education < minEd) return false;
         if (c.MaxEducation is { } maxEd && p.Education > maxEd) return false;
         if (c.MinGrades is { } minGr && p.Grades < minGr) return false;
+        if (c.MaxGrades is { } maxGr && p.Grades > maxGr) return false;
         if (c.JobTags is { Count: > 0 } tags && ctx.Content.Occupation(p.OccupationId)?.Tags.Any(tags.Contains) != true) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;

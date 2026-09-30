@@ -6,28 +6,24 @@ namespace OneMoreYear.Simulation.Systems;
 /// <summary>Creates new people: newborns, partners, friends and the starting family.</summary>
 public static class PersonFactory
 {
-    /// <summary>A first name that no living family member already has, so stories stay easy to follow.</summary>
-    public static string RandomFirstName(SimContext ctx, Sex sex)
-    {
-        var names = sex == Sex.Male ? ctx.Country.MaleNames : ctx.Country.FemaleNames;
-        var taken = ctx.World.People.Where(p => p.IsAlive && p.InFamily).Select(p => p.FirstName).ToHashSet();
-        for (int i = 0; i < 12; i++)
-        {
-            var name = ctx.Rng.Pick(names);
-            if (!taken.Contains(name)) return name;
-        }
-        return ctx.Rng.Pick(names);
-    }
+    /// <summary>A first name that fits the person's sex, heritage and birth year (see Names).</summary>
+    public static string RandomFirstName(SimContext ctx, Sex sex, string? heritage = null, int? birthYear = null) =>
+        Names.FirstName(ctx, sex, heritage ?? Names.Default, birthYear ?? ctx.Year);
 
-    /// <summary>Creates an adult (or child) with no parents in the world.</summary>
-    public static Person CreateStranger(SimContext ctx, Sex sex, int age, string? lastName = null)
+    /// <summary>
+    /// Creates an adult (or child) with no parents in the world. The heritage is drawn from how common
+    /// each one was this year unless given (a grandparent shares their child's).
+    /// </summary>
+    public static Person CreateStranger(SimContext ctx, Sex sex, int age, string? lastName = null, string? heritage = null)
     {
         var rng = ctx.Rng;
+        heritage ??= Names.PickHeritage(ctx);
         var p = new Person
         {
             Sex = sex,
-            FirstName = RandomFirstName(ctx, sex),
-            LastName = lastName ?? rng.Pick(ctx.Country.LastNames),
+            Heritage = heritage,
+            FirstName = RandomFirstName(ctx, sex, heritage, ctx.Year - age),
+            LastName = lastName ?? Names.LastName(ctx, heritage),
             BirthYear = ctx.Year - age,
             AttractedToSameSex = rng.Chance(ctx.Country.SameSexCoupleChance),
             Health = Math.Clamp(rng.Gaussian(92 - Math.Max(0, age - 30) * 0.6, 6), 20, 100),
@@ -53,11 +49,14 @@ public static class PersonFactory
         var sex = rng.Chance(0.51) ? Sex.Male : Sex.Female;
         var father = parentA.Sex == Sex.Male ? parentA : parentB?.Sex == Sex.Male ? parentB : null;
         var lastName = (father ?? parentA).LastName;
+        // The family that raises the child names it.
+        string heritage = Names.Inherit(ctx, parentB == null ? new[] { parentA } : new[] { parentA, parentB });
 
         var p = new Person
         {
             Sex = sex,
-            FirstName = RandomFirstName(ctx, sex),
+            Heritage = heritage,
+            FirstName = RandomFirstName(ctx, sex, heritage, ctx.Year),
             LastName = lastName,
             BirthLastName = lastName,
             BirthYear = ctx.Year,

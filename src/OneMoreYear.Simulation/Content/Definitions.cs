@@ -217,6 +217,7 @@ public sealed class ConditionDef
     /// <summary>The person's job must have one of these workplace tags.</summary>
     public List<string>? JobTags { get; set; }
     public double? MinGrades { get; set; }
+    public double? MaxGrades { get; set; }
 }
 
 /// <summary>Picks another participant in an event, relative to the player.</summary>
@@ -367,4 +368,34 @@ public sealed class EmployerNamesDef
     public List<string> BrandStarts { get; set; } = new();
     public List<string> BrandEnds { get; set; } = new();
     public Dictionary<string, List<string>> ByOccupation { get; set; } = new();
+}
+
+/// <summary>Names and heritages for one country (content/names).</summary>
+public sealed class NamesDef
+{
+    public string Country { get; set; } = "";
+    public List<HeritageDef> Heritages { get; set; } = new();
+    public List<NameGroupDef> Groups { get; set; } = new();
+}
+
+public sealed class HeritageDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>How common the heritage is among people the family meets, by year.</summary>
+    public Dictionary<int, double> Share { get; set; } = new();
+    /// <summary>Surnames typical for the heritage; empty = the country's surnames.</summary>
+    public List<string> LastNames { get; set; } = new();
+    /// <summary>Skin tone range (0 light – 1 dark) for people with no parents in the world.</summary>
+    public List<double> Skin { get; set; } = new() { 0.02, 0.25 };
+    /// <summary>Chance of black or dark brown hair and brown eyes.</summary>
+    public double DarkHair { get; set; } = 0.15;
+}
+
+public sealed class NameGroupDef
+{
+    public string Heritage { get; set; } = "";
+    public string Sex { get; set; } = "";
+    public int From { get; set; }
+    public int To { get; set; }
+    public List<string> Names { get; set; } = new();
 }

@@ -1,0 +1,137 @@
+// More teenage years: identity, friends, first freedoms and first mistakes. Ages 13–17.
+[
+  {
+    "id": "teen_diary", "title": "The diary",
+    "text": "Your diary is on the kitchen table, open. {t.name} is sitting next to it, not looking at you.",
+    "conditions": { "minAge": 13, "maxAge": 17 }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Scream at {t.him}", "effects": [
+          { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 15 },
+          { "type": "memory", "kind": "diary_read", "to": "target", "text": "{t.name} read my diary", "impact": -20 } ],
+        "result": "Doors slam. You don't speak for a week." },
+      { "text": "Take it without a word", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": -15 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.1 } ],
+        "result": "After that you hide everything. Some things you stop writing down at all." },
+      { "text": "Ask what {t.he} is worried about", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 15 } ],
+        "result": "{t.name} was scared. For once you actually talk – the real kind of talking." }
+    ]
+  },
+  {
+    "id": "teen_band", "title": "The band",
+    "text": "{t.name} has a drum kit in the garage and a plan: a band. You just need to pick an instrument and a terrible name.",
+    "conditions": { "minAge": 13, "maxAge": 17 }, "cooldown": 0,
+    "target": { "role": "friend" },
+    "choices": [
+      { "text": "Grab the bass", "chance": 0.4, "chanceTraits": { "creative": 0.25, "charming": 0.1 },
+        "success": { "text": "Your first gig is at the youth club. Forty people. Somebody asks for an autograph as a joke. You keep it anyway.",
+          "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.3 }, { "type": "happiness", "amount": 10 },
+            { "type": "memory", "kind": "band", "to": "target", "text": "The band with {t.name}", "impact": 18 } ] },
+        "failure": { "text": "The neighbours complain after two weeks. The band splits over the name.",
+          "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 5, "mutual": true } ] } },
+      { "text": "Be the manager", "effects": [ { "type": "trait_add", "trait": "ambitious", "chance": 0.2 } ],
+        "result": "You book three gigs and a local radio interview. Nobody plays well, but everyone agrees you are a genius." }
+    ]
+  },
+  {
+    "id": "teen_first_drink", "title": "Behind the youth club",
+    "text": "Someone has a bottle of home-made wine in a plastic bag. It goes round the circle and reaches you.",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Take a swig", "chance": 0.6,
+        "success": { "text": "It tastes like cough medicine. Everything is very funny for an hour.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "You are sick behind the bushes and your parents are called. The grounding lasts a month.",
+          "effects": [ { "type": "health", "amount": -2 }, { "type": "memory", "kind": "first_drunk", "text": "Getting sick at the youth club", "impact": -8 } ] } },
+      { "text": "Pass it on", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ],
+        "result": "Nobody really cares. That's the surprise." }
+    ]
+  },
+  {
+    "id": "teen_tryouts", "title": "Try-outs",
+    "text": "The local team is holding try-outs. The coach looks like he has never smiled in his life.",
+    "conditions": { "minAge": 13, "maxAge": 16 }, "cooldown": 0,
+    "choices": [
+      { "text": "Give it everything", "chance": 0.4, "chanceAttributes": { "fitness": 0.008 }, "chanceTraits": { "brave": 0.05 },
+        "success": { "text": "You make the team. Training four evenings a week – and you love every minute.",
+          "effects": [ { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "trait_add", "trait": "social", "chance": 0.15 },
+            { "type": "memory", "kind": "team", "text": "Making the team", "impact": 15 } ] },
+        "failure": { "text": "Not this time. The coach nods at you on your way out, which somehow makes it worse.",
+          "effects": [ { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Stay in the stands", "result": "Someone has to cheer." }
+    ]
+  },
+  {
+    "id": "teen_hair", "title": "A new look",
+    "text": "Your friend has a packet of hair dye and a very confident expression.",
+    "conditions": { "minAge": 13, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go all in", "chance": 0.5, "chanceTraits": { "vain": 0.1 },
+        "success": { "text": "It looks amazing. Your parents say nothing, loudly.", "effects": [ { "type": "attribute", "kind": "looks", "amount": 3 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "It's green. It's supposed to be red. It's definitely green.", "effects": [ { "type": "attribute", "kind": "looks", "amount": -2 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Maybe just a streak", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Small rebellions count too." }
+    ]
+  },
+  {
+    "id": "teen_graffiti", "title": "After dark",
+    "text": "Your friends have spray cans and have picked out the wall of the school gym. \"Just our names. Nobody gets hurt.\"",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Join in", "chance": 0.65, "chanceTraits": { "criminal": 0.15, "impulsive": -0.05 },
+        "success": { "text": "Your tag is there for three years before anyone paints over it.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.1 } ] },
+        "failure": { "text": "A security guard with a torch. Your parents have to pay for the cleaning, and they make you pay them back.",
+          "effects": [ { "type": "money", "amount": -2000 }, { "type": "memory", "kind": "caught_graffiti", "text": "Caught painting the school wall", "impact": -10 } ] } },
+      { "text": "Go home", "result": "They call you boring. Two of them get caught." }
+    ]
+  },
+  {
+    "id": "teen_heartbreak", "title": "Someone else",
+    "text": "The person you've liked all year is holding hands with someone else in the corridor.",
+    "conditions": { "minAge": 13, "maxAge": 17, "hasPartner": false }, "cooldown": 3,
+    "choices": [
+      { "text": "Sad songs, locked door", "effects": [ { "type": "happiness", "amount": -8 }, { "type": "memory", "kind": "heartbreak", "text": "My first broken heart", "impact": -12 } ],
+        "result": "It hurts in a way nobody warned you about. It passes, the way everyone promised it would." },
+      { "text": "Shrug it off", "chance": 0.5, "chanceTraits": { "resilient": 0.3, "cheerful": 0.15 },
+        "success": { "text": "You decide they weren't that great anyway. By Friday you almost believe it.", "effects": [] },
+        "failure": { "text": "You tell everyone you don't care. You care a lot.", "effects": [ { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "teen_failing", "title": "Red ink",
+    "text": "Your maths test comes back covered in red. The teacher wants to talk to your parents.",
+    "conditions": { "minAge": 13, "maxAge": 17, "maxGrades": 55 }, "cooldown": 3,
+    "choices": [
+      { "text": "Study every night for a month", "chance": 0.6, "chanceAttributes": { "smarts": 0.005 }, "chanceTraits": { "lazy": -0.2, "ambitious": 0.15 },
+        "success": { "text": "Next test: a pass. Not great. But yours.", "effects": [ { "type": "grades", "amount": 10 }, { "type": "attribute", "kind": "smarts", "amount": 2 } ] },
+        "failure": { "text": "You try. It still doesn't stick. Maybe numbers just aren't your thing.", "effects": [ { "type": "grades", "amount": 3 } ] } },
+      { "text": "Decide school isn't for you", "effects": [ { "type": "grades", "amount": -8 }, { "type": "trait_add", "trait": "lazy", "chance": 0.1 } ],
+        "result": "You spend maths looking out of the window. The window is very interesting." }
+    ]
+  },
+  {
+    "id": "teen_runaway", "title": "Enough",
+    "text": "After another fight with {t.name} you stuff clothes into a bag. You're not staying here one more night.",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "target": { "role": "parent", "conditions": { "relMax": { "closeness": 45 } } },
+    "choices": [
+      { "text": "Go to a friend's place", "effects": [
+          { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 },
+          { "type": "memory", "kind": "ran_away", "to": "target", "text": "The night I ran away from home", "impact": -12 } ],
+        "result": "{t.name} comes to get you in the middle of the night, in pyjamas and a coat. Neither of you says much. It's a start." },
+      { "text": "Unpack the bag", "effects": [ { "type": "happiness", "amount": -4 } ],
+        "result": "Two more years. You can do two more years." }
+    ]
+  },
+  {
+    "id": "teen_moped", "title": "Freedom on two wheels",
+    "text": "Everyone in your class seems to have a moped. You want one more than you have ever wanted anything.",
+    "conditions": { "minAge": 15, "maxAge": 16 }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Beg {t.name}", "chance": 0.4,
+        "success": { "text": "{t.name} gives in, on the condition that you never, ever ride without a helmet. You ride everywhere.",
+          "effects": [ { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "moped", "to": "target", "text": "The moped {t.name} bought me", "impact": 12 } ] },
+        "failure": { "text": "\"Over my dead body.\" A very firm no.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 5 } ] } },
+      { "text": "Save up for it yourself", "effects": [ { "type": "trait_add", "trait": "ambitious", "chance": 0.15 }, { "type": "happiness", "amount": 3 } ],
+        "result": "Paper round, a whole summer. The moped is second-hand, loud and the best thing you've ever owned." }
+    ]
+  }
+]
