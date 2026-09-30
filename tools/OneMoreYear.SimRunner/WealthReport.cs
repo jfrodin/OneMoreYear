@@ -16,6 +16,13 @@ static class WealthReport
         foreach (var p in adults.OrderByDescending(p => EconomySystem.NetWorth(ctx, p)).Take(5))
             Console.WriteLine($"  {p.FullName,-24} {p.Age(s.Year),3}  cash {Real(p.Money),7:0.0}  funds {Real(p.Funds),7:0.0}  shares {Real(p.Stocks),7:0.0}  " +
                               $"home {Real(p.HomeValue),6:0.0}  loan {Real(p.Mortgage),6:0.0}  income {p.Income / 1e3:0}k  {CareerSystem.ActivityText(ctx, p)}");
+        Console.WriteLine("  Secrets: " + string.Join(", ", s.World.Secrets.GroupBy(x => x.Kind).Select(g => $"{g.Key} {g.Count()}")) +
+                          $"  · predatory people: {s.World.People.Count(p => p.Traits.Contains("predatory"))}");
+        var fam = s.World.People.Where(x => x.IsAlive && x.InFamily && x.Age(s.Year) >= 30).ToList();
+        var pairs = fam.SelectMany(c => Kinship.Parents(s.World, c).Where(pp => pp.IsAlive).Select(pp => s.World.Opinion(pp.Id, c.Id))
+            .Concat(Kinship.Siblings(s.World, c).Where(sb => sb.IsAlive).Select(sb => s.World.Opinion(c.Id, sb.Id)))).ToList();
+        Console.WriteLine($"  Parents→adult children and siblings ({pairs.Count}): " +
+                          string.Join(", ", pairs.GroupBy(RelationshipSystem.OpinionLabel).OrderBy(g => g.Key).Select(g => $"{g.Key} {g.Count()}")));
         var peak = s.World.People.OrderByDescending(p => p.PeakNetWorth).First();
         Console.WriteLine($"  Highest ever: {peak.FullName} {EconomySystem.Format(ctx, peak.PeakNetWorth)} (nominal)");
     }

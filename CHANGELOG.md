@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.13.0 – 2026-09-30 · Balancing: families
+
+- **Family stays family**: parents and grown children, siblings and grandparents no longer drift
+  to "Neutral" just because they live apart. Without a grudge, ties settle at a warm baseline and
+  grow back slowly; real conflicts still show as bitterness. Most close relatives now like each other.
+- **Partners take the initiative**: your partner may suggest moving in together, or say they want
+  a child (or to adopt). You still decide. Partners feel closer over the years, and propose more often.
+- **Dark traits don't pile up**: a predatory parent now very rarely passes it on (was 30 %, now 2 %),
+  so abuse no longer runs through whole family lines. Each trait can have its own inheritance.
+- Test scenarios got new seeds where needed (The family secret: Joakim, Gun and Anna; Late in life: Göran).
+- SimRunner: `--dating`, `--wealth` (now with secrets and family opinions) and `--count=N` for seed searches.
+
 ## 0.12.0 – 2026-09-30 · Money that works
 
 - **A real market**: inflation follows history, the stock market goes up most years and crashes in

@@ -14,6 +14,8 @@ public sealed class TraitDef
     public double Weight { get; set; } = 1;
     /// <summary>Only appears in adulthood (e.g. partner preferences); rolled at 18 instead of at birth.</summary>
     public bool AdultOnly { get; set; }
+    /// <summary>Chance that a child picks the trait up from a parent who has it.</summary>
+    public double Inherit { get; set; } = 0.3;
     /// <summary>Extra weight by sex, e.g. more men than women prefer much younger partners.</summary>
     public double MaleWeight { get; set; } = 1;
     public double FemaleWeight { get; set; } = 1;

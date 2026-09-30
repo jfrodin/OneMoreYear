@@ -18,18 +18,18 @@ The scenarios are defined in [content/scenarios.json](../content/scenarios.json)
 | **Old money** | `old_money` | 1001 | 1965, newborn | Rich, greedy parents with a home of their own and a very rich grandfather. You are ambitious and charming. Inheritance, spoiled children, extreme wealth. |
 | **Nothing to lose** | `nothing_to_lose` | 1002 | 1975, newborn | Poor parents in debt, both unemployed. Your father drinks and has a temper. Poverty, addiction, violence at home, breaking the pattern. |
 | **Sunshine** | `sunshine` | 1003 | 1980, newborn | Kind, cheerful, devoted parents, and you are kind and resilient. The good life: does it last? |
-| **The family secret – grandfather** | `the_family_secret` | 11 | 2015, you are the grandfather (79) | Your granddaughter Sofia (25) is also your daughter. Her mother Elsa (40) is your daughter; you abused her from when she was a child, and she had Sofia at 15. Her teenage boyfriend Johan has always believed Sofia is his. It happened before you take over and is never shown or played. Sofia has just ordered a DNA test: buy silence, threaten, talk her out of it or confess. **Dark theme.** |
-| **The family secret – mother** | `the_family_secret_mother` | 11 | 2015, you are the mother (40) | The same family, as Elsa. You have carried it alone for 25 years, and now your daughter wants to take a DNA test. Stop her, confront your father, tell her yourself or keep quiet. **Dark theme.** |
-| **The family secret – daughter** | `the_family_secret_daughter` | 11 | 2015, you are the granddaughter (25) | The same family, as Sofia. Mum goes pale when you mention a DNA test. Find out, go to Mum, report Grandpa or cut them all off. **Dark theme.** |
+| **The family secret – grandfather** | `the_family_secret` | 97 | 2015, you are the grandfather (72) | Your granddaughter Anna (25) is also your daughter. Her mother Gun (40) is your daughter; you abused her from when she was a child, and she had Anna at 15. Her teenage boyfriend Erik has always believed Anna is his. Your wife Fatima knows nothing. It happened before you take over and is never shown or played. Anna has just ordered a DNA test: buy silence, threaten, talk her out of it or confess. **Dark theme.** |
+| **The family secret – mother** | `the_family_secret_mother` | 97 | 2015, you are the mother (40) | The same family, as Gun. You have carried it alone for 25 years, and now your daughter wants to take a DNA test. Stop her, confront your father, tell her yourself or keep quiet. **Dark theme.** |
+| **The family secret – daughter** | `the_family_secret_daughter` | 97 | 2015, you are the granddaughter (25) | The same family, as Anna. Mum goes pale when you mention a DNA test. Find out, go to Mum, report Grandpa or cut them all off. **Dark theme.** |
 | **Born bad** | `born_bad` | 1005 | 1995, age 17 | You are cruel, hot-tempered and criminal-minded. Crime, temptations, the police, prison, a way back. |
 | **Scandal** | `scandal` | 1006 | 1997, age 12 | Both parents are unfaithful, dishonest or jealous. Affairs, revealed secrets, divorce, a half-sibling. |
-| **Grown up** | `grown_up` | 1007 | 1996, age 26 | Skips childhood. You have a partner, 150,000 kr and job offers waiting. Adult life, love, money and work. |
-| **Late in life** | `late_in_life` | 57 | 2015, age 62 | With a partner, three grown children and five grandchildren. 900,000 kr and a home of your own. Retirement, wills, health, death and succession. |
+| **Grown up** | `grown_up` | 1007 | 1996, age 26 | Skips childhood. You have a job, a partner, a two-year-old son and 150,000 kr. Adult life, love, money and work. |
+| **Late in life** | `late_in_life` | 11 | 2013, age 62 | With a partner, three grown children and four grandchildren. 900,000 kr and a home of your own. Retirement, wills, health, death and succession. |
 
 ## Tips
 
 - *Nothing to lose* and *Born bad* are good for the crime system. Try the actions under *Crime*.
-- *The family secret*: play it from all three sides. The truth can also come out by itself (DNA test, Elsa telling the family), and then the police get involved.
+- *The family secret*: play it from all three sides. The truth can also come out by itself (DNA test, Gun telling the family), and then the police get involved.
 - *Late in life* is the quickest way to test death, the will and choosing an heir.
 - Found something? Press F1 in the game and write it down, as usual. The note gets the scenario's save file.
 
@@ -39,3 +39,9 @@ The scenarios are defined in [content/scenarios.json](../content/scenarios.json)
 - `[seed] [years] --scenario=id` (seed and years first; leave out the seed to use the scenario's) plays automatically on from a scenario.
 - `--find-seed=id` tries seeds 1–30 for a scenario (children, grandchildren, partner, prison) when you need a better seed.
 - A test checks that every scenario starts at the promised age with the promised traits.
+
+## When seeds stop matching
+
+Changes to the simulation (balancing, new systems) change what happens with a seed, so a scenario
+can stop matching its description – a test then fails. Find a new seed with `--find-seed=id`
+(`--count=250` searches further) and update the seed and the names above.

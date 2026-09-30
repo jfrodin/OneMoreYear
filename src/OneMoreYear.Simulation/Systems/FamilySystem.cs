@@ -75,9 +75,17 @@ public static class FamilySystem
         if (playerCouple)
         {
             var npc = a.Id == w.PlayerId ? b : a;
-            if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 2 && w.Opinion(npc.Id, w.PlayerId) > 40
+            var player = a.Id == w.PlayerId ? a : b;
+            double npcOpinion = w.Opinion(npc.Id, player.Id);
+            // The partner takes the initiative too – the player still decides.
+            if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && npcOpinion > 25 && OldEnoughToMoveIn(ctx, a) && OldEnoughToMoveIn(ctx, b)
+                && rng.Chance(0.35))
+                EventSystem.QueueSituation(ctx, "partner_suggests_moving_in", new() { ["target"] = npc.Id });
+            else if (a.PartnerStatus != PartnerStatus.Dating && years >= 2 && npcOpinion > 30 && player.Expecting == null && WantsChild(ctx, a, b))
+                EventSystem.QueueSituation(ctx, "partner_wants_baby", new() { ["target"] = npc.Id });
+            if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 2 && npcOpinion > 30
                 && a.Age(ctx.Year) >= ctx.Country.MarriageAge && b.Age(ctx.Year) >= ctx.Country.MarriageAge
-                && rng.Chance(0.15))
+                && rng.Chance(0.25))
                 EventSystem.QueueSituation(ctx, "partner_proposes", new() { ["target"] = npc.Id });
         }
         else if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && oa > 15 && ob > 15 && rng.Chance(0.4)
@@ -89,6 +97,20 @@ public static class FamilySystem
 
         // --- Children ---
         TryHaveChildren(ctx, a, b, playerCouple);
+    }
+
+    /// <summary>Does the player's partner bring up having a child this year? Fewer children, stronger wish.</summary>
+    private static bool WantsChild(SimContext ctx, Person a, Person b)
+    {
+        int kids = a.ChildIds.Intersect(b.ChildIds).Count();
+        if (kids >= 3) return false;
+        var mother = a.Sex == Sex.Female ? a : b.Sex == Sex.Female ? b : null;
+        // Same-sex couples adopt; otherwise it depends on the mother's age.
+        double fertility = mother == null || a.Sex == b.Sex ? (Math.Min(a.Age(ctx.Year), b.Age(ctx.Year)) is >= 25 and <= 50 ? 1 : 0)
+            : FertilityByAge(ctx, mother.Age(ctx.Year));
+        if (fertility <= 0) return false;
+        double chance = (kids switch { 0 => 0.3, 1 => 0.2, _ => 0.07 }) * Math.Min(1, fertility * 1.5) * ctx.FertilityIndex;
+        return ctx.Rng.Chance(chance);
     }
 
     private static void TryHaveChildren(SimContext ctx, Person a, Person b, bool playerCouple)

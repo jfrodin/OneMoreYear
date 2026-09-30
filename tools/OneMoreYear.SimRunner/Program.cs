@@ -9,8 +9,9 @@ if (args.FirstOrDefault(a => a.StartsWith("--load=")) is { } loadArg)
     Inspect.Run(loadArg["--load=".Length..], args.FirstOrDefault(a => a.StartsWith("--who="))?["--who=".Length..] ?? "");
     return;
 }
-if (args.FirstOrDefault(a => a.StartsWith("--find-seed=")) is { } fs) { SeedSearch.Run(fs["--find-seed=".Length..], 60); return; }
+if (args.FirstOrDefault(a => a.StartsWith("--find-seed=")) is { } fs) { SeedSearch.Run(fs["--find-seed=".Length..], args.FirstOrDefault(a => a.StartsWith("--count=")) is { } c ? int.Parse(c[8..]) : 60); return; }
 if (args.Contains("--scenarios")) { ScenarioReport.Run(); return; }
+if (args.Contains("--dating")) { DatingReport.Run(); return; }
 ulong? givenSeed = args.Length > 0 && ulong.TryParse(args[0], out var s) ? s : null;
 int years = args.Length > 1 && int.TryParse(args[1], out var y) ? y : 120;
 int startYear = args.Length > 2 && int.TryParse(args[2], out var sy) ? sy : 1950;

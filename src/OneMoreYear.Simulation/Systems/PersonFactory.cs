@@ -120,7 +120,7 @@ public static class PersonFactory
 
         foreach (var parent in parents)
             foreach (var t in parent.Traits)
-                if (p.Traits.Count < count && ctx.Content.Traits.TryGetValue(t, out var def) && !def.AdultOnly && rng.Chance(0.3))
+                if (p.Traits.Count < count && ctx.Content.Traits.TryGetValue(t, out var def) && !def.AdultOnly && rng.Chance(def.Inherit))
                     TryAddTrait(ctx, p, t);
 
         int guard = 0;

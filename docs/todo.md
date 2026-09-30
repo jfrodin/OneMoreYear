@@ -5,8 +5,8 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Balancing** – the open items below.
-2. [ ] **Readable seed codes** and **content settings** (under Before release).
+1. [ ] **Readable seed codes** (under Before release).
+2. [ ] **Content settings** (under Before release).
 
 ## Before release
 
@@ -38,8 +38,6 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Balancing
 
-- [ ] Many relationships drift towards "Neutral" over the decades – check drift and contact rules.
-- [ ] The abuse storyline can pile up in one family (seed 1008 from 1950: six abuse secrets in 65 years) –
-  check how the predatory trait is inherited and how often it strikes.
-- [ ] Played without actions, few players find a partner or have children (see `--find-seed=late_in_life`) –
-  check how often dating happens by itself.
+- [ ] Few players marry: a player who only answers events is rarely married at 35 (`SimRunner --dating`).
+  Look at how partners feel about the player over time, and at proposals.
+

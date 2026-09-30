@@ -117,16 +117,19 @@ public static class RelationshipSystem
         if (partners)
         {
             r.Attraction = Math.Max(10, r.Attraction - 1.5);
-            r.Closeness = Math.Clamp(r.Closeness + (60 + warmth * 0.2 - r.Closeness) * 0.08 + ctx.Rng.Gaussian(0, 3), 0, 100);
+            r.Closeness = Math.Clamp(r.Closeness + (75 + warmth * 0.2 - r.Closeness) * 0.08 + ctx.Rng.Gaussian(0, 3), 0, 100);
         }
-        else if (sinceContact > 2)
+        else
         {
+            double floor = FamilyFloor(ctx, from, to, warmth);
             bool friend = from.FriendIds.Contains(to.Id);
-            r.Closeness = Math.Max(warmth * 0.4, r.Closeness - (friend ? 3 : 1));
+            if (sinceContact > 2 && r.Closeness > floor) r.Closeness = Math.Max(floor, r.Closeness - (friend ? 3 : 1));
+            // Family ties grow back slowly between people with no grudge (holidays, birthdays, time).
+            else if (r.Closeness < floor && r.Bitterness < 30) r.Closeness = Math.Min(floor, r.Closeness + 2);
+            // Living in different cities makes it harder to stay close.
+            if (from.CityId != null && from.CityId != to.CityId && to.Age(ctx.Year) >= 18 && from.Age(ctx.Year) >= 18)
+                r.Closeness = Math.Max(Math.Min(floor, r.Closeness), r.Closeness - 1);
         }
-        // Living in different cities makes it harder to stay close.
-        if (!partners && from.CityId != null && from.CityId != to.CityId && to.Age(ctx.Year) >= 18 && from.Age(ctx.Year) >= 18)
-            r.Closeness = Math.Max(warmth * 0.4, r.Closeness - 1);
 
         // Siblings and cousins compare themselves with each other.
         if (from.InFamily && to.InFamily && from.Age(ctx.Year) >= 25 && from.Generation == to.Generation)
@@ -134,6 +137,19 @@ public static class RelationshipSystem
             double mine = EconomySystem.NetWorth(ctx, from), theirs = EconomySystem.NetWorth(ctx, to);
             if (theirs > mine * 2 + ctx.Nominal(300000)) r[RelDim.Envy] += 3 + ctx.Mod(from, "envy") * 5;
         }
+    }
+
+    /// <summary>
+    /// How far closeness sinks without contact. Family stays family: parents and children, siblings and
+    /// grandparents keep a baseline (grudges show up as bitterness instead); others fade to what memories hold.
+    /// </summary>
+    private static double FamilyFloor(SimContext ctx, Person from, Person to, double warmth)
+    {
+        double floor = warmth * 0.4;
+        if (from.ParentIds.Contains(to.Id) || to.ParentIds.Contains(from.Id)) floor = Math.Max(floor, 70);
+        else if (from.ParentIds.Intersect(to.ParentIds).Any()) floor = Math.Max(floor, 62);
+        else if (Kinship.Grandparents(ctx.World, from).Contains(to) || Kinship.Grandparents(ctx.World, to).Contains(from)) floor = Math.Max(floor, 55);
+        return floor;
     }
 
     private static void SiblingDynamics(SimContext ctx, Person p)

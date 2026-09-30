@@ -24,3 +24,25 @@ static class SeedSearch
         }
     }
 }
+
+/// <summary>--dating: how often a player who only answers events has a partner and children at 35.</summary>
+static class DatingReport
+{
+    public static void Run()
+    {
+        int partner = 0, married = 0, kids = 0, n = 40, everDated = 0;
+        for (ulong seed = 1; seed <= (ulong)n; seed++)
+        {
+            var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1960 });
+            var bot = new AutoPlayer(seed, useActions: false);
+            int playerId = s.Player.Id;
+            while (s.Player.Id == playerId && s.Player.Age(s.Year) < 35 && bot.PlayYear(s)) { }
+            var p = s.World.Get(playerId);
+            if (p.PartnerId != null) partner++;
+            if (p.PartnerStatus == OneMoreYear.Simulation.Model.PartnerStatus.Married) married++;
+            if (p.ChildIds.Count > 0) kids++;
+            if (p.PartnerId != null || p.ExPartnerIds.Count > 0) everDated++;
+        }
+        Console.WriteLine($"At 35 (of {n}): partner {partner}, married {married}, children {kids}, ever had a partner {everDated}");
+    }
+}

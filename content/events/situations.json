@@ -155,6 +155,40 @@
     ]
   },
   {
+    "id": "partner_suggests_moving_in", "trigger": "situation",
+    "title": "Your place or mine?",
+    "text": "{t.name} is lying with {t.his} head in your lap. \"I'm tired of saying goodbye every evening. Should we move in together?\"",
+    "choices": [
+      { "text": "Yes – let's do it", "effects": [ { "type": "move_in" }, { "type": "happiness", "amount": 8 } ], "result": "Two sets of everything. One home." },
+      {
+        "text": "It's too soon",
+        "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ],
+        "result": "{t.name} says it's fine. It mostly is."
+      }
+    ]
+  },
+  {
+    "id": "partner_wants_baby", "trigger": "situation",
+    "title": "Baby talk",
+    "text": "{t.name} has been quiet all evening. Then: \"I want us to have a child. I've wanted it for a while.\"",
+    "choices": [
+      { "text": "Me too", "effects": [ { "type": "child" }, { "type": "happiness", "amount": 8 } ], "result": "A year later everything is different." },
+      {
+        "text": "Not yet",
+        "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "baby_not_yet", "text": "{name} wasn't ready for a child", "impact": -10 } ],
+        "result": "\"Not yet\" hangs in the air between you."
+      },
+      {
+        "text": "I never want children",
+        "effects": [
+          { "type": "memory", "who": "target", "to": "player", "kind": "baby_never", "text": "{name} never wants children with me", "impact": -35 },
+          { "type": "breakup", "who": "target", "chance": 0.3 }
+        ],
+        "result": "Some differences don't meet in the middle."
+      }
+    ]
+  },
+  {
     "id": "partner_proposes", "trigger": "situation",
     "title": "A proposal",
     "text": "In the middle of dinner, {t.name} gets down on one knee. \"Will you marry me?\"",

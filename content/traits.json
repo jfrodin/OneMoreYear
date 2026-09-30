@@ -14,6 +14,8 @@
 //   prefers_younger / prefers_older – falls for much younger / older adults (never minors)
 // tone: light, dark or odd (colour in the UI). weight: how common the trait is (default 1).
 // adultOnly traits are rolled at 18; maleWeight/femaleWeight skew how common they are by sex.
+// inherit: chance that a child picks the trait up from a parent who has it (default 0.3). Low for
+// traits that should not pile up in one family line (predatory).
 [
   { "id": "ambitious", "name": "Ambitious", "opposite": "lazy", "tone": "light",
     "description": "Always wants more. Performs better at work, but compares themselves to others.",
@@ -94,7 +96,7 @@
   { "id": "criminal", "name": "Criminal-minded", "tone": "dark", "weight": 0.5,
     "description": "Rules are for other people. Drawn to easy money and the wrong crowd.",
     "modifiers": { "crime": 1.0, "risk": 0.3, "dishonesty": 0.4 } },
-  { "id": "predatory", "name": "Predatory", "tone": "dark", "weight": 0.08,
+  { "id": "predatory", "name": "Predatory", "tone": "dark", "weight": 0.08, "inherit": 0.02,
     "description": "Hides something dark behind a friendly face. A danger to the children around them.",
     "modifiers": { "predatory": 1.0, "dishonesty": 0.5 } },
   { "id": "paranoid", "name": "Paranoid", "tone": "odd",
