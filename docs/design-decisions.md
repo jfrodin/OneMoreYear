@@ -104,3 +104,20 @@ Chosen from three style probes (docs/style-probes):
 - **Each new year opens with the family's newspaper**: the biggest family news as the headline,
   the rest in brief, and the world in the side column.
 - Fonts are open (OFL / Apache) and live in `game/fonts` with their licences.
+
+## Sexual violence between adults, and the dark themes in depth – 2026-09-30
+
+Sexual violence is far more common between adults than against children, and a game about real
+lives should include it. The same line applies as for children: **it exists in the world, but the
+player can never choose to commit it.** (Steam removed a game with playable rape in 2019; consoles
+do not allow it; and the story is in the consequences, not the act.) Never depicted explicitly.
+
+What is played: the player as a survivor (assault, harassment at work, a partner who coerces) –
+telling, reporting, staying silent, a trial, who believes you, trauma and healing, with the era
+mattering (the silence of the seventies, #MeToo in 2017); a loved one as a survivor (how do you
+support them?); a relative or partner as the perpetrator (a secret that splits the family).
+
+All dark themes are to be built out properly, not left as footnotes: psychological violence and
+coercive control, stalking, relapse and treatment in addiction, mental illness (depression,
+anxiety, burnout), suicide and self-harm as grief and consequence, dementia, eviction and
+homelessness. Each gets a content-settings category where it needs one.

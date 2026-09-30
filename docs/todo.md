@@ -14,6 +14,16 @@ Big decisions live in [design-decisions.md](design-decisions.md).
   - The F1 playtest notes, `--load`, `--smoke` and `--screenshots`.
   - The seed field stays (see design-decisions.md, "Shareable seeds").
 
+## Content sprint (before more countries)
+
+1. [ ] **Old age** (~25 events): retirement, grandchildren, illness, widowhood, loneliness, a care home, looking back.
+2. [ ] **Dark themes in depth** (see design-decisions.md): sexual violence between adults (the player only ever
+   as survivor or next of kin), coercive control, stalking and harassment, relapse and treatment,
+   mental illness, suicide and self-harm as grief, dementia, eviction. New content-settings categories.
+3. [ ] **Adult everyday life** (~40), **work** (~25) and **parenthood** (~20) events.
+4. [ ] **Passive trait checks**: personality reveals things in event texts ("[Paranoid] He turns his phone away").
+5. [ ] Settings menu (fullscreen, volume, text size), several save slots, an introduction, sound.
+
 ## Later
 
 - [ ] Type your own name for a baby (needs a controller-friendly text input).
