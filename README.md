@@ -21,6 +21,8 @@ Alternatively, open `game/project.godot` in Godot 4.6 (.NET edition) and press *
 | Next year | **N** | **Y** |
 | Switch tab | **Q** / **E** | **LB** / **RB** |
 
+Press **F1** (controller: Select) at any time to write a playtest note – it lands in `docs/playtest-notes.md` with a screenshot and a copy of the situation.
+
 The game autosaves every year. **Continue** on the title screen picks up where you left off.
 
 ## Structure

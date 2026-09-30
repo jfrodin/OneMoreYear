@@ -11,6 +11,8 @@ public sealed class Memory
     /// <summary>Who the holder considers responsible (or who it was about), if anyone.</summary>
     public int? AboutId { get; set; }
     public string Text { get; set; } = "";
+    /// <summary>Someone the memory mentions without blaming them (e.g. a relative who died).</summary>
+    public int? MentionId { get; set; }
     /// <summary>-100 (traumatic) to +100 (cherished).</summary>
     public double Impact { get; set; }
     /// <summary>1 when fresh, fades towards 0 over time.</summary>

@@ -223,8 +223,15 @@ public partial class GameScreen : Control
             _sidebar.AddChild(Ui.Label("Answer this year's events first.", 15, UiTheme.Accent));
 
         _sidebar.AddChild(Ui.Label("N / (Y) next year  ·  Q E / LB RB switch tabs", 13, UiTheme.Faint, wrap: true));
-        var menu = Ui.Button("Save & exit to menu", () => { _main.AutoSave(); _main.ShowTitle(); }, 42);
-        _sidebar.AddChild(menu);
+        var bottom = Ui.HBox(8);
+        var feedback = Ui.Button("Feedback  (F1)", () => _main.ShowFeedback(), 42);
+        feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
+        bottom.AddChild(feedback);
+        var menu = Ui.Button("Save & exit", () => { _main.AutoSave(); _main.ShowTitle(); }, 42);
+        menu.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        bottom.AddChild(menu);
+        _sidebar.AddChild(bottom);
     }
 
     private static Control StatRow(string label, string value, Color color)
@@ -562,6 +569,8 @@ public partial class GameScreen : Control
     // --- Smoke test (automated run through the real UI, see Main) ------------------------
 
     public void ShowTab(int tab) => _tabs.CurrentTab = tab;
+
+    public string CurrentTabName => _tabs.GetTabTitle(_tabs.CurrentTab);
 
     public void SmokeStep(int step)
     {

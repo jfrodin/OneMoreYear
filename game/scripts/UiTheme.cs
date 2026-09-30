@@ -114,7 +114,7 @@ public static class UiTheme
         // Inputs
         var input = Box(PanelAlt, 6, Border, 1, 10);
         var inputFocus = Box(PanelAlt, 6, Accent, 2, 10);
-        foreach (var type in new[] { "LineEdit", "SpinBox" })
+        foreach (var type in new[] { "LineEdit", "SpinBox", "TextEdit" })
         {
             t.SetStylebox("normal", type, input);
             t.SetStylebox("focus", type, inputFocus);

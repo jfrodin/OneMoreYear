@@ -100,7 +100,13 @@ public static class Kinship
     // --- Labels -------------------------------------------------------------------------------
 
     /// <summary>"your brother", "your granddaughter", "your friend" ...</summary>
-    public static string Possessive(World w, Person viewer, Person other) => "your " + Label(w, viewer, other);
+    public static string Possessive(World w, Person viewer, Person other) => WithYour(Label(w, viewer, other));
+
+    /// <summary>"your sister", but "Oskar's girlfriend" stays as it is.</summary>
+    public static string WithYour(string label) => IsOwnerLabel(label) ? label : "your " + label;
+
+    /// <summary>True for labels like "Oskar's girlfriend" or "Mats' ex-wife".</summary>
+    public static bool IsOwnerLabel(string label) => label.Contains("'s ") || label.Contains("' ");
 
     /// <summary>"Anna's brother", "Eric's grandson" ...</summary>
     public static string ThirdPerson(World w, Person viewer, Person other) => $"{Genitive(viewer.FirstName)} {Label(w, viewer, other)}";
@@ -157,6 +163,7 @@ public static class Kinship
             foreach (var aunt in Siblings(w, parent))
             {
                 if (aunt.Id == other.Id) return G("uncle", "aunt");
+                if (aunt.PartnerId == other.Id && aunt.PartnerStatus == PartnerStatus.Married) return G("uncle", "aunt");
                 if (aunt.ChildIds.Contains(other.Id)) return "cousin";
             }
         }
@@ -176,6 +183,29 @@ public static class Kinship
         }
 
         if (viewer.FriendIds.Contains(other.Id)) return "friend";
+
+        // Partners and exes of relatives: "Oskar's girlfriend", "Mats's ex-wife".
+        foreach (var (relId, _) in Distances(w, viewer, 3).OrderBy(kv => kv.Value).ThenBy(kv => kv.Key))
+        {
+            var rel = w.Get(relId);
+            if (!rel.IsBlood && relId != viewer.PartnerId) continue;
+            string owner = Genitive(rel.FirstName);
+            if (rel.PartnerId == other.Id)
+            {
+                string noun = rel.PartnerStatus switch
+                {
+                    PartnerStatus.Married => G("husband", "wife"),
+                    PartnerStatus.Cohabiting => "partner",
+                    _ => G("boyfriend", "girlfriend")
+                };
+                return $"{owner} {noun}";
+            }
+            if (rel.ExPartnerIds.Contains(other.Id))
+            {
+                bool married = other.Flags.Contains($"married_to_{rel.Id}");
+                return $"{owner} {(married ? G("ex-husband", "ex-wife") : "ex")}";
+            }
+        }
         if (Distances(w, viewer, 4).ContainsKey(other.Id)) return "relative";
         return "acquaintance";
     }

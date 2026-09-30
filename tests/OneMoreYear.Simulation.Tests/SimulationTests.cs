@@ -108,3 +108,19 @@ public class KinshipTests
         }
     }
 }
+
+public class AnnotationTests
+{
+    [Fact]
+    public void NamesGetRelationToPlayer()
+    {
+        var session = GameSession.NewGame(new NewGameOptions { Seed = 5, StartYear = 1980 });
+        var w = session.World;
+        var mother = w.Get(w.Player.ParentIds.Select(w.Get).First(p => p.Sex == OneMoreYear.Simulation.Model.Sex.Female).Id);
+        var text = session.Annotate($"{mother.FirstName} got a job.", new[] { mother.Id });
+        Assert.Equal($"{mother.FirstName} (your mother) got a job.", text);
+        // Not twice, and not when the text already says it.
+        Assert.Equal(text, session.Annotate(text, new[] { mother.Id }));
+        Assert.Equal($"Your mother, {mother.FirstName}, called.", session.Annotate($"Your mother, {mother.FirstName}, called.", new[] { mother.Id }));
+    }
+}

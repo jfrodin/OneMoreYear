@@ -129,7 +129,41 @@ public sealed class GameSession
             .ToList();
     }
 
-    private static ChronicleLine ToLine(LogEntry e) => new(e.Year, e.Text, e.Importance, e.Category, e.PersonIds);
+    private ChronicleLine ToLine(LogEntry e) => new(e.Year, Annotate(e.Text, e.PersonIds), e.Importance, e.Category, e.PersonIds);
+
+    /// <summary>
+    /// Adds how each mentioned person relates to the current player: "Anna got married" becomes
+    /// "Anna (your sister) got married". Computed when shown, so it stays right after a generation change.
+    /// </summary>
+    public string Annotate(string text, IEnumerable<int> personIds)
+    {
+        var player = Player;
+        // All insertions are found in the original text and applied afterwards, so an added
+        // "(Oskar's ex)" can never itself be annotated.
+        var inserts = new List<(int Index, string Text)>();
+        foreach (var id in personIds.Distinct())
+        {
+            if (id == player.Id || World.TryGet(id) is not { } p) continue;
+            string label = Kinship.Label(World, player, p);
+            if (label is "acquaintance" or "you") continue;
+            string relation = Kinship.WithYour(label);
+            if (text.Contains(relation, StringComparison.OrdinalIgnoreCase)) continue;
+            // "Agneta (Oskar's ex)" adds nothing when Oskar is already in the sentence.
+            if (Kinship.IsOwnerLabel(label) && text.Contains(label.Split('\'')[0])) continue;
+            foreach (var name in new[] { p.FullName, p.FirstName })
+            {
+                // Whole word, and not already followed by a parenthesis.
+                var match = System.Text.RegularExpressions.Regex.Match(text, $@"\b{System.Text.RegularExpressions.Regex.Escape(name)}\b(?!\s*\()(?!')");
+                if (!match.Success) continue;
+                int at = match.Index + match.Length;
+                if (inserts.All(i => i.Index != at)) inserts.Add((at, $" ({relation})"));
+                break;
+            }
+        }
+        foreach (var (index, insert) in inserts.OrderByDescending(i => i.Index))
+            text = text.Insert(index, insert);
+        return text;
+    }
 
     // --- Events ------------------------------------------------------------------------------
 
@@ -144,8 +178,11 @@ public sealed class GameSession
             c.Hint == null ? null : TextFormatter.Format(Ctx, c.Hint, pending),
             c.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, c, pending) * 100) : null,
             EventSystem.IsChoiceAvailable(Ctx, c, pending))).ToList();
-        return new EventView(pending.Uid, TextFormatter.Format(Ctx, def.Title, pending), TextFormatter.Format(Ctx, def.Text, pending),
-            choices, pending.Resolved, pending.OutcomeText, pending.Roles.TryGetValue("target", out var t) ? t : null);
+        var involved = pending.Roles.Values.ToList();
+        return new EventView(pending.Uid, TextFormatter.Format(Ctx, def.Title, pending),
+            Annotate(TextFormatter.Format(Ctx, def.Text, pending), involved),
+            choices, pending.Resolved, pending.OutcomeText == null ? null : Annotate(pending.OutcomeText, involved),
+            pending.Roles.TryGetValue("target", out var t) ? t : null);
     }
 
     public string Choose(int eventUid, int choiceIndex)
@@ -255,7 +292,7 @@ public sealed class GameSession
             .Where(m => p.Id == player.Id || m.AboutId == player.Id || Math.Abs(m.Impact) >= 30)
             .OrderByDescending(m => m.Year)
             .Take(12)
-            .Select(m => new MemoryView(m.Year, m.Text, m.Impact * m.Strength, World.TryGet(m.AboutId)?.FirstName))
+            .Select(m => new MemoryView(m.Year, Annotate(m.Text, new[] { m.AboutId, m.MentionId }.OfType<int>()), m.Impact * m.Strength, World.TryGet(m.AboutId)?.FirstName))
             .ToList();
 
         return new PersonView

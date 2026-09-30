@@ -9,9 +9,10 @@ public static class RelationshipSystem
     /// <summary>
     /// Stores a memory and applies its immediate effect on the relationship to the person it is about.
     /// </summary>
-    public static Memory AddMemory(SimContext ctx, Person holder, string kind, string text, double impact, int? aboutId = null)
+    public static Memory AddMemory(SimContext ctx, Person holder, string kind, string text, double impact, int? aboutId = null,
+        int? mentionId = null)
     {
-        var m = new Memory { Year = ctx.Year, Kind = kind, Text = text, Impact = impact, AboutId = aboutId };
+        var m = new Memory { Year = ctx.Year, Kind = kind, Text = text, Impact = impact, AboutId = aboutId, MentionId = mentionId };
         holder.Memories.Add(m);
         holder.Happiness = Math.Clamp(holder.Happiness + impact * 0.15, 0, 100);
         if (aboutId is { } about && about != holder.Id)

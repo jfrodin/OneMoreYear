@@ -76,7 +76,7 @@ public static class LifeSystem
             var rel = w.FindRel(other.Id, p.Id);
             if (rel == null || rel.Closeness < 35) continue;
             RelationshipSystem.AddMemory(ctx, other, "death",
-                $"{p.FirstName} died when I was {other.Age(ctx.Year)}", -Math.Min(60, rel.Closeness * 0.5));
+                $"{p.FirstName} died when I was {other.Age(ctx.Year)}", -Math.Min(60, rel.Closeness * 0.5), mentionId: p.Id);
             other.Happiness -= rel.Closeness * 0.2;
         }
 

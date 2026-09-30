@@ -28,6 +28,15 @@ public partial class Main : Control
         _overlayLayer.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(_overlayLayer);
 
+        // Development aid: --load=path/to/save.json opens a saved situation (e.g. from a playtest note).
+        var load = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--load="));
+        if (load != null && System.IO.File.Exists(load["--load=".Length..]))
+        {
+            Session = GameSession.Load(System.IO.File.ReadAllText(load["--load=".Length..]));
+            if (Session.NeedsSuccession) ShowSuccession(); else ShowGame();
+            return;
+        }
+
         ShowTitle();
     }
 
@@ -44,6 +53,123 @@ public partial class Main : Control
         Bind("omy_next_year", Key.N, JoyButton.Y);
         Bind("omy_tab_prev", Key.Q, JoyButton.LeftShoulder);
         Bind("omy_tab_next", Key.E, JoyButton.RightShoulder);
+        Bind("omy_feedback", Key.F1, JoyButton.Back);
+    }
+
+    public override void _UnhandledInput(InputEvent e)
+    {
+        if (e.IsActionPressed("omy_feedback") && !HasModal)
+        {
+            GetViewport().SetInputAsHandled();
+            ShowFeedback();
+        }
+    }
+
+    // --- Playtest feedback ----------------------------------------------------------------------
+
+    /// <summary>
+    /// F1 / Select: write a playtest note. It is appended to docs/playtest-notes.md together with the
+    /// current situation, a screenshot and a copy of the save so the moment can be reopened later.
+    /// </summary>
+    public void ShowFeedback()
+    {
+        var screenshot = GetViewport().GetTexture().GetImage();
+        var previousFocus = GetViewport().GuiGetFocusOwner();
+
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.6f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+
+        var box = Ui.VBox(14);
+        box.CustomMinimumSize = new Vector2(720, 0);
+        box.AddChild(Ui.Label("Playtest note", 26, UiTheme.Accent));
+        box.AddChild(Ui.Label(FeedbackContext(), 16, UiTheme.Muted, wrap: true));
+        var text = new TextEdit
+        {
+            CustomMinimumSize = new Vector2(0, 220),
+            WrapMode = TextEdit.LineWrappingMode.Boundary,
+            PlaceholderText = "What feels right or wrong? Swedish is fine.",
+        };
+        box.AddChild(text);
+
+        void Close()
+        {
+            _overlayLayer.RemoveChild(dim);
+            dim.QueueFree();
+            if (IsInstanceValid(previousFocus) && previousFocus!.IsInsideTree() && previousFocus.IsVisibleInTree())
+                previousFocus.GrabFocus();
+        }
+
+        var buttons = Ui.HBox(10);
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        buttons.AddChild(Ui.Button("Cancel", Close));
+        var save = Ui.Button("Save note  (Ctrl+Enter)", () =>
+        {
+            if (!string.IsNullOrWhiteSpace(text.Text))
+            {
+                string where = SaveFeedback(text.Text.Trim(), screenshot);
+                Close();
+                ShowMessage("Thanks!", $"Your note was saved to {where}.");
+                return;
+            }
+            Close();
+        });
+        UiTheme.MakePrimary(save);
+        save.AddThemeFontSizeOverride("font_size", 18);
+        buttons.AddChild(save);
+        box.AddChild(buttons);
+
+        text.GuiInput += e =>
+        {
+            if (e is InputEventKey { Pressed: true, Keycode: Key.Enter or Key.KpEnter, CtrlPressed: true })
+            {
+                text.AcceptEvent();
+                save.EmitSignal(BaseButton.SignalName.Pressed);
+            }
+            else if (e.IsActionPressed("ui_cancel"))
+            {
+                text.AcceptEvent();
+                Close();
+            }
+        };
+
+        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        text.GrabFocus();
+    }
+
+    private string FeedbackContext()
+    {
+        if (Session == null) return $"Screen: {_screen?.GetType().Name}";
+        var p = Session.Player;
+        string where = _screen is GameScreen g ? g.CurrentTabName : _screen?.GetType().Name ?? "";
+        return $"{Session.Year}  ·  {p.FullName}, {p.Age(Session.Year)}  ·  {where}  ·  seed {Session.World.Seed}";
+    }
+
+    /// <summary>Appends the note to the notes file. Returns where it was written.</summary>
+    private string SaveFeedback(string note, Image screenshot)
+    {
+        // When running from the source tree, write into the repo's docs folder; otherwise to user data.
+        string docs = System.IO.Path.GetFullPath(System.IO.Path.Combine(ProjectSettings.GlobalizePath("res://"), "..", "docs"));
+        if (!System.IO.Directory.Exists(docs)) docs = OS.GetUserDataDir();
+        string snapshots = System.IO.Path.Combine(docs, "playtest-saves");
+        System.IO.Directory.CreateDirectory(snapshots);
+
+        string stamp = System.DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
+        screenshot.SavePng(System.IO.Path.Combine(snapshots, stamp + ".png"));
+        string files = $"playtest-saves/{stamp}.png";
+        if (Session != null)
+        {
+            System.IO.File.WriteAllText(System.IO.Path.Combine(snapshots, stamp + ".json"), Session.Save());
+            files += $" · playtest-saves/{stamp}.json";
+        }
+
+        string notesPath = System.IO.Path.Combine(docs, "playtest-notes.md");
+        string entry = $"\n### {System.DateTime.Now:yyyy-MM-dd HH:mm} · {FeedbackContext()}\n\n{note}\n\n_{files}_\n";
+        System.IO.File.AppendAllText(notesPath, entry);
+        return notesPath;
     }
 
     private void SetScreen(Control screen)
@@ -218,9 +344,36 @@ public partial class Main : Control
             case 50: Shot("04_tree"); break;
             case 52: if (_screen is GameScreen g3) g3.ShowTab(3); break;
             case 60: Shot("05_chronicle"); break;
-            case 62: ShowSuccession(); break;
-            case 70: Shot("06_succession"); GetTree().Quit(); break;
+            case 62: ShowFeedback(); break;
+            case 64:
+                if (FindChild<TextEdit>(_overlayLayer) is { } te) te.Text = "Screenshot tour test note – please ignore.";
+                Shot("07_feedback");
+                break;
+            case 66: if (FindButtonNamed(_overlayLayer, "Save note") is { } sb) sb.EmitSignal(BaseButton.SignalName.Pressed); break;
+            case 68: Shot("08_saved"); break;
+            case 70: Ui.Clear(_overlayLayer); ShowSuccession(); break;
+            case 78: Shot("06_succession"); GetTree().Quit(); break;
         }
+    }
+
+    private static T? FindChild<T>(Node root) where T : Node
+    {
+        foreach (var child in root.GetChildren())
+        {
+            if (child is T t) return t;
+            if (FindChild<T>(child) is { } found) return found;
+        }
+        return null;
+    }
+
+    private static Button? FindButtonNamed(Node root, string prefix)
+    {
+        foreach (var child in root.GetChildren())
+        {
+            if (child is Button b && b.Text.StartsWith(prefix)) return b;
+            if (FindButtonNamed(child, prefix) is { } found) return found;
+        }
+        return null;
     }
 
     private static Button? FindButton(Node root)
