@@ -204,11 +204,11 @@ public sealed class GameSession
                 continue;
             }
             if (CareerSystem.ParseOffer(Ctx, pending.Options[i]) is not { } offer) continue;
-            var (occ, level) = offer;
+            var (occ, level, employer) = offer;
             var lvl = occ.Levels[level];
             string fit = CareerSystem.FitsDegree(Ctx, Player, occ) ? "Uses your education." : "Doesn't use your education.";
-            choices.Add(new ChoiceView(i, $"{lvl.Title}  ·  {occ.Name}  ·  {EconomySystem.FormatPay(Ctx, lvl.Salary)}",
-                $"{fit} Top of this career: {occ.Levels[^1].Title}.", null, true));
+            choices.Add(new ChoiceView(i, $"{lvl.Title}{(employer != null ? $" at {employer}" : $"  ·  {occ.Name}")}  ·  {EconomySystem.FormatPay(Ctx, lvl.Salary)}",
+                $"{occ.Name}. {fit} Top of this career: {occ.Levels[^1].Title}.", null, true));
         }
         int offset = pending.Options.Count;
         for (int i = 0; i < def.Choices.Count; i++)
@@ -479,6 +479,7 @@ public sealed class GameSession
             PartTimeJob = p.Flags.Contains(CareerSystem.PartTimeFlag),
             Degrees = p.Degrees.Select(d => Content.Programme(d)?.Name ?? d).ToList(),
             JobTitle = occ == null ? null : CareerSystem.Title(Ctx, p),
+            Employer = occ == null || occ.Id == "crime" ? null : p.Employer,
             Field = occ?.Name,
             Salary = occ == null ? null : EconomySystem.FormatPay(Ctx, p.Income),
             YearsInJob = p.YearsInJob,

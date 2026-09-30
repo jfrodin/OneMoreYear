@@ -186,7 +186,7 @@ public static class CareerSystem
     }
 
     /// <summary>Finds a job for the person. Returns false if nothing fits their education.</summary>
-    public static bool Hire(SimContext ctx, Person p, string? occupationId = null, int? level = null)
+    public static bool Hire(SimContext ctx, Person p, string? occupationId = null, int? level = null, string? employer = null)
     {
         var options = ctx.Content.Occupations
             .Where(o => occupationId == null || o.Id == occupationId)
@@ -199,12 +199,13 @@ public static class CareerSystem
         p.Activity = Activity.Working;
         p.OccupationId = occ.Id;
         p.OccupationLevel = lvl;
+        p.Employer = employer ?? Employers.Name(ctx, p, occ.Id, lvl);
         p.YearsInJob = 0;
         p.Performance = Math.Clamp(ctx.Rng.Gaussian(50, 10), 20, 80);
         p.Income = occ.Levels[lvl].Salary;
         if (p.Id == ctx.World.PlayerId) SocialSystem.OnNewJob(p, ctx.Year);
         if (p.InFamily && p.Age(ctx.Year) >= 16)
-            ctx.World.Log($"{p.FirstName} got a job as {Article(Title(ctx, p))}.", ctx.Importance(false, p), "career", p.Id);
+            ctx.World.Log($"{p.FirstName} got a job as {Article(Title(ctx, p))}{(p.Employer != null ? $" at {p.Employer}" : "")}.", ctx.Importance(false, p), "career", p.Id);
         return true;
     }
 
@@ -226,7 +227,7 @@ public static class CareerSystem
         {
             var occ = rng.PickWeighted(pool, o => OccupationWeight(ctx, p, o))!;
             pool.Remove(occ);
-            offers.Add($"{occ.Id}:{EntryLevel(p, occ)}");
+            offers.Add($"{occ.Id}:{EntryLevel(p, occ)}:{Employers.Name(ctx, p, occ.Id, EntryLevel(p, occ), salt: i + 1)}");
         }
         return offers;
     }
@@ -245,11 +246,13 @@ public static class CareerSystem
         if (pending != null) pending.Options = offers;
     }
 
-    public static (OccupationDef Occ, int Level)? ParseOffer(SimContext ctx, string offer)
+    /// <summary>"occupationId:level:employer" (the employer is missing in saves from before 0.11).</summary>
+    public static (OccupationDef Occ, int Level, string? Employer)? ParseOffer(SimContext ctx, string offer)
     {
-        var parts = offer.Split(':');
-        if (parts.Length != 2 || ctx.Content.Occupation(parts[0]) is not { } occ || !int.TryParse(parts[1], out var lvl)) return null;
-        return (occ, Math.Clamp(lvl, 0, occ.Levels.Count - 1));
+        var parts = offer.Split(':', 3);
+        if (parts.Length < 2 || ctx.Content.Occupation(parts[0]) is not { } occ || !int.TryParse(parts[1], out var lvl)) return null;
+        string? employer = parts.Length == 3 && parts[2].Length > 0 ? parts[2] : null;
+        return (occ, Math.Clamp(lvl, 0, occ.Levels.Count - 1), employer);
     }
 
     private static void UpdateJob(SimContext ctx, Person p, double extraJobLossChance)
@@ -367,7 +370,7 @@ public static class CareerSystem
         Activity.Studying => ctx.Content.Programme(p.ProgrammeId) is { } prog
             ? (prog.Level == EducationLevel.University ? $"Studying {prog.Name}" : prog.Name)
             : p.StudyingFor == EducationLevel.University ? "At university" : "In upper secondary school",
-        Activity.Working => Title(ctx, p),
+        Activity.Working => p.Employer != null && p.OccupationId != "crime" ? $"{Title(ctx, p)} at {p.Employer}" : Title(ctx, p),
         Activity.Unemployed => "Looking for work",
         Activity.Retired => "Retired",
         Activity.Prison => $"In prison ({p.PrisonYearsLeft} year{(p.PrisonYearsLeft == 1 ? "" : "s")} left)",

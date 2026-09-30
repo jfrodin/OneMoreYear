@@ -76,6 +76,8 @@ public sealed class Person
     public double Grades { get; set; } = 50;
     public string? OccupationId { get; set; }
     public int OccupationLevel { get; set; }
+    /// <summary>Where the person works (a fictional company, hospital, school ...).</summary>
+    public string? Employer { get; set; }
     public double Performance { get; set; } = 50;
     public int YearsInJob { get; set; }
     /// <summary>Yearly gross income in 2020-kronor (price level adjusted when displayed).</summary>

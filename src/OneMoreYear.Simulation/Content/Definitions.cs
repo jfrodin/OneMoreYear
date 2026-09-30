@@ -334,3 +334,13 @@ public sealed class ScenarioTweak
     public bool? Unemployed { get; set; }
     public string? Addiction { get; set; }
 }
+
+/// <summary>Name parts for fictional employers in one country (content/employers).</summary>
+public sealed class EmployerNamesDef
+{
+    public string Country { get; set; } = "";
+    public List<string> Places { get; set; } = new();
+    public List<string> BrandStarts { get; set; } = new();
+    public List<string> BrandEnds { get; set; } = new();
+    public Dictionary<string, List<string>> ByOccupation { get; set; } = new();
+}

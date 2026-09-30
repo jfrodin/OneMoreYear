@@ -362,6 +362,7 @@ public partial class GameScreen : Control
         if (c.JobTitle != null)
         {
             work.AddChild(StatRow("Job", $"{c.JobTitle}  ·  {c.Field}", UiTheme.Text));
+            if (c.Employer != null) work.AddChild(StatRow("Workplace", c.Employer, UiTheme.Text));
             work.AddChild(StatRow("Salary", c.Salary ?? "", UiTheme.Text));
             work.AddChild(StatRow("In the job", $"{c.YearsInJob} year{(c.YearsInJob == 1 ? "" : "s")}", UiTheme.Text));
             if (c.Performance is { } perf)

@@ -14,6 +14,7 @@ public sealed class ContentDb
     public Dictionary<string, ProgrammeDef> Programmes { get; } = new();
     public Dictionary<string, CrimeDef> Crimes { get; } = new();
     public List<ScenarioDef> Scenarios { get; } = new();
+    public Dictionary<string, EmployerNamesDef> Employers { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
 
@@ -56,6 +57,11 @@ public sealed class ContentDb
                 if (path.Contains("content/events/"))
                 {
                     foreach (var e in Deserialize<List<EventDef>>(json)) db.Events[e.Id] = e;
+                }
+                else if (path.Contains("content/employers/"))
+                {
+                    var e = Deserialize<EmployerNamesDef>(json);
+                    db.Employers[e.Country] = e;
                 }
                 else if (path.Contains("content/countries/"))
                 {

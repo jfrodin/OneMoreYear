@@ -5,8 +5,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Employer names** for jobs (fictional companies, hospitals, schools).
-2. [ ] **Investments**: stocks and funds, home values that change, mortgages.
+1. [ ] **Investments**: stocks and funds, home values that change, mortgages.
 
 ## Before release
 

@@ -414,3 +414,19 @@ public class FaceTests
             Assert.Equal(Faces.Of(w, c).Nose, Faces.Of(again.World, again.World.Get(c.Id)).Nose);
     }
 }
+
+public class EmployerTests
+{
+    [Fact]
+    public void WorkingPeopleHaveEmployers()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 12, StartYear = 1970 });
+        var bot = new AutoPlayer(12);
+        for (int i = 0; i < 50; i++) bot.PlayYear(s);
+        var working = s.World.People.Where(p => p.IsAlive && p.Activity == Activity.Working && p.OccupationId != "crime").ToList();
+        Assert.NotEmpty(working);
+        // Everyone hired since employers exist has one (people created already working may not).
+        Assert.True(working.Count(p => p.Employer != null) > working.Count / 2);
+        Assert.All(working.Where(p => p.Employer != null), p => Assert.DoesNotContain("{", p.Employer));
+    }
+}

@@ -1,0 +1,36 @@
+// Fictional employers, per career track. Placeholders: {city} (where the person lives),
+// {surname} (a common surname), {place} (a made-up place name), {brand} (a made-up company name).
+// Any resemblance to real companies is accidental – keep names generic.
+// "career:level" (e.g. "education:0") overrides the career's list for that level.
+{
+  "country": "sweden",
+  "places": [
+    "Solbacka", "Ekdalen", "Björkhagen", "Lindgården", "Ängsvik", "Granlunda", "Tallåsen", "Sjövik",
+    "Norrbacka", "Rosendal", "Stenhagen", "Lövsta", "Björnkulla", "Hagaberg", "Mossebo", "Vallby",
+    "Kvarnbäcken", "Åsbro", "Furuvik", "Lärkstaden"
+  ],
+  "brandStarts": [
+    "Nord", "Berg", "Järn", "Sten", "Lin", "Ek", "Sol", "Fjäll", "Hav", "Gran", "Svea", "Vik",
+    "Kron", "Stor", "Ål", "Bro", "Norr", "Väst", "Öst", "Syd"
+  ],
+  "brandEnds": [
+    "tec", "lux", "mek", "plast", "verken", "trä", "stål", "data", "logik", "bygg", "tronik",
+    "form", "kraft", "gruppen", "partner", "system", "nova", "linje"
+  ],
+  "byOccupation": {
+    "healthcare": [ "{city} University Hospital", "{city} County Hospital", "{place} Health Centre", "{place} Care Home", "{place} Home Care" ],
+    "medicine": [ "{city} University Hospital", "{city} County Hospital", "{place} Medical Centre" ],
+    "industry": [ "{brand} AB", "{city} {brand}", "{surname} Industries", "{brand} Manufacturing", "{place} Sawmill" ],
+    "academia": [ "{city} University", "The Institute of {brand}", "{city} Research Institute" ],
+    "it": [ "{brand}", "{brand} Software", "{brand} Consulting", "{surname} Digital" ],
+    "trade": [ "{place} Supermarket", "{brand} Retail", "{surname}'s Hardware", "{city} Shopping Centre", "{place} Kiosk" ],
+    "public": [ "{city} Municipality", "The Social Insurance Agency", "{city} County Council", "The Tax Agency", "The Swedish Transport Administration" ],
+    "law": [ "{surname} & {surname} Law Firm", "{city} District Court", "{brand} Legal", "The Prosecution Authority" ],
+    "media": [ "{city} Tribune", "Radio {city}", "{brand} Media", "{place} Film", "{surname} Advertising" ],
+    "education:0": [ "{place} Preschool", "{city} Municipal Preschool", "{place} After-School Centre" ],
+    "education:1": [ "{place} Preschool", "{city} Municipal Preschool" ],
+    "education": [ "{place} School", "{place} Upper Secondary School", "{place} Middle School", "{city} Adult Education" ],
+    "construction": [ "{surname} Construction", "{brand} Bygg AB", "{city} Housing Company", "{brand} Roofing" ],
+    "business": [ "{brand} Group", "{surname} & Partners", "{brand} Capital", "{city} Savings Bank", "{brand} Invest" ]
+  }
+}

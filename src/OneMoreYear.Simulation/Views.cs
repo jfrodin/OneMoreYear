@@ -97,6 +97,7 @@ public sealed record CareerView
     public bool PartTimeJob { get; init; }
     public IReadOnlyList<string> Degrees { get; init; } = Array.Empty<string>();
     public string? JobTitle { get; init; }
+    public string? Employer { get; init; }
     public string? Field { get; init; }
     public string? Salary { get; init; }
     public int YearsInJob { get; init; }

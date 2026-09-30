@@ -110,6 +110,7 @@ public static class SocialSystem
         c.Activity = Activity.Working;
         c.OccupationId = occ.Id;
         c.OccupationLevel = level;
+        c.Employer = p.Employer;
         c.Income = occ.Levels[level].Salary;
         Meet(ctx, p, c, boss ? "boss" : "colleague");
         if (boss) ctx.World.Rel(c.Id, p.Id).Respect = Math.Clamp(ctx.Rng.Gaussian(45, 12), 0, 100);

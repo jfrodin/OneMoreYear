@@ -307,9 +307,9 @@ public static class EventSystem
             var player = ctx.World.Player;
             if (def.DynamicChoices == "job_offers" && CareerSystem.ParseOffer(ctx, pending.Options[choiceIndex]) is { } offer)
             {
-                var (occ, level) = offer;
-                CareerSystem.Hire(ctx, player, occ.Id, level);
-                texts.Add($"You accept. You start as {CareerSystem.Article(occ.Levels[level].Title)}.");
+                var (occ, level, employer) = offer;
+                CareerSystem.Hire(ctx, player, occ.Id, level, employer);
+                texts.Add($"You accept. You start as {CareerSystem.Article(occ.Levels[level].Title)}{(employer != null ? $" at {employer}" : "")}.");
             }
             else if (def.DynamicChoices == "cities")
             {

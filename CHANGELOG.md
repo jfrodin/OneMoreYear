@@ -2,6 +2,15 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.11.0 – 2026-09-30 · Workplaces
+
+- Jobs now have **employers**: "Assistant Nurse at Uppsala University Hospital", "Carpenter at
+  Granträ Bygg AB", "Case Officer at The Social Insurance Agency". Fictional names from the
+  city you live in, made-up places and companies – different for each career (preschools for
+  childcare workers, courts and law firms for lawyers, and so on).
+- Job offers show where the job is; your colleagues and boss work at the same place.
+- The workplace is shown on the School & Work tab, the person page and in the chronicle.
+
 ## 0.10.0 – 2026-09-30 · Faces
 
 - **Generated portraits** replace the coloured initials everywhere: face shape, jaw, chin, nose,
