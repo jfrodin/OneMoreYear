@@ -40,6 +40,13 @@ public partial class Main : Control
             if (Session.NeedsSuccession) ShowSuccession(); else ShowGame();
             return;
         }
+        var probe = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--styleprobe="));
+        if (probe != null && OS.IsDebugBuild())
+        {
+            AddChild(new StyleProbe(probe["--styleprobe=".Length..]));
+            SetProcess(false);
+            return;
+        }
         var gallery = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--portraits="));
         if (gallery != null && OS.IsDebugBuild())
         {
