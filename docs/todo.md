@@ -18,8 +18,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
   - Each is *On*, *Mentioned only* (happens off-screen, one line in the chronicle, no events or
     choices) or *Off* (never happens).
   - Asked on first start, and changeable at any time in the settings. Stored per save.
-  - Events and dark systems carry content tags and check the settings. Scenarios that need a theme
-    that is off are greyed out.
+  - Events and dark systems carry content tags and check the settings.
   - Content warnings on the title screen and the store page (Steam's mature content survey).
 - [ ] **Readable seed codes** like Balatro (e.g. `7LB2WVPK`): shown in the game menu and on the
   game-over screen, typed in on the title screen. See design-decisions.md.
