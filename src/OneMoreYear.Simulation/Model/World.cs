@@ -16,6 +16,8 @@ public sealed class World
     public ulong Seed { get; set; }
     /// <summary>The shareable code the seed came from ("7LB2WVPK"), or null for a plain number.</summary>
     public string? SeedCode { get; set; }
+    /// <summary>Dark themes the player has turned down; missing = On.</summary>
+    public Dictionary<string, ContentLevel> ContentSettings { get; set; } = new();
     public string CountryId { get; set; } = "";
     public int StartYear { get; set; }
     public int Year { get; set; }

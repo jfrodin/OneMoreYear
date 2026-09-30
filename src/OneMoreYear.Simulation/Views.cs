@@ -12,6 +12,8 @@ public sealed record NewGameOptions
     public int StartYear { get; init; } = 1970;
     /// <summary>A test scenario id (content/scenarios.json). Uses its start year, and its seed unless Seed is set.</summary>
     public string? ScenarioId { get; init; }
+    /// <summary>Dark themes turned down for this game (see Model.ContentCategories).</summary>
+    public IReadOnlyDictionary<string, Model.ContentLevel>? ContentSettings { get; init; }
 }
 
 public sealed record ChoiceView(int Index, string Text, string? Hint, int? ChancePercent, bool Available);

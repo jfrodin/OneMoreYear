@@ -141,6 +141,9 @@ public sealed class ContentDb
                 foreach (var trait in t?.Traits ?? new())
                     if (!Traits.ContainsKey(trait)) errors.Add($"Scenario {s.Id}: unknown trait {trait}");
         foreach (var e in Events.Values)
+            foreach (var c in e.Content.Where(c => ContentCategories.All.All(x => x.Id != c)))
+                errors.Add($"Event {e.Id}: unknown content category {c}");
+        foreach (var e in Events.Values)
         {
             if (e.Choices.Count == 0 && e.DynamicChoices == null) errors.Add($"Event {e.Id} has no choices.");
             CheckConditions(e.Id, e.Conditions, errors);

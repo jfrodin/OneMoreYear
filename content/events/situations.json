@@ -216,7 +216,7 @@
     ]
   },
   {
-    "id": "discovered_partner_affair", "trigger": "situation",
+    "id": "discovered_partner_affair", "content": [ "infidelity" ], "trigger": "situation",
     "title": "The messages",
     "text": "The phone is lying unlocked on the kitchen counter. You see the messages before you can stop yourself. {t.name} is having an affair with {o.full}.",
     "choices": [
@@ -252,7 +252,7 @@
     ]
   },
   {
-    "id": "learned_affair", "trigger": "situation",
+    "id": "learned_affair", "content": [ "infidelity" ], "trigger": "situation",
     "title": "A secret",
     "text": "At a restaurant in town you see {t.name} kissing someone who isn't {o.name}. {t.He} hasn't seen you. {o.name} is {o.role}.",
     "choices": [
@@ -287,7 +287,7 @@
     ]
   },
   {
-    "id": "paternity_revealed_child", "trigger": "situation",
+    "id": "paternity_revealed_child", "content": [ "infidelity" ], "trigger": "situation",
     "title": "The DNA test",
     "text": "The results of a genealogy test arrive in the mail. Your biological father is not who you thought. It's {t.full}. {o.name} knew all along.",
     "choices": [
@@ -315,7 +315,7 @@
     ]
   },
   {
-    "id": "paternity_revealed_father", "trigger": "situation",
+    "id": "paternity_revealed_father", "content": [ "infidelity" ], "trigger": "situation",
     "title": "Not your child",
     "text": "A DNA test shows that {o.name} is not your biological child. {t.name} has lied for all these years.",
     "choices": [

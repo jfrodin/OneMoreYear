@@ -7,7 +7,8 @@ Decisions that shape the whole game. Add new ones at the bottom with a date.
 The game is made for adults, so content can be graphic and mature: sex, violence, drugs, crime,
 abuse, addiction and dark family secrets can be shown openly rather than toned down. Affects event
 writing, text, images and store pages (Steam mature content survey, age gate). Consider a content
-option for players who want to tone it down.
+option for players who want to tone it down (done in 0.15.0: content settings per theme – On,
+Mentioned only or Off; new dark events must get a "content" tag).
 
 ## Full tonal range: from sunshine to pitch black – 2026-09-30
 

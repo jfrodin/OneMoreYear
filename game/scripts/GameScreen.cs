@@ -249,6 +249,9 @@ public partial class GameScreen : Control
         feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
         bottom.AddChild(feedback);
+        var content = Ui.Button("Content", () => _main.ShowContentSettings(S, onClose: RefreshAll), 42);
+        RegisterHint(content, "Choose how dark themes are handled: violence, abuse, addiction, murder, infidelity.");
+        bottom.AddChild(content);
         var menu = Ui.Button("Save & exit", () => { _main.AutoSave(); _main.ShowTitle(); }, 42);
         menu.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         bottom.AddChild(menu);

@@ -121,7 +121,7 @@
     ]
   },
   {
-    "id": "adult_temptation", "title": "Temptation",
+    "id": "adult_temptation", "content": [ "infidelity" ], "title": "Temptation",
     "text": "{t.name}, a new colleague, is flirting with you openly. The chemistry is impossible to ignore.",
     "conditions": { "minAge": 22, "maxAge": 60, "hasPartner": true },
     "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -8, "ageOffsetMax": 4 },

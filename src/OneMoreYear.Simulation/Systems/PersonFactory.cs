@@ -140,6 +140,8 @@ public static class PersonFactory
     public static bool TryAddTrait(SimContext ctx, Person p, string trait)
     {
         if (p.Traits.Contains(trait) || !ctx.Content.Traits.TryGetValue(trait, out var def)) return false;
+        // Content settings: with sexual abuse turned off, nobody is predatory.
+        if (trait == "predatory" && !ctx.Happens(ContentCategories.SexualAbuse)) return false;
         if (def.Opposite != null && p.Traits.Contains(def.Opposite)) return false;
         if (ctx.Content.Traits.Values.Any(t => t.Opposite == trait && p.Traits.Contains(t.Id))) return false;
         p.Traits.Add(trait);

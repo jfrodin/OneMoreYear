@@ -394,7 +394,7 @@ public static class FamilySystem
     {
         var w = ctx.World;
         int age = p.Age(ctx.Year);
-        if (age < 20 || age > 65 || p.PartnerId is not { } pid) return;
+        if (age < 20 || age > 65 || p.PartnerId is not { } pid || !ctx.Happens(ContentCategories.Infidelity)) return;
         if (w.Secrets.Any(s => s.Kind == "affair" && s.Active && s.SubjectId == p.Id)) return;
 
         double chance = 0.004 + ctx.Mod(p, "infidelity") * 0.03 + (w.Opinion(p.Id, pid) < 15 ? 0.02 : 0);

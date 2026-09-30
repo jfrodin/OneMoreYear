@@ -5,18 +5,10 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order
 
-1. [ ] **Content settings** (under Before release).
+1. [ ] Playtest the new systems (faces, money, content settings) and triage the notes.
 
 ## Before release
 
-- [ ] **Content settings**: let players turn dark themes off, category by category.
-  - Categories: sexual abuse, violence at home, murder, drugs and addiction, suicide and self-harm
-    (once it exists), infidelity.
-  - Each is *On*, *Mentioned only* (happens off-screen, one line in the chronicle, no events or
-    choices) or *Off* (never happens).
-  - Asked on first start, and changeable at any time in the settings. Stored per save.
-  - Events and dark systems carry content tags and check the settings.
-  - Content warnings on the title screen and the store page (Steam's mature content survey).
 - [ ] **Strip the testing tools** from the release build.
   - Test scenarios are already hidden outside development builds; also leave `scenarios.json` out.
   - The F1 playtest notes, `--load`, `--smoke` and `--screenshots`.

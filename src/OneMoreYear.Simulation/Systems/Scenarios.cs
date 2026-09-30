@@ -106,7 +106,7 @@ public static class Scenarios
         var mother = w.People.FirstOrDefault(p => p.Flags.Contains(MotherFlag) && p.IsAlive);
         var legalFather = w.People.FirstOrDefault(p => p.Flags.Contains(FatherFlag));
 
-        if (s.Storyline == "hidden_father" && grandfather != null && mother != null && mother.ParentIds.Contains(grandfather.Id))
+        if (s.Storyline == "hidden_father" && ctx.Happens(ContentCategories.SexualAbuse) && grandfather != null && mother != null && mother.ParentIds.Contains(grandfather.Id))
         {
             var origin = DarkSystem.StartOrigin(ctx, grandfather, mother, child, legalFather);
             // The mother's "carry the secret" moment is this scenario's opening, not a separate event.

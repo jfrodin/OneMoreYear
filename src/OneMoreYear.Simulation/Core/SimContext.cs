@@ -24,6 +24,15 @@ public sealed class SimContext
 
     public double Mod(Person p, string key) => Content.TraitModifier(p, key);
 
+    /// <summary>The player's setting for a dark theme (content settings).</summary>
+    public ContentLevel Level(string category) => World.ContentSettings.GetValueOrDefault(category, ContentLevel.On);
+
+    /// <summary>Can this theme happen at all in this world?</summary>
+    public bool Happens(string category) => Level(category) != ContentLevel.Off;
+
+    /// <summary>May the player get events and choices about this theme?</summary>
+    public bool Shown(string category) => Level(category) == ContentLevel.On;
+
     /// <summary>
     /// How important news about these people is for the chronicle: 3 if it involves the player,
     /// 2 for the player's partner, parents, children and siblings, otherwise 1.

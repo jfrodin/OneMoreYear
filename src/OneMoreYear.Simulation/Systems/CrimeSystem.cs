@@ -196,7 +196,8 @@ public static class CrimeSystem
             return;
         }
         if (crimeMod <= 0 || !ctx.Rng.Chance(0.05 * crimeMod)) return;
-        var options = ctx.Content.Crimes.Values.Where(c => !c.Targeted && c.MinAge <= p.Age(ctx.Year)).OrderBy(c => c.Id).ToList();
+        var options = ctx.Content.Crimes.Values.Where(c => !c.Targeted && c.MinAge <= p.Age(ctx.Year) && (!c.Violent || ctx.Happens(ContentCategories.Violence)))
+            .OrderBy(c => c.Id).ToList();
         if (options.Count == 0) return;
         Commit(ctx, p, ctx.Rng.Pick(options), null);
     }

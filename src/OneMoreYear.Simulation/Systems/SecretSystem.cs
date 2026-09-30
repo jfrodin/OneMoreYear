@@ -29,7 +29,7 @@ public static class SecretSystem
                 double discover = (s.Active ? 0.12 : 0.02) * Math.Clamp(1 - ctx.Mod(subject, "dishonesty") * 0.4, 0.3, 1);
                 if (ctx.Rng.Chance(discover))
                 {
-                    if (victim.Id == w.PlayerId)
+                    if (victim.Id == w.PlayerId && ctx.Shown(ContentCategories.Infidelity))
                         EventSystem.QueueSituation(ctx, "discovered_partner_affair",
                             new() { ["target"] = s.SubjectId, ["other"] = s.OtherId ?? s.SubjectId }, new() { ["secret"] = s.Id });
                     else

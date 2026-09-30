@@ -1,5 +1,6 @@
 using Godot;
 using OneMoreYear.Simulation;
+using OneMoreYear.Simulation.Model;
 
 namespace OneMoreYear.Game;
 
@@ -212,7 +213,7 @@ public partial class Main : Control
 
     public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null)
     {
-        Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId });
+        Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId, ContentSettings = Settings.Content });
         SaveSystem.Save(Session);
         ShowGame();
     }
@@ -253,6 +254,73 @@ public partial class Main : Control
     }
 
     /// <summary>Shows a modal message with an OK button (controller friendly). Focus returns afterwards.</summary>
+    /// <summary>
+    /// Content settings: how each dark theme is handled. From the title screen they are the defaults
+    /// for new games; in a game they change that game too (and become the new defaults).
+    /// </summary>
+    public void ShowContentSettings(GameSession? game, bool firstTime = false, System.Action? onClose = null)
+    {
+        var previousFocus = GetViewport().GuiGetFocusOwner();
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.7f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+
+        var box = Ui.VBox(12);
+        box.CustomMinimumSize = new Vector2(760, 0);
+        box.AddChild(Ui.Label(firstTime ? "Before you start" : "Content settings", 28, UiTheme.Accent));
+        box.AddChild(Ui.Label(firstTime
+            ? "One More Year is a game for adults. Families can be loving and warm – and they can hide abuse, violence, addiction and betrayal. " +
+              "Choose how much of the dark side you want. You can change this at any time."
+            : "How each dark theme is handled. \"Mentioned only\" means it can happen to others, off-screen – a line in the chronicle, never an event or a choice for you.",
+            17, UiTheme.Muted, wrap: true));
+
+        Control? first = null;
+        foreach (var (id, name, description) in ContentCategories.All)
+        {
+            var row = Ui.HBox(14);
+            var text = Ui.VBox(0);
+            text.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            text.AddChild(Ui.Label(name, 19, UiTheme.Text));
+            text.AddChild(Ui.Label(description, 14, UiTheme.Faint, wrap: true));
+            row.AddChild(text);
+            var pick = new OptionButton { CustomMinimumSize = new Vector2(220, 44) };
+            pick.AddItem("On");
+            pick.AddItem("Mentioned only");
+            pick.AddItem("Off");
+            pick.Selected = (int)(game?.ContentLevelOf(id) ?? Settings.ContentLevelOf(id));
+            string category = id;
+            pick.ItemSelected += index =>
+            {
+                var level = (ContentLevel)(int)index;
+                Settings.SetContentLevel(category, level);
+                game?.SetContentLevel(category, level);
+            };
+            row.AddChild(pick);
+            box.AddChild(row);
+            first ??= pick;
+        }
+
+        var done = Ui.Button(firstTime ? "Continue" : "Done", () =>
+        {
+            Settings.MarkContentAsked();
+            if (game != null) AutoSave();
+            _overlayLayer.RemoveChild(dim);
+            dim.QueueFree();
+            if (IsInstanceValid(previousFocus) && previousFocus!.IsInsideTree() && previousFocus.IsVisibleInTree())
+                previousFocus.GrabFocus();
+            onClose?.Invoke();
+        });
+        UiTheme.MakePrimary(done);
+        done.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+        done.CustomMinimumSize = new Vector2(180, 48);
+        box.AddChild(done);
+        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        Ui.FocusLater(first ?? done);
+    }
+
     public void ShowMessage(string title, string text, System.Action? onClose = null)
     {
         var previousFocus = GetViewport().GuiGetFocusOwner();
@@ -363,8 +431,10 @@ public partial class Main : Control
             case 60: Shot("05_money"); break;
             case 62: if (_screen is GameScreen g4) g4.ShowTab(4); break;
             case 70: Shot("06_tree"); break;
-            case 72: ShowSuccession(); break;
-            case 80: Shot("07_succession"); GetTree().Quit(); break;
+            case 72: ShowContentSettings(Session); break;
+            case 75: Shot("07_content"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
+            case 77: ShowSuccession(); break;
+            case 82: Shot("08_succession"); GetTree().Quit(); break;
         }
     }
 

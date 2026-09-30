@@ -15,7 +15,7 @@ public static class EventSystem
         Dictionary<string, int>? roles = null, Dictionary<string, double>? vars = null)
     {
         var w = ctx.World;
-        if (!ctx.Content.Events.TryGetValue(eventId, out var def)) return null;
+        if (!ctx.Content.Events.TryGetValue(eventId, out var def) || !Allowed(ctx, def)) return null;
         if (w.PendingEvents.Any(e => e.EventId == eventId && !e.Resolved)) return null;
         var pending = new PendingEvent { Uid = w.NextEventUid++, EventId = eventId, Roles = roles ?? new() };
         foreach (var (name, v) in def.Vars) pending.Vars[name] = ComputeVar(ctx, v, pending);
@@ -26,6 +26,9 @@ public static class EventSystem
         w.EventHistory[eventId] = w.Year;
         return pending;
     }
+
+    /// <summary>False for events about a dark theme the player has turned down (content settings).</summary>
+    public static bool Allowed(SimContext ctx, EventDef e) => e.Content.All(ctx.Shown);
 
     public static void GenerateRandomEvents(SimContext ctx)
     {
@@ -53,7 +56,7 @@ public static class EventSystem
     private static bool IsEligible(SimContext ctx, EventDef e, Person player, Dictionary<int, int> distances)
     {
         var w = ctx.World;
-        if (w.PendingEvents.Any(p => p.EventId == e.Id)) return false;
+        if (!Allowed(ctx, e) || w.PendingEvents.Any(p => p.EventId == e.Id)) return false;
         if ((player.Activity == Activity.Prison) != (e.Category == "prison")) return false;
         if (w.EventHistory.TryGetValue(e.Id, out var last))
         {

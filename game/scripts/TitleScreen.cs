@@ -83,15 +83,26 @@ public partial class TitleScreen : Control
         options.AddChild(start);
         col.AddChild(Ui.Card(options));
 
+        var content = Ui.Button("Content settings", () => _main.ShowContentSettings(null));
+        col.AddChild(content);
         var quit = Ui.Button("Quit", () => GetTree().Quit());
         col.AddChild(quit);
 
+        var warning = Ui.Label("For adults (18+). Contains violence, abuse, addiction and crime – adjust in Content settings.", 15, UiTheme.Faint, wrap: true);
+        warning.HorizontalAlignment = HorizontalAlignment.Center;
+        col.AddChild(warning);
         var hint = Ui.Label($"Version {Main.Version}  ·  Sweden is the first country. More will follow.", 15, UiTheme.Faint);
         hint.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(hint);
 
         Ui.FocusLater(first ?? start);
+        // The first time the game starts, ask about dark themes before anything else.
+        bool automated = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
+        if (Settings.ShouldAskAboutContent && !automated)
+            CallDeferred(nameof(AskAboutContent));
     }
+
+    private void AskAboutContent() => _main.ShowContentSettings(null, firstTime: true);
 
     private void StartNew()
     {

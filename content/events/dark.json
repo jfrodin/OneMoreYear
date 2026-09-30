@@ -2,7 +2,7 @@
 // consequences and never described in detail. The player is never asked to abuse anyone.
 [
   {
-    "id": "addiction_begins", "trigger": "situation",
+    "id": "addiction_begins", "content": [ "addiction" ], "trigger": "situation",
     "title": "Just one more",
     "text": "It started as a way to cope. Now you think about it when you wake up, and it's the last thing on your mind at night.",
     "choices": [
@@ -20,7 +20,7 @@
     ]
   },
   {
-    "id": "addiction_crossroads", "title": "Rock bottom",
+    "id": "addiction_crossroads", "content": [ "addiction" ], "title": "Rock bottom",
     "text": "The money is disappearing, your body hurts and the people around you have stopped believing your excuses.",
     "conditions": { "flags": [ "addicted" ] }, "weight": 3, "cooldown": 2,
     "choices": [
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "id": "violence_by_partner", "trigger": "situation",
+    "id": "violence_by_partner", "content": [ "violence" ], "trigger": "situation",
     "title": "The bruise",
     "text": "It happened again. {t.name} hit you – and afterwards {t.he} cried and said it would never happen again.",
     "choices": [
@@ -73,7 +73,7 @@
     ]
   },
   {
-    "id": "violence_by_parent", "trigger": "situation",
+    "id": "violence_by_parent", "content": [ "violence" ], "trigger": "situation",
     "title": "Behind closed doors",
     "text": "{T.role} hit you again tonight. You've learned to read the signs, but it doesn't help.",
     "choices": [
@@ -97,7 +97,7 @@
     ]
   },
   {
-    "id": "losing_temper", "title": "The rage",
+    "id": "losing_temper", "content": [ "violence" ], "title": "The rage",
     "text": "{t.name} says the wrong thing at the wrong moment. The anger comes from nowhere and fills the whole room.",
     "conditions": { "minAge": 18, "hasPartner": true, "traitsAny": [ "hot_tempered", "cruel" ] },
     "target": { "role": "partner" }, "cooldown": 3,
@@ -145,7 +145,7 @@
     ]
   },
   {
-    "id": "abuse_child", "trigger": "situation",
+    "id": "abuse_child", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "A secret",
     "text": "After the weekend at {t.name}'s you feel sick and scared, and you don't know why. {t.He} said it was your special secret – and that nobody would believe you anyway.",
     "choices": [
@@ -169,7 +169,7 @@
     ]
   },
   {
-    "id": "carry_secret", "trigger": "situation",
+    "id": "carry_secret", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "What you carry",
     "text": "You have carried it since you were a child – what {t.name} did. Nobody in the family knows.",
     "choices": [
@@ -200,7 +200,7 @@
   // takes over and is never described. Played from three sides – only the secret, the guilt and the
   // reckoning. The player never commits abuse (docs/design-decisions.md).
   {
-    "id": "origin_start_grandfather", "trigger": "situation",
+    "id": "origin_start_grandfather", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "Roots",
     "text": "At {t.name}'s birthday dinner {t.he} tells everyone about the DNA kit {t.he} has ordered – \"to find out where we really come from\". Everyone laughs. Everyone except {o.name}, {t.his} mother, who puts down her fork and looks straight at you. You are the only two people alive who know who {t.name}'s father really is.",
     "choices": [
@@ -237,7 +237,7 @@
     ]
   },
   {
-    "id": "origin_start_mother", "trigger": "situation",
+    "id": "origin_start_mother", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "The DNA kit",
     "text": "{t.name} shows you the DNA kit {t.he} has ordered. \"Don't you want to know where we come from, Mum?\" {t.He} has no idea that the man {t.he} calls Dad is not {t.his} father. {t.His} father is {o.name} – your own father. For {t.age} years you have carried it alone.",
     "choices": [
@@ -270,7 +270,7 @@
     ]
   },
   {
-    "id": "origin_start_child", "trigger": "situation",
+    "id": "origin_start_child", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "Roots",
     "text": "You've ordered a DNA kit to learn more about the family. When you tell Mum, {t.name} goes white and leaves the room. Grandpa {o.name} laughs a little too loudly and says it's a waste of money.",
     "choices": [
@@ -292,7 +292,7 @@
     ]
   },
   {
-    "id": "origin_revealed_child", "trigger": "situation",
+    "id": "origin_revealed_child", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "The results",
     "text": "At first the DNA match makes no sense. Then it does. Your biological father is {t.name} – your grandfather. {o.name}, your mother, was only a child when it started. She has carried it your whole life.",
     "choices": [
@@ -324,7 +324,7 @@
     ]
   },
   {
-    "id": "origin_revealed_mother", "trigger": "situation",
+    "id": "origin_revealed_mother", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "It's out",
     "text": "{t.name} knows. Soon the whole family knows. For {t.age} years it was yours alone to carry. Now everyone is looking at you – and at {o.name}.",
     "choices": [
@@ -348,7 +348,7 @@
     ]
   },
   {
-    "id": "abuse_revealed", "trigger": "situation",
+    "id": "abuse_revealed", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "Everyone knows",
     "text": "The family knows what you did to {t.name}. The phone has stopped ringing. Your own children won't look at you. Then the police call and ask you to come in for questioning.",
     "choices": [

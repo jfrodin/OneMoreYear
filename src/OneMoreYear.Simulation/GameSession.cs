@@ -54,6 +54,7 @@ public sealed class GameSession
         {
             Seed = seed,
             SeedCode = code,
+            ContentSettings = options.ContentSettings?.ToDictionary(kv => kv.Key, kv => kv.Value) ?? new(),
             CountryId = options.CountryId,
             StartYear = options.StartYear,
             Year = options.StartYear,
@@ -66,6 +67,17 @@ public sealed class GameSession
         if (scenario != null) Scenarios.FastForward(session, scenario);
         return session;
     }
+
+    /// <summary>Changes how a dark theme is handled from now on (content settings).</summary>
+    public void SetContentLevel(string category, ContentLevel level)
+    {
+        if (level == ContentLevel.On) World.ContentSettings.Remove(category);
+        else World.ContentSettings[category] = level;
+        // Anything already waiting about that theme goes away.
+        World.PendingEvents.RemoveAll(e => !e.Resolved && Content.Events.TryGetValue(e.EventId, out var d) && !EventSystem.Allowed(Ctx, d));
+    }
+
+    public ContentLevel ContentLevelOf(string category) => Ctx.Level(category);
 
     /// <summary>The test scenarios that can be started from the title screen.</summary>
     public static IReadOnlyList<ScenarioDef> AvailableScenarios(ContentDb? content = null) => (content ?? ContentDb.Embedded).Scenarios;
@@ -282,7 +294,7 @@ public sealed class GameSession
         foreach (var def in Content.Events.Values.OrderBy(e => e.Id, StringComparer.Ordinal))
         {
             bool isSelf = def.Trigger == "self";
-            if (def.Trigger != "action" && !isSelf) continue;
+            if (def.Trigger != "action" && !isSelf || !EventSystem.Allowed(Ctx, def)) continue;
             // In prison, only prison life is possible.
             if ((player.Activity == Activity.Prison) != (def.Category == "prison")) continue;
             if (isSelf != (target == null)) continue;

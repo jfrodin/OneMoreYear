@@ -2,6 +2,16 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.15.0 – 2026-09-30 · Content settings
+
+- **Choose how dark it gets**: sexual abuse, violence, murder, addiction and infidelity can each be
+  *On*, *Mentioned only* (it happens to others, off-screen – a line in the chronicle, never an event
+  or a choice for you) or *Off* (it never happens).
+- Asked the first time the game starts; change it any time from the title screen or with the new
+  *Content* button in a game. Stored per save, and remembered as the default for new games.
+- The title screen says the game is for adults and what it contains.
+- Events carry content tags, so new dark events are easy to cover.
+
 ## 0.14.0 – 2026-09-30 · Shareable seeds
 
 - Every new game gets a **seed code** like `7LB2WVPK` (no I, O, 0 or 1 – easy to read out and type).

@@ -16,11 +16,11 @@
   { "id": "crime_fraud", "trigger": "self", "category": "crime", "title": "Commit fraud",
     "conditions": { "minAge": 20, "hasJob": true },
     "choices": [ { "text": "Cook the books", "hint": "Your job gives you access to money that isn't yours.", "effects": [ { "type": "crime", "kind": "fraud" } ] } ] },
-  { "id": "crime_robbery", "trigger": "self", "category": "crime", "title": "Rob someone",
+  { "id": "crime_robbery", "content": [ "violence" ], "trigger": "self", "category": "crime", "title": "Rob someone",
     "conditions": { "minAge": 16 },
     "choices": [ { "text": "Pick a victim in the dark", "hint": "Violent, and punished hard.", "effects": [ { "type": "crime", "kind": "robbery" } ] } ] },
 
-  { "id": "crime_assault", "trigger": "action", "category": "crime", "title": "Beat up",
+  { "id": "crime_assault", "content": [ "violence" ], "trigger": "action", "category": "crime", "title": "Beat up",
     "target": { "role": "known", "conditions": { "minAge": 14 } },
     "conditions": { "minAge": 14 },
     "choices": [ { "text": "Hurt them", "hint": "They will never forget it – and neither might the police.", "effects": [ { "type": "crime", "kind": "assault", "to": "target" } ] } ] },
@@ -28,7 +28,7 @@
     "target": { "role": "secret_known", "conditions": { "minAge": 18 } },
     "conditions": { "minAge": 16 },
     "choices": [ { "text": "\"Pay, or everyone finds out\"", "hint": "You know their secret. Some people pay. Some go to the police.", "effects": [ { "type": "crime", "kind": "blackmail", "to": "target" } ] } ] },
-  { "id": "crime_murder", "trigger": "action", "category": "crime", "title": "Kill",
+  { "id": "crime_murder", "content": [ "murder" ], "trigger": "action", "category": "crime", "title": "Kill",
     "target": { "role": "known", "conditions": { "minAge": 18 } },
     "conditions": { "minAge": 15 },
     "choices": [ { "text": "End their life", "hint": "There is no coming back from this. Murders can be solved years later.", "effects": [ { "type": "crime", "kind": "murder", "to": "target" } ] } ] },
@@ -62,7 +62,7 @@
   },
 
   {
-    "id": "prison_fight", "category": "prison", "title": "The yard",
+    "id": "prison_fight", "content": [ "violence" ], "category": "prison", "title": "The yard",
     "text": "In the yard, a big man with a lot of tattoos decides you're looking at him the wrong way.",
     "conditions": { "minAge": 15 }, "cooldown": 2,
     "choices": [
@@ -98,7 +98,7 @@
     "choices": [ { "text": "Lift every day", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "health", "amount": 3 } ], "result": "You come out stronger than you went in." } ] },
 
   {
-    "id": "caught_for_murder", "trigger": "situation", "category": "prison",
+    "id": "caught_for_murder", "content": [ "murder" ], "trigger": "situation", "category": "prison",
     "title": "The knock on the door",
     "text": "Years have passed. You had almost convinced yourself it never happened. Then new evidence about {t.name}'s death reached the police.",
     "choices": [

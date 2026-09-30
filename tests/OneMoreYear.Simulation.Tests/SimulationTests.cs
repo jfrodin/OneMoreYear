@@ -489,3 +489,40 @@ public class SeedCodeTests
         Assert.Equal(OneMoreYear.Simulation.Core.SeedCode.ToSeed("svensson"), GameSession.NewGame(new NewGameOptions { SeedCode = "Svens son" }).World.Seed);
     }
 }
+
+public class ContentSettingsTests
+{
+    private static Dictionary<string, ContentLevel> All(ContentLevel level) =>
+        ContentCategories.All.ToDictionary(c => c.Id, _ => level);
+
+    [Fact]
+    public void ThemesTurnedOffNeverHappen()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 7, StartYear = 1950, ContentSettings = All(ContentLevel.Off) });
+        var bot = new AutoPlayer(7);
+        var titles = new List<string>();
+        bot.OnText = titles.Add;
+        for (int i = 0; i < 150 && bot.PlayYear(s); i++) { }
+        var w = s.World;
+        Assert.DoesNotContain(w.Secrets, x => x.Kind is "abuse" or "affair" or "paternity" or "murder" or "origin");
+        Assert.DoesNotContain(w.People, p => p.Traits.Contains("predatory") || p.Addiction != null);
+        Assert.DoesNotContain(w.People, p => p.Memories.Any(m => m.Kind is "hit" or "abused" or "betrayed" or "addicted_parent"));
+        Assert.DoesNotContain(w.People, p => p.CriminalRecord.Any(r => s.Content.Crimes[r.CrimeId].Violent));
+    }
+
+    [Fact]
+    public void MentionedThemesNeverReachThePlayer()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 7, StartYear = 1950, ContentSettings = All(ContentLevel.Mentioned) });
+        var bot = new AutoPlayer(7);
+        var seen = new HashSet<string>();
+        for (int i = 0; i < 150 && bot.PlayYear(s); i++)
+        {
+            foreach (var e in s.World.PendingEvents) seen.Add(e.EventId);
+            foreach (var a in s.Actions(null)) seen.Add(a.Id);
+        }
+        var tagged = s.Content.Events.Values.Where(e => e.Content.Count > 0).Select(e => e.Id).ToHashSet();
+        Assert.Empty(seen.Intersect(tagged));
+        Assert.All(s.World.PlayedIds.Select(s.World.Get), p => Assert.Null(p.Addiction));
+    }
+}

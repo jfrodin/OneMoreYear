@@ -21,9 +21,9 @@ public static class DarkSystem
             var p = w.People[i];
             if (!p.IsAlive || !(p.InFamily || p.Id == w.PlayerId)) continue;
             int age = p.Age(ctx.Year);
-            if (age >= 14) Addiction(ctx, p);
-            if (age >= 18 && p.Id != w.PlayerId) Violence(ctx, p);
-            if (age >= 18 && p.Id != w.PlayerId && ctx.Mod(p, "predatory") > 0) Abuse(ctx, p);
+            if (age >= 14 && ctx.Happens(ContentCategories.Addiction)) Addiction(ctx, p);
+            if (age >= 18 && p.Id != w.PlayerId && ctx.Happens(ContentCategories.Violence)) Violence(ctx, p);
+            if (age >= 18 && p.Id != w.PlayerId && ctx.Mod(p, "predatory") > 0 && ctx.Happens(ContentCategories.SexualAbuse)) Abuse(ctx, p);
             if (age >= 60 && ctx.Rng.Chance(0.03)) Mellow(ctx, p);
         }
         RevealAbuse(ctx);
@@ -37,6 +37,8 @@ public static class DarkSystem
         var rng = ctx.Rng;
         var w = ctx.World;
         bool isPlayer = p.Id == w.PlayerId;
+        // With addiction set to "mentioned only", it happens to others – never to the player, who would have no choices.
+        if (isPlayer && !ctx.Shown(ContentCategories.Addiction)) return;
         if (p.Addiction == null)
         {
             double chance = 0.003 + ctx.Mod(p, "addiction") * 0.035 + (p.Happiness < 35 ? 0.015 : 0);
@@ -110,6 +112,7 @@ public static class DarkSystem
         if (w.TryGet(p.PartnerId) is { IsAlive: true } partner
             && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) victims.Add(partner);
         victims.AddRange(Kinship.Children(w, p).Where(k => k.IsAlive && k.Age(ctx.Year) is >= 2 and < 18));
+        if (!ctx.Shown(ContentCategories.Violence)) victims.RemoveAll(v => v.Id == w.PlayerId);
         if (victims.Count == 0) return;
         Hit(ctx, p, ctx.Rng.Pick(victims));
     }
@@ -146,6 +149,7 @@ public static class DarkSystem
         var children = Kinship.Distances(w, predator, 2).Keys.Select(w.Get)
             .Where(c => c.IsAlive && c.Age(ctx.Year) is >= 5 and <= 15 && c.Id != predator.Id)
             .Where(c => !w.Secrets.Any(s => s.Kind == "abuse" && s.VictimId == c.Id))
+            .Where(c => c.Id != w.PlayerId || ctx.Shown(ContentCategories.SexualAbuse))
             .ToList();
         if (children.Count == 0) return;
         StartAbuse(ctx, predator, ctx.Rng.Pick(children));
