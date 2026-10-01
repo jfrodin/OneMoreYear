@@ -2,6 +2,10 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.25.1 – 2026-10-01 · F1 everywhere
+
+- F1 (playtest note) now works on top of the newspaper and other dialogs. The note says what was open.
+
 ## 0.25.0 – 2026-10-01 · Playtest 4: fixes
 
 - **Fixed: stuck on "Next Year".** After doing something (applying for jobs, homework, asking for a

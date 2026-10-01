@@ -89,7 +89,8 @@ public partial class Main : Control
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (e.IsActionPressed("omy_feedback") && !HasModal)
+        // F1 works on top of everything (the newspaper, a message) – only not twice.
+        if (e.IsActionPressed("omy_feedback") && !_feedbackOpen)
         {
             GetViewport().SetInputAsHandled();
             ShowFeedback();
@@ -98,12 +99,20 @@ public partial class Main : Control
 
     // --- Playtest feedback ----------------------------------------------------------------------
 
+    private bool _feedbackOpen;
+    /// <summary>What is shown on top of the game right now, for the playtest note ("Newspaper").</summary>
+    private string? _overlayName;
+
     /// <summary>
     /// F1 / Select: write a playtest note. It is appended to docs/playtest-notes.md together with the
     /// current situation, a screenshot and a copy of the save so the moment can be reopened later.
+    /// Works on top of anything, the newspaper included.
     /// </summary>
     public void ShowFeedback()
     {
+        if (_feedbackOpen) return;
+        _feedbackOpen = true;
+        string context = FeedbackContext() + (_overlayName != null ? $"  ·  {_overlayName}" : HasModal ? "  ·  a dialog" : "");
         var screenshot = GetViewport().GetTexture().GetImage();
         var previousFocus = GetViewport().GuiGetFocusOwner();
 
@@ -116,7 +125,7 @@ public partial class Main : Control
         var box = Ui.VBox(14);
         box.CustomMinimumSize = new Vector2(720, 0);
         box.AddChild(Ui.Label("Playtest note", 26, UiTheme.Accent));
-        box.AddChild(Ui.Label(FeedbackContext(), 16, UiTheme.Muted, wrap: true));
+        box.AddChild(Ui.Label(context, 16, UiTheme.Muted, wrap: true));
         var text = new TextEdit
         {
             CustomMinimumSize = new Vector2(0, 220),
@@ -127,6 +136,7 @@ public partial class Main : Control
 
         void Close()
         {
+            _feedbackOpen = false;
             _overlayLayer.RemoveChild(dim);
             dim.QueueFree();
             if (IsInstanceValid(previousFocus) && previousFocus!.IsInsideTree() && previousFocus.IsVisibleInTree())
@@ -140,7 +150,7 @@ public partial class Main : Control
         {
             if (!string.IsNullOrWhiteSpace(text.Text))
             {
-                string where = SaveFeedback(text.Text.Trim(), screenshot);
+                string where = SaveFeedback(text.Text.Trim(), screenshot, context);
                 Close();
                 ShowMessage("Thanks!", $"Your note was saved to {where}.");
                 return;
@@ -180,7 +190,7 @@ public partial class Main : Control
     }
 
     /// <summary>Appends the note to the notes file. Returns where it was written.</summary>
-    private string SaveFeedback(string note, Image screenshot)
+    private string SaveFeedback(string note, Image screenshot, string context)
     {
         // When running from the source tree, write into the repo's docs folder; otherwise to user data.
         string docs = System.IO.Path.GetFullPath(System.IO.Path.Combine(ProjectSettings.GlobalizePath("res://"), "..", "docs"));
@@ -198,7 +208,7 @@ public partial class Main : Control
         }
 
         string notesPath = System.IO.Path.Combine(docs, "playtest-notes.md");
-        string entry = $"\n### {System.DateTime.Now:yyyy-MM-dd HH:mm} · {FeedbackContext()}\n\n{note}\n\n_{files}_\n";
+        string entry = $"\n### {System.DateTime.Now:yyyy-MM-dd HH:mm} · {context}\n\n{note}\n\n_{files}_\n";
         System.IO.File.AppendAllText(notesPath, entry);
         return notesPath;
     }
@@ -577,11 +587,13 @@ public partial class Main : Control
         {
             if (closed) return;
             closed = true;
+            _overlayName = null;
             _overlayLayer.RemoveChild(dim);
             dim.QueueFree();
             if (_screen is GameScreen game) game.FocusAfterNewspaper();
         }
         Sound.Play("paper");
+        _overlayName = "Newspaper";
         center.AddChild(Newspaper.Build(Session, report, Close));
         // A click anywhere outside the paper closes it too.
         // (Only a real click – the scroll wheel also counts as a mouse button in Godot.)
