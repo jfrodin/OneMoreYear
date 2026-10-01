@@ -2,6 +2,14 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.23.0 – 2026-10-01 · Abuse of children withdrawn
+
+- **Abuse of children is out of the game for now.** It never happens, whatever the content settings
+  say. It is no longer listed in the content settings, and "The family secret" scenarios are hidden.
+  Nothing is deleted: the events and code stay, so it can come back, or be removed for good, later.
+  Older saves keep any such secret they already had, but it is never revealed. Sexual violence
+  between adults is not affected.
+
 ## 0.22.0 – 2026-09-30 · Settings, save slots and sound
 
 - **A Settings menu**, reachable from the title screen and from the sidebar in-game: window or

@@ -362,6 +362,35 @@ public class CrimeTests
             var again = GameSession.NewGame(new NewGameOptions { ScenarioId = sc.Id });
             Assert.Equal(s.Player.FullName, again.Player.FullName);
         }
+        var poor = GameSession.NewGame(new NewGameOptions { ScenarioId = "nothing_to_lose" });
+        Assert.Contains(Kinship.Parents(poor.World, poor.Player), p => p.Addiction == "alcohol");
+    }
+
+    [Fact]
+    public void Abuse_of_children_is_withdrawn_whatever_the_settings_say()
+    {
+        Assert.DoesNotContain(ContentCategories.Selectable, c => c.Id == ContentCategories.SexualAbuse);
+        Assert.DoesNotContain(GameSession.AvailableScenarios(), s => s.Storyline == "hidden_father");
+        Assert.Throws<ArgumentException>(() => GameSession.NewGame(new NewGameOptions { ScenarioId = "the_family_secret" }));
+        for (ulong seed = 1; seed <= 6; seed++)
+        {
+            var s = GameSession.NewGame(new NewGameOptions
+            {
+                Seed = seed, StartYear = 1950,
+                ContentSettings = new Dictionary<string, ContentLevel> { [ContentCategories.SexualAbuse] = ContentLevel.On },
+            });
+            Assert.Equal(ContentLevel.Off, s.ContentLevelOf(ContentCategories.SexualAbuse));
+            var bot = new AutoPlayer(seed);
+            for (int i = 0; i < 100 && bot.PlayYear(s); i++) { }
+            var w = s.World;
+            Assert.DoesNotContain(w.Secrets, x => x.Kind is "abuse" or "origin");
+            Assert.DoesNotContain(w.People, p => p.Traits.Contains("predatory") || p.Memories.Any(m => m.Kind == "abused"));
+        }
+    }
+
+    [Fact(Skip = "Abuse of children is withdrawn (0.23.0). Un-skip if ContentCategories.Withdrawn lets it back in.")]
+    public void The_family_secret_from_three_sides()
+    {
         // "The family secret" from three sides: the same family, the same hidden father.
         foreach (var (id, opening) in new[] { ("the_family_secret", "Roots"), ("the_family_secret_mother", "The DNA kit"), ("the_family_secret_daughter", "Roots") })
         {
@@ -389,8 +418,6 @@ public class CrimeTests
         gf.Choose(roots.Uid, roots.Choices.Single(c => c.Text == "Tell them the truth").Index);
         Assert.All(gf.World.Secrets.Where(x => x.Kind is "origin" or "abuse"), x => Assert.True(x.Revealed));
         Assert.Contains(gf.CurrentEvents(), e => e.Title == "Everyone knows");
-        var poor = GameSession.NewGame(new NewGameOptions { ScenarioId = "nothing_to_lose" });
-        Assert.Contains(Kinship.Parents(poor.World, poor.Player), p => p.Addiction == "alcohol");
     }
 }
 

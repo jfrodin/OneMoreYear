@@ -24,6 +24,14 @@ revelation that splits the family – shown through its consequences and how peo
 never depicted in sexually explicit detail. (This is also what keeps the game within PEGI 18 and
 Steam's rules.)
 
+**Withdrawn 2026-10-01.** The producer is unsure whether abuse of children belongs in the game. It
+is taken out for now: it never happens in any game, whatever the content settings say, it is not
+offered in the content settings, and "The family secret" scenarios are hidden. Nothing is deleted.
+The events, the code and the tests stay (the tests are skipped), so it can come back by removing
+`sexual_abuse` from `ContentCategories.Withdrawn`, or be removed for good later. Games saved before
+this keep any such secrets they already had, but those secrets are never revealed. Sexual violence
+between adults (`sexual_violence`) is not affected.
+
 ## Relationships follow the country's law – 2026-09-30
 
 In Sweden the age of consent is 15, so that is where romantic and sexual relationships – and

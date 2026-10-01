@@ -26,8 +26,12 @@ public static class DarkSystem
             if (age >= 18 && p.Id != w.PlayerId && ctx.Mod(p, "predatory") > 0 && ctx.Happens(ContentCategories.SexualAbuse)) Abuse(ctx, p);
             if (age >= 60 && ctx.Rng.Chance(0.03)) Mellow(ctx, p);
         }
-        RevealAbuse(ctx);
-        RevealOrigins(ctx);
+        // Withdrawn themes stay buried, also in games saved before they were withdrawn.
+        if (ctx.Happens(ContentCategories.SexualAbuse))
+        {
+            RevealAbuse(ctx);
+            RevealOrigins(ctx);
+        }
     }
 
     // --- Addiction --------------------------------------------------------------------------

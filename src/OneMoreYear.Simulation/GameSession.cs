@@ -42,6 +42,7 @@ public sealed class GameSession
         var scenario = options.ScenarioId == null ? null
             : content.Scenarios.FirstOrDefault(s => s.Id == options.ScenarioId)
               ?? throw new ArgumentException($"Unknown scenario '{options.ScenarioId}'.");
+        if (scenario != null && Withdrawn(scenario)) throw new ArgumentException($"Scenario '{scenario.Id}' is withdrawn.");
         if (scenario != null)
             options = options with
             {
@@ -91,7 +92,12 @@ public sealed class GameSession
     public ContentLevel ContentLevelOf(string category) => Ctx.Level(category);
 
     /// <summary>The test scenarios that can be started from the title screen.</summary>
-    public static IReadOnlyList<ScenarioDef> AvailableScenarios(ContentDb? content = null) => (content ?? ContentDb.Embedded).Scenarios;
+    public static IReadOnlyList<ScenarioDef> AvailableScenarios(ContentDb? content = null) =>
+        (content ?? ContentDb.Embedded).Scenarios.Where(s => !Withdrawn(s)).ToList();
+
+    // "The family secret" is built on abuse of a child, a theme withdrawn for now.
+    private static bool Withdrawn(ScenarioDef s) =>
+        s.Storyline == "hidden_father" && ContentCategories.Withdrawn.Contains(ContentCategories.SexualAbuse);
 
     public string Save() => JsonSerializer.Serialize(World, ContentDb.JsonOptions);
 

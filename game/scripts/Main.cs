@@ -394,7 +394,7 @@ public partial class Main : Control
             17, UiTheme.Muted, wrap: true));
 
         Control? first = null;
-        foreach (var (id, name, description) in ContentCategories.All)
+        foreach (var (id, name, description) in ContentCategories.Selectable)
         {
             var row = Ui.HBox(14);
             var text = Ui.VBox(0);

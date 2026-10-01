@@ -23,6 +23,16 @@ public static class ContentCategories
     public const string SexualViolence = "sexual_violence";
     public const string Suicide = "suicide";
 
+    /// <summary>
+    /// Themes taken out of the game for now. Their content and code stay, but they never happen,
+    /// whatever the settings say, and the player is not asked about them. To bring one back,
+    /// remove it here and un-skip its tests. See docs/design-decisions.md.
+    /// </summary>
+    public static readonly IReadOnlySet<string> Withdrawn = new HashSet<string> { SexualAbuse };
+
+    /// <summary>The themes the player can choose about: all except the withdrawn ones.</summary>
+    public static IEnumerable<(string Id, string Name, string Description)> Selectable => All.Where(c => !Withdrawn.Contains(c.Id));
+
     public static readonly IReadOnlyList<(string Id, string Name, string Description)> All = new[]
     {
         (SexualAbuse, "Sexual abuse of children", "Abuse of children as a family secret – never shown, only its consequences."),

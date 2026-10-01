@@ -25,7 +25,8 @@ public sealed class SimContext
     public double Mod(Person p, string key) => Content.TraitModifier(p, key);
 
     /// <summary>The player's setting for a dark theme (content settings).</summary>
-    public ContentLevel Level(string category) => World.ContentSettings.GetValueOrDefault(category, ContentLevel.On);
+    public ContentLevel Level(string category) =>
+        ContentCategories.Withdrawn.Contains(category) ? ContentLevel.Off : World.ContentSettings.GetValueOrDefault(category, ContentLevel.On);
 
     /// <summary>Can this theme happen at all in this world?</summary>
     public bool Happens(string category) => Level(category) != ContentLevel.Off;
