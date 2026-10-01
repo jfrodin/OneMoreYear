@@ -2,6 +2,15 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.28.1 – 2026-10-02 · Traditions and friends
+
+- **The Swedish year (10)**: Lucia, Easter witches, Walpurgis night, the first day of school, the white
+  student cap, crayfish, the National Day, the almond in the rice pudding, the sports holiday, name days.
+- **Friendship (10)**: the forgotten birthday, carrying a piano up four floors, "we should meet up",
+  the friend who needs your sofa, money that never comes back, a best friend from childhood who
+  writes after thirty years, a friend who says too much after wine. When an old friend dies, the
+  family may ask you to speak at the funeral.
+
 ## 0.28.0 – 2026-10-02 · A night of writing
 
 About 135 new events, written without dashes. The game now has about 435.
