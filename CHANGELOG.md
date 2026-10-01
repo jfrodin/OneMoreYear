@@ -2,6 +2,27 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.25.0 – 2026-10-01 · Playtest 4: fixes
+
+- **Fixed: stuck on "Next Year".** After doing something (applying for jobs, homework, asking for a
+  promotion) the screen was not redrawn, so new events and results did not show until you changed tab,
+  and "Next Year" looked ready but did nothing. The screen now updates after every action, and
+  "Next Year" always shows what is waiting.
+- **What happened to you is told to you**: "You inherited 80,000 kr from Karin", not "Marie inherited…"
+  in the middle of the list.
+- **A new trait says why**: "You became more brave, after: “After the meeting”." Traits that only make
+  sense for adults (devoted parent, unfaithful) now come at 18, with a line saying so.
+- **Texts follow the times**: no filming on phones in 1974, letters instead of text messages before
+  2000, a memo instead of an email, no internet in the 1960s.
+- Pronouns follow the person: a female boss is no longer "he".
+- Before year 8 the school bar says "How school goes" – Swedish grades come later.
+- "Buy a home" is always shown to adults who rent, greyed out with the price and what you are missing
+  (down payment, or an income the bank will lend on).
+- The job offers event says you have been looking for work. It comes by itself when you have no job.
+- The newspaper no longer closes when you scroll the mouse wheel.
+- The focus ring is ink-coloured. In the eighties it was red and looked like a warning.
+- Title screen: "A new life" is as visible as "Continue".
+
 ## 0.24.0 – 2026-10-01 · Finding someone
 
 - **You meet people as often as everyone else does.** A single player used to depend on one rare random

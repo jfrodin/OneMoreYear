@@ -112,7 +112,7 @@
   {
     "id": "job_offers", "trigger": "situation", "dynamicChoices": "job_offers",
     "title": "Job offers",
-    "text": "You've sent out applications. These employers want you:",
+    "text": "You have been looking for work – the employment office, the papers, asking around. These employers would take you:",
     "choices": [
       { "text": "Keep looking", "hint": "Something better might come along next year.", "result": "You say no thanks and keep looking." }
     ]
@@ -217,8 +217,8 @@
   },
   {
     "id": "discovered_partner_affair", "content": [ "infidelity" ], "trigger": "situation",
-    "title": "The messages",
-    "text": "The phone is lying unlocked on the kitchen counter. You see the messages before you can stop yourself. {t.name} is having an affair with {o.full}.",
+    "title": "[[2000: The letters || The messages]]",
+    "text": "[[2000: In the pocket of a jacket you are taking to the cleaner's there is a bundle of letters. You read the first one before you can stop yourself. || The phone is lying unlocked on the kitchen counter. You see the messages before you can stop yourself.]] {t.name} is having an affair with {o.full}.",
     "choices": [
       {
         "text": "Leave {t.name}",

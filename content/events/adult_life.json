@@ -301,7 +301,7 @@
       { "text": "Buy it", "effects": [ { "type": "money", "amount": -250000 }, { "type": "flag", "flag": "summer_cottage" }, { "type": "happiness", "amount": 10 },
           { "type": "memory", "kind": "cottage", "text": "Summers at the red cottage", "impact": 20 } ],
         "result": "Every summer from now on: the lake, the mosquitoes, the smell of the wood stove. The family's place." },
-      { "text": "Dream about it", "result": "You look at the photo on your phone sometimes." }
+      { "text": "Dream about it", "result": "You look at [[2008: the cutting from the paper || the photo on your phone]] sometimes." }
     ]
   },
   {
@@ -310,7 +310,7 @@
     "conditions": { "minAge": 18, "maxAge": 65, "minHealth": 60 }, "cooldown": 0,
     "choices": [
       { "text": "Donate", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.1 }, { "type": "happiness", "amount": 4 } ],
-        "result": "A text message a week later: your blood has helped someone. You keep the message." },
+        "result": "[[2000: A letter || A text message]] a week later: your blood has helped someone. You keep the message." },
       { "text": "Not today", "result": "Needles. Maybe next time." }
     ]
   },
@@ -384,7 +384,7 @@
     "target": { "role": "parent", "conditions": { "minAge": 70 } },
     "choices": [
       { "text": "Drive over every Saturday", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": -2 } ],
-        "result": "Gutters, lightbulbs, the computer. And coffee afterwards, which is the real reason." },
+        "result": "Gutters, lightbulbs, [[1990: the TV aerial. || the computer.]] And coffee afterwards, which is the real reason." },
       { "text": "Pay someone to help", "effects": [ { "type": "money", "amount": -5000 } ], "result": "{t.name} complains the man does it wrong. But nobody's on a ladder." }
     ]
   },

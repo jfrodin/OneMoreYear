@@ -169,6 +169,15 @@ public sealed class ContentDb
         foreach (var e in Events.Values)
             foreach (var c in e.Content.Where(c => ContentCategories.All.All(x => x.Id != c)))
                 errors.Add($"Event {e.Id}: unknown content category {c}");
+        // Era text, [[year: before || after]], must be well formed.
+        foreach (var e in Events.Values)
+        {
+            var texts = new List<string?> { e.Title, e.Text };
+            foreach (var c in e.Choices) texts.AddRange(new[] { c.Text, c.Hint, c.Result, c.Success?.Text, c.Failure?.Text });
+            foreach (var t in texts.OfType<string>())
+                if (Systems.TextFormatter.ByEra(2000, t) is var resolved && (resolved.Contains("[[") || resolved.Contains("]]") || resolved.Contains("||")))
+                    errors.Add($"Event {e.Id}: broken era text in \"{t}\"");
+        }
         foreach (var e in Events.Values)
         {
             if (e.Choices.Count == 0 && e.DynamicChoices == null) errors.Add($"Event {e.Id} has no choices.");

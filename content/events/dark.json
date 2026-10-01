@@ -123,7 +123,7 @@
   },
   {
     "id": "jealous_partner", "title": "Who were you texting?",
-    "text": "{t.name} has been through your phone again. \"Who is this? Why are you always talking to them?\"",
+    "text": "{t.name} has been through your [[1998: bag and your letters || phone]] again. \"Who is this? Why are you always talking to them?\"",
     "conditions": { "minAge": 16, "hasPartner": true },
     "target": { "role": "partner", "conditions": { "traitsAny": [ "jealous" ] } }, "cooldown": 3,
     "choices": [

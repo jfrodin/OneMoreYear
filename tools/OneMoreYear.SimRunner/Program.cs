@@ -4,6 +4,16 @@
 using OneMoreYear.Simulation;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
+// --play-from=save.json: loads a save and plays on from there, to reproduce bugs.
+if (args.FirstOrDefault(a => a.StartsWith("--play-from=")) is { } playArg)
+{
+    var loaded = GameSession.Load(File.ReadAllText(playArg["--play-from=".Length..]));
+    Console.WriteLine($"Loaded {loaded.Year}, {loaded.Player.FullName}, can advance: {loaded.CanAdvance}, needs succession: {loaded.NeedsSuccession}");
+    foreach (var e in loaded.CurrentEvents()) Console.WriteLine($"  event {e.Title} resolved={e.Resolved}");
+    var playBot = new AutoPlayer(1);
+    for (int i = 0; i < 10 && playBot.PlayYear(loaded); i++) Console.WriteLine($"  -> {loaded.Year}");
+    return;
+}
 if (args.FirstOrDefault(a => a.StartsWith("--load=")) is { } loadArg)
 {
     Inspect.Run(loadArg["--load=".Length..], args.FirstOrDefault(a => a.StartsWith("--who="))?["--who=".Length..] ?? "");

@@ -50,7 +50,7 @@
   { "id": "manipulative", "name": "Manipulative", "tone": "dark",
     "description": "Gets others to do what they want. Trust is a tool.",
     "modifiers": { "conflict": 0.5, "loyalty": -0.5, "grudge": 0.3, "infidelity": 0.3, "dishonesty": 0.4 } },
-  { "id": "unfaithful", "name": "Unfaithful", "opposite": "loyal", "tone": "dark",
+  { "id": "unfaithful", "name": "Unfaithful", "opposite": "loyal", "tone": "dark", "adultOnly": true,
     "description": "Finds temptation hard to resist.",
     "modifiers": { "infidelity": 1.2, "divorce": 0.8 } },
 
@@ -72,7 +72,7 @@
   { "id": "creative", "name": "Creative", "tone": "light",
     "description": "Full of ideas. Drawn to art, media and research.",
     "modifiers": { "happiness": 4 } },
-  { "id": "devoted_parent", "name": "Devoted parent", "tone": "light",
+  { "id": "devoted_parent", "name": "Devoted parent", "tone": "light", "adultOnly": true,
     "description": "Children come first. Their kids feel it all their lives.",
     "modifiers": { "parenting": 1.0, "loyalty": 0.3 } },
   { "id": "resilient", "name": "Resilient", "tone": "light",

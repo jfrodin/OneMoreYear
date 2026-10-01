@@ -584,7 +584,8 @@ public partial class Main : Control
         Sound.Play("paper");
         center.AddChild(Newspaper.Build(Session, report, Close));
         // A click anywhere outside the paper closes it too.
-        dim.GuiInput += e => { if (e is InputEventMouseButton { Pressed: true }) Close(); };
+        // (Only a real click – the scroll wheel also counts as a mouse button in Godot.)
+        dim.GuiInput += e => { if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left or MouseButton.Right }) Close(); };
         _overlayLayer.AddChild(dim);
     }
 

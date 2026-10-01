@@ -132,7 +132,8 @@ public static class PersonFactory
         foreach (var def in ctx.Content.Traits.Values.Where(t => t.AdultOnly).OrderBy(t => t.Id, StringComparer.Ordinal))
         {
             double sexWeight = p.Sex == Sex.Male ? def.MaleWeight : def.FemaleWeight;
-            if (ctx.Rng.Chance(def.Weight * sexWeight * 0.12)) TryAddTrait(ctx, p, def.Id);
+            if (ctx.Rng.Chance(def.Weight * sexWeight * 0.12) && TryAddTrait(ctx, p, def.Id) && p.Id == ctx.World.PlayerId)
+                ctx.World.Log($"{p.FirstName} grew into something new: {def.Name.ToLowerInvariant()}.", 2, "trait", p.Id);
         }
     }
 

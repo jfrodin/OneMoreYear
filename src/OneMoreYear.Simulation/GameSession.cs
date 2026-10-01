@@ -334,11 +334,39 @@ public sealed class GameSession
             if (target != null) probe.Roles["target"] = target.Id;
             int? chance = choice.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, choice, probe) * 100) : null;
             bool used = World.ActionsThisYear.Contains(ActionKey(def.Id, targetId));
-            result.Add(new ActionView(def.Id, TextFormatter.Format(Ctx, def.Title, probe),
-                choice.Hint == null ? null : TextFormatter.Format(Ctx, choice.Hint, probe), chance,
+            string? hint = choice.Hint == null ? null : TextFormatter.Format(Ctx, choice.Hint, probe);
+            if (def.Id == BuyHomeAction) hint = $"{HomePriceText()} {hint}";
+            result.Add(new ActionView(def.Id, TextFormatter.Format(Ctx, def.Title, probe), hint, chance,
                 !used && World.ActionPoints > 0 && CanAdvanceOrActionsAllowed(), def.Category));
         }
+        // Buying a home is shown even when it is out of reach, with what it would take.
+        if (target == null && result.All(a => a.Id != BuyHomeAction) && player.Age(Year) >= 20 && !player.OwnsHome
+            && !player.LivesWithParents && player.Activity != Activity.Prison)
+            result.Add(new ActionView(BuyHomeAction, "Buy a home", null, null, false, "money", BuyHomeLocked()));
         return result;
+    }
+
+    private const string BuyHomeAction = "self_buy_home";
+
+    private string HomePriceText()
+    {
+        double price = HousingSystem.HomePrice(Ctx, Player);
+        return $"A home in {HousingSystem.City(Ctx, Player).Name} costs about {EconomySystem.Format(Ctx, price)}.";
+    }
+
+    /// <summary>Why the player cannot buy a home yet: the deposit, or a loan their income cannot carry.</summary>
+    private string BuyHomeLocked()
+    {
+        var p = Player;
+        double price = HousingSystem.HomePrice(Ctx, p);
+        double deposit = price * Country.DownPayment;
+        double income = Ctx.Nominal(EconomySystem.GrossIncome(Ctx, p));
+        var missing = new List<string>();
+        if (p.Money < deposit)
+            missing.Add($"{EconomySystem.Format(Ctx, deposit)} for the down payment (you have {EconomySystem.Format(Ctx, Math.Max(0, p.Money))})");
+        if (price - deposit > Math.Max(income, 1) * 5.5)
+            missing.Add($"an income of at least {EconomySystem.Format(Ctx, (price - deposit) / 5.5)} a year for the bank to lend you the rest");
+        return missing.Count == 0 ? $"{HomePriceText()} Not right now." : $"{HomePriceText()} You need {string.Join(", and ", missing)}.";
     }
 
     private bool CanAdvanceOrActionsAllowed() => !NeedsSuccession && !GameOver;
@@ -610,7 +638,23 @@ public sealed class GameSession
     }
 
     /// <summary>Everything that has happened to the player's circle so far this year.</summary>
-    public IReadOnlyList<ChronicleLine> NewsThisYear() => RelevantLines(World.Chronicle.Where(e => e.Year == Year));
+    /// <summary>This year's lines, with what happened to the player told to them: "You inherited …".</summary>
+    public IReadOnlyList<ChronicleLine> NewsThisYear() =>
+        RelevantLines(World.Chronicle.Where(e => e.Year == Year)).Select(l => l with { Text = ToYou(l.Text) }).ToList();
+
+    /// <summary>"Marie inherited …" → "You inherited …", "Marie was released" → "You were released".</summary>
+    internal string ToYou(string text)
+    {
+        foreach (var name in new[] { Player.FullName, Player.FirstName })
+        {
+            if (!text.StartsWith(name + " ")) continue;
+            var rest = text[(name.Length + 1)..];
+            foreach (var (from, to) in new[] { ("was ", "were "), ("has ", "have "), ("is ", "are "), ("doesn't ", "don't ") })
+                if (rest.StartsWith(from)) { rest = to + rest[from.Length..]; break; }
+            return "You " + rest;
+        }
+        return text;
+    }
 
     // --- Chronicle ---------------------------------------------------------------------------
 

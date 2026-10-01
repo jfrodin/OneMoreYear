@@ -87,7 +87,7 @@
   },
   {
     "id": "parent_teen_late", "title": "Two in the morning",
-    "text": "It's two in the morning. {t.name} said midnight. {t.His} phone goes straight to voicemail.",
+    "text": "It's two in the morning. {t.name} said midnight. [[2000: There is no one you can call at this hour. || {t.His} phone goes straight to voicemail.]]",
     "conditions": { "minAge": 25 }, "cooldown": 3,
     "target": { "role": "child", "conditions": { "minAge": 14, "maxAge": 17 } },
     "choices": [

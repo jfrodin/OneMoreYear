@@ -286,3 +286,95 @@ _playtest-saves/2026-10-01_213347.png · playtest-saves/2026-10-01_213347.json_
 Jag minns inte att jag sökte något jobb? Sker detta automatiskt om man iten har något och är vuxen?
 
 _playtest-saves/2026-10-01_213426.png · playtest-saves/2026-10-01_213426.json_
+
+### 2026-10-01 21:35 · v0.23.0  ·  1971  ·  Marie Olofsson, 21  ·  This Year  ·  seed T2FXTXJN
+
+Kanske borde finnas alternativ för bostader? Så man liksom vet vad det kostar. För ingen hyr ju elelr köper något i blindå?
+
+_playtest-saves/2026-10-01_213531.png · playtest-saves/2026-10-01_213531.json_
+
+### 2026-10-01 21:38 · v0.23.0  ·  1973  ·  Marie Olofsson, 23  ·  School & Work  ·  seed T2FXTXJN
+
+Ska man itne kunan ansträgna sig mer på jobbet öfr att göra bättre ifrån sig, elelr hur styrs detta?
+
+_playtest-saves/2026-10-01_213806.png · playtest-saves/2026-10-01_213806.json_
+
+### 2026-10-01 21:39 · v0.23.0  ·  1974  ·  Marie Olofsson, 24  ·  This Year  ·  seed T2FXTXJN
+
+Någon filmade att jag dansade på bordet 1974. Filmade med vadå? Och vwem äger en filmkamera detta åR? :)
+
+_playtest-saves/2026-10-01_213920.png · playtest-saves/2026-10-01_213920.json_
+
+### 2026-10-01 21:42 · v0.23.0  ·  1976  ·  Marie Olofsson, 26  ·  This Year  ·  seed T2FXTXJN
+
+Gunnel och he? Gunnel är nog en kvinnonamn generellt tycker jag?
+
+_playtest-saves/2026-10-01_214215.png · playtest-saves/2026-10-01_214215.json_
+
+### 2026-10-01 21:42 · v0.23.0  ·  1976  ·  Marie Olofsson, 26  ·  School & Work  ·  seed T2FXTXJN
+
+Jag var successfull i ask for promotion, men inget har hänt på sidan?
+
+_playtest-saves/2026-10-01_214236.png · playtest-saves/2026-10-01_214236.json_
+
+### 2026-10-01 21:44 · v0.23.0  ·  1977  ·  Marie Olofsson, 27  ·  Money  ·  seed T2FXTXJN
+
+Jag skulel gärna se hur mycket av funds och shares man har investerat och vad värdet är, samt % också hur mycket värdet har ökat kanske?
+
+_playtest-saves/2026-10-01_214404.png · playtest-saves/2026-10-01_214404.json_
+
+### 2026-10-01 21:45 · v0.23.0  ·  1978  ·  Marie Olofsson, 28  ·  School & Work  ·  seed T2FXTXJN
+
+Ska vi ha nån slags uppslag när vi kliver in i ny tid som vi har vid start? Alltså taglinen. Sen tycke rjag iten att temat har ändrats sedan jag startade spelet när jag tänker efter?
+
+_playtest-saves/2026-10-01_214552.png · playtest-saves/2026-10-01_214552.json_
+
+### 2026-10-01 21:48 · v0.23.0  ·  1979  ·  Marie Olofsson, 29  ·  This Year  ·  seed T2FXTXJN
+
+Att tidingen stängs med scroll på musen är jättekonstigt.
+
+_playtest-saves/2026-10-01_214816.png · playtest-saves/2026-10-01_214816.json_
+
+### 2026-10-01 21:49 · v0.23.0  ·  1979  ·  Marie Olofsson, 29  ·  This Year  ·  seed T2FXTXJN
+
+Oj, jag har en ny trait, när fick jag den och varför? Det borde framgå tydligare :)
+
+_playtest-saves/2026-10-01_214902.png · playtest-saves/2026-10-01_214902.json_
+
+### 2026-10-01 21:49 · v0.23.0  ·  1979  ·  Marie Olofsson, 29  ·  This Year  ·  seed T2FXTXJN
+
+Varför är ett val rött?
+
+_playtest-saves/2026-10-01_214914.png · playtest-saves/2026-10-01_214914.json_
+
+### 2026-10-01 21:50 · v0.23.0  ·  1979  ·  Marie Olofsson, 29  ·  This Year  ·  seed T2FXTXJN
+
+Alla utom jag verkar ha ärvt penagr efter mi nmamma, åtminståne står det inget om det här?
+
+_playtest-saves/2026-10-01_215002.png · playtest-saves/2026-10-01_215002.json_
+
+### 2026-10-01 21:51 · v0.23.0  ·  1979  ·  Marie Olofsson, 29  ·  Money  ·  seed T2FXTXJN
+
+Köpa en bostad går inte? Kan bara hyra, flytta till ny stad elelr flytta hem?
+
+_playtest-saves/2026-10-01_215118.png · playtest-saves/2026-10-01_215118.json_
+
+### 2026-10-01 21:53 · v0.23.0  ·  1980  ·  Marie Olofsson, 30  ·  Money  ·  seed T2FXTXJN
+
+Shares borde också ge utdelning tänke rjag. Som det ser ut nu får jag inget av dom utan bara på in the bank antar jag ger interest?
+
+_playtest-saves/2026-10-01_215305.png · playtest-saves/2026-10-01_215305.json_
+
+### 2026-10-01 21:54 · v0.23.0  ·  1981  ·  Marie Olofsson, 31  ·  Money  ·  seed T2FXTXJN
+
+Köpte en stuga, borde redovisas potentielt värde tänke rjag?
+
+_playtest-saves/2026-10-01_215407.png · playtest-saves/2026-10-01_215407.json_
+
+### 2026-10-01 21:57 · v0.23.0  ·  1983  ·  Marie Olofsson, 33  ·  This Year  ·  seed T2FXTXJN
+
+Händer inget när jag klicka rpå net year? Något har blivit fel
+
+_playtest-saves/2026-10-01_215718.png · playtest-saves/2026-10-01_215718.json_
+
+_Notes above were processed on 2026-10-01 (playtest 4): the stuck "Next Year" and the screen not updating after actions, "You" in the year report, why a trait came, devoted parent and unfaithful only from adulthood, pronouns, anachronisms, "How school goes" before grades, the newspaper closing on scroll, the focus ring, the title screen, why a home cannot be bought, the job offers text – see CHANGELOG 0.25.0. The larger wishes are in docs/todo.md._

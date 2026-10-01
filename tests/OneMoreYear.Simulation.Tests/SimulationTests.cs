@@ -367,9 +367,36 @@ public class CrimeTests
     }
 
     [Fact]
+    public void Texts_follow_the_times_and_speak_to_the_player()
+    {
+        const string text = "[[2000: A letter || A text message]] a week later.";
+        Assert.Equal("A letter a week later.", TextFormatter.ByEra(1975, text));
+        Assert.Equal("A text message a week later.", TextFormatter.ByEra(2000, text));
+
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1970 });
+        var name = s.Player.FirstName;
+        Assert.Equal("You inherited 5,000 kr from Karin.", s.ToYou($"{name} inherited 5,000 kr from Karin."));
+        Assert.Equal("You were released from prison.", s.ToYou($"{name} was released from prison."));
+        Assert.Equal("Karin got married.", s.ToYou("Karin got married."));
+    }
+
+    [Fact]
+    public void Buying_a_home_out_of_reach_says_what_it_takes()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1970 });
+        var p = s.Player;
+        p.BirthYear = s.Year - 25;
+        p.LivesWithParents = false;
+        p.Money = 0;
+        var buy = Assert.Single(s.Actions(null), a => a.Id == "self_buy_home");
+        Assert.False(buy.Enabled);
+        Assert.Contains("down payment", buy.Locked);
+    }
+
+    [Fact]
     public void A_player_who_wants_love_usually_finds_it()
     {
-        string[] love = { "A proposal", "Your place or mine?", "A spark", "Saturday dance", "A dinner party", "Stuck", "A match", "Someone likes you", "After work" };
+        string[] love = { "A proposal", "Your place or mine?", "Baby talk", "A spark", "Saturday dance", "A dinner party", "Stuck", "A match", "Someone likes you", "After work" };
         int partnered = 0, married = 0, n = 12;
         for (ulong seed = 1; seed <= (ulong)n; seed++)
         {

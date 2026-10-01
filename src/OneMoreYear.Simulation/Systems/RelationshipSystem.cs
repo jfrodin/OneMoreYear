@@ -16,7 +16,7 @@ public static class RelationshipSystem
         holder.Memories.Add(m);
         holder.Happiness = Math.Clamp(holder.Happiness + impact * 0.15, 0, 100);
         // Deep wounds can change who you are (the abuse storyline handles its own).
-        if (impact <= -45 && kind != "abused") DarkSystem.Traumatize(ctx, holder, 0.12);
+        if (impact <= -45 && kind != "abused") DarkSystem.Traumatize(ctx, holder, 0.12, text);
         if (aboutId is { } about && about != holder.Id)
         {
             var r = ctx.World.Rel(holder.Id, about);

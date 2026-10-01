@@ -209,7 +209,7 @@
           { "type": "memory", "who": "target", "to": "player", "kind": "memoir", "text": "The notebooks {name} wrote for us", "impact": 20 } ],
         "result": "Three notebooks in your careful handwriting. The good parts, the hard parts. Most of it true." },
       { "text": "Tell {t.him}, a little at a time", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ],
-        "result": "Every visit, a new story. {t.He} starts recording them on {t.his} phone." }
+        "result": "Every visit, a new story. {t.He} starts recording them [[2008: on a cassette recorder || on {t.his} phone]]." }
     ]
   },
   {

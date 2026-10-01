@@ -110,7 +110,7 @@
   },
   {
     "id": "child_grandparent_summer", "title": "Summer in the countryside",
-    "text": "You're spending all of July with {t.role}. No internet, just forest, a lake and old comic books.",
+    "text": "You're spending all of July with {t.role}. [[1998: No TV, || No internet,]] just forest, a lake and old comic books.",
     "conditions": { "minAge": 5, "maxAge": 13 },
     "target": { "role": "grandparent", "conditions": { "maxAge": 85 } },
     "cooldown": 4,

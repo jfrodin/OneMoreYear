@@ -24,7 +24,7 @@
       {
         "text": "Stay home",
         "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.15 } ],
-        "result": "You play video games and look at the photos afterwards."
+        "result": "[[1985: You read comics and hear all about it on Monday. || You play video games and look at the photos afterwards.]]"
       }
     ]
   },

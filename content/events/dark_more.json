@@ -7,9 +7,9 @@
     "text": "It was someone you trusted enough to let into your flat. Afterwards you sit on the bathroom floor for a long time, and the world has changed shape.",
     "conditions": { "minAge": 16, "maxAge": 70, "notFlags": [ "survivor" ] }, "weight": 0.25, "cooldown": 0,
     "choices": [
-      { "text": "Go to the police", "hint": "It is your word against his. It is still worth saying.",
+      { "text": "Go to the police", "hint": "It is your word against theirs. It is still worth saying.",
         "chance": 0.35, "chanceTraits": { "brave": 0.1, "resilient": 0.05 },
-        "success": { "text": "It takes a year and every ounce of strength you have. He is convicted.",
+        "success": { "text": "It takes a year and every ounce of strength you have. The court convicts.",
           "effects": [ { "type": "assaulted" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "justice", "text": "The day the court believed me", "impact": 20 } ] },
         "failure": { "text": "The case is dropped for lack of evidence. The officer is kind, which almost makes it worse.",
           "effects": [ { "type": "assaulted" }, { "type": "happiness", "amount": -5 } ] } },
@@ -62,8 +62,8 @@
         "failure": { "text": "Your word against a manager's. Six months later your position is \"restructured\".",
           "effects": [ { "type": "fire" }, { "type": "memory", "kind": "harassed", "to": "target", "text": "What {t.name} did, and how nobody listened", "impact": -35 } ] } },
       { "text": "Tell {t.him} to stop, to {t.his} face", "chance": 0.55, "chanceTraits": { "brave": 0.2, "conflict_averse": -0.2 },
-        "success": { "text": "{t.name} goes pale and never does it again. He is very polite to you from then on.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.2 } ] },
-        "failure": { "text": "He laughs. Your reviews get worse after that.", "effects": [ { "type": "performance", "amount": -15 } ] } },
+        "success": { "text": "{t.name} goes pale and never does it again. {t.He} is very polite to you from then on.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.2 } ] },
+        "failure": { "text": "{t.name} laughs. Your reviews get worse after that.", "effects": [ { "type": "performance", "amount": -15 } ] } },
       { "text": "Find another job", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": -4 } ],
         "result": "You leave without saying why. Years later you still wonder about the next person in that office." }
     ]
@@ -87,7 +87,7 @@
   },
   {
     "id": "ex_stalking", "title": "Again", "content": [ "violence" ],
-    "text": "{t.name}'s car is outside your building again. Flowers on the doorstep. Forty messages last night. \"I just want to talk.\"",
+    "text": "{t.name}'s car is outside your building again. Flowers on the doorstep. [[2000: The phone rang forty times last night. || Forty messages last night.]] \"I just want to talk.\"",
     "conditions": { "minAge": 16 }, "weight": 0.8, "cooldown": 8,
     "target": { "role": "ex", "conditions": { "minAge": 18, "relMin": { "bitterness": 30 } } },
     "choices": [

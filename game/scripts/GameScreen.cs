@@ -356,8 +356,10 @@ public partial class GameScreen : Control
         if (c.Degrees.Count > 0) edu.AddChild(StatRow("Diplomas", string.Join(", ", c.Degrees), UiTheme.Text));
         if (c.Grades is { } grades)
         {
-            edu.AddChild(Ui.Bar("Grades", grades, grades >= 60 ? UiTheme.Good : grades >= 40 ? UiTheme.Accent : UiTheme.Bad, $"{grades:0}"));
-            edu.AddChild(Ui.Label("Grades decide which programmes you can get into – Medicine needs about 85, Law 75.", 15, UiTheme.Faint, wrap: true));
+            edu.AddChild(Ui.Bar(S.Player.Age(S.Year) < 14 ? "How school goes" : "Grades", grades, grades >= 60 ? UiTheme.Good : grades >= 40 ? UiTheme.Accent : UiTheme.Bad, $"{grades:0}"));
+            edu.AddChild(Ui.Label(S.Player.Age(S.Year) < 14
+                ? "No grades yet – they come in year 8. How you do now is where they will start."
+                : "Grades decide which programmes you can get into – Medicine needs about 85, Law 75.", 15, UiTheme.Faint, wrap: true));
         }
         if (c.PartTimeJob) edu.AddChild(Ui.Label("You have a part-time job next to your studies.", 15, UiTheme.Muted));
         _workContent.AddChild(Ui.Card(edu));
@@ -555,6 +557,8 @@ public partial class GameScreen : Control
     {
         if (!S.CanAdvance)
         {
+            // Never leave the player stuck on a stale screen: show what is waiting.
+            RefreshAll();
             if (S.HasUnresolvedEvents)
             {
                 _tabs.CurrentTab = TabYear;
@@ -592,7 +596,8 @@ public partial class GameScreen : Control
             b.Disabled = !a.Enabled;
             b.SetMeta("action", true);
             string hint = a.Hint ?? a.Title;
-            if (!a.Enabled) hint = S.World.ActionPoints <= 0 ? "You have no time left this year." : "Already done this year.";
+            if (a.Locked != null) hint = a.Locked;
+            else if (!a.Enabled) hint = S.World.ActionPoints <= 0 ? "You have no time left this year." : "Already done this year.";
             RegisterHint(b, hint);
             flow.AddChild(b);
         }
@@ -609,6 +614,7 @@ public partial class GameScreen : Control
             if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
             // Some actions lead to a decision (job offers, university applications).
             if (S.HasUnresolvedEvents) _tabs.CurrentTab = TabYear;
+            RefreshAll();
             FocusDefault();
         });
     }

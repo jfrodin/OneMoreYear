@@ -326,13 +326,13 @@ public static class DarkSystem
     // --- Traits change with life ------------------------------------------------------------
 
     /// <summary>A trauma can leave a mark: a new dark trait, unless the person is resilient.</summary>
-    public static void Traumatize(SimContext ctx, Person p, double chance)
+    public static void Traumatize(SimContext ctx, Person p, double chance, string? cause = null)
     {
         chance *= 1 - Math.Clamp(ctx.Mod(p, "resilience"), 0, 0.9);
         if (!ctx.Rng.Chance(chance)) return;
         var trait = ctx.Rng.Pick(TraumaTraits);
         if (PersonFactory.TryAddTrait(ctx, p, trait) && p.Id == ctx.World.PlayerId)
-            ctx.World.Log($"{p.FirstName} became more {ctx.Content.Traits[trait].Name.ToLowerInvariant()}.", 2, "trait", p.Id);
+            ctx.World.Log($"{p.FirstName} became more {ctx.Content.Traits[trait].Name.ToLowerInvariant()}{(cause == null ? "" : $", after: “{cause}”")}.", 2, "trait", p.Id);
     }
 
     /// <summary>Old age softens some edges.</summary>

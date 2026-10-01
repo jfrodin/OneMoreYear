@@ -19,11 +19,22 @@ public static partial class TextFormatter
     [GeneratedRegex(@"\{(\w+)(?:\.(\w+))?\}")]
     private static partial Regex Token();
 
+    [GeneratedRegex(@"\[\[(\d{4}):(.*?)\|\|(.*?)\]\]", RegexOptions.Singleline)]
+    private static partial Regex Era();
+
+    /// <summary>
+    /// Text that follows the times: <c>[[2005: a letter || a text message]]</c> gives the first part
+    /// before 2005 and the second from then on.
+    /// </summary>
+    public static string ByEra(int year, string text) =>
+        Era().Replace(text, m => (year >= int.Parse(m.Groups[1].Value) ? m.Groups[3].Value : m.Groups[2].Value).Trim());
+
     public static string Format(SimContext ctx, string text, PendingEvent? pending, Person? viewer = null)
     {
         var w = ctx.World;
         var player = w.Player;
         var perspective = viewer ?? player;
+        text = ByEra(ctx.Year, text);
         return Token().Replace(text, m =>
         {
             string head = m.Groups[1].Value;

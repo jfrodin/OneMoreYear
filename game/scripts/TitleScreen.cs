@@ -64,6 +64,9 @@ public partial class TitleScreen : Control
 
         // New game options
         var options = Ui.VBox(10);
+        var newTitle = Ui.Label("A new life", 26, UiTheme.Accent);
+        newTitle.AddThemeFontOverride("font", UiTheme.Heading);
+        options.AddChild(newTitle);
         var yearRow = Ui.HBox(12);
         var yearLabel = Ui.Label("Begin in", 18, UiTheme.Muted);
         yearLabel.CustomMinimumSize = new Vector2(140, 0);
@@ -100,7 +103,8 @@ public partial class TitleScreen : Control
         UpdateScenarioInfo();
 
         var start = Ui.Button("New Life", StartNew, 56);
-        if (first == null) UiTheme.MakePrimary(start);
+        // As visible as Continue: starting over is just as much a main path.
+        UiTheme.MakePrimary(start);
         options.AddChild(start);
         col.AddChild(Ui.Card(options));
 

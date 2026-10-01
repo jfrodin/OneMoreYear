@@ -8,7 +8,7 @@
     "choices": [
       { "text": "Dance on the table", "chance": 0.5, "chanceTraits": { "charming": 0.15, "social": 0.1 },
         "success": { "text": "Legendary. People will talk about it for years – in a good way.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "performance", "amount": 3 } ] },
-        "failure": { "text": "Someone filmed it. HR would like a word.", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -4 } ] } },
+        "failure": { "text": "[[2007: Someone took photos. || Someone filmed it.]] [[1995: The personnel department || HR]] would like a word.", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -4 } ] } },
       { "text": "One glass and home by ten", "effects": [ { "type": "performance", "amount": 2 } ], "result": "On Monday you're the only one who remembers everything. Useful." },
       { "text": "Talk to {t.name} all evening", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true } ],
         "result": "You find out you both collect old records. A work friend, maybe more than that." }
@@ -16,7 +16,7 @@
   },
   {
     "id": "work_reorganisation", "title": "Reorganisation",
-    "text": "An email with the subject \"Exciting changes ahead\". Everyone knows what that means.",
+    "text": "[[1997: A memo || An email]] with the subject \"Exciting changes ahead\". Everyone knows what that means.",
     "conditions": { "minAge": 20, "hasJob": true, "minYear": 1985 }, "cooldown": 6,
     "choices": [
       { "text": "Volunteer for the new team", "chance": 0.5, "chanceTraits": { "ambitious": 0.15 },
@@ -230,7 +230,7 @@
     "conditions": { "minAge": 22, "hasJob": true, "jobTags": [ "office" ] }, "cooldown": 10,
     "choices": [
       { "text": "Refuse", "chance": 0.6, "chanceTraits": { "brave": 0.15 },
-        "success": { "text": "Your boss backs down. A year later he's under investigation – and you're a witness, not a suspect.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.1 } ] },
+        "success": { "text": "Your boss backs down. A year later the whole department is under investigation – and you are a witness, not a suspect.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.1 } ] },
         "failure": { "text": "Your boss makes your life difficult until you leave.", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": -5 } ] } },
       { "text": "Do it", "effects": [ { "type": "performance", "amount": 6 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.2 } ], "result": "Nobody notices. You check the news every morning for a year." }
     ]

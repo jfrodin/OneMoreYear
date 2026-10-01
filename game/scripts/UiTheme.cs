@@ -127,7 +127,8 @@ public static class UiTheme
 
     public static StyleBoxFlat FocusRing()
     {
-        var sb = new StyleBoxFlat { DrawCenter = false, BorderColor = Accent };
+        // The ink colour, not the accent: in some decades the accent is red, and a red ring reads as a warning.
+        var sb = new StyleBoxFlat { DrawCenter = false, BorderColor = new Color(Text, 0.7f) };
         sb.SetBorderWidthAll(3);
         sb.SetCornerRadiusAll(6);
         sb.SetExpandMarginAll(3);

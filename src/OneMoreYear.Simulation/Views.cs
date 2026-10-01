@@ -25,7 +25,8 @@ public sealed record InsightView(string Label, string Text, string Tone);
 public sealed record EventView(int Uid, string Title, string Text, IReadOnlyList<ChoiceView> Choices,
     bool Resolved, string? OutcomeText, int? TargetId, IReadOnlyList<InsightView>? Insights = null);
 
-public sealed record ActionView(string Id, string Title, string? Hint, int? ChancePercent, bool Enabled, string Category = "life");
+/// <summary>An action button. <paramref name="Locked"/> says why it cannot be done yet (shown greyed out).</summary>
+public sealed record ActionView(string Id, string Title, string? Hint, int? ChancePercent, bool Enabled, string Category = "life", string? Locked = null);
 
 public sealed record RelationView(double Closeness, double Respect, double Trust, double Attraction,
     double Fear, double Envy, double Bitterness, double Opinion, string OpinionLabel);
