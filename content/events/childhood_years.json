@@ -1,0 +1,173 @@
+// Childhood, 3 to 12: small things that feel enormous. No dashes.
+[
+  {
+    "id": "child_lost_tooth", "title": "Wobbly",
+    "text": "Your front tooth has been wobbling for a week. Today it is hanging by a thread.",
+    "conditions": { "minAge": 5, "maxAge": 8 }, "cooldown": 3,
+    "choices": [
+      { "text": "Pull it out yourself", "chance": 0.6, "chanceTraits": { "brave": 0.2 },
+        "success": { "text": "A tiny bloody triumph. The tooth fairy leaves a coin and a note in very familiar handwriting.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "money", "amount": 10 } ] },
+        "failure": { "text": "You lose your nerve halfway and cry, and it comes out by itself in an apple at dinner.", "effects": [ { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Let your father tie it to a door", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The door slams. The tooth stays. Your father tells this story at your wedding." }
+    ]
+  },
+  {
+    "id": "child_snow_day", "title": "Snow",
+    "text": "It snowed all night. The school bus cannot get through and the whole world is white and silent.",
+    "conditions": { "minAge": 4, "maxAge": 12 }, "cooldown": 3,
+    "choices": [
+      { "text": "Build a snow fort", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ],
+        "result": "It has two rooms and a window. You eat your lunch in it. Your mittens freeze solid." },
+      { "text": "Go sledging on the big hill", "chance": 0.8, "chanceAttributes": { "fitness": 0.002 },
+        "success": { "text": "Faster than you have ever gone. You walk up a hundred times.", "effects": [ { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "A tree. Not a big one. You have a bruise shaped like a map of Gotland for a month.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": -2 } ] } },
+      { "text": "Stay in and read", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "happiness", "amount": 3 } ], "result": "Hot chocolate, a blanket and a whole book in one day." }
+    ]
+  },
+  {
+    "id": "child_bike_no_hands", "title": "Look, no hands",
+    "text": "Your big cousin can ride a bike without holding on. You have been practising in secret for a week.",
+    "conditions": { "minAge": 7, "maxAge": 11 }, "cooldown": 20,
+    "choices": [
+      { "text": "Show everyone", "chance": 0.55, "chanceAttributes": { "fitness": 0.004 }, "chanceTraits": { "impulsive": -0.1 },
+        "success": { "text": "All the way to the end of the road. Your cousin is very quiet afterwards.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 } ] },
+        "failure": { "text": "Gravel in both knees. You do not cry until you are inside.", "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Keep practising a bit longer", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "By the end of the summer you can do it while eating an ice cream." }
+    ]
+  },
+  {
+    "id": "child_lost_in_shop", "title": "Lost",
+    "text": "You turned round in the department store and your parent was gone. The shop is enormous. Everybody is very tall.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 20,
+    "choices": [
+      { "text": "Ask a shop assistant", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ],
+        "result": "Your name is read out over the loudspeakers. It is the most famous you will ever feel." },
+      { "text": "Hide in the clothes rail and wait", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "introvert", "chance": 0.05 } ],
+        "result": "Twenty minutes in the dark between the coats. When you are found, nobody is angry. That is worse." }
+    ]
+  },
+  {
+    "id": "child_school_play", "title": "The school play",
+    "text": "The class is putting on a play for the parents. Your teacher asks who wants the big part.",
+    "conditions": { "minAge": 7, "maxAge": 12, "activity": "School" }, "cooldown": 3,
+    "choices": [
+      { "text": "Put your hand up", "chance": 0.55, "chanceTraits": { "social": 0.15, "creative": 0.15, "introvert": -0.2 },
+        "success": { "text": "You forget one line and make up a better one. The parents give a standing ovation, which they always do, but still.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "trait_add", "trait": "creative", "chance": 0.05 } ] },
+        "failure": { "text": "Stage fright. You stand there. Your best friend whispers the line from the side. You survive.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Be a tree", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The best tree that school has ever seen. You do not move once." }
+    ]
+  },
+  {
+    "id": "child_pocket_money", "title": "Pocket money",
+    "text": "You get pocket money for the first time. Every Saturday, a few coins of your own.",
+    "conditions": { "minAge": 6, "maxAge": 9, "notFlags": [ "pocket_money" ] }, "cooldown": 50, "weight": 2,
+    "choices": [
+      { "text": "Spend it on Saturday sweets", "effects": [ { "type": "flag", "flag": "pocket_money" }, { "type": "happiness", "amount": 4 } ],
+        "result": "The pick and mix at the corner shop becomes a weekly ritual. You know exactly how much each sweet costs." },
+      { "text": "Save it in a jar", "effects": [ { "type": "flag", "flag": "pocket_money" }, { "type": "money", "amount": 100 }, { "type": "trait_add", "trait": "stingy", "chance": 0.05 } ],
+        "result": "You count it every evening. By summer you could buy something big, and you cannot bear to." }
+    ]
+  },
+  {
+    "id": "child_cat_kittens", "title": "Kittens",
+    "text": "The neighbour's cat has had kittens in the shed. Five of them. One is grey and keeps falling over.",
+    "conditions": { "minAge": 4, "maxAge": 12, "livesWithParents": true, "notFlags": [ "has_cat" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Beg to keep the grey one", "chance": 0.45, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "Your parents say no four times and yes once. The cat lives for eighteen years and only ever likes you.", "effects": [ { "type": "flag", "flag": "has_cat" }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "pet", "text": "The grey kitten from the shed", "impact": 20 } ] },
+        "failure": { "text": "No. You visit them every day until they are all given away.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Help find homes for them", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "You make a sign with drawings of all five. They are gone in a week. You check on the grey one sometimes." }
+    ]
+  },
+  {
+    "id": "child_scared_of_dark", "title": "Under the bed",
+    "text": "Something is definitely under the bed. You heard it move.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 4,
+    "choices": [
+      { "text": "Call for a parent", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A torch, a careful search, and a parent who sits on the edge of the bed until you are asleep." },
+      { "text": "Look yourself", "chance": 0.5, "chanceTraits": { "brave": 0.25 },
+        "success": { "text": "A sock. Only a sock. You sleep like a king.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.08 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "You cannot do it. You sleep with the covers over your head and your feet tucked in for safety.", "effects": [ { "type": "happiness", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "child_football_team", "title": "Picking teams",
+    "text": "Gym class. Two captains are picking teams, and you are still standing there.",
+    "conditions": { "minAge": 7, "maxAge": 12, "activity": "School" }, "cooldown": 4,
+    "choices": [
+      { "text": "Play as if your life depended on it", "chance": 0.5, "chanceAttributes": { "fitness": 0.005 },
+        "success": { "text": "You score. Next week you are picked second.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "attribute", "kind": "fitness", "amount": 2 } ] },
+        "failure": { "text": "The ball hits you in the face. Everyone laughs. Even you, eventually.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Pretend you do not care", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You get very good at pretending." }
+    ]
+  },
+  {
+    "id": "child_grandparent_cards", "title": "Cards",
+    "text": "{t.Role}, {t.name}, teaches you to play cards. {t.He} cheats, openly, and laughs when you notice.",
+    "conditions": { "minAge": 5, "maxAge": 12 },
+    "target": { "role": "grandparent" }, "cooldown": 6,
+    "choices": [
+      { "text": "Learn to cheat back", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "attribute", "kind": "smarts", "amount": 1 } ],
+        "result": "By Christmas you beat {t.him}. {t.He} is prouder than if {t.he} had won." },
+      { "text": "Tell on {t.him}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 3 } ], "result": "\"Grandparents are allowed,\" says your mother, and {t.name} winks." }
+    ]
+  },
+  {
+    "id": "child_den_in_woods", "title": "The den",
+    "text": "You and the other children on the street have found a place in the woods where nobody can see you. It needs a roof.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 6,
+    "choices": [
+      { "text": "Build the best den ever", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "attribute", "kind": "fitness", "amount": 1 }, { "type": "memory", "kind": "den", "text": "The den in the woods", "impact": 15 } ],
+        "result": "Planks from a building site, a tarpaulin, a sign that says NO ADULTS. It stands for three summers." },
+      { "text": "Be in charge", "requires": { "traitsAny": [ "ambitious", "manipulative", "hot_tempered" ] }, "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "You make the rules. Two children start their own den. It is better than yours." }
+    ]
+  },
+  {
+    "id": "child_broken_window", "title": "Crash",
+    "text": "The ball went through the neighbour's kitchen window. Everyone else has already run.",
+    "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 15,
+    "choices": [
+      { "text": "Knock on the door and own up", "effects": [ { "type": "money", "amount": -200 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "happiness", "amount": 1 } ],
+        "result": "The neighbour is so surprised you owned up that she gives you a biscuit. Your parents pay for the glass. You pay for it in chores." },
+      { "text": "Run", "chance": 0.6, "chanceAttributes": { "fitness": 0.003 },
+        "success": { "text": "Nobody ever finds out. You feel guilty every time you walk past for years.", "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.05 } ] },
+        "failure": { "text": "The neighbour knows exactly whose ball it is. Your name is written on it.", "effects": [ { "type": "money", "amount": -200 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "child_library_card", "title": "The library",
+    "text": "You get your own library card. The children's section has a corner with cushions and every book you could want.",
+    "conditions": { "minAge": 6, "maxAge": 10, "notFlags": [ "library_card" ] }, "cooldown": 50,
+    "choices": [
+      { "text": "Take out the maximum", "effects": [ { "type": "flag", "flag": "library_card" }, { "type": "attribute", "kind": "smarts", "amount": 3 }, { "type": "happiness", "amount": 4 } ],
+        "result": "Ten books, carried home in your arms. The librarian learns your name. You read under the covers with a torch." },
+      { "text": "Just the comics", "effects": [ { "type": "flag", "flag": "library_card" }, { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ],
+        "result": "Every comic they have, twice. It counts." }
+    ]
+  },
+  {
+    "id": "child_sleepover", "title": "Sleepover",
+    "text": "Your first sleepover at a friend's house. Their family eats dinner in front of the television, which is incredible.",
+    "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 4,
+    "choices": [
+      { "text": "Stay up all night", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 } ],
+        "result": "You fall asleep at three, mid sentence. In the morning you are grumpy and very happy." },
+      { "text": "Ask to go home", "requires": { "traitsAny": [ "introvert", "gloomy", "paranoid" ] }, "effects": [ { "type": "happiness", "amount": -1 } ],
+        "result": "Your father comes at eleven in his slippers and does not say a word about it. You love him for that." }
+    ]
+  },
+  {
+    "id": "child_jealous_new_baby", "title": "The new baby",
+    "text": "Everyone who visits looks at the new baby. Nobody looks at the drawing you made for it.",
+    "conditions": { "minAge": 3, "maxAge": 9, "livesWithParents": true },
+    "target": { "role": "sibling", "conditions": { "maxAge": 0 } }, "cooldown": 30,
+    "choices": [
+      { "text": "Help with the baby", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "You are allowed to hold {t.him} on the sofa with a cushion. {t.He} grabs your finger and does not let go." },
+      { "text": "Act like a baby too", "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "You suddenly cannot dress yourself and want a bottle. Your parents are patient. Mostly." }
+    ]
+  }
+]
