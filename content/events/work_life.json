@@ -1,0 +1,212 @@
+// Working life across the trades: the factory and the building site, care, shops, schools and
+// offices. Era details use [[year: before || after]]. No dashes.
+[
+  {
+    "id": "work_factory_line_speed", "title": "Faster",
+    "text": "Management has sped up the line again. The new pace is set by a man with a stopwatch who has never stood on the floor.",
+    "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "manual" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Talk to the union rep", "chance": 0.5, "chanceTraits": { "brave": 0.1, "social": 0.1 },
+        "success": { "text": "The union pushes back. The line slows down a little, and you are the one people nod to at lunch now.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": 1 } ] },
+        "failure": { "text": "The rep says it is in the agreement. Your shoulders ache every night.", "effects": [ { "type": "health", "amount": -3 } ] } },
+      { "text": "Keep up and say nothing", "effects": [ { "type": "performance", "amount": 5 }, { "type": "health", "amount": -3 } ], "result": "You keep up. Your hands go numb at night." },
+      { "text": "Slow down on purpose", "requires": { "traitsAny": [ "lazy", "hot_tempered", "criminal" ] }, "effects": [ { "type": "performance", "amount": -8 } ],
+        "result": "The foreman notices on the second day. You get a warning in writing." }
+    ]
+  },
+  {
+    "id": "work_site_accident", "title": "The scaffolding",
+    "text": "A plank on the scaffolding gives way under the man next to you. He grabs your arm on the way down.",
+    "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "manual" ] }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Hold on", "chance": 0.6, "chanceAttributes": { "fitness": 0.006 }, "chanceTraits": { "brave": 0.1 },
+        "success": { "text": "You hold him until someone gets a rope round him. At the pub that evening he cries and cannot stop, and nobody makes a joke about it.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "brave", "chance": 0.2 }, { "type": "memory", "kind": "saved_colleague", "text": "The day on the scaffolding", "impact": 15 } ] },
+        "failure": { "text": "He falls two floors and breaks both legs. Your shoulder is never quite the same.", "effects": [ { "type": "health", "amount": -8 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.2 } ] } }
+    ]
+  },
+  {
+    "id": "work_apprentice", "title": "The apprentice",
+    "text": "You have been given an apprentice. Nineteen, clever, and convinced he already knows everything.",
+    "conditions": { "minAge": 35, "hasJob": true, "jobTags": [ "manual" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Teach him properly", "effects": [ { "type": "performance", "amount": 4 }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "apprentice", "text": "The apprentice who turned out well", "impact": 12 } ],
+        "result": "It takes a year. Then one day he does it better than you, and you are prouder than you expected." },
+      { "text": "Let him find out the hard way", "effects": [ { "type": "performance", "amount": -2 } ], "result": "He finds out the hard way. So does the customer." }
+    ]
+  },
+  {
+    "id": "work_care_night_patient", "title": "Room twelve",
+    "text": "Three in the morning on the ward. The old woman in room twelve is awake and frightened and asks you to hold her hand.",
+    "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "care" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Sit with her", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "performance", "amount": -2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "Ten minutes, then twenty. She tells you about her husband. The rest of the night is behind schedule, and you would do it again." },
+      { "text": "Tell her you will come back", "effects": [ { "type": "performance", "amount": 2 } ], "result": "By the time you come back she is asleep. You check twice that she is breathing." }
+    ]
+  },
+  {
+    "id": "work_care_understaffed", "title": "Two short",
+    "text": "Two colleagues are off sick and there is nobody to call in. Your manager asks you to stay for a double shift.",
+    "conditions": { "minAge": 20, "hasJob": true, "jobTags": [ "care", "school" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Stay", "effects": [ { "type": "money", "amount": 1500 }, { "type": "health", "amount": -3 }, { "type": "performance", "amount": 5 }, { "type": "ailment_add", "kind": "burnout", "chance": 0.05 } ],
+        "result": "Sixteen hours. You drive home with the window down so you do not fall asleep." },
+      { "text": "Say no", "chance": 0.7, "chanceTraits": { "conflict_averse": -0.3, "brave": 0.1 },
+        "success": { "text": "Your manager sighs and finds someone else. The world does not end.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "You say no and then stay anyway, because who else would.", "effects": [ { "type": "health", "amount": -3 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "work_care_family_complaint", "title": "A complaint",
+    "text": "A patient's son shouts at you in the corridor. His father has been lying in a wet bed, he says, and it is your fault.",
+    "conditions": { "minAge": 20, "hasJob": true, "jobTags": [ "care" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Apologise and fix it", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "performance", "amount": 2 } ],
+        "result": "You change the bed and the son calms down. In the staff room you sit for a minute with your eyes closed." },
+      { "text": "Explain how many patients you have", "chance": 0.5, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "He goes quiet. Later he writes a letter to the newspaper about the staffing, and names nobody.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "He writes a complaint with your name in it.", "effects": [ { "type": "performance", "amount": -5 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "work_shop_shoplifter", "title": "The pocket",
+    "text": "An old man puts a packet of coffee in his coat pocket. He sees that you saw.",
+    "conditions": { "minAge": 16, "hasJob": true, "jobTags": [ "shop" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Pretend you did not see", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "He comes back every week. He always buys one thing and steals one thing. You never say a word." },
+      { "text": "Call security", "effects": [ { "type": "performance", "amount": 3 }, { "type": "happiness", "amount": -2 } ],
+        "result": "Security takes him to the back room. He is eighty-one. You think about it all evening." },
+      { "text": "Pay for it yourself", "effects": [ { "type": "money", "amount": -80 }, { "type": "happiness", "amount": 3 } ], "result": "He does not know. You do not tell him." }
+    ]
+  },
+  {
+    "id": "work_shop_christmas_rush", "title": "Christmas rush",
+    "text": "The week before Christmas. The queue reaches the back of the shop and the card machine has just stopped working.",
+    "conditions": { "minAge": 16, "hasJob": true, "jobTags": [ "shop" ], "minYear": 1985 }, "cooldown": 4,
+    "choices": [
+      { "text": "Keep everyone laughing", "chance": 0.55, "chanceTraits": { "charming": 0.2, "cheerful": 0.15, "hot_tempered": -0.2 },
+        "success": { "text": "Somebody starts singing in the queue. Somebody else joins in. Your manager gives you a box of chocolates on Christmas Eve.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "performance", "amount": 5 } ] },
+        "failure": { "text": "A woman in a fur hat tells you that you are the reason the country is going to the dogs.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Cash only, and quickly", "effects": [ { "type": "performance", "amount": 2 }, { "type": "health", "amount": -1 } ], "result": "You count change faster than a machine. Your feet hurt until New Year." }
+    ]
+  },
+  {
+    "id": "work_shop_closing", "title": "Closing down",
+    "text": "The shop where you work is closing. The chain is moving everything to a big box outside town[[2005: . || , and online.]]",
+    "conditions": { "minAge": 20, "hasJob": true, "jobTags": [ "shop" ], "minYear": 1980 }, "cooldown": 30, "weight": 0.3,
+    "choices": [
+      { "text": "Apply for a job at the new place", "chance": 0.5, "chanceTraits": { "ambitious": 0.15 },
+        "success": { "text": "You get a job there. It is bigger and brighter and you do not know any of the customers.", "effects": [ { "type": "happiness", "amount": -1 } ] },
+        "failure": { "text": "They want younger staff. They say it differently, but that is what they mean.", "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Take the redundancy money", "effects": [ { "type": "money", "amount": 30000 }, { "type": "job_quit" }, { "type": "happiness", "amount": -2 } ],
+        "result": "On the last day the regulars bring flowers. One of them has been coming in every morning for twenty years." }
+    ]
+  },
+  {
+    "id": "work_teacher_parent_meeting", "title": "Parents' evening",
+    "text": "A father at parents' evening explains to you, at length, that his son is a genius and that you are the problem.",
+    "conditions": { "minAge": 22, "hasJob": true, "jobTags": [ "school" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Show him the boy's work", "chance": 0.5, "chanceTraits": { "brave": 0.1, "charming": 0.1 },
+        "success": { "text": "He reads it in silence. At the door he asks, in a small voice for such a big man, what he can do at home.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "He takes it to the headteacher. You spend a week writing explanations.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Nod until he is finished", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "It takes forty minutes. Your next parents have been waiting in the corridor." }
+    ]
+  },
+  {
+    "id": "work_teacher_pupil_trouble", "title": "Something is wrong",
+    "text": "One of your pupils has stopped eating lunch, wears the same clothes every day, and flinches when someone shouts.",
+    "conditions": { "minAge": 22, "hasJob": true, "jobTags": [ "school", "care" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Report your concern", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "memory", "kind": "reported_concern", "text": "The pupil I reported a concern about", "impact": 5 } ],
+        "result": "It is the right thing to do, and it takes months, and you never find out how it ends. In the spring the child starts eating lunch again." },
+      { "text": "Talk to the child first", "chance": 0.5, "chanceTraits": { "kind": 0.2, "charming": 0.1 },
+        "success": { "text": "It comes out slowly, over weeks. You make the report together. The child chose to trust you.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "The child closes up completely. You make the report anyway.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Wait and see", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "You wait. You see. It is worse." }
+    ]
+  },
+  {
+    "id": "work_teacher_last_day", "title": "End of term",
+    "text": "Your class is leaving for the summer, and for good. They have bought you a card and a plant and they are all pretending not to be emotional.",
+    "conditions": { "minAge": 25, "hasJob": true, "jobTags": [ "school" ] }, "cooldown": 3,
+    "choices": [
+      { "text": "Give a speech", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "You get two sentences in before you have to stop. The class claps anyway." },
+      { "text": "Hug the ones who want a hug", "effects": [ { "type": "happiness", "amount": 7 } ],
+        "result": "All of them, as it turns out, even the one who has not said a word to you all year." }
+    ]
+  },
+  {
+    "id": "work_office_open_plan", "title": "Open plan",
+    "text": "The office has been rebuilt as an open landscape. No more walls, no more doors, and the colleague next to you eats crisps very loudly.",
+    "conditions": { "minAge": 20, "hasJob": true, "jobTags": [ "office" ], "minYear": 1995 }, "cooldown": 15,
+    "choices": [
+      { "text": "Buy noise cancelling headphones", "requires": { "minYear": 2008 }, "effects": [ { "type": "money", "amount": -3000 }, { "type": "performance", "amount": 4 } ],
+        "result": "You become one of the people with headphones. Nobody talks to you. You get a lot done." },
+      { "text": "Book the meeting room every day", "chance": 0.5, "chanceTraits": { "manipulative": 0.2 },
+        "success": { "text": "Meeting with yourself, nine to five. Nobody questions it.", "effects": [ { "type": "performance", "amount": 3 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "Your manager wants to know who \"Strategy Session\" is with.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Get to know the crisp eater", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "meet_through_friend" } ], "result": "He is going through a divorce. The crisps make sense now." }
+    ]
+  },
+  {
+    "id": "work_office_new_system", "title": "The new system",
+    "text": "The company has bought a new computer system. Nothing works the way it used to, the training was two hours long, and everyone comes to you.",
+    "conditions": { "minAge": 20, "hasJob": true, "jobTags": [ "office" ], "minYear": 1985 }, "cooldown": 8,
+    "choices": [
+      { "text": "Become the expert", "chance": 0.6, "chanceAttributes": { "smarts": 0.004 }, "chanceTraits": { "ambitious": 0.1 },
+        "success": { "text": "By March you know it better than the consultants. People bring you cake.", "effects": [ { "type": "performance", "amount": 8 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "You become the person everyone asks and nobody thanks.", "effects": [ { "type": "performance", "amount": 2 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Keep a secret spreadsheet on the side", "effects": [ { "type": "performance", "amount": 2 } ], "result": "Half the department does the same. The new system is replaced four years later." }
+    ]
+  },
+  {
+    "id": "work_office_credit", "title": "Credit",
+    "text": "{t.name} presents your idea at the management meeting. As {t.his} own.",
+    "conditions": { "minAge": 22, "hasJob": true, "jobTags": [ "office" ] },
+    "target": { "role": "colleague" }, "cooldown": 10,
+    "choices": [
+      { "text": "Say something in the meeting", "chance": 0.45, "chanceTraits": { "brave": 0.15, "charming": 0.1, "conflict_averse": -0.25 },
+        "success": { "text": "\"I'm glad you liked my proposal,\" you say, calmly. The director writes down your name.", "effects": [ { "type": "performance", "amount": 8 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ] },
+        "failure": { "text": "You stammer. It sounds like envy. {t.name} looks wounded and kind.", "effects": [ { "type": "performance", "amount": -3 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Take it up with {t.him} afterwards", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 6 } ],
+        "result": "{t.He} apologises in a way that is not an apology. It does not happen again." },
+      { "text": "Let it go", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 12 } ], "result": "You remember it. For years." }
+    ]
+  },
+  {
+    "id": "work_office_layoffs_survivor", "title": "Still here",
+    "text": "Eleven people were let go this morning. You were not. Your desk is in the middle of a lot of empty desks.",
+    "conditions": { "minAge": 25, "hasJob": true, "jobTags": [ "office" ] }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Work harder than ever", "effects": [ { "type": "performance", "amount": 6 }, { "type": "health", "amount": -2 }, { "type": "ailment_add", "kind": "burnout", "chance": 0.08 } ],
+        "result": "You do the work of two people for the same salary. Your manager says you are a rock." },
+      { "text": "Call the ones who left", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "loyal", "chance": 0.08 } ],
+        "result": "One of them helps you find a new job two years later." },
+      { "text": "Start looking yourself", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "If they did it once, they will do it again. You are probably right." }
+    ]
+  },
+  {
+    "id": "work_coffee_machine", "title": "The coffee machine",
+    "text": "The coffee machine at work is broken and morale has collapsed. There is talk of a collection for a new one.",
+    "conditions": { "minAge": 18, "hasJob": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Organise the collection", "effects": [ { "type": "money", "amount": -200 }, { "type": "happiness", "amount": 4 }, { "type": "performance", "amount": 2 } ],
+        "result": "Within a week there is a shiny new machine with your name on a little sign. It is the most popular thing you have ever done." },
+      { "text": "Bring a thermos from home", "effects": [ { "type": "money", "amount": 100 } ], "result": "You become the person with the thermos. People are nice to you in a way that is about the thermos." }
+    ]
+  },
+  {
+    "id": "work_sick_leave_back", "title": "Back again",
+    "text": "Your first day back after a long sick leave. Everyone is kind, and your desk has been moved.",
+    "conditions": { "minAge": 22, "hasJob": true, "ailmentsAny": [ "burnout", "depression" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Start at half time", "effects": [ { "type": "money", "amount": -6000 }, { "type": "health", "amount": 3 }, { "type": "happiness", "amount": 4 }, { "type": "ailment_treat" } ],
+        "result": "Mornings only for three months. It is enough. Slowly, it is enough." },
+      { "text": "Go straight back to full time", "chance": 0.45, "chanceTraits": { "resilient": 0.25 },
+        "success": { "text": "You manage. You leave at five every day now, which you never did before.", "effects": [ { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "By November you are back where you started.", "effects": [ { "type": "health", "amount": -5 }, { "type": "happiness", "amount": -5 } ] } }
+    ]
+  }
+]
