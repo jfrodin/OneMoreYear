@@ -1,0 +1,149 @@
+// Living with someone: the everyday, the rough patches and the tenderness of long relationships.
+// {p.} is the player's partner. No dashes.
+[
+  {
+    "id": "couple_dishes", "title": "The dishes",
+    "text": "The dishes have been in the sink for three days. You are both waiting for the other one to break.",
+    "conditions": { "minAge": 18, "hasPartner": true, "livesWithParents": false }, "cooldown": 6,
+    "choices": [
+      { "text": "Do them, loudly", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 3 } ],
+        "result": "Every plate goes into the rack with a clatter. {p.name} turns up the television." },
+      { "text": "Suggest a rota", "chance": 0.6, "chanceTraits": { "charming": 0.1, "hot_tempered": -0.2 },
+        "success": { "text": "A rota on the fridge, with magnets. It lasts. It actually lasts.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 3, "mutual": true } ] },
+        "failure": { "text": "The rota becomes a weapon. Who did Tuesday becomes a question you argue about for years.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 4 } ] } },
+      { "text": "Buy a dishwasher", "requires": { "minYear": 1975, "minMoney": 8000 }, "effects": [ { "type": "money", "amount": -6000 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 4, "mutual": true } ],
+        "result": "The best money you ever spend on your relationship." }
+    ]
+  },
+  {
+    "id": "couple_snoring", "title": "Like a chainsaw",
+    "text": "{p.name} snores. You have known this for years. This year it has become a problem.",
+    "conditions": { "minAge": 30, "hasPartner": true, "minPartnerYears": 3 }, "cooldown": 15,
+    "choices": [
+      { "text": "Earplugs", "effects": [ { "type": "money", "amount": -100 }, { "type": "health", "amount": 1 } ], "result": "You sleep. You miss the alarm twice." },
+      { "text": "Separate bedrooms", "effects": [ { "type": "health", "amount": 2 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -2, "mutual": true } ],
+        "result": "Everyone sleeps better. You visit each other in the mornings with coffee, which turns out to be quite romantic." },
+      { "text": "Record it as proof", "requires": { "minYear": 1980 }, "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "{p.name} refuses to believe it is {p.him}. Then laughs so hard {p.he} has to sit down." }
+    ]
+  },
+  {
+    "id": "couple_holiday_fight", "title": "The holiday",
+    "text": "You want sun and a pool. {p.name} wants to walk across mountains with a tent. You have one week.",
+    "conditions": { "minAge": 20, "hasPartner": true, "minMoney": 10000 }, "cooldown": 4,
+    "choices": [
+      { "text": "Sun and a pool", "chance": 0.6, "chanceTraits": { "charming": 0.1, "manipulative": 0.1 },
+        "success": { "text": "{p.name} complains for one day and then falls asleep on a sun lounger for the rest of the week.", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "{p.name} is bored by Wednesday and makes sure you know it.", "effects": [ { "type": "money", "amount": -10000 }, { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 5 } ] } },
+      { "text": "The mountains", "effects": [ { "type": "money", "amount": -5000 }, { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 6 } ],
+        "result": "It rains for five days. On the sixth the sky clears over a valley and you understand. Mostly you remember the rain." },
+      { "text": "Half and half", "effects": [ { "type": "money", "amount": -9000 }, { "type": "happiness", "amount": 3 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 3, "mutual": true } ],
+        "result": "Three days of hiking, four days of pool. Everyone is a bit dissatisfied and it is the best holiday you have had." }
+    ]
+  },
+  {
+    "id": "couple_in_laws", "title": "Sunday at the in-laws'",
+    "text": "Every Sunday, dinner at {p.name}'s parents'. Every Sunday, the same comment about your job.",
+    "conditions": { "minAge": 20, "hasPartner": true, "minPartnerYears": 1 }, "cooldown": 6,
+    "choices": [
+      { "text": "Answer back, politely", "chance": 0.5, "chanceTraits": { "charming": 0.2, "hot_tempered": -0.15 },
+        "success": { "text": "Your father-in-law laughs, surprised. The comments stop, and he starts asking real questions.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "The roast goes cold while everyone looks at their plates.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 4 } ] } },
+      { "text": "Suggest every other Sunday", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 3 }, { "type": "happiness", "amount": 3 } ],
+        "result": "{p.name} says fine in a voice that means not fine, and then admits on the way home that {p.he} finds them tiring too." },
+      { "text": "Smile and eat", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "It is good food, at least." }
+    ]
+  },
+  {
+    "id": "couple_money_secret", "title": "The statement",
+    "text": "You open a bank statement by mistake. {p.name} has a credit card you did not know about, and a debt on it you did not know about.",
+    "conditions": { "minAge": 22, "hasPartner": true, "minPartnerYears": 2 }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Ask {p.him} calmly", "chance": 0.6, "chanceTraits": { "kind": 0.1, "hot_tempered": -0.25 },
+        "success": { "text": "It comes out in a rush: shame, small purchases, a hole that kept growing. You make a plan together at the kitchen table.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "relation", "who": "partner", "to": "player", "dim": "trust", "amount": 10 } ] },
+        "failure": { "text": "{p.He} says it is none of your business. For a few months, it is a cold house.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "trust", "amount": -12 } ] } },
+      { "text": "Pay it off in secret", "requires": { "minMoney": 15000 }, "effects": [ { "type": "money", "amount": -12000 }, { "type": "relation", "who": "player", "to": "partner", "dim": "trust", "amount": -4 } ],
+        "result": "{p.He} never mentions it. Neither do you. It sits between you like a piece of furniture." }
+    ]
+  },
+  {
+    "id": "couple_tenderness", "title": "An ordinary Tuesday",
+    "text": "{p.name} comes home with your favourite cake for no reason at all. It is a Tuesday.",
+    "conditions": { "minAge": 18, "hasPartner": true }, "cooldown": 4,
+    "choices": [
+      { "text": "Ask what {p.he} has done", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "\"Nothing,\" {p.he} says, offended and laughing. \"I just thought of you.\"" },
+      { "text": "Eat it on the sofa together", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 5, "mutual": true } ],
+        "result": "Straight out of the box, with two forks, during a programme neither of you is watching." }
+    ]
+  },
+  {
+    "id": "couple_different_dreams", "title": "The cottage",
+    "text": "{p.name} has found a red cottage in the forest, three hours from the city. {p.He} wants to sell everything and move there.",
+    "conditions": { "minAge": 35, "hasPartner": true, "minPartnerYears": 5 }, "cooldown": 25, "weight": 0.5,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "move_city", "kind": "vimmerby" }, { "type": "happiness", "amount": 4 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 12 } ],
+        "result": "The first winter is long and dark and the well freezes. In spring there are cranes on the field and {p.name} cries at the sight of them." },
+      { "text": "Suggest a summer place instead", "requires": { "minMoney": 200000 }, "effects": [ { "type": "money", "amount": -150000 }, { "type": "flag", "flag": "summer_cottage" }, { "type": "happiness", "amount": 6 } ],
+        "result": "Weekends and summers. A compromise that turns out to be the best idea either of you ever had." },
+      { "text": "Say no", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 10 } ], "result": "{p.He} keeps the advert. You find it years later in a drawer." }
+    ]
+  },
+  {
+    "id": "couple_second_honeymoon", "title": "Just the two of you",
+    "text": "The children are old enough to look after themselves for a week. For the first time in years it could be just the two of you.",
+    "conditions": { "minAge": 38, "married": true, "minChildren": 1, "minMoney": 15000 }, "cooldown": 10,
+    "choices": [
+      { "text": "Go to Paris", "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 7 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true },
+          { "type": "memory", "kind": "second_honeymoon", "to": "partner", "text": "The week in Paris without the children", "impact": 18 } ],
+        "result": "On the second evening you run out of things to say about the children, and for a moment you are frightened. Then you start talking about each other." },
+      { "text": "Stay home and do nothing", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 4, "mutual": true } ],
+        "result": "Breakfast in bed every day. The phone off. The children call eleven times." }
+    ]
+  },
+  {
+    "id": "couple_illness_care", "title": "In sickness",
+    "text": "{p.name} is ill and will be for a long time. The doctor speaks to you in the corridor about what the coming year will look like.",
+    "conditions": { "minAge": 40, "hasPartner": true },
+    "target": { "role": "partner", "conditions": { "maxHealth": 45 } }, "cooldown": 15,
+    "choices": [
+      { "text": "Take care of {p.him} yourself", "effects": [ { "type": "health", "amount": -4 }, { "type": "happiness", "amount": -3 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 15 },
+          { "type": "memory", "who": "partner", "to": "player", "kind": "cared_for", "text": "{name} took care of me when I was ill", "impact": 30 } ],
+        "result": "Medicines, appointments, nights on the edge of the bed. Some evenings {p.he} is like before, and you hold on to those." },
+      { "text": "Get help from home care", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 5 } ],
+        "result": "A woman called Birgitta comes every morning. She becomes part of the family." }
+    ]
+  },
+  {
+    "id": "couple_old_love_letters", "title": "In the attic",
+    "text": "In a box in the attic you find the letters you and {p.name} wrote to each other the first year. You were so young.",
+    "conditions": { "minAge": 45, "hasPartner": true, "minPartnerYears": 20 }, "cooldown": 30,
+    "choices": [
+      { "text": "Read them aloud together", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true } ],
+        "result": "You laugh at how serious you were. Then, at one particular letter, neither of you laughs." },
+      { "text": "Put them back without a word", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You think about them for days. On Friday you bring home flowers." }
+    ]
+  },
+  {
+    "id": "couple_retire_together", "title": "All day, every day",
+    "text": "You have both retired. You are home together all day, every day, for the first time in forty years.",
+    "conditions": { "minAge": 64, "hasPartner": true, "activity": "retired" }, "cooldown": 40,
+    "choices": [
+      { "text": "Each take a room of your own", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "{p.name} gets the garden. You get the garage. You meet at lunch and have things to tell each other." },
+      { "text": "Do everything together", "chance": 0.5, "chanceTraits": { "social": 0.1, "kind": 0.1 },
+        "success": { "text": "Walks, crosswords, a trip to Italy. You have never been closer.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "By March you are arguing about how to load the dishwasher, in detail, every day.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 6 } ] } }
+    ]
+  },
+  {
+    "id": "couple_anniversary_forgot", "title": "The date",
+    "text": "It is your anniversary. You only realise when {p.name} comes down to breakfast in a dress shirt and with a small wrapped box.",
+    "conditions": { "minAge": 20, "hasPartner": true, "minPartnerYears": 2 }, "cooldown": 8,
+    "choices": [
+      { "text": "Confess", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 3 }, { "type": "happiness", "amount": 1 } ],
+        "result": "{p.He} sighs, and then laughs. You make it up with dinner. You put a reminder in [[2000: the calendar || your phone]] for every year after." },
+      { "text": "Pretend you have a surprise planned", "chance": 0.5, "chanceTraits": { "dishonest": 0.15, "creative": 0.15 },
+        "success": { "text": "You improvise a picnic by the water with everything you can grab from the kitchen. {p.He} never finds out.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 6 } ] },
+        "failure": { "text": "The surprise is a pizza. {p.He} knows. {p.He} always knows.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 5 } ] } }
+    ]
+  }
+]
