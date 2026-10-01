@@ -1,0 +1,182 @@
+// Young adults, 18 to 30: the first flat, studies, friends who become family, and finding out who
+// you are without anyone watching. No dashes.
+[
+  {
+    "id": "young_first_flat", "title": "Your own key",
+    "text": "A one-room flat on the fourth floor without a lift. The kitchen is a cupboard with a hotplate. It is yours.",
+    "conditions": { "minAge": 18, "maxAge": 26, "livesWithParents": false, "notFlags": [ "first_flat" ] }, "cooldown": 50, "weight": 2,
+    "choices": [
+      { "text": "Throw a party", "effects": [ { "type": "flag", "flag": "first_flat" }, { "type": "happiness", "amount": 6 }, { "type": "money", "amount": -800 } ],
+        "result": "Twenty-two people in eighteen square metres. The neighbour complains. You do not care at all." },
+      { "text": "Sit on the floor and eat noodles", "effects": [ { "type": "flag", "flag": "first_flat" }, { "type": "happiness", "amount": 5 } ],
+        "result": "No furniture yet. The silence is enormous and wonderful. You fall asleep with the light on." },
+      { "text": "Call home", "effects": [ { "type": "flag", "flag": "first_flat" }, { "type": "happiness", "amount": 3 } ],
+        "result": "Your mother asks if you have eaten. You say yes. You have not." }
+    ]
+  },
+  {
+    "id": "young_laundry_room", "title": "The laundry room",
+    "text": "Someone has taken your clothes out of the machine and left them in a wet heap on the floor. There is a note: \"YOUR TIME ENDED 14.00.\"",
+    "conditions": { "minAge": 18, "livesWithParents": false, "ownsHome": false }, "cooldown": 12,
+    "choices": [
+      { "text": "Write a note back", "effects": [ { "type": "happiness", "amount": 2 } ],
+        "result": "The note war lasts four months and involves eleven households. A new caretaker finally takes them all down." },
+      { "text": "Find out who it was", "chance": 0.4, "chanceTraits": { "paranoid": 0.2 },
+        "success": { "text": "A retired dentist on the second floor. She is very sorry, and invites you for coffee.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "You suspect everyone. You start doing laundry at six in the morning.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Pick them up and say nothing", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.05 } ], "result": "Very Swedish of you." }
+    ]
+  },
+  {
+    "id": "young_student_party", "title": "The student party",
+    "text": "A party in a corridor at the student housing. Someone has made punch in a bucket. Someone else is playing guitar badly.",
+    "conditions": { "minAge": 19, "maxAge": 28, "activity": "studying" }, "cooldown": 2,
+    "choices": [
+      { "text": "Drink the punch", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -1 } ],
+        "result": "You wake up in someone else's corridor with a traffic cone and a new friend." },
+      { "text": "Talk to the person sitting alone", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "meet_through_friend" } ],
+        "result": "You talk about books until four in the morning. You still do, sometimes, at weddings." },
+      { "text": "Go home and study", "effects": [ { "type": "grades", "amount": 2 } ], "result": "Through the wall you hear them singing. You turn a page." }
+    ]
+  },
+  {
+    "id": "young_exam_week", "title": "Exam week",
+    "text": "Five exams in eight days. You have slept four hours a night for a week and your coffee is cold.",
+    "conditions": { "minAge": 19, "maxAge": 30, "activity": "studying" }, "cooldown": 2,
+    "choices": [
+      { "text": "Push through", "chance": 0.6, "chanceTraits": { "ambitious": 0.15, "lazy": -0.2, "resilient": 0.1 }, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "You pass all five. You sleep for fourteen hours and wake up not knowing what day it is.", "effects": [ { "type": "grades", "amount": 4 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "You fail statistics. Everyone fails statistics. It does not help.", "effects": [ { "type": "grades", "amount": -3 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Skip one and resit in August", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Future you will be furious. Present you sleeps." }
+    ]
+  },
+  {
+    "id": "young_interrail", "title": "Interrail",
+    "text": "A month on European trains with a rucksack and a friend. Night trains, hostels, bread and cheese on station platforms.",
+    "conditions": { "minAge": 18, "maxAge": 26, "minYear": 1972, "minMoney": 8000 }, "cooldown": 10,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "interrail", "text": "The summer on the trains through Europe", "impact": 22 } ],
+        "result": "You see Venice at dawn and lose your passport in Ljubljana. Twenty years later you still tell the story about the night in the luggage rack." },
+      { "text": "Stay and work", "effects": [ { "type": "money", "amount": 6000 } ], "result": "Your friend sends postcards. You put them on the fridge." }
+    ]
+  },
+  {
+    "id": "young_military_service", "title": "The letter from the army",
+    "text": "A brown envelope: you are called for military service. Eleven months, starting in January.",
+    "conditions": { "minAge": 18, "maxAge": 20, "sex": "male", "maxYear": 2009, "notFlags": [ "military_service" ] }, "cooldown": 50, "weight": 3,
+    "choices": [
+      { "text": "Do your service", "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.1 } ],
+        "result": "You learn to make a bed so tight a coin bounces off it, and to sleep in a ditch in November. Some of the men in your platoon you never see again. Two you see every year for the rest of your life." },
+      { "text": "Apply for civilian service", "requires": { "traitsAny": [ "kind", "creative", "conflict_averse", "introvert" ] }, "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "You spend a year at a hospital instead, pushing beds and talking to old men. It was the right choice." },
+      { "text": "Try to get out of it", "chance": 0.3, "chanceTraits": { "manipulative": 0.2, "dishonest": 0.15 },
+        "success": { "text": "A doctor finds something wrong with your knees. Your knees are fine.", "effects": [ { "type": "flag", "flag": "military_service" } ] },
+        "failure": { "text": "You report in January like everyone else, with a reputation.", "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "attribute", "kind": "fitness", "amount": 6 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "young_roommate", "title": "Sharing",
+    "text": "You share a flat with someone you met through an advert. They label their food. All of it. Including the salt.",
+    "conditions": { "minAge": 19, "maxAge": 28, "livesWithParents": false, "hasPartner": false }, "cooldown": 15,
+    "choices": [
+      { "text": "Label your own food too", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The fridge becomes a library. You live together for three years and never fight once." },
+      { "text": "Eat their yoghurt", "requires": { "traitsAny": [ "impulsive", "dishonest", "eccentric" ] }, "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "A very polite note appears. Then a second yoghurt, labelled \"FOR YOU\". You are friends from that day." },
+      { "text": "Move out", "effects": [ { "type": "money", "amount": -2000 } ], "result": "The next place has mice. The mice do not label anything." }
+    ]
+  },
+  {
+    "id": "young_quarter_crisis", "title": "Twenty-seven",
+    "text": "Everyone from school seems to have a career, a partner and [[2012: a car. || a sourdough starter.]] You have a job you did not choose and a plant that is dying.",
+    "conditions": { "minAge": 25, "maxAge": 30 }, "cooldown": 20,
+    "choices": [
+      { "text": "Change direction", "chance": 0.5, "chanceTraits": { "brave": 0.15, "ambitious": 0.15, "conflict_averse": -0.1 },
+        "success": { "text": "You apply for something completely different and get in. Your parents are worried. You have never been happier.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "trait_add", "trait": "brave", "chance": 0.1 } ] },
+        "failure": { "text": "You look at courses for a month and do nothing. The plant dies.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Remember that everyone is pretending", "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "At a dinner a friend admits she cries in the toilet at work once a week. You all laugh, and you all mean it." },
+      { "text": "Water the plant", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "It survives. It is a start." }
+    ]
+  },
+  {
+    "id": "young_friend_wedding_guest", "title": "Another wedding",
+    "text": "The fourth wedding this summer. The invitation says \"plus one\" and looks at you accusingly.",
+    "conditions": { "minAge": 24, "maxAge": 35, "hasPartner": false }, "cooldown": 3,
+    "choices": [
+      { "text": "Go alone and enjoy it", "chance": 0.6, "chanceTraits": { "social": 0.2, "charming": 0.15, "introvert": -0.15 },
+        "success": { "text": "You end up at the singles table, which is the best table. You dance with the bride's grandmother.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Everyone asks when it is your turn. Everyone.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Bring a friend as your date", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "You win the dance competition. Nobody knew there was a dance competition." },
+      { "text": "Send a gift and stay home", "effects": [ { "type": "money", "amount": -600 } ], "result": "A toaster from their list. You eat crisps on the sofa and feel fine about it." }
+    ]
+  },
+  {
+    "id": "young_first_salary", "title": "Payday",
+    "text": "Your first real salary has arrived. More money than you have ever had at once.",
+    "conditions": { "minAge": 18, "maxAge": 28, "hasJob": true, "notFlags": [ "first_salary" ] }, "cooldown": 50, "weight": 2,
+    "choices": [
+      { "text": "Take your parents out to dinner", "effects": [ { "type": "flag", "flag": "first_salary" }, { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 6 } ],
+        "result": "Your father tries to pay. You do not let him. He is quiet in a good way all evening." },
+      { "text": "Buy something stupid", "effects": [ { "type": "flag", "flag": "first_salary" }, { "type": "money", "amount": -4000 }, { "type": "happiness", "amount": 5 } ],
+        "result": "A leather jacket you wear twice. You keep it for thirty years anyway." },
+      { "text": "Put half of it in the bank", "effects": [ { "type": "flag", "flag": "first_salary" }, { "type": "money", "amount": 3000 }, { "type": "trait_add", "trait": "stingy", "chance": 0.03 } ],
+        "result": "The beginning of a habit." }
+    ]
+  },
+  {
+    "id": "young_coming_out_family", "title": "Sunday dinner",
+    "text": "You have decided to tell your family today. You have rehearsed it in the shower forty times.",
+    "conditions": { "minAge": 16, "maxAge": 35, "sameSexAttraction": true, "notFlags": [ "out_to_family" ] }, "cooldown": 5, "weight": 1.5,
+    "choices": [
+      { "text": "Say it over dessert", "chance": 0.65, "chanceTraits": { "brave": 0.1, "charming": 0.1 },
+        "success": { "text": "Your mother says she has known since you were six. Your father asks if you want more cake. It is the best and strangest dinner of your life.", "effects": [ { "type": "flag", "flag": "out_to_family" }, { "type": "happiness", "amount": 10 } ] },
+        "failure": { "text": "A long silence. Someone leaves the table. It takes years, but they come back to it.", "effects": [ { "type": "flag", "flag": "out_to_family" }, { "type": "happiness", "amount": -6 }, { "type": "trait_add", "trait": "resilient", "chance": 0.2 } ] } },
+      { "text": "Tell your sibling first", "requires": { "hasRole": [ "sibling" ] }, "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "\"Finally,\" says your sibling, and promises to sit next to you when you tell the others." },
+      { "text": "Not today", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You eat dessert and talk about the weather. There will be another Sunday." }
+    ]
+  },
+  {
+    "id": "young_debt_collector", "title": "A red letter",
+    "text": "The letter is red and the word in the corner is \"REMINDER\". You had forgotten about the phone bill. And the one before it.",
+    "conditions": { "minAge": 18, "maxAge": 30, "maxMoney": 5000 }, "cooldown": 6,
+    "choices": [
+      { "text": "Pay it now, eat pasta for a month", "effects": [ { "type": "money", "amount": -1800 }, { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "stingy", "chance": 0.05 } ],
+        "result": "Pasta with ketchup, pasta with butter, pasta with nothing. You learn something." },
+      { "text": "Ask your parents", "requires": { "hasRole": [ "parent" ] }, "effects": [ { "type": "happiness", "amount": -1 } ],
+        "result": "They pay it, and tell the story at every family dinner until you are forty." },
+      { "text": "Ignore it", "effects": [ { "type": "money", "amount": -3500 }, { "type": "happiness", "amount": -4 } ], "result": "The next letter comes from the Enforcement Authority. It costs twice as much, and you cannot get a flat contract for three years." }
+    ]
+  },
+  {
+    "id": "young_backpacking_asia", "title": "A year away",
+    "text": "Everyone seems to be taking a year to travel in Asia. You have the money, just. Your job would not wait.",
+    "conditions": { "minAge": 20, "maxAge": 28, "minYear": 1985, "minMoney": 40000 }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -40000 }, { "type": "job_quit" }, { "type": "happiness", "amount": 10 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.1 },
+          { "type": "memory", "kind": "year_away", "text": "The year I travelled", "impact": 25 } ],
+        "result": "Beaches, buses, food poisoning in a town you cannot pronounce. You come home thinner and calmer and nobody wants to hear about it for as long as you want to talk about it." },
+      { "text": "Stay", "effects": [ { "type": "money", "amount": 2000 } ], "result": "You follow other people's trips on postcards and later on screens. You tell yourself there will be time." }
+    ]
+  },
+  {
+    "id": "young_band", "title": "The band",
+    "text": "Three friends, a rehearsal room in a basement and a name everyone hates. You play your first gig on Friday.",
+    "conditions": { "minAge": 16, "maxAge": 26, "traitsAny": [ "creative", "social", "eccentric" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Play your heart out", "chance": 0.5, "chanceTraits": { "creative": 0.2, "charming": 0.1 },
+        "success": { "text": "Forty people, and some of them dance. Someone asks for a demo. It never goes anywhere, and it does not matter.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "band", "text": "The first gig with the band", "impact": 20 } ] },
+        "failure": { "text": "Nine people, three of them your girlfriends and boyfriends. The bass breaks in the second song.", "effects": [ { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Quit before Friday", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "They find another guitarist. You hear them on the radio, once, years later." }
+    ]
+  },
+  {
+    "id": "young_old_teacher", "title": "In the supermarket",
+    "text": "You meet your old primary school teacher by the bananas. She remembers your name. She remembers the thing with the fire alarm.",
+    "conditions": { "minAge": 20, "maxAge": 35 }, "cooldown": 30,
+    "choices": [
+      { "text": "Apologise, twenty years late", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "She laughs and says you were her favourite. You do not believe her, but you take it." },
+      { "text": "Pretend not to know what she means", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "\"Of course,\" she says, in exactly the voice she used then." }
+    ]
+  }
+]
