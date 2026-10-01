@@ -1,0 +1,176 @@
+// Teenage years, 13 to 19. Era-dependent details use [[year: before || after]]. No dashes.
+[
+  {
+    "id": "teen_first_job_summer", "title": "Summer job",
+    "text": "The council is hiring teenagers for the summer: weeding parks, painting fences, emptying bins. Six weeks, real wages.",
+    "conditions": { "minAge": 15, "maxAge": 18 }, "cooldown": 2,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "money", "amount": 9000 }, { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.05 } ],
+        "result": "Blisters, a tan in the shape of a T-shirt and more money than you have ever had. You spend half of it in a week." },
+      { "text": "Spend the summer doing nothing", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "The best summer of your life, and you will not remember a single day of it." }
+    ]
+  },
+  {
+    "id": "teen_driving_test", "title": "The driving test",
+    "text": "The examiner gets in, says nothing, and writes something down before you have even started the engine.",
+    "conditions": { "minAge": 18, "maxAge": 22, "notFlags": [ "driving_licence" ] }, "cooldown": 1, "weight": 1.5,
+    "choices": [
+      { "text": "Stay calm and drive", "chance": 0.6, "chanceTraits": { "impulsive": -0.15, "resilient": 0.1, "paranoid": -0.1 }, "chanceAttributes": { "smarts": 0.002 },
+        "success": { "text": "You pass. The first thing you do is drive to a petrol station and buy sweets, because you can.", "effects": [ { "type": "flag", "flag": "driving_licence" }, { "type": "happiness", "amount": 8 }, { "type": "money", "amount": -3000 } ] },
+        "failure": { "text": "A roundabout. You will not talk about the roundabout.", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "money", "amount": -3000 } ] } },
+      { "text": "Postpone it", "effects": [], "result": "You will take the bus a while longer." }
+    ]
+  },
+  {
+    "id": "teen_concert", "title": "The concert",
+    "text": "Your favourite band is playing in the city. The ticket costs a month of pocket money and your parents say the answer is no.",
+    "conditions": { "minAge": 14, "maxAge": 18, "livesWithParents": true }, "cooldown": 3,
+    "choices": [
+      { "text": "Go anyway", "chance": 0.6, "chanceTraits": { "dishonest": 0.15, "impulsive": 0.05 },
+        "success": { "text": "You say you are sleeping at a friend's. You stand at the front and lose your voice and one shoe. Worth it.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "concert", "text": "The concert I lied about", "impact": 15 } ] },
+        "failure": { "text": "Your father is waiting outside the venue when it ends. The drive home is very quiet.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Negotiate", "chance": 0.5, "chanceTraits": { "charming": 0.2, "manipulative": 0.15 },
+        "success": { "text": "Home by midnight, a friend's older sister drives. You agree to everything.", "effects": [ { "type": "happiness", "amount": 7 } ] },
+        "failure": { "text": "The answer is still no. You listen to the album in your room, very loudly.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Accept it", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You hear about it from everyone for weeks." }
+    ]
+  },
+  {
+    "id": "teen_bedroom_door", "title": "Knock first",
+    "text": "Your mother walks into your room without knocking. Again.",
+    "conditions": { "minAge": 13, "maxAge": 17, "livesWithParents": true }, "cooldown": 5,
+    "choices": [
+      { "text": "Make a sign for the door", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "KEEP OUT, in thick black letters. She knocks now, and then walks in." },
+      { "text": "Slam the door", "requires": { "traitsAny": [ "hot_tempered", "impulsive" ] }, "effects": [ { "type": "happiness", "amount": 1 } ],
+        "result": "The frame cracks. Your father fixes it on Sunday without saying anything, which is worse." },
+      { "text": "Have a real conversation about it", "chance": 0.5, "chanceTraits": { "charming": 0.15, "kind": 0.1 },
+        "success": { "text": "She actually listens. She says she remembers being fifteen. It is a strange thing to imagine.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "\"As long as you live under my roof...\" You know the rest.", "effects": [ { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "teen_school_dance", "title": "The school dance",
+    "text": "The gym hall has been decorated with crêpe paper. Somebody's older brother is the DJ. Everyone is standing along the walls.",
+    "conditions": { "minAge": 13, "maxAge": 17, "activity": "School" }, "cooldown": 2,
+    "choices": [
+      { "text": "Be the first on the dance floor", "chance": 0.5, "chanceTraits": { "social": 0.2, "brave": 0.1, "introvert": -0.25 }, "chanceAttributes": { "looks": 0.003 },
+        "success": { "text": "Two songs later everyone is dancing. People talk about it on Monday as if you did something brave. You did.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "trait_add", "trait": "social", "chance": 0.1 } ] },
+        "failure": { "text": "You dance alone for one very long song. Someone laughs. You keep dancing anyway.", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.1 } ] } },
+      { "text": "Stand by the wall with your friends", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You give a running commentary on everyone who dances. It is the funniest night of the term." },
+      { "text": "Leave early", "requires": { "traitsAny": [ "introvert", "gloomy" ] }, "effects": [], "result": "You walk home in the dark, and the quiet is a relief." }
+    ]
+  },
+  {
+    "id": "teen_diary", "title": "The diary",
+    "text": "Your younger sibling has found your diary and read it. Out loud. At dinner.",
+    "conditions": { "minAge": 13, "maxAge": 17, "hasRole": [ "sibling" ] }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Swear revenge", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "It takes you three years, but you get it." },
+      { "text": "Laugh along", "chance": 0.4, "chanceTraits": { "resilient": 0.2, "cheerful": 0.15 },
+        "success": { "text": "You read the next page yourself, with feeling. Even your father laughs. The diary loses its power.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "You try, but your face goes red and then wet. You burn the diary that night.", "effects": [ { "type": "happiness", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "teen_part_time_burger", "title": "The fryer",
+    "text": "A job at the burger place on Saturdays. The manager is nineteen and takes it very seriously.",
+    "conditions": { "minAge": 15, "maxAge": 19, "minYear": 1975 }, "cooldown": 4,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "money", "amount": 6000 }, { "type": "health", "amount": -1 }, { "type": "happiness", "amount": 1 } ],
+        "result": "Your hair smells of oil for two years. You learn to count change faster than anyone you know." },
+      { "text": "No thanks", "effects": [], "result": "You keep your weekends, and your money stays your parents' money." }
+    ]
+  },
+  {
+    "id": "teen_teacher_believes", "title": "After class",
+    "text": "Your teacher asks you to stay behind. You are sure you are in trouble. Instead {t.he} says you have a real talent and should think about what you do with it.",
+    "conditions": { "minAge": 13, "maxAge": 18, "activity": "School", "minGrades": 55 },
+    "target": { "role": "new_person", "ageOffsetMin": 20, "ageOffsetMax": 35 }, "cooldown": 30, "weight": 0.6,
+    "choices": [
+      { "text": "Take it seriously", "effects": [ { "type": "grades", "amount": 8 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.15 }, { "type": "memory", "kind": "teacher", "to": "target", "text": "The teacher who believed in me", "impact": 25 } ],
+        "result": "You think about those words for years. In some ways you still do." },
+      { "text": "Shrug it off", "effects": [], "result": "You tell your friends the teacher is weird. You keep the essay {t.he} wrote \"excellent\" on." }
+    ]
+  },
+  {
+    "id": "teen_smoke_behind_school", "title": "Behind the gym",
+    "text": "The cool kids smoke behind the gym at lunch. One of them holds out the packet to you.",
+    "conditions": { "minAge": 13, "maxAge": 17, "maxYear": 2010 }, "cooldown": 10,
+    "choices": [
+      { "text": "Take one", "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": 2 }, { "type": "flag", "flag": "smoked_young" } ],
+        "result": "You cough until your eyes run. They pretend not to notice. By summer you can do it without coughing, which is not a good thing." },
+      { "text": "Say no thanks", "chance": 0.6, "chanceTraits": { "brave": 0.15, "social": 0.1 },
+        "success": { "text": "Nobody cares as much as you thought they would.", "effects": [] },
+        "failure": { "text": "Someone calls you a baby. It stings for longer than it should.", "effects": [ { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "teen_vape", "title": "Mango",
+    "text": "Everyone in your class has a vape that tastes of mango or blue raspberry. One is passed to you in the toilets.",
+    "conditions": { "minAge": 13, "maxAge": 17, "minYear": 2016 }, "cooldown": 10,
+    "choices": [
+      { "text": "Try it", "effects": [ { "type": "health", "amount": -1 }, { "type": "happiness", "amount": 1 } ], "result": "It tastes like sweets and makes your head spin. Your mother smells mango in your jacket and asks no questions, yet." },
+      { "text": "Pass it on", "effects": [], "result": "The bell rings. Nobody remembers that you said no." }
+    ]
+  },
+  {
+    "id": "teen_exam_cheat", "title": "The answers",
+    "text": "Someone has got hold of the answers to the maths test. They are going round the class on a folded piece of paper.",
+    "conditions": { "minAge": 13, "maxAge": 19, "activity": "School" }, "cooldown": 6,
+    "choices": [
+      { "text": "Copy them", "chance": 0.7, "chanceTraits": { "dishonest": 0.15, "paranoid": -0.1 },
+        "success": { "text": "A perfect score. Your teacher looks at you for a long time and then lets it go.", "effects": [ { "type": "grades", "amount": 4 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.1 } ] },
+        "failure": { "text": "The whole class gets the same wrong answer on question seven. Everyone has to resit, and your parents get a letter.", "effects": [ { "type": "grades", "amount": -4 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Study properly instead", "effects": [ { "type": "grades", "amount": 2 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "You get a B. It is yours." },
+      { "text": "Tell the teacher", "effects": [ { "type": "grades", "amount": 1 }, { "type": "happiness", "amount": -3 } ], "result": "The test is cancelled. Nobody knows it was you. You are almost sure." }
+    ]
+  },
+  {
+    "id": "teen_moped", "title": "Two wheels",
+    "text": "A boy down the road is selling his moped. It is loud, it smells of petrol, and it means freedom.",
+    "conditions": { "minAge": 15, "maxAge": 17, "minMoney": 3000 }, "cooldown": 20,
+    "choices": [
+      { "text": "Buy it", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 8 }, { "type": "flag", "flag": "had_moped" } ],
+        "result": "You ride it to school, to the lake, to nowhere in particular. Your mother stands at the window every time you leave." },
+      { "text": "Tune it to go faster", "requires": { "traitsAny": [ "impulsive", "criminal" ] }, "chance": 0.7,
+        "success": { "text": "Seventy kilometres an hour on a road meant for forty. You have never felt so alive.", "effects": [ { "type": "money", "amount": -3500 }, { "type": "happiness", "amount": 9 } ] },
+        "failure": { "text": "The police stop you outside the shop. A fine, and a phone call home.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Save the money", "effects": [], "result": "You keep cycling. In the rain, mostly." }
+    ]
+  },
+  {
+    "id": "teen_best_friend_moves", "title": "Moving away",
+    "text": "Your best friend's family is moving to another city in the summer. You promise to write every week.",
+    "conditions": { "minAge": 12, "maxAge": 17 }, "cooldown": 15, "weight": 0.6,
+    "choices": [
+      { "text": "Keep the promise", "chance": 0.4, "chanceTraits": { "loyal": 0.3 },
+        "success": { "text": "You write for years. You are best friends again at twenty-five, in the same city, as if nothing happened.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "loyal", "chance": 0.1 } ] },
+        "failure": { "text": "Every week, then every month, then a birthday card, then nothing. Nobody decided it.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Make the most of the last summer", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "last_summer", "text": "The last summer before my best friend moved", "impact": 18 } ],
+        "result": "Every day at the lake, every night on the phone. On the day they leave you do not cry until the car turns the corner." }
+    ]
+  },
+  {
+    "id": "teen_skipped_school", "title": "The sun is out",
+    "text": "The first warm day of spring. A friend suggests skipping the afternoon and going to the beach.",
+    "conditions": { "minAge": 14, "maxAge": 19, "activity": "School" }, "cooldown": 3,
+    "choices": [
+      { "text": "Go", "chance": 0.7, "chanceTraits": { "dishonest": 0.1 },
+        "success": { "text": "Cold water, warm rocks, nobody at school says anything. A perfect afternoon.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "grades", "amount": -1 } ] },
+        "failure": { "text": "Your teacher is walking a dog on the same beach.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "grades", "amount": -3 } ] } },
+      { "text": "Stay in class", "effects": [ { "type": "grades", "amount": 1 } ], "result": "You watch the sun through the window all afternoon." }
+    ]
+  },
+  {
+    "id": "teen_social_media", "title": "Likes",
+    "text": "You posted a picture three hours ago. Eleven likes. Everyone else gets hundreds. You check again.",
+    "conditions": { "minAge": 13, "maxAge": 19, "minYear": 2010 }, "cooldown": 4,
+    "choices": [
+      { "text": "Delete it", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "And the one before it. Your profile looks very tidy." },
+      { "text": "Put the phone in a drawer for a day", "chance": 0.5, "chanceTraits": { "resilient": 0.15, "vain": -0.2 },
+        "success": { "text": "You read a book. You see a friend. When you look again you can barely remember why it mattered.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "You last forty minutes.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Post another one", "requires": { "traitsAny": [ "vain", "social" ] }, "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Better light, a better angle. Twenty-three likes. You feel slightly better and slightly worse." }
+    ]
+  }
+]
