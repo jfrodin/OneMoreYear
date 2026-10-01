@@ -1,0 +1,299 @@
+// The middle years, roughly 35 to 65: bodies that start to complain, parents who get old, children
+// who leave, and the question of what all of it was for. Written without dashes (docs: writing style).
+[
+  {
+    "id": "mid_reading_glasses", "title": "Arm's length",
+    "text": "The menu is fine if you hold it far enough away. Lately you have to hold everything far enough away.",
+    "conditions": { "minAge": 42, "maxAge": 55, "notFlags": [ "reading_glasses" ] }, "cooldown": 30,
+    "choices": [
+      { "text": "Go to the optician", "effects": [ { "type": "money", "amount": -1500 }, { "type": "flag", "flag": "reading_glasses" }, { "type": "happiness", "amount": 2 } ],
+        "result": "The optician says it happens to everyone. You buy two pairs and lose one within the week." },
+      { "text": "Buy the cheapest pair at the petrol station", "effects": [ { "type": "money", "amount": -100 }, { "type": "flag", "flag": "reading_glasses" } ],
+        "result": "They give you a slight headache. You keep them on the bedside table anyway." },
+      { "text": "Refuse. Your eyes are fine", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You order the wrong dish twice in one month." }
+    ]
+  },
+  {
+    "id": "mid_back", "title": "Bending down",
+    "text": "You bend down to pick up a sock and something in your lower back goes click. You stay down there for a while.",
+    "conditions": { "minAge": 38, "maxAge": 62 }, "cooldown": 12,
+    "choices": [
+      { "text": "See a physiotherapist", "effects": [ { "type": "money", "amount": -2400 }, { "type": "health", "amount": 3 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ],
+        "result": "Exercises every morning. You do them for eleven days, which the physiotherapist says is above average." },
+      { "text": "Painkillers and stubbornness", "effects": [ { "type": "health", "amount": -2 } ], "result": "It gets better in three weeks. It would have got better in three weeks anyway." },
+      { "text": "Take up yoga", "chance": 0.5, "chanceTraits": { "lazy": -0.25, "ambitious": 0.1 },
+        "success": { "text": "You turn out to be good at it. The back is better than it was at thirty.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 6 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "You go twice. The mat stands rolled up in the hall for four years.", "effects": [ { "type": "money", "amount": -900 } ] } }
+    ]
+  },
+  {
+    "id": "mid_class_reunion", "title": "Twenty-five years",
+    "text": "An invitation to the class reunion. Twenty-five years since you left school. There is a list of who is coming.",
+    "conditions": { "minAge": 40, "maxAge": 46 }, "cooldown": 40,
+    "choices": [
+      { "text": "Go", "chance": 0.6, "chanceTraits": { "social": 0.2, "introvert": -0.15, "vain": -0.1 }, "chanceAttributes": { "looks": 0.003 },
+        "success": { "text": "The one who was cruel to you in year eight apologises without being asked. You talk until the staff start stacking chairs.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "reunion", "text": "The class reunion, where everyone had become people", "impact": 12 } ] },
+        "failure": { "text": "Everyone is a consultant. Someone asks what you do and looks away before you have finished.", "effects": [ { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Look at the photos on the internet afterwards", "requires": { "minYear": 2005 }, "effects": [ { "type": "happiness", "amount": -1 } ],
+        "result": "They look old. You close the computer and look in the mirror for longer than you meant to." },
+      { "text": "Throw the invitation away", "effects": [], "result": "Some doors are fine closed." }
+    ]
+  },
+  {
+    "id": "mid_crisis_purchase", "title": "Something red",
+    "text": "You stand in a showroom touching a motorbike you cannot afford and do not need. The salesman has seen this before.",
+    "conditions": { "minAge": 44, "maxAge": 56, "minMoney": 60000 }, "cooldown": 20,
+    "choices": [
+      { "text": "Buy it", "effects": [ { "type": "money", "amount": -90000 }, { "type": "happiness", "amount": 9 }, { "type": "flag", "flag": "midlife_bike" } ],
+        "result": "For one summer you are someone who rides a motorbike. It is a very good summer." },
+      { "text": "Buy a good bicycle instead", "effects": [ { "type": "money", "amount": -12000 }, { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "happiness", "amount": 3 } ],
+        "result": "Lycra, a heart rate monitor and opinions about gear ratios. Your family are patient." },
+      { "text": "Walk out before you change your mind", "effects": [ { "type": "money", "amount": 1000 } ], "result": "In the car you sit for a while with the engine off." }
+    ]
+  },
+  {
+    "id": "mid_parent_falls", "title": "The phone call",
+    "text": "{t.Role}, {t.name}, has fallen on the bathroom floor and lay there for hours before a neighbour heard. {t.He} is in hospital and asks for you.",
+    "conditions": { "minAge": 35 },
+    "target": { "role": "parent", "conditions": { "minAge": 72 } }, "cooldown": 8, "weight": 1.5,
+    "choices": [
+      { "text": "Take time off and stay with {t.him}", "effects": [ { "type": "money", "amount": -6000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "came_when_needed", "text": "{name} came and stayed when I fell", "impact": 25 }, { "type": "performance", "amount": -4 } ],
+        "result": "You sleep in the chair by the bed. {t.He} tells you stories you have never heard, mostly about people who are dead." },
+      { "text": "Arrange home help and call every day", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ],
+        "result": "The home help comes twice a day. {t.name} says they are kind but talk too much." },
+      { "text": "Leave it to your siblings", "requires": { "hasRole": [ "sibling" ] }, "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "absent_child", "text": "{name} did not come when I was in hospital", "impact": -20 } ],
+        "result": "One of your siblings calls you something you will both remember." }
+    ]
+  },
+  {
+    "id": "mid_empty_weekend", "title": "Saturday",
+    "text": "No football practice to drive to, no one to pick up after a party. A whole Saturday and nothing anyone needs from you.",
+    "conditions": { "minAge": 42, "minChildren": 1, "maxChildrenAtHome": 0 }, "cooldown": 15,
+    "choices": [
+      { "text": "Start something new", "chance": 0.55, "chanceTraits": { "creative": 0.2, "ambitious": 0.1, "lazy": -0.2 },
+        "success": { "text": "A pottery course, of all things. You are bad at it and you love it.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "trait_add", "trait": "creative", "chance": 0.15 } ] },
+        "failure": { "text": "You sign up for three courses and go to none of them.", "effects": [ { "type": "money", "amount": -2500 } ] } },
+      { "text": "Call your children", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "[[1995: Two do not answer. || Two go to voicemail.]] The third talks for an hour, mostly about a colleague you have never met. It is lovely." },
+      { "text": "Sleep until eleven", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": 1 } ], "result": "The first lie-in in twenty years. Your body does not know what to do with it." }
+    ]
+  },
+  {
+    "id": "mid_career_plateau", "title": "The same desk",
+    "text": "You have sat at the same desk for eleven years. The young ones ask you how things work. Nobody asks what you want.",
+    "conditions": { "minAge": 40, "maxAge": 58, "hasJob": true }, "cooldown": 12,
+    "choices": [
+      { "text": "Ask for something new", "chance": 0.45, "chanceTraits": { "ambitious": 0.2, "charming": 0.1, "conflict_averse": -0.15 },
+        "success": { "text": "They give you a project nobody else wanted. It is the best year you have had at work.", "effects": [ { "type": "performance", "amount": 10 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Your boss nods for a long time and nothing happens.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Do your hours and live the rest", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Work becomes work. You start leaving at four and nobody notices." },
+      { "text": "Start looking elsewhere", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You update your CV for the first time in a decade. It is shorter than you remembered. Next year you can apply for jobs from the School & Work tab." }
+    ]
+  },
+  {
+    "id": "mid_health_check", "title": "Numbers",
+    "text": "The company health check. The nurse looks at the screen and then at you. \"Your blood pressure is a bit high. Do you drink much coffee?\"",
+    "conditions": { "minAge": 45, "maxAge": 64, "hasJob": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Change your habits", "chance": 0.5, "chanceTraits": { "lazy": -0.25, "impulsive": -0.1, "resilient": 0.1 },
+        "success": { "text": "Less salt, walks after dinner, one coffee instead of five. The next check is normal.", "effects": [ { "type": "health", "amount": 6 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ] },
+        "failure": { "text": "You start strong. By Christmas everything is as before.", "effects": [ { "type": "health", "amount": -1 } ] } },
+      { "text": "Take the pills", "effects": [ { "type": "health", "amount": 3 }, { "type": "money", "amount": -600 } ], "result": "One small tablet every morning, next to the coffee." },
+      { "text": "Laugh it off", "requires": { "traitsAny": [ "impulsive", "hot_tempered", "lazy" ] }, "effects": [ { "type": "health", "amount": -4 } ], "result": "\"Everyone's blood pressure is high in here,\" you say. The nurse does not laugh." }
+    ]
+  },
+  {
+    "id": "mid_child_moves_abroad", "title": "Far away",
+    "text": "{t.name} has got a job in Australia. Two years, {t.he} says. You look at the map and count the hours.",
+    "conditions": { "minAge": 45 },
+    "target": { "role": "child", "conditions": { "minAge": 22, "maxAge": 35 } }, "cooldown": 20, "weight": 0.6,
+    "choices": [
+      { "text": "Say you are proud of {t.him}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 }, { "type": "happiness", "amount": -3 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "blessing", "text": "{name} was proud of me when I left", "impact": 20 } ],
+        "result": "At the airport you hold on a bit too long. {t.He} lets you." },
+      { "text": "Ask {t.him} to stay", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 8 } ],
+        "result": "{t.He} goes anyway. The first phone call is careful." },
+      { "text": "Start saving for a visit", "requires": { "minMoney": 20000 }, "effects": [ { "type": "money", "amount": -25000 }, { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "visit_far", "to": "target", "text": "Christmas on a beach with {t.name}", "impact": 18 } ],
+        "result": "Christmas Eve in thirty degrees. {t.name} has made rice pudding anyway. It is terrible and you eat two bowls." }
+    ]
+  },
+  {
+    "id": "mid_old_friend_illness", "title": "Bad news",
+    "text": "{t.name} calls and asks if you can meet for lunch. {t.He} does not want to talk about it on the phone.",
+    "conditions": { "minAge": 40 },
+    "target": { "role": "friend", "conditions": { "minAge": 40 } }, "cooldown": 15, "weight": 0.6,
+    "choices": [
+      { "text": "Go, and listen", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12, "mutual": true }, { "type": "happiness", "amount": -4 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "stood_by", "text": "{name} was there when I got sick", "impact": 25 } ],
+        "result": "It is cancer. Treatable, they say. {t.name} wants to talk about anything else, so you talk about a holiday you took together in your twenties until you are both laughing." },
+      { "text": "Say you are too busy this week", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -10 } ],
+        "result": "You find out what it was about from someone else, three weeks later." }
+    ]
+  },
+  {
+    "id": "mid_inheritance_furniture", "trigger": "situation", "title": "The sideboard",
+    "text": "After {t.name}'s funeral comes the house. Your siblings have started putting little notes with their names on the furniture.",
+    "cooldown": 0,
+    "choices": [
+      { "text": "Take only the photo albums", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "generous", "chance": 0.1 } ],
+        "result": "Nobody else wanted them. You spend a whole evening at the kitchen table looking at people you almost recognise." },
+      { "text": "Fight for the sideboard", "chance": 0.5, "chanceTraits": { "hot_tempered": 0.1, "manipulative": 0.2, "conflict_averse": -0.3 },
+        "success": { "text": "You get the sideboard. It does not fit anywhere in your flat.", "effects": [ { "type": "happiness", "amount": 1 } ] },
+        "failure": { "text": "Your brother gets it, and you do not speak until spring.", "effects": [ { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Suggest you sell everything and split the money", "effects": [ { "type": "money", "amount": 8000 } ],
+        "result": "A man from an auction house walks through your childhood with a clipboard. It is fair, and it feels terrible." }
+    ]
+  },
+  {
+    "id": "mid_menopause", "title": "Hot",
+    "text": "You wake at three in the morning soaked through, for the fourth night in a row. In the meeting today you forgot a word you have used all your life.",
+    "conditions": { "minAge": 46, "maxAge": 56, "sex": "female" }, "cooldown": 30,
+    "choices": [
+      { "text": "Go to the doctor and ask about hormones", "effects": [ { "type": "health", "amount": 3 }, { "type": "happiness", "amount": 4 }, { "type": "money", "amount": -800 } ],
+        "result": "The doctor is young and kind and takes you seriously. You sleep through the night for the first time in months." },
+      { "text": "Talk to your friends about it", "effects": [ { "type": "happiness", "amount": 5 } ],
+        "result": "It turns out all of them have it. Nobody said anything. You laugh until the waiter comes over to check on you." },
+      { "text": "Grit your teeth", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "health", "amount": -2 } ], "result": "Your mother never mentioned it either." }
+    ]
+  },
+  {
+    "id": "mid_prostate", "title": "Twice a night",
+    "text": "You get up twice every night now. Your partner has noticed. So has your doctor's receptionist, who wants you to come in.",
+    "conditions": { "minAge": 52, "maxAge": 70, "sex": "male" }, "cooldown": 30,
+    "choices": [
+      { "text": "Go for the check", "chance": 0.85,
+        "success": { "text": "Enlarged, not dangerous. A tablet and some advice about coffee in the evening.", "effects": [ { "type": "health", "amount": 2 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "They want to take more tests. The waiting is the worst week of the year, and then it is early and treatable.", "effects": [ { "type": "health", "amount": -6 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Put it off", "effects": [ { "type": "health", "amount": -3 } ], "result": "Men in your family do not go to the doctor. That is how men in your family die." }
+    ]
+  },
+  {
+    "id": "mid_partner_change", "title": "Different",
+    "text": "{p.name} has started running. Has new clothes. Laughs at things on the phone and turns the screen away when you come into the room.",
+    "conditions": { "minAge": 40, "maxAge": 60, "hasPartner": true, "minPartnerYears": 10, "minYear": 2000 }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Ask straight out", "chance": 0.65, "chanceTraits": { "brave": 0.15, "paranoid": -0.2 },
+        "success": { "text": "It is a running club, and a group chat full of people your age who also feel invisible. {p.name} asks if you want to come.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "trust", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "{p.name} says you are imagining things in a voice that is too calm.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "trust", "amount": -10 } ] } },
+      { "text": "Start running too", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 5, "mutual": true } ],
+        "result": "Your knees hate it. Your marriage does not." },
+      { "text": "Check the phone while {p.he} sleeps", "requires": { "traitsAny": [ "paranoid", "jealous", "dishonest" ] }, "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "trust", "amount": -5 } ],
+        "result": "Nothing. Running routes and a recipe for protein balls. You feel worse than if you had found something." }
+    ]
+  },
+  {
+    "id": "mid_grandchild_babysit", "title": "Just for the weekend",
+    "text": "{t.Role} asks if you can take the little one for a whole weekend. They need to sleep, {t.he} says, and looks it.",
+    "conditions": { "minAge": 45 },
+    "target": { "role": "child", "conditions": { "minAge": 22, "minChildren": 1 } }, "cooldown": 4,
+    "choices": [
+      { "text": "Of course", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "helped_with_baby", "text": "{name} took the baby so we could sleep", "impact": 15 } ],
+        "result": "Pancakes for dinner, a film you have seen nine times, a small warm body asleep on your chest. On Monday you need two days to recover." },
+      { "text": "Say you have plans", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "You do have plans. They are not as good as you pretend." }
+    ]
+  },
+  {
+    "id": "mid_downsize", "title": "Too many rooms",
+    "text": "The house has four bedrooms and two of them are full of boxes labelled with your children's names.",
+    "conditions": { "minAge": 55, "ownsHome": true, "maxChildrenAtHome": 0, "minChildren": 1 }, "cooldown": 20,
+    "choices": [
+      { "text": "Sell and buy something smaller", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -2 } ],
+        "result": "The last evening you walk through every room. The marks on the kitchen door frame, where you measured them, you photograph before the painters come." },
+      { "text": "Ask the children to collect their boxes", "effects": [ { "type": "happiness", "amount": 2 } ],
+        "result": "One comes, takes a teddy bear and leaves the rest. The boxes stay." },
+      { "text": "Keep it. This is where Christmas happens", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "As long as there is a house, there is somewhere to come home to." }
+    ]
+  },
+  {
+    "id": "mid_hearing", "title": "Pardon?",
+    "text": "Your family say you have the television too loud. You say they mumble. At dinner you nod at things you did not hear.",
+    "conditions": { "minAge": 55 }, "cooldown": 25,
+    "choices": [
+      { "text": "Get a hearing aid", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 4 } ],
+        "result": "On the way home you hear birds. You had forgotten about the birds." },
+      { "text": "Keep nodding", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You agree to a holiday in Croatia without knowing it." }
+    ]
+  },
+  {
+    "id": "mid_sibling_money", "title": "A loan",
+    "text": "{t.name} has never asked you for anything. Now {t.he} sits in your kitchen and asks to borrow money, and cannot look at you while {t.he} does it.",
+    "conditions": { "minAge": 30, "minMoney": 30000 },
+    "target": { "role": "sibling", "conditions": { "minAge": 25 } }, "cooldown": 12,
+    "choices": [
+      { "text": "Lend it, and mean it", "effects": [ { "type": "money", "amount": -25000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "lent_money", "text": "{name} helped me when I was going under", "impact": 30 } ],
+        "result": "Two years later the money comes back in an envelope with a card. You keep the card." },
+      { "text": "Give it, and never mention it again", "requires": { "traitsAny": [ "generous", "kind" ] }, "effects": [ { "type": "money", "amount": -25000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 18 } ],
+        "result": "{t.He} tries to pay it back for years. You never take it." },
+      { "text": "Say no", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 12 } ],
+        "result": "{t.He} says of course, it was a stupid idea, and leaves without finishing the coffee." }
+    ]
+  },
+  {
+    "id": "mid_first_grey", "title": "The mirror",
+    "text": "Under the bathroom light you count them. Eleven grey hairs. Twelve, if you count the one in your eyebrow.",
+    "conditions": { "minAge": 33, "maxAge": 45 }, "cooldown": 50,
+    "choices": [
+      { "text": "Dye it", "effects": [ { "type": "money", "amount": -400 }, { "type": "happiness", "amount": 1 } ], "result": "It looks fine. It looks like you, a few years ago, under a lamp." },
+      { "text": "Pull them out", "requires": { "traitsAny": [ "vain" ] }, "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You read somewhere that two grow back. You pull them out anyway." },
+      { "text": "Leave them", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Someone at work says it suits you. You decide to believe them." }
+    ]
+  },
+  {
+    "id": "mid_volunteer", "title": "The notice board",
+    "text": "A note at the library: the homework club needs adults on Tuesday evenings. No experience needed, just patience.",
+    "conditions": { "minAge": 40, "minYear": 1975 }, "cooldown": 15,
+    "choices": [
+      { "text": "Sign up", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "kind", "chance": 0.1 }, { "type": "memory", "kind": "volunteer", "text": "Tuesday evenings at the homework club", "impact": 12 } ],
+        "result": "A boy called Ahmed learns long division from you. You learn that you have been doing it wrong for forty years." },
+      { "text": "Walk past", "effects": [], "result": "Next week the note is still there. Then it is gone." }
+    ]
+  },
+  {
+    "id": "mid_long_marriage", "title": "Silver",
+    "text": "Twenty-five years married. {p.name} has booked a table at the restaurant where you had your first proper dinner. It is a pizzeria now.",
+    "conditions": { "married": true, "minPartnerYears": 25 }, "cooldown": 50,
+    "choices": [
+      { "text": "Order pizza and tell old stories", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true },
+          { "type": "memory", "kind": "silver_wedding", "to": "partner", "text": "Our silver wedding, at the pizzeria", "impact": 20 } ],
+        "result": "You remember the same evening completely differently, and argue about it happily until they close." },
+      { "text": "Give a speech in front of the family", "chance": 0.6, "chanceTraits": { "charming": 0.2, "introvert": -0.2 },
+        "success": { "text": "Halfway through your voice breaks. Your children have never seen you like that. Nobody minds.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 10 } ] },
+        "failure": { "text": "You tell the story about the camping trip. It was funnier in your head.", "effects": [ { "type": "happiness", "amount": 2 } ] } }
+    ]
+  },
+  {
+    "id": "mid_retirement_party", "title": "Cake in the staff room",
+    "text": "The last day. A cake, a card everyone has signed, and a speech by a manager who started three years ago.",
+    "conditions": { "minAge": 60, "hasJob": true }, "cooldown": 50, "weight": 0.5,
+    "choices": [
+      { "text": "Give a speech of your own", "effects": [ { "type": "happiness", "amount": 5 } ],
+        "result": "You thank the cleaner by name. She is the only one who cries." },
+      { "text": "Slip out before the cake", "requires": { "traitsAny": [ "introvert", "conflict_averse" ] }, "effects": [ { "type": "happiness", "amount": 2 } ],
+        "result": "In the car park you sit and look at the building for a while. Forty years. It looks very ordinary." }
+    ]
+  },
+  {
+    "id": "mid_dementia_parent_name", "title": "Who are you?",
+    "text": "{t.Role}, {t.name}, looks at you kindly and asks if you are the new nurse.",
+    "conditions": { "minAge": 40 },
+    "target": { "role": "parent", "conditions": { "ailmentsAny": [ "dementia" ] } }, "cooldown": 6, "weight": 2,
+    "choices": [
+      { "text": "Say yes, and sit with {t.him}", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "memory", "kind": "parent_forgot", "to": "target", "text": "The day {t.name} did not know me", "impact": -20 } ],
+        "result": "{t.He} tells the new nurse all about {t.his} child, who is clever and busy and does not visit enough. It is you. {t.He} is very proud." },
+      { "text": "Tell {t.him} who you are", "effects": [ { "type": "happiness", "amount": -6 } ],
+        "result": "For a moment {t.his} face opens. Then it closes again, and {t.he} asks about the weather." }
+    ]
+  },
+  {
+    "id": "mid_vinyl", "title": "In the attic",
+    "text": "A box of your old records. The covers smell of the room you grew up in.",
+    "conditions": { "minAge": 40, "minYear": 1990 }, "cooldown": 30,
+    "choices": [
+      { "text": "Buy a record player and play them all", "effects": [ { "type": "money", "amount": -2500 }, { "type": "happiness", "amount": 6 } ],
+        "result": "Track three on side two still jumps in the same place. You sing the skip, the way you always did." },
+      { "text": "Sell them", "effects": [ { "type": "money", "amount": 3000 } ], "result": "A young man with a beard pays more than you expected and handles them like eggs." }
+    ]
+  }
+]

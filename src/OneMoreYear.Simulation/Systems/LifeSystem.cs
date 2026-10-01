@@ -90,6 +90,12 @@ public static class LifeSystem
             other.Happiness -= rel.Closeness * 0.2;
         }
 
+        // A parent's house has to be emptied, and siblings rarely agree on how.
+        var player = w.Player;
+        if (player.IsAlive && player.ParentIds.Contains(p.Id) && player.Age(ctx.Year) >= 25
+            && Kinship.Siblings(w, player).Any(s => s.IsAlive) && ctx.Rng.Chance(0.5))
+            EventSystem.QueueSituation(ctx, "mid_inheritance_furniture", new() { ["target"] = p.Id });
+
         int? spouseId = p.PartnerStatus == PartnerStatus.Married ? p.PartnerId : null;
         if (p.PartnerId is { } pid)
         {

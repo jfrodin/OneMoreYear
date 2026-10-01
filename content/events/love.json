@@ -23,7 +23,7 @@
     "text": "Your friends have planned this, and they are not subtle about it: at dinner you are seated next to {t.name}, who is also single. Everyone else leaves early.",
     "choices": [
       {
-        "text": "Play along – and ask {t.him} out",
+        "text": "Play along and ask {t.him} out",
         "chance": 0.7, "chanceTraits": { "social": 0.1, "charming": 0.15, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.003 },
         "success": {
           "text": "You have dinner again the week after, just the two of you. Your friends are unbearable about it.",
@@ -58,7 +58,7 @@
   },
   {
     "id": "meet_online", "trigger": "situation", "title": "A match",
-    "text": "{t.name} has sent you a message on a dating app. It's actually funny – and {t.he} has read the same book you're reading.",
+    "text": "{t.name} has sent you a message on a dating app. It is actually funny, and {t.he} has read the same book you're reading.",
     "choices": [
       {
         "text": "Meet for a drink",
