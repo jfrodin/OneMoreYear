@@ -1,0 +1,230 @@
+// Family ties at every age: siblings, parents seen from the other side, grandparents, cousins.
+// Written without dashes (see the writing style note).
+[
+  {
+    "id": "ties_sibling_borrowed_clothes", "title": "Your jumper",
+    "text": "{t.name} is wearing your favourite jumper. {t.He} says it was on the floor, so it was basically free.",
+    "conditions": { "minAge": 10, "maxAge": 18 },
+    "target": { "role": "sibling", "conditions": { "minAge": 9, "maxAge": 20 } }, "cooldown": 6,
+    "choices": [
+      { "text": "Take it back by force", "chance": 0.5, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "You win. The jumper has a hole in the sleeve now, but it is yours.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 4 } ] },
+        "failure": { "text": "{t.He} runs out of the door in it. You see it at a party a week later, on someone else.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Steal something of {t.his} in return", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2, "mutual": true } ],
+        "result": "This goes on for years. Neither of you will admit that it is a game." },
+      { "text": "Tell your parents", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -6 } ], "result": "Your mother says \"sort it out yourselves\" without looking up from the paper." }
+    ]
+  },
+  {
+    "id": "ties_sibling_secret", "title": "Don't tell",
+    "text": "{t.name} comes into your room late at night and closes the door. \"I need to tell someone. You can't tell Mum and Dad.\"",
+    "conditions": { "minAge": 12, "maxAge": 25 },
+    "target": { "role": "sibling", "conditions": { "minAge": 14 } }, "cooldown": 8,
+    "choices": [
+      { "text": "Promise, and listen", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 15 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "kept_secret", "text": "{name} kept my secret", "impact": 20 } ],
+        "result": "{t.He} talks until the sky gets light. You never tell anyone, not even years later when it would be funny." },
+      { "text": "Tell your parents anyway", "requires": { "traitsAny": [ "dishonest", "manipulative", "loyal" ] }, "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -25 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "betrayed_secret", "text": "{name} told Mum and Dad what I said in confidence", "impact": -30 } ],
+        "result": "You tell yourself it was for {t.his} own good. {t.He} does not believe that, and neither do you." },
+      { "text": "Say you're too tired", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ], "result": "The door closes. In the morning {t.he} acts as if nothing happened." }
+    ]
+  },
+  {
+    "id": "ties_sibling_wedding_speech", "title": "The speech",
+    "text": "{t.name} is getting married and has asked you to give a speech. You have known {t.him} longer than anyone in that room.",
+    "conditions": { "minAge": 20 },
+    "target": { "role": "sibling", "conditions": { "minAge": 20, "hasPartner": true } }, "cooldown": 30, "weight": 0.6,
+    "choices": [
+      { "text": "Tell the embarrassing childhood stories", "chance": 0.6, "chanceTraits": { "charming": 0.2, "social": 0.1, "introvert": -0.15 },
+        "success": { "text": "The whole room laughs. {t.name} goes red and then hugs you so hard your glasses come off.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "The story about the school trip lands badly with the in-laws. You can see your mother counting to ten.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 6 } ] } },
+      { "text": "Say something short and true", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "wedding_speech", "text": "{name}'s speech at my wedding", "impact": 18 } ],
+        "result": "Four sentences. Your voice holds until the last one." },
+      { "text": "Say you can't", "requires": { "traitsAny": [ "introvert", "conflict_averse" ] }, "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ],
+        "result": "A cousin does it instead. It is fine. You sit at table four and wish you had." }
+    ]
+  },
+  {
+    "id": "ties_sibling_favourite", "title": "The favourite",
+    "text": "At Christmas dinner your mother praises {t.name} for the third time in an hour. Your new job has not come up once.",
+    "conditions": { "minAge": 18 },
+    "target": { "role": "sibling", "conditions": { "minAge": 18 } }, "cooldown": 10,
+    "choices": [
+      { "text": "Say it out loud", "chance": 0.4, "chanceTraits": { "brave": 0.15, "hot_tempered": 0.1, "charming": 0.1 },
+        "success": { "text": "There is a silence. Then your mother says she had no idea, and the next day she calls to ask about the job.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "\"Here we go,\" says {t.name}, and Christmas is over at half past seven.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 8 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Swallow it", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "relation", "who": "player", "to": "target", "dim": "envy", "amount": 8 } ], "result": "You eat a lot of ham." },
+      { "text": "Talk to {t.name} about it later", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true } ],
+        "result": "{t.He} laughs, not unkindly. \"You think I'm the favourite? She asks me about you all the time.\"" }
+    ]
+  },
+  {
+    "id": "ties_parent_retires", "title": "Time on their hands",
+    "text": "{t.Role}, {t.name}, has retired and calls you every day now. Sometimes twice. Today it was about a blackbird.",
+    "conditions": { "minAge": 30 },
+    "target": { "role": "parent", "conditions": { "minAge": 64, "maxAge": 75 } }, "cooldown": 15,
+    "choices": [
+      { "text": "Talk about the blackbird", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 }, { "type": "happiness", "amount": 2 } ],
+        "result": "It has built a nest in the gutter. By June you know the names of all four chicks." },
+      { "text": "Suggest a hobby", "chance": 0.5,
+        "success": { "text": "{t.He} joins a choir. The calls get shorter and happier, and mostly about the choir.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ] },
+        "failure": { "text": "{t.He} says {t.he} is not old enough for a pensioners' choir, thank you very much.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 3 } ] } },
+      { "text": "Let it go to voicemail", "requires": { "minYear": 1995 }, "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ],
+        "result": "Seven messages by Friday. The last one just says \"never mind\"." }
+    ]
+  },
+  {
+    "id": "ties_parent_old_letters", "title": "The letters",
+    "text": "Clearing out a cupboard at {t.name}'s, you find a bundle of letters tied with string. They are love letters, and not to your other parent.",
+    "conditions": { "minAge": 30 },
+    "target": { "role": "parent", "conditions": { "minAge": 60 } }, "cooldown": 40, "weight": 0.4,
+    "choices": [
+      { "text": "Ask {t.him} about them", "chance": 0.6, "chanceTraits": { "charming": 0.1, "kind": 0.1 },
+        "success": { "text": "{t.He} sits down and tells you about a summer long before you were born, someone with a motorbike, and a choice. {t.He} has never told anyone.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12, "mutual": true },
+            { "type": "memory", "kind": "parent_story", "to": "target", "text": "The summer {t.name} told me about", "impact": 15 } ] },
+        "failure": { "text": "{t.He} takes them out of your hands and puts them in the stove. You never mention them again.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -6 } ] } },
+      { "text": "Put them back exactly where they were", "effects": [], "result": "Everyone is allowed one cupboard." },
+      { "text": "Read them all", "requires": { "traitsAny": [ "paranoid", "dishonest", "impulsive" ] }, "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "They are beautiful, and they are about someone you never met. You look at your parent differently at dinner." }
+    ]
+  },
+  {
+    "id": "ties_parent_moves_in", "title": "The spare room",
+    "text": "{t.Role}, {t.name}, can no longer manage the stairs at home. {t.He} has not asked. {t.He} would never ask.",
+    "conditions": { "minAge": 35, "livesWithParents": false },
+    "target": { "role": "parent", "conditions": { "minAge": 75, "hasPartner": false } }, "cooldown": 20, "weight": 0.7,
+    "choices": [
+      { "text": "Offer {t.him} your spare room", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15 }, { "type": "happiness", "amount": -3 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "took_me_in", "text": "{name} took me into their home", "impact": 30 }, { "type": "flag", "flag": "parent_lives_with_me" } ],
+        "result": "{t.He} brings a radio, a chair and forty years of opinions about how to load a dishwasher." },
+      { "text": "Help {t.him} find a flat with a lift", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "money", "amount": -5000 } ],
+        "result": "Ground floor, near the shop, a view of a birch. {t.He} complains for a month and then says it is the best flat {t.he} has ever had." },
+      { "text": "Leave it", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -6 } ], "result": "{t.He} manages. Slowly, and badly, and alone." }
+    ]
+  },
+  {
+    "id": "ties_grandparent_stories", "title": "Back then",
+    "text": "{t.Role}, {t.name}, is telling the story about the war again. You have heard it many times, but tonight {t.he} tells a part you have never heard.",
+    "conditions": { "minAge": 8, "maxAge": 30 },
+    "target": { "role": "grandparent", "conditions": { "minAge": 70 } }, "cooldown": 8,
+    "choices": [
+      { "text": "Ask questions", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "attribute", "kind": "smarts", "amount": 2 },
+          { "type": "memory", "kind": "grandparent_story", "to": "target", "text": "The night {t.name} told me what really happened", "impact": 15 } ],
+        "result": "It turns out {t.he} hid a family in the hay loft for three weeks. Nobody ever asked." },
+      { "text": "Record it", "requires": { "minYear": 1975 }, "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "flag", "flag": "recorded_grandparent" } ],
+        "result": "[[2008: A cassette, || A voice memo,]] forty minutes long. Years later it is the only recording anyone has of {t.his} voice." },
+      { "text": "Look at the clock", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "{t.He} notices and finishes quickly. You think about it when {t.he} is gone." }
+    ]
+  },
+  {
+    "id": "ties_grandparent_money", "title": "A fifty",
+    "text": "{t.Role}, {t.name}, presses a folded note into your hand when nobody is looking. \"Don't tell your mother.\"",
+    "conditions": { "minAge": 6, "maxAge": 22 },
+    "target": { "role": "grandparent" }, "cooldown": 3,
+    "choices": [
+      { "text": "Say thank you and spend it on sweets", "requires": { "maxAge": 14 }, "effects": [ { "type": "money", "amount": 50 }, { "type": "happiness", "amount": 4 } ],
+        "result": "Gone by Monday. Worth it." },
+      { "text": "Save it", "effects": [ { "type": "money", "amount": 50 } ], "result": "The note goes into a tin. There are a lot of notes in the tin." },
+      { "text": "Try to give it back", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 3 } ],
+        "result": "\"Nonsense,\" says {t.name}, and puts it in your pocket with a firmness you did not know {t.he} had." }
+    ]
+  },
+  {
+    "id": "ties_grandchild_visit", "title": "A week in summer",
+    "text": "{t.name} is staying with you for a week in the summer. {t.He} has never been bored in {t.his} life until now.",
+    "conditions": { "minAge": 55 },
+    "target": { "role": "grandchild", "conditions": { "minAge": 6, "maxAge": 13 } }, "cooldown": 4,
+    "choices": [
+      { "text": "Teach {t.him} to fish", "chance": 0.6, "chanceTraits": { "lazy": -0.15 },
+        "success": { "text": "A perch, no bigger than a finger. {t.name} insists on eating it. You fry it with great ceremony.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12, "mutual": true },
+            { "type": "memory", "who": "target", "to": "player", "kind": "grandparent_summer", "text": "The summer {name} taught me to fish", "impact": 25 } ] },
+        "failure": { "text": "Nothing bites all week. {t.name} decides fishing is for old people. You agree, and buy ice cream.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ] } },
+      { "text": "Let {t.him} do whatever {t.he} wants", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 7 }, { "type": "health", "amount": -1 } ],
+        "result": "Pancakes for breakfast and dinner. Bedtime is a suggestion. {t.His} parents are not pleased when {t.he} comes home." },
+      { "text": "Give {t.him} jobs in the garden", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ],
+        "result": "{t.He} complains every day and tells everyone at school about it afterwards, proudly." }
+    ]
+  },
+  {
+    "id": "ties_cousin_summer", "title": "Cousins",
+    "text": "All the cousins are at the summer place at once this year. Somebody has found the old boat.",
+    "conditions": { "minAge": 7, "maxAge": 16 },
+    "target": { "role": "relative", "conditions": { "minAge": 6, "maxAge": 18 } }, "cooldown": 4,
+    "choices": [
+      { "text": "Row out to the island", "chance": 0.7, "chanceAttributes": { "fitness": 0.003 },
+        "success": { "text": "You row out, swim, build a fire you are not allowed to build and row back after dark. Nobody notices. It is the best day of the summer.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true } ] },
+        "failure": { "text": "The boat leaks. You are rescued by an uncle in a motorboat and a very long lecture.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5, "mutual": true } ] } },
+      { "text": "Stay on the jetty with a book", "requires": { "traitsAny": [ "introvert", "creative" ] }, "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "happiness", "amount": 3 } ],
+        "result": "You read three books that week. The cousins call you the professor, and it sticks for thirty years." }
+    ]
+  },
+  {
+    "id": "ties_child_calls_late", "title": "Eleven at night",
+    "text": "The phone rings at eleven at night. It is {t.name}. {t.He} says nothing is wrong, {t.he} just wanted to hear your voice.",
+    "conditions": { "minAge": 40 },
+    "target": { "role": "child", "conditions": { "minAge": 20 } }, "cooldown": 6,
+    "choices": [
+      { "text": "Talk until {t.he} is ready to say it", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true },
+          { "type": "memory", "who": "target", "to": "player", "kind": "listened", "text": "{name} stayed on the phone with me all night", "impact": 20 } ],
+        "result": "At half past one it comes out: a breakup, a job that is going badly, a feeling of being completely alone in a big city. You stay on the line until {t.he} falls asleep." },
+      { "text": "Ask {t.him} to call tomorrow", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ],
+        "result": "{t.He} does not call tomorrow. You call {t.him} instead, and {t.he} says everything is fine." }
+    ]
+  },
+  {
+    "id": "ties_parent_asks_forgiveness", "title": "Sorry",
+    "text": "{t.Role}, {t.name}, is old now. One afternoon, out of nowhere, {t.he} says {t.he} was not a good parent and asks you to forgive {t.him}.",
+    "conditions": { "minAge": 30 },
+    "target": { "role": "parent", "conditions": { "minAge": 65, "maxOpinion": 30 } }, "cooldown": 30, "weight": 0.6,
+    "choices": [
+      { "text": "Forgive {t.him}", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": -30 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15 },
+          { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "forgave_parent", "to": "target", "text": "The afternoon I forgave {t.name}", "impact": 20 } ],
+        "result": "You do not say much. {t.He} holds your hand in a way {t.he} never did when you were small." },
+      { "text": "Say it is too late", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -8 } ],
+        "result": "{t.He} nods as if {t.he} expected it. Driving home, you are not sure you meant it." },
+      { "text": "Say you need time", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": -10 } ], "result": "{t.He} says {t.he} understands. Neither of you knows how much time there is." }
+    ]
+  },
+  {
+    "id": "ties_family_photo", "title": "Everyone together",
+    "text": "{t.Role} has hired a photographer for a family portrait. Three generations, matching jumpers, a sofa that does not fit everyone.",
+    "conditions": { "minAge": 5, "minYear": 1960 },
+    "target": { "role": "family", "conditions": { "minAge": 55 } }, "cooldown": 15,
+    "choices": [
+      { "text": "Smile and do as you are told", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "flag", "flag": "family_portrait" } ],
+        "result": "It hangs in the hallway for decades. You blinked." },
+      { "text": "Make the children laugh", "chance": 0.6, "chanceTraits": { "charming": 0.15, "eccentric": 0.15 },
+        "success": { "text": "The best picture is the one where everyone is laughing and nobody is looking at the camera. That is the one they frame.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Your youngest relative starts crying and does not stop. The photographer charges extra.", "effects": [ { "type": "happiness", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "ties_sibling_rivalry_adult", "title": "Who did better",
+    "text": "{t.name} has bought a house with a sea view. At the housewarming {t.he} shows you the wine cellar twice.",
+    "conditions": { "minAge": 28 },
+    "target": { "role": "sibling", "conditions": { "minAge": 28, "ownsHome": true } }, "cooldown": 15,
+    "choices": [
+      { "text": "Be happy for {t.him}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "happiness", "amount": 1 } ],
+        "result": "Later, on the balcony, {t.he} admits the mortgage keeps {t.him} awake at night." },
+      { "text": "Mention your own promotion", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "envy", "amount": 5 } ], "result": "Neither of you is listening. Your mother is very proud of both of you." },
+      { "text": "Ask how much it cost", "requires": { "traitsAny": [ "greedy", "impulsive", "stingy" ] }, "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 5 } ],
+        "result": "There is a short silence in which the whole party hears the dishwasher." }
+    ]
+  },
+  {
+    "id": "ties_half_sibling", "title": "Someone at the door",
+    "text": "A young woman at the door says she thinks you have the same father. She has his chin. She has your chin.",
+    "conditions": { "minAge": 25 },
+    "target": { "role": "parent", "conditions": { "sex": "male", "traitsAny": [ "unfaithful" ] } }, "cooldown": 60, "weight": 0.3,
+    "content": [ "infidelity" ],
+    "choices": [
+      { "text": "Ask her in", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "memory", "kind": "half_sibling", "to": "target", "text": "The day my half sister knocked on the door", "impact": -5 } ],
+        "result": "She stays for four hours. You show her baby photos. She shows you hers. You have the same laugh." },
+      { "text": "Call {t.name}", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": -20 } ],
+        "result": "A long silence on the line. Then: \"I always wondered when this would happen.\"" },
+      { "text": "Close the door", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "You see her once more, years later, across the room at a funeral." }
+    ]
+  }
+]
