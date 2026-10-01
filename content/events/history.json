@@ -1,0 +1,155 @@
+// Moments of Swedish and world history, as the family lived them. Each only happens in its year
+// (or years), and is weighted so it usually turns up then. No dashes.
+[
+  {
+    "id": "hist_first_tv", "title": "The box in the corner",
+    "text": "The neighbours have bought a television set. Half the street is in their living room every evening, staring at a test card.",
+    "conditions": { "minAge": 5, "minYear": 1956, "maxYear": 1960, "notFlags": [ "first_tv" ] }, "weight": 4, "cooldown": 10,
+    "choices": [
+      { "text": "Go and watch", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "flag", "flag": "first_tv" } ],
+        "result": "A western, in grey, with a lot of snow on the screen. Nobody can tell what is happening. Nobody leaves." },
+      { "text": "Buy one of your own", "requires": { "minAge": 20, "minMoney": 10000 }, "effects": [ { "type": "money", "amount": -9000 }, { "type": "happiness", "amount": 7 }, { "type": "flag", "flag": "first_tv" } ],
+        "result": "It gets its own table and a lace cloth on top. Now the neighbours come to you." }
+    ]
+  },
+  {
+    "id": "hist_world_cup_1958", "title": "The World Cup at home",
+    "text": "Sweden is hosting the football World Cup, and Sweden is in the final against Brazil. Everyone you know is gathered round a radio.",
+    "conditions": { "minAge": 6, "minYear": 1958, "maxYear": 1958 }, "weight": 6, "cooldown": 0,
+    "choices": [
+      { "text": "Listen with the whole family", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "world_cup", "text": "The final against Brazil, 1958", "impact": 10 } ],
+        "result": "Sweden scores first and the whole house shouts. Then a seventeen-year-old called Pelé happens. Your father says it was worth it to have seen him, even on the radio." },
+      { "text": "Try to get a ticket to Råsunda", "chance": 0.25, "chanceTraits": { "charming": 0.15, "manipulative": 0.15 },
+        "success": { "text": "Standing room behind the goal. You are there when it happens. For the rest of your life, you were there.", "effects": [ { "type": "money", "amount": -300 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "world_cup", "text": "I was at Råsunda for the final in 1958", "impact": 25 } ] },
+        "failure": { "text": "Sold out. You listen to the final through a café window with a hundred strangers.", "effects": [ { "type": "happiness", "amount": 4 } ] } }
+    ]
+  },
+  {
+    "id": "hist_dagen_h", "title": "Dagen H",
+    "text": "At ten to five this morning every car in Sweden stopped, crossed to the other side of the road, and waited. From today, we drive on the right.",
+    "conditions": { "minAge": 6, "minYear": 1967, "maxYear": 1967 }, "weight": 6, "cooldown": 0,
+    "choices": [
+      { "text": "Go out and watch", "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "Hundreds of people stand on the pavements in the rain to watch cars change sides. It is the strangest, most Swedish morning you will ever see." },
+      { "text": "Drive, very carefully", "requires": { "minAge": 18, "flags": [ "driving_licence" ] }, "chance": 0.85,
+        "success": { "text": "You drive at twenty all the way to work. So does everyone else. It is the safest day in the history of Swedish roads.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "At the first roundabout your hands go the old way. Nobody is hurt. Your pride is.", "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "hist_1968", "title": "The student union",
+    "text": "Students have occupied the student union building in Stockholm. They are debating the future of everything, all night, with a lot of cigarettes.",
+    "conditions": { "minAge": 17, "maxAge": 30, "minYear": 1968, "maxYear": 1968 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Join them", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.1 }, { "type": "memory", "kind": "1968", "text": "The night at the occupation in 1968", "impact": 15 } ],
+        "result": "You argue about Vietnam and the revolution until four in the morning with people you will never see again. Your parents do not understand. That is part of the point." },
+      { "text": "Think they are spoilt", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You go to work. Somebody has to." }
+    ]
+  },
+  {
+    "id": "hist_million_programme", "title": "A new suburb",
+    "text": "The council is building whole new suburbs: concrete blocks with lifts, balconies, a laundry room and a centre with shops. There is a flat with three rooms free from next month.",
+    "conditions": { "minAge": 20, "minYear": 1966, "maxYear": 1975, "ownsHome": false, "livesWithParents": false }, "weight": 2, "cooldown": 20,
+    "choices": [
+      { "text": "Move in", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "new_flat", "text": "Moving into the new flat in the suburb", "impact": 12 } ],
+        "result": "Hot water. A bathtub. A kitchen with a fridge already in it. The trees are still very small, and so are the neighbours' children, and they grow up together." },
+      { "text": "Stay where you are", "effects": [], "result": "Your old flat has a toilet in the yard. It also has character, you tell people." }
+    ]
+  },
+  {
+    "id": "hist_nuclear_vote", "title": "The referendum",
+    "text": "Sweden votes on nuclear power. There are three options, all of them say phase it out sooner or later, and nobody at the dinner table agrees.",
+    "conditions": { "minAge": 18, "minYear": 1980, "maxYear": 1980 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Vote line three, against", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You wear a badge with a smiling sun. Line two wins." },
+      { "text": "Vote line one or two", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Line two wins. The reactors keep running for decades." },
+      { "text": "Argue about it with everyone", "requires": { "traitsAny": [ "hot_tempered", "social", "eccentric" ] }, "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "Christmas dinner that year is remembered as \"the nuclear Christmas\"." }
+    ]
+  },
+  {
+    "id": "hist_wall_falls", "title": "The Wall",
+    "text": "On television, people are dancing on the Berlin Wall with hammers. Your grandfather is crying in his armchair and will not say why.",
+    "conditions": { "minAge": 6, "minYear": 1989, "maxYear": 1989, "hasRole": [ "grandparent" ] }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Ask him", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ],
+        "result": "He tells you about a friend from the war who ended up on the wrong side, and the letters that stopped coming in 1961." },
+      { "text": "Watch in silence", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You do not quite understand what you are seeing. You understand that it is enormous." }
+    ]
+  },
+  {
+    "id": "hist_krona_crisis", "title": "Five hundred percent",
+    "text": "The radio says the central bank has raised the interest rate to five hundred percent. Your neighbour is standing in the stairwell with his mortgage papers, very pale.",
+    "conditions": { "minAge": 18, "minYear": 1992, "maxYear": 1992 }, "weight": 6, "cooldown": 0,
+    "choices": [
+      { "text": "Cut every expense", "effects": [ { "type": "money", "amount": 3000 }, { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "stingy", "chance": 0.08 } ],
+        "result": "No holidays, no restaurants, porridge. Everyone you know is doing the same. The silence in the shops is eerie." },
+      { "text": "Buy shares while they are cheap", "requires": { "minMoney": 50000 }, "chance": 0.7, "chanceTraits": { "greedy": 0.1, "ambitious": 0.1 },
+        "success": { "text": "Everyone thinks you are mad. Five years later, everyone wishes they had been mad too.", "effects": [ { "type": "invest", "kind": "shares", "amount": 0.3 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.05 } ] },
+        "failure": { "text": "The company you chose does not survive the crisis.", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Help the neighbour with his papers", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "You spend an evening going through the numbers with him. It is bad, but it is not the end. He brings you a bottle at Christmas for years." }
+    ]
+  },
+  {
+    "id": "hist_estonia", "title": "The ferry",
+    "text": "The ferry Estonia has sunk in a storm on the Baltic. Over eight hundred people. The list of names is printed in the morning paper and your hands shake as you read it.",
+    "conditions": { "minAge": 10, "minYear": 1994, "maxYear": 1994 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Go to the church that evening", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "memory", "kind": "estonia", "text": "The evening in the church after the Estonia", "impact": -8 } ],
+        "result": "The church is full of people who did not know anyone on board, and people who did. Nobody can tell which is which. Candles all the way out to the street." },
+      { "text": "Call everyone you love", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You do not say why. They all know why." }
+    ]
+  },
+  {
+    "id": "hist_eu_vote", "title": "Yes or no",
+    "text": "Sweden votes on joining the European Union. There are YES and NO posters on every lamp post, and the family is split down the middle.",
+    "conditions": { "minAge": 18, "minYear": 1994, "maxYear": 1994 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Vote yes", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Yes wins, narrowly. Your brother does not speak to you until New Year." },
+      { "text": "Vote no", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "No loses, narrowly. You keep the badge in a drawer for thirty years." },
+      { "text": "Stay home", "effects": [], "result": "You tell everyone you voted. Nobody asks how." }
+    ]
+  },
+  {
+    "id": "hist_millennium_party", "title": "Two thousand",
+    "text": "New Year's Eve, 1999. Everybody wants to be somewhere special at midnight and nobody knows where.",
+    "conditions": { "minAge": 12, "minYear": 1999, "maxYear": 1999 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "A big party in the city", "chance": 0.5, "chanceTraits": { "social": 0.2 },
+        "success": { "text": "Fireworks, strangers kissing, champagne on the tram. The lights stay on. The year is 2000 and it looks just like 1999.", "effects": [ { "type": "happiness", "amount": 7 } ] },
+        "failure": { "text": "Two hours in a queue in the cold, and you see midnight from the pavement outside the club.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "At home with the family", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Your mother has kept a bottle of something since the eighties. At midnight the children are asleep on the sofa." }
+    ]
+  },
+  {
+    "id": "hist_tsunami", "title": "Boxing Day",
+    "text": "The news is about a wave in Thailand. Thousands of Swedes were on holiday there over Christmas. You know at least three families who went.",
+    "conditions": { "minAge": 12, "minYear": 2004, "maxYear": 2005 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Try to reach them", "chance": 0.75,
+        "success": { "text": "After two days of busy signals, a text: everyone is alive. You sit down on the kitchen floor.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "One of the families comes home short. The funeral is in February, and the whole town goes.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "memory", "kind": "tsunami", "text": "The family who did not all come home from Thailand", "impact": -15 } ] } },
+      { "text": "Give money to the relief effort", "effects": [ { "type": "money", "amount": -1000 }, { "type": "happiness", "amount": 1 } ], "result": "It feels like nothing. It is not nothing." }
+    ]
+  },
+  {
+    "id": "hist_hot_summer", "title": "The hot summer",
+    "text": "No rain since May. The forests in the north are burning, the lawns are brown, and every lake is full of people.",
+    "conditions": { "minAge": 6, "minYear": 2018, "maxYear": 2018 }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Swim every evening", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "The best summer in memory, and the most frightening. Both at once." },
+      { "text": "Volunteer with the fire crews", "requires": { "minAge": 18 }, "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 } ],
+        "result": "A week of carrying hoses in smoke near Ljusdal. Your clothes smell of it until Christmas." }
+    ]
+  },
+  {
+    "id": "hist_donald_duck", "title": "Three o'clock",
+    "text": "Christmas Eve, three o'clock. The whole country sits down in front of Donald Duck and his friends, the same cartoons as every year.",
+    "conditions": { "minYear": 1960, "minAge": 3 }, "weight": 0.7, "cooldown": 6,
+    "choices": [
+      { "text": "Watch with everyone", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Ferdinand the bull smells the flowers. Somebody's grandfather falls asleep. Nothing changes, which is the whole point." },
+      { "text": "Refuse, on principle", "requires": { "traitsAny": [ "eccentric", "hot_tempered" ] }, "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You do the washing up alone and can hear them all laughing." }
+    ]
+  }
+]
