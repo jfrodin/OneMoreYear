@@ -1,0 +1,109 @@
+// The Swedish year: Lucia, Easter witches, Walpurgis, crayfish, the first day of school and the rest.
+// Each comes back now and then with a long cooldown. No dashes.
+[
+  {
+    "id": "trad_lucia_child", "title": "Lucia",
+    "text": "Your class is doing the Lucia procession for the parents. Somebody has to be Lucia, with candles in her hair. Everybody else is a maid, a star boy or a gingerbread man.",
+    "conditions": { "minAge": 5, "maxAge": 12, "activity": "School" }, "cooldown": 4,
+    "choices": [
+      { "text": "Ask to be Lucia", "chance": 0.25, "chanceTraits": { "charming": 0.1, "social": 0.1 },
+        "success": { "text": "A crown of candles, a red sash, and you sing every verse without a mistake. Your parents film the whole thing on [[1985: a borrowed cine camera || a video camera]].", "effects": [ { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "You are a gingerbread man. You are the best gingerbread man there has ever been.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Be a star boy", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "A paper cone hat that keeps falling over your eyes. You sing the wrong verse with total confidence." }
+    ]
+  },
+  {
+    "id": "trad_easter_witch", "title": "Easter witch",
+    "text": "Easter. All the children on the street dress up as witches with red cheeks and headscarves and go door to door with drawings, hoping for sweets.",
+    "conditions": { "minAge": 4, "maxAge": 10 }, "cooldown": 3,
+    "choices": [
+      { "text": "Go with the others", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 } ],
+        "result": "Forty houses and a bag so heavy you have to carry it with both arms. You eat until you feel ill and do not regret it." },
+      { "text": "Make the best drawings on the street", "requires": { "traitsAny": [ "creative", "ambitious" ] }, "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "creative", "chance": 0.05 } ],
+        "result": "One old man pins your drawing on his fridge. It is still there years later when you walk past." }
+    ]
+  },
+  {
+    "id": "trad_walpurgis", "title": "Walpurgis night",
+    "text": "The last night of April. A huge bonfire by the lake, a choir singing to the spring, and everyone stamping their feet against the cold.",
+    "conditions": { "minAge": 6 }, "cooldown": 4,
+    "choices": [
+      { "text": "Stay till the fire burns down", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Your coat smells of smoke for a week. The spring song gets to you, the way it always does." },
+      { "text": "Celebrate like a student", "requires": { "minAge": 18, "maxAge": 30 }, "chance": 0.7,
+        "success": { "text": "Champagne breakfast, a park full of white student caps, and a picnic that lasts until the sun goes down at nine.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "health", "amount": -1 } ] },
+        "failure": { "text": "It rains. It always rains. You end up in a crowded flat eating crisps and singing anyway.", "effects": [ { "type": "happiness", "amount": 3 } ] } }
+    ]
+  },
+  {
+    "id": "trad_first_day_school", "title": "The first day",
+    "text": "Your first day at school. A new rucksack, shoes that pinch, and a teacher who knows your name already.",
+    "conditions": { "minAge": 7, "maxAge": 7 }, "weight": 6, "cooldown": 0,
+    "choices": [
+      { "text": "Walk in by yourself", "chance": 0.6, "chanceTraits": { "brave": 0.2, "social": 0.1, "introvert": -0.15 },
+        "success": { "text": "You do not even look back. Your parent stands at the fence for a while afterwards.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "You hold on to the gate. A teacher takes your hand. By lunch you have a best friend.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Ask to be walked to the door", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "At the door you let go of the hand. That is the first big step." }
+    ]
+  },
+  {
+    "id": "trad_graduation", "title": "The white cap",
+    "text": "Graduation day. You run out of the school building in a white cap while your family hold up a sign with your baby photo on it.",
+    "conditions": { "minAge": 18, "maxAge": 20, "minEducation": "secondary", "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
+    "choices": [
+      { "text": "Ride on the back of a truck through town", "requires": { "minYear": 1975 }, "effects": [ { "type": "flag", "flag": "graduated_upper" }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "graduation", "text": "Running out of school in the white cap", "impact": 20 } ],
+        "result": "Music, shouting, confetti, and your whole year on a flatbed truck. You lose your voice. You lose your cap. You find the cap." },
+      { "text": "A quiet dinner with the family", "effects": [ { "type": "flag", "flag": "graduated_upper" }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "graduation", "text": "My graduation day", "impact": 15 } ],
+        "result": "Your grandmother gives you an envelope and a speech. The envelope is more generous than you expected. So is the speech." }
+    ]
+  },
+  {
+    "id": "trad_crayfish", "title": "Crayfish party",
+    "text": "August, paper lanterns, silly hats and a table covered in crayfish. Someone has printed the drinking songs.",
+    "conditions": { "minAge": 18 }, "cooldown": 3,
+    "choices": [
+      { "text": "Sing every song", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 } ], "result": "You know all the words to songs you have never sung sober. The neighbours join in from their balcony." },
+      { "text": "Eat and listen", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Twenty crayfish and a lot of bread. Your fingers smell of dill until Tuesday." }
+    ]
+  },
+  {
+    "id": "trad_national_day", "title": "Sixth of June",
+    "text": "The National Day. Flags on every pole, and a ceremony in the park where new citizens are welcomed.",
+    "conditions": { "minAge": 12, "minYear": 1983 }, "cooldown": 8,
+    "choices": [
+      { "text": "Go to the ceremony", "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "A woman next to you is crying. She got her citizenship this year after nine years of waiting. She holds her small paper flag very carefully." },
+      { "text": "Treat it as a day off", "requires": { "minYear": 2005 }, "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A picnic and a nap. Most people celebrate it this way." }
+    ]
+  },
+  {
+    "id": "trad_christmas_ham", "title": "The Christmas table",
+    "text": "Christmas Eve. The ham, the meatballs, the herring, the cabbage, the rice pudding with one almond hidden in it.",
+    "conditions": { "minAge": 4 }, "cooldown": 4,
+    "choices": [
+      { "text": "Hunt for the almond", "chance": 0.25,
+        "success": { "text": "You find it. Tradition says you will be married within a year. Everyone looks at you meaningfully.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Your uncle finds it, for the fourth year running. Nobody believes it is chance.", "effects": [ { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Fall asleep on the sofa", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "The best sleep of the year, with the sound of the washing up in the background." }
+    ]
+  },
+  {
+    "id": "trad_ski_holiday", "title": "Sports holiday",
+    "text": "The February sports holiday. Half the school is going to the mountains to ski.",
+    "conditions": { "minAge": 6, "maxAge": 50, "minMoney": 8000 }, "cooldown": 3,
+    "choices": [
+      { "text": "Go to the mountains", "chance": 0.75, "chanceAttributes": { "fitness": 0.003 },
+        "success": { "text": "Sun on the snow, waffles at the hut, and legs that ache in the best way.", "effects": [ { "type": "money", "amount": -7000 }, { "type": "happiness", "amount": 7 }, { "type": "attribute", "kind": "fitness", "amount": 2 } ] },
+        "failure": { "text": "A twisted knee on the first day. You spend the week in the cabin playing cards with whoever is injured.", "effects": [ { "type": "money", "amount": -7000 }, { "type": "health", "amount": -3 }, { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Stay at home", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Ice skating on the lake behind the school. Free, and nearly as good." }
+    ]
+  },
+  {
+    "id": "trad_name_day", "title": "Name day",
+    "text": "Today is your name day. Only your grandmother remembers.",
+    "conditions": { "minAge": 5 }, "cooldown": 6,
+    "choices": [
+      { "text": "Call to thank her", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "She has baked a cake. You go round for coffee. It is the nicest small thing that happens all year." },
+      { "text": "Celebrate it yourself", "effects": [ { "type": "money", "amount": -100 }, { "type": "happiness", "amount": 2 } ], "result": "You buy a pastry and eat it standing at the counter. Nobody needs to know." }
+    ]
+  }
+]
