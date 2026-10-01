@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One More Year – grafik</title>
+<style>
+  @font-face { font-family: Playfair; src: url("../../game/fonts/PlayfairDisplay.ttf"); }
+  @font-face { font-family: Lora; src: url("../../game/fonts/Lora.ttf"); }
+  @font-face { font-family: Caveat; src: url("../../game/fonts/Caveat.ttf"); }
+  :root { --paper: #ecd4a8; --card: #f8e7c7; --ink: #47280f; --accent: #c05a18; --muted: #7a5a3a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.55 Lora, Georgia, serif; }
+  main { max-width: 1180px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font: 56px Playfair, Georgia, serif; color: var(--accent); margin: 0; letter-spacing: .04em; }
+  .hand { font-family: Caveat, cursive; font-size: 26px; color: var(--muted); }
+  h2 { font: 30px Playfair, Georgia, serif; color: var(--accent); margin: 48px 0 8px; }
+  p { max-width: 760px; }
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .wide { grid-template-columns: 1fr; }
+  figure { margin: 0; background: var(--card); padding: 12px; border-radius: 4px; box-shadow: 2px 3px 8px rgba(60, 30, 10, .18); }
+  figure img { width: 100%; height: auto; display: block; background: #fff8ec; }
+  figcaption { font-size: 15px; color: var(--muted); margin-top: 8px; }
+  .icons { display: flex; gap: 18px; align-items: end; flex-wrap: wrap; }
+  .icons img.small { image-rendering: pixelated; }
+  code { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>ONE MORE YEAR</h1>
+  <div class="hand">Grafikförslag, natten till 2 oktober 2026</div>
+
+  <p>Allt här är renderat av spelet självt (<code>--brand=</code>), med spelets riktiga typsnitt och färger, så det ser
+  ut exakt så här i spelet. Emblemen är ritade i kod och kan därför animeras och skalas fritt.
+  Namnförslag finns i <a href="names.md">names.md</a>.</p>
+
+  <h2>Emblemet: årsringar</h2>
+  <p>Min favorit. Ett tvärsnitt av en stam: varje ring är ett år, den yttersta och nyaste har tidsepokens
+  accentfärg. <em>One more year</em> betyder en ring till, och trädet är släkten. Det fungerar från 32 pixlar
+  upp till en hel skärm. Det byter färg med epoken, precis som resten av spelet.</p>
+  <div class="grid">
+    <figure><img src="renders/lockup_rings_stacked.png" alt=""><figcaption>Logotyp, stående</figcaption></figure>
+    <figure><img src="renders/avatar_512.png" alt=""><figcaption>Rund profilbild (Discord, sociala medier)</figcaption></figure>
+  </div>
+  <div class="grid wide" style="margin-top:18px">
+    <figure><img src="renders/lockup_rings_horizontal.png" alt=""><figcaption>Logotyp, liggande</figcaption></figure>
+    <figure><img src="renders/wordmark_eras.png" alt=""><figcaption>Logon följer tiden: 50-tal, 70-tal, 80-tal, 2010-tal</figcaption></figure>
+  </div>
+
+  <h2>Appikoner, fyra förslag</h2>
+  <p>Varje ikon i 256, 64 och 32 pixlar, så att man ser hur de håller när de blir små (aktivitetsfältet,
+  Steam-biblioteket). Årsringarna är nu spelets ikon. De andra är alternativ.</p>
+  <div class="icons">
+    <img src="renders/icon_rings_256.png" width="128" alt=""><img src="renders/icon_rings_64.png" width="64" alt=""><img class="small" src="renders/icon_rings_32.png" width="32" alt="">
+    &nbsp;&nbsp;
+    <img src="renders/icon_sprout_256.png" width="128" alt=""><img src="renders/icon_sprout_64.png" width="64" alt=""><img class="small" src="renders/icon_sprout_32.png" width="32" alt="">
+    &nbsp;&nbsp;
+    <img src="renders/icon_candle_256.png" width="128" alt=""><img src="renders/icon_candle_64.png" width="64" alt=""><img class="small" src="renders/icon_candle_32.png" width="32" alt="">
+    &nbsp;&nbsp;
+    <img src="renders/icon_photo_256.png" width="128" alt=""><img src="renders/icon_photo_64.png" width="64" alt=""><img class="small" src="renders/icon_photo_32.png" width="32" alt="">
+  </div>
+  <p>Från vänster: <b>årsringar</b>, <b>årsringar med en grodd</b> (släkten fortsätter), <b>ett födelsedagsljus</b>,
+  <b>ett albumfoto av ett träd</b>.</p>
+
+  <h2>Andra logotyper</h2>
+  <div class="grid">
+    <figure><img src="renders/lockup_candle.png" alt=""><figcaption>Ljuset: ett år till, en födelsedag till</figcaption></figure>
+    <figure><img src="renders/lockup_photo.png" alt=""><figcaption>Albumfotot med skrivmaskinstext, 50-talskänsla</figcaption></figure>
+  </div>
+  <div class="grid wide" style="margin-top:18px">
+    <figure><img src="renders/wordmark_playfair.png" alt=""><figcaption>Ordbild i Playfair (som titelskärmen idag)</figcaption></figure>
+    <figure><img src="renders/wordmark_fraunces.png" alt=""><figcaption>Ordbild i Fraunces, varmare och tyngre</figcaption></figure>
+    <figure><img src="renders/wordmark_hand.png" alt=""><figcaption>Handskriven, som en anteckning i albumet</figcaption></figure>
+  </div>
+
+  <h2>Start och laddning</h2>
+  <p>När spelet startar visas nu en papperssida där årsringarna växer fram, ett år i taget, medan namnet tonar in.
+  Sedan bleknar den bort till titelskärmen. En knapptryckning hoppar över den. Den är redan inlagd i spelet.</p>
+  <div class="grid wide">
+    <figure><img src="renders/loading_frames.png" alt=""><figcaption>Fem ögonblick ur startanimationen</figcaption></figure>
+    <figure><img src="renders/splash.png" alt=""><figcaption>Startbild i helskärm (för t.ex. pressmaterial)</figcaption></figure>
+  </div>
+
+  <h2>Butiksbilder (Steam-storlekar)</h2>
+  <p>Utkast i rätt mått. Porträtten kommer från en riktig familj i spelet, i olika åldrar.</p>
+  <div class="grid">
+    <figure><img src="renders/store_header_920x430.png" alt=""><figcaption>Header 920 × 430</figcaption></figure>
+    <figure><img src="renders/store_capsule_616x353.png" alt=""><figcaption>Main capsule 616 × 353</figcaption></figure>
+    <figure><img src="renders/store_small_462x174.png" alt=""><figcaption>Small capsule 462 × 174</figcaption></figure>
+    <figure><img src="renders/store_library_600x900.png" alt=""><figcaption>Library 600 × 900</figcaption></figure>
+  </div>
+
+  <h2>Ikoner för gränssnittet</h2>
+  <p>24 ikoner i samma stil: tunna rundade linjer som tar färg från tidsepoken. Flikar (This Year, People, School &amp; Work,
+  Money, Family Tree, Chronicle), värden (hälsa, glädje, smarthet, utseende, kondition, pengar) och händelser
+  (kärlek, vänner, brott, hem, bebis, bröllop, död, missbruk, tidningen, inställningar, feedback, nästa år).
+  De är SVG-filer i <code>docs/brand/icons</code> och läggs in i spelet när du har sagt vad du tycker.</p>
+  <div class="grid wide">
+    <figure><img src="renders/icons_sheet.png" alt=""><figcaption>Alla ikoner i fyra epokers färger (varannan i bläck, varannan i accent)</figcaption></figure>
+  </div>
+</main>
+</body>
+</html>

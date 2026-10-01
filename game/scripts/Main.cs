@@ -53,6 +53,13 @@ public partial class Main : Control
             SetProcess(false);
             return;
         }
+        var brand = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--brand="));
+        if (brand != null && OS.IsDebugBuild())
+        {
+            AddChild(new BrandSheet(brand["--brand=".Length..]));
+            SetProcess(false);
+            return;
+        }
         var gallery = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--portraits="));
         if (gallery != null && OS.IsDebugBuild())
         {
@@ -69,6 +76,9 @@ public partial class Main : Control
         }
 
         ShowTitle();
+        // The tree rings grow while the album opens (not in automated runs).
+        if (!System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots=")))
+            AddChild(new StartupScreen());
     }
 
     /// <summary>Keyboard and controller bindings in addition to Godot's built-in ui_* actions.</summary>

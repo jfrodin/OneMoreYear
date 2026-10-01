@@ -2,6 +2,16 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.27.0 – 2026-10-02 · Year rings
+
+- **A logo and an icon**: tree rings, where every ring is a year and the newest one has the decade's
+  accent colour. The game window and taskbar use it as the icon.
+- **A startup screen**: the rings grow one year at a time on the album paper while the name fades in,
+  then the page fades to the title screen. Any key or click skips it.
+- **Graphics proposals** to look at in `docs/brand/index.html`: logos, four app icons, the logo in four
+  decades, store art in Steam sizes, a profile picture, 24 interface icons, and name ideas
+  (`docs/brand/names.md`). Rendered by the game itself with `--brand=DIR`.
+
 ## 0.26.0 – 2026-10-01 · This is you
 
 - **A little say in who you are.** In "A new life" you can choose to be a boy or a girl, the city you
