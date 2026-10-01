@@ -2,6 +2,33 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.28.0 – 2026-10-02 · A night of writing
+
+About 135 new events, written without dashes. The game now has about 435.
+
+- **The middle years (23)**: reading glasses, a bad back, the class reunion, a motorbike you do not
+  need, a parent who falls, the empty Saturday, menopause and the prostate, the silver wedding,
+  the parent who no longer knows who you are. When a parent dies and you have siblings, there is
+  the house to empty, and the sideboard.
+- **Family ties (16)**: a sibling's secret, the wedding speech, the favourite child, a retired parent
+  who calls every day, love letters in a cupboard, a parent who asks for forgiveness, a grandparent's
+  war story, cousins and the leaking boat, a half sister at the door.
+- **Teenage years (15)**: the driving test, the concert you lied about, the school dance, the moped,
+  a teacher who believes in you, cigarettes behind the gym (and later mango vapes), likes.
+- **Young adults (15)**: your own key, the laundry room note war, military service (men, until 2009),
+  interrail, the red reminder letter, coming out at Sunday dinner, the band.
+- **Childhood (15)**: a wobbly tooth, snow days, lost in the department store, the school play,
+  kittens in the shed, the den in the woods, the library card.
+- **Working life (18)** by trade: the line that speeds up, the scaffolding, night shifts in care,
+  the old man who steals coffee, the shop that closes, parents' evening, a pupil you worry about,
+  open plan, someone taking credit for your idea.
+- **History (14)**: the first television, the 1958 World Cup final, Dagen H, 1968, the new suburbs,
+  the nuclear referendum, the Berlin Wall, 500 percent interest in 1992, the Estonia, the EU vote,
+  the millennium, the tsunami, the hot summer of 2018, Donald Duck at three on Christmas Eve.
+- **Partnership (12)** and **old age (12)**: dishes, snoring, in-laws, secret debts, a cottage in the
+  forest, the allotment, turning eighty, giving things away with warm hands, a great grandchild named
+  after you.
+
 ## 0.27.0 – 2026-10-02 · Year rings
 
 - **A logo and an icon**: tree rings, where every ring is a year and the newest one has the decade's
