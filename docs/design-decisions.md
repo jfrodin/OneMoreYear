@@ -129,3 +129,22 @@ All dark themes are to be built out properly, not left as footnotes: psychologic
 coercive control, stalking, relapse and treatment in addiction, mental illness (depression,
 anxiety, burnout), suicide and self-harm as grief and consequence, dementia, eviction and
 homelessness. Each gets a content-settings category where it needs one.
+
+## Choosing who you are – 2026-10-01
+
+A little control, not a character creator. Before the first life the player may choose three things,
+all set to chance by default:
+
+- **Sex** – a boy or a girl.
+- **Where** – the city you are born in.
+- **Your start** – *Comfortable* (easier: money, steady jobs, a home of their own), *Ordinary*
+  (normal) or *A hard start* (harder: debt, a parent out of work, maybe drink). The difficulty is
+  said out loud in the choice.
+
+**Leaving it to chance is the way the game is meant to be played**, and the menu says so. Only the
+broad strokes can be chosen – never the parents' names, traits or story. The same seed with the same
+choices gives the same family, so seeds can still be shared. Later generations are chosen by picking
+an heir, never through a form.
+
+When a life begins, a page called **"This is you"** shows what chance (or the choices) gave: name,
+traits and what each one does, the parents and the siblings.

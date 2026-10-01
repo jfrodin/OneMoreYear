@@ -20,6 +20,8 @@ public sealed class World
     public Dictionary<string, ContentLevel> ContentSettings { get; set; } = new();
     public string CountryId { get; set; } = "";
     public int StartYear { get; set; }
+    /// <summary>How the first life started: "comfortable", "ordinary", "hard" – or null, left to chance.</summary>
+    public string? StartConditions { get; set; }
     public int Year { get; set; }
     public string FamilyName { get; set; } = "";
 

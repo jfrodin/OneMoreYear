@@ -244,14 +244,18 @@ public partial class Main : Control
         SetScreen(title);
     }
 
-    public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null, int? slot = null)
+    /// <summary>Starts a new life. <paramref name="choices"/> carries the optional start choices (sex, circumstances, city).</summary>
+    public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null, int? slot = null, NewGameOptions? choices = null)
     {
         SaveSystem.CurrentSlot = slot ?? SaveSystem.FirstEmptySlot() ?? 1;
-        Session = GameSession.NewGame(new NewGameOptions { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId, ContentSettings = Settings.Content });
+        Session = GameSession.NewGame((choices ?? new NewGameOptions()) with { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId, ContentSettings = Settings.Content });
         SaveSystem.Save(Session);
         ShowGame();
         bool automated = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
-        if (!Settings.IntroSeen && !automated) ShowIntroduction();
+        if (automated) return;
+        // The first time: how to play. Every new life: who you are.
+        if (!Settings.IntroSeen) ShowIntroduction(ShowThisIsYou);
+        else ShowThisIsYou();
     }
 
     /// <summary>Opens the game saved most recently.</summary>
@@ -517,7 +521,7 @@ public partial class Main : Control
     }
 
     /// <summary>A short introduction, the first time a life begins (and from Settings → How to play).</summary>
-    public void ShowIntroduction()
+    public void ShowIntroduction(System.Action? then = null)
     {
         string[][] pages =
         {
@@ -555,7 +559,8 @@ public partial class Main : Control
             Settings.MarkIntroSeen();
             _overlayLayer.RemoveChild(dim);
             dim.QueueFree();
-            if (_screen is GameScreen g) g.FocusAfterNewspaper();
+            if (then != null) then();
+            else if (_screen is GameScreen g) g.FocusAfterNewspaper();
         }
         buttons.AddChild(Ui.Button("Skip", Close, 46));
         next = Ui.Button("Next", () => { if (page < pages.Length - 1) { page++; Sound.Play("page"); Show(); } else Close(); }, 46);
@@ -569,6 +574,107 @@ public partial class Main : Control
         _overlayLayer.AddChild(dim);
         Ui.FocusLater(next);
     }
+
+    /// <summary>
+    /// "This is you": when a life begins, the player meets themselves – name, traits and what they do –
+    /// and the family they were born into.
+    /// </summary>
+    public void ShowThisIsYou()
+    {
+        if (Session == null) return;
+        var s = Session;
+        var me = s.Describe(s.Player.Id);
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.55f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+        void Close()
+        {
+            _overlayLayer.RemoveChild(dim);
+            dim.QueueFree();
+            if (_screen is GameScreen g) g.FocusAfterNewspaper();
+        }
+
+        var box = Ui.VBox(14);
+        box.CustomMinimumSize = new Vector2(860, 0);
+        var heading = Ui.Label("This is you", 32, UiTheme.Accent);
+        heading.AddThemeFontOverride("font", UiTheme.Heading);
+        box.AddChild(heading);
+
+        var top = Ui.HBox(18);
+        top.AddChild(Portrait.Create(s.Portrait(me.Id), true, 110));
+        var who = Ui.VBox(4);
+        who.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        who.AddChild(Ui.Label(me.Name, 28, UiTheme.Text));
+        string city = s.Player.CityId is { } cid ? s.Country.Cities.FirstOrDefault(c => c.Id == cid)?.Name ?? "" : "";
+        who.AddChild(UiTheme.HandLabel($"A {(me.IsMale ? "boy" : "girl")}, born in {city}, {me.BirthYear}.", 24, UiTheme.Muted));
+        string start = s.World.StartConditions switch
+        {
+            "comfortable" => "You chose a comfortable start.",
+            "ordinary" => "You chose an ordinary start.",
+            "hard" => "You chose a hard start.",
+            _ => "Chance decided where you begin.",
+        };
+        who.AddChild(Ui.Label(start, 15, UiTheme.Faint));
+        top.AddChild(who);
+        box.AddChild(top);
+
+        // Who you are: each trait and what it does.
+        var traits = Ui.VBox(6);
+        traits.AddChild(Ui.Label("Who you are", 20, UiTheme.Text));
+        if (me.Traits.Count == 0) traits.AddChild(Ui.Label("Nothing stands out yet. Life will decide.", 16, UiTheme.Muted, wrap: true));
+        foreach (var (name, description, tone) in me.Traits)
+        {
+            var row = Ui.HBox(12);
+            var n = Ui.Label(name, 17, tone == "dark" ? UiTheme.Bad : tone == "odd" ? UiTheme.Info : UiTheme.Good);
+            n.CustomMinimumSize = new Vector2(190, 0);
+            row.AddChild(n);
+            var d = Ui.Label(description, 16, UiTheme.Muted, wrap: true);
+            d.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            row.AddChild(d);
+            traits.AddChild(row);
+        }
+        box.AddChild(traits);
+
+        // The family you were born into.
+        var family = Ui.VBox(8);
+        family.AddChild(Ui.Label("Your family", 20, UiTheme.Text));
+        foreach (var parent in Simulation.Systems.Kinship.Parents(s.World, s.Player))
+        {
+            var pv = s.Describe(parent.Id);
+            var row = Ui.HBox(12);
+            row.AddChild(Portrait.Create(s.Portrait(pv.Id), false, 56));
+            var col = Ui.VBox(2);
+            col.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            col.AddChild(Ui.Label($"{pv.Name}  ·  your {(pv.IsMale ? "father" : "mother")}, {pv.Age}", 17, UiTheme.Text));
+            string traitNames = string.Join(", ", pv.Traits.Select(t => t.Name.ToLowerInvariant()));
+            col.AddChild(Ui.Label($"{pv.Occupation}. {pv.Home}.{(traitNames.Length > 0 ? $" {Capitalize(traitNames)}." : "")}", 15, UiTheme.Muted, wrap: true));
+            if (pv.Condition != null) col.AddChild(Ui.Label(pv.Condition, 15, UiTheme.Bad));
+            row.AddChild(col);
+            family.AddChild(row);
+        }
+        var siblings = Simulation.Systems.Kinship.Siblings(s.World, s.Player).Where(x => x.IsAlive).ToList();
+        if (siblings.Count > 0)
+            family.AddChild(Ui.Label((siblings.Count == 1 ? "A sibling: " : "Siblings: ")
+                + string.Join(", ", siblings.Select(x => $"{x.FirstName} ({x.Age(s.Year)})")) + ".", 16, UiTheme.Muted, wrap: true));
+        box.AddChild(family);
+
+        var buttons = Ui.HBox(10);
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        var begin = Ui.Button("Begin your life", Close, 52);
+        UiTheme.MakePrimary(begin);
+        begin.AddThemeFontSizeOverride("font_size", 19);
+        begin.CustomMinimumSize = new Vector2(240, 52);
+        buttons.AddChild(begin);
+        box.AddChild(buttons);
+
+        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        Ui.FocusLater(begin);
+    }
+
+    private static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
 
     /// <summary>A new year begins: the family's newspaper, on top of the (already updated) game screen.</summary>
     public void ShowNewspaper(YearReport report)
@@ -727,7 +833,8 @@ public partial class Main : Control
             case 72: ShowContentSettings(Session); break;
             case 75: Shot("07_content"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowSettings(Session); break;
             case 77: Shot("07b_settings"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowIntroduction(); break;
-            case 79: Shot("07c_intro"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
+            case 78: Shot("07c_intro"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowThisIsYou(); break;
+            case 79: Shot("07d_this_is_you"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
             case 80: ShowSuccession(); break;
             case 82: Shot("08_succession"); _eraOverride = 1956; ShowGame(); break;
             case 86: Shot("09_era_1956"); _eraOverride = 1987; ShowGame(); break;

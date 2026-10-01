@@ -367,6 +367,30 @@ public class CrimeTests
     }
 
     [Fact]
+    public void Start_choices_shape_the_first_life()
+    {
+        for (ulong seed = 1; seed <= 5; seed++)
+        {
+            var girl = GameSession.NewGame(new NewGameOptions { Seed = seed, PlayerSex = Sex.Female, CityId = "kiruna" });
+            Assert.Equal(Sex.Female, girl.Player.Sex);
+            Assert.Equal("kiruna", girl.Player.CityId);
+
+            var easy = GameSession.NewGame(new NewGameOptions { Seed = seed, StartConditions = StartChoices.Comfortable });
+            var parents = Kinship.Parents(easy.World, easy.Player).ToList();
+            Assert.Contains(parents, p => p.OwnsHome);
+            Assert.All(parents, p => Assert.True(p.Money > 0 && p.Addiction == null && p.Activity == Activity.Working));
+
+            var hard = GameSession.NewGame(new NewGameOptions { Seed = seed, StartConditions = StartChoices.Hard });
+            var poor = Kinship.Parents(hard.World, hard.Player).ToList();
+            Assert.All(poor, p => Assert.True(p.Money < 0 && !p.OwnsHome));
+            Assert.Contains(poor, p => p.Activity == Activity.Unemployed);
+            Assert.Equal(StartChoices.Hard, hard.World.StartConditions);
+        }
+        // Left to chance, nothing is recorded.
+        Assert.Null(GameSession.NewGame(new NewGameOptions { Seed = 1 }).World.StartConditions);
+    }
+
+    [Fact]
     public void Texts_follow_the_times_and_speak_to_the_player()
     {
         const string text = "[[2000: A letter || A text message]] a week later.";

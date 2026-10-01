@@ -43,10 +43,12 @@ public static class PersonFactory
     }
 
     /// <summary>A child born this year to the given legal parents.</summary>
-    public static Person CreateBaby(SimContext ctx, Person parentA, Person? parentB, int? biologicalFatherId = null)
+    public static Person CreateBaby(SimContext ctx, Person parentA, Person? parentB, int? biologicalFatherId = null, Sex? chosenSex = null)
     {
         var rng = ctx.Rng;
         var sex = rng.Chance(0.51) ? Sex.Male : Sex.Female;
+        // A chosen sex (the player at the start) still draws, so the rest of the world stays the same.
+        if (chosenSex is { } chosen) sex = chosen;
         var father = parentA.Sex == Sex.Male ? parentA : parentB?.Sex == Sex.Male ? parentB : null;
         var lastName = (father ?? parentA).LastName;
         // The family that raises the child names it.

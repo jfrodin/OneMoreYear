@@ -28,11 +28,11 @@ public static class Scenarios
                           ?? Kinship.Grandparents(w, player).FirstOrDefault(p => p.Sex == Sex.Male && p.IsAlive);
 
         // The player's own money and home are set when the scenario hands over (see FastForward).
-        Apply(ctx, player, s.Player is { } pt ? new ScenarioTweak { Traits = pt.Traits, Smarts = pt.Smarts, Looks = pt.Looks, Fitness = pt.Fitness, Addiction = pt.Addiction } : null);
-        foreach (var p in parents) Apply(ctx, p, s.Parents);
-        Apply(ctx, father, s.Father);
-        Apply(ctx, mother, s.Mother);
-        Apply(ctx, grandfather, s.Grandfather);
+        StartChoices.Tweak(ctx, player, s.Player is { } pt ? new ScenarioTweak { Traits = pt.Traits, Smarts = pt.Smarts, Looks = pt.Looks, Fitness = pt.Fitness, Addiction = pt.Addiction } : null);
+        foreach (var p in parents) StartChoices.Tweak(ctx, p, s.Parents);
+        StartChoices.Tweak(ctx, father, s.Father);
+        StartChoices.Tweak(ctx, mother, s.Mother);
+        StartChoices.Tweak(ctx, grandfather, s.Grandfather);
         grandfather?.Flags.Add(GrandfatherFlag);
 
         // "The family secret": the mother was fifteen when the child was born, and her teenage
@@ -69,29 +69,6 @@ public static class Scenarios
         PersonFactory.SetUpLifeStage(ctx, p);
     }
 
-    private static void Apply(SimContext ctx, Person? p, ScenarioTweak? t)
-    {
-        if (p == null || t == null) return;
-        foreach (var trait in t.Traits ?? new())
-        {
-            if (ctx.Content.Traits.TryGetValue(trait, out var def) && def.Opposite != null) p.Traits.Remove(def.Opposite);
-            p.Traits.RemoveAll(x => ctx.Content.Traits.TryGetValue(x, out var d) && d.Opposite == trait);
-            PersonFactory.TryAddTrait(ctx, p, trait);
-        }
-        if (t.Smarts is { } smarts) p.Smarts = smarts;
-        if (t.Looks is { } looks) p.Looks = looks;
-        if (t.Fitness is { } fitness) p.Fitness = fitness;
-        if (t.Money is { } money) p.Money = ctx.Nominal(money);
-        if (t.OwnsHome == true && p.HomeValue <= 0) EconomySystem.GiveHome(p, HousingSystem.HomePrice(ctx, p), HousingSystem.HomePrice(ctx, p) * 0.3);
-        if (t.OwnsHome == false && p.HomeValue > 0) EconomySystem.SellHome(ctx, p, log: false);
-        if (t.Unemployed == true && p.Age(ctx.Year) >= 16) CareerSystem.BecomeJobSeeker(p, ctx);
-        if (t.Addiction != null)
-        {
-            p.Addiction = t.Addiction;
-            p.AddictionSince = ctx.Year;
-        }
-    }
-
     /// <summary>Whether a started scenario is what it promises (see ScenarioDef.Requires and the storyline).</summary>
     public static bool Meets(GameSession session, ScenarioDef s)
     {
@@ -125,7 +102,7 @@ public static class Scenarios
         int guard = 0;
         while (session.Player.Age(session.Year) < s.Age && !session.GameOver && guard++ < 150)
             bot.PlayYear(session);
-        if (s.Player is { } pt) Apply(session.Ctx, session.Player, new ScenarioTweak { Money = pt.Money, OwnsHome = pt.OwnsHome, Unemployed = pt.Unemployed });
+        if (s.Player is { } pt) StartChoices.Tweak(session.Ctx, session.Player, new ScenarioTweak { Money = pt.Money, OwnsHome = pt.OwnsHome, Unemployed = pt.Unemployed });
 
         var ctx = session.Ctx;
         var w = ctx.World;

@@ -9,7 +9,7 @@ namespace OneMoreYear.Simulation.Systems;
 /// </summary>
 public static class StartingFamily
 {
-    public static void Create(SimContext ctx)
+    public static void Create(SimContext ctx, NewGameOptions? options = null)
     {
         var w = ctx.World;
         var rng = ctx.Rng;
@@ -20,6 +20,7 @@ public static class StartingFamily
             heritage: rng.Chance(0.85) ? father.Heritage : null);
         father.AttractedToSameSex = mother.AttractedToSameSex = false;
         w.FamilyName = father.LastName;
+        if (options?.CityId is { } city && ctx.Country.Cities.Any(c => c.Id == city)) father.CityId = city;
         mother.CityId = father.CityId;
 
         foreach (var parent in new[] { father, mother })
@@ -40,7 +41,7 @@ public static class StartingFamily
         for (int i = 0; i < siblings; i++)
             CreateChildAged(ctx, father, mother, Math.Min(maxSiblingAge, rng.Range(1 + i * 2, 3 + i * 3)));
 
-        var player = FamilySystem.HaveChild(ctx, father, mother);
+        var player = FamilySystem.HaveChild(ctx, father, mother, sex: options?.PlayerSex);
         w.PlayerId = player.Id;
         w.PlayedIds.Add(player.Id);
 

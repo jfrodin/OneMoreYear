@@ -5,28 +5,25 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order (from playtest 4, 2026-10-01)
 
-1. [ ] **"This is you"** – when a life starts, a page that introduces the player: name, where and
-   when they were born, their traits and what each one does, the parents (who they are, their work,
-   their traits) and siblings.
-2. [ ] **Rethink the newspaper.** Several lines about the same person in one paper (moved in, split up,
+1. [ ] **Rethink the newspaper.** Several lines about the same person in one paper (moved in, split up,
    an affair) read oddly, and the order is unclear. Options: one story per person, told in order;
    a front page with one headline and a few short items; or something else than a newspaper
-   (a Christmas letter, a page in the album). Discuss with the producer first.
-3. [ ] **Investments with depth** – a game within the game:
+   (a Christmas letter, a page in the album). The producer has not decided yet – wait for them.
+2. [ ] **Investments with depth** – a game within the game:
    - see each holding: what you put in, what it is worth now, the change in %;
    - choose the amount, not only a share of your savings; several funds and companies to pick from;
    - shares pay dividends;
    - saving as a teenager (a savings account, a first fund with the parents' help).
-4. [ ] **Housing you can see**: homes of different sizes and prices in each city, renting or buying
+3. [ ] **Housing you can see**: homes of different sizes and prices in each city, renting or buying
    with what each costs, before you choose. A summer cottage (and other property) shows its value
    among your assets.
-5. [ ] **Effort at work**: choose to work harder or coast – it moves performance, promotions and the
+4. [ ] **Effort at work**: choose to work harder or coast – it moves performance, promotions and the
    risk of burnout. Show how performance works.
-6. [ ] **More ways to learn**: adult education (Komvux) to raise grades later, vocational courses,
+5. [ ] **More ways to learn**: adult education (Komvux) to raise grades later, vocational courses,
    and a clear reason when a university application fails (grades needed vs. yours).
-7. [ ] **A new decade, a new chapter**: a title page when a decade begins ("The 1980s – …"), and a
+6. [ ] **A new decade, a new chapter**: a title page when a decade begins ("The 1980s – …"), and a
    more visible change of look at that moment instead of only a slow blend.
-8. [ ] Keep checking texts for anachronisms (use `[[year: before || after]]`). Also programme
+7. [ ] Keep checking texts for anachronisms (use `[[year: before || after]]`). Also programme
    names, like "Computer science" before the 1970s.
 
 ## Closed test build (planned, not yet)

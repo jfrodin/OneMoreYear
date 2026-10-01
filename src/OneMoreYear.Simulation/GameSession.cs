@@ -65,7 +65,8 @@ public sealed class GameSession
                 Rng = new SimRandom(s),
             };
             var session = new GameSession(world, content);
-            StartingFamily.Create(session.Ctx);
+            StartingFamily.Create(session.Ctx, options);
+            StartChoices.Apply(session.Ctx, options.StartConditions);
             if (scenario != null) Scenarios.ApplyFamily(session.Ctx, scenario);
             session.World.ActionPoints = session.ActionPointsFor(session.Player);
             if (scenario != null) Scenarios.FastForward(session, scenario);

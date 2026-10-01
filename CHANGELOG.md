@@ -2,6 +2,17 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.26.0 – 2026-10-01 · This is you
+
+- **A little say in who you are.** In "A new life" you can choose to be a boy or a girl, the city you
+  are born in, and **your start**: *Comfortable – easier* (money, steady jobs, a home of their own),
+  *Ordinary – normal*, or *A hard start – harder* (debt, a parent out of work, maybe drink). Each one
+  is set to chance by default – "Leave it to chance – as intended" – because that is how the game is
+  meant to be played. The same seed with the same choices gives the same family.
+- **"This is you"**: when a life begins, a page shows your name, where and when you were born, your
+  traits and what each one does, your parents (work, home, traits, troubles) and your siblings.
+- The title screen is a little more compact.
+
 ## 0.25.1 – 2026-10-01 · F1 everywhere
 
 - F1 (playtest note) now works on top of the newspaper and other dialogs. The note says what was open.

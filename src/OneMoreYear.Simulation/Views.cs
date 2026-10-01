@@ -14,6 +14,14 @@ public sealed record NewGameOptions
     public string? ScenarioId { get; init; }
     /// <summary>Dark themes turned down for this game (see Model.ContentCategories).</summary>
     public IReadOnlyDictionary<string, Model.ContentLevel>? ContentSettings { get; init; }
+
+    // A few optional choices about the first life. Left out, chance decides – the way the game is meant to be played.
+    /// <summary>The first player's sex.</summary>
+    public Model.Sex? PlayerSex { get; init; }
+    /// <summary>The family's circumstances: "comfortable" (easier), "ordinary" or "hard" (harder). See Systems.StartChoices.</summary>
+    public string? StartConditions { get; init; }
+    /// <summary>The city the player is born in (an id from the country's cities).</summary>
+    public string? CityId { get; init; }
 }
 
 /// <summary>A choice. <paramref name="Tag"/> names the trait that makes it possible ("Charming"); <paramref name="Factors"/> explains the chance.</summary>

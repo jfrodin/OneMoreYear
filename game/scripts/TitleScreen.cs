@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using OneMoreYear.Simulation;
 using OneMoreYear.Simulation.Content;
+using OneMoreYear.Simulation.Model;
+using OneMoreYear.Simulation.Systems;
 
 namespace OneMoreYear.Game;
 
@@ -9,6 +12,9 @@ public partial class TitleScreen : Control
 {
     private Main _main = null!;
     private OptionButton _year = null!;
+    private OptionButton _sex = null!, _conditions = null!, _city = null!;
+    private Label _conditionInfo = null!;
+    private IReadOnlyList<CityDef> _cities = null!;
 
     /// <summary>Where a life can begin: a decade and what Sweden felt like then.</summary>
     private static readonly (int Year, string Name)[] Decades =
@@ -34,18 +40,18 @@ public partial class TitleScreen : Control
         center.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(center);
 
-        var col = Ui.VBox(14);
+        var col = Ui.VBox(10);
         col.CustomMinimumSize = new Vector2(520, 0);
         center.AddChild(col);
 
-        var title = Ui.Label("ONE MORE YEAR", 72, UiTheme.Accent);
+        var title = Ui.Label("ONE MORE YEAR", 56, UiTheme.Accent);
         title.AddThemeFontOverride("font", UiTheme.Masthead);
         title.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(title);
-        var tagline = UiTheme.HandLabel("Live a life. Build a family. Leave a legacy.", 30, UiTheme.Muted);
+        var tagline = UiTheme.HandLabel("Live a life. Build a family. Leave a legacy.", 26, UiTheme.Muted);
         tagline.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(tagline);
-        col.AddChild(Ui.Spacer(30));
+        col.AddChild(Ui.Spacer(12));
 
         Button? first = null;
         if (SaveSystem.HasSave)
@@ -84,6 +90,34 @@ public partial class TitleScreen : Control
         _seed = new LineEdit { PlaceholderText = "Random – or a code from a friend", MaxLength = 24, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         seedRow.AddChild(_seed);
         options.AddChild(seedRow);
+
+        // A few choices about the first life – all left to chance unless the player wants otherwise.
+        OptionButton Choice(string label, IEnumerable<string> items)
+        {
+            var row = Ui.HBox(12);
+            var l = Ui.Label(label, 18, UiTheme.Muted);
+            l.CustomMinimumSize = new Vector2(140, 0);
+            row.AddChild(l);
+            var o = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+            foreach (var item in items) o.AddItem(item);
+            row.AddChild(o);
+            options.AddChild(row);
+            return o;
+        }
+        // Sex and city share a row: "You are [a girl] in [Umeå]".
+        _sex = Choice("You are", new[] { "Surprise me", "A boy", "A girl" });
+        var whoRow = (HBoxContainer)_sex.GetParent();
+        whoRow.AddChild(Ui.Label("in", 18, UiTheme.Muted));
+        _cities = ContentDb.Embedded.Countries["sweden"].Cities;
+        _city = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+        _city.AddItem("Surprise me");
+        foreach (var c in _cities) _city.AddItem(c.Name);
+        whoRow.AddChild(_city);
+        _conditions = Choice("Your start", new[] { "Leave it to chance – as intended" }.Concat(StartChoices.Conditions.Select(c => c.Name)));
+        _conditionInfo = Ui.Label("", 15, UiTheme.Faint, wrap: true);
+        options.AddChild(_conditionInfo);
+        _conditions.ItemSelected += _ => UpdateConditionInfo();
+        UpdateConditionInfo();
 
         // Test scenarios (a playtesting tool, docs/test-scenarios.md): only in development builds, never in a release.
         var scenarioRow = Ui.HBox(12);
@@ -134,12 +168,23 @@ public partial class TitleScreen : Control
         string? seed = string.IsNullOrWhiteSpace(_seed.Text) ? null : _seed.Text;
         int year = Decades[_year.Selected].Year;
         string? scenario = SelectedScenario?.Id;
+        var choices = new NewGameOptions
+        {
+            PlayerSex = _sex.Selected switch { 1 => Sex.Male, 2 => Sex.Female, _ => null },
+            StartConditions = _conditions.Selected > 0 ? StartChoices.Conditions[_conditions.Selected - 1].Id : null,
+            CityId = _city.Selected > 0 ? _cities[_city.Selected - 1].Id : null,
+        };
         // All slots taken: the player picks which family to replace.
         if (SaveSystem.FirstEmptySlot() == null)
-            _main.ShowSlots(slot => _main.StartNewGame(year, seed, scenario, slot));
+            _main.ShowSlots(slot => _main.StartNewGame(year, seed, scenario, slot, choices));
         else
-            _main.StartNewGame(year, seed, scenario);
+            _main.StartNewGame(year, seed, scenario, choices: choices);
     }
+
+    private void UpdateConditionInfo() =>
+        _conditionInfo.Text = _conditions.Selected > 0
+            ? StartChoices.Conditions[_conditions.Selected - 1].Description
+            : "Whatever family fate gives you – this is how One More Year is meant to be played.";
 
     private ScenarioDef? SelectedScenario => _scenario.Selected > 0 ? _scenarios[_scenario.Selected - 1] : null;
 
