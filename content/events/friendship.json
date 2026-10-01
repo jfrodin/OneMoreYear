@@ -1,0 +1,118 @@
+// Friendship at every age: making friends, keeping them, losing them and finding them again. No dashes.
+[
+  {
+    "id": "friend_birthday_forgot", "title": "Forgotten",
+    "text": "{t.name}'s birthday was yesterday. You remember it today, at lunch, with a fork halfway to your mouth.",
+    "conditions": { "minAge": 12 },
+    "target": { "role": "friend" }, "cooldown": 8,
+    "choices": [
+      { "text": "Call and grovel", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 } ], "result": "{t.He} pretends to be offended for exactly one minute, then tells you about the party you missed." },
+      { "text": "Turn up with cake", "effects": [ { "type": "money", "amount": -250 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 } ],
+        "result": "A day late, with a cake that says HAPPY BIRTHDAY YESTERDAY. It becomes a tradition." },
+      { "text": "Say nothing and hope", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "{t.He} noticed." }
+    ]
+  },
+  {
+    "id": "friend_moving_help", "title": "Moving day",
+    "text": "{t.name} is moving and needs help carrying. Fourth floor, no lift, and a piano.",
+    "conditions": { "minAge": 18, "maxAge": 60 },
+    "target": { "role": "friend", "conditions": { "minAge": 18 } }, "cooldown": 6,
+    "choices": [
+      { "text": "Help all day", "effects": [ { "type": "health", "amount": -1 }, { "type": "attribute", "kind": "fitness", "amount": 1 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "helped_move", "text": "{name} carried my piano up four flights", "impact": 12 } ],
+        "result": "The piano gets stuck on the second floor for forty minutes. Afterwards, pizza on the floor among the boxes. Your back hurts for a week and it was a good day." },
+      { "text": "Suddenly have other plans", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ], "result": "{t.He} hires students. You see the photos afterwards. It looked fun." }
+    ]
+  },
+  {
+    "id": "friend_drifting", "title": "We should meet",
+    "text": "You and {t.name} have said \"we should meet up\" four times this year. You have not met once.",
+    "conditions": { "minAge": 25 },
+    "target": { "role": "friend", "conditions": { "minAge": 25 } }, "cooldown": 8,
+    "choices": [
+      { "text": "Book a date, right now", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 4 } ],
+        "result": "A Thursday dinner. Three hours go by. You agree to do it every month, and for once you actually do." },
+      { "text": "Let it go", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -8, "mutual": true } ], "result": "You still like each other's [[2006: Christmas cards || photos]]. That is something." }
+    ]
+  },
+  {
+    "id": "friend_jealous_new", "title": "The new friend",
+    "text": "{t.name} has a new friend from work and talks about her all the time. You were not invited to the weekend at her cottage.",
+    "conditions": { "minAge": 14 },
+    "target": { "role": "friend", "conditions": { "minAge": 14 } }, "cooldown": 10,
+    "choices": [
+      { "text": "Say you felt left out", "chance": 0.6, "chanceTraits": { "brave": 0.1, "charming": 0.1 },
+        "success": { "text": "{t.He} had no idea and invites you next time. The new friend turns out to be great.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 } ] },
+        "failure": { "text": "{t.He} says you are being childish, which stings because it is a bit true.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 6 } ] } },
+      { "text": "Make new friends too", "effects": [ { "type": "meet_through_friend" }, { "type": "happiness", "amount": 2 } ], "result": "It is fine. People are allowed more than one friend. You keep telling yourself that." }
+    ]
+  },
+  {
+    "id": "friend_needs_place", "title": "The sofa",
+    "text": "{t.name} has left {t.his} partner and needs somewhere to sleep. \"Just a few nights,\" {t.he} says.",
+    "conditions": { "minAge": 20, "livesWithParents": false },
+    "target": { "role": "friend", "conditions": { "minAge": 20 } }, "cooldown": 15,
+    "choices": [
+      { "text": "Of course", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12 },
+          { "type": "memory", "who": "target", "to": "player", "kind": "took_me_in", "text": "{name} let me sleep on the sofa when everything fell apart", "impact": 25 } ],
+        "result": "A few nights becomes seven weeks. Some evenings you talk until three. Some evenings neither of you says a word. Both are fine." },
+      { "text": "Help {t.him} find something else", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 3 } ], "result": "You call around and find a sublet in two days. {t.He} is grateful, and a bit hurt." }
+    ]
+  },
+  {
+    "id": "friend_holiday_together", "title": "A week away",
+    "text": "{t.name} suggests a week away together, just the two of you, like when you were young.",
+    "conditions": { "minAge": 25, "minMoney": 8000 },
+    "target": { "role": "friend", "conditions": { "minAge": 25 } }, "cooldown": 10,
+    "choices": [
+      { "text": "Go", "chance": 0.7,
+        "success": { "text": "A cabin, a lake, wine on the jetty. You talk about everything and nothing. It is the best week of the year.", "effects": [ { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 7 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ] },
+        "failure": { "text": "It turns out you have become very different people. You are both relieved when it is over, and a little sad.", "effects": [ { "type": "money", "amount": -6000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5, "mutual": true } ] } },
+      { "text": "Not this year", "effects": [], "result": "\"Next year then,\" says {t.name}. You both mean it at the time." }
+    ]
+  },
+  {
+    "id": "friend_borrowed_money", "title": "Still waiting",
+    "text": "{t.name} borrowed money from you a year ago. {t.He} has not mentioned it since, and has just been on holiday to [[1990: the Canary Islands. || Thailand.]]",
+    "conditions": { "minAge": 18 },
+    "target": { "role": "friend", "conditions": { "minAge": 18 } }, "cooldown": 15, "weight": 0.6,
+    "choices": [
+      { "text": "Ask for it back", "chance": 0.55, "chanceTraits": { "brave": 0.1, "charming": 0.1, "conflict_averse": -0.2 },
+        "success": { "text": "{t.He} is embarrassed and pays it all back the same day, with an apology and a bottle of wine.", "effects": [ { "type": "money", "amount": 5000 } ] },
+        "failure": { "text": "{t.He} gets defensive and pays half. The friendship never quite recovers.", "effects": [ { "type": "money", "amount": 2500 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -10, "mutual": true } ] } },
+      { "text": "Write it off", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 6 } ], "result": "You tell yourself it is the price of the friendship. You mention it to your partner more often than you would like." }
+    ]
+  },
+  {
+    "id": "friend_old_reconnect", "title": "A familiar name",
+    "text": "A [[2006: letter || message]] from your best friend at fourteen. Thirty years of nothing, and now: \"I've thought about you so often. Are you well?\"",
+    "conditions": { "minAge": 40 }, "cooldown": 30,
+    "choices": [
+      { "text": "Write back the same day", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "meet_through_friend" }, { "type": "memory", "kind": "old_friend_back", "text": "Finding my best friend again after thirty years", "impact": 18 } ],
+        "result": "You meet for coffee and stay until the café closes. You still laugh at the same things." },
+      { "text": "Let it lie", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You read it many times. You do not know what you would say." }
+    ]
+  },
+  {
+    "id": "friend_secret_crush", "title": "More than friends",
+    "text": "{t.name} has had too much wine and says {t.he} has always been a little bit in love with you.",
+    "conditions": { "minAge": 18, "hasPartner": false },
+    "target": { "role": "friend", "conditions": { "minAge": 18, "hasPartner": false, "compatibleWithPlayer": true } }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Kiss {t.him}", "chance": 0.6,
+        "success": { "text": "It is not strange at all. That is the strange part.", "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 9 } ] },
+        "failure": { "text": "It is very strange. You agree to never mention it, and then mention it at every party for ten years.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3, "mutual": true } ] } },
+      { "text": "Say you value the friendship too much", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "{t.He} laughs it off. In the morning there is a careful [[2005: phone call || text]]." }
+    ]
+  },
+  {
+    "id": "friend_funeral_speech", "trigger": "situation", "title": "The eulogy",
+    "text": "{t.name}'s family has asked you to speak at the funeral. You knew {t.him} longer than almost anyone.",
+    "conditions": { "minAge": 40 },
+    "cooldown": 0,
+    "choices": [
+      { "text": "Tell the funny stories", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "People laugh in a church full of grief. Afterwards {t.his} daughter thanks you for giving {t.him} back to them for five minutes." },
+      { "text": "Say it was too hard", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You sit in the third row and wish you had found the words." }
+    ]
+  }
+]
