@@ -1,0 +1,135 @@
+// More of old age, 65 and up: small pleasures, the body, giving things away, and still learning.
+// No dashes.
+[
+  {
+    "id": "old_allotment", "title": "The allotment",
+    "text": "A plot has come free at the allotments by the railway. Ten square metres of earth and a shed with a broken window.",
+    "conditions": { "minAge": 63, "notFlags": [ "allotment" ] }, "cooldown": 20,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "flag", "flag": "allotment" }, { "type": "money", "amount": -600 }, { "type": "happiness", "amount": 6 }, { "type": "health", "amount": 2 } ],
+        "result": "Potatoes, dill, a row of sweet peas for no reason except the smell. The man on the next plot has opinions about your compost." },
+      { "text": "Your knees say no", "effects": [], "result": "You buy tomatoes in pots for the balcony. They do surprisingly well." }
+    ]
+  },
+  {
+    "id": "old_birthday_80", "title": "Eighty",
+    "text": "The family wants to throw a big party for your eightieth. You would honestly prefer a quiet coffee.",
+    "conditions": { "minAge": 80, "maxAge": 80 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Let them", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "eightieth", "text": "My eightieth, with everyone there", "impact": 20 } ],
+        "result": "A hired hall, a slideshow of your life and a grandchild who plays the violin very badly. You are tired for a week and happy for a year." },
+      { "text": "Coffee and cake, only the closest", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Seven people round your kitchen table, and a cake that says EIGHTY in blue icing. Exactly right." }
+    ]
+  },
+  {
+    "id": "old_give_away", "title": "With warm hands",
+    "text": "You have more things than you will ever need, and you would rather see who gets them than have them divided after.",
+    "conditions": { "minAge": 72, "minChildren": 1 }, "cooldown": 30,
+    "choices": [
+      { "text": "Let everyone choose something", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "generous", "chance": 0.1 } ],
+        "result": "Your granddaughter chooses the ugly clock you were sure nobody wanted. She says she loved it when she was small. You did not know." },
+      { "text": "Give money now instead of later", "requires": { "minMoney": 100000 }, "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": 6 } ],
+        "result": "A deposit for a flat, a debt paid off, a trip. You get to see it happen. That was the point." },
+      { "text": "Not yet", "effects": [], "result": "There is time. Probably." }
+    ]
+  },
+  {
+    "id": "old_swimming", "title": "The pool",
+    "text": "The swimming baths have a class for pensioners on Thursday mornings. You never learned to swim properly.",
+    "conditions": { "minAge": 66 }, "cooldown": 30,
+    "choices": [
+      { "text": "Sign up", "chance": 0.6, "chanceTraits": { "brave": 0.15, "lazy": -0.15 },
+        "success": { "text": "By May you can do a full length of breaststroke with your head up. The class goes for coffee afterwards and you become regulars.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "happiness", "amount": 7 }, { "type": "health", "amount": 3 } ] },
+        "failure": { "text": "You go twice. The water is cold and your swimsuit is older than your grandchildren.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Too old for that", "effects": [], "result": "You say so to yourself, out loud. It does not sound right." }
+    ]
+  },
+  {
+    "id": "old_letters_to_dead", "title": "Dear",
+    "text": "Sometimes, in the evenings, you talk to your late partner. Out loud, in the kitchen. Today you thought about writing it down.",
+    "conditions": { "minAge": 60, "flags": [ "widowed" ], "hasPartner": false }, "cooldown": 20,
+    "choices": [
+      { "text": "Write a letter", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "ailment_treat", "kind": "depression" } ],
+        "result": "Four pages about the grandchildren, the leaking tap and the neighbours. You fold it and put it in the drawer with the others." },
+      { "text": "Go out for a walk instead", "effects": [ { "type": "health", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "You talk to the trees instead. They do not mind either." }
+    ]
+  },
+  {
+    "id": "old_childhood_home", "title": "The old house",
+    "text": "You drive past the house you grew up in. Somebody has painted it yellow. There is a trampoline where the apple tree was.",
+    "conditions": { "minAge": 65, "flags": [ "driving_licence" ] }, "cooldown": 30,
+    "choices": [
+      { "text": "Knock on the door", "chance": 0.5, "chanceTraits": { "charming": 0.15, "social": 0.1 },
+        "success": { "text": "A young family lets you in. Your room is a nursery now. The crack in the window frame is still there, the one you made with a hockey stick when you were nine.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "childhood_home", "text": "Standing in my old room again", "impact": 15 } ] },
+        "failure": { "text": "Nobody is home. You stand at the gate a bit too long and a neighbour comes out to ask if you are lost.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Keep driving", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Better to keep it the way it was." }
+    ]
+  },
+  {
+    "id": "old_neighbour_boy", "title": "The boy next door",
+    "text": "The boy next door, maybe twelve, offers to do your shopping when it is icy. He wants twenty kronor a time.",
+    "conditions": { "minAge": 75 }, "cooldown": 8,
+    "choices": [
+      { "text": "Pay him fifty", "effects": [ { "type": "money", "amount": -500 }, { "type": "happiness", "amount": 5 }, { "type": "meet_through_friend" } ],
+        "result": "He comes every week. After a while he stays for juice and tells you about school. You know more about his maths teacher than his parents do." },
+      { "text": "Do it yourself", "chance": 0.7, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "Ice grips on your shoes and a walking stick. Slowly, but there and back.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 1 } ] },
+        "failure": { "text": "You slip outside the shop. A wrist in plaster for six weeks.", "effects": [ { "type": "health", "amount": -6 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "old_choir", "title": "The choir",
+    "text": "The church choir needs more voices. The conductor says it does not matter if you cannot read music. Nobody else can either.",
+    "conditions": { "minAge": 62 }, "cooldown": 20,
+    "choices": [
+      { "text": "Join", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "health", "amount": 2 }, { "type": "memory", "kind": "choir", "text": "Singing in the choir on Wednesday evenings", "impact": 15 } ],
+        "result": "Wednesday evenings, and the Lucia concert in December. You sing loudly and mostly right." },
+      { "text": "Listen from the pews", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You go to every concert anyway." }
+    ]
+  },
+  {
+    "id": "old_great_grandchild_name", "title": "The name",
+    "text": "{t.name} has had a baby and has named it after you.",
+    "conditions": { "minAge": 70 },
+    "target": { "role": "grandchild", "conditions": { "minAge": 20, "minChildren": 1 } }, "cooldown": 50, "weight": 0.5,
+    "choices": [
+      { "text": "Cry, a bit", "effects": [ { "type": "happiness", "amount": 10 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true },
+          { "type": "memory", "kind": "named_after", "to": "target", "text": "The baby who got my name", "impact": 30 } ],
+        "result": "You hold the baby at the christening and say your own name to it, very softly. It is the strangest, happiest thing." },
+      { "text": "Say they should not have", "effects": [ { "type": "happiness", "amount": 8 } ], "result": "You say it three times. Nobody believes you mean it, least of all you." }
+    ]
+  },
+  {
+    "id": "old_funeral_plan", "title": "The arrangements",
+    "text": "You have started thinking about your own funeral. Not in a sad way. You just do not want anyone choosing the wrong hymns.",
+    "conditions": { "minAge": 75 }, "cooldown": 40,
+    "choices": [
+      { "text": "Write it all down", "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "Two hymns, one pop song from 1965, no lilies, coffee and cake after with the good cups. You put it in an envelope marked AFTER." },
+      { "text": "Talk to the children about it", "chance": 0.5, "chanceTraits": { "charming": 0.1 },
+        "success": { "text": "It turns into a long, funny evening about everyone's worst funerals. Your son writes everything down.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "\"Don't talk like that,\" says your son, and the subject is changed. You write it down anyway.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "old_bus_trip", "title": "The pensioners' trip",
+    "text": "The pensioners' association is going on a bus trip to the coast. Lunch, a guided tour of a church, and back by seven.",
+    "conditions": { "minAge": 65 }, "cooldown": 3,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -400 }, { "type": "happiness", "amount": 5 } ],
+        "result": "Somebody brings a thermos of coffee with something extra in it. The singing on the way home is not suitable for a church tour." },
+      { "text": "Stay home", "effects": [], "result": "You hear all about it at the pharmacy for weeks." }
+    ]
+  },
+  {
+    "id": "old_memory_slip", "title": "Where was it",
+    "text": "You find your keys in the fridge. The milk is in your coat pocket. You laugh, and then you sit down.",
+    "conditions": { "minAge": 72, "notAilments": [ "dementia" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Go to the memory clinic", "chance": 0.7,
+        "success": { "text": "Normal for your age, the doctor says. You buy a key bowl and put it by the door.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "The tests are not normal. They want to see you again in six months.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "ailment_add", "kind": "dementia", "chance": 0.4 } ] } },
+      { "text": "Do crosswords every day", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "You get very good at crosswords. You keep a list by the phone." }
+    ]
+  }
+]

@@ -35,8 +35,8 @@
     ]
   },
   {
-    "id": "work_care_night_patient", "title": "Room twelve",
-    "text": "Three in the morning on the ward. The old woman in room twelve is awake and frightened and asks you to hold her hand.",
+    "id": "work_care_night_patient", "title": "Night shift",
+    "text": "Three in the morning on the ward. The old woman in room eight is awake and frightened and asks you to hold her hand.",
     "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "care" ] }, "cooldown": 8,
     "choices": [
       { "text": "Sit with her", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "performance", "amount": -2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],

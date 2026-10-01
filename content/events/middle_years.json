@@ -194,18 +194,6 @@
     ]
   },
   {
-    "id": "mid_downsize", "title": "Too many rooms",
-    "text": "The house has four bedrooms and two of them are full of boxes labelled with your children's names.",
-    "conditions": { "minAge": 55, "ownsHome": true, "maxChildrenAtHome": 0, "minChildren": 1 }, "cooldown": 20,
-    "choices": [
-      { "text": "Sell and buy something smaller", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -2 } ],
-        "result": "The last evening you walk through every room. The marks on the kitchen door frame, where you measured them, you photograph before the painters come." },
-      { "text": "Ask the children to collect their boxes", "effects": [ { "type": "happiness", "amount": 2 } ],
-        "result": "One comes, takes a teddy bear and leaves the rest. The boxes stay." },
-      { "text": "Keep it. This is where Christmas happens", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "As long as there is a house, there is somewhere to come home to." }
-    ]
-  },
-  {
     "id": "mid_hearing", "title": "Pardon?",
     "text": "Your family say you have the television too loud. You say they mumble. At dinner you nod at things you did not hear.",
     "conditions": { "minAge": 55 }, "cooldown": 25,
