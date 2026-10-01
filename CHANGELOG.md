@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.24.0 – 2026-10-01 · Finding someone
+
+- **You meet people as often as everyone else does.** A single player used to depend on one rare random
+  event, and spent three quarters of their adult years alone. Now you meet someone about as often as
+  the people around you, as an event where you decide: a Saturday dance (before 1990), a dinner your
+  friends set up, an hour stuck on a train, a match on a dating app (from 2008).
+- **Love moves forward.** Your partner suggests moving in, proposes and brings up children at levels
+  that fit a normal, happy couple. They used to need a couple to be unusually happy. Partners also
+  leave only when something is really wrong.
+- **Marriage follows the times**: before 1970 you marry first and move in after; until 1990 proposals
+  come a little sooner.
+- A player who says yes to love is now usually married with children at 35 (27 of 40 in simulation,
+  up from none). One who answers at random has a partner in 28 of 40 cases (up from 13).
+
 ## 0.23.0 – 2026-10-01 · Abuse of children withdrawn
 
 - **Abuse of children is out of the game for now.** It never happens, whatever the content settings

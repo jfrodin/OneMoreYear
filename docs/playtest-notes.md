@@ -208,3 +208,81 @@ Famileträödet måste bli snyggare. Vi kan iten ha såhär
 _playtest-saves/2026-09-30_203223.png · playtest-saves/2026-09-30_203223.json_
 
 _Notes above were processed on 2026-09-30 (playtest 3): full-body figures removed, graphical family tree, trait colours, names by era and heritage, 30 new childhood and teen events – see CHANGELOG 0.17.0._
+
+### 2026-10-01 21:11 · Screen: TitleScreen
+
+New game känns gömt i jämförelse med continue.
+
+_playtest-saves/2026-10-01_211129.png_
+
+### 2026-10-01 21:13 · v0.23.0  ·  1950  ·  Marie Olofsson, 0  ·  This Year  ·  seed T2FXTXJN
+
+Kanske vi ska introducera den första personen när man startar spelet. Alltså typ "This is you, och gpå igenom namn, kön, traits och förklara vad dom gör, vilka dina förädlrar är och vad dom gör etc? Elelr är det onödigt?
+
+_playtest-saves/2026-10-01_211336.png · playtest-saves/2026-10-01_211336.json_
+
+### 2026-10-01 21:15 · v0.23.0  ·  1952  ·  Marie Olofsson, 2  ·  This Year  ·  seed T2FXTXJN
+
+Raderan i tidningen komemr ltie konstigt. Tänker att man ofta läser uppifrån och ned, men jjag vet itne hur man ska lägga upp det. Nu kom det fyra rader där min farbror flyttaihop, separerade och det uppdagades att hans sambo hade en affär i samma tidning. Blir lite märkligt på någto vis när allt det händer samtidigt. Hur det ska hanteras vet jag dock inte. Tidningen kanske itne är rätt grej? Vet ej.
+
+_playtest-saves/2026-10-01_211539.png · playtest-saves/2026-10-01_211539.json_
+
+### 2026-10-01 21:22 · v0.23.0  ·  1960  ·  Marie Olofsson, 10  ·  This Year  ·  seed T2FXTXJN
+
+Devoted parent kanske man inte kan ha som perk som barn?
+
+_playtest-saves/2026-10-01_212220.png · playtest-saves/2026-10-01_212220.json_
+
+### 2026-10-01 21:23 · v0.23.0  ·  1960  ·  Marie Olofsson, 10  ·  School & Work  ·  seed T2FXTXJN
+
+Kan klicka konstant på do homwork, men efter första gången händer inget. Behöver kanske gråas ut när man klickat en gång?
+
+_playtest-saves/2026-10-01_212300.png · playtest-saves/2026-10-01_212300.json_
+
+### 2026-10-01 21:23 · v0.23.0  ·  1961  ·  Marie Olofsson, 11  ·  School & Work  ·  seed T2FXTXJN
+
+Det händer inge tmed grades när man gör läxa som barn? Antingen ska vi itne ha grades, vilekt man itne har i Sverige tidigt, men det borde heta performance elelr något likanande kanske, tills man har betyg?
+
+_playtest-saves/2026-10-01_212356.png · playtest-saves/2026-10-01_212356.json_
+
+### 2026-10-01 21:24 · v0.23.0  ·  1962  ·  Marie Olofsson, 12  ·  School & Work  ·  seed T2FXTXJN
+
+Ok, det uppdateras, men man måste växla tab för att det ska synas. Så kan vi itne ha det.
+
+_playtest-saves/2026-10-01_212439.png · playtest-saves/2026-10-01_212439.json_
+
+### 2026-10-01 21:25 · v0.23.0  ·  1963  ·  Marie Olofsson, 13  ·  Family Tree  ·  seed T2FXTXJN
+
+Släktträdet börjar se riktigt bra ut! Snyggt
+
+_playtest-saves/2026-10-01_212528.png · playtest-saves/2026-10-01_212528.json_
+
+### 2026-10-01 21:26 · v0.23.0  ·  1965  ·  Marie Olofsson, 15  ·  Money  ·  seed T2FXTXJN
+
+Varför kan jag itne på något vis investera pengarna elelr köpa något för dom?
+
+_playtest-saves/2026-10-01_212634.png · playtest-saves/2026-10-01_212634.json_
+
+### 2026-10-01 21:30 · v0.23.0  ·  1968  ·  Marie Olofsson, 18  ·  Money  ·  seed T2FXTXJN
+
+Varför kan jag bara investera 300 i funds? Det här måste vi göra bättre om ha mer djup i. TRror mågnma kan tycka att det här är ett roligt spel i spelet så att säga med aktier och investeringar.
+
+_playtest-saves/2026-10-01_213037.png · playtest-saves/2026-10-01_213037.json_
+
+### 2026-10-01 21:32 · v0.23.0  ·  1969  ·  Marie Olofsson, 19  ·  School & Work  ·  seed T2FXTXJN
+
+Apply for univeristy gjorde ingenting på den här sidan
+
+_playtest-saves/2026-10-01_213248.png · playtest-saves/2026-10-01_213248.json_
+
+### 2026-10-01 21:33 · v0.23.0  ·  1969  ·  Marie Olofsson, 19  ·  School & Work  ·  seed T2FXTXJN
+
+Eftersom jag itne kunde gå på universitet av någon anledning så borde vi introducera extrautbildning, eller andra sätt att utbilda sig till specifika saker. elelr läsa upp betyg så man kan söka ett jobb senar eom man vill.
+
+_playtest-saves/2026-10-01_213347.png · playtest-saves/2026-10-01_213347.json_
+
+### 2026-10-01 21:34 · v0.23.0  ·  1970  ·  Marie Olofsson, 20  ·  This Year  ·  seed T2FXTXJN
+
+Jag minns inte att jag sökte något jobb? Sker detta automatiskt om man iten har något och är vuxen?
+
+_playtest-saves/2026-10-01_213426.png · playtest-saves/2026-10-01_213426.json_

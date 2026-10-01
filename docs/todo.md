@@ -7,6 +7,16 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 1. [ ] Playtest the new systems (faces, money, content settings) and triage the notes.
 
+## Closed test build (planned, not yet)
+
+When the game is ready for outside testers. Ask the producer before starting.
+- itch.io: a hidden, password- or key-protected page, marked 18+, Windows first. Updates with butler.
+- A "test build" mode: F1 stays, development tools go, and a start notice says "Test version – F1 for feedback".
+- F1 posts the note, screenshot, version, seed and save to a Discord channel through a webhook (fine
+  for a closed group, not for public builds).
+- Saves must survive updates in the middle of a life.
+- The producer sets up the itch.io account, the Discord server and webhook, and invites the testers.
+
 ## Before release
 
 - [ ] **Strip the testing tools** from the release build.
@@ -43,6 +53,5 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Balancing
 
-- [ ] Few players marry: a player who only answers events is rarely married at 35 (`SimRunner --dating`).
-  Look at how partners feel about the player over time, and at proposals.
+- Nothing open. `SimRunner --dating` shows partners, marriages and children at 35 (random answers vs. a player who says yes to love).
 

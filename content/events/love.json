@@ -1,0 +1,78 @@
+[
+  {
+    "id": "meet_at_dance", "trigger": "situation", "title": "Saturday dance",
+    "text": "At the dance on Saturday, {t.name} asks you for a dance. Then another. By the third, your friends have stopped pretending not to look.",
+    "choices": [
+      {
+        "text": "Dance until they close",
+        "chance": 0.8, "chanceTraits": { "social": 0.1, "charming": 0.1, "introvert": -0.15 },
+        "success": {
+          "text": "{t.name} walks you home. On Sunday, {t.he} calls.",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
+        },
+        "failure": {
+          "text": "By the last song, {t.name} is dancing with someone else.",
+          "effects": [ { "type": "happiness", "amount": -3 } ]
+        }
+      },
+      { "text": "Thank {t.him} and find your friends", "effects": [], "result": "You think about {t.him} on the bus home anyway." }
+    ]
+  },
+  {
+    "id": "meet_through_friends", "trigger": "situation", "title": "A dinner party",
+    "text": "Your friends have planned this, and they are not subtle about it: at dinner you are seated next to {t.name}, who is also single. Everyone else leaves early.",
+    "choices": [
+      {
+        "text": "Play along – and ask {t.him} out",
+        "chance": 0.7, "chanceTraits": { "social": 0.1, "charming": 0.15, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.003 },
+        "success": {
+          "text": "You have dinner again the week after, just the two of you. Your friends are unbearable about it.",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
+        },
+        "failure": {
+          "text": "{t.name} is lovely, and very clear that {t.he} is not looking for anything right now.",
+          "effects": [ { "type": "happiness", "amount": -3 } ]
+        }
+      },
+      { "text": "Be polite, nothing more", "effects": [], "result": "Your friends sigh. You help with the dishes." }
+    ]
+  },
+  {
+    "id": "meet_by_chance", "trigger": "situation", "title": "Stuck",
+    "text": "The train stops between two stations and stays there for an hour. By the time it moves again, you and {t.name}, a stranger in the next seat, have told each other things you've never told anyone.",
+    "choices": [
+      {
+        "text": "Ask to see {t.him} again",
+        "chance": 0.7, "chanceTraits": { "charming": 0.15, "introvert": -0.1 }, "chanceAttributes": { "looks": 0.003 },
+        "success": {
+          "text": "{t.name} writes {t.his} number on your ticket. You keep the ticket for years.",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
+        },
+        "failure": {
+          "text": "{t.name} smiles. \"Some things are better as one hour on a train.\"",
+          "effects": [ { "type": "happiness", "amount": -2 } ]
+        }
+      },
+      { "text": "Say goodbye on the platform", "effects": [], "result": "You look for {t.him} on that train for weeks." }
+    ]
+  },
+  {
+    "id": "meet_online", "trigger": "situation", "title": "A match",
+    "text": "{t.name} has sent you a message on a dating app. It's actually funny – and {t.he} has read the same book you're reading.",
+    "choices": [
+      {
+        "text": "Meet for a drink",
+        "chance": 0.65, "chanceTraits": { "charming": 0.15, "social": 0.05 }, "chanceAttributes": { "looks": 0.004 },
+        "success": {
+          "text": "One drink becomes four. You both delete the app a month later.",
+          "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 10 } ]
+        },
+        "failure": {
+          "text": "{t.name} was funnier in writing. So, apparently, were you.",
+          "effects": [ { "type": "happiness", "amount": -3 } ]
+        }
+      },
+      { "text": "Keep swiping", "effects": [], "result": "There's always someone else. That's the problem." }
+    ]
+  }
+]

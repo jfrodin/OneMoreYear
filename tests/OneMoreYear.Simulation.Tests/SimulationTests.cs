@@ -367,6 +367,25 @@ public class CrimeTests
     }
 
     [Fact]
+    public void A_player_who_wants_love_usually_finds_it()
+    {
+        string[] love = { "A proposal", "Your place or mine?", "A spark", "Saturday dance", "A dinner party", "Stuck", "A match", "Someone likes you", "After work" };
+        int partnered = 0, married = 0, n = 12;
+        for (ulong seed = 1; seed <= (ulong)n; seed++)
+        {
+            var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1960 });
+            var bot = new AutoPlayer(seed, useActions: false) { Prefer = ev => love.Contains(ev.Title) ? ev.Choices[0] : null };
+            int playerId = s.Player.Id;
+            while (s.Player.Id == playerId && s.Player.Age(s.Year) < 35 && bot.PlayYear(s)) { }
+            var p = s.World.Get(playerId);
+            if (p.PartnerId != null) partnered++;
+            if (p.PartnerStatus == PartnerStatus.Married) married++;
+        }
+        Assert.True(partnered >= n * 2 / 3, $"Only {partnered} of {n} had a partner at 35");
+        Assert.True(married >= n / 3, $"Only {married} of {n} were married at 35");
+    }
+
+    [Fact]
     public void Abuse_of_children_is_withdrawn_whatever_the_settings_say()
     {
         Assert.DoesNotContain(ContentCategories.Selectable, c => c.Id == ContentCategories.SexualAbuse);

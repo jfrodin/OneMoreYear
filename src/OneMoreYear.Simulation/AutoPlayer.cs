@@ -15,6 +15,9 @@ public sealed class AutoPlayer
     /// <summary>Called with every text shown to the player (event texts, choices, outcomes).</summary>
     public Action<string>? OnText { get; set; }
 
+    /// <summary>Picks a choice for some events instead of chance (for balancing: "a player who wants this").</summary>
+    public Func<EventView, ChoiceView?>? Prefer { get; set; }
+
     public AutoPlayer(ulong seed, bool useActions = true)
     {
         _rng = new SimRandom(seed);
@@ -70,7 +73,7 @@ public sealed class AutoPlayer
             OnText?.Invoke(ev.Text);
             foreach (var c in ev.Choices) { OnText?.Invoke(c.Text); if (c.Hint != null) OnText?.Invoke(c.Hint); }
             var options = ev.Choices.Where(c => c.Available).ToList();
-            var choice = options[_rng.Next(options.Count)];
+            var choice = Prefer?.Invoke(ev) is { Available: true } preferred ? preferred : options[_rng.Next(options.Count)];
             var outcome = session.Choose(ev.Uid, choice.Index);
             OnText?.Invoke(outcome);
         }

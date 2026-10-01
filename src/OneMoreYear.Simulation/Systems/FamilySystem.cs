@@ -28,6 +28,10 @@ public static class FamilySystem
             {
                 SeekPartner(ctx, p);
             }
+            else if (p.Id == w.PlayerId && age >= 18 && age <= 75)
+            {
+                PlayerMeetsSomeone(ctx, p);
+            }
         }
     }
 
@@ -51,7 +55,8 @@ public static class FamilySystem
             var npc = a.Id == w.PlayerId ? b : a;
             var player = a.Id == w.PlayerId ? a : b;
             double npcOpinion = w.Opinion(npc.Id, player.Id);
-            double leave = npcOpinion < 20 ? baseChance + (20 - npcOpinion) / 150 + ctx.Mod(npc, "divorce") * 0.04 : 0;
+            // A content couple sits around 25 (see Relationship.Opinion); below 10 something is wrong.
+            double leave = npcOpinion < 10 ? baseChance + (10 - npcOpinion) / 150 + ctx.Mod(npc, "divorce") * 0.04 : 0;
             if (years >= 1 && rng.Chance(leave))
             {
                 EventSystem.QueueSituation(ctx, "partner_leaves", new() { ["target"] = npc.Id });
@@ -78,14 +83,16 @@ public static class FamilySystem
             var player = a.Id == w.PlayerId ? a : b;
             double npcOpinion = w.Opinion(npc.Id, player.Id);
             // The partner takes the initiative too – the player still decides.
-            if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && npcOpinion > 25 && OldEnoughToMoveIn(ctx, a) && OldEnoughToMoveIn(ctx, b)
+            bool canMarry = a.Age(ctx.Year) >= ctx.Country.MarriageAge && b.Age(ctx.Year) >= ctx.Country.MarriageAge;
+            // Before 1970 you married first and moved in after; from then on most couples lived together first.
+            bool marryFirst = ctx.Year < 1970 && canMarry;
+            if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && npcOpinion > 15 && OldEnoughToMoveIn(ctx, a) && OldEnoughToMoveIn(ctx, b)
                 && rng.Chance(0.35))
-                EventSystem.QueueSituation(ctx, "partner_suggests_moving_in", new() { ["target"] = npc.Id });
-            else if (a.PartnerStatus != PartnerStatus.Dating && years >= 2 && npcOpinion > 30 && player.Expecting == null && WantsChild(ctx, a, b))
+                EventSystem.QueueSituation(ctx, marryFirst ? "partner_proposes" : "partner_suggests_moving_in", new() { ["target"] = npc.Id });
+            else if (a.PartnerStatus != PartnerStatus.Dating && years >= 2 && npcOpinion > 20 && player.Expecting == null && WantsChild(ctx, a, b))
                 EventSystem.QueueSituation(ctx, "partner_wants_baby", new() { ["target"] = npc.Id });
-            if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 2 && npcOpinion > 30
-                && a.Age(ctx.Year) >= ctx.Country.MarriageAge && b.Age(ctx.Year) >= ctx.Country.MarriageAge
-                && rng.Chance(0.25))
+            if (a.PartnerStatus == PartnerStatus.Cohabiting && years >= 2 && npcOpinion > 20 && canMarry
+                && rng.Chance(ctx.Year < 1990 ? 0.35 : 0.25))
                 EventSystem.QueueSituation(ctx, "partner_proposes", new() { ["target"] = npc.Id });
         }
         else if (a.PartnerStatus == PartnerStatus.Dating && years >= 1 && oa > 15 && ob > 15 && rng.Chance(0.4)
@@ -237,15 +244,38 @@ public static class FamilySystem
         return child;
     }
 
-    private static void SeekPartner(SimContext ctx, Person p)
+    /// <summary>How likely a single adult is to meet someone this year.</summary>
+    private static double MeetChance(SimContext ctx, Person p)
     {
         int age = p.Age(ctx.Year);
-        double baseChance = age switch { < 26 => 0.2, < 36 => 0.22, < 51 => 0.12, _ => 0.05 };
-        baseChance *= 1 + ctx.Mod(p, "social");
-        baseChance *= 0.7 + p.Looks / 100 * 0.6;
-        baseChance *= 1 + ctx.Mod(p, "charm") * 0.3;
-        if (p.Flags.Contains("widowed") || p.ExPartnerIds.Count > 0) baseChance *= 0.7;
-        if (!ctx.Rng.Chance(baseChance)) return;
+        double chance = age switch { < 26 => 0.2, < 36 => 0.22, < 51 => 0.12, _ => 0.05 };
+        chance *= 1 + ctx.Mod(p, "social");
+        chance *= 0.7 + p.Looks / 100 * 0.6;
+        chance *= 1 + ctx.Mod(p, "charm") * 0.3;
+        if (p.Flags.Contains("widowed") || p.ExPartnerIds.Count > 0) chance *= 0.7;
+        return chance;
+    }
+
+    /// <summary>
+    /// A single player meets someone about as often as anyone else does – as an event, so the player
+    /// decides. How they meet follows the times: the dance hall, friends, a stranded train, an app.
+    /// </summary>
+    private static void PlayerMeetsSomeone(SimContext ctx, Person p)
+    {
+        if (p.Activity == Activity.Prison || p.Flags.Contains(HousingSystem.CareHomeFlag)) return;
+        // Not in the same year as a break-up, and a little more often than NPCs: the player also says no.
+        if (p.LastSplitYear is { } split && ctx.Year - split < 1) return;
+        if (!ctx.Rng.Chance(MeetChance(ctx, p) * 1.4)) return;
+        var ways = new List<string> { "meet_through_friends", "meet_by_chance" };
+        if (ctx.Year < 1990 && p.Age(ctx.Year) < 40) ways.Add("meet_at_dance");
+        if (ctx.Year >= 2008) { ways.Add("meet_online"); ways.Add("meet_online"); }
+        var partner = CreatePartnerFor(ctx, p);
+        EventSystem.QueueSituation(ctx, ways[ctx.Rng.Next(ways.Count)], new() { ["target"] = partner.Id });
+    }
+
+    private static void SeekPartner(SimContext ctx, Person p)
+    {
+        if (!ctx.Rng.Chance(MeetChance(ctx, p))) return;
         var partner = CreatePartnerFor(ctx, p);
         StartDating(ctx, p, partner);
     }
@@ -334,6 +364,8 @@ public static class FamilySystem
     public static void Marry(SimContext ctx, Person a, Person b)
     {
         if (a.Age(ctx.Year) < ctx.Country.MarriageAge || b.Age(ctx.Year) < ctx.Country.MarriageAge) return;
+        // Married straight from dating (the norm before 1970): the couple moves in together too.
+        if (a.PartnerStatus == PartnerStatus.Dating) MoveIn(ctx, a, b);
         a.PartnerStatus = b.PartnerStatus = PartnerStatus.Married;
         a.Flags.Add($"married_to_{b.Id}");
         b.Flags.Add($"married_to_{a.Id}");
