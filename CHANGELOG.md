@@ -2,6 +2,34 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.51.0 – 2026-10-03 · A thousand moments
+
+- **Over a thousand events.** 102 new ones in six groups:
+  - **University life**: freshers' week, the lecturer who changes everything, group projects,
+    failing an exam, the wrong subject, a year abroad, the occupation, the thesis, a study partner,
+    the internship, graduation day.
+  - **Grandparents and grandchildren**, from both sides: holding the first grandchild, babysitting,
+    spoiling, teaching a craft, summers with all of them, a teenager's secret, a grandchild in
+    trouble, four generations on one sofa. As a grandchild: the box of photographs, folded notes,
+    the family recipe, the porch, a grandparent who no longer knows you.
+  - **History**: the polio vaccine, Sputnik, Ingo, Norrmalmstorg, Nixon, Elvis, Borg and McEnroe,
+    the big strike, Lennon, Live Aid, the Gulf War, the 1994 bronze, the O.J. verdict, Diana, the
+    Öresund bridge, Gothenburg 2001, Anna Lindh, Katrina, the first iPhone, the swine flu, the royal
+    wedding, Drottninggatan.
+  - **Holidays**: New Year's Eve, Walpurgis Night, National Day for new citizens, midsummer in the
+    rain, cream buns, fermented herring, winter break, name days, turning fifty, the Super Bowl,
+    the Fourth, Thanksgiving politics, Halloween, Black Friday, Valentine's Day, the anniversary
+    you forgot, the last day of school, Advent.
+  - **Heavier themes**, each behind its content setting: a partner, parent, sibling, child or friend
+    with an addiction; panic, therapy, November dark, a new mother's depression, burnout; a phone
+    kept face down, an old flame's message, a confession; a controlling partner; a fight outside a
+    bar; a mugging; a friend's call at two in the morning.
+  - **Everyday**: a power cut, four lottery numbers, a breakdown, a parking ticket, a kind stranger,
+    a stolen bicycle, snowed in, the old man downstairs, a stray dog, a waiting room.
+- University events are weighted up, since the student years are short.
+- Events can now name the player's child (or parent) standing between the player and a grandchild
+  (or grandparent).
+
 ## 0.50.0 – 2026-10-02 · The family business
 
 - **Start a business** (from The Sims' Get to Work): a bakery, a café, a restaurant, a repair

@@ -1,0 +1,105 @@
+// Small things in ordinary years. No dashes.
+[
+  {
+    "id": "ev_power_cut", "title": "The lights go out",
+    "text": "A winter storm has taken the power. No heating, no cooker, no television. Candles, blankets, and a long evening ahead.",
+    "conditions": { "minAge": 6 }, "cooldown": 8,
+    "choices": [
+      { "text": "Play cards by candlelight", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Everyone at the kitchen table in coats, telling stories nobody has told in years. When the lights come back on, somebody is disappointed." },
+      { "text": "Go to bed early under every blanket", "effects": [ { "type": "health", "amount": 1 } ], "result": "Eleven hours of sleep. The best night you have had all winter." }
+    ]
+  },
+  {
+    "id": "ev_lottery_ticket", "title": "Four numbers",
+    "text": "You check an old lottery ticket from the back of your wallet. The first number matches. The second. The third. The fourth.",
+    "conditions": { "minAge": 18 }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Check the fifth", "chance": 0.08,
+        "success": { "text": "It matches too. Not the jackpot, but enough to sit down on the kitchen floor for a while.", "effects": [ { "type": "money", "amount": 150000 }, { "type": "happiness", "amount": 10 } ] },
+        "failure": { "text": "It does not. Four numbers: enough for a nice dinner and a story you will tell for years.", "effects": [ { "type": "money", "amount": 1500 }, { "type": "happiness", "amount": 3 } ] } }
+    ]
+  },
+  {
+    "id": "ev_car_breakdown", "title": "On the hard shoulder",
+    "text": "Smoke from the bonnet, a cough from the engine, and then silence. You are on the hard shoulder, forty kilometres from anywhere.",
+    "conditions": { "minAge": 18, "minYear": 1955 }, "cooldown": 8,
+    "choices": [
+      { "text": "Try to fix it yourself", "chance": 0.35, "chanceSkills": { "handiness": 0.12 },
+        "success": { "text": "A loose hose and a roll of tape. You drive home with oily hands and enormous pride.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "You make it worse. The tow truck driver looks at what you did and sighs.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Call for a tow", "effects": [ { "type": "money", "amount": -4000 } ], "result": "Three hours in the cold, a driver with a thermos he shares with you, and a large bill at the garage." }
+    ]
+  },
+  {
+    "id": "ev_parking_ticket", "title": "Under the wiper",
+    "text": "A parking ticket. You were gone for four minutes. You can see the warden at the end of the street.",
+    "conditions": { "minAge": 18, "minYear": 1958 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go and argue", "chance": 0.15, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "The warden tears it up, possibly just to make you stop talking.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "You argue for ten minutes. The warden writes you a second ticket for the car behind yours, which is also yours.", "effects": [ { "type": "money", "amount": -1600 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Pay it", "effects": [ { "type": "money", "amount": -800 } ], "result": "You pay it. You think about it every time you park on that street for the rest of your life." }
+    ]
+  },
+  {
+    "id": "ev_kind_stranger", "title": "Exact change",
+    "text": "You are short of money at the till. The queue behind you is long, and sighing. A stranger leans forward and pays the difference.",
+    "conditions": { "minAge": 14 }, "cooldown": 15,
+    "choices": [
+      { "text": "Thank them, and pass it on one day", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "generous", "chance": 0.04 } ], "result": "You never see them again. Years later you do the same for someone else, and feel the debt is paid." },
+      { "text": "Insist on paying them back", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "They will not hear of it. They are gone before you have found a pen." }
+    ]
+  },
+  {
+    "id": "ev_bicycle_stolen", "title": "An empty lock",
+    "text": "Your bicycle is gone. The lock is still there, cut neatly in two, lying on the ground like an insult.",
+    "conditions": { "minAge": 10 }, "cooldown": 10,
+    "choices": [
+      { "text": "Report it", "chance": 0.1,
+        "success": { "text": "Three weeks later the police call. It was found in a canal. It still works, mostly.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "A form, a reference number and a very tired officer. You never hear anything again.", "effects": [ { "type": "money", "amount": -2500 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Buy a second hand one", "effects": [ { "type": "money", "amount": -1500 } ], "result": "From a man in a car park who has eleven bicycles and no questions. You decide not to think about it." }
+    ]
+  },
+  {
+    "id": "ev_snowed_in", "countries": [ "sweden" ], "title": "Snowed in",
+    "text": "Half a metre of snow overnight. The door will not open. The radio says stay home. The children are already at the window.",
+    "conditions": { "minAge": 6 }, "cooldown": 8,
+    "choices": [
+      { "text": "Dig out and build a snow fort", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "Three hours of digging and a fort big enough to sit in. Hot chocolate inside it. A perfect day." },
+      { "text": "Stay in and bake", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Cinnamon buns, the radio, the snow falling past the window. The world can wait one day." }
+    ]
+  },
+  {
+    "id": "ev_neighbour_help", "title": "The old man downstairs",
+    "text": "The old man downstairs has not collected his post for three days. His curtains are still drawn.",
+    "conditions": { "minAge": 16 }, "cooldown": 20, "weight": 0.6,
+    "choices": [
+      { "text": "Knock, and keep knocking", "chance": 0.7,
+        "success": { "text": "A fall in the bathroom, two days ago. He is weak and embarrassed and alive. He brings you jam from his allotment every summer for the rest of his life.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ] },
+        "failure": { "text": "The caretaker opens the door. You were too late. You go to the funeral. You and the vicar are the only ones there.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Probably on holiday", "effects": [], "result": "Probably. You find out a week later that he was not. You think about it whenever you pass his door." }
+    ]
+  },
+  {
+    "id": "ev_lost_dog_found", "title": "A dog on the road",
+    "text": "A small dog is running along the side of the road with a collar and no owner. It looks at you with enormous hope.",
+    "conditions": { "minAge": 10 }, "cooldown": 12,
+    "choices": [
+      { "text": "Take it home and find the owner", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "A phone number on the collar, an owner in tears, a box of chocolates the next day. The dog barks at you happily every time you pass." },
+      { "text": "Keep it, if nobody calls", "requires": { "pet": "none", "livesWithParents": false }, "chance": 0.4,
+        "success": { "text": "Nobody calls. A week later, nobody has called. It is yours now, and it seems to know.", "effects": [ { "type": "pet_add", "kind": "dog" }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "The owner calls the next day. You hand it over with a smile and a very quiet drive home.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "ev_queue_conversation", "title": "In the waiting room",
+    "text": "Two hours in a waiting room, and the person next to you starts talking. About their life, their children, the war, everything.",
+    "conditions": { "minAge": 30 }, "cooldown": 10,
+    "target": { "role": "new_person", "ageOffsetMin": 10, "ageOffsetMax": 30 },
+    "choices": [
+      { "text": "Listen", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "kind", "chance": 0.02 } ], "result": "{t.name} tells you a whole life in two hours. When your name is called you are almost sorry. You never see {t.him} again, but you remember all of it." },
+      { "text": "Put on your headphones", "requires": { "minYear": 1980 }, "effects": [], "result": "Two quiet hours. You are not sure afterwards whether you missed something." }
+    ]
+  }
+]
