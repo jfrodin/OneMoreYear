@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.44.0 – 2026-10-02 · More life in every age
+
+From 599 to 687 events, aimed at the parts of a life with the fewest:
+
+- **20 for the last decades** (70 to 100): a hearing aid, love at the day centre, the old dog, the
+  first Christmas alone after losing a husband or wife, the choir, the talk about the will, a letter
+  from an estranged child, the last sibling, teaching a grandchild the family recipe, turning ninety,
+  a letter to a great grandchild who will not remember you.
+- **23 for teenagers**: a first kiss, a house party, the stolen test answers, the teacher who believes
+  in you, coming out to your best friend, a fight, braces, a summer romance, the student council.
+- **22 for middle childhood**: Christmas Eve footsteps, the spelling final, the hamster, the fort, the
+  sledge, the found wallet, grandpa's box, the invention.
+- **22 for middle age**: turning fifty, the last mortgage payment, a year off, therapy, a motorbike at
+  fifty, the band reunion, learning to swim, a market stall, coaching the children's team.
+- **21 for young adults**: the first car, backpacking, the roommate, dating apps, the best friend's
+  wedding speech, the first payslip, a new city, the first funeral of someone your age.
+- Four events had the same id as another and were silently replaced; they are back, and a repeated
+  id is now an error. Writing "your {t.role}" ("your your brother") is caught by the content check.
+
 ## 0.43.1 – 2026-10-02 · Proofreading
 
 A read through every text in twelve long games, Swedish and American:
