@@ -22,6 +22,7 @@ public sealed class ContentDb
     public Dictionary<string, DreamDef> Dreams { get; } = new();
     public Dictionary<string, FamilyTraitDef> FamilyTraits { get; } = new();
     public Dictionary<string, HeirloomDef> Heirlooms { get; } = new();
+    public Dictionary<string, PetKindDef> PetKinds { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
     /// <summary>History and life's milestones (a first word, turning eighty): they come for sure, the year their conditions first hold.</summary>
     public List<EventDef> HistoryEvents { get; } = new();
@@ -110,6 +111,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("scenarios.json"))
                 {
                     db.Scenarios.AddRange(Deserialize<List<ScenarioDef>>(json));
+                }
+                else if (path.EndsWith("pets.json"))
+                {
+                    foreach (var k in Deserialize<List<PetKindDef>>(json)) db.PetKinds[k.Id] = k;
                 }
                 else if (path.EndsWith("heirlooms.json"))
                 {
@@ -242,6 +247,7 @@ public sealed class ContentDb
                 foreach (var eff in all)
                 {
                     if (!Systems.EffectApplier.KnownTypes.Contains(eff.Type)) errors.Add($"Event {e.Id}: unknown effect type '{eff.Type}'");
+                    if (eff.Type == "pet_add" && (eff.Kind == null || !PetKinds.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown pet {eff.Kind}");
                     if (eff.Type == "emigrate" && (eff.Country == null || !Countries.ContainsKey(eff.Country))) errors.Add($"Event {e.Id}: emigrate to unknown country {eff.Country}");
                     if (eff.Trait != null && !Traits.ContainsKey(eff.Trait)) errors.Add($"Event {e.Id}: unknown trait {eff.Trait}");
                     // Design rule: abusing a child is never something the player can choose to do.

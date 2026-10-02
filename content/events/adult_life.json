@@ -61,7 +61,7 @@
     "text": "The rescue centre has a dog with one floppy ear who has been waiting for a home for a year.",
     "conditions": { "minAge": 22, "livesWithParents": false, "notFlags": [ "has_dog" ] }, "cooldown": 8,
     "choices": [
-      { "text": "Take him home", "effects": [ { "type": "flag", "flag": "has_dog" }, { "type": "happiness", "amount": 8 }, { "type": "attribute", "kind": "fitness", "amount": 4 },
+      { "text": "Take him home", "effects": [ { "type": "flag", "flag": "has_dog" }, { "type": "pet_add", "kind": "dog" }, { "type": "happiness", "amount": 8 }, { "type": "attribute", "kind": "fitness", "amount": 4 },
           { "type": "memory", "kind": "dog", "text": "The dog with one floppy ear", "impact": 15 } ],
         "result": "Walks at six every morning, hair on everything, and someone who is always, always happy to see you." },
       { "text": "Not now", "result": "You think about the ear for weeks." }
@@ -279,7 +279,7 @@
     "text": "A thin grey cat has been sitting outside your door every evening for a week.",
     "conditions": { "minAge": 18, "livesWithParents": false, "notFlags": [ "has_cat" ] }, "cooldown": 0,
     "choices": [
-      { "text": "Let it in", "effects": [ { "type": "flag", "flag": "has_cat" }, { "type": "happiness", "amount": 6 } ],
+      { "text": "Let it in", "effects": [ { "type": "flag", "flag": "has_cat" }, { "type": "pet_add", "kind": "cat" }, { "type": "happiness", "amount": 6 } ],
         "result": "It moves in as if it always lived there. You are, it turns out, its staff." },
       { "text": "Take it to a shelter", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 } ], "result": "They find it a home. You check the website twice." }
     ]

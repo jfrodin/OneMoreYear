@@ -59,6 +59,8 @@ public sealed record PersonView
     public string Partner { get; init; } = "";
     /// <summary>The life dream, for people who were played: "Dream: become a doctor", "Lived the dream: ...".</summary>
     public string? Dream { get; init; }
+    /// <summary>The pets in the player's home: "Bella the dog, 7, who steals socks".</summary>
+    public IReadOnlyList<string> Pets { get; init; } = Array.Empty<string>();
     public IReadOnlyList<(string Name, string Description, string Tone)> Traits { get; init; } = Array.Empty<(string, string, string)>();
     /// <summary>Something serious going on, e.g. "Struggling with alcohol".</summary>
     public string? Condition { get; init; }

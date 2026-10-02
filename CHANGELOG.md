@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.48.0 – 2026-10-02 · Pets
+
+- **Dogs and cats as members of the family** (from The Sims): each has a name, an age and a nature
+  (playful, lazy, loyal, grumpy or anxious) and shows under your name. A pet makes its home a little
+  happier every year and the children in it a little kinder, which counts in how they grow up. When
+  it dies the whole family remembers it. If its owner dies first, someone in the home takes it on.
+- Get one yourself ("Get a pet"), or through the stray cat, the kittens in the shed and the dog with
+  one floppy ear, which now give you a real animal.
+- **12 events about pets**: the vet bill, the tangled leads in the park, a present on the pillow, old
+  age, the open gate, the new baby, an allergy, obedience class, the cat and the Christmas tree, the
+  child who promised to walk the dog.
+
 ## 0.47.0 – 2026-10-02 · New careers, and raising children
 
 885 events.

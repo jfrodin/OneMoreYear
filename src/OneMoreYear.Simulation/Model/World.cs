@@ -49,6 +49,7 @@ public sealed class World
     /// <summary>What the family has become known for (ReputationSystem): "learning", "warmth" ...</summary>
     public SortedSet<string> FamilyTraits { get; set; } = new(StringComparer.Ordinal);
     public List<Heirloom> Heirlooms { get; set; } = new();
+    public List<Pet> Pets { get; set; } = new();
 
     public SimRandom Rng { get; set; } = new();
     public int NextEventUid { get; set; } = 1;
@@ -164,4 +165,20 @@ public sealed class HeirloomEntry
 {
     public int Year { get; set; }
     public string Text { get; set; } = "";
+}
+
+/// <summary>A family pet (PetSystem): it lives, ages and dies with the family.</summary>
+public sealed class Pet
+{
+    public int Id { get; set; }
+    /// <summary>dog or cat (content/pets.json).</summary>
+    public string Kind { get; set; } = "";
+    public string Name { get; set; } = "";
+    public int BirthYear { get; set; }
+    public int? DeathYear { get; set; }
+    /// <summary>Whose pet it is; it lives in that person's home.</summary>
+    public int OwnerId { get; set; }
+    /// <summary>playful, lazy, loyal, grumpy or anxious.</summary>
+    public string Nature { get; set; } = "";
+    public bool IsAlive => DeathYear == null;
 }

@@ -1,0 +1,126 @@
+// Life with pets (PetSystem). {pet}, {pet_kind}, {pet_age} and {pet_nature} name the family pet.
+// No dashes.
+[
+  {
+    "id": "self_get_pet", "trigger": "self", "category": "life", "title": "Get a pet",
+    "conditions": { "minAge": 18, "livesWithParents": false },
+    "choices": [
+      { "text": "A dog", "hint": "Walks every day, whatever the weather. Loyal to the end.", "effects": [ { "type": "pet_add", "kind": "dog" }, { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 6 } ],
+        "result": "A shelter, a wagging tail, and a pair of eyes that decide it for you. {pet} comes home the same day." },
+      { "text": "A cat", "hint": "Independent, warm, and on your keyboard.", "effects": [ { "type": "pet_add", "kind": "cat" }, { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 5 } ],
+        "result": "{pet} inspects every room, chooses the best chair, and lets you stay." },
+      { "text": "Not yet", "result": "You look at the shelter's website for a long time. One day." }
+    ]
+  },
+  {
+    "id": "pet_died", "trigger": "situation", "title": "Goodbye, {pet}",
+    "text": "{pet} has died. {pet_age} years of a {pet_kind} who {pet_nature}. The house is very quiet.",
+    "choices": [
+      { "text": "Bury {pet} in the garden", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Under the apple tree, with a stone the children painted. You stand there longer than you expected." },
+      { "text": "Keep the collar", "effects": [], "result": "It hangs on a hook by the door. Nobody moves it for years." }
+    ]
+  },
+  {
+    "id": "pet_vet_bill", "title": "The vet",
+    "text": "{pet} has eaten something terrible. The vet says surgery, tonight, and names a price.",
+    "conditions": { "minAge": 18, "pet": "any" }, "cooldown": 6,
+    "choices": [
+      { "text": "Pay whatever it costs", "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 2 } ], "result": "A sock, a rubber duck and part of a remote control. {pet} is home in two days, unrepentant." },
+      { "text": "Ask about cheaper options", "chance": 0.6,
+        "success": { "text": "Medicine and a long night of waiting. It passes. {pet} looks at you as if nothing happened.", "effects": [ { "type": "money", "amount": -3000 } ] },
+        "failure": { "text": "It does not pass. The surgery comes anyway, a day later, at twice the price.", "effects": [ { "type": "money", "amount": -25000 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "pet_dog_walk_friend", "title": "The park",
+    "text": "Every morning in the park, the same person walking a dog that {pet} is clearly in love with. Today their leads have tangled.",
+    "conditions": { "minAge": 18, "pet": "dog" }, "cooldown": 8,
+    "target": { "role": "new_person", "ageOffsetMin": -10, "ageOffsetMax": 10 },
+    "choices": [
+      { "text": "Laugh and untangle them", "effects": [ { "type": "friend_add", "who": "player", "to": "target" }, { "type": "happiness", "amount": 4 } ], "result": "Ten minutes of untangling and talking. Now you walk together every morning. The dogs approve." },
+      { "text": "Apologise and hurry off", "effects": [], "result": "{pet} sulks all the way home." }
+    ]
+  },
+  {
+    "id": "pet_cat_gift", "title": "A present",
+    "text": "{pet} has left a present on your pillow. It was alive this morning.",
+    "conditions": { "minAge": 6, "pet": "cat" }, "cooldown": 4,
+    "choices": [
+      { "text": "Praise {pet}", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "{pet} purrs with enormous pride. You deal with the present with rubber gloves." },
+      { "text": "Scream", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "{pet} looks deeply offended and brings a bigger one the next week." }
+    ]
+  },
+  {
+    "id": "pet_old_age", "title": "Grey around the muzzle",
+    "text": "{pet} is old now. Slower on the stairs, sleeping most of the day, still {pet_nature} when there is energy.",
+    "conditions": { "minAge": 8, "pet": "any" }, "cooldown": 10, "weight": 0.6,
+    "choices": [
+      { "text": "Make the last years good", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "money", "amount": -2000 } ], "result": "A soft bed by the radiator, shorter walks, the best bits from dinner. You spend more time on the floor with {pet} than you have in years." },
+      { "text": "Get a younger one too", "effects": [ { "type": "pet_add", "kind": "dog" }, { "type": "happiness", "amount": 3 } ], "result": "The old one is outraged for a week, then teaches the young one everything. {pet} is your new problem now." }
+    ]
+  },
+  {
+    "id": "pet_runs_away", "title": "The open gate",
+    "text": "Someone left the gate open. {pet} is gone. It is getting dark.",
+    "conditions": { "minAge": 8, "pet": "any" }, "cooldown": 12, "weight": 0.5,
+    "choices": [
+      { "text": "Search all night", "chance": 0.75,
+        "success": { "text": "A torch, the whole street calling the name, and at two in the morning, {pet} trots home, looking as if you are the one who was lost.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "Posters on every lamp post. A week. Two. Then a phone call from a farm nine kilometres away: {pet} has been living in their barn, very happily.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Wait by the door", "chance": 0.5,
+        "success": { "text": "At dawn, a scratch at the door. You cry into fur that smells of somebody's compost.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "{pet} never comes home. Every animal at the side of the road, for years, makes your heart stop.", "effects": [ { "type": "pet_rehome" }, { "type": "happiness", "amount": -7 } ] } }
+    ]
+  },
+  {
+    "id": "pet_new_baby", "title": "The new arrival",
+    "text": "There is a new baby in the house, and {pet} is very interested, and very worried, about the small loud thing that gets all the attention.",
+    "conditions": { "minAge": 20, "pet": "any" }, "cooldown": 15,
+    "target": { "role": "child", "conditions": { "maxAge": 0 } },
+    "choices": [
+      { "text": "Introduce them slowly", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A sniff, a long look, and from that day {pet} sleeps under the cot. Every night. For years." },
+      { "text": "Keep them apart", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "{pet} sulks for months. Then {t.name} learns to crawl, straight to {pet}, and that is that." }
+    ]
+  },
+  {
+    "id": "pet_moving_allergic", "title": "Sneezing",
+    "text": "{p.name} has started sneezing and itching every time {pet} is in the room. The doctor says it is an allergy. A serious one.",
+    "conditions": { "minAge": 20, "pet": "any", "hasPartner": true }, "cooldown": 20, "weight": 0.3,
+    "choices": [
+      { "text": "Find {pet} a new home", "effects": [ { "type": "pet_rehome" }, { "type": "happiness", "amount": -6 } ], "result": "A family with a big garden and two children. You get a photo every Christmas. It helps, a little." },
+      { "text": "Pills and a lot of hoovering", "effects": [ { "type": "money", "amount": -2000 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "It works, mostly. {p.name} reminds you about it in every argument for years." }
+    ]
+  },
+  {
+    "id": "pet_dog_training", "title": "Obedience class",
+    "text": "{pet} pulls on the lead, eats shoes and barks at bicycles. There is an obedience class on Tuesday evenings.",
+    "conditions": { "minAge": 16, "pet": "dog" }, "cooldown": 15,
+    "choices": [
+      { "text": "Go, every week", "chance": 0.6,
+        "success": { "text": "Ten weeks later {pet} sits, stays and walks to heel. Mostly. On a good day. You get a certificate and frame it.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "money", "amount": -2000 } ] },
+        "failure": { "text": "{pet} is asked politely not to come back after eating the instructor's lunch.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "money", "amount": -2000 } ] } },
+      { "text": "Accept {pet} as {pet} is", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You buy cheaper shoes. It is easier." }
+    ]
+  },
+  {
+    "id": "pet_christmas_tree", "title": "The tree",
+    "text": "The Christmas tree is up. {pet} has noticed it. {pet} is looking at it the way a climber looks at a mountain.",
+    "conditions": { "minAge": 6, "pet": "cat" }, "cooldown": 6,
+    "choices": [
+      { "text": "Tie it to the wall", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The tree survives. The baubles at the bottom do not. {pet} sleeps under it all December, smug." },
+      { "text": "Hope for the best", "chance": 0.3,
+        "success": { "text": "Against all odds, nothing happens. {pet} ignores it. You feel slightly cheated.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "Three in the morning, a crash, a cat at the top of a tree lying on its side. A family legend is born.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "money", "amount": -500 } ] } }
+    ]
+  },
+  {
+    "id": "pet_child_responsibility", "title": "Whose turn",
+    "text": "{t.name} promised to walk {pet} every day if you got a dog. That was a year ago. You have walked {pet} every day since.",
+    "conditions": { "minAge": 30, "pet": "dog" }, "cooldown": 10,
+    "target": { "role": "child", "conditions": { "minAge": 8, "maxAge": 16 } },
+    "choices": [
+      { "text": "Insist on the promise", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 4 } ], "result": "Grumbling, then a routine. By summer {t.name} and {pet} are inseparable, and {t.he} would never admit you were right." },
+      { "text": "Keep walking {pet} yourself", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "happiness", "amount": 1 } ], "result": "Honestly, you like the walks. You will never tell {t.name} that." }
+    ]
+  }
+]

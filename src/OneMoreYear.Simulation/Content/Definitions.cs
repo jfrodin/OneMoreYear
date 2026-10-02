@@ -316,6 +316,8 @@ public sealed class ConditionDef
     public List<string>? JobTags { get; set; }
     /// <summary>Works in one of these occupations (ids from occupations.json).</summary>
     public List<string>? Jobs { get; set; }
+    /// <summary>Has a living pet: "any", "dog" or "cat"; "none" for no pet.</summary>
+    public string? Pet { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
     /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>
@@ -641,4 +643,16 @@ public sealed class HeirloomDef
     public string Text { get; set; } = "";
     /// <summary>What it would sell for when new to the family, in reference kronor; antiques gain with age.</summary>
     public double Value { get; set; }
+}
+
+/// <summary>A kind of pet (content/pets.json).</summary>
+public sealed class PetKindDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>"dog": "Bella the dog".</summary>
+    public string Name { get; set; } = "";
+    public int Lifespan { get; set; } = 12;
+    public List<string> Names { get; set; } = new();
+    /// <summary>Natures and how each shows: "playful" → "steals socks and brings them back".</summary>
+    public Dictionary<string, string> Natures { get; set; } = new();
 }

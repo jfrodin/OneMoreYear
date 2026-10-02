@@ -113,6 +113,8 @@ public static class EventSystem
             pending.Roles["other"] = other.Id;
         }
         foreach (var (name, v) in def.Vars) pending.Vars[name] = ComputeVar(ctx, v, pending);
+        // An event about the family pet names it.
+        if (def.Conditions?.Pet is { } petKind && petKind != "none" && PetSystem.Matching(ctx, player, petKind) is { } pet) PetSystem.Fill(ctx, pending, pet);
         return pending;
     }
 
@@ -186,6 +188,7 @@ public static class EventSystem
         if (c.MaxChildrenAtHome is { } maxHome && p.ChildIds.Select(w.Get).Count(k => k.IsAlive && k.LivesWithParents) > maxHome) return false;
         if (c.JobTags is { Count: > 0 } tags && ctx.Content.Occupation(p.OccupationId)?.Tags.Any(tags.Contains) != true) return false;
         if (c.Jobs is { Count: > 0 } jobs && (p.OccupationId == null || !jobs.Contains(p.OccupationId))) return false;
+        if (c.Pet is { } petKind && (petKind == "none" ? PetSystem.InHome(w, p).Any() : PetSystem.Matching(ctx, p, petKind) == null)) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;
         if (c.MaxChildren is { } maxK && kids > maxK) return false;

@@ -1030,6 +1030,25 @@ public class CountryTests
     }
 
     [Fact]
+    public void Pets_live_age_and_are_remembered()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 17, StartYear = 1970 });
+        var bot = new AutoPlayer(17, useActions: false);
+        for (int i = 0; i < 25 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        p.LivesWithParents = false;
+        var pet = PetSystem.Adopt(s.Ctx, p, "dog")!;
+        Assert.Contains(s.Describe(p.Id).Pets, x => x.StartsWith(pet.Name + " the dog"));
+        for (int i = 0; i < 30 && pet.IsAlive && p.IsAlive; i++)
+        {
+            s.World.Year++;
+            PetSystem.Update(s.Ctx);
+        }
+        Assert.False(pet.IsAlive, "a dog does not live thirty years");
+        if (p.IsAlive) Assert.Contains(p.Memories, m => m.Kind == "pet" && m.Text.Contains(pet.Name));
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // A working player with a newborn: unpaid weeks and daycare in the USA, neither in Sweden.

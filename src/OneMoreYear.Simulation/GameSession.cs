@@ -191,6 +191,7 @@ public sealed class GameSession
             LegacySystem.Update(ctx);
             ReputationSystem.Update(ctx);
             HeirloomSystem.Update(ctx);
+            PetSystem.Update(ctx);
             EventSystem.GenerateRandomEvents(ctx);
             w.ActionPoints = ActionPointsFor(Player);
         }
@@ -488,6 +489,7 @@ public sealed class GameSession
                 _ => "None"
             },
             Partner = partnerText,
+            Pets = p.Id == Player.Id ? PetSystem.InHome(World, p).Select(x => PetSystem.Describe(Ctx, x)).ToList() : Array.Empty<string>(),
             Dream = DreamSystem.Of(Ctx, p) is { } dream ? p.DreamState switch
             {
                 DreamState.Fulfilled => $"Lived the dream: {dream.Name.ToLowerInvariant()}",

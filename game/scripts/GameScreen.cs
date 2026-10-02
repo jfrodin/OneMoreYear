@@ -208,6 +208,7 @@ public partial class GameScreen : Control
 
         if (!string.IsNullOrEmpty(p.Partner)) _sidebar.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
         if (p.Dream != null) _sidebar.AddChild(UiTheme.HandLabel(p.Dream, 21, UiTheme.Accent, wrap: true));
+        foreach (var pet in p.Pets) _sidebar.AddChild(Ui.Label(pet, 14, UiTheme.Faint, wrap: true));
         if (p.Condition != null) _sidebar.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad, wrap: true));
 
         var traits = new HFlowContainer();

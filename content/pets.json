@@ -1,0 +1,22 @@
+// Pets (PetSystem). A pet is named from its list, gets a nature, and lives about "lifespan" years.
+// No dashes.
+[
+  { "id": "dog", "name": "dog", "lifespan": 12,
+    "names": [ "Bella", "Max", "Charlie", "Molly", "Buster", "Rufus", "Lady", "Sixten", "Ronja", "Pluto", "Daisy", "Rocky", "Tess", "Bosse", "Lucky", "Ziggy" ],
+    "natures": {
+      "playful": "steals socks and brings them back, very proud",
+      "lazy": "has not run since the first year, and sees no reason to start",
+      "loyal": "sits by the door every afternoon, waiting",
+      "grumpy": "barks at the postman, the neighbours and most leaves",
+      "anxious": "hides under the bed whenever it thunders"
+    } },
+  { "id": "cat", "name": "cat", "lifespan": 15,
+    "names": [ "Misse", "Luna", "Tiger", "Smokey", "Oliver", "Cleo", "Pelle", "Felix", "Nala", "Simba", "Mittens", "Socks", "Kitty", "Oscar", "Milo", "Lilla" ],
+    "natures": {
+      "playful": "attacks shoelaces and runs sideways at nothing",
+      "lazy": "sleeps nineteen hours a day, mostly on your clothes",
+      "loyal": "follows you from room to room and pretends not to",
+      "grumpy": "tolerates one person in the family, and it is not you",
+      "anxious": "lives under the sofa when there are guests"
+    } }
+]

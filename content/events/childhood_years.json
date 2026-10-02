@@ -74,7 +74,7 @@
     "conditions": { "minAge": 4, "maxAge": 12, "livesWithParents": true, "notFlags": [ "has_cat" ] }, "cooldown": 10,
     "choices": [
       { "text": "Beg to keep the grey one", "chance": 0.45, "chanceTraits": { "charming": 0.2 },
-        "success": { "text": "Your parents say no four times and yes once. The cat lives for eighteen years and only ever likes you.", "effects": [ { "type": "flag", "flag": "has_cat" }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "pet", "text": "The grey kitten from the shed", "impact": 20 } ] },
+        "success": { "text": "Your parents say no four times and yes once. The cat lives for eighteen years and only ever likes you.", "effects": [ { "type": "flag", "flag": "has_cat" }, { "type": "pet_add", "kind": "cat" }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "pet", "text": "The grey kitten from the shed", "impact": 20 } ] },
         "failure": { "text": "No. You visit them every day until they are all given away.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
       { "text": "Help find homes for them", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
         "result": "You make a sign with drawings of all five. They are gone in a week. You check on the grey one sometimes." }
