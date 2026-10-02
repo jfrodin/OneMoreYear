@@ -1135,6 +1135,29 @@ public partial class GameScreen : Control
             _personDetail.AddChild(Ui.Card(memBox));
         }
 
+        // Your own child at home: how you raise them shapes the adult they become.
+        if (S.Upbringing().FirstOrDefault(u => u.ChildId == id) is { } raising)
+        {
+            var box = Ui.VBox(8);
+            box.AddChild(Ui.Label($"How you raise {raising.Name}", 19, UiTheme.Text));
+            var row = new HFlowContainer();
+            row.AddThemeConstantOverride("h_separation", 8);
+            foreach (var style in OneMoreYear.Simulation.Systems.UpbringingSystem.Styles)
+            {
+                string s = style;
+                var b = Ui.Button(char.ToUpperInvariant(s[0]) + s[1..], () => { S.SetUpbringing(id, s); RefreshDetail(); }, 42);
+                if (raising.Style == s) UiTheme.MakePrimary(b);
+                b.SetMeta("action", true);
+                RegisterHint(b, OneMoreYear.Simulation.Systems.UpbringingSystem.Describe(s));
+                row.AddChild(b);
+            }
+            box.AddChild(row);
+            box.AddChild(Ui.Label(OneMoreYear.Simulation.Systems.UpbringingSystem.Describe(raising.Style)
+                + (raising.Chosen ? "" : " (as you are by nature; choose to change it)"), 15, UiTheme.Muted, wrap: true));
+            if (raising.Shaping != null) box.AddChild(UiTheme.HandLabel(raising.Shaping, 22, UiTheme.Accent));
+            _personDetail.AddChild(Ui.Card(box));
+        }
+
         if (p.Alive)
         {
             var actions = S.Actions(isPlayer ? null : id);

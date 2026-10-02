@@ -1007,6 +1007,29 @@ public class CountryTests
     }
 
     [Fact]
+    public void How_a_child_is_raised_shapes_the_adult()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 14, StartYear = 1960 });
+        var bot = new AutoPlayer(14, useActions: false);
+        for (int i = 0; i < 26 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        var warm = FamilySystem.HaveChild(s.Ctx, p, null);
+        var distant = FamilySystem.HaveChild(s.Ctx, p, null);
+        s.SetUpbringing(warm.Id, UpbringingSystem.Warm);
+        s.SetUpbringing(distant.Id, UpbringingSystem.Distant);
+        for (int year = 0; year < 17; year++)
+        {
+            s.World.Year++;
+            UpbringingSystem.Update(s.Ctx, warm);
+            UpbringingSystem.Update(s.Ctx, distant);
+        }
+        Assert.True(warm.Empathy > 20, $"warm empathy {warm.Empathy:0}");
+        Assert.True(distant.Empathy < 0, $"distant empathy {distant.Empathy:0}");
+        Assert.True(s.World.Opinion(warm.Id, p.Id) > s.World.Opinion(distant.Id, p.Id));
+        Assert.Contains(s.Upbringing(), u => u.ChildId == warm.Id && u.Style == UpbringingSystem.Warm && u.Chosen);
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // A working player with a newborn: unpaid weeks and daycare in the USA, neither in Sweden.

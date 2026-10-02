@@ -2,6 +2,26 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.47.0 – 2026-10-02 · New careers, and raising children
+
+885 events.
+
+- **Ten new careers**: restaurants (dishwasher to restaurant manager), transport (delivery driver to
+  logistics manager), the police, the military, farming, the arts (from struggling to renowned),
+  finance, social work, engineering and science, each with employers in Sweden and the USA and
+  degrees that lead there.
+- **Events for each of them**: a Saturday night rush in the kitchen, the food critic, the long haul,
+  an envelope after a traffic stop, a cold case, a deployment, the harvest before the rain, a calf at
+  two in the morning, the gallery show, a client's bad idea, a red day on the markets, a case that
+  keeps you up at night, a mistake in a bridge, the result that might change everything.
+- **Raising children** (from The Sims' Parenthood): on a child's page you choose how you raise
+  them, warm, strict, free or distant. Other parents raise theirs as they are. Every year it shapes
+  three hidden values in the child, and at eighteen they become traits: a warm childhood leaves
+  kindness, a strict one responsibility, a free one independence, a distant one scars.
+- **20 events for the smallest years** (2 to 6).
+- Events can ask for a specific job (`jobs`).
+- docs/sims-inspiration.md: what else to borrow from The Sims, and in what order.
+
 ## 0.46.0 – 2026-10-02 · Friends, money, health, more America
 
 825 events now.

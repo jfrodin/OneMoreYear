@@ -96,6 +96,12 @@ public sealed class Person
     /// <summary>Every occupation the person has had (ids), for family achievements like three doctors in a row.</summary>
     public List<string> Jobs { get; set; } = new();
     /// <summary>The life dream the player chose for this person (docs/endgame.md), and how it went.</summary>
+    /// <summary>How the child is being raised (UpbringingSystem): warm, strict, free or distant. Null: as the parents are.</summary>
+    public string? Upbringing { get; set; }
+    /// <summary>Values a childhood leaves behind, from -50 to 50: empathy, responsibility, self control.</summary>
+    public double Empathy { get; set; }
+    public double Responsibility { get; set; }
+    public double SelfControl { get; set; }
     public string? Dream { get; set; }
     public DreamState DreamState { get; set; }
     public int DreamYear { get; set; }

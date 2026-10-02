@@ -159,7 +159,12 @@ public sealed class GameSession
             if (!p.IsAlive) continue;
             LifeSystem.UpdateHealth(ctx, p);
             if (LifeSystem.CheckDeath(ctx, p)) continue;
-            if (p.Age(ctx.Year) == ctx.Country.AdultAge) PersonFactory.RollAdultTraits(ctx, p);
+            UpbringingSystem.Update(ctx, p);
+            if (p.Age(ctx.Year) == ctx.Country.AdultAge)
+            {
+                PersonFactory.RollAdultTraits(ctx, p);
+                UpbringingSystem.BecomeAdult(ctx, p);
+            }
             CareerSystem.Update(ctx, p, jobLoss);
             HousingSystem.Update(ctx, p);
             EconomySystem.Update(ctx, p, market);
@@ -914,6 +919,18 @@ public sealed class GameSession
     /// </summary>
     public IReadOnlyList<AchievementDef> NewAchievements(IReadOnlySet<string> alreadyUnlocked) =>
         AchievementSystem.NewlyEarned(Ctx, alreadyUnlocked);
+
+    /// <summary>The player's children under eighteen and how each is raised (UpbringingSystem).</summary>
+    public IReadOnlyList<UpbringingView> Upbringing() => Kinship.Children(World, Player)
+        .Where(c => c.IsAlive && c.Age(Year) < Country.AdultAge && c.Abroad == Player.Abroad).OrderBy(c => c.BirthYear)
+        .Select(c => new UpbringingView(c.Id, c.FirstName, c.Age(Year), UpbringingSystem.StyleFor(Ctx, c), c.Upbringing != null, UpbringingSystem.Shaping(c))).ToList();
+
+    /// <summary>Chooses how one of the player's children is raised from now on.</summary>
+    public void SetUpbringing(int childId, string style)
+    {
+        if (!UpbringingSystem.Styles.Contains(style) || World.TryGet(childId) is not { } child || !child.ParentIds.Contains(Player.Id)) return;
+        child.Upbringing = style;
+    }
 
     /// <summary>What the player keeps of the family's things (HeirloomSystem).</summary>
     public IReadOnlyList<HeirloomView> Heirlooms() => HeirloomSystem.OwnedBy(World, Player).Select(h => new HeirloomView(h.Id, h.Name,

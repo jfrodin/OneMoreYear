@@ -242,3 +242,6 @@ public sealed record EpilogueView(string FamilyName, int FromYear, int ToYear, s
 
 /// <summary>"Anna Berglund, 1950 to 2034. A nurse. Lived the dream: a big family."</summary>
 public sealed record PlayedLifeView(string Name, string Years, string Summary);
+
+/// <summary>One of the player's children at home and how they are being raised.</summary>
+public sealed record UpbringingView(int ChildId, string Name, int Age, string Style, bool Chosen, string? Shaping);
