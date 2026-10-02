@@ -3,7 +3,7 @@
 [
   {
     "id": "young_first_flat", "trigger": "milestone", "title": "Your own key",
-    "text": "A one-room flat on the fourth floor without a lift. The kitchen is a cupboard with a hotplate. It is yours.",
+    "text": "A one-room {flat} on the fourth floor without a lift. The kitchen is a cupboard with a hotplate. It is yours.",
     "conditions": { "minAge": 18, "maxAge": 26, "livesWithParents": false, "notFlags": [ "first_flat" ] }, "cooldown": 50, "weight": 2,
     "choices": [
       { "text": "Throw a party", "effects": [ { "type": "flag", "flag": "first_flat" }, { "type": "happiness", "amount": 6 }, { "type": "money", "amount": -800 } ],
@@ -76,7 +76,7 @@
   },
   {
     "id": "young_roommate", "title": "Sharing",
-    "text": "You share a flat with someone you met through an advert. They label their food. All of it. Including the salt.",
+    "text": "You share {a.flat} with someone you met through an advert. They label their food. All of it. Including the salt.",
     "conditions": { "minAge": 19, "maxAge": 28, "livesWithParents": false, "hasPartner": false }, "cooldown": 15,
     "choices": [
       { "text": "Label your own food too", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The fridge becomes a library. You live together for three years and never fight once." },

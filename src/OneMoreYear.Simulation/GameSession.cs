@@ -222,7 +222,8 @@ public sealed class GameSession
             if (text.Contains(relation, StringComparison.OrdinalIgnoreCase)) continue;
             // "Agneta (Oskar's ex)" adds nothing when Oskar is already in the sentence.
             if (Kinship.IsOwnerLabel(label) && text.Contains(label.Split('\'')[0])) continue;
-            foreach (var name in new[] { p.FullName, p.FirstName })
+            // The full name now, the name at birth (before a marriage), then the first name alone.
+            foreach (var name in new[] { p.FullName, $"{p.FirstName} {p.BirthLastName}", p.FirstName })
             {
                 // Whole word, and not already followed by a parenthesis.
                 var match = System.Text.RegularExpressions.Regex.Match(text, $@"\b{System.Text.RegularExpressions.Regex.Escape(name)}\b(?!\s*\()(?!')");
@@ -264,7 +265,7 @@ public sealed class GameSession
             var (occ, level, employer) = offer;
             var lvl = occ.Levels[level];
             string fit = CareerSystem.FitsDegree(Ctx, Player, occ) ? "Uses your education." : "Doesn't use your education.";
-            choices.Add(new ChoiceView(i, $"{lvl.Title}{(employer != null ? $" at {employer}" : $"  ·  {occ.Name}")}  ·  {EconomySystem.FormatPay(Ctx, lvl.Salary)}",
+            choices.Add(new ChoiceView(i, $"{lvl.Title}{(employer != null ? $" at {employer}" : $"  ·  {occ.Name}")}  ·  {EconomySystem.FormatPay(Ctx, CareerSystem.Salary(Ctx, lvl))}",
                 $"{occ.Name}. {fit} Top of this career: {occ.Levels[^1].Title}.", null, true));
         }
         int offset = pending.Options.Count;
@@ -462,7 +463,7 @@ public sealed class GameSession
             Education = p.Education switch
             {
                 EducationLevel.University => "University",
-                EducationLevel.Secondary => "Upper secondary",
+                EducationLevel.Secondary => TextFormatter.Capitalize(Country.SecondarySchool),
                 EducationLevel.Primary => "Primary school",
                 _ => "None"
             },
@@ -521,10 +522,10 @@ public sealed class GameSession
         var ladder = occ == null ? new List<LadderStep>() : occ.Levels.Select((l, i) =>
         {
             var req = new List<string>();
-            if (l.MinEducation > EducationLevel.None) req.Add(CareerSystem.EducationName(l.MinEducation));
+            if (l.MinEducation > EducationLevel.None) req.Add(CareerSystem.EducationName(Ctx, l.MinEducation));
             if (l.RequiresDegree is { Count: > 0 } degrees)
-                req.Add(string.Join(" or ", degrees.Select(d => Content.Programme(d)?.Name ?? d)));
-            return new LadderStep(l.Title, EconomySystem.FormatPay(Ctx, l.Salary),
+                req.Add(string.Join(" or ", degrees.Select(d => Content.Programme(d)?.NameIn(Country.Id) ?? d)));
+            return new LadderStep(l.Title, EconomySystem.FormatPay(Ctx, CareerSystem.Salary(Ctx, l)),
                 req.Count == 0 ? "No requirements" : "Needs " + string.Join(", ", req),
                 i == p.OccupationLevel, CareerSystem.QualifiesFor(p, l));
         }).ToList();
@@ -545,7 +546,7 @@ public sealed class GameSession
             EducationLevel = p.Education switch
             {
                 EducationLevel.University => "University degree",
-                EducationLevel.Secondary => "Upper secondary school",
+                EducationLevel.Secondary => TextFormatter.Capitalize(Country.SecondarySchool),
                 EducationLevel.Primary => "Primary school",
                 _ => p.Age(Year) < 7 ? "Not in school yet" : "In school"
             },
@@ -554,7 +555,7 @@ public sealed class GameSession
             YearsLeft = p.Activity == Activity.Studying ? p.StudyYearsLeft : 0,
             Grades = p.Age(Year) >= 7 ? p.Grades : null,
             PartTimeJob = p.Flags.Contains(CareerSystem.PartTimeFlag),
-            Degrees = p.Degrees.Select(d => Content.Programme(d)?.Name ?? d).ToList(),
+            Degrees = p.Degrees.Select(d => Content.Programme(d)?.NameIn(Country.Id) ?? d).ToList(),
             JobTitle = occ == null ? null : CareerSystem.Title(Ctx, p),
             Employer = occ == null || occ.Id == "crime" ? null : p.Employer,
             Field = occ?.Name,
@@ -623,6 +624,7 @@ public sealed class GameSession
             YearlyIncome = EconomySystem.FormatPay(Ctx, EconomySystem.GrossIncome(Ctx, p)) + " before tax",
             SaveRatePercent = (int)Math.Round(EconomySystem.SaveRate(Ctx, p) * 100),
             TaxPercent = (int)Math.Round(Country.TaxRate * 100),
+            WelfareShare = Country.WelfareShare switch { >= 0.45 and <= 0.55 => "half", >= 0.2 and <= 0.3 => "a quarter", var w => $"{w * 100:0}%" },
             Year = Year,
             ThisYear = thisYear,
             ThisYearTotal = Signed(thisYear.Sum(l => l.Raw)),

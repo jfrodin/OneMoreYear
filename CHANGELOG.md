@@ -2,6 +2,24 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.34.0 – 2026-10-02 · The United States
+
+A second country. Choose it on the title screen.
+
+- **America in dollars**: US prices from 1950, incomes, rents and homes for twelve cities from New
+  York to Boise, tuition that becomes debt, hospital bills when you fall ill (much smaller with a job
+  or a pension) and a thinner safety net.
+- **American families**: names by heritage and era, fictional employers, a decade page for each
+  decade, funds and companies that live through the dot com crash and 2008.
+- **School the American way**: school from 6, high school with tracks (college prep, business,
+  trades), graduation in cap and gown, community college for adults.
+- **25 American events**: the draft for Vietnam, Kennedy, the March on Washington, Woodstock, the
+  bicentennial, Challenger, September 11, the 2008 foreclosures, prom, the driving test,
+  Thanksgiving, the Fourth, Halloween, Little League, the Super Bowl, tornadoes and more.
+- Everyday words follow the country ("high school", "an apartment"); the money tab says how much
+  welfare covers where you live.
+- `--country=usa` works for the smoke test, screenshots and `SimRunner --coverage`.
+
 ## 0.33.0 – 2026-10-02 · Ready for more countries
 
 A new country is now only data and events (see `docs/countries.md`).

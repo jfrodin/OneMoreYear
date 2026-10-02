@@ -111,7 +111,7 @@ public static class SocialSystem
         c.OccupationId = occ.Id;
         c.OccupationLevel = level;
         c.Employer = p.Employer;
-        c.Income = occ.Levels[level].Salary;
+        c.Income = CareerSystem.Salary(ctx, occ.Levels[level]);
         Meet(ctx, p, c, boss ? "boss" : "colleague");
         if (boss) ctx.World.Rel(c.Id, p.Id).Respect = Math.Clamp(ctx.Rng.Gaussian(45, 12), 0, 100);
         return c;

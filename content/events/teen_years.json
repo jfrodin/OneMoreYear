@@ -11,7 +11,7 @@
     ]
   },
   {
-    "id": "teen_driving_test", "title": "The driving test",
+    "id": "teen_driving_test", "countries": [ "sweden" ], "title": "The driving test",
     "text": "The examiner gets in, says nothing, and writes something down before you have even started the engine.",
     "conditions": { "minAge": 18, "maxAge": 22, "notFlags": [ "driving_licence" ] }, "cooldown": 1, "weight": 1.5,
     "choices": [

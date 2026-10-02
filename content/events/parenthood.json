@@ -183,7 +183,7 @@
     "choices": [
       { "text": "Of course, come in", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 }, { "type": "happiness", "amount": -2 } ],
         "result": "A few months becomes two years. Dirty dishes and late-night talks. You'll miss it when it's over." },
-      { "text": "Help {t.him} find a flat instead", "effects": [ { "type": "money", "amount": -10000 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 6 } ],
+      { "text": "Help {t.him} find {a.flat} instead", "effects": [ { "type": "money", "amount": -10000 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 6 } ],
         "result": "A deposit, a borrowed van. {t.He}'s on {t.his} own two feet again." }
     ]
   },
@@ -234,7 +234,7 @@
   },
   {
     "id": "parent_school_choice", "trigger": "milestone", "title": "Which school?",
-    "text": "{t.name} is choosing what to study at upper secondary school. {t.He} wants to do music. You were thinking of something more... sensible.",
+    "text": "{t.name} is choosing what to study at {secondary}. {t.He} wants to do music. You were thinking of something more... sensible.",
     "conditions": { "minAge": 30 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 15, "maxAge": 15 } },
     "choices": [

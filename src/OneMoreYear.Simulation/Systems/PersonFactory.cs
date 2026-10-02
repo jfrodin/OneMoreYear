@@ -208,7 +208,7 @@ public static class PersonFactory
                 if (!CareerSystem.QualifiesFor(p, occ.Levels[p.OccupationLevel + 1])) break;
                 p.OccupationLevel++;
             }
-            p.Income = occ.Levels[p.OccupationLevel].Salary;
+            p.Income = CareerSystem.Salary(ctx, occ.Levels[p.OccupationLevel]);
             p.YearsInJob = rng.Range(0, Math.Max(0, age - 20));
         }
         else
@@ -218,7 +218,7 @@ public static class PersonFactory
         }
 
         double yearsOfSaving = Math.Max(0, age - 22);
-        p.Money = ctx.Nominal(rng.Range(-0.05, 0.25) * yearsOfSaving * 40000);
+        p.Money = ctx.NominalRef(rng.Range(-0.05, 0.25) * yearsOfSaving * 40000);
         if (age > 30 && rng.Chance(0.55))
         {
             // Bought some years ago; part of the loan is paid off.

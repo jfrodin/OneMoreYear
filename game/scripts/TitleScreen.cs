@@ -76,7 +76,8 @@ public partial class TitleScreen : Control
             countryRow.AddChild(countryLabel);
             _country = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
             foreach (var c in _countries) _country.AddItem(c.Name);
-            _country.Selected = Math.Max(0, _countries.FindIndex(c => c.Id == "sweden"));
+            // --country=ID picks another country for automated runs.
+            _country.Selected = Math.Max(0, _countries.FindIndex(c => c.Id == Main.ArgCountry));
             _country.ItemSelected += _ => FillForCountry();
             countryRow.AddChild(_country);
             options.AddChild(countryRow);

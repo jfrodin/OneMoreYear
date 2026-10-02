@@ -29,7 +29,7 @@
       { "text": "Let everyone choose something", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "generous", "chance": 0.1 } ],
         "result": "Your granddaughter chooses the ugly clock you were sure nobody wanted. She says she loved it when she was small. You did not know." },
       { "text": "Give money now instead of later", "requires": { "minMoney": 100000 }, "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": 6 } ],
-        "result": "A deposit for a flat, a debt paid off, a trip. You get to see it happen. That was the point." },
+        "result": "A deposit for {a.flat}, a debt paid off, a trip. You get to see it happen. That was the point." },
       { "text": "Not yet", "effects": [], "result": "There is time. Probably." }
     ]
   },

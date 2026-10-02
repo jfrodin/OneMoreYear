@@ -8,7 +8,7 @@ using OneMoreYear.Simulation.Content;
 /// </summary>
 static class CoverageReport
 {
-    public static void Run(int games)
+    public static void Run(int games, string countryId = "sweden")
     {
         var content = ContentDb.Embedded;
         var seen = content.Events.Keys.ToDictionary(k => k, _ => 0);
@@ -18,7 +18,7 @@ static class CoverageReport
 
         for (int g = 0; g < games; g++)
         {
-            var s = GameSession.NewGame(new NewGameOptions { Seed = (ulong)(1000 + g), StartYear = starts[g % starts.Length] });
+            var s = GameSession.NewGame(new NewGameOptions { Seed = (ulong)(1000 + g), StartYear = starts[g % starts.Length], CountryId = countryId });
             var bot = new AutoPlayer((ulong)g);
             var thisLife = new HashSet<string>();
             int playerId = s.Player.Id;
@@ -54,6 +54,13 @@ static class CoverageReport
         var neverSituation = content.Events.Values.Where(e => seen[e.Id] == 0 && e.Trigger == "situation").OrderBy(e => e.Id).ToList();
         Console.WriteLine($"Situations that never appeared ({neverSituation.Count}): {string.Join(", ", neverSituation.Select(e => e.Id))}");
         Console.WriteLine();
+        var local = content.Events.Values.Where(e => e.Countries.Contains(countryId)).OrderBy(e => e.Id).ToList();
+        if (local.Count > 0)
+        {
+            Console.WriteLine($"Events only in {countryId} (lives that saw it, and total):");
+            foreach (var e in local) Console.WriteLine($"  {e.Id,-34} {livesWith[e.Id] * 100 / Math.Max(1, lives),3}% of lives, {seen[e.Id]} times");
+            Console.WriteLine();
+        }
         Console.WriteLine("Most common (share of lives that saw it at least once, and total):");
         foreach (var (id, n) in livesWith.Where(kv => content.Events[kv.Key].Trigger == "random").OrderByDescending(kv => kv.Value).Take(25))
             Console.WriteLine($"  {id,-34} {n * 100 / Math.Max(1, lives),3}% of lives, {seen[id]} times");

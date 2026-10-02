@@ -1,0 +1,287 @@
+// The United States: history as the family lived it, the American year, school, the draft,
+// and what healthcare and college cost. Only in the USA. No dashes.
+[
+  {
+    "id": "us_kennedy", "countries": [ "usa" ], "trigger": "history", "title": "Dallas",
+    "text": "A Friday afternoon in November. The teacher leaves the classroom, comes back, and cannot speak. The President has been shot in Dallas.",
+    "conditions": { "minAge": 6, "minYear": 1963, "maxYear": 1963 },
+    "choices": [
+      { "text": "Watch the television all weekend", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "memory", "kind": "kennedy", "text": "The weekend Kennedy was shot", "impact": -10 } ],
+        "result": "Walter Cronkite takes off his glasses. On Sunday you see a man shot on live television. Nobody in your family says much for days." },
+      { "text": "Go to church with your family", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "The church is full on a Friday evening. Grown men are crying. You have never seen that before." }
+    ]
+  },
+  {
+    "id": "us_march_on_washington", "countries": [ "usa" ], "trigger": "history", "title": "The march",
+    "text": "Buses are leaving for Washington, for a march for jobs and freedom. A minister from your town has seats left.",
+    "conditions": { "minAge": 16, "maxAge": 45, "minYear": 1963, "maxYear": 1963 },
+    "choices": [
+      { "text": "Get on the bus", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "brave", "chance": 0.1 }, { "type": "memory", "kind": "march", "text": "I was at the March on Washington", "impact": 25 } ],
+        "result": "A quarter of a million people on the Mall, and a preacher from Atlanta who talks about a dream. You will tell your grandchildren you were there." },
+      { "text": "Stay home and hear it on the radio", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Even on the radio, the speech makes the hair on your arms stand up." }
+    ]
+  },
+  {
+    "id": "us_draft", "countries": [ "usa" ], "trigger": "history", "title": "The letter",
+    "text": "A letter from the Selective Service System. You have been drafted. The army wants you, and the army is in Vietnam.",
+    "conditions": { "minAge": 18, "maxAge": 25, "sex": "male", "minYear": 1965, "maxYear": 1972, "notFlags": [ "draft_settled" ] },
+    "choices": [
+      { "text": "Report for duty", "chance": 0.9,
+        "success": { "text": "Two years. One of them in the jungle. You come home thinner, older, and you do not talk about it at dinner.", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "flag", "flag": "veteran" }, { "type": "attribute", "kind": "fitness", "amount": 6 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.35 }, { "type": "trait_add", "trait": "resilient", "chance": 0.15 }, { "type": "memory", "kind": "vietnam", "text": "Vietnam", "impact": -25 } ] },
+        "failure": { "text": "A mine on a trail in Quang Tri. You come home in a wheelchair and spend a year learning to walk again.", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "flag", "flag": "veteran" }, { "type": "health", "amount": -35 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.7 }, { "type": "memory", "kind": "vietnam", "text": "The trail in Quang Tri", "impact": -45 } ] } },
+      { "text": "Ask for a student deferment", "requires": { "activity": "studying" }, "effects": [ { "type": "flag", "flag": "draft_settled" } ],
+        "result": "As long as you are in college, you are safe. Your friend from high school is not in college." },
+      { "text": "Go to Canada", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "happiness", "amount": -6 },
+          { "type": "memory", "kind": "canada", "text": "The years in Canada", "impact": -10 } ],
+        "result": "You cross the border at night with one suitcase. Your father does not speak to you for nine years." },
+      { "text": "Apply as a conscientious objector", "chance": 0.35, "chanceTraits": { "kind": 0.15, "brave": 0.1 },
+        "success": { "text": "Two years as an orderly in a veterans' hospital instead. You see what the war does, from the other end.", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "trait_add", "trait": "kind", "chance": 0.15 } ] },
+        "failure": { "text": "The board says no. You report in March like everyone else.", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "flag", "flag": "veteran" }, { "type": "ailment_add", "kind": "trauma", "chance": 0.35 }, { "type": "memory", "kind": "vietnam", "text": "Vietnam", "impact": -25 } ] } }
+    ]
+  },
+  {
+    "id": "us_woodstock", "countries": [ "usa" ], "trigger": "history", "title": "A farm in Bethel",
+    "text": "Three days of music on a farm in upstate New York. Everybody you know is going, or says they are.",
+    "conditions": { "minAge": 16, "maxAge": 28, "minYear": 1969, "maxYear": 1969 },
+    "choices": [
+      { "text": "Hitchhike there", "chance": 0.7, "chanceTraits": { "impulsive": 0.1, "social": 0.1 },
+        "success": { "text": "Mud, rain, half a million people and Jimi Hendrix playing the anthem at dawn. You lose your shoes and find a friend for life.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.1 }, { "type": "memory", "kind": "woodstock", "text": "Three days at Woodstock", "impact": 22 } ] },
+        "failure": { "text": "The traffic stops twenty miles away. You hear it from a car roof, faintly, for two days.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Stay home", "effects": [], "result": "You see the photographs in Life magazine and wish you had gone." }
+    ]
+  },
+  {
+    "id": "us_bicentennial", "countries": [ "usa" ], "trigger": "history", "title": "Two hundred years",
+    "text": "July 4th, 1976. Two hundred years. Every town has a parade, every fence is painted red, white and blue.",
+    "conditions": { "minAge": 4, "minYear": 1976, "maxYear": 1976 },
+    "choices": [
+      { "text": "March in the parade", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "A tricorn hat, a drum, and fireworks over the river that the whole town watches from the grass." },
+      { "text": "Watch the tall ships on TV", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Sailing ships in New York harbour, and your grandfather explaining which ones he recognises." }
+    ]
+  },
+  {
+    "id": "us_challenger", "countries": [ "usa" ], "trigger": "history", "title": "The launch",
+    "text": "The whole school is watching the launch, because a teacher is going into space. The shuttle climbs into a blue sky.",
+    "conditions": { "minAge": 7, "maxAge": 18, "minYear": 1986, "maxYear": 1986 },
+    "choices": [
+      { "text": "Keep watching", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "memory", "kind": "challenger", "text": "Watching Challenger in the school gym", "impact": -10 } ],
+        "result": "Seventy-three seconds. Then a strange cloud, and the teacher turns off the television. Nobody explains anything for the rest of the day." }
+    ]
+  },
+  {
+    "id": "us_september_11", "countries": [ "usa" ], "trigger": "history", "title": "A Tuesday morning",
+    "text": "The phone rings early. \"Turn on the TV.\" A tower in New York is burning, and as you watch, a second plane hits the other one.",
+    "conditions": { "minAge": 7, "minYear": 2001, "maxYear": 2001 },
+    "choices": [
+      { "text": "Call everyone you love", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "memory", "kind": "nine_eleven", "text": "The morning of September 11", "impact": -15 } ],
+        "result": "The lines are busy for hours. When you finally get through to your sister, you both just breathe for a while." },
+      { "text": "Give blood", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
+        "result": "The line at the blood bank goes round the block. Strangers hold each other's hands. For a few weeks, the whole country is kind." }
+    ]
+  },
+  {
+    "id": "us_foreclosure", "countries": [ "usa" ], "trigger": "history", "title": "The letter from the bank",
+    "text": "Your house is worth less than the loan, the payment has gone up, and the bank has sent a letter with the word foreclosure in it.",
+    "conditions": { "minAge": 22, "minYear": 2008, "maxYear": 2010, "hasMortgage": true },
+    "choices": [
+      { "text": "Fight to keep it", "chance": 0.5, "chanceTraits": { "ambitious": 0.1, "resilient": 0.1 },
+        "success": { "text": "Two jobs, no vacations, a loan modification after eleven phone calls. You keep the house.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "health", "amount": -3 } ] },
+        "failure": { "text": "A sheriff's notice on the door. You move into your sister's basement with what fits in a truck.", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -10 }, { "type": "memory", "kind": "foreclosure", "text": "Losing the house in 2009", "impact": -30 } ] } },
+      { "text": "Hand back the keys", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -6 } ],
+        "result": "You leave the keys on the kitchen counter and do not look back. Half the street does the same that year." }
+    ]
+  },
+  {
+    "id": "us_drivers_license", "countries": [ "usa" ], "trigger": "milestone", "title": "Sixteen",
+    "text": "You are sixteen. The test is on Saturday, in your mother's station wagon, with an examiner who smells of coffee.",
+    "conditions": { "minAge": 16, "maxAge": 18, "notFlags": [ "driving_licence" ] },
+    "choices": [
+      { "text": "Take the test", "chance": 0.7, "chanceTraits": { "impulsive": -0.1, "resilient": 0.1 },
+        "success": { "text": "You pass. That night you drive nowhere in particular for two hours with the windows down.", "effects": [ { "type": "flag", "flag": "driving_licence" }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "Parallel parking. You hit the cone, and then the other cone.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Wait a year", "effects": [], "result": "Your friends drive you around. It is a little humiliating." }
+    ]
+  },
+  {
+    "id": "us_prom", "countries": [ "usa" ], "title": "Prom",
+    "text": "Senior prom. Rented tuxedos, corsages, a gym that has been turned into Paris for one night.",
+    "conditions": { "minAge": 17, "maxAge": 18, "activity": "studying", "notFlags": [ "prom" ] }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Ask someone you like", "chance": 0.55, "chanceTraits": { "charming": 0.15, "brave": 0.1, "introvert": -0.15 }, "chanceAttributes": { "looks": 0.004 },
+        "success": { "text": "A yes, a slow dance, and a photo on the staircase that your mother frames.", "effects": [ { "type": "flag", "flag": "prom" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "prom", "text": "Prom night", "impact": 15 } ] },
+        "failure": { "text": "A no, kindly put. You go with your friends instead and have a better time than the couples.", "effects": [ { "type": "flag", "flag": "prom" }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Skip it", "effects": [ { "type": "flag", "flag": "prom" } ], "result": "You watch a movie at home. On Monday everyone has a story and you have none." }
+    ]
+  },
+  {
+    "id": "us_college_letters", "countries": [ "usa" ], "trigger": "milestone", "title": "Thick envelopes",
+    "text": "College letters arrive in April. A thick envelope means yes. A thin one means no. There are three in the mailbox.",
+    "conditions": { "minAge": 17, "maxAge": 19, "activity": "studying", "minGrades": 50 },
+    "choices": [
+      { "text": "Open them at the kitchen table", "chance": 0.6, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "Two thick ones. Your father pretends to have something in his eye. Then he sees the tuition.", "effects": [ { "type": "grades", "amount": 3 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "Three thin envelopes. Community college, then. Plenty of people start there.", "effects": [ { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "us_student_loans", "countries": [ "usa" ], "title": "The loan statement",
+    "text": "A statement from the student loan company. With interest, you owe more than you borrowed, and you have been paying for years.",
+    "conditions": { "minAge": 23, "maxAge": 45, "minEducation": "university", "maxMoney": 20000 }, "cooldown": 8,
+    "choices": [
+      { "text": "Pay extra every month", "effects": [ { "type": "money", "amount": -30000 }, { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "stingy", "chance": 0.05 } ],
+        "result": "No vacations for two years. The number gets smaller, slowly." },
+      { "text": "Pay the minimum", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "It will follow you into your forties. Everyone you know has one." }
+    ]
+  },
+  {
+    "id": "us_insurance", "countries": [ "usa" ], "title": "No insurance",
+    "text": "A pain in your side that will not go away. Without a job, you have no health insurance, and the emergency room costs more than a month's rent.",
+    "conditions": { "minAge": 20, "maxAge": 64, "activity": "unemployed" }, "cooldown": 6,
+    "choices": [
+      { "text": "Go to the emergency room", "effects": [ { "type": "money", "amount": -60000 }, { "type": "health", "amount": 4 } ],
+        "result": "Appendicitis. They operate the same night. The bill comes three weeks later and you read it four times." },
+      { "text": "Wait and see", "chance": 0.6,
+        "success": { "text": "It goes away by itself. You were lucky, and you know it.", "effects": [] },
+        "failure": { "text": "It does not go away. By the time you go in, it is worse, and so is the bill.", "effects": [ { "type": "health", "amount": -12 }, { "type": "money", "amount": -100000 } ] } }
+    ]
+  },
+  {
+    "id": "us_thanksgiving", "countries": [ "usa" ], "title": "Thanksgiving",
+    "text": "Thanksgiving at your parents'. A turkey the size of a child, the game on TV, and an uncle with opinions.",
+    "conditions": { "minAge": 6, "hasRole": [ "parent" ] }, "cooldown": 3,
+    "choices": [
+      { "text": "Argue with the uncle", "requires": { "traitsAny": [ "hot_tempered", "brave", "eccentric" ] }, "effects": [ { "type": "happiness", "amount": 2 } ],
+        "result": "It starts with football and ends with the President. Your mother serves pie very loudly." },
+      { "text": "Eat until you cannot move", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "You fall asleep on the couch in the third quarter. It is the best nap of the year." },
+      { "text": "Help in the kitchen", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "Your grandmother tells you the secret of the stuffing. It is butter. It is always butter." }
+    ]
+  },
+  {
+    "id": "us_fourth_of_july", "countries": [ "usa" ], "title": "The Fourth",
+    "text": "The Fourth of July. A barbecue in the backyard, and fireworks your cousin bought from a stand across the state line.",
+    "conditions": { "minAge": 5 }, "cooldown": 4,
+    "choices": [
+      { "text": "Light the big ones", "chance": 0.85,
+        "success": { "text": "The whole street comes out to watch. Your cousin is a hero until next year.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "One goes sideways into the neighbour's hedge. The fire department is very polite about it.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "health", "amount": -1 } ] } },
+      { "text": "Watch the town fireworks from the hood of a car", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Mosquitoes, sparklers and a sky full of colour. Summer feels like it will last forever." }
+    ]
+  },
+  {
+    "id": "us_halloween", "countries": [ "usa" ], "title": "Halloween",
+    "text": "Halloween. The whole neighbourhood is out in costumes, and there is a house on the corner that gives full-size candy bars.",
+    "conditions": { "minAge": 4, "maxAge": 13 }, "cooldown": 2,
+    "choices": [
+      { "text": "Make your own costume", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "creative", "chance": 0.05 } ],
+        "result": "A robot made of cardboard boxes. It falls apart by the third house. You do not care at all." },
+      { "text": "Go for the haunted house", "chance": 0.5, "chanceTraits": { "brave": 0.25 },
+        "success": { "text": "You go all the way through. At school on Monday you are a legend.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 } ] },
+        "failure": { "text": "You run out screaming at the first room. Your older brother never lets it go.", "effects": [ { "type": "happiness", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "us_little_league", "countries": [ "usa" ], "title": "Little League",
+    "text": "Little League tryouts. Your father has been throwing balls to you in the backyard every evening for a month.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 6,
+    "choices": [
+      { "text": "Swing for it", "chance": 0.55, "chanceAttributes": { "fitness": 0.005 },
+        "success": { "text": "You make the team. Your father is at every game, in the same cap, yelling the same advice.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ] },
+        "failure": { "text": "You strike out three times. The coach says next year. Your father takes you for ice cream anyway.", "effects": [ { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "us_super_bowl", "countries": [ "usa" ], "title": "Super Bowl Sunday",
+    "text": "Super Bowl Sunday. A party at a friend's, chicken wings, and a bet on the game you know nothing about.",
+    "conditions": { "minAge": 16, "minYear": 1967 }, "cooldown": 4,
+    "choices": [
+      { "text": "Bet on the underdog", "chance": 0.35,
+        "success": { "text": "The underdog wins in the last minute. You collect from everyone in the room.", "effects": [ { "type": "money", "amount": 1500 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "A rout by halftime. You pay up and watch the commercials.", "effects": [ { "type": "money", "amount": -800 }, { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Just watch the commercials", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The commercials are better than the game. They usually are." }
+    ]
+  },
+  {
+    "id": "us_road_trip", "countries": [ "usa" ], "title": "Route 66",
+    "text": "A friend has an old car and two free weeks. The plan is to drive west until the road runs out.",
+    "conditions": { "minAge": 18, "maxAge": 35, "minMoney": 15000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "road_trip", "text": "Driving west to the Pacific", "impact": 20 } ],
+        "result": "Diners, motels, a breakdown in New Mexico and a sunset over the Pacific that you will still describe badly at sixty." },
+      { "text": "Keep working", "effects": [ { "type": "money", "amount": 3000 } ], "result": "Your friend sends postcards from Arizona. You pin them over your desk." }
+    ]
+  },
+  {
+    "id": "us_waiting_tables", "countries": [ "usa" ], "title": "Tips",
+    "text": "A summer job waiting tables at a diner off the highway. The pay is almost nothing. The tips are everything.",
+    "conditions": { "minAge": 16, "maxAge": 22 }, "cooldown": 3,
+    "choices": [
+      { "text": "Smile until your face hurts", "chance": 0.6, "chanceTraits": { "charming": 0.2, "social": 0.1, "hot_tempered": -0.2 },
+        "success": { "text": "Truckers who leave twenties, regulars who ask for your section. You save more than you thought possible.", "effects": [ { "type": "money", "amount": 25000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "A man complains about his eggs for twenty minutes and leaves nothing. You learn a lot about people that summer.", "effects": [ { "type": "money", "amount": 10000 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Say no", "effects": [], "result": "You mow lawns instead. Less money, more sun." }
+    ]
+  },
+  {
+    "id": "us_tornado", "countries": [ "usa" ], "title": "The siren",
+    "text": "The sky turns green in the afternoon. Then the siren. You have about ten minutes.",
+    "conditions": { "minAge": 6 }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Get everyone into the basement", "chance": 0.85,
+        "success": { "text": "It passes two streets away. The next morning the neighbour's house is gone and yours has lost its porch.", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": -4 } ] },
+        "failure": { "text": "The roof goes. Everyone is alive. Everything else is in the next county.", "effects": [ { "type": "money", "amount": -150000 }, { "type": "happiness", "amount": -10 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.2 } ] } }
+    ]
+  },
+  {
+    "id": "after_primary_usa", "countries": [ "usa" ], "trigger": "situation",
+    "title": "High school",
+    "text": "Middle school is over. In the fall you start high school, and the counselor wants to know which track you are on.",
+    "choices": [
+      { "text": "College prep", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_academic" } ], "result": "Algebra, chemistry and a counselor who keeps saying the word college." },
+      { "text": "Health careers", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_care" } ], "result": "Biology, first aid and a semester volunteering at the hospital." },
+      { "text": "Building trades", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_construction" } ], "result": "Shop class every afternoon. You build a birdhouse, then a shed, then half a house." },
+      { "text": "Vocational and technical", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_industry" } ], "result": "Engines, welding and a teacher who used to work at the plant." },
+      { "text": "Business", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_business" } ], "result": "Typing, bookkeeping and a class where you run a pretend company." },
+      { "text": "Drop out and get a job", "hint": "Your own money now, but fewer doors later.", "effects": [ { "type": "job_find" }, { "type": "happiness", "amount": 5 } ], "result": "You start asking around for work." },
+      { "text": "Take a year off", "hint": "The question comes back next year.", "effects": [ { "type": "happiness", "amount": 8 } ], "result": "You sleep late, work a little, and put the decision off." }
+    ]
+  },
+  {
+    "id": "us_back_to_school", "countries": [ "usa" ], "trigger": "self", "category": "career", "title": "Go back to school",
+    "conditions": { "minAge": 20, "maxAge": 60, "notActivity": [ "studying" ] },
+    "choices": [ {
+      "text": "Look at classes", "hint": "Community college to finish high school, or a vocational course for a new trade.",
+      "effects": [ { "type": "queue_event", "event": "choose_adult_education" } ],
+      "result": "You pick up the community college catalogue at the library."
+    } ]
+  },
+  {
+    "id": "choose_adult_education_usa", "countries": [ "usa" ], "trigger": "situation",
+    "title": "Back to school",
+    "text": "Your grades are {grades}. Community college is cheap, but not free, and you will have to keep working.",
+    "choices": [
+      { "text": "Night classes, next to everything else", "hint": "Two evenings a week for a year. Raises your grades.",
+        "effects": [ { "type": "grades", "amount": 10 }, { "type": "happiness", "amount": -2 }, { "type": "money", "amount": -8000 } ],
+        "result": "Two evenings a week in a classroom with buzzing lights. Your classmates are a mechanic, a grandmother and a kid of nineteen. You all get better." },
+      { "text": "Finish your high school diploma", "requires": { "maxEducation": "primary" }, "effects": [ { "type": "study", "level": "secondary", "programme": "us_ged" } ],
+        "result": "Night classes and a test at the end. The first week you feel very old. The second week you do not." },
+      { "text": "Nursing assistant course", "effects": [ { "type": "study", "level": "secondary", "programme": "voc_care" } ],
+        "result": "A few months of anatomy and early mornings. After that, there is always a job." },
+      { "text": "Electrician and trades course", "effects": [ { "type": "study", "level": "secondary", "programme": "voc_trades" } ],
+        "result": "Two years with your hands. You come home tired in a good way." },
+      { "text": "Programming course", "effects": [ { "type": "study", "level": "secondary", "programme": "voc_it" } ],
+        "result": "Two years of code. Half the class are career changers like you." },
+      { "text": "Not now", "result": "The catalogue goes into a drawer. Maybe next year." }
+    ]
+  },
+  {
+    "id": "us_graduation", "countries": [ "usa" ], "trigger": "milestone", "title": "Cap and gown",
+    "text": "High school graduation on the football field. Folding chairs, a valedictorian who talks too long, and your name read out wrong.",
+    "conditions": { "minAge": 17, "maxAge": 20, "minEducation": "secondary", "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
+    "choices": [
+      { "text": "Throw your cap in the air", "effects": [ { "type": "flag", "flag": "graduated_upper" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "graduation", "text": "Throwing my cap on the football field", "impact": 18 } ],
+        "result": "Four hundred caps in the air at once. You never find yours. Your mother takes forty photographs of you holding someone else's." },
+      { "text": "Go to the all night party", "effects": [ { "type": "flag", "flag": "graduated_upper" }, { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "graduation", "text": "Graduation night", "impact": 15 } ],
+        "result": "A bowling alley rented by the parents until six in the morning. Somebody cries, somebody proposes, and breakfast is pancakes." }
+    ]
+  }
+]

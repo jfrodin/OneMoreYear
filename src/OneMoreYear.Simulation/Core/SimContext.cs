@@ -65,6 +65,12 @@ public sealed class SimContext
     /// <summary>Converts an amount in 2020-kronor to this year's nominal kronor.</summary>
     public double Nominal(double amount2020) => amount2020 * MoneyIndex(Year);
 
+    /// <summary>A shared-content amount (Swedish kronor of 2020) in this country's 2020 money.</summary>
+    public double Ref(double referenceAmount) => referenceAmount * Country.ContentMoneyScale;
+
+    /// <summary>A shared-content amount in this year's local money: <see cref="Ref"/> then <see cref="Nominal"/>.</summary>
+    public double NominalRef(double referenceAmount) => Nominal(Ref(referenceAmount));
+
     /// <summary>Converts this year's nominal kronor to 2020-kronor.</summary>
     public double Real(double nominal) => nominal / MoneyIndex(Year);
 

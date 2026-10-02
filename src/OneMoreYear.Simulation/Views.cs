@@ -170,6 +170,8 @@ public sealed record MoneyView
     public string YearlyIncome { get; init; } = "";
     public int SaveRatePercent { get; init; }
     public int TaxPercent { get; init; }
+    /// <summary>The share of a shortfall that welfare covers, in words ("half", "a quarter").</summary>
+    public string WelfareShare { get; init; } = "half";
     public int Year { get; init; }
     public IReadOnlyList<LedgerView> ThisYear { get; init; } = Array.Empty<LedgerView>();
     public string ThisYearTotal { get; init; } = "";

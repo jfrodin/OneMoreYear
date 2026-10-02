@@ -39,7 +39,7 @@ public static partial class TextFormatter
         var perspective = viewer ?? player;
         text = ByEra(ctx.Year, text);
         // {money:20}: an amount in 2020 money, shown in the country's currency at this year's prices.
-        text = MoneyToken().Replace(text, m => EconomySystem.Format(ctx, ctx.Nominal(double.Parse(m.Groups[1].Value))));
+        text = MoneyToken().Replace(text, m => EconomySystem.Format(ctx, ctx.NominalRef(double.Parse(m.Groups[1].Value))));
         return Token().Replace(text, m =>
         {
             string head = m.Groups[1].Value;
@@ -55,9 +55,18 @@ public static partial class TextFormatter
                     "grades" => player.Grades.ToString("0"),
                     "age" => player.Age(ctx.Year).ToString(),
                     "city" => HousingSystem.City(ctx, player).Name,
+                    "secondary" => ctx.Country.SecondarySchool,
+                    "flat" => ctx.Country.Flat,
                     _ when pending != null && pending.Vars.TryGetValue(head, out var v) => EconomySystem.Format(ctx, ctx.Nominal(v)),
                     _ => m.Value
                 };
+            }
+
+            // {a.flat}, {a.secondary}: the country's word with its article ("a flat", "an apartment").
+            if (head is "a" or "A" && field is "flat" or "secondary")
+            {
+                string a = A(field == "flat" ? ctx.Country.Flat : ctx.Country.SecondarySchool);
+                return head == "A" ? Capitalize(a) : a;
             }
 
             Person? who = head.ToLowerInvariant() switch
@@ -97,4 +106,7 @@ public static partial class TextFormatter
     }
 
     public static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
+
+    /// <summary>"a flat", "an apartment".</summary>
+    public static string A(string noun) => ("aeiou".Contains(char.ToLowerInvariant(noun.FirstOrDefault())) ? "an " : "a ") + noun;
 }

@@ -99,8 +99,8 @@
       { "text": "Offer {t.him} your spare room", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15 }, { "type": "happiness", "amount": -3 },
           { "type": "memory", "who": "target", "to": "player", "kind": "took_me_in", "text": "{name} took me into their home", "impact": 30 }, { "type": "flag", "flag": "parent_lives_with_me" } ],
         "result": "{t.He} brings a radio, a chair and forty years of opinions about how to load a dishwasher." },
-      { "text": "Help {t.him} find a flat with a lift", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "money", "amount": -5000 } ],
-        "result": "Ground floor, near the shop, a view of a birch. {t.He} complains for a month and then says it is the best flat {t.he} has ever had." },
+      { "text": "Help {t.him} find {a.flat} with a lift", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "money", "amount": -5000 } ],
+        "result": "Ground floor, near the shop, a view of a birch. {t.He} complains for a month and then says it is the best {flat} {t.he} has ever had." },
       { "text": "Leave it", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -6 } ], "result": "{t.He} manages. Slowly, and badly, and alone." }
     ]
   },

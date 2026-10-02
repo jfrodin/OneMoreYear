@@ -136,7 +136,7 @@
     "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 4,
     "choices": [
       { "text": "Wait by the door", "chance": 0.7, "chanceTraits": { "social": 0.2, "charming": 0.1, "introvert": -0.15 },
-        "success": { "text": "Then it rings. And rings. The flat is full of screaming children and it's perfect.",
+        "success": { "text": "Then it rings. And rings. The {flat} is full of screaming children and it's perfect.",
           "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "birthday", "text": "The birthday when everyone came", "impact": 15 } ] },
         "failure": { "text": "Two come. Three, counting your cousin. You eat a lot of cake.",
           "effects": [ { "type": "happiness", "amount": -8 }, { "type": "memory", "kind": "lonely_birthday", "text": "The birthday nobody came to", "impact": -20 } ] } }

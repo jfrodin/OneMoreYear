@@ -221,7 +221,7 @@
   },
   {
     "id": "adult_child_needs_money", "oncePerTarget": true, "title": "The deposit",
-    "text": "{t.name} wants to buy a flat and asks to borrow {amount} for the deposit.",
+    "text": "{t.name} wants to buy {a.flat} and asks to borrow {amount} for the deposit.",
     "conditions": { "minAge": 42 },
     "target": { "role": "child", "conditions": { "minAge": 20, "maxAge": 40, "ownsHome": false } },
     "vars": { "amount": { "base": 150000, "randomMin": 0.7, "randomMax": 1.3 } },

@@ -1,0 +1,34 @@
+// Fictional American employers, per career track. Placeholders: {city}, {surname}, {place}, {brand}.
+// Any resemblance to real companies is accidental; keep names generic.
+{
+  "country": "usa",
+  "places": [
+    "Maple Grove", "Cedar Falls", "Riverside", "Oak Ridge", "Fairview", "Pine Hill", "Lakewood", "Brookside",
+    "Westfield", "Springdale", "Hillcrest", "Greenfield", "Elm Park", "Clearwater", "Ashland", "Bayview",
+    "Sunnyvale", "Highland", "Mill Creek", "Stonebridge"
+  ],
+  "brandStarts": [
+    "Ameri", "Pacific", "Atlantic", "Great", "Star", "Eagle", "Liberty", "Summit", "Pioneer", "Frontier",
+    "Keystone", "Prairie", "Golden", "Northern", "United", "Western", "Coastal", "Patriot", "Delta", "Apex"
+  ],
+  "brandEnds": [
+    "Corp", "Co.", "tech", "Systems", "Industries", "Group", "Labs", "Works", "Solutions", "Holdings",
+    "Partners", "Supply", "Logic", "Point", "Line", "One", "Dynamics", "Brands"
+  ],
+  "byOccupation": {
+    "healthcare": [ "{city} General Hospital", "St. {surname}'s Hospital", "{place} Medical Center", "{place} Nursing Home", "{place} Home Health" ],
+    "medicine": [ "{city} General Hospital", "St. {surname}'s Hospital", "{place} Medical Group" ],
+    "industry": [ "{brand}", "{city} {brand}", "{surname} Manufacturing", "{brand} Steel", "{place} Plant" ],
+    "academia": [ "The University of {city}", "{place} State University", "{brand} Institute" ],
+    "it": [ "{brand}", "{brand} Software", "{brand} Data", "{surname} Digital" ],
+    "trade": [ "{place} Supermarket", "{brand} Stores", "{surname}'s Hardware", "{place} Mall", "{place} Gas and Go" ],
+    "public": [ "The City of {city}", "The Post Office", "{place} County", "The Department of Motor Vehicles", "The State Department of Revenue" ],
+    "law": [ "{surname} & {surname} LLP", "The {city} District Attorney", "{brand} Legal", "{surname} Law Offices" ],
+    "media": [ "The {city} Herald", "Radio {city}", "{brand} Media", "{place} Studios", "{surname} Advertising" ],
+    "education:0": [ "{place} Daycare", "{place} Kindergarten", "{place} After School Program" ],
+    "education:1": [ "{place} Daycare", "{place} Kindergarten" ],
+    "education": [ "{place} Elementary School", "{place} High School", "{place} Middle School", "{city} Community College" ],
+    "construction": [ "{surname} Construction", "{brand} Builders", "{city} Contracting", "{surname} Roofing" ],
+    "business": [ "{brand} Group", "{surname} & Partners", "{brand} Capital", "{city} Savings Bank", "{brand} Investments" ]
+  }
+}

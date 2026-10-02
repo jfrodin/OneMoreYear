@@ -867,6 +867,9 @@ public partial class Main : Control
     // Run with:  Godot --path game -- --smoke   (add --headless for no window)
     // Plays through the real UI for a few hundred steps and quits; errors show up in the log.
 
+    /// <summary>--country=ID: the country for automated runs.</summary>
+    public static string ArgCountry => System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--country="))?["--country=".Length..] ?? "sweden";
+
     private int _smokeStep = -1;
     private int _shotFrame;
     private string? _shotDir;
@@ -882,7 +885,7 @@ public partial class Main : Control
         {
             if (!System.Linq.Enumerable.Contains(OS.GetCmdlineUserArgs(), "--smoke")) { SetProcess(false); return; }
             _smokeStep = 0;
-            StartNewGame(1960, "12345");
+            StartNewGame(1960, "12345", choices: new NewGameOptions { CountryId = ArgCountry });
             return;
         }
         _smokeStep++;
@@ -920,7 +923,7 @@ public partial class Main : Control
 
         switch (_shotFrame)
         {
-            case 10: Shot("01_title"); StartNewGame(1970, "777"); break;
+            case 10: Shot("01_title"); StartNewGame(1970, "777", choices: new NewGameOptions { CountryId = ArgCountry }); break;
             case 20:
                 for (int i = 0; i < 40 && Session is { } s; i++)
                 {

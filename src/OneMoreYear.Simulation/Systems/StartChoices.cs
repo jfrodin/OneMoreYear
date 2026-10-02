@@ -46,7 +46,7 @@ public static class StartChoices
                     break;
                 case Ordinary:
                     p.Addiction = null;
-                    p.Money = Math.Clamp(p.Money, ctx.Nominal(10000), ctx.Nominal(150000));
+                    p.Money = Math.Clamp(p.Money, ctx.NominalRef(10000), ctx.NominalRef(150000));
                     if (p.Activity == Activity.Unemployed) CareerSystem.Hire(ctx, p);
                     break;
                 case Hard:
@@ -79,7 +79,7 @@ public static class StartChoices
         if (t.Smarts is { } smarts) p.Smarts = smarts;
         if (t.Looks is { } looks) p.Looks = looks;
         if (t.Fitness is { } fitness) p.Fitness = fitness;
-        if (t.Money is { } money) p.Money = ctx.Nominal(money);
+        if (t.Money is { } money) p.Money = ctx.NominalRef(money);
         if (t.OwnsHome == true && p.HomeValue <= 0) EconomySystem.GiveHome(p, HousingSystem.HomePrice(ctx, p), HousingSystem.HomePrice(ctx, p) * 0.3);
         if (t.OwnsHome == false && p.HomeValue > 0) EconomySystem.SellHome(ctx, p, log: false);
         if (t.Unemployed == true && p.Age(ctx.Year) >= 16) CareerSystem.BecomeJobSeeker(p, ctx);

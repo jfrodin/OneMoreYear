@@ -770,7 +770,7 @@ public class EffortAndLearningTests
         p.Activity = Activity.Working;
         var komvux = s.Content.Programme("komvux")!;
         var law = s.Content.Programme("uni_law")!;
-        Assert.Contains("diploma", CareerSystem.WhyNot(s.Ctx, p, law));
+        Assert.Contains("finish", CareerSystem.WhyNot(s.Ctx, p, law));
         Assert.Null(CareerSystem.WhyNot(s.Ctx, p, komvux));
         Assert.Contains("Not offered yet", CareerSystem.WhyNot(s.Ctx, p, s.Content.Programme("voc_it")!));
 
@@ -829,5 +829,21 @@ public class CountryTests
         while (s.Player.Age(s.Year) < 6 && bot.PlayYear(s)) { }
         if (s.Player.Id == playerId && s.Player.IsAlive)
             Assert.Equal(Activity.School, s.Player.Activity);
+    }
+
+    [Fact]
+    public void The_usa_has_its_own_words_and_situations()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1980, CountryId = "usa" });
+        Assert.Equal("an apartment", TextFormatter.Format(s.Ctx, "{a.flat}", null));
+        Assert.Equal("high school", TextFormatter.Format(s.Ctx, "{secondary}", null));
+        Assert.Equal("College prep track", s.Ctx.Content.Programme("sec_academic")!.NameIn("usa"));
+        Assert.Equal("$1,500", EconomySystem.Format(s.Ctx, 1500));
+        var pending = EventSystem.QueueSituation(s.Ctx, "after_primary");
+        Assert.Equal("after_primary_usa", pending?.EventId);
+
+        var sweden = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1980 });
+        Assert.Equal("a flat", TextFormatter.Format(sweden.Ctx, "{a.flat}", null));
+        Assert.Equal("after_primary", EventSystem.QueueSituation(sweden.Ctx, "after_primary")?.EventId);
     }
 }

@@ -22,9 +22,9 @@ public static class CrimeSystem
         var texts = new List<string>();
 
         // The deed.
-        double gain = crime.GainMax > 0 ? rng.Range(crime.GainMin, crime.GainMax) : 0;
+        double gain = crime.GainMax > 0 ? rng.Range(ctx.Ref(crime.GainMin), ctx.Ref(crime.GainMax)) : 0;
         if (crime.Id == "blackmail" && victim != null)
-            gain = Math.Clamp(ctx.Real(Math.Max(0, victim.Money)) * 0.15, crime.GainMin, crime.GainMax);
+            gain = Math.Clamp(ctx.Real(Math.Max(0, victim.Money)) * 0.15, ctx.Ref(crime.GainMin), ctx.Ref(crime.GainMax));
         if (gain > 0)
         {
             double nominal = ctx.Nominal(gain);
@@ -109,7 +109,7 @@ public static class CrimeSystem
         }
         else if (crime.PrisonMax == 0 || (priors == 0 && crime.PrisonMin == 0 && ctx.Rng.Chance(0.6)))
         {
-            double fine = ctx.Nominal(crime.Fine * (1 + priors * 0.5));
+            double fine = ctx.NominalRef(crime.Fine * (1 + priors * 0.5));
             p.Money -= fine;
             EconomySystem.Record(ctx, p, $"Fine for {crime.Name.ToLowerInvariant()}", -fine);
             sentence = $"a fine of {EconomySystem.Format(ctx, fine)}";

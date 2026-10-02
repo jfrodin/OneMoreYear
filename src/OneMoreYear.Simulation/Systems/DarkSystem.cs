@@ -59,7 +59,7 @@ public static class DarkSystem
 
         // Living with it.
         p.Health = Math.Max(1, p.Health - (p.Addiction == "drugs" ? 5 : p.Addiction == "alcohol" ? 3 : 0.5));
-        double cost = p.Addiction switch { "drugs" => 50000, "gambling" => 60000, _ => 20000 };
+        double cost = ctx.Ref(p.Addiction switch { "drugs" => 50000, "gambling" => 60000, _ => 20000 });
         p.Money -= ctx.Nominal(cost);
         EconomySystem.Record(ctx, p, $"Your {What(p.Addiction)} habit", -ctx.Nominal(cost));
         p.Performance = Math.Max(0, p.Performance - 8);

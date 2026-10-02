@@ -1,0 +1,90 @@
+// First names by era and heritage in the United States, and how common each heritage is by year.
+// The first heritage is the majority one. Names follow the most common names of each period.
+{
+  "country": "usa",
+  "heritages": [
+    { "id": "american", "share": { "1950": 0.87, "1970": 0.83, "1990": 0.75, "2010": 0.64 },
+      "skin": [ 0.02, 0.22 ], "darkHair": 0.35 },
+    { "id": "african_american", "share": { "1950": 0.1, "1970": 0.11, "1990": 0.12, "2010": 0.13 },
+      "skin": [ 0.55, 0.9 ], "darkHair": 0.95,
+      "lastNames": [ "Washington", "Jefferson", "Jackson", "Robinson", "Harris", "Coleman", "Banks", "Freeman", "Brooks", "Mitchell" ] },
+    { "id": "hispanic", "share": { "1950": 0.025, "1970": 0.045, "1990": 0.09, "2010": 0.16 },
+      "skin": [ 0.2, 0.5 ], "darkHair": 0.9,
+      "lastNames": [ "Garcia", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Perez", "Sanchez", "Ramirez", "Torres" ] },
+    { "id": "asian_american", "share": { "1950": 0.005, "1970": 0.015, "1990": 0.035, "2010": 0.06 },
+      "skin": [ 0.1, 0.3 ], "darkHair": 0.98,
+      "lastNames": [ "Nguyen", "Kim", "Chen", "Lee", "Wang", "Patel", "Tran", "Liu", "Park", "Singh" ] }
+  ],
+  "groups": [
+    { "heritage": "american", "sex": "male", "from": 1880, "to": 1949, "names": [
+      "James", "Robert", "John", "William", "Richard", "Charles", "George", "Donald", "Joseph", "Edward", "Frank",
+      "Thomas", "Walter", "Harold", "Raymond", "Jack", "Henry", "Arthur", "Paul", "Kenneth", "Ralph", "Eugene", "Howard", "Carl", "Earl" ] },
+    { "heritage": "american", "sex": "male", "from": 1950, "to": 1969, "names": [
+      "Michael", "David", "James", "John", "Robert", "Mark", "William", "Richard", "Thomas", "Steven", "Gary",
+      "Larry", "Jeffrey", "Kevin", "Scott", "Timothy", "Ronald", "Dennis", "Bruce", "Gregory", "Keith", "Craig", "Randy", "Douglas", "Brian" ] },
+    { "heritage": "american", "sex": "male", "from": 1970, "to": 1989, "names": [
+      "Michael", "Christopher", "Jason", "David", "James", "Matthew", "Joshua", "John", "Robert", "Daniel", "Brian",
+      "Justin", "Ryan", "Eric", "Adam", "Andrew", "Jeremy", "Kyle", "Travis", "Brandon", "Aaron", "Nathan", "Jonathan", "Shawn", "Chad" ] },
+    { "heritage": "american", "sex": "male", "from": 1990, "to": 2009, "names": [
+      "Michael", "Jacob", "Matthew", "Joshua", "Christopher", "Nicholas", "Andrew", "Tyler", "Ethan", "Austin", "Zachary",
+      "Ryan", "Dylan", "Logan", "Cody", "Hunter", "Connor", "Caleb", "Noah", "Brandon", "Kyle", "Jordan", "Cameron", "Mason", "Luke" ] },
+    { "heritage": "american", "sex": "male", "from": 2010, "to": 2100, "names": [
+      "Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Mason", "Logan",
+      "Jackson", "Levi", "Wyatt", "Grayson", "Carter", "Owen", "Hudson", "Lincoln", "Asher", "Theodore", "Jack", "Cooper", "Easton", "Brooks" ] },
+
+    { "heritage": "american", "sex": "female", "from": 1880, "to": 1949, "names": [
+      "Mary", "Dorothy", "Helen", "Margaret", "Betty", "Ruth", "Virginia", "Doris", "Shirley", "Mildred", "Frances",
+      "Evelyn", "Alice", "Jean", "Marie", "Lois", "Joan", "Barbara", "Patricia", "Martha", "Florence", "Irene", "Louise", "Edna", "Ethel" ] },
+    { "heritage": "american", "sex": "female", "from": 1950, "to": 1969, "names": [
+      "Mary", "Linda", "Patricia", "Susan", "Deborah", "Barbara", "Debra", "Karen", "Nancy", "Donna", "Cynthia",
+      "Sandra", "Pamela", "Sharon", "Kathleen", "Carol", "Diane", "Brenda", "Cheryl", "Janet", "Lisa", "Kimberly", "Teresa", "Denise", "Laura" ] },
+    { "heritage": "american", "sex": "female", "from": 1970, "to": 1989, "names": [
+      "Jennifer", "Jessica", "Amanda", "Ashley", "Sarah", "Melissa", "Nicole", "Stephanie", "Heather", "Elizabeth", "Amy",
+      "Michelle", "Kimberly", "Angela", "Emily", "Rebecca", "Megan", "Lauren", "Crystal", "Tiffany", "Rachel", "Christina", "Laura", "Andrea", "Erin" ] },
+    { "heritage": "american", "sex": "female", "from": 1990, "to": 2009, "names": [
+      "Emily", "Hannah", "Madison", "Ashley", "Sarah", "Alexis", "Samantha", "Jessica", "Taylor", "Elizabeth", "Lauren",
+      "Alyssa", "Kayla", "Abigail", "Brianna", "Olivia", "Emma", "Megan", "Grace", "Victoria", "Rachel", "Anna", "Sydney", "Hailey", "Morgan" ] },
+    { "heritage": "american", "sex": "female", "from": 2010, "to": 2100, "names": [
+      "Olivia", "Emma", "Ava", "Sophia", "Isabella", "Charlotte", "Amelia", "Mia", "Harper", "Evelyn", "Abigail",
+      "Emily", "Ella", "Elizabeth", "Avery", "Scarlett", "Madison", "Lily", "Chloe", "Aubrey", "Nora", "Hazel", "Riley", "Zoey", "Stella" ] },
+
+    { "heritage": "african_american", "sex": "male", "from": 1880, "to": 1969, "names": [
+      "James", "Willie", "Robert", "John", "Charles", "George", "Joseph", "Henry", "Samuel", "Leroy", "Clarence",
+      "Earl", "Otis", "Curtis", "Melvin", "Calvin", "Roosevelt", "Booker", "Floyd", "Marvin" ] },
+    { "heritage": "african_american", "sex": "male", "from": 1970, "to": 2100, "names": [
+      "Michael", "Darnell", "Marcus", "Andre", "Terrell", "Jamal", "DeShawn", "Malik", "Isaiah", "Jalen", "Xavier",
+      "Darius", "Elijah", "Josiah", "Jayden", "Trevon", "Cedric", "Tyrone", "Jerome", "Kendrick" ] },
+    { "heritage": "african_american", "sex": "female", "from": 1880, "to": 1969, "names": [
+      "Mary", "Annie", "Willie", "Ruby", "Mattie", "Lillie", "Hattie", "Bessie", "Gloria", "Dorothy", "Loretta",
+      "Bernice", "Gwendolyn", "Delores", "Shirley", "Yvonne", "Juanita", "Carolyn", "Barbara", "Gladys" ] },
+    { "heritage": "african_american", "sex": "female", "from": 1970, "to": 2100, "names": [
+      "Keisha", "Tamika", "Latoya", "Ebony", "Jasmine", "Aaliyah", "Imani", "Destiny", "Brianna", "Kiara", "Tiana",
+      "Nia", "Jada", "Maya", "Zoe", "Simone", "Monique", "Danielle", "Aisha", "Raven" ] },
+
+    { "heritage": "hispanic", "sex": "male", "from": 1880, "to": 1969, "names": [
+      "Jose", "Juan", "Manuel", "Jesus", "Antonio", "Francisco", "Pedro", "Ramon", "Luis", "Carlos", "Miguel",
+      "Ricardo", "Roberto", "Raul", "Alfredo", "Ernesto", "Rafael", "Arturo", "Fernando", "Guadalupe" ] },
+    { "heritage": "hispanic", "sex": "male", "from": 1970, "to": 2100, "names": [
+      "Jose", "Luis", "Carlos", "Juan", "Miguel", "Jorge", "Alejandro", "Diego", "Angel", "Javier", "Adrian",
+      "Gabriel", "Mateo", "Santiago", "Sebastian", "Daniel", "Eduardo", "Victor", "Oscar", "Emiliano" ] },
+    { "heritage": "hispanic", "sex": "female", "from": 1880, "to": 1969, "names": [
+      "Maria", "Guadalupe", "Juana", "Josefina", "Carmen", "Rosa", "Dolores", "Teresa", "Esperanza", "Consuelo", "Elena",
+      "Graciela", "Alicia", "Socorro", "Margarita", "Lucia", "Irma", "Yolanda", "Gloria", "Esther" ] },
+    { "heritage": "hispanic", "sex": "female", "from": 1970, "to": 2100, "names": [
+      "Maria", "Daniela", "Gabriela", "Andrea", "Valeria", "Ximena", "Camila", "Sofia", "Isabella", "Natalia", "Lucia",
+      "Mariana", "Jessica", "Veronica", "Adriana", "Elena", "Paola", "Monica", "Vanessa", "Alejandra" ] },
+
+    { "heritage": "asian_american", "sex": "male", "from": 1880, "to": 1969, "names": [
+      "George", "Frank", "Harry", "Henry", "Tom", "Kenji", "Hiroshi", "Wing", "Kim", "Jimmy", "Raymond",
+      "Richard", "Kenneth", "Gilbert", "Calvin", "Wilbert", "Norman", "Roy", "Edwin", "Akira" ] },
+    { "heritage": "asian_american", "sex": "male", "from": 1970, "to": 2100, "names": [
+      "Kevin", "Eric", "Daniel", "Andrew", "Brian", "Jason", "Justin", "Ryan", "Raj", "Arjun", "Minh",
+      "Kenji", "Wei", "Jun", "Ethan", "Nathan", "Aiden", "Vikram", "Tuan", "Hiro" ] },
+    { "heritage": "asian_american", "sex": "female", "from": 1880, "to": 1969, "names": [
+      "Mary", "Grace", "Alice", "Helen", "Lily", "Mae", "Yuki", "Mei", "Rose", "Ruby", "Ruth",
+      "Sachiko", "Emiko", "Frances", "Dorothy", "Florence", "Lillian", "Betty", "Jean", "Shirley" ] },
+    { "heritage": "asian_american", "sex": "female", "from": 1970, "to": 2100, "names": [
+      "Jennifer", "Michelle", "Christine", "Grace", "Priya", "Anjali", "Linh", "Mai", "Yuna", "Mei", "Jasmine",
+      "Hannah", "Emily", "Sophia", "Chloe", "Isabelle", "Sakura", "Lily", "Ananya", "Vivian" ] }
+  ]
+}

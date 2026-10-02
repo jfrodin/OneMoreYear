@@ -103,13 +103,13 @@
     "text": "You're {age} and still living with your parents in {city}. Your friends are moving out one by one.",
     "choices": [
       {
-        "text": "Rent a flat of your own",
+        "text": "Rent {a.flat} of your own",
         "hint": "Freedom, and every bill is yours.",
         "effects": [ { "type": "move_out", "kind": "rent" }, { "type": "happiness", "amount": 8 } ],
-        "result": "The first night in your own flat you eat [[1972: sandwiches || pizza]] on the floor. It's perfect."
+        "result": "The first night in your own {flat} you eat [[1972: sandwiches || pizza]] on the floor. It's perfect."
       },
       {
-        "text": "Share a flat with friends",
+        "text": "Share {a.flat} with friends",
         "hint": "Cheaper, louder, more fun.",
         "effects": [ { "type": "move_out", "kind": "share" }, { "type": "happiness", "amount": 6 } ],
         "result": "Three people, one bathroom and a fridge full of labelled food."

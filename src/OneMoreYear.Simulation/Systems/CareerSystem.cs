@@ -150,7 +150,7 @@ public static class CareerSystem
         if (p.Age(ctx.Year) < prog.MinAge) return $"For adults, from {prog.MinAge}.";
         if (prog.Level == EducationLevel.Secondary) return p.Education >= EducationLevel.Primary ? null : "You need to finish primary school first.";
         if (p.Education < EducationLevel.Secondary)
-            return "You need an upper secondary diploma first." + (ctx.Country.AdultEducation is { } adult ? $" {adult} can give you one." : "");
+            return $"You need to finish {ctx.Country.SecondarySchool} first." + (ctx.Country.AdultEducation is { } adult ? $" {adult} can give you one." : "");
         double need = RequiredGrades(ctx, p, prog);
         return p.Grades >= need ? null : $"Needs grades {need:0}, yours are {p.Grades:0}." + (ctx.Country.AdultEducation is { } a ? $" Evening classes at {a} can raise them." : "");
     }
@@ -203,8 +203,8 @@ public static class CareerSystem
         p.Flags.Remove(PartTimeFlag);
         if (p.InFamily)
             ctx.World.Log(prog != null
-                    ? $"{p.FirstName} graduated from the {prog.Name.ToLowerInvariant()}{(prog.Level == EducationLevel.University ? " programme at university" : "")}."
-                    : $"{p.FirstName} graduated from {EducationName(p.Education)}.",
+                    ? $"{p.FirstName} graduated from the {prog.NameIn(ctx.Country.Id).ToLowerInvariant()}{(prog.Level == EducationLevel.University ? " programme at university" : "")}."
+                    : $"{p.FirstName} graduated from {EducationName(ctx, p.Education)}.",
                 ctx.Importance(false, p), "education", p.Id);
     }
 
@@ -242,6 +242,9 @@ public static class CareerSystem
         return w;
     }
 
+    /// <summary>A job level's yearly salary in this country's 2020 money (the content is in Swedish kronor).</summary>
+    public static double Salary(SimContext ctx, OccupationLevelDef level) => ctx.Ref(level.Salary);
+
     /// <summary>Finds a job for the person. Returns false if nothing fits their education.</summary>
     public static bool Hire(SimContext ctx, Person p, string? occupationId = null, int? level = null, string? employer = null)
     {
@@ -260,7 +263,7 @@ public static class CareerSystem
         p.Employer = employer ?? Employers.Name(ctx, p, occ.Id, lvl);
         p.YearsInJob = 0;
         p.Performance = Math.Clamp(ctx.Rng.Gaussian(50, 10), 20, 80);
-        p.Income = occ.Levels[lvl].Salary;
+        p.Income = Salary(ctx, occ.Levels[lvl]);
         if (p.Id == ctx.World.PlayerId) SocialSystem.OnNewJob(p, ctx.Year);
         if (p.InFamily && p.Age(ctx.Year) >= 16)
             ctx.World.Log($"{p.FirstName} got a job as {Article(Title(ctx, p))}{(p.Employer != null ? $" at {p.Employer}" : "")}.", ctx.Importance(false, p), "career", p.Id);
@@ -346,7 +349,7 @@ public static class CareerSystem
             Promote(ctx, p);
             return;
         }
-        p.Income = occ.Levels[p.OccupationLevel].Salary;
+        p.Income = Salary(ctx, occ.Levels[p.OccupationLevel]);
     }
 
     /// <summary>This year's chance of a promotion (0 if the next level needs a degree you don't have).</summary>
@@ -369,7 +372,7 @@ public static class CareerSystem
         if (!QualifiesFor(p, occ.Levels[p.OccupationLevel + 1])) return;
         p.OccupationLevel++;
         p.YearsInJob = 0;
-        p.Income = occ.Levels[p.OccupationLevel].Salary;
+        p.Income = Salary(ctx, occ.Levels[p.OccupationLevel]);
         p.Happiness += 8;
         if (p.InFamily)
             ctx.World.Log($"{p.FirstName} was promoted to {JobName(Title(ctx, p))}.", ctx.Importance(false, p), "career", p.Id);
@@ -413,10 +416,10 @@ public static class CareerSystem
     public static string JobName(string title) =>
         string.Join(' ', title.Split(' ').Select(w => w.Skip(1).Any(char.IsUpper) ? w : w.ToLowerInvariant()));
 
-    public static string EducationName(EducationLevel level) => level switch
+    public static string EducationName(SimContext ctx, EducationLevel level) => level switch
     {
         EducationLevel.Primary => "primary school",
-        EducationLevel.Secondary => "upper secondary school",
+        EducationLevel.Secondary => ctx.Country.SecondarySchool,
         EducationLevel.University => "university",
         _ => "no education"
     };
@@ -427,8 +430,8 @@ public static class CareerSystem
         Activity.Child => "Child",
         Activity.School => p.Age(ctx.Year) < ctx.Country.SecondaryAge ? "In school" : "Deciding what to do next",
         Activity.Studying => ctx.Content.Programme(p.ProgrammeId) is { } prog
-            ? (prog.Level == EducationLevel.University ? $"Studying {prog.Name}" : prog.Name)
-            : p.StudyingFor == EducationLevel.University ? "At university" : "In upper secondary school",
+            ? (prog.Level == EducationLevel.University ? $"Studying {prog.NameIn(ctx.Country.Id)}" : prog.NameIn(ctx.Country.Id))
+            : p.StudyingFor == EducationLevel.University ? "At university" : $"In {ctx.Country.SecondarySchool}",
         Activity.Working => p.Employer != null && p.OccupationId != "crime" ? $"{Title(ctx, p)} at {p.Employer}" : Title(ctx, p),
         Activity.Unemployed => "Looking for work",
         Activity.Retired => "Retired",

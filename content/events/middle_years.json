@@ -138,7 +138,7 @@
       { "text": "Take only the photo albums", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "generous", "chance": 0.1 } ],
         "result": "Nobody else wanted them. You spend a whole evening at the kitchen table looking at people you almost recognise." },
       { "text": "Fight for the sideboard", "chance": 0.5, "chanceTraits": { "hot_tempered": 0.1, "manipulative": 0.2, "conflict_averse": -0.3 },
-        "success": { "text": "You get the sideboard. It does not fit anywhere in your flat.", "effects": [ { "type": "happiness", "amount": 1 } ] },
+        "success": { "text": "You get the sideboard. It does not fit anywhere in your {flat}.", "effects": [ { "type": "happiness", "amount": 1 } ] },
         "failure": { "text": "Your brother gets it, and you do not speak until spring.", "effects": [ { "type": "happiness", "amount": -5 } ] } },
       { "text": "Suggest you sell everything and split the money", "effects": [ { "type": "money", "amount": 8000 } ],
         "result": "A man from an auction house walks through your childhood with a clipboard. It is fair, and it feels terrible." }

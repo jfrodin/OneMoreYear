@@ -15,6 +15,8 @@ public static class EventSystem
         Dictionary<string, int>? roles = null, Dictionary<string, double>? vars = null)
     {
         var w = ctx.World;
+        // A country can have its own version of a situation: "after_primary_usa" replaces "after_primary".
+        if (ctx.Content.Events.ContainsKey($"{eventId}_{ctx.Country.Id}")) eventId = $"{eventId}_{ctx.Country.Id}";
         if (!ctx.Content.Events.TryGetValue(eventId, out var def) || !Allowed(ctx, def)) return null;
         if (w.PendingEvents.Any(e => e.EventId == eventId && !e.Resolved)) return null;
         var pending = new PendingEvent { Uid = w.NextEventUid++, EventId = eventId, Roles = roles ?? new() };
@@ -148,7 +150,7 @@ public static class EventSystem
             _ => ctx.World.Player
         };
         double income = who?.Income ?? 0;
-        double value = (v.Base + income * v.IncomeFactor) * ctx.Rng.Range(v.RandomMin, v.RandomMax);
+        double value = (ctx.Ref(v.Base) + income * v.IncomeFactor) * ctx.Rng.Range(v.RandomMin, v.RandomMax);
         return Math.Round(value / 1000) * 1000;
     }
 
@@ -186,8 +188,8 @@ public static class EventSystem
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;
         if (c.MaxChildren is { } maxK && kids > maxK) return false;
-        if (c.MinMoney is { } minM && p.Money < ctx.Nominal(minM)) return false;
-        if (c.MaxMoney is { } maxM && p.Money > ctx.Nominal(maxM)) return false;
+        if (c.MinMoney is { } minM && p.Money < ctx.NominalRef(minM)) return false;
+        if (c.MaxMoney is { } maxM && p.Money > ctx.NominalRef(maxM)) return false;
         if (c.MinHealth is { } minH && p.Health < minH) return false;
         if (c.MaxHealth is { } maxH && p.Health > maxH) return false;
         if (c.OwnsHome is { } oh && p.OwnsHome != oh) return false;

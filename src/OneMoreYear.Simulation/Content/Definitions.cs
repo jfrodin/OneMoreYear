@@ -97,6 +97,19 @@ public sealed class CountryDef
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
     public string CurrencySymbol { get; set; } = "kr";
+    /// <summary>
+    /// Shared content (salaries, event amounts, crimes) is written in Swedish kronor of 2020. This converts
+    /// it to the country's own 2020 money (about 0.13 for dollars). The country's own fields are already local.
+    /// </summary>
+    public double ContentMoneyScale { get; set; } = 1;
+    /// <summary>The symbol goes before the amount ($12,500) instead of after (12,500 kr).</summary>
+    public bool CurrencyBefore { get; set; }
+    /// <summary>Yearly university tuition, 2020 money (0 where university is free). Paid as debt: student loans.</summary>
+    public double UniversityFee { get; set; }
+    /// <summary>What a serious illness costs the patient, 2020 money (0 where healthcare is free).</summary>
+    public double MedicalBill { get; set; }
+    /// <summary>Share of a shortfall that welfare covers when savings are gone (the rest becomes debt).</summary>
+    public double WelfareShare { get; set; } = 0.5;
     public int MinStartYear { get; set; } = 1950;
     public int MaxStartYear { get; set; } = 2020;
     public List<string> MaleNames { get; set; } = new();
@@ -136,6 +149,10 @@ public sealed class CountryDef
     public int GradesFromAge { get; set; } = 14;
     /// <summary>What adult education is called here ("Komvux"), for hints; null if there is none.</summary>
     public string? AdultEducation { get; set; }
+    /// <summary>What the school after compulsory school is called ("upper secondary school", "high school").</summary>
+    public string SecondarySchool { get; set; } = "upper secondary school";
+    /// <summary>The everyday word for a rented home ("flat", "apartment").</summary>
+    public string Flat { get; set; } = "flat";
     public int PensionAge { get; set; } = 65;
     public double PensionRate { get; set; } = 0.6;
     public double MinimumPension { get; set; }
@@ -207,6 +224,9 @@ public sealed class ProgrammeDef
 {
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
+    /// <summary>The name in other countries, by country id; <see cref="Name"/> elsewhere.</summary>
+    public Dictionary<string, string> LocalNames { get; set; } = new();
+    public string NameIn(string countryId) => LocalNames.TryGetValue(countryId, out var n) ? n : Name;
     public string Description { get; set; } = "";
     public EducationLevel Level { get; set; }
     public int Years { get; set; } = 3;

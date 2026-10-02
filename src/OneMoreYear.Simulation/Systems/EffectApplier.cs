@@ -35,31 +35,34 @@ public static class EffectApplier
         var w = ctx.World;
         var who = Resolve(ctx, e.Who, pending);
         var to = e.To != null ? Resolve(ctx, e.To, pending) : null;
-        double amount = e.Var != null && pending.Vars.TryGetValue(e.Var, out var v) ? v * (e.Amount == 0 ? 1 : e.Amount) : e.Amount;
+        bool fromVar = e.Var != null && pending.Vars.ContainsKey(e.Var);
+        double amount = fromVar ? pending.Vars[e.Var!] * (e.Amount == 0 ? 1 : e.Amount) : e.Amount;
+        // Money written in the content is in Swedish kronor of 2020; variables are already local.
+        double money = fromVar ? amount : ctx.Ref(amount);
         if (who == null) return;
 
         switch (e.Type)
         {
             case "buy_cottage":
                 // A summer cottage: paid from savings, kept as an asset that follows the housing market.
-                who.Money -= ctx.Nominal(amount);
-                who.CottageValue += ctx.Nominal(amount);
+                who.Money -= ctx.Nominal(money);
+                who.CottageValue += ctx.Nominal(money);
                 who.Flags.Add("summer_cottage");
-                EconomySystem.Record(ctx, who, "Bought a summer cottage", -ctx.Nominal(amount));
+                EconomySystem.Record(ctx, who, "Bought a summer cottage", -ctx.Nominal(money));
                 break;
             case "sell_cottage":
                 if (who.CottageValue > 0) pending.ExtraText.Add($"It sells for {EconomySystem.Format(ctx, EconomySystem.SellCottage(ctx, who))}.");
                 break;
             case "money":
-                who.Money += ctx.Nominal(amount);
-                EconomySystem.Record(ctx, who, EventTitle(ctx, pending), ctx.Nominal(amount));
+                who.Money += ctx.Nominal(money);
+                EconomySystem.Record(ctx, who, EventTitle(ctx, pending), ctx.Nominal(money));
                 break;
             case "transfer":
                 if (to == null) return;
-                who.Money -= ctx.Nominal(amount);
-                to.Money += ctx.Nominal(amount);
-                EconomySystem.Record(ctx, who, $"To {to.FirstName}: {EventTitle(ctx, pending)}", -ctx.Nominal(amount));
-                EconomySystem.Record(ctx, to, $"From {who.FirstName}: {EventTitle(ctx, pending)}", ctx.Nominal(amount));
+                who.Money -= ctx.Nominal(money);
+                to.Money += ctx.Nominal(money);
+                EconomySystem.Record(ctx, who, $"To {to.FirstName}: {EventTitle(ctx, pending)}", -ctx.Nominal(money));
+                EconomySystem.Record(ctx, to, $"From {who.FirstName}: {EventTitle(ctx, pending)}", ctx.Nominal(money));
                 break;
             case "health":
                 who.Health = Math.Clamp(who.Health + amount, 1, 100);
@@ -183,8 +186,8 @@ public static class EffectApplier
                 if (prog == null || !CareerSystem.CanEnter(ctx, who, prog)) return;
                 CareerSystem.StartStudies(ctx, who, prog.Id);
                 w.Log(prog.Level == EducationLevel.University
-                        ? $"{who.FirstName} started studying {prog.Name} at university."
-                        : $"{who.FirstName} started the {prog.Name.ToLowerInvariant()}.",
+                        ? $"{who.FirstName} started studying {prog.NameIn(ctx.Country.Id)} at university."
+                        : $"{who.FirstName} started the {prog.NameIn(ctx.Country.Id).ToLowerInvariant()}.",
                     ctx.Importance(false, who), "education", who.Id);
                 break;
             }

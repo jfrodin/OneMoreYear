@@ -476,7 +476,7 @@ public partial class GameScreen : Control
         summary.AddChild(Ui.Label(
             $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs and the home are paid first. Of what is left, you save about " +
             $"{m.SaveRatePercent}%, depending on your personality. Money in the bank roughly keeps its value. Funds and shares " +
-            "grow more over time but can crash. If your income does not cover the basics, savings pay first, then welfare pays half the gap " +
+            $"grow more over time but can crash. If your income does not cover the basics, savings pay first, then welfare pays {m.WelfareShare} of the gap " +
             "and the rest becomes debt.", 15, UiTheme.Faint, wrap: true));
         _moneyContent.AddChild(Ui.Card(summary));
 

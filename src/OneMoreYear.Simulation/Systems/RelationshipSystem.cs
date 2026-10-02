@@ -135,7 +135,7 @@ public static class RelationshipSystem
         if (from.InFamily && to.InFamily && from.Age(ctx.Year) >= 25 && from.Generation == to.Generation)
         {
             double mine = EconomySystem.NetWorth(ctx, from), theirs = EconomySystem.NetWorth(ctx, to);
-            if (theirs > mine * 2 + ctx.Nominal(300000)) r[RelDim.Envy] += 3 + ctx.Mod(from, "envy") * 5;
+            if (theirs > mine * 2 + ctx.NominalRef(300000)) r[RelDim.Envy] += 3 + ctx.Mod(from, "envy") * 5;
         }
     }
 

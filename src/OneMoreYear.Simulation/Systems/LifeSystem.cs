@@ -36,6 +36,16 @@ public static class LifeSystem
             if (p.InFamily || p.Id == ctx.World.PlayerId)
                 ctx.World.Log($"{p.FirstName} was struck by {what}.", ctx.Importance(false, p), "health", p.Id);
             p.Happiness -= 10;
+            // Where healthcare is not free, illness costs money: less with insurance through work, or after 65.
+            if (ctx.Country.MedicalBill > 0)
+            {
+                bool covered = p.Activity == Activity.Working || p.Age(ctx.Year) >= 65;
+                double bill = ctx.Nominal(ctx.Country.MedicalBill * (covered ? 0.15 : 1));
+                p.Money -= bill;
+                EconomySystem.Record(ctx, p, "Hospital bills", -bill);
+                if (!covered && (p.InFamily || p.Id == ctx.World.PlayerId))
+                    ctx.World.Log($"{p.FirstName} had no insurance. The hospital bills came to {EconomySystem.Format(ctx, bill)}.", ctx.Importance(false, p), "economy", p.Id);
+            }
         }
     }
 
@@ -150,7 +160,7 @@ public static class LifeSystem
         dead.OwnsHome = false;
         if (estate <= 0)
         {
-            if (estate < -ctx.Nominal(20000) && dead.InFamily)
+            if (estate < -ctx.NominalRef(20000) && dead.InFamily)
                 w.Log($"{dead.FirstName} left {EconomySystem.Format(ctx, -estate)} of debt behind.", 1, "economy", dead.Id);
             return;
         }
@@ -187,7 +197,7 @@ public static class LifeSystem
             var heir = w.Get(id);
             heir.Money += amount;
             EconomySystem.Record(ctx, heir, $"Inheritance from {dead.FirstName}", amount);
-            if (heir.InFamily && amount > ctx.Nominal(10000))
+            if (heir.InFamily && amount > ctx.NominalRef(10000))
                 w.Log($"{heir.FirstName} inherited {EconomySystem.Format(ctx, amount)} from {dead.FirstName}.", ctx.Importance(false, heir), "economy", id, dead.Id);
         }
 

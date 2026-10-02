@@ -73,7 +73,7 @@
     "choices": [
       { "text": "Dance all night", "chance": 0.65, "chanceTraits": { "charming": 0.15, "social": 0.1 },
         "success": { "text": "Your knees complain for days. Your heart doesn't.", "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 12 } ] },
-        "failure": { "text": "A lovely evening. {t.name} moves to be near a daughter in Malmö the week after.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+        "failure": { "text": "A lovely evening. The week after, {t.name} moves across the country to be near a daughter.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
       { "text": "\"At my age?\"", "result": "You go home early. You think about it for a long time." }
     ]
   },
@@ -159,7 +159,7 @@
     "text": "The house has more rooms than people now. The stairs are steeper every year.",
     "conditions": { "minAge": 68, "holdsHome": true }, "cooldown": 6,
     "choices": [
-      { "text": "Sell and buy a flat in town", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -3 } ],
+      { "text": "Sell and buy {a.flat} in town", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -3 } ],
         "result": "Forty years of things into a van. You walk through the empty rooms one last time." },
       { "text": "Stay. The grandchildren need a place to come to", "effects": [ { "type": "happiness", "amount": 2 } ],
         "result": "Christmas is still at your place. That's worth the stairs." }

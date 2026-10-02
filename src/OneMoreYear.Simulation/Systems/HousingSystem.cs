@@ -122,9 +122,9 @@ public static class HousingSystem
         // "Owns a terraced house in Umeå", "Rents a one-room flat in Malmö".
         string? kind = HomeTypeOf(ctx, p) is { } t && t.Id != "room" ? t.Name.ToLowerInvariant() : null;
         if (p.OwnsHome) return $"Owns {kind ?? "a home"} in {city}";
-        if (p.SharesFlat) return $"Shares a flat in {city}";
+        if (p.SharesFlat) return $"Shares {TextFormatter.A(ctx.Country.Flat)} in {city}";
         if (p.PartnerId != null && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) return $"Rents {kind ?? "a home"} with their partner in {city}";
-        return $"Rents {kind ?? "a flat"} in {city}";
+        return $"Rents {kind ?? TextFormatter.A(ctx.Country.Flat)} in {city}";
     }
 
     /// <summary>The same as <see cref="Describe"/>, told to the player: "You rent a three-room flat with Anna in Umeå."</summary>
@@ -138,8 +138,8 @@ public static class HousingSystem
         string with = ctx.World.TryGet(p.PartnerId) is { } partner && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married
             ? $" with {partner.FirstName}" : "";
         if (p.OwnsHome) return p.HomeValue > 0 || with == "" ? $"You own {kind ?? "your home"}{with} in {city}" : $"You live in {Kinship.Genitive(ctx.World.Get(p.PartnerId!.Value).FirstName)} home in {city}";
-        if (p.SharesFlat) return $"You share a flat in {city}";
-        return $"You rent {kind ?? "a flat"}{with} in {city}";
+        if (p.SharesFlat) return $"You share {TextFormatter.A(ctx.Country.Flat)} in {city}";
+        return $"You rent {kind ?? TextFormatter.A(ctx.Country.Flat)}{with} in {city}";
     }
 
     /// <summary>Young adults move out of their parents' home – the player decides through an event.</summary>

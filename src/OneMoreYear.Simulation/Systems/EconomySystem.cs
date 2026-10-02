@@ -60,6 +60,12 @@ public static class EconomySystem
         if (age < 18 && p.Activity != Activity.Working) return;
 
         double gross = GrossIncome(ctx, p);
+        // Tuition, where university is not free: it becomes student debt.
+        if (ctx.Country.UniversityFee > 0 && p.Activity == Activity.Studying && p.StudyingFor == EducationLevel.University)
+        {
+            p.Money -= ctx.Nominal(ctx.Country.UniversityFee);
+            Record(ctx, p, "Tuition", -ctx.Nominal(ctx.Country.UniversityFee));
+        }
         double tax = gross * c.TaxRate;
         double net = gross - tax;
         if (gross > 0)
@@ -108,8 +114,8 @@ public static class EconomySystem
             }
             else
             {
-                saved = surplus * 0.5;
-                Record(ctx, p, "Covered by welfare", ctx.Nominal(-surplus * 0.5));
+                saved = surplus * (1 - c.WelfareShare);
+                Record(ctx, p, "Covered by welfare", ctx.Nominal(-surplus * c.WelfareShare));
             }
         }
         p.Money += ctx.Nominal(saved);
@@ -122,7 +128,7 @@ public static class EconomySystem
             // Others buy a home when they can afford it (the player decides for themselves).
             if (age >= 26 && CanBuyHome(ctx, p) && ctx.Rng.Chance(0.2)) BuyHome(ctx, p);
         }
-        if (p.Money < -ctx.Nominal(150000)) p.Happiness -= 4;
+        if (p.Money < -ctx.NominalRef(150000)) p.Happiness -= 4;
     }
 
     // --- Homes and mortgages --------------------------------------------------------------------
@@ -346,8 +352,12 @@ public static class EconomySystem
     /// <summary>Formats a nominal amount the way the UI shows money: "12,500 kr".</summary>
     public static string Format(SimContext ctx, double nominal)
     {
-        double rounded = Math.Abs(nominal) >= 10000 ? Math.Round(nominal / 1000) * 1000 : Math.Round(nominal / 100) * 100;
-        var s = rounded.ToString("#,0", System.Globalization.CultureInfo.InvariantCulture);
-        return $"{s} {ctx.Country.CurrencySymbol}";
+        // Round like people talk about money: 7 kr, 340 kr, 4,500 kr, 120,000 kr.
+        double abs = Math.Abs(nominal);
+        double step = abs >= 10000 ? 1000 : abs >= 1000 ? 100 : abs >= 100 ? 10 : 1;
+        double rounded = Math.Round(nominal / step) * step;
+        var s = Math.Abs(rounded).ToString("#,0", System.Globalization.CultureInfo.InvariantCulture);
+        string sign = rounded < 0 ? "-" : "";
+        return ctx.Country.CurrencyBefore ? $"{sign}{ctx.Country.CurrencySymbol}{s}" : $"{sign}{s} {ctx.Country.CurrencySymbol}";
     }
 }

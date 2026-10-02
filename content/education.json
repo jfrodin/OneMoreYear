@@ -3,27 +3,27 @@
 // need +10 extra for university. leadsTo lists occupation ids the degree qualifies for or favours.
 [
   {
-    "id": "sec_academic", "name": "Academic programme", "level": "secondary", "years": 3,
+    "id": "sec_academic", "name": "Academic programme", "localNames": { "usa": "College prep track" }, "level": "secondary", "years": 3,
     "description": "Natural and social sciences. The road to university.",
     "academic": true, "leadsTo": [], "traitAffinity": { "ambitious": 1.8, "lazy": 0.5 }
   },
   {
-    "id": "sec_care", "name": "Health and social care programme", "level": "secondary", "years": 3,
+    "id": "sec_care", "name": "Health and social care programme", "localNames": { "usa": "Health careers track" }, "level": "secondary", "years": 3,
     "description": "Leads straight to work in healthcare and elderly care.",
     "leadsTo": [ "healthcare" ], "traitAffinity": { "generous": 1.6, "loyal": 1.3 }
   },
   {
-    "id": "sec_construction", "name": "Building and construction programme", "level": "secondary", "years": 3,
+    "id": "sec_construction", "name": "Building and construction programme", "localNames": { "usa": "Building trades track" }, "level": "secondary", "years": 3,
     "description": "Carpentry, construction and trades.",
     "leadsTo": [ "construction" ], "traitAffinity": { "brave": 1.3, "introvert": 1.2 }
   },
   {
-    "id": "sec_industry", "name": "Industrial technology programme", "level": "secondary", "years": 3,
+    "id": "sec_industry", "name": "Industrial technology programme", "localNames": { "usa": "Vocational and technical track" }, "level": "secondary", "years": 3,
     "description": "Machines, production and technology.",
     "leadsTo": [ "industry" ], "traitAffinity": { "introvert": 1.3 }
   },
   {
-    "id": "sec_business", "name": "Business and administration programme", "level": "secondary", "years": 3,
+    "id": "sec_business", "name": "Business and administration programme", "localNames": { "usa": "Business track" }, "level": "secondary", "years": 3,
     "description": "Sales, retail and office work.",
     "leadsTo": [ "trade", "public" ], "traitAffinity": { "social": 1.5 }
   },
@@ -33,7 +33,12 @@
     "academic": true, "leadsTo": []
   },
   {
-    "id": "voc_care", "name": "Assistant nurse course", "level": "secondary", "years": 1, "minAge": 20, "minYear": 1970,
+    "id": "us_ged", "countries": [ "usa" ], "name": "High school diploma at community college", "level": "secondary", "years": 1, "minAge": 20,
+    "description": "Night classes and a test at the end. Opens the road to college.",
+    "academic": true, "leadsTo": []
+  },
+  {
+    "id": "voc_care", "name": "Assistant nurse course", "localNames": { "usa": "Nursing assistant course" }, "level": "secondary", "years": 1, "minAge": 20, "minYear": 1970,
     "description": "One year, then work in a hospital or in elderly care. There is always a job.",
     "leadsTo": [ "healthcare" ]
   },
