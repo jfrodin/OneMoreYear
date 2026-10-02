@@ -40,7 +40,7 @@ public static partial class TextFormatter
         text = ByEra(ctx.Year, text);
         // {money:20}: an amount in 2020 money, shown in the country's currency at this year's prices.
         text = MoneyToken().Replace(text, m => EconomySystem.Format(ctx, ctx.NominalRef(double.Parse(m.Groups[1].Value))));
-        return Token().Replace(text, m =>
+        text = Token().Replace(text, m =>
         {
             string head = m.Groups[1].Value;
             string field = m.Groups[2].Success ? m.Groups[2].Value : "";
@@ -110,6 +110,25 @@ public static partial class TextFormatter
             };
             return char.IsUpper(field[0]) || char.IsUpper(head[0]) ? Capitalize(value) : value;
         });
+        // A token at the start of a sentence ("{t.role} calls") must not leave it in lower case.
+        text = SentenceStart().Replace(text, m => m.Groups[1].Value + char.ToUpperInvariant(m.Groups[2].Value[0]));
+        return text.Length > 0 && char.IsLower(text[0]) ? Capitalize(text) : text;
+    }
+
+    [GeneratedRegex(@"([.!?][""”]? )([a-z])")]
+    private static partial Regex SentenceStart();
+
+    /// <summary>"kinder", "braver", "lazier", "more generous": a trait name made comparative.</summary>
+    public static string More(string traitName)
+    {
+        string w = traitName.ToLowerInvariant();
+        return w switch
+        {
+            "kind" or "cruel" => w + "er",
+            "brave" or "vain" => w.EndsWith('e') ? w + "r" : w + "er",
+            "lazy" or "stingy" or "greedy" => w[..^1] + "ier",
+            _ => "more " + w,
+        };
     }
 
     public static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];

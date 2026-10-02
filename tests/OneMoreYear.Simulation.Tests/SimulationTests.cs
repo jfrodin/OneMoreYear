@@ -835,15 +835,16 @@ public class CountryTests
     public void The_usa_has_its_own_words_and_situations()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1980, CountryId = "usa" });
-        Assert.Equal("an apartment", TextFormatter.Format(s.Ctx, "{a.flat}", null));
-        Assert.Equal("high school", TextFormatter.Format(s.Ctx, "{secondary}", null));
+        Assert.Equal("You rent an apartment.", TextFormatter.Format(s.Ctx, "You rent {a.flat}.", null));
+        Assert.Equal("Yes. Your brother calls.", TextFormatter.Format(s.Ctx, "yes. your brother calls.", null));
+        Assert.Equal("In high school", TextFormatter.Format(s.Ctx, "In {secondary}", null));
         Assert.Equal("College prep track", s.Ctx.Content.Programme("sec_academic")!.NameIn("usa"));
         Assert.Equal("$1,500", EconomySystem.Format(s.Ctx, 1500));
         var pending = EventSystem.QueueSituation(s.Ctx, "after_primary");
         Assert.Equal("after_primary_usa", pending?.EventId);
 
         var sweden = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1980 });
-        Assert.Equal("a flat", TextFormatter.Format(sweden.Ctx, "{a.flat}", null));
+        Assert.Equal("You rent a flat.", TextFormatter.Format(sweden.Ctx, "You rent {a.flat}.", null));
         Assert.Equal("after_primary", EventSystem.QueueSituation(sweden.Ctx, "after_primary")?.EventId);
     }
 

@@ -44,7 +44,7 @@ public partial class GameOverScreen : Control
         chips.AddThemeConstantOverride("h_separation", 8);
         chips.AddThemeConstantOverride("v_separation", 8);
         chips.AddChild(Ui.Chip($"{stats.Years} years"));
-        chips.AddChild(Ui.Chip($"{stats.Generations} generations"));
+        chips.AddChild(Ui.Chip(stats.Generations == 1 ? "1 generation" : $"{stats.Generations} generations"));
         chips.AddChild(Ui.Chip(stats.Characters == 1 ? "1 life played" : $"{stats.Characters} lives played"));
         chips.AddChild(Ui.Chip($"{stats.FamilyMembers} family members"));
         chips.AddChild(Ui.Chip($"{stats.Divorces} divorces"));

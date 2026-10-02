@@ -29,6 +29,8 @@ public static class PersonFactory
             Health = Math.Clamp(rng.Gaussian(92 - Math.Max(0, age - 30) * 0.6, 6), 20, 100),
             Happiness = rng.Range(45, 75),
         };
+        // "Ali Ali": some heritages share names between first and last; never both for one person.
+        for (int i = 0; i < 5 && p.FirstName == p.LastName; i++) p.FirstName = RandomFirstName(ctx, sex, heritage, ctx.Year - age);
         // Strangers mostly live where the player lives – that is where the player meets them.
         p.CityId = ctx.World.TryGet(ctx.World.PlayerId) is { } pl && rng.Chance(0.8) ? pl.CityId : HousingSystem.RandomCityId(ctx);
         p.LivesWithParents = age < 20;
@@ -73,6 +75,7 @@ public static class PersonFactory
             CityId = parentA.CityId,
             LivesWithParents = true,
         };
+        for (int i = 0; i < 5 && p.FirstName == p.LastName; i++) p.FirstName = RandomFirstName(ctx, sex, heritage, ctx.Year);
         var geneticParents = new List<Person> { parentA };
         if (parentB != null) geneticParents.Add(parentB);
         if (biologicalFatherId is { } bio)

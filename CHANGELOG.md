@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.43.1 – 2026-10-02 · Proofreading
+
+A read through every text in twelve long games, Swedish and American:
+
+- Sentences that began with a role ("your brother, Keith, sits...") now start with a capital, everywhere.
+- Nobody is called "Ali Ali" or "Mohammed Mohammed" any more.
+- "Got clean after 1 years" reads "after a year"; "became more kind" reads "became kinder".
+- Old family stories name the ancestor properly ("your great-great-grandmother, Astrid") instead of
+  "your relative", and no longer say it twice. Six different everyday legends instead of one.
+- `SimRunner --savecheck=DIR` loads every save in a folder, plays on and checks every view: all 62
+  playtest saves work. `--textdump=N` prints every text the player would read, for proofreading.
+
 ## 0.43.0 – 2026-10-02 · The last page
 
 - **When a family's story ends, it gets a last page in words**, written from what it actually did:

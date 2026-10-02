@@ -42,7 +42,7 @@ public static class LegacySystem
         if (generations >= 3 && !w.Feats.Contains("diary") && ctx.Rng.Chance(0.15) && Diary(ctx) is { } diary)
         {
             w.Feats.Add("diary");
-            Queue(ctx, DiaryEvent, diary.Owner, new() { ["diary"] = diary.Text });
+            Queue(ctx, DiaryEvent, diary.Owner, new() { ["diary"] = diary.Text, ["who"] = Who(ctx, diary.Owner) });
             return;
         }
         if (generations >= 5 && !w.Feats.Contains("genealogist") && ctx.Rng.Chance(0.12) && founder != null)
@@ -72,7 +72,19 @@ public static class LegacySystem
         // From the third generation, old stories start to circulate, now and then.
         if (generations >= 3 && ctx.Rng.Chance(0.08) && (!w.EventHistory.TryGetValue(MythEvent, out var last) || ctx.Year - last >= 6)
             && Myth(ctx) is { } myth)
-            Queue(ctx, MythEvent, myth.Ancestor, new() { ["myth"] = myth.Told, ["truth"] = myth.Truth, ["myth_secret"] = myth.SecretId?.ToString() ?? "" });
+            Queue(ctx, MythEvent, myth.Ancestor, new() { ["myth"] = myth.Told, ["truth"] = myth.Truth, ["myth_secret"] = myth.SecretId?.ToString() ?? "", ["who"] = Who(ctx, myth.Ancestor) });
+    }
+
+    /// <summary>
+    /// How the player is related to someone long gone: "your great-great-grandmother, Dina" for a direct
+    /// ancestor, or "Dina, who was family long before you" when the line runs sideways.
+    /// </summary>
+    public static string Who(SimContext ctx, Person p)
+    {
+        string label = Kinship.Label(ctx.World, ctx.World.Player, p);
+        return label is "relative" or "acquaintance" or "you"
+            ? $"{p.FirstName}, who was family long before you"
+            : $"{Kinship.Possessive(ctx.World, ctx.World.Player, p)}, {p.FirstName}";
     }
 
     private static void Queue(SimContext ctx, string eventId, Person target, Dictionary<string, string> words)
@@ -186,8 +198,20 @@ public static class LegacySystem
             yield return new(a, $"{name} was the best in the whole country at what {He(a)} did",
                 $"{name} was not the best in the country. But {He(a)} got the one thing {He(a)} wanted: {dream.Name.ToLowerInvariant()}. That was enough.", null, "dream");
         if (a.Jobs.LastOrDefault() is { } job && ctx.Content.Occupation(job) is { } occ)
-            yield return new(a, man ? $"{name} was so strong {He(a)} once lifted a car off a man with {His(a)} bare hands" : $"{name} could outwork any three men and still have dinner on the table at six",
-                $"{name} worked in {CareerSystem.FieldName(occ)} for most of {His(a)} life, and was tired most evenings, like everybody else.", null, "work", 0.35);
+        {
+            // Ordinary lives grow ordinary legends; which one sticks to a person stays the same every time.
+            string[] legends =
+            {
+                man ? $"{name} was so strong {He(a)} once lifted a car off a man with {His(a)} bare hands" : $"{name} could outwork any three men and still have dinner on the table at six",
+                $"{name} once shook hands with the king, and never washed that hand again",
+                $"{name} walked ten miles to work every day, uphill both ways, in the snow",
+                $"{name} won a small fortune at cards one night and lost it all before morning",
+                $"{name} could sing so beautifully that a whole church once went quiet to listen",
+                $"{name} turned down a proposal from someone who later became very famous",
+            };
+            yield return new(a, legends[a.Id % legends.Length],
+                $"{name} worked in {CareerSystem.FieldName(occ)} for most of {His(a)} life, and was tired most evenings, like everybody else. Nobody can find any proof of the rest.", null, "work", 0.35);
+        }
     }
 
     /// <summary>Digging into a myth about a hidden killing brings it to light.</summary>

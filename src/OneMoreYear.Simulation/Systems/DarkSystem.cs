@@ -88,7 +88,7 @@ public static class DarkSystem
     public static void Recover(SimContext ctx, Person p)
     {
         if (p.Addiction == null) return;
-        ctx.World.Log($"{p.FirstName} got clean after {Math.Max(1, ctx.Year - p.AddictionSince)} years of {What(p.Addiction)}.",
+        ctx.World.Log($"{p.FirstName} got clean after {(Math.Max(1, ctx.Year - p.AddictionSince) is var n && n == 1 ? "a year" : $"{n} years")} of {What(p.Addiction)}.",
             ctx.Importance(false, p), "dark", p.Id);
         p.Flags.Add(Hardship.RecoveredPrefix + p.Addiction);
         p.Addiction = null;
@@ -332,7 +332,7 @@ public static class DarkSystem
         if (!ctx.Rng.Chance(chance)) return;
         var trait = ctx.Rng.Pick(TraumaTraits);
         if (PersonFactory.TryAddTrait(ctx, p, trait) && p.Id == ctx.World.PlayerId)
-            ctx.World.Log($"{p.FirstName} became more {ctx.Content.Traits[trait].Name.ToLowerInvariant()}{(cause == null ? "" : $", after: “{cause}”")}.", 2, "trait", p.Id);
+            ctx.World.Log($"{p.FirstName} became {TextFormatter.More(ctx.Content.Traits[trait].Name)}{(cause == null ? "" : $", after: “{cause}”")}.", 2, "trait", p.Id);
     }
 
     /// <summary>Old age softens some edges.</summary>

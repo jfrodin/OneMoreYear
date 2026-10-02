@@ -220,6 +220,17 @@ public static class Kinship
             foreach (var gp in Parents(w, parent))
                 if (gp.ParentIds.Contains(other.Id)) return G("great-grandfather", "great-grandmother");
         }
+        // Further back in a long family: great-great-grandmother and beyond.
+        var line = Parents(w, viewer).SelectMany(p => Parents(w, p)).SelectMany(p => Parents(w, p)).ToList();
+        for (int greats = 2; greats <= 10 && line.Count > 0; greats++)
+        {
+            line = line.SelectMany(p => Parents(w, p)).Distinct().ToList();
+            if (line.Any(p => p.Id == other.Id))
+            {
+                string prefix = string.Concat(Enumerable.Repeat("great-", greats));
+                return G($"{prefix}grandfather", $"{prefix}grandmother");
+            }
+        }
 
         foreach (var child in Children(w, viewer))
         {

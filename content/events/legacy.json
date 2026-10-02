@@ -4,7 +4,7 @@
   {
     "id": "family_myth", "trigger": "situation",
     "title": "The old story",
-    "text": "At a family dinner, someone tells it again, the way it is always told: {myth}. Everyone nods. It is the story about {t.role}, {t.name}.",
+    "text": "At a family dinner, someone tells it again, the way it is always told: {myth}. Everyone nods. It is the story about {who}.",
     "choices": [
       { "text": "Leave the legend alone", "effects": [ { "type": "happiness", "amount": 3 } ],
         "result": "Some stories are better than the truth. This one will be told again, a little bigger, at the next dinner." },
@@ -18,7 +18,7 @@
   {
     "id": "legacy_diary", "trigger": "situation",
     "title": "The diary",
-    "text": "Clearing out a cupboard, you find a notebook with a cracked cover. It belonged to {t.name}, {t.role}. The handwriting is small and careful: \"{diary}\"",
+    "text": "Clearing out a cupboard, you find a notebook with a cracked cover. It belonged to {who}. The handwriting is small and careful: \"{diary}\"",
     "choices": [
       { "text": "Read it all, in one night", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "diary", "text": "Reading {t.name}'s diary", "impact": 18 } ],
         "result": "By morning you know {t.name} better than anyone alive ever did. Some pages you read twice. One you wish you had not read at all." },

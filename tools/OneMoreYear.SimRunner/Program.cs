@@ -14,6 +14,8 @@ if (args.FirstOrDefault(a => a.StartsWith("--play-from=")) is { } playArg)
     for (int i = 0; i < 10 && playBot.PlayYear(loaded); i++) Console.WriteLine($"  -> {loaded.Year}");
     return;
 }
+if (args.FirstOrDefault(a => a.StartsWith("--textdump=")) is { } td) { TextDump.Run(int.Parse(td["--textdump=".Length..])); return; }
+if (args.FirstOrDefault(a => a.StartsWith("--savecheck=")) is { } sc) { SaveCheck.Run(sc["--savecheck=".Length..]); return; }
 if (args.FirstOrDefault(a => a.StartsWith("--load=")) is { } loadArg)
 {
     Inspect.Run(loadArg["--load=".Length..], args.FirstOrDefault(a => a.StartsWith("--who="))?["--who=".Length..] ?? "");
