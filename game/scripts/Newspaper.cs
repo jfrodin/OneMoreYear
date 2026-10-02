@@ -47,7 +47,7 @@ public static class Newspaper
         var story = Ui.VBox(6);
         story.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
         story.AddChild(Label(lead?.Text ?? "A quiet year", UiTheme.Masthead, 34, Ink, wrap: true));
-        story.AddChild(Label(lead == null ? "Nothing much happened in the family. Some years are like that – and some people would give anything for one."
+        story.AddChild(Label(lead == null ? "Nothing much happened in the family. Some years are like that, and some people would give anything for one."
             : "The family's biggest news this year.", UiTheme.Body, 15, Grey, wrap: true));
         headline.AddChild(story);
         main.AddChild(headline);

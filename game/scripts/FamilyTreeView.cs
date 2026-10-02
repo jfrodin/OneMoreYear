@@ -213,7 +213,7 @@ public partial class FamilyTreeView : Control
 
         int id = p.Id;
         b.Pressed += () => { if (isFocus) _open(id); else _refocus(id); };
-        _hint(b, isFocus ? $"{p.Name} – press to open the page about them." : $"{p.Name} – press to see the family from their place in it.");
+        _hint(b, isFocus ? $"{p.Name}: press to open the page about them." : $"{p.Name}: press to see the family from their place in it.");
         return b;
     }
 

@@ -1,7 +1,7 @@
 [
   {
     "id": "adult_promotion_move", "title": "The offer",
-    "text": "Your boss offers you a promotion – but the position is in another city. You would have to leave {city}.",
+    "text": "Your boss offers you a promotion, but the position is in another city. You would have to leave {city}.",
     "conditions": { "minAge": 22, "maxAge": 60, "hasJob": true }, "cooldown": 8,
     "choices": [
       {
@@ -109,7 +109,7 @@
           "effects": [ { "type": "money", "var": "amount", "amount": 2.5 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15, "mutual": true } ]
         },
         "failure": {
-          "text": "The restaurant closes after eight months. The money is gone – and things are awkward with {t.name}.",
+          "text": "The restaurant closes after eight months. The money is gone, and things are awkward with {t.name}.",
           "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 15 } ]
         }
       },
@@ -251,7 +251,7 @@
       {
         "text": "Buy it",
         "effects": [ { "type": "buy_home" }, { "type": "happiness", "amount": 8 } ],
-        "result": "You get the keys. It's all yours – and the bank's."
+        "result": "You get the keys. It's all yours. And the bank's."
       },
       {
         "text": "Keep renting",
@@ -306,7 +306,7 @@
   },
   {
     "id": "adult_ex_encounter", "oncePerTarget": true, "title": "An old flame",
-    "text": "You bump into {t.name} – your ex – at the supermarket. The past comes rushing back.",
+    "text": "You bump into {t.name}, your ex, at the supermarket. The past comes rushing back.",
     "conditions": { "minAge": 20 },
     "target": { "role": "ex" }, "cooldown": 5,
     "choices": [
@@ -369,7 +369,7 @@
         "chance": 0.55,
         "success": { "text": "A few weeks later: two lines on the test. The baby is due next year.", "effects": [ { "type": "child" }, { "type": "happiness", "amount": 10 } ] },
         "failure": {
-          "text": "You try for a year. It doesn't happen – not yet.",
+          "text": "You try for a year. It doesn't happen. Not yet.",
           "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ]
         }
       },
@@ -385,7 +385,7 @@
   },
   {
     "id": "adult_partner_dream_job", "title": "The dream job",
-    "text": "{t.name} has been offered {t.his} dream job – but it's far from {city}.",
+    "text": "{t.name} has been offered {t.his} dream job, but it's far from {city}.",
     "conditions": { "minAge": 22, "maxAge": 60 },
     "target": { "role": "partner", "conditions": { "hasJob": true } }, "cooldown": 10,
     "choices": [

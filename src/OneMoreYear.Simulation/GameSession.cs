@@ -281,7 +281,7 @@ public sealed class GameSession
                 hint ??= prog.Description + (CareerSystem.WhyNot(Ctx, Player, prog) is { } why ? " " + why : "");
             }
             if (EventSystem.StartsRomance(c) && World.TryGet(Player.PartnerId) is { } partner)
-                hint = $"You're with {partner.FirstName} – this would be an affair." + (hint == null ? "" : " " + hint);
+                hint = $"You're with {partner.FirstName}, so this would be an affair." + (hint == null ? "" : " " + hint);
             choices.Add(new ChoiceView(offset + i, TextFormatter.Format(Ctx, c.Text, pending), hint,
                 c.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, c, pending) * 100) : null,
                 EventSystem.IsChoiceAvailable(Ctx, c, pending), tag, EventSystem.ChanceFactors(Ctx, c, pending)));
@@ -729,6 +729,46 @@ public sealed class GameSession
         return amount < 1 ? "You have no cottage." : $"The cottage is sold for {EconomySystem.Format(Ctx, amount)}.";
     }
 
+    // --- Decades ---------------------------------------------------------------------------------
+
+    /// <summary>The decades a life can begin in, for the title screen: (1970, "The 1970s: the welfare state").</summary>
+    public static IReadOnlyList<(int Year, string Title)> StartDecades(string countryId = "sweden", ContentDb? content = null)
+    {
+        var country = (content ?? ContentDb.Embedded).Countries[countryId];
+        return country.Decades.Where(d => d.Year >= country.MinStartYear && d.Year <= country.MaxStartYear)
+            .Select(d => (d.Year, $"The {d.Year}s: {d.Name}")).ToList();
+    }
+
+    /// <summary>True in the first year of a decade, when the chapter page is shown.</summary>
+    public bool IsNewDecade => Year % 10 == 0 && Year > World.StartYear;
+
+    /// <summary>The chapter page for the decade that has just begun (or any decade, for the screenshot tour).</summary>
+    public ChapterView Chapter(int? decade = null)
+    {
+        int year = decade ?? Year / 10 * 10;
+        var def = Country.Decades.LastOrDefault(d => d.Year <= year);
+        var p = Player;
+        int since = year - 10;
+        var family = World.People.Where(x => x.InFamily).ToList();
+        int born = family.Count(x => x.BirthYear >= since && x.BirthYear < year);
+        int died = family.Count(x => x.DeathYear is { } d && d >= since && d < year);
+        int weddings = World.Chronicle.Count(l => l.Year >= since && l.Year < year && l.Category == "love" && l.Text.Contains("got married")
+                                                  && l.PersonIds.Any(id => World.TryGet(id) is { InFamily: true }));
+        int alive = family.Count(x => x.IsAlive);
+        string Count(int n, string one, string many) => n == 1 ? $"one {one}" : $"{n} {many}";
+        var lines = new List<string>();
+        if (born + died + weddings > 0)
+            lines.Add($"Since {since}: " + string.Join(", ", new[]
+            {
+                born > 0 ? Count(born, "child born", "children born") : null,
+                weddings > 0 ? Count(weddings, "wedding", "weddings") : null,
+                died > 0 ? Count(died, "funeral", "funerals") : null,
+            }.OfType<string>()) + ".");
+        lines.Add($"The family is {alive} people now.");
+        string playerLine = p.IsAlive ? $"{p.FirstName} is {p.Age(year)}." : "";
+        return new ChapterView(year, $"The {year}s", def?.Name ?? "", def?.Text ?? "", playerLine, lines);
+    }
+
     /// <summary>This year's lines, with what happened to the player told to them: "You inherited …".</summary>
     public IReadOnlyList<ChronicleLine> NewsThisYear() =>
         RelevantLines(World.Chronicle.Where(e => e.Year == Year)).Select(l => l with { Text = ToYou(l.Text) }).ToList();
@@ -756,9 +796,9 @@ public sealed class GameSession
         if (ex == null || p.LastSplitYear is not { } year || Year - year > 10)
             return p.Flags.Contains("widowed") ? (p.Sex == Sex.Male ? "Widower" : "Widow") : "Single";
         if (p.Flags.Contains("widowed") && !ex.IsAlive && ex.DeathYear == year)
-            return $"Widowed – {ex.FirstName} died in {year}";
+            return $"Widowed when {ex.FirstName} died in {year}";
         string pronoun = p.Id == Player.Id ? "you" : p.Sex == Sex.Male ? "him" : "her";
-        return p.LastSplitByThem ? $"Single – {ex.FirstName} broke up with {pronoun} in {year}" : $"Single – left {ex.FirstName} in {year}";
+        return p.LastSplitByThem ? $"Single since {ex.FirstName} broke up with {pronoun} in {year}" : $"Single since leaving {ex.FirstName} in {year}";
     }
 
     public IReadOnlyList<ChronicleLine> Chronicle(int minImportance = 1, int? personId = null) =>

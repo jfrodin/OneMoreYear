@@ -42,7 +42,7 @@
   },
   {
     "id": "old_grandchild_money", "title": "Just this once",
-    "text": "{t.name} calls. It's been a while. {t.He} is short of money – \"just this once, I promise\".",
+    "text": "{t.name} calls. It's been a while. {t.He} is short of money. \"Just this once, I promise\".",
     "conditions": { "minAge": 60, "minMoney": 20000 }, "cooldown": 4,
     "target": { "role": "grandchild", "conditions": { "minAge": 18 } },
     "choices": [
@@ -67,7 +67,7 @@
   },
   {
     "id": "old_new_love", "title": "At the dance",
-    "text": "Thursday dance at the community hall. {t.name} asks you to dance three times in a row – and on the third, you say yes.",
+    "text": "Thursday dance at the community hall. {t.name} asks you to dance three times in a row, and on the third, you say yes.",
     "conditions": { "minAge": 60, "hasPartner": false },
     "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -6, "ageOffsetMax": 6 }, "cooldown": 4,
     "choices": [
@@ -85,7 +85,7 @@
     "choices": [
       { "text": "Move into a care home", "effects": [ { "type": "care_home" }, { "type": "happiness", "amount": -4 } ],
         "result": "A small room, a view of the birch trees, dinner at five. You make a friend on the first day." },
-      { "text": "Refuse – this is your home", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 5 }, { "type": "trait_add", "trait": "brave", "chance": 0.1 } ],
+      { "text": "Refuse. This is your home", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 5 }, { "type": "trait_add", "trait": "brave", "chance": 0.1 } ],
         "result": "\"Over my dead body,\" you say. They look at each other. Nobody laughs." },
       { "text": "Ask if you can live with {t.him}", "chance": 0.5, "chanceOpinion": 0.006,
         "success": { "text": "{t.name} clears out the study. It's cramped, loud and full of life.",
@@ -115,7 +115,7 @@
     "choices": [
       { "text": "Crawl to the phone", "chance": 0.7, "chanceAttributes": { "fitness": 0.004 },
         "success": { "text": "An ambulance, a cast, six weeks with a walking frame. You were lucky.", "effects": [ { "type": "health", "amount": -8 } ] },
-        "failure": { "text": "A neighbour finds you the next morning. The hip takes months to heal – and your confidence longer.",
+        "failure": { "text": "A neighbour finds you the next morning. The hip takes months to heal, and your confidence longer.",
           "effects": [ { "type": "health", "amount": -18 }, { "type": "happiness", "amount": -8 } ] } }
     ]
   },
@@ -161,7 +161,7 @@
     "choices": [
       { "text": "Sell and buy a flat in town", "effects": [ { "type": "sell_home" }, { "type": "happiness", "amount": -3 } ],
         "result": "Forty years of things into a van. You walk through the empty rooms one last time." },
-      { "text": "Stay – the grandchildren need a place to come to", "effects": [ { "type": "happiness", "amount": 2 } ],
+      { "text": "Stay. The grandchildren need a place to come to", "effects": [ { "type": "happiness", "amount": 2 } ],
         "result": "Christmas is still at your place. That's worth the stairs." }
     ]
   },
@@ -228,7 +228,7 @@
     "text": "You always said \"when I retire\". Well. You've retired.",
     "conditions": { "minAge": 62, "activity": "retired", "minMoney": 60000 }, "cooldown": 6,
     "choices": [
-      { "text": "Go far – very far", "effects": [ { "type": "money", "amount": -50000 }, { "type": "happiness", "amount": 12 }, { "type": "memory", "kind": "big_trip", "text": "The trip of a lifetime, finally", "impact": 22 } ],
+      { "text": "Go far. Very far", "effects": [ { "type": "money", "amount": -50000 }, { "type": "happiness", "amount": 12 }, { "type": "memory", "kind": "big_trip", "text": "The trip of a lifetime, finally", "impact": 22 } ],
         "result": "Temples, markets, a sunset you'll describe to anyone who stands still long enough." },
       { "text": "A week at the coast", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 6 } ],
         "result": "Grey sea, good fish, early nights. Exactly right." }
@@ -249,7 +249,7 @@
   },
   {
     "id": "old_ex_peace", "title": "Old wounds",
-    "text": "You meet {t.name} – your ex – in the pharmacy queue. You're both old now. Neither of you pretends not to see the other.",
+    "text": "You meet {t.name}, your ex, in the pharmacy queue. You're both old now. Neither of you pretends not to see the other.",
     "conditions": { "minAge": 60 }, "cooldown": 0,
     "target": { "role": "ex", "conditions": { "minAge": 55 } },
     "choices": [
@@ -273,7 +273,7 @@
   },
   {
     "id": "old_great_grandchild", "title": "Four generations",
-    "text": "{t.name} puts the baby in your arms – your great-grandchild. Someone takes a photo: four generations on one sofa.",
+    "text": "{t.name} puts the baby in your arms: your great-grandchild. Someone takes a photo: four generations on one sofa.",
     "conditions": { "minAge": 70 }, "cooldown": 0,
     "target": { "role": "grandchild", "conditions": { "minAge": 18, "minChildren": 1 } },
     "choices": [

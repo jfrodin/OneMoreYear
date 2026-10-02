@@ -105,7 +105,7 @@
   },
   {
     "id": "child_grandparent_stories", "title": "When I was your age",
-    "text": "{t.name} has been telling the same stories all afternoon – about how everything was different, and harder, and somehow better.",
+    "text": "{t.name} has been telling the same stories all afternoon, about how everything was different, and harder, and still better.",
     "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 5,
     "target": { "role": "grandparent", "conditions": { "minAge": 55 } },
     "choices": [
@@ -151,7 +151,7 @@
         "success": { "text": "Opening night: you remember every line. The applause is the best sound in the world.",
           "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.25 }, { "type": "happiness", "amount": 8 },
             { "type": "memory", "kind": "school_play", "text": "The lead in the school play", "impact": 15 } ] },
-        "failure": { "text": "You get the role – and forget your lines in front of everyone's parents.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+        "failure": { "text": "You get the role, and then forget your lines in front of everyone's parents.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
       { "text": "Be a tree", "result": "A very convincing tree. Your mother cries anyway." }
     ]
   },
@@ -177,7 +177,7 @@
       { "text": "Keep it", "effects": [ { "type": "money", "amount": 100 }, { "type": "happiness", "amount": 4 } ],
         "result": "It buys more sweets than you can eat. You eat them anyway." },
       { "text": "Hand it in to the police", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.15 } ],
-        "result": "The officer looks surprised and writes your name in a book. Three months later nobody has claimed it – and it's yours." },
+        "result": "The officer looks surprised and writes your name in a book. Three months later nobody has claimed it, and it's yours." },
       { "text": "Buy sweets for the whole class", "effects": [ { "type": "trait_add", "trait": "generous", "chance": 0.25 }, { "type": "trait_add", "trait": "social", "chance": 0.1 } ],
         "result": "For one afternoon, you are the most popular person in school." }
     ]
@@ -211,7 +211,7 @@
     "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
     "choices": [
       { "text": "Ring it", "chance": 0.5, "chanceTraits": { "brave": 0.3, "conflict_averse": -0.1 },
-        "success": { "text": "He opens, looks at you – and asks if you want to see his model railway. It fills the whole basement.",
+        "success": { "text": "He opens, looks at you, and asks if you want to see his model railway. It fills the whole basement.",
           "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.2 }, { "type": "memory", "kind": "neighbour", "text": "The old man with the model railway", "impact": 12 } ] },
         "failure": { "text": "You ring and run. Your friends laugh at how fast you ran. You laugh too, a bit.", "effects": [] } },
       { "text": "Refuse", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "\"Chicken!\" It follows you around for a week." }

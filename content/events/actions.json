@@ -98,7 +98,7 @@
     "target": { "role": "known", "conditions": { "compatibleWithPlayer": true, "hasPartner": false } },
     "conditions": { "minAge": 15, "hasPartner": false },
     "choices": [ {
-      "text": "Ask out", "hint": "Could turn a friendship into something more – or make it awkward.",
+      "text": "Ask out", "hint": "Could turn a friendship into something more. Or make it awkward.",
       "chance": 0.3, "chanceOpinion": 0.005, "chanceTraits": { "social": 0.1, "brave": 0.05, "charming": 0.15 }, "chanceAttributes": { "looks": 0.005 }, "chanceRelation": { "attraction": 0.006 },
       "success": {
         "text": "{t.name} says yes!",
@@ -126,7 +126,7 @@
     "target": { "role": "partner", "conditions": { "partnerStatus": "dating", "minAge": 16 } },
     "conditions": { "minAge": 16, "maxAge": 17 },
     "choices": [ {
-      "text": "Ask your parents", "hint": "You are under 18 – your parents have to agree.",
+      "text": "Ask your parents", "hint": "You are under 18, so your parents have to agree.",
       "chance": 0.3, "chanceTraits": { "manipulative": 0.15, "social": 0.05 },
       "success": {
         "text": "After a long talk at the kitchen table, your parents reluctantly agree. You and {t.name} move in together.",
@@ -162,7 +162,7 @@
     "choices": [ {
       "text": "Try for a baby",
       "chance": 0.45,
-      "success": { "text": "It worked! You're expecting a baby – due next year.", "effects": [ { "type": "child" } ] },
+      "success": { "text": "It worked! You're expecting a baby, due next year.", "effects": [ { "type": "child" } ] },
       "failure": { "text": "Not this year.", "effects": [] }
     } ]
   },
@@ -173,7 +173,7 @@
     "choices": [ {
       "text": "Try for a baby",
       "chance": 0.45,
-      "success": { "text": "It worked! You're expecting a baby – due next year.", "effects": [ { "type": "child" } ] },
+      "success": { "text": "It worked! You're expecting a baby, due next year.", "effects": [ { "type": "child" } ] },
       "failure": { "text": "Not this year.", "effects": [] }
     } ]
   },
@@ -193,7 +193,7 @@
     "target": { "role": "partner" },
     "conditions": { "minAge": 13 },
     "choices": [ {
-      "text": "End the relationship", "hint": "This will hurt – and be remembered.",
+      "text": "End the relationship", "hint": "This will hurt, and it will be remembered.",
       "effects": [ { "type": "breakup" } ],
       "result": "It's over."
     } ]
@@ -237,7 +237,7 @@
     "id": "self_go_out", "trigger": "self", "title": "Go out with your friends",
     "conditions": { "minAge": 13, "hasRole": [ "friend" ] },
     "choices": [ {
-      "text": "Meet their friends", "hint": "The best way to meet new people – friends, or maybe more.",
+      "text": "Meet their friends", "hint": "The best way to meet new people: friends, or maybe more.",
       "effects": [ { "type": "meet_through_friend" }, { "type": "happiness", "amount": 4 } ],
       "result": "You meet {o.full} ({o.role}). You get on well."
     } ]
@@ -249,7 +249,7 @@
     "choices": [ {
       "text": "Go out and meet people",
       "chance": 0.4, "chanceTraits": { "social": 0.15, "introvert": -0.1, "charming": 0.15 }, "chanceAttributes": { "looks": 0.006 },
-      "success": { "text": "You meet {t.full}. There's a spark – you start seeing each other.", "effects": [ { "type": "start_dating", "to": "target" } ] },
+      "success": { "text": "You meet {t.full}. There's a spark, and you start seeing each other.", "effects": [ { "type": "start_dating", "to": "target" } ] },
       "failure": { "text": "A few awkward dates, but nobody special.", "effects": [] }
     } ]
   },
@@ -298,7 +298,7 @@
     "choices": [ {
       "text": "Hand in your notice",
       "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 5 } ],
-      "result": "Freedom – for now."
+      "result": "Freedom. For now."
     } ]
   },
   {

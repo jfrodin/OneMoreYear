@@ -62,6 +62,16 @@
   "spouseInheritanceShare": 0.5,
   "sameSexCoupleChance": 0.04,
   "wifeTakesNameChance": 0.7,
+  "decades": [
+    { "year": 1950, "name": "after the war", "text": "The war is over and Sweden was spared. The People's Home is being built: new flats, the first fridges, a car if you are lucky. Most mothers are at home, most fathers at the factory." },
+    { "year": 1960, "name": "the record years", "text": "Everyone who wants a job has one. Television arrives, the suburbs grow out of the forest, and the young start to sound different from their parents." },
+    { "year": 1970, "name": "the welfare state", "text": "Day care, parental leave and free university. Long hair, protest songs, an oil crisis, and ABBA winning Eurovision." },
+    { "year": 1980, "name": "yuppies and video", "text": "Stock market fever, shoulder pads and video shops. Then one night in February 1986, the Prime Minister is shot on a Stockholm street." },
+    { "year": 1990, "name": "crisis and the EU", "text": "The krona collapses and interest rates reach 500 percent. Half a million jobs disappear. Sweden joins the European Union, and the internet arrives." },
+    { "year": 2000, "name": "everyone online", "text": "Mobile phones in every pocket, the IT bubble bursts, and a wave in Thailand takes hundreds of Swedish lives." },
+    { "year": 2010, "name": "smartphones", "text": "Everyone is looking at a screen. Home prices only go one way, and the summers get hotter." },
+    { "year": 2020, "name": "the pandemic and after", "text": "Working from the kitchen table, grandparents behind windows, and then a world that will not settle down." }
+  ],
   "investments": [
     { "id": "sweden_fund", "name": "Swedish stock fund", "kind": "fund", "beta": 1.0, "spread": 0.03, "minYear": 1958,
       "description": "A little of every big company in Sweden. Up most years, and down with everything else in a crash." },

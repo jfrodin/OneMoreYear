@@ -1,7 +1,7 @@
 [
   {
     "id": "teen_party", "title": "The party",
-    "text": "Someone's parents are away. The whole year is invited – and there's alcohol.",
+    "text": "Someone's parents are away. The whole year is invited, and there's alcohol.",
     "conditions": { "minAge": 14, "maxAge": 18 }, "cooldown": 2,
     "choices": [
       {

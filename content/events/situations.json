@@ -15,7 +15,7 @@
       { "text": "Business and administration programme", "effects": [ { "type": "study", "level": "secondary", "programme": "sec_business" } ], "result": "You start the business and administration programme in the autumn." },
       {
         "text": "Start working right away",
-        "hint": "Your own money now – but fewer doors later.",
+        "hint": "Your own money now, but fewer doors later.",
         "effects": [ { "type": "job_find" }, { "type": "happiness", "amount": 5 } ],
         "result": "You start applying for jobs."
       },
@@ -34,7 +34,7 @@
     "choices": [
       {
         "text": "Apply to university",
-        "hint": "Choose a programme – what you can get into depends on your grades.",
+        "hint": "Choose a programme. What you can get into depends on your grades.",
         "effects": [ { "type": "queue_event", "event": "choose_university" } ],
         "result": "You look through the university catalogue."
       },
@@ -94,7 +94,7 @@
   {
     "id": "name_baby", "trigger": "situation", "dynamicChoices": "baby_names",
     "title": "A new baby",
-    "text": "{T.role} is here – healthy, loud and perfect. What do you call {t.him}?",
+    "text": "{T.role} is here: healthy, loud and perfect. What do you call {t.him}?",
     "choices": []
   },
   {
@@ -104,7 +104,7 @@
     "choices": [
       {
         "text": "Rent a flat of your own",
-        "hint": "Freedom – and every bill is yours.",
+        "hint": "Freedom, and every bill is yours.",
         "effects": [ { "type": "move_out", "kind": "rent" }, { "type": "happiness", "amount": 8 } ],
         "result": "The first night in your own flat you eat pizza on the floor. It's perfect."
       },
@@ -116,7 +116,7 @@
       },
       {
         "text": "Stay at home a while longer",
-        "hint": "Save money – but it gets a bit cramped.",
+        "hint": "Save money, but it gets a bit cramped.",
         "effects": [ { "type": "happiness", "amount": -2 } ],
         "result": "Your parents sigh, but they don't mind the company."
       }
@@ -131,7 +131,7 @@
   {
     "id": "job_offers", "trigger": "situation", "dynamicChoices": "job_offers",
     "title": "Job offers",
-    "text": "You have been looking for work – the employment office, the papers, asking around. These employers would take you:",
+    "text": "You have been looking for work: the employment office, the papers, asking around. These employers would take you:",
     "choices": [
       { "text": "Keep looking", "hint": "Something better might come along next year.", "result": "You say no thanks and keep looking." }
     ]
@@ -178,7 +178,7 @@
     "title": "Your place or mine?",
     "text": "{t.name} is lying with {t.his} head in your lap. \"I'm tired of saying goodbye every evening. Should we move in together?\"",
     "choices": [
-      { "text": "Yes – let's do it", "effects": [ { "type": "move_in" }, { "type": "happiness", "amount": 8 } ], "result": "Two sets of everything. One home." },
+      { "text": "Yes, let's do it", "effects": [ { "type": "move_in" }, { "type": "happiness", "amount": 8 } ], "result": "Two sets of everything. One home." },
       {
         "text": "It's too soon",
         "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ],
@@ -245,7 +245,7 @@
         "result": "You pack a bag that same night."
       },
       {
-        "text": "Forgive – but demand that it ends",
+        "text": "Forgive, but demand that it ends",
         "hint": "Trust will take time to rebuild.",
         "effects": [
           { "type": "reveal_secret" },

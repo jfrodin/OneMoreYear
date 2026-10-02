@@ -253,7 +253,7 @@ public partial class GameScreen : Control
         RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
         bottom.AddChild(feedback);
         var content = Ui.Button("Settings", () => _main.ShowSettings(S), 42);
-        RegisterHint(content, "Screen, text size, sound, the newspaper – and how dark themes are handled.");
+        RegisterHint(content, "Screen, text size, sound, the newspaper, and how dark themes are handled.");
         bottom.AddChild(content);
         var menu = Ui.Button("Save & exit", () => { _main.AutoSave(); _main.ShowTitle(); }, 42);
         menu.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -310,7 +310,7 @@ public partial class GameScreen : Control
         var events = S.CurrentEvents();
         foreach (var ev in events) _yearContent.AddChild(BuildEventCard(ev));
         if (events.Count == 0)
-            _yearContent.AddChild(Ui.Label("A quiet year. Spend your time on something below, visit your family – or let the year pass.", 18, UiTheme.Muted, wrap: true));
+            _yearContent.AddChild(Ui.Label("A quiet year. Spend your time on something below, visit your family, or let the year pass.", 18, UiTheme.Muted, wrap: true));
 
         // Your own life
         var all = S.Actions(null);
@@ -318,7 +318,7 @@ public partial class GameScreen : Control
         {
             ("prison", "Life inside", "You can't do much from a cell. Things outside go on without you."),
             ("life", "Your life", "School, work and money have their own tabs. People are in the People tab."),
-            ("crime", "Outside the law", "Anyone can do these. Your personality decides how risky they are – and how you feel afterwards."),
+            ("crime", "Outside the law", "Anyone can do these. Your personality decides how risky they are, and how you feel afterwards."),
         })
         {
             var actions = all.Where(a => a.Category == category).ToList();
@@ -431,7 +431,7 @@ public partial class GameScreen : Control
         else
         {
             work.AddChild(Ui.Label(c.Status == "Looking for work"
-                ? "You don't have a job. Look for one below – offers depend on your education and grades."
+                ? "You don't have a job. Look for one below. Offers depend on your education and grades."
                 : "No job right now.", 16, UiTheme.Muted, wrap: true));
         }
         _workContent.AddChild(Ui.Card(work));
@@ -905,7 +905,9 @@ public partial class GameScreen : Control
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
         // The whole screen is rebuilt so the look follows the new year, then the paper arrives.
         _main.ShowGame();
-        _main.ShowNewspaper(report);
+        // A new decade opens with a chapter page, then the paper.
+        if (S.IsNewDecade) _main.ShowChapter(S.Chapter(), () => _main.ShowNewspaper(report));
+        else _main.ShowNewspaper(report);
     }
 
     public void FocusAfterNewspaper()
@@ -994,7 +996,7 @@ public partial class GameScreen : Control
         b.Pressed += () => SelectPerson(id);
         b.FocusEntered += () =>
         {
-            _hint.Text = $"{p.Name} – press to see details and things you can do together.";
+            _hint.Text = $"{p.Name}: press to see details and things you can do together.";
             if (_selectedId != id) SelectPerson(id, keepFocus: true);
         };
         _personButtons[p.Id] = b;
@@ -1062,7 +1064,7 @@ public partial class GameScreen : Control
             traitBox.AddChild(row);
         }
         if (p.Traits.Count > 0)
-            traitBox.AddChild(UiTheme.HandLabel("green – a good side   ·   red – a dark side   ·   blue – neither, it depends", 17, UiTheme.Faint));
+            traitBox.AddChild(UiTheme.HandLabel("green: a good side   ·   red: a dark side   ·   blue: neither, it depends", 17, UiTheme.Faint));
         _personDetail.AddChild(traitBox);
 
         if (!isPlayer && p.TowardsPlayer is { } r)

@@ -177,6 +177,9 @@ public sealed class ContentDb
             foreach (var t in texts.OfType<string>())
                 if (Systems.TextFormatter.ByEra(2000, t) is var resolved && (resolved.Contains("[[") || resolved.Contains("]]") || resolved.Contains("||")))
                     errors.Add($"Event {e.Id}: broken era text in \"{t}\"");
+                else if (t.Contains(" – ") || t.Contains("—"))
+                    // House style: no dashes in game text (they read as machine-written). Use a full stop, comma or colon.
+                    errors.Add($"Event {e.Id}: dash in \"{t}\"");
         }
         foreach (var e in Events.Values)
         {

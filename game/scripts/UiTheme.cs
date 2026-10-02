@@ -6,23 +6,37 @@ namespace OneMoreYear.Game;
 
 /// <summary>
 /// The visual identity: a family album on paper whose colours and headings follow the decade being
-/// played – sepia and typewriter in the fifties, brown and orange in the seventies, cooler and
-/// sharper in the eighties, clean and flat after 2000 (docs/design-decisions.md, "The look").
-/// Colours blend smoothly between the eras; call <see cref="SetYear"/> and rebuild the theme when
+/// played: sepia and typewriter in the fifties, olive in the sixties, brown and orange in the seventies,
+/// magenta in the eighties, teal in the nineties, clean and flat after 2000 (docs/design-decisions.md, "The look").
+/// Each decade has its own look, which changes when the decade begins; call <see cref="SetYear"/> and rebuild the theme when
 /// the year changes. Focus outlines are strong on purpose – the game must be playable with a controller.
 /// </summary>
 public static class UiTheme
 {
-    /// <summary>One decade's look. Colours blend between neighbouring eras; fonts switch at the midpoint.</summary>
+    /// <summary>
+    /// One decade's look. Each decade has its own, and it changes when the decade begins: a new
+    /// chapter in the album (the chapter page marks it). Fonts and colours are chosen to feel like the time.
+    /// </summary>
     private sealed record Era(int Year, string Heading, Color Paper, Color Card, Color Ink, Color Accent, Color Good, Color Bad, Color Info, Color PhotoTint);
 
     private static readonly Era[] Eras =
     {
+        // Sepia and typewriter.
         new(1950, "SpecialElite", new("e3d4b2"), new("f2e8d0"), new("3a2a1a"), new("8a4a1f"), new("4d7535"), new("9b3526"), new("3d5b78"), new(1f, 0.87f, 0.68f)),
+        // Olive, mustard and an elegant serif.
+        new(1960, "PlayfairDisplay", new("e6dcbc"), new("f6efda"), new("2f2a1e"), new("5f7f2a"), new("4d7535"), new("9b3526"), new("3d6b8a"), new(1f, 0.92f, 0.8f)),
+        // Brown and orange.
         new(1970, "Fraunces", new("ecd4a8"), new("f8e7c7"), new("47280f"), new("c05a18"), new("5a7a22"), new("a83a22"), new("2f6a82"), new(1f, 0.9f, 0.76f)),
-        new(1985, "Rajdhani", new("dcd8e6"), new("f3f1f8"), new("201a38"), new("c42a78"), new("2f7d5c"), new("b3303c"), new("2a7fb8"), new(0.97f, 0.95f, 1.02f)),
+        // Cool, with magenta.
+        new(1980, "Rajdhani", new("dcd8e6"), new("f3f1f8"), new("201a38"), new("c42a78"), new("2f7d5c"), new("b3303c"), new("2a7fb8"), new(0.97f, 0.95f, 1.02f)),
+        // Teal and purple.
+        new(1990, "Rajdhani", new("dbe4e0"), new("f3f7f5"), new("1d2b2a"), new("23807d"), new("2f7d5c"), new("b3303c"), new("5a4f9e"), new(0.98f, 1f, 1f)),
+        // Clean and flat, blue.
         new(2000, "Inter", new("e6e9ed"), new("fafbfc"), new("1e2731"), new("2a6fd0"), new("2f8a4e"), new("c0392b"), new("2a7fb8"), new(1f, 1f, 1f)),
-        new(2015, "Inter", new("efece5"), new("fffdf9"), new("23262b"), new("0f7f73"), new("2f8a4e"), new("c0392b"), new("3a6fb0"), new(1f, 1f, 1f)),
+        // Warm white and green.
+        new(2010, "Inter", new("efece5"), new("fffdf9"), new("23262b"), new("0f7f73"), new("2f8a4e"), new("c0392b"), new("3a6fb0"), new(1f, 1f, 1f)),
+        // A serif comes back; coral.
+        new(2020, "Fraunces", new("f1ebe3"), new("fffaf4"), new("2a2420"), new("c9563a"), new("3f8a50"), new("b83a2e"), new("3a6fb0"), new(1f, 0.99f, 0.97f)),
     };
 
     // Declared first: the fonts below are loaded through it during static initialisation.
@@ -30,7 +44,7 @@ public static class UiTheme
 
     private static int _year = 1970;
 
-    // Current colours (blended for the year).
+    // Current colours (the decade's).
     public static Color Background { get; private set; }
     public static Color Panel { get; private set; }
     public static Color PanelAlt { get; private set; }
@@ -73,12 +87,11 @@ public static class UiTheme
     public static bool SetYear(int year)
     {
         _year = year;
+        // The decade's look, unchanged until the next decade begins.
         int i = 0;
-        while (i < Eras.Length - 2 && year >= Eras[i + 1].Year) i++;
+        while (i < Eras.Length - 1 && year >= Eras[i + 1].Year) i++;
         var a = Eras[i];
-        var b = Eras[Math.Min(i + 1, Eras.Length - 1)];
-        float t = b.Year == a.Year ? 0 : Mathf.Clamp((year - a.Year) / (float)(b.Year - a.Year), 0, 1);
-        Color Mix(Func<Era, Color> c) => c(a).Lerp(c(b), t);
+        Color Mix(Func<Era, Color> c) => c(a);
 
         var old = Background;
         Background = Mix(e => e.Paper);
@@ -96,7 +109,7 @@ public static class UiTheme
         Faint = Text.Lerp(Background, 0.58f);
         AccentDark = Accent.Darkened(0.35f);
         PhotoBackdrop = Background.Darkened(0.12f);
-        Heading = Load(t < 0.5f ? a.Heading : b.Heading);
+        Heading = Load(a.Heading);
         return old != Background;
     }
 

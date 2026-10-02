@@ -36,7 +36,7 @@ public partial class SuccessionScreen : Control
         header.AddChild(Portrait.Create(s.Portrait(dead.Id), true, 110));
         var names = Ui.VBox(4);
         names.AddChild(Ui.Label(life.Name, 40, UiTheme.Accent));
-        names.AddChild(Ui.Label($"{life.BirthYear} – {life.DeathYear}", 24, UiTheme.Text));
+        names.AddChild(Ui.Label($"{life.BirthYear}–{life.DeathYear}", 24, UiTheme.Text));
         names.AddChild(Ui.Label($"Died of {life.Cause}, aged {life.Age}.", 19, UiTheme.Muted, wrap: true));
         header.AddChild(names);
         left.AddChild(header);
@@ -71,7 +71,7 @@ public partial class SuccessionScreen : Control
         if (heirs.Count > 0)
         {
             right.AddChild(Ui.Label("Who carries the family forward?", 26, UiTheme.Text));
-            right.AddChild(Ui.Label("You continue as someone who has already lived a life of their own – with their relationships, money, secrets and grudges.",
+            right.AddChild(Ui.Label("You continue as someone who has already lived a life of their own, with their relationships, money, secrets and grudges.",
                 17, UiTheme.Muted, wrap: true));
             string owner = SimKinship.Genitive(life.Name.Split(' ')[0]);
             foreach (var h in heirs.Take(12))

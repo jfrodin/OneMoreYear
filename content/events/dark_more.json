@@ -70,11 +70,11 @@
   },
   {
     "id": "partner_control", "title": "Just checking", "content": [ "violence" ],
-    "text": "{t.name} wants to know where you've been. Who you talked to. Why you were twelve minutes late. Your friends have stopped calling – {t.he} never liked them anyway.",
+    "text": "{t.name} wants to know where you've been. Who you talked to. Why you were twelve minutes late. Your friends have stopped calling. {t.He} never liked them anyway.",
     "conditions": { "minAge": 18 }, "weight": 1.5, "cooldown": 6,
     "target": { "role": "partner", "conditions": { "traitsAny": [ "jealous", "manipulative", "paranoid" ] } },
     "choices": [
-      { "text": "Leave", "hint": "It is harder than it sounds – and it is the way out.",
+      { "text": "Leave", "hint": "It is harder than it sounds, and it is the way out.",
         "chance": 0.6, "chanceTraits": { "brave": 0.15, "resilient": 0.1, "conflict_averse": -0.15 },
         "success": { "text": "You pack one bag while {t.he} is at work. A friend's sofa has never felt so safe.",
           "effects": [ { "type": "breakup" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "got_out", "to": "target", "text": "The day I left {t.name}", "impact": 15 } ] },
@@ -94,7 +94,7 @@
       { "text": "Go to the police", "chance": 0.6, "success": { "text": "A restraining order. The car stops coming.", "effects": [ { "type": "happiness", "amount": 5 } ] },
         "failure": { "text": "\"Unless he actually does something...\" You start taking different routes home.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.15 } ] } },
       { "text": "Talk to {t.him} one last time", "chance": 0.4,
-        "success": { "text": "{t.name} cries, apologises – and finally lets go.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -20 } ] },
+        "success": { "text": "{t.name} cries, apologises, and finally lets go.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": -20 } ] },
         "failure": { "text": "It only makes it worse. Now {t.he} knows you'll answer.", "effects": [ { "type": "happiness", "amount": -8 } ] } },
       { "text": "Move to another city", "effects": [ { "type": "move_city" }, { "type": "happiness", "amount": -3 } ],
         "result": "A new address that almost nobody has. It feels like freedom and like running at the same time." }
@@ -116,7 +116,7 @@
     "id": "self_rehab", "trigger": "self", "category": "life", "title": "Get treatment", "content": [ "addiction" ],
     "conditions": { "minAge": 15, "addicted": true },
     "choices": [ {
-      "text": "Check into treatment", "hint": "Weeks away, and hard – but it works more often than going it alone.",
+      "text": "Check into treatment", "hint": "Weeks away, and hard, but it works more often than going it alone.",
       "chance": 0.55, "chanceTraits": { "resilient": 0.15, "addictive": -0.15 },
       "success": { "text": "You come out clean, with a phone number you can call at 3 am. You'll need it.", "effects": [ { "type": "recover" }, { "type": "money", "amount": -10000 } ] },
       "failure": { "text": "You leave after ten days. Not yet.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": -5 } ] }

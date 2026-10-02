@@ -6,7 +6,7 @@
     "choices": [ { "text": "Pocket something", "hint": "Small money, small risk.", "effects": [ { "type": "crime", "kind": "shoplifting" } ] } ] },
   { "id": "crime_burglary", "trigger": "self", "category": "crime", "title": "Break into a house",
     "conditions": { "minAge": 15 },
-    "choices": [ { "text": "Do it tonight", "hint": "Could pay well – or end in prison.", "effects": [ { "type": "crime", "kind": "burglary" } ] } ] },
+    "choices": [ { "text": "Do it tonight", "hint": "Could pay well. Or end in prison.", "effects": [ { "type": "crime", "kind": "burglary" } ] } ] },
   { "id": "crime_car", "trigger": "self", "category": "crime", "title": "Steal a car",
     "conditions": { "minAge": 15 },
     "choices": [ { "text": "Hot-wire one", "effects": [ { "type": "crime", "kind": "car_theft" } ] } ] },
@@ -23,7 +23,7 @@
   { "id": "crime_assault", "content": [ "violence" ], "trigger": "action", "category": "crime", "title": "Beat up",
     "target": { "role": "known", "conditions": { "minAge": 14 } },
     "conditions": { "minAge": 14 },
-    "choices": [ { "text": "Hurt them", "hint": "They will never forget it – and neither might the police.", "effects": [ { "type": "crime", "kind": "assault", "to": "target" } ] } ] },
+    "choices": [ { "text": "Hurt them", "hint": "They will never forget it, and the police might not either.", "effects": [ { "type": "crime", "kind": "assault", "to": "target" } ] } ] },
   { "id": "crime_blackmail", "trigger": "action", "category": "crime", "title": "Blackmail",
     "target": { "role": "secret_known", "conditions": { "minAge": 18 } },
     "conditions": { "minAge": 16 },
@@ -53,7 +53,7 @@
   },
   {
     "id": "cash_temptation", "title": "Unguarded",
-    "text": "Your boss has left the safe open – and nobody would ever check today's takings.",
+    "text": "Your boss has left the safe open, and nobody would ever check today's takings.",
     "conditions": { "minAge": 18, "hasJob": true, "traitsAny": [ "dishonest", "greedy", "criminal", "manipulative" ] }, "weight": 1.5, "cooldown": 5,
     "choices": [
       { "text": "Take some", "effects": [ { "type": "crime", "kind": "fraud" } ] },

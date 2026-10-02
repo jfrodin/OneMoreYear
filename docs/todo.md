@@ -9,9 +9,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
    an affair) read oddly, and the order is unclear. Options: one story per person, told in order;
    a front page with one headline and a few short items; or something else than a newspaper
    (a Christmas letter, a page in the album). The producer has not decided yet – wait for them.
-2. [ ] **A new decade, a new chapter**: a title page when a decade begins ("The 1980s – …"), and a
-   more visible change of look at that moment instead of only a slow blend.
-3. [ ] Keep checking texts for anachronisms (use `[[year: before || after]]`). Also programme
+2. [ ] Keep checking texts for anachronisms (use `[[year: before || after]]`). Also programme
    names, like "Computer science" before the 1970s.
 
 ## Closed test build (planned, not yet)

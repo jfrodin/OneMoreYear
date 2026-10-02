@@ -4,13 +4,13 @@
   {
     "id": "ailment_depression", "trigger": "situation", "content": [ "mental_health" ],
     "title": "Grey",
-    "text": "It came slowly. Now everything is grey – food has no taste, friends feel far away, and mornings are the worst part of the day.",
+    "text": "It came slowly. Now everything is grey: food has no taste, friends feel far away, and mornings are the worst part of the day.",
     "choices": [
       { "text": "See a doctor", "hint": "Treatment makes it far more likely to pass.",
         "effects": [ { "type": "ailment_treat", "kind": "depression" }, { "type": "money", "amount": -3000 } ],
         "result": "It takes all your strength to make the call. The doctor listens. It's a start." },
       { "text": "Tell someone close", "effects": [ { "type": "happiness", "amount": 5 } ],
-        "result": "You say it out loud. They don't fix it – but you're not alone with it any more." },
+        "result": "You say it out loud. They don't fix it, but you're not alone with it any more." },
       { "text": "Push through on your own", "effects": [ { "type": "happiness", "amount": -4 } ],
         "result": "You keep going. On the outside, nobody can tell." }
     ]
@@ -23,7 +23,7 @@
       { "text": "Get help", "effects": [ { "type": "ailment_treat", "kind": "anxiety" }, { "type": "money", "amount": -3000 } ],
         "result": "A therapist teaches you to breathe through it. It doesn't vanish, but it gets smaller." },
       { "text": "Avoid what scares you", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.3 } ],
-        "result": "Fewer parties, fewer phone calls. Your world gets quieter – and smaller." }
+        "result": "Fewer parties, fewer phone calls. Your world gets quieter, and smaller." }
     ]
   },
   {
@@ -42,7 +42,7 @@
   {
     "id": "ailment_trauma", "trigger": "situation", "content": [ "mental_health" ],
     "title": "It comes back",
-    "text": "A smell, a voice, a sound in the dark – and you're back there again. You sleep badly. You jump at nothing.",
+    "text": "A smell, a voice, a sound in the dark, and you're back there again. You sleep badly. You jump at nothing.",
     "choices": [
       { "text": "Find a therapist", "effects": [ { "type": "ailment_treat", "kind": "trauma" }, { "type": "money", "amount": -4000 } ],
         "result": "Slowly you learn to put it into words. It becomes something that happened, not something that is happening." },
@@ -68,7 +68,7 @@
     "choices": [ {
       "text": "See a therapist", "hint": "Makes recovery from what you're carrying much more likely.",
       "effects": [ { "type": "ailment_treat" }, { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": 3 } ],
-      "result": "An hour a week in a quiet room. It's harder work than you thought – and it helps."
+      "result": "An hour a week in a quiet room. It's harder work than you thought, and it helps."
     } ]
   },
   {
@@ -83,7 +83,7 @@
         "result": "You sit with {t.him} in the waiting room, holding {t.his} hand. It's the first step." },
       { "text": "Be patient and stay close", "effects": [
           { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 }, { "type": "happiness", "amount": -4 } ],
-        "result": "You bring tea and don't ask for anything back. It's lonely – but it matters." },
+        "result": "You bring tea and don't ask for anything back. It's lonely, but it matters." },
       { "text": "\"Pull yourself together\"", "effects": [
           { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 15 },
           { "type": "memory", "who": "target", "to": "player", "kind": "not_understood", "text": "{name} told me to pull myself together", "impact": -25 } ],

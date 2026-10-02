@@ -13,7 +13,7 @@
       { "text": "Take it without a word", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": -15 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.1 } ],
         "result": "After that you hide everything. Some things you stop writing down at all." },
       { "text": "Ask what {t.he} is worried about", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 15 } ],
-        "result": "{t.name} was scared. For once you actually talk – the real kind of talking." }
+        "result": "{t.name} was scared. For once you actually talk, the real kind of talking." }
     ]
   },
   {
@@ -51,7 +51,7 @@
     "conditions": { "minAge": 13, "maxAge": 16 }, "cooldown": 0,
     "choices": [
       { "text": "Give it everything", "chance": 0.4, "chanceAttributes": { "fitness": 0.008 }, "chanceTraits": { "brave": 0.05 },
-        "success": { "text": "You make the team. Training four evenings a week – and you love every minute.",
+        "success": { "text": "You make the team. Training four evenings a week, and you love every minute.",
           "effects": [ { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "trait_add", "trait": "social", "chance": 0.15 },
             { "type": "memory", "kind": "team", "text": "Making the team", "impact": 15 } ] },
         "failure": { "text": "Not this time. The coach nods at you on your way out, which somehow makes it worse.",

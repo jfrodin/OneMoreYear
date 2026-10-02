@@ -46,7 +46,7 @@
     "insights": [ { "trait": "manipulative", "text": "Information is currency. You could use this." } ],
     "choices": [ { "trait": "manipulative", "text": "Pass it on to the right people",
       "effects": [ { "type": "performance", "amount": 8 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.1 } ],
-      "result": "A word here, a raised eyebrow there. By Friday you know more than anyone – and people know it." } ] },
+      "result": "A word here, a raised eyebrow there. By Friday you know more than anyone, and people know it." } ] },
   { "event": "work_interview",
     "insights": [
       { "trait": "charming", "text": "The panel smiled at your first answer. That's half the job done." },

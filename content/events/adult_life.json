@@ -133,7 +133,7 @@
         "success": { "text": "Four months of weekends. It's beautiful, and yours.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": 8 } ] },
         "failure": { "text": "The plumber you call afterwards laughs, then charges double.", "effects": [ { "type": "money", "amount": -90000 }, { "type": "happiness", "amount": -4 } ] } },
       { "text": "Hire a firm", "effects": [ { "type": "money", "amount": -120000 }, { "type": "happiness", "amount": 6 } ],
-        "result": "Three months late, twenty percent over budget – and it's lovely." },
+        "result": "Three months late, twenty percent over budget, and it's lovely." },
       { "text": "Paint the cupboards and call it retro", "effects": [ { "type": "money", "amount": -2000 } ], "result": "Retro is in again, you tell your friends." }
     ]
   },
@@ -224,7 +224,7 @@
   },
   {
     "id": "life_storm", "title": "The storm",
-    "text": "A storm tore through the forests last night. Millions of trees down, and the power is out – maybe for weeks.",
+    "text": "A storm tore through the forests last night. Millions of trees down, and the power is out, maybe for weeks.",
     "conditions": { "minAge": 18, "minYear": 2005, "maxYear": 2005 }, "weight": 15, "cooldown": 0,
     "choices": [
       { "text": "Help the neighbours", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.1 } ],
@@ -237,7 +237,7 @@
     "text": "The office is closed. Your workplace is now the kitchen table, and you haven't seen your colleagues' legs in months.",
     "conditions": { "minAge": 20, "hasJob": true, "minYear": 2020, "maxYear": 2021 }, "weight": 10, "cooldown": 0,
     "choices": [
-      { "text": "Embrace it – sweatpants forever", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "No commute, lunch walks, the neighbour's cat on your video calls." },
+      { "text": "Embrace it: sweatpants forever", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "No commute, lunch walks, the neighbour's cat on your video calls." },
       { "text": "Go slowly mad", "effects": [ { "type": "happiness", "amount": -6 } ], "result": "The walls get closer every week." }
     ]
   },
@@ -350,7 +350,7 @@
     "text": "A letter from the Church of Sweden: the church tax, and whether you want to stay a member.",
     "conditions": { "minAge": 25, "minYear": 2000 }, "cooldown": 0,
     "choices": [
-      { "text": "Stay – for the funerals, the weddings, the bells", "effects": [ { "type": "money", "amount": -2000 } ], "result": "You haven't been inside in years. But you like knowing it's there." },
+      { "text": "Stay, for the funerals, the weddings, the bells", "effects": [ { "type": "money", "amount": -2000 } ], "result": "You haven't been inside in years. But you like knowing it's there." },
       { "text": "Leave", "effects": [ { "type": "money", "amount": 2000 } ], "result": "One form, and it's done. Your grandmother would have had something to say about it." }
     ]
   },
@@ -360,7 +360,7 @@
     "conditions": { "minAge": 18 }, "cooldown": 0,
     "choices": [
       { "text": "Suggest meeting for a coffee", "chance": 0.5, "chanceTraits": { "social": 0.15 },
-        "success": { "text": "They turn out to be exactly as funny in person. You have a new friend – from a wrong number.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "success": { "text": "They turn out to be exactly as funny in person. You have a new friend, from a wrong number.", "effects": [ { "type": "happiness", "amount": 6 } ] },
         "failure": { "text": "They never show up. Some things are best left on the phone.", "effects": [] } },
       { "text": "Say goodbye", "result": "You think about the conversation for days." }
     ]

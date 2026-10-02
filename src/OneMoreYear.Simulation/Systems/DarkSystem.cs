@@ -305,7 +305,7 @@ public static class DarkSystem
         var legal = w.TryGet(s.OtherId);
         foreach (var p in new[] { child, legal }.OfType<Person>()) if (!s.KnownBy.Contains(p.Id)) s.KnownBy.Add(p.Id);
 
-        w.Log($"The truth came out: {father.FullName} is not only {Kinship.Genitive(child.FirstName)} grandfather – he is {(child.Sex == Sex.Male ? "his" : "her")} biological father.",
+        w.Log($"The truth came out: {father.FullName} is not only {Kinship.Genitive(child.FirstName)} grandfather. He is {(child.Sex == Sex.Male ? "his" : "her")} biological father.",
             3, "secret", child.Id, father.Id, mother.Id);
         RelationshipSystem.AddMemory(ctx, child, "origin", $"Found out that {father.FirstName} is not just my grandfather but my father", -80, father.Id);
         w.Rel(child.Id, father.Id)[RelDim.Bitterness] += 50;
@@ -342,7 +342,7 @@ public static class DarkSystem
         {
             if (!p.Traits.Remove(t)) continue;
             if (p.Id == ctx.World.PlayerId)
-                ctx.World.Log($"{p.FirstName} mellowed with age – no longer {ctx.Content.Traits[t].Name.ToLowerInvariant()}.", 1, "trait", p.Id);
+                ctx.World.Log($"{p.FirstName} mellowed with age, and is no longer {ctx.Content.Traits[t].Name.ToLowerInvariant()}.", 1, "trait", p.Id);
             return;
         }
     }

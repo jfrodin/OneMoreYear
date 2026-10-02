@@ -403,7 +403,7 @@ public static class EventSystem
         texts.AddRange(pending.ExtraText.Where(t => !string.IsNullOrWhiteSpace(t)));
 
         if (pending.Vars.TryGetValue("became_affair", out var partnerId) && ctx.World.TryGet((int)partnerId) is { } partner)
-            texts.Add($"But you're still with {partner.FirstName} – this is an affair now. Nobody can find out.");
+            texts.Add($"But you're still with {partner.FirstName}, so this is an affair now. Nobody can find out.");
 
         pending.Resolved = true;
         pending.ChosenIndex = choiceIndex;

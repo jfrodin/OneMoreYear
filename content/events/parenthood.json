@@ -74,7 +74,7 @@
     ]
   },
   {
-    "id": "parent_teacher_meeting", "title": "Parent–teacher meeting",
+    "id": "parent_teacher_meeting", "title": "Parents' evening",
     "text": "Twenty minutes on a tiny chair while the teacher talks about {t.name}.",
     "conditions": { "minAge": 20 }, "cooldown": 3,
     "target": { "role": "child", "conditions": { "minAge": 7, "maxAge": 16 } },
@@ -107,7 +107,7 @@
     "target": { "role": "child", "conditions": { "minAge": 14, "maxAge": 17 } },
     "choices": [
       { "text": "Hold {t.his} hair and talk tomorrow", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 10 } ],
-        "result": "The next day you talk – really talk. {t.He} tells you more than you expected." },
+        "result": "The next day you talk. Really talk. {t.He} tells you more than you expected." },
       { "text": "Grounded for a month", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ],
         "result": "A month of slammed doors. {t.He} gets better at hiding it." }
     ]
@@ -181,7 +181,7 @@
     "conditions": { "minAge": 45, "livesWithParents": false }, "cooldown": 8,
     "target": { "role": "child", "conditions": { "minAge": 23, "maxAge": 35, "livesWithParents": false } },
     "choices": [
-      { "text": "Of course – come in", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 }, { "type": "happiness", "amount": -2 } ],
+      { "text": "Of course, come in", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 }, { "type": "happiness", "amount": -2 } ],
         "result": "A few months becomes two years. Dirty dishes and late-night talks. You'll miss it when it's over." },
       { "text": "Help {t.him} find a flat instead", "effects": [ { "type": "money", "amount": -10000 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 6 } ],
         "result": "A deposit, a borrowed van. {t.He}'s on {t.his} own two feet again." }
@@ -194,7 +194,7 @@
     "target": { "role": "child", "conditions": { "minAge": 20, "hasPartner": true, "maxChildren": 0 } },
     "choices": [
       { "text": "Scream with joy", "effects": [ { "type": "happiness", "amount": 10 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true } ],
-        "result": "A grandparent. You – a grandparent. You start knitting the same evening." }
+        "result": "A grandparent. You, a grandparent. You start knitting the same evening." }
     ]
   },
   {

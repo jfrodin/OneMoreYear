@@ -88,7 +88,7 @@ public static class InvestmentSystem
             {
                 p.Holdings.Remove(h);
                 if (p.Id == ctx.World.PlayerId || p.InFamily)
-                    ctx.World.Log($"{a.Name} went bankrupt. {p.FirstName} lost {EconomySystem.Format(ctx, h.Invested)}.", ctx.Importance(true, p), "economy", p.Id);
+                    ctx.World.Log($"{p.FirstName} lost {EconomySystem.Format(ctx, h.Invested)} when {a.Name} went bankrupt.", ctx.Importance(true, p), "economy", p.Id);
                 continue;
             }
             if (a.Kind == "shares" && a.Dividend > 0)

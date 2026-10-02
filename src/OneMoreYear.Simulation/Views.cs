@@ -224,3 +224,6 @@ public sealed record FamilyFocusView(
     TreePerson? Partner,
     IReadOnlyList<TreePerson> Children,
     IReadOnlyDictionary<int, IReadOnlyList<TreePerson>> Grandchildren);
+
+/// <summary>The page that opens a new decade: its name, what it was like, and the family since the last chapter.</summary>
+public sealed record ChapterView(int Year, string Title, string Name, string Text, string PlayerLine, IReadOnlyList<string> FamilyLines);

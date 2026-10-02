@@ -310,7 +310,7 @@ public partial class Main : Control
             var row = Ui.HBox(10);
             var text = Ui.VBox(0);
             text.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            text.AddChild(Ui.Label(info == null ? $"Slot {slot} – empty" : $"The {info.Family} family", 20, info == null ? UiTheme.Faint : UiTheme.Text));
+            text.AddChild(Ui.Label(info == null ? $"Slot {slot}: empty" : $"The {info.Family} family", 20, info == null ? UiTheme.Faint : UiTheme.Text));
             if (info != null)
                 text.AddChild(Ui.Label($"{info.Year}  ·  {info.Player}, {info.Age}{(info.GameOver ? "  ·  the end" : "")}  ·  seed {info.SeedCode}" +
                                        (info.SavedAt > System.DateTime.MinValue ? $"  ·  saved {info.SavedAt:d MMM HH:mm}" : ""), 14, UiTheme.Muted));
@@ -412,9 +412,9 @@ public partial class Main : Control
         box.CustomMinimumSize = new Vector2(760, 0);
         box.AddChild(Ui.Label(firstTime ? "Before you start" : "Content settings", 28, UiTheme.Accent));
         box.AddChild(Ui.Label(firstTime
-            ? "One More Year is a game for adults. Families can be loving and warm – and they can hide abuse, violence, addiction and betrayal. " +
+            ? "One More Year is a game for adults. Families can be loving and warm, and they can hide abuse, violence, addiction and betrayal. " +
               "Choose how much of the dark side you want. You can change this at any time."
-            : "How each dark theme is handled. \"Mentioned only\" means it can happen to others, off-screen – a line in the chronicle, never an event or a choice for you.",
+            : "How each dark theme is handled. \"Mentioned only\" means it can happen to others, off-screen: a line in the chronicle, never an event or a choice for you.",
             17, UiTheme.Muted, wrap: true));
 
         Control? first = null;
@@ -535,9 +535,9 @@ public partial class Main : Control
     {
         string[][] pages =
         {
-            new[] { "Welcome to the family", "You live one life at a time – from birth to death – and then the story continues with someone you leave behind: a child, a sibling, a niece. The family is the real hero. See how far it goes." },
-            new[] { "One year at a time", "Each year, things happen. Answer them on the This Year tab – there is no right answer, only a life. You also have time for a few things of your own: see people, work, study, love, fight, make money, or break the law." },
-            new[] { "Who you are matters", "Your traits and gifts change the odds and what you notice. A charming person has other ways out than a hot-tempered one. People remember what you do to them – and they tell others." },
+            new[] { "Welcome to the family", "You live one life at a time, from birth to death, and then the story continues with someone you leave behind: a child, a sibling, a niece. The family is the real hero. See how far it goes." },
+            new[] { "One year at a time", "Each year, things happen. Answer them on the This Year tab. There is no right answer, only a life. You also have time for a few things of your own: see people, work, study, love, fight, make money, or break the law." },
+            new[] { "Who you are matters", "Your traits and gifts change the odds and what you notice. A charming person has other ways out than a hot-tempered one. People remember what you do to them, and they tell others." },
             new[] { "When you're ready", "Press Next Year (N, or Y on a controller). Some years bring the family newspaper. When your life ends, choose who carries the story on. Everything is saved as you go." },
         };
         int page = 0;
@@ -685,6 +685,88 @@ public partial class Main : Control
     }
 
     private static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
+
+    /// <summary>
+    /// A new decade begins: a full page in the album with the decade's name, what it was like, and the
+    /// family since the last chapter. The new look of the decade is already on the page behind it.
+    /// </summary>
+    public void ShowChapter(ChapterView chapter, System.Action? then = null)
+    {
+        var page = new Control { MouseFilter = MouseFilterEnum.Stop };
+        page.SetAnchorsPreset(LayoutPreset.FullRect);
+        var paper = new AlbumPaper();
+        paper.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+        page.AddChild(paper);
+        var center = new CenterContainer();
+        center.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+        page.AddChild(center);
+
+        var box = Ui.VBox(14);
+        box.CustomMinimumSize = new Vector2(860, 0);
+        var kicker = UiTheme.HandLabel("A new chapter", 30, UiTheme.Muted);
+        kicker.HorizontalAlignment = HorizontalAlignment.Center;
+        box.AddChild(kicker);
+        var title = Ui.Label(chapter.Title, 104, UiTheme.Accent);
+        title.AddThemeFontOverride("font", UiTheme.Heading);
+        title.HorizontalAlignment = HorizontalAlignment.Center;
+        box.AddChild(title);
+        if (chapter.Name != "")
+        {
+            var name = UiTheme.HandLabel(chapter.Name, 40, UiTheme.Text);
+            name.HorizontalAlignment = HorizontalAlignment.Center;
+            box.AddChild(name);
+        }
+        box.AddChild(Ui.Spacer(8));
+        var text = Ui.Label(chapter.Text, 20, UiTheme.Text, wrap: true);
+        text.HorizontalAlignment = HorizontalAlignment.Center;
+        box.AddChild(text);
+        box.AddChild(Ui.Spacer(10));
+        if (chapter.PlayerLine != "")
+        {
+            var player = UiTheme.HandLabel(chapter.PlayerLine, 30, UiTheme.Accent);
+            player.HorizontalAlignment = HorizontalAlignment.Center;
+            box.AddChild(player);
+        }
+        foreach (var line in chapter.FamilyLines)
+        {
+            var l = Ui.Label(line, 17, UiTheme.Muted, wrap: true);
+            l.HorizontalAlignment = HorizontalAlignment.Center;
+            box.AddChild(l);
+        }
+        box.AddChild(Ui.Spacer(16));
+        bool closed = false;
+        void Close()
+        {
+            if (closed) return;
+            closed = true;
+            _overlayName = null;
+            var fade = page.CreateTween();
+            fade.TweenProperty(page, "modulate:a", 0f, 0.35f);
+            fade.TweenCallback(Callable.From(() =>
+            {
+                _overlayLayer.RemoveChild(page);
+                page.QueueFree();
+                if (then != null) then();
+                else if (_screen is GameScreen g) g.FocusAfterNewspaper();
+            }));
+        }
+        var turn = Ui.Button("Turn the page", Close, 56);
+        UiTheme.MakePrimary(turn);
+        turn.AddThemeFontSizeOverride("font_size", 20);
+        turn.CustomMinimumSize = new Vector2(280, 56);
+        turn.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+        box.AddChild(turn);
+        center.AddChild(box);
+        page.AddChild(new CancelCatcher(Close));
+
+        _overlayName = "Chapter";
+        Sound.Play("page");
+        // Fade in (not in the screenshot tour, which needs the page at once).
+        page.Modulate = new Color(1, 1, 1, _shotDir == null ? 0 : 1);
+        _overlayLayer.AddChild(page);
+        page.CreateTween().TweenProperty(page, "modulate:a", 1f, 0.5f);
+        Ui.FocusLater(turn);
+    }
 
     /// <summary>A new year begins: the family's newspaper, on top of the (already updated) game screen.</summary>
     public void ShowNewspaper(YearReport report)
@@ -882,8 +964,8 @@ public partial class Main : Control
             case 75: Shot("07_content"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowSettings(Session); break;
             case 77: Shot("07b_settings"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowIntroduction(); break;
             case 78: Shot("07c_intro"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); ShowThisIsYou(); break;
-            case 79: Shot("07d_this_is_you"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); break;
-            case 80: ShowSuccession(); break;
+            case 79: Shot("07d_this_is_you"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); _eraOverride = 1990; ShowGame(); ShowChapter(Session!.Chapter(1990)); break;
+            case 80: Shot("07e_chapter"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); _eraOverride = null; ShowSuccession(); break;
             case 82: Shot("08_succession"); _eraOverride = 1956; ShowGame(); break;
             case 86: Shot("09_era_1956"); _eraOverride = 1987; ShowGame(); break;
             case 90: Shot("10_era_1987"); GetTree().Quit(); break;

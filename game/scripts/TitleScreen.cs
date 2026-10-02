@@ -16,17 +16,8 @@ public partial class TitleScreen : Control
     private Label _conditionInfo = null!;
     private IReadOnlyList<CityDef> _cities = null!;
 
-    /// <summary>Where a life can begin: a decade and what Sweden felt like then.</summary>
-    private static readonly (int Year, string Name)[] Decades =
-    {
-        (1950, "The 1950s – after the war"),
-        (1960, "The 1960s – the record years"),
-        (1970, "The 1970s – the welfare state"),
-        (1980, "The 1980s – yuppies and video"),
-        (1990, "The 1990s – crisis and the EU"),
-        (2000, "The 2000s – everyone online"),
-        (2010, "The 2010s – smartphones"),
-    };
+    /// <summary>Where a life can begin: a decade and what the country felt like then (country content).</summary>
+    private static readonly IReadOnlyList<(int Year, string Title)> Decades = GameSession.StartDecades();
     private LineEdit _seed = null!;
     private OptionButton _scenario = null!;
     private Label _scenarioInfo = null!;
@@ -78,7 +69,7 @@ public partial class TitleScreen : Control
         yearLabel.CustomMinimumSize = new Vector2(140, 0);
         yearRow.AddChild(yearLabel);
         _year = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
-        foreach (var (_, name) in Decades) _year.AddItem(name);
+        foreach (var (_, decade) in Decades) _year.AddItem(decade);
         _year.Selected = 2;
         yearRow.AddChild(_year);
         options.AddChild(yearRow);
@@ -87,7 +78,7 @@ public partial class TitleScreen : Control
         var seedLabel = Ui.Label("Seed", 18, UiTheme.Muted);
         seedLabel.CustomMinimumSize = new Vector2(140, 0);
         seedRow.AddChild(seedLabel);
-        _seed = new LineEdit { PlaceholderText = "Random – or a code from a friend", MaxLength = 24, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        _seed = new LineEdit { PlaceholderText = "Random, or a code from a friend", MaxLength = 24, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         seedRow.AddChild(_seed);
         options.AddChild(seedRow);
 
@@ -113,7 +104,7 @@ public partial class TitleScreen : Control
         _city.AddItem("Surprise me");
         foreach (var c in _cities) _city.AddItem(c.Name);
         whoRow.AddChild(_city);
-        _conditions = Choice("Your start", new[] { "Leave it to chance – as intended" }.Concat(StartChoices.Conditions.Select(c => c.Name)));
+        _conditions = Choice("Your start", new[] { "Leave it to chance (as intended)" }.Concat(StartChoices.Conditions.Select(c => c.Name)));
         _conditionInfo = Ui.Label("", 15, UiTheme.Faint, wrap: true);
         options.AddChild(_conditionInfo);
         _conditions.ItemSelected += _ => UpdateConditionInfo();
@@ -126,7 +117,7 @@ public partial class TitleScreen : Control
         scenarioRow.AddChild(scenarioLabel);
         _scenarios = GameSession.AvailableScenarios();
         _scenario = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
-        _scenario.AddItem("None – a random family");
+        _scenario.AddItem("None (a random family)");
         foreach (var s in _scenarios) _scenario.AddItem($"{s.Name}  (seed {s.Seed})");
         _scenario.ItemSelected += _ => UpdateScenarioInfo();
         scenarioRow.AddChild(_scenario);
@@ -147,7 +138,7 @@ public partial class TitleScreen : Control
         var quit = Ui.Button("Quit", () => GetTree().Quit());
         col.AddChild(quit);
 
-        var warning = Ui.Label("For adults (18+). Contains violence, abuse, addiction and crime – adjust in Settings.", 15, UiTheme.Faint, wrap: true);
+        var warning = Ui.Label("For adults (18+). Contains violence, abuse, addiction and crime. Adjust in Settings.", 15, UiTheme.Faint, wrap: true);
         warning.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(warning);
         var hint = Ui.Label($"Version {Main.Version}  ·  Sweden is the first country. More will follow.", 15, UiTheme.Faint);
@@ -184,7 +175,7 @@ public partial class TitleScreen : Control
     private void UpdateConditionInfo() =>
         _conditionInfo.Text = _conditions.Selected > 0
             ? StartChoices.Conditions[_conditions.Selected - 1].Description
-            : "Whatever family fate gives you – this is how One More Year is meant to be played.";
+            : "Whatever family fate gives you. This is how One More Year is meant to be played.";
 
     private ScenarioDef? SelectedScenario => _scenario.Selected > 0 ? _scenarios[_scenario.Selected - 1] : null;
 

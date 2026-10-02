@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.31.0 – 2026-10-02 · Chapters
+
+- **A new decade, a new chapter.** When a decade begins, a full page opens the chapter: "The 1990s",
+  what the decade was like, how old you are, and what has happened in the family since the last
+  chapter (children born, weddings, funerals, how many you are now). Then the newspaper.
+- **Each decade has its own look**, and it changes when the decade begins instead of blending slowly:
+  sepia and typewriter in the fifties, olive and an elegant serif in the sixties, brown and orange in
+  the seventies, magenta in the eighties, teal in the nineties, blue and flat in the 2000s, warm green
+  in the 2010s, and coral with a serif again in the 2020s.
+- A life can now begin in the 2020s too. The decades and what they were like live in the country's data.
+- **No more dashes** in the game's text: around 150 sentences rewritten. New event text with a dash
+  is now caught by the content check.
+- "You lost … when Vasabanken went bankrupt" is told to you.
+
 ## 0.30.0 – 2026-10-02 · Effort and second chances
 
 - **How hard do you push?** On the School & Work tab: take it easy, do your job, or give it everything.

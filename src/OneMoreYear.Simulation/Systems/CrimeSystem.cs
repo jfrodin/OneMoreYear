@@ -122,7 +122,7 @@ public static class CrimeSystem
         }
         p.CriminalRecord.Add(new CrimeRecord { Year = ctx.Year, CrimeId = crime.Id, Sentence = sentence });
         w.Log(victim != null
-                ? $"{p.FullName} was convicted – {p.FirstName} {crime.Did} {victim.FirstName} – and got {sentence}."
+                ? $"{p.FullName} was convicted: {p.FirstName} {crime.Did} {victim.FirstName}, and got {sentence}."
                 : $"{p.FullName} was convicted of {crime.Name.ToLowerInvariant()} and got {sentence}.",
             ctx.Importance(true, p), "crime", victim != null ? new[] { p.Id, victim.Id } : new[] { p.Id });
 

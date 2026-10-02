@@ -77,7 +77,7 @@
   },
   {
     "id": "colleague_credit", "oncePerTarget": true, "title": "Stolen credit",
-    "text": "In the big meeting, {t.name} presents your work as {t.his} own. The boss is impressed – with {t.name}.",
+    "text": "In the big meeting, {t.name} presents your work as {t.his} own. The boss is impressed. With {t.name}.",
     "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "office" ] },
     "target": { "role": "colleague" }, "cooldown": 5,
     "choices": [
@@ -132,10 +132,10 @@
           { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -6 },
           { "type": "happiness", "amount": -5 }
         ],
-        "result": "It gets done. {t.name} nods at you on Monday – high praise, from {t.him}."
+        "result": "It gets done. {t.name} nods at you on Monday. High praise, from {t.him}."
       },
       {
-        "text": "Say no – you have plans",
+        "text": "Say no, you have plans",
         "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": -8 }, { "type": "happiness", "amount": 3 } ],
         "result": "{t.name} raises an eyebrow and walks off."
       }

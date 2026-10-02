@@ -73,6 +73,14 @@ public sealed class HomeTypeDef
     public int MinYear { get; set; } = 1900;
 }
 
+/// <summary>A decade in a country: "the record years", and a few lines about what it was like.</summary>
+public sealed class DecadeDef
+{
+    public int Year { get; set; }
+    public string Name { get; set; } = "";
+    public string Text { get; set; } = "";
+}
+
 public sealed class CityDef
 {
     public string Id { get; set; } = "";
@@ -146,6 +154,8 @@ public sealed class CountryDef
     public double WifeTakesNameChance { get; set; } = 0.7;
     public List<CityDef> Cities { get; set; } = new();
     public List<HistoricalEventDef> HistoricalEvents { get; set; } = new();
+    /// <summary>What each decade felt like in this country: the title screen and the chapter pages.</summary>
+    public List<DecadeDef> Decades { get; set; } = new();
     /// <summary>Funds and companies the player can invest in (fictional companies, real kinds of risk).</summary>
     public List<AssetDef> Investments { get; set; } = new();
     /// <summary>Kinds of home, from a room in a shared flat to a house; prices and rents relative to the city.</summary>

@@ -23,8 +23,8 @@ public partial class GameOverScreen : Control
 
         col.AddChild(Ui.Label("THE END OF A FAMILY", 16, UiTheme.Muted));
         col.AddChild(Ui.Label($"The {s.World.FamilyName} family", 48, UiTheme.Accent));
-        col.AddChild(Ui.Label($"{s.World.StartYear} – {s.Year}", 24, UiTheme.Text));
-        col.AddChild(Ui.Label($"Seed {s.SeedCode}, starting {s.World.StartYear} – give it to a friend and see how their family turns out.", 16, UiTheme.Faint, wrap: true));
+        col.AddChild(Ui.Label($"{s.World.StartYear}–{s.Year}", 24, UiTheme.Text));
+        col.AddChild(Ui.Label($"Seed {s.SeedCode}, starting {s.World.StartYear}. Give it to a friend and see how their family turns out.", 16, UiTheme.Faint, wrap: true));
 
         var chips = new HFlowContainer();
         chips.AddThemeConstantOverride("h_separation", 8);

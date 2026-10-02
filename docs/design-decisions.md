@@ -106,9 +106,9 @@ Chosen from three style probes (docs/style-probes):
 
 - **The base is a family album**: paper instead of a dark app, cards like things glued into the
   album, portraits as prints with a white edge, memories in handwriting.
-- **The look follows the decade being played**: colours blend smoothly and headings change
-  typeface – sepia and typewriter in the fifties, brown and orange in the seventies, cool with
-  magenta in the eighties, clean and flat after 2000. Photos are tinted like prints of their time.
+- **The look follows the decade being played**: each decade has its own colours and heading typeface,
+  and the look changes when the decade begins, with a chapter page (changed 2026-10-02: it used to blend
+  slowly, and nobody noticed). Photos are tinted like prints of their time.
 - **Each new year opens with the family's newspaper**: the biggest family news as the headline,
   the rest in brief, and the world in the side column.
 - Fonts are open (OFL / Apache) and live in `game/fonts` with their licences.

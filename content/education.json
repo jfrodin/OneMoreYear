@@ -84,7 +84,7 @@
   },
   {
     "id": "uni_science", "name": "Natural sciences", "level": "university", "years": 4, "minGrades": 60,
-    "description": "Physics, chemistry, biology – and a possible research career.",
+    "description": "Physics, chemistry, biology, and maybe a career in research.",
     "leadsTo": [ "academia", "it" ], "traitAffinity": { "introvert": 1.4, "ambitious": 1.2 }
   },
   {

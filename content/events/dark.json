@@ -26,7 +26,7 @@
     "choices": [
       {
         "text": "Check into rehab",
-        "hint": "Costs money and time – and it doesn't always work the first time.",
+        "hint": "Costs money and time, and it doesn't always work the first time.",
         "effects": [ { "type": "money", "amount": -40000 } ],
         "chance": 0.55, "chanceTraits": { "resilient": 0.2, "addictive": -0.15 },
         "success": { "text": "Eight weeks later you walk out clean. The world looks sharper.", "effects": [ { "type": "recover" }, { "type": "health", "amount": 8 } ] },
@@ -48,7 +48,7 @@
   {
     "id": "violence_by_partner", "content": [ "violence" ], "trigger": "situation",
     "title": "The bruise",
-    "text": "It happened again. {t.name} hit you – and afterwards {t.he} cried and said it would never happen again.",
+    "text": "It happened again. {t.name} hit you, and afterwards {t.he} cried and said it would never happen again.",
     "choices": [
       {
         "text": "Leave {t.him}",
@@ -147,13 +147,13 @@
   {
     "id": "abuse_child", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "A secret",
-    "text": "After the weekend at {t.name}'s you feel sick and scared, and you don't know why. {t.He} said it was your special secret – and that nobody would believe you anyway.",
+    "text": "After the weekend at {t.name}'s you feel sick and scared, and you don't know why. {t.He} said it was your special secret, and that nobody would believe you anyway.",
     "choices": [
       {
         "text": "Tell someone you trust",
         "chance": 0.45, "chanceTraits": { "brave": 0.15, "social": 0.05 },
         "success": {
-          "text": "They believe you. Everything falls apart – and you are safe.",
+          "text": "They believe you. Everything falls apart. And you are safe.",
           "effects": [ { "type": "reveal_abuse" } ]
         },
         "failure": {
@@ -171,7 +171,7 @@
   {
     "id": "carry_secret", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "What you carry",
-    "text": "You have carried it since you were a child – what {t.name} did. Nobody in the family knows.",
+    "text": "You have carried it since you were a child: what {t.name} did. Nobody in the family knows.",
     "choices": [
       {
         "text": "Tell the family",
@@ -202,7 +202,7 @@
   {
     "id": "origin_start_grandfather", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "Roots",
-    "text": "At {t.name}'s birthday dinner {t.he} tells everyone about the DNA kit {t.he} has ordered – \"to find out where we really come from\". Everyone laughs. Everyone except {o.name}, {t.his} mother, who puts down her fork and looks straight at you. You are the only two people alive who know who {t.name}'s father really is.",
+    "text": "At {t.name}'s birthday dinner {t.he} tells everyone about the DNA kit {t.he} has ordered, \"to find out where we really come from\". Everyone laughs. Everyone except {o.name}, {t.his} mother, who puts down her fork and looks straight at you. You are the only two people alive who know who {t.name}'s father really is.",
     "choices": [
       {
         "text": "Give {o.name} money to keep the past buried",
@@ -239,7 +239,7 @@
   {
     "id": "origin_start_mother", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "The DNA kit",
-    "text": "{t.name} shows you the DNA kit {t.he} has ordered. \"Don't you want to know where we come from, Mum?\" {t.He} has no idea that the man {t.he} calls Dad is not {t.his} father. {t.His} father is {o.name} – your own father. For {t.age} years you have carried it alone.",
+    "text": "{t.name} shows you the DNA kit {t.he} has ordered. \"Don't you want to know where we come from, Mum?\" {t.He} has no idea that the man {t.he} calls Dad is not {t.his} father. {t.His} father is {o.name}, your own father. For {t.age} years you have carried it alone.",
     "choices": [
       {
         "text": "Ask {t.him} not to send it",
@@ -278,7 +278,7 @@
         "text": "Send the test",
         "chance": 0.7,
         "success": { "text": "Six weeks later the results arrive.", "effects": [ { "type": "reveal_origin" } ] },
-        "failure": { "text": "The sample gets lost in the mail. You don't order another one – not yet." }
+        "failure": { "text": "The sample gets lost in the mail. You don't order another one. Not yet." }
       },
       {
         "text": "Ask Mum what's wrong",
@@ -294,7 +294,7 @@
   {
     "id": "origin_revealed_child", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "The results",
-    "text": "At first the DNA match makes no sense. Then it does. Your biological father is {t.name} – your grandfather. {o.name}, your mother, was only a child when it started. She has carried it your whole life.",
+    "text": "At first the DNA match makes no sense. Then it does. Your biological father is {t.name}, your grandfather. {o.name}, your mother, was only a child when it started. She has carried it your whole life.",
     "choices": [
       {
         "text": "Go to Mum",
@@ -319,14 +319,14 @@
       {
         "text": "Cut them all off",
         "effects": [ { "type": "happiness", "amount": -15 }, { "type": "move_city" } ],
-        "result": "You move away and change your number. You don't know who you are anymore – but you know who you're not."
+        "result": "You move away and change your number. You don't know who you are anymore, but you know who you're not."
       }
     ]
   },
   {
     "id": "origin_revealed_mother", "content": [ "sexual_abuse" ], "trigger": "situation",
     "title": "It's out",
-    "text": "{t.name} knows. Soon the whole family knows. For {t.age} years it was yours alone to carry. Now everyone is looking at you – and at {o.name}.",
+    "text": "{t.name} knows. Soon the whole family knows. For {t.age} years it was yours alone to carry. Now everyone is looking at you, and at {o.name}.",
     "choices": [
       {
         "text": "Hold on to {t.name}",
@@ -360,7 +360,7 @@
       {
         "text": "Deny it",
         "chance": 0.45, "chanceTraits": { "manipulative": 0.15, "charming": 0.1, "dishonest": 0.1 },
-        "success": { "text": "So many years later there is no evidence. The case is dropped – but the family knows, and they always will.",
+        "success": { "text": "So many years later there is no evidence. The case is dropped, but the family knows, and they always will.",
           "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 30 } ] },
         "failure": { "text": "The court believes {t.name}.",
           "effects": [ { "type": "convicted", "kind": "child_abuse", "to": "target" } ] }
