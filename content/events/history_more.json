@@ -1,0 +1,203 @@
+// More moments of history, as the family lived them. Each only happens in its year or years. No dashes.
+[
+  {
+    "id": "hist_polio_vaccine", "trigger": "history", "title": "The vaccine",
+    "text": "Every summer for years, parents have kept children away from swimming pools for fear of polio. Now there is a vaccine, and the queue outside the clinic goes round the block.",
+    "conditions": { "minAge": 3, "minYear": 1955, "maxYear": 1957 }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Stand in the queue", "effects": [ { "type": "health", "amount": 2 }, { "type": "happiness", "amount": 2 } ], "result": "A sugar lump or a sharp jab, depending on the year. Then summer, and the pools are full of children again." },
+      { "text": "Wait and see", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You wait. Everyone else goes. By autumn you feel a little foolish, and go too." }
+    ]
+  },
+  {
+    "id": "hist_sputnik", "trigger": "history", "title": "Beep, beep",
+    "text": "The Russians have put something into orbit. On the radio, a recording of its signal: a thin beep, from space, over and over.",
+    "conditions": { "minAge": 6, "minYear": 1957, "maxYear": 1957 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Go outside and look for it", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "memory", "kind": "sputnik", "text": "Looking for Sputnik in the night sky", "impact": 8 } ], "result": "The whole street, on the pavement, pointing at stars. Someone is sure they see it. Maybe they did." },
+      { "text": "Worry about what it means", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "If they can put that up there, what else can they put up there? The grown ups talk late into the night." }
+    ]
+  },
+  {
+    "id": "hist_ingo", "countries": [ "sweden" ], "trigger": "history", "title": "Ingo",
+    "text": "Ingemar Johansson is fighting Floyd Patterson for the heavyweight title in New York. The fight is in the middle of the night, Swedish time. Nobody is sleeping.",
+    "conditions": { "minAge": 6, "minYear": 1959, "maxYear": 1959 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Stay up by the radio", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "ingo", "text": "The night Ingo won", "impact": 10 } ], "result": "Third round. Patterson goes down seven times. The whole building is awake and shouting through the walls. At breakfast half the street is still hoarse." },
+      { "text": "Sleep, read about it in the morning", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The headline is enormous. Nobody talks about anything else. You nod as if you had been up." }
+    ]
+  },
+  {
+    "id": "hist_norrmalmstorg", "countries": [ "sweden" ], "trigger": "history", "title": "Norrmalmstorg",
+    "text": "A man has taken hostages in a bank vault in central Stockholm. It has been on television for days. The strangest part: the hostages seem to be on his side.",
+    "conditions": { "minAge": 10, "minYear": 1973, "maxYear": 1973 }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Watch every minute of it", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Six days. Tear gas at the end, and nobody is hurt. A doctor gives the strange part a name, and the name goes round the world." },
+      { "text": "Turn it off", "effects": [], "result": "You turn it off. Everyone else talks about it all week anyway." }
+    ]
+  },
+  {
+    "id": "hist_nixon", "countries": [ "usa" ], "trigger": "history", "title": "Resignation",
+    "text": "The President is on television tonight. Everyone knows what he is going to say.",
+    "conditions": { "minAge": 10, "minYear": 1974, "maxYear": 1974 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Watch with the family", "effects": [ { "type": "memory", "kind": "nixon", "text": "The night Nixon resigned", "impact": 8 } ], "result": "He resigns. Somebody in the room says nothing for a long time, then: \"Well. The system works.\" Somebody else is not so sure." },
+      { "text": "Go out", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The bar has the television on anyway. Somebody buys a round when it is over. Somebody else leaves." }
+    ]
+  },
+  {
+    "id": "hist_elvis_dies", "trigger": "history", "title": "The King",
+    "text": "The radio interrupts the music to say that Elvis Presley is dead. Forty two years old.",
+    "conditions": { "minAge": 12, "minYear": 1977, "maxYear": 1977 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Play the old records", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "memory", "kind": "elvis", "text": "Playing Elvis all night, the day he died", "impact": 6 } ], "result": "All night, every record you have. You were young when this music came. Now you are not." },
+      { "text": "Shrug", "effects": [], "result": "Not your music. Your parents' music. Somebody older than you cries in the kitchen, and you do not understand it until much later." }
+    ]
+  },
+  {
+    "id": "hist_borg_mcenroe", "countries": [ "sweden" ], "trigger": "history", "title": "The tie break",
+    "text": "The Wimbledon final. Björn Borg against John McEnroe. The fourth set tie break has been going on for twenty minutes, and the whole country has stopped.",
+    "conditions": { "minAge": 6, "minYear": 1980, "maxYear": 1980 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Watch to the last point", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "borg", "text": "Borg against McEnroe, 1980", "impact": 10 } ], "result": "Eighteen to sixteen to McEnroe. Then Borg wins the fifth anyway, and falls to his knees on the grass, and so do you, in the living room." },
+      { "text": "Go out in the sun", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The streets are empty. Every open window has the same commentary coming out of it. You hear the ending from a stranger's balcony." }
+    ]
+  },
+  {
+    "id": "hist_storkonflikten", "countries": [ "sweden" ], "trigger": "history", "title": "The big conflict",
+    "text": "Strikes and lockouts across the country. Buses are not running, the ferries have stopped, and the shops are running out of things.",
+    "conditions": { "minAge": 18, "minYear": 1980, "maxYear": 1980, "hasJob": true }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Stand with the union", "effects": [ { "type": "money", "amount": -6000 }, { "type": "trait_add", "trait": "loyal", "chance": 0.04 } ], "result": "Ten days. Strike pay, coffee on the picket line, an argument with a neighbour. It ends in a deal nobody is happy with." },
+      { "text": "Keep your head down", "effects": [ { "type": "money", "amount": -3000 } ], "result": "You keep your head down. The money is short for a while. It passes." }
+    ]
+  },
+  {
+    "id": "hist_lennon", "trigger": "history", "title": "Imagine",
+    "text": "John Lennon has been shot outside his home in New York. The radio is playing nothing but Beatles songs.",
+    "conditions": { "minAge": 12, "minYear": 1980, "maxYear": 1980 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Light a candle", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "memory", "kind": "lennon", "text": "The day Lennon died", "impact": 8 } ], "result": "A candle in the window. Across the street, someone has done the same. You do not know them, but tonight you do." },
+      { "text": "Turn the radio off", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You turn it off. The songs are everywhere anyway, all week." }
+    ]
+  },
+  {
+    "id": "hist_live_aid", "trigger": "history", "title": "Live Aid",
+    "text": "A concert in two cities at once, sixteen hours long, on television everywhere, for the famine in Ethiopia. A man on screen keeps telling everyone to give money now.",
+    "conditions": { "minAge": 10, "minYear": 1985, "maxYear": 1985 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Call the number and give", "effects": [ { "type": "money", "amount": -500 }, { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "generous", "chance": 0.03 } ], "result": "The line is busy for an hour. Then it goes through. You stay up for Queen, and feel like part of something." },
+      { "text": "Just watch", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Sixteen hours of television. You see bands you had only heard of. Everyone has a favourite moment the next day." }
+    ]
+  },
+  {
+    "id": "hist_gulf_war_tv", "trigger": "history", "title": "Green lights",
+    "text": "A war is on live television. Green flashes over Baghdad, night after night, and a reporter in a hotel room describing it like a sports match.",
+    "conditions": { "minAge": 10, "minYear": 1991, "maxYear": 1991 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Stay up watching", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You cannot look away, and you cannot quite believe it is real. You do not sleep well that winter." },
+      { "text": "Turn it off", "effects": [], "result": "It is too much like a video game, and you do not like how that feels." }
+    ]
+  },
+  {
+    "id": "hist_world_cup_1994", "countries": [ "sweden" ], "trigger": "history", "title": "Bronze",
+    "text": "Sweden is in the World Cup semi final in America. The games are in the middle of the night, and the whole country has given up sleeping for a month.",
+    "conditions": { "minAge": 6, "minYear": 1994, "maxYear": 1994 }, "weight": 5, "cooldown": 0,
+    "choices": [
+      { "text": "Watch every game", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 }, { "type": "memory", "kind": "world_cup", "text": "The summer of 1994 and the bronze", "impact": 12 } ], "result": "A penalty shootout against Romania that nobody alive will forget, a loss to Brazil, then bronze. Half of Sweden goes to work on four hours' sleep and does not care." },
+      { "text": "Sleep", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You sleep. You are the only one. The car horns wake you up anyway." }
+    ]
+  },
+  {
+    "id": "hist_oj_verdict", "countries": [ "usa" ], "trigger": "history", "title": "The verdict",
+    "text": "The whole country has stopped to hear the verdict in the trial of the year. At work, someone has brought a television into the break room.",
+    "conditions": { "minAge": 18, "minYear": 1995, "maxYear": 1995, "hasJob": true }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Crowd into the break room", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Not guilty. Half the room cheers, half the room is silent, and you learn more about your colleagues in ten seconds than in ten years." },
+      { "text": "Keep working", "effects": [ { "type": "performance", "amount": 2 } ], "result": "You are the only person working in the building. You hear the reaction through the walls." }
+    ]
+  },
+  {
+    "id": "hist_diana", "trigger": "history", "title": "Paris, in a tunnel",
+    "text": "Princess Diana has died in a car crash in Paris. The television has shown nothing else since morning.",
+    "conditions": { "minAge": 10, "minYear": 1997, "maxYear": 1997 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Watch the funeral", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "A billion people watching, the reports say. You are surprised how much you mind. You never met her." },
+      { "text": "Not your royalty", "effects": [], "result": "You do not understand the fuss. Somebody close to you takes it personally." }
+    ]
+  },
+  {
+    "id": "hist_oresund_bridge", "countries": [ "sweden" ], "trigger": "history", "title": "The bridge",
+    "text": "The bridge to Denmark is open. For the first time since the Ice Age you can drive from Sweden to the continent.",
+    "conditions": { "minAge": 6, "minYear": 2000, "maxYear": 2000 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Drive over and back", "effects": [ { "type": "money", "amount": -600 }, { "type": "happiness", "amount": 4 } ], "result": "Copenhagen for lunch, a hot dog, and home before dinner. The bridge seems to float on the water. You do it twice that summer." },
+      { "text": "The ferry was fine", "effects": [], "result": "You liked the ferry. Nobody on the bridge is singing or buying cheap drink." }
+    ]
+  },
+  {
+    "id": "hist_gothenburg_2001", "countries": [ "sweden" ], "trigger": "history", "title": "Gothenburg",
+    "text": "The EU summit in Gothenburg. The President of the United States is in town, and so are tens of thousands of protesters. On television, shop windows on Avenyn are breaking.",
+    "conditions": { "minAge": 12, "minYear": 2001, "maxYear": 2001 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Join the peaceful march", "requires": { "minAge": 16 }, "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "brave", "chance": 0.03 } ], "result": "Banners, drums and thousands of people. Then shots fired, a few streets away. You go home shaken, and argue about it for years." },
+      { "text": "Watch from home", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Riot police on the boulevard where you used to buy ice cream. It does not look like Sweden." }
+    ]
+  },
+  {
+    "id": "hist_anna_lindh", "countries": [ "sweden" ], "trigger": "history", "title": "In the department store",
+    "text": "The foreign minister, Anna Lindh, has been stabbed while shopping in a department store in Stockholm, without bodyguards. This morning she died.",
+    "conditions": { "minAge": 12, "minYear": 2003, "maxYear": 2003 }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Lay a rose", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "memory", "kind": "anna_lindh", "text": "The roses for Anna Lindh", "impact": 8 } ], "result": "A sea of roses outside the store. Three days later the country votes on the euro, and everyone wonders what it means to vote now." },
+      { "text": "Think about Palme", "requires": { "minAge": 30 }, "effects": [ { "type": "happiness", "amount": -3 } ], "result": "It has happened before. You had thought, after last time, that it never would again." }
+    ]
+  },
+  {
+    "id": "hist_katrina", "countries": [ "usa" ], "trigger": "history", "title": "The water",
+    "text": "A hurricane has hit New Orleans and the levees have broken. On television, people on rooftops, waving sheets, for days.",
+    "conditions": { "minAge": 10, "minYear": 2005, "maxYear": 2005 }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Send money", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "generous", "chance": 0.03 } ], "result": "You give. Your church collects blankets. It does not feel like enough, because it is not." },
+      { "text": "Drive down to help", "requires": { "minAge": 18 }, "effects": [ { "type": "money", "amount": -4000 }, { "type": "health", "amount": -2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "memory", "kind": "katrina", "text": "The weeks I spent in New Orleans after the flood", "impact": 20 } ], "result": "Two weeks of mud, gutted houses and people who lost everything and still offer you coffee. You come home different." }
+    ]
+  },
+  {
+    "id": "hist_first_iphone", "trigger": "history", "title": "The phone with no buttons",
+    "text": "Someone you know has a phone with no buttons. Just glass. They are scrolling through photographs with one finger, and a crowd has formed.",
+    "conditions": { "minAge": 14, "minYear": 2007, "maxYear": 2009, "notFlags": [ "first_smartphone" ] }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Buy one", "requires": { "minMoney": 8000 }, "effects": [ { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 4 }, { "type": "flag", "flag": "first_smartphone" } ], "result": "You never put it down again. Neither does anyone else, in a few years. Nobody quite notices it happening." },
+      { "text": "A phone is for calling", "effects": [ { "type": "flag", "flag": "first_smartphone" } ], "result": "You keep your old one, with the buttons. It lasts a week on one charge. You feel very wise for about three years." }
+    ]
+  },
+  {
+    "id": "hist_swine_flu", "countries": [ "sweden" ], "trigger": "history", "title": "The swine flu",
+    "text": "A new flu is spreading, and the government is offering everyone a vaccine. The queues outside the clinics are hours long.",
+    "conditions": { "minAge": 6, "minYear": 2009, "maxYear": 2009 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Get the vaccine", "effects": [ { "type": "health", "amount": 1 } ], "result": "Two hours in the cold, a jab and a sticker. Most of the country does the same. Years later there are questions about side effects, and you follow them closely." },
+      { "text": "Skip it", "chance": 0.85,
+        "success": { "text": "Nothing happens. The flu passes you by.", "effects": [] },
+        "failure": { "text": "A week in bed with a fever that makes the ceiling move.", "effects": [ { "type": "health", "amount": -3 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "hist_royal_wedding_2010", "countries": [ "sweden" ], "trigger": "history", "title": "The royal wedding",
+    "text": "The Crown Princess is marrying her personal trainer. The whole of Stockholm is decorated, and the ceremony is on every channel.",
+    "conditions": { "minAge": 8, "minYear": 2010, "maxYear": 2010 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Watch it with cake", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "You say you are only watching for the dresses. You cry at the vows. Everyone does." },
+      { "text": "Republican, thank you", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You go for a walk. Every window is flickering blue with the same picture." }
+    ]
+  },
+  {
+    "id": "hist_drottninggatan", "countries": [ "sweden" ], "trigger": "history", "title": "Drottninggatan",
+    "text": "A stolen lorry has been driven down the busiest shopping street in Stockholm. People are dead. Everyone is checking their phones for news of everyone they know.",
+    "conditions": { "minAge": 12, "minYear": 2017, "maxYear": 2017 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Call everyone you love", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "Everyone is fine. You call them anyway, one by one, until your battery dies." },
+      { "text": "Go to the flowers", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "memory", "kind": "drottninggatan", "text": "The flowers on Drottninggatan", "impact": 8 } ], "result": "A mountain of flowers on the police fence. Strangers hugging. Somebody has written: you will not change us." }
+    ]
+  }
+]
