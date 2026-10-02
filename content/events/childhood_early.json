@@ -256,7 +256,7 @@
     ]
   },
   {
-    "id": "teen_concert", "title": "The concert",
+    "id": "teen_first_concert", "title": "The concert",
     "text": "Your favourite band is playing in the big city. Your parents say you are too young. Your friends are going anyway.",
     "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
     "choices": [

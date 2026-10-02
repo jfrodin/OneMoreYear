@@ -1,0 +1,215 @@
+// The middle of childhood, 7 to 12: school, friends, fears and small adventures. No dashes.
+[
+  {
+    "id": "mid_child_sleepless_christmas", "title": "Christmas Eve night",
+    "text": "It is Christmas Eve and you cannot sleep. There are footsteps downstairs, and the rustle of paper.",
+    "conditions": { "minAge": 6, "maxAge": 10 }, "cooldown": 0,
+    "choices": [
+      { "text": "Creep down and look", "chance": 0.5,
+        "success": { "text": "Your father, in his socks, eating the biscuits left out by the fireplace. You go back to bed knowing something important and keeping it to yourself.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ] },
+        "failure": { "text": "A creaking stair. \"Bed!\" from the dark. You run, heart pounding, and fall asleep in a minute.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Squeeze your eyes shut", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "You count to a thousand. Somewhere after six hundred, it is morning." }
+    ]
+  },
+  {
+    "id": "mid_child_spelling_bee", "title": "The spelling test",
+    "text": "A spelling competition for the whole school. You are in the final four, on the stage, in front of everyone's parents.",
+    "conditions": { "minAge": 8, "maxAge": 12, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Take your time", "chance": 0.4, "chanceAttributes": { "smarts": 0.008 },
+        "success": { "text": "Necessary. One c, two s. You win a dictionary and a handshake from the head teacher.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "grades", "amount": 2 } ] },
+        "failure": { "text": "One s. You knew it was two, afterwards. You will spell it correctly for the rest of your life.", "effects": [ { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "mid_child_best_friend_fight", "title": "Not friends any more",
+    "text": "Your best friend has said something unforgivable about your family at break. The whole class heard.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Never speak to them again", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "hot_tempered", "chance": 0.04 } ], "result": "Never lasts until Thursday. You share a skipping rope and nobody mentions it." },
+      { "text": "Ask why they said it", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "happiness", "amount": 1 } ], "result": "It turns out things are bad at their house. You walk home together, slowly, the long way." }
+    ]
+  },
+  {
+    "id": "mid_child_magic_trick", "title": "The magic set",
+    "text": "A magic set for your birthday: a wand, a top hat, cards with a secret, and a coin that disappears if you practise for weeks.",
+    "conditions": { "minAge": 7, "maxAge": 11 }, "cooldown": 0,
+    "choices": [
+      { "text": "Practise until it is perfect", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.06 }, { "type": "happiness", "amount": 4 } ], "result": "At the family dinner the coin disappears. Your grandfather pretends to be amazed so well that you suspect he really is." },
+      { "text": "Show the trick straight away", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The coin falls out of your sleeve onto the table. Everyone claps anyway. Families are like that." }
+    ]
+  },
+  {
+    "id": "mid_child_lost_dog", "title": "Lost",
+    "text": "The neighbour's dog has got out and is running towards the main road. Nobody else is looking.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Run after it", "chance": 0.7, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "You catch it by the collar at the kerb. The neighbour gives you a whole bar of chocolate and tells everyone on the street.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 } ] },
+        "failure": { "text": "You fall and graze both knees. The dog comes back on its own, very pleased with itself.", "effects": [ { "type": "health", "amount": -1 }, { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Shout for a grown up", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A man from the bus stop catches it. You were the one who saw it, though, and the neighbour knows." }
+    ]
+  },
+  {
+    "id": "mid_child_piano", "title": "Lessons",
+    "text": "Your parents have signed you up for [[1985: piano lessons || guitar lessons]] with a teacher who smells of peppermints and has very strong opinions about posture.",
+    "conditions": { "minAge": 7, "maxAge": 11 }, "cooldown": 0,
+    "choices": [
+      { "text": "Practise every day", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.06 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "Scales, scales and more scales. Then one day a real song comes out of your fingers, and you play it nine times in a row." },
+      { "text": "Beg to stop", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "They let you stop after a year. When you are forty, you will wish they had not." }
+    ]
+  },
+  {
+    "id": "mid_child_shopping_alone", "title": "The errand",
+    "text": "For the first time you are sent to the shop on your own: a list, a purse with exact change, and very clear instructions.",
+    "conditions": { "minAge": 7, "maxAge": 10 }, "cooldown": 0,
+    "choices": [
+      { "text": "Follow the list exactly", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "loyal", "chance": 0.03 } ], "result": "Milk, bread, eggs, and back in eleven minutes. You feel about fifteen years older." },
+      { "text": "Buy sweets with the change", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.04 } ], "result": "The change was exact. The eggs were not bought. There is a conversation." }
+    ]
+  },
+  {
+    "id": "mid_child_hospital_tonsils", "title": "Tonsils",
+    "text": "Your tonsils have to come out. A night in hospital, and afterwards, you are told, as much ice cream as you want.",
+    "conditions": { "minAge": 5, "maxAge": 11 }, "cooldown": 0, "weight": 0.5,
+    "choices": [
+      { "text": "Be brave", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "health", "amount": 1 } ], "result": "Your throat hurts too much to eat the ice cream. That is the real betrayal." },
+      { "text": "Cry for your mother", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "She stays the whole night on a plastic chair. You do not forget that." }
+    ]
+  },
+  {
+    "id": "mid_child_fort", "title": "The fort",
+    "text": "Every sofa cushion, every blanket and four chairs: the biggest fort ever built in this living room. Your parents are coming home in an hour.",
+    "conditions": { "minAge": 5, "maxAge": 10 }, "cooldown": 0,
+    "choices": [
+      { "text": "Defend it", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "They let you sleep in it. Your father crawls in with a torch and tells a story about when he was your age." },
+      { "text": "Tidy it all up in time", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.03 } ], "result": "Done with two minutes to spare. One cushion is behind the radiator for three years." }
+    ]
+  },
+  {
+    "id": "mid_child_snow_day_real", "title": "The sledge",
+    "text": "The steepest hill in town, covered in fresh snow, and a sledge that steers by hope alone.",
+    "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "From the very top", "chance": 0.7,
+        "success": { "text": "Faster than anything you have ever done. You scream the whole way down and walk straight back up.", "effects": [ { "type": "happiness", "amount": 7 } ] },
+        "failure": { "text": "A tree. A small tree, fortunately. A bruise the shape of a country.", "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "From halfway", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Plenty fast. You go thirty times before your feet stop working." }
+    ]
+  },
+  {
+    "id": "mid_child_class_pet", "title": "The class hamster",
+    "text": "It is your turn to take the class hamster home for the holidays. It has a name, a cage, and an exercise wheel that squeaks all night.",
+    "conditions": { "minAge": 6, "maxAge": 10, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Look after it perfectly", "effects": [ { "type": "trait_add", "trait": "devoted_parent", "chance": 0.03 }, { "type": "happiness", "amount": 4 } ], "result": "Fresh water, carrots and a diary of everything it did. The teacher reads it aloud. The hamster did not do much." },
+      { "text": "Let it out to explore", "chance": 0.5,
+        "success": { "text": "It explores, and comes back to its cage by itself. Clever hamster.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "It is gone for two days. It is found inside the sofa, fat and happy. Nobody at school ever knows.", "effects": [ { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "mid_child_cousin_visit", "title": "The cousins are coming",
+    "text": "The cousins from the other side of the country are coming to stay for a week. You have not seen them since you were small.",
+    "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Show them everything", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.04 } ], "result": "The den, the creek, the shop with the cheap sweets. On the last day nobody wants them to leave." },
+      { "text": "Hide in your room", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "trait_add", "trait": "introvert", "chance": 0.04 } ], "result": "They are loud and they touch your things. On the third day, one of them turns out to like the same books as you." }
+    ]
+  },
+  {
+    "id": "mid_child_school_play_lead", "title": "The lead",
+    "text": "You have the biggest part in the school play. Forty lines. The performance is in two weeks, and you know nine of them.",
+    "conditions": { "minAge": 8, "maxAge": 12, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Learn them every night", "chance": 0.75, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "All forty, perfect, and a bow at the end that you practised in the mirror. Your grandmother stands up to clap.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "trait_add", "trait": "charming", "chance": 0.04 } ] },
+        "failure": { "text": "You freeze at line twenty. The prompter whispers. You carry on. Afterwards everyone says they did not notice. They noticed.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Swap to a smaller part", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You play a tree. You are an excellent tree." }
+    ]
+  },
+  {
+    "id": "mid_child_found_wallet", "title": "The wallet",
+    "text": "A wallet on the pavement, fat with money. Nobody around. It is more money than you have ever held.",
+    "conditions": { "minAge": 8, "maxAge": 13 }, "cooldown": 0,
+    "choices": [
+      { "text": "Hand it in", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "happiness", "amount": 3 } ], "result": "The owner, an old man, cries a little and gives you a reward. Your parents are prouder than you have ever seen them." },
+      { "text": "Keep a little, hand in the rest", "effects": [ { "type": "money", "amount": 200 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.05 } ], "result": "Nobody ever knows. You do. You spend it on something you do not even want." }
+    ]
+  },
+  {
+    "id": "mid_child_night_sky_camp", "title": "Camping in the garden",
+    "text": "Your first night in a tent, in the garden, with a torch and a bag of crisps. The house is twenty metres away. It feels like a hundred miles.",
+    "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 0,
+    "choices": [
+      { "text": "Stay the whole night", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "happiness", "amount": 5 } ], "result": "Every sound is a bear. At dawn, a blackbird. You walk into the kitchen like someone back from an expedition." },
+      { "text": "Go in at midnight", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Nobody says anything. Your bed has never felt so good." }
+    ]
+  },
+  {
+    "id": "mid_child_learning_to_lose", "title": "Board games",
+    "text": "Family games night. You are losing at the board game, badly, and your older cousin is being very smug about it.",
+    "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 0,
+    "choices": [
+      { "text": "Flip the board", "effects": [ { "type": "trait_add", "trait": "hot_tempered", "chance": 0.05 }, { "type": "happiness", "amount": -1 } ], "result": "Pieces everywhere. You are sent to your room. It is still, in a way, a little bit worth it." },
+      { "text": "Lose properly", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.04 }, { "type": "happiness", "amount": 1 } ], "result": "You shake hands and demand a rematch. Next week, you win. It is glorious." }
+    ]
+  },
+  {
+    "id": "mid_child_grandparent_war", "title": "Grandpa's box",
+    "text": "In a box at your grandparents' house: old photographs of a young man in uniform, a medal, and letters in tight handwriting.",
+    "conditions": { "minAge": 8, "maxAge": 13, "maxYear": 2000 }, "cooldown": 0,
+    "choices": [
+      { "text": "Ask about it", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "memory", "kind": "grandpa_box", "text": "The box with the old photographs", "impact": 8 } ], "result": "He is quiet for a while. Then he tells you one story, only one. You never hear the rest, and you never forget that one." },
+      { "text": "Put it back", "effects": [], "result": "You put it back exactly as it was. Some boxes are not for children." }
+    ]
+  },
+  {
+    "id": "mid_child_tooth_fairy", "title": "Under the pillow",
+    "text": "The tooth is under the pillow. You have decided to stay awake to see who comes.",
+    "conditions": { "minAge": 6, "maxAge": 8 }, "cooldown": 0,
+    "choices": [
+      { "text": "Pretend to sleep", "chance": 0.4,
+        "success": { "text": "A shape, a careful hand, and a very familiar dressing gown. You say nothing. You keep the coin anyway.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "You fall asleep in four minutes. There is a coin in the morning, and you never solve the mystery.", "effects": [ { "type": "happiness", "amount": 4 } ] } }
+    ]
+  },
+  {
+    "id": "mid_child_birthday_forgotten", "title": "The quiet birthday",
+    "text": "It is your birthday, and it is a bad week at home. Nobody has said anything yet. It is already afternoon.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0, "weight": 0.4,
+    "choices": [
+      { "text": "Remind them", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Panic, apologies, a cake from the petrol station with candles from the drawer. It is not perfect. It is enough." },
+      { "text": "Say nothing", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "memory", "kind": "forgotten_birthday", "text": "The birthday nobody remembered", "impact": -15 } ], "result": "Your grandmother calls at six to sing. She is the only one. You remember that, too." }
+    ]
+  },
+  {
+    "id": "mid_child_inventor", "title": "The invention",
+    "text": "You have invented a machine that will make your bed for you. It is made of string, a skateboard and most of your father's tools.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Test it", "chance": 0.3, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "It works, once. The duvet ends up mostly on the bed. You are a genius, and you tell everyone.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "attribute", "kind": "smarts", "amount": 2 } ] },
+        "failure": { "text": "The skateboard goes through the wardrobe door. The tools are confiscated. The idea, they cannot take.", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.04 } ] } }
+    ]
+  },
+  {
+    "id": "mid_child_new_baby_help", "title": "The new baby",
+    "text": "There is a new baby in the house, and it is very loud and very small. Everyone is tired. Nobody has asked you how you are.",
+    "conditions": { "minAge": 5, "maxAge": 11 }, "cooldown": 0,
+    "target": { "role": "sibling", "conditions": { "maxAge": 0 } },
+    "choices": [
+      { "text": "Help with {t.name}", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "You learn to hold {t.him} properly. {T.He} stops crying for you when {t.he} will not for anyone else. You are very proud of this." },
+      { "text": "Act up to be noticed", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You get noticed. Not in the way you wanted. Later, your mother takes you out alone for ice cream, just the two of you." }
+    ]
+  },
+  {
+    "id": "mid_child_rain_day", "title": "Rain all week",
+    "text": "It has rained for six days. The holiday is ruined, the cottage is small, and everyone is getting on everyone's nerves.",
+    "conditions": { "minAge": 6, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Start the thousand piece puzzle", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The whole family ends up around it. On the last day, the last piece is missing. It is found in the dog." },
+      { "text": "Go out in it anyway", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "health", "amount": -1 } ], "result": "Soaked to the skin, puddles to the knee. The best day of the holiday, by far." }
+    ]
+  }
+]

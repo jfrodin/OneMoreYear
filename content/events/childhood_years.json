@@ -47,7 +47,7 @@
     ]
   },
   {
-    "id": "child_school_play", "title": "The school play",
+    "id": "child_school_play_star", "title": "The school play",
     "text": "The class is putting on a play for the parents. Your teacher asks who wants the big part.",
     "conditions": { "minAge": 7, "maxAge": 12, "activity": "School" }, "cooldown": 3,
     "choices": [

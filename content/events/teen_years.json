@@ -61,7 +61,7 @@
     ]
   },
   {
-    "id": "teen_diary", "title": "The diary",
+    "id": "teen_diary_read", "title": "The diary",
     "text": "Your younger sibling has found your diary and read it. Out loud. At dinner.",
     "conditions": { "minAge": 13, "maxAge": 17, "hasRole": [ "sibling" ] }, "cooldown": 20, "weight": 0.5,
     "choices": [
@@ -126,7 +126,7 @@
     ]
   },
   {
-    "id": "teen_moped", "title": "Two wheels",
+    "id": "teen_moped_crash", "title": "Two wheels",
     "text": "A boy down the road is selling his moped. It is loud, it smells of petrol, and it means freedom.",
     "conditions": { "minAge": 15, "maxAge": 17 }, "cooldown": 20,
     "choices": [

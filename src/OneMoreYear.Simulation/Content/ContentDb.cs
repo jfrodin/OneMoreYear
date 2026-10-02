@@ -65,7 +65,12 @@ public sealed class ContentDb
             {
                 if (path.Contains("content/events/"))
                 {
-                    foreach (var e in Deserialize<List<EventDef>>(json)) db.Events[e.Id] = e;
+                    foreach (var e in Deserialize<List<EventDef>>(json))
+                    {
+                        // Two events with one id: the later would silently replace the earlier.
+                        if (db.Events.ContainsKey(e.Id)) throw new InvalidDataException($"Event id {e.Id} is used twice ({path}).");
+                        db.Events[e.Id] = e;
+                    }
                 }
                 else if (path.Contains("content/names/"))
                 {
