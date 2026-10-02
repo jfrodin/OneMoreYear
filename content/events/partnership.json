@@ -77,7 +77,7 @@
     ]
   },
   {
-    "id": "couple_different_dreams", "title": "The cottage",
+    "id": "couple_different_dreams", "countries": [ "sweden" ], "title": "The cottage",
     "text": "{p.name} has found a red cottage in the forest, three hours from the city. {p.He} wants to sell everything and move there.",
     "conditions": { "minAge": 35, "hasPartner": true, "minPartnerYears": 5 }, "cooldown": 25, "weight": 0.5,
     "choices": [

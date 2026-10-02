@@ -67,7 +67,7 @@
   },
   {
     "id": "old_neighbour_boy", "title": "The boy next door",
-    "text": "The boy next door, maybe twelve, offers to do your shopping when it is icy. He wants twenty kronor a time.",
+    "text": "The boy next door, maybe twelve, offers to do your shopping when it is icy. He wants {money:20} a time.",
     "conditions": { "minAge": 75 }, "cooldown": 8,
     "choices": [
       { "text": "Pay him fifty", "effects": [ { "type": "money", "amount": -500 }, { "type": "happiness", "amount": 5 }, { "type": "meet_through_friend" } ],
@@ -83,7 +83,7 @@
     "conditions": { "minAge": 62 }, "cooldown": 20,
     "choices": [
       { "text": "Join", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "health", "amount": 2 }, { "type": "memory", "kind": "choir", "text": "Singing in the choir on Wednesday evenings", "impact": 15 } ],
-        "result": "Wednesday evenings, and the Lucia concert in December. You sing loudly and mostly right." },
+        "result": "Wednesday evenings, and the Christmas concert in December. You sing loudly and mostly right." },
       { "text": "Listen from the pews", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You go to every concert anyway." }
     ]
   },

@@ -45,7 +45,7 @@ When the game is ready for outside testers. Ask the producer before starting.
 - [ ] Chronicle filter per person and per generation (spec §16).
 - [ ] Localization (Swedish and more).
 - [ ] **More countries**, in this order:
-  1. Prepare: move everything that is Swedish in the code into country data (welfare, schools,
+  1. [x] Prepare: done in 0.33.0, see docs/countries.md. (Was: move everything Swedish into country data: welfare, schools,
      pensions, currency, laws, holidays) – so a new country is only data and events.
   2. **USA** – the biggest market, English, and the biggest contrast: healthcare that can ruin a
      family, student debt, suburbs, the Vietnam draft, no parental leave.

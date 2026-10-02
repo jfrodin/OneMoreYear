@@ -16,7 +16,7 @@ public static class CareerSystem
         int age = p.Age(ctx.Year);
         bool isPlayer = p.Id == ctx.World.PlayerId;
 
-        if (p.Activity == Activity.Child && age >= 7)
+        if (p.Activity == Activity.Child && age >= ctx.Country.SchoolStartAge)
         {
             p.Activity = Activity.School;
             return;
@@ -24,7 +24,7 @@ public static class CareerSystem
 
         if (p.Activity is Activity.School or Activity.Studying) UpdateGrades(ctx, p);
 
-        if (p.Activity == Activity.School && age >= 16)
+        if (p.Activity == Activity.School && age >= ctx.Country.SecondaryAge)
         {
             p.Education = EducationLevel.Primary;
             if (isPlayer)
@@ -71,7 +71,7 @@ public static class CareerSystem
             return;
         }
 
-        if (p.Activity == Activity.Unemployed && age >= 16)
+        if (p.Activity == Activity.Unemployed && age >= ctx.Country.SecondaryAge)
         {
             if (isPlayer) { QueueJobOffers(ctx, p); return; }
             double chance = 0.55 + ctx.Mod(p, "career") * 0.3 + (int)p.Education * 0.05;
@@ -135,6 +135,7 @@ public static class CareerSystem
     public static bool CanEnter(SimContext ctx, Person p, ProgrammeDef prog)
     {
         if (p.Degrees.Contains(prog.Id) || p.Age(ctx.Year) < prog.MinAge || ctx.Year < prog.MinYear) return false;
+        if (prog.Countries.Count > 0 && !prog.Countries.Contains(ctx.Country.Id)) return false;
         if (prog.Level == EducationLevel.Secondary) return p.Education >= EducationLevel.Primary;
         if (p.Education < EducationLevel.Secondary) return false;
         return p.Grades >= RequiredGrades(ctx, p, prog);
@@ -144,12 +145,14 @@ public static class CareerSystem
     public static string? WhyNot(SimContext ctx, Person p, ProgrammeDef prog)
     {
         if (p.Degrees.Contains(prog.Id)) return "You already have this.";
+        if (prog.Countries.Count > 0 && !prog.Countries.Contains(ctx.Country.Id)) return "Not offered in this country.";
         if (ctx.Year < prog.MinYear) return $"Not offered yet. It starts around {prog.MinYear}.";
         if (p.Age(ctx.Year) < prog.MinAge) return $"For adults, from {prog.MinAge}.";
         if (prog.Level == EducationLevel.Secondary) return p.Education >= EducationLevel.Primary ? null : "You need to finish primary school first.";
-        if (p.Education < EducationLevel.Secondary) return "You need an upper secondary diploma first. Komvux can give you one.";
+        if (p.Education < EducationLevel.Secondary)
+            return "You need an upper secondary diploma first." + (ctx.Country.AdultEducation is { } adult ? $" {adult} can give you one." : "");
         double need = RequiredGrades(ctx, p, prog);
-        return p.Grades >= need ? null : $"Needs grades {need:0}, yours are {p.Grades:0}. Evening classes at Komvux can raise them.";
+        return p.Grades >= need ? null : $"Needs grades {need:0}, yours are {p.Grades:0}." + (ctx.Country.AdultEducation is { } a ? $" Evening classes at {a} can raise them." : "");
     }
 
     /// <summary>Vocational secondary programmes need 10 extra grade points for university.</summary>
@@ -422,7 +425,7 @@ public static class CareerSystem
     public static string ActivityText(SimContext ctx, Person p) => p.Activity switch
     {
         Activity.Child => "Child",
-        Activity.School => p.Age(ctx.Year) < 16 ? "In school" : "Deciding what to do next",
+        Activity.School => p.Age(ctx.Year) < ctx.Country.SecondaryAge ? "In school" : "Deciding what to do next",
         Activity.Studying => ctx.Content.Programme(p.ProgrammeId) is { } prog
             ? (prog.Level == EducationLevel.University ? $"Studying {prog.Name}" : prog.Name)
             : p.StudyingFor == EducationLevel.University ? "At university" : "In upper secondary school",

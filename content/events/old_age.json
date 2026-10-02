@@ -293,7 +293,7 @@
     ]
   },
   {
-    "id": "old_pension_worry", "title": "Every krona",
+    "id": "old_pension_worry", "title": "Every coin",
     "text": "The pension doesn't stretch as far as it used to. You've started comparing prices on things you never used to think about.",
     "conditions": { "minAge": 65, "activity": "retired", "maxMoney": 20000 }, "cooldown": 5,
     "choices": [

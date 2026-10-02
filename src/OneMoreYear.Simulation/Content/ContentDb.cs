@@ -172,6 +172,12 @@ public sealed class ContentDb
         foreach (var e in Events.Values)
             foreach (var c in e.Content.Where(c => ContentCategories.All.All(x => x.Id != c)))
                 errors.Add($"Event {e.Id}: unknown content category {c}");
+        foreach (var e in Events.Values)
+            foreach (var c in e.Countries.Where(c => !Countries.ContainsKey(c)))
+                errors.Add($"Event {e.Id}: unknown country {c}");
+        foreach (var p in Programmes.Values)
+            foreach (var c in p.Countries.Where(c => !Countries.ContainsKey(c)))
+                errors.Add($"Programme {p.Id}: unknown country {c}");
         // Era text, [[year: before || after]], must be well formed.
         foreach (var e in Events.Values)
         {

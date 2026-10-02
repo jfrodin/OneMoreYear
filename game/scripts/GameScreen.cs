@@ -385,9 +385,10 @@ public partial class GameScreen : Control
         if (c.Degrees.Count > 0) edu.AddChild(StatRow("Diplomas", string.Join(", ", c.Degrees), UiTheme.Text));
         if (c.Grades is { } grades)
         {
-            edu.AddChild(Ui.Bar(S.Player.Age(S.Year) < 14 ? "How school goes" : "Grades", grades, grades >= 60 ? UiTheme.Good : grades >= 40 ? UiTheme.Accent : UiTheme.Bad, $"{grades:0}"));
-            edu.AddChild(Ui.Label(S.Player.Age(S.Year) < 14
-                ? "No grades yet. They come in year 8, and how you do now is where they will start."
+            bool graded = S.Player.Age(S.Year) >= c.GradesFromAge;
+            edu.AddChild(Ui.Bar(graded ? "Grades" : "How school goes", grades, grades >= 60 ? UiTheme.Good : grades >= 40 ? UiTheme.Accent : UiTheme.Bad, $"{grades:0}"));
+            edu.AddChild(Ui.Label(!graded
+                ? $"No grades yet. They come at {c.GradesFromAge}, and how you do now is where they will start."
                 : "Grades decide which programmes you can get into. Medicine needs about 85, Law 75.", 15, UiTheme.Faint, wrap: true));
             if (c.GradesNote != null) edu.AddChild(Ui.Label(c.GradesNote, 15, UiTheme.Muted, wrap: true));
         }

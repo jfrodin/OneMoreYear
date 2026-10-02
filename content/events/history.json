@@ -13,7 +13,7 @@
     ]
   },
   {
-    "id": "hist_world_cup_1958", "trigger": "history", "title": "The World Cup at home",
+    "id": "hist_world_cup_1958", "countries": [ "sweden" ], "trigger": "history", "title": "The World Cup at home",
     "text": "Sweden is hosting the football World Cup, and Sweden is in the final against Brazil. Everyone you know is gathered round a radio.",
     "conditions": { "minAge": 6, "minYear": 1958, "maxYear": 1958 }, "weight": 6, "cooldown": 0,
     "choices": [
@@ -25,7 +25,7 @@
     ]
   },
   {
-    "id": "hist_dagen_h", "trigger": "history", "title": "Dagen H",
+    "id": "hist_dagen_h", "countries": [ "sweden" ], "trigger": "history", "title": "Dagen H",
     "text": "At ten to five this morning every car in Sweden stopped, crossed to the other side of the road, and waited. From today, we drive on the right.",
     "conditions": { "minAge": 6, "minYear": 1967, "maxYear": 1967 }, "weight": 6, "cooldown": 0,
     "choices": [
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "id": "hist_1968", "trigger": "history", "title": "The student union",
+    "id": "hist_1968", "countries": [ "sweden" ], "trigger": "history", "title": "The student union",
     "text": "Students have occupied the student union building in Stockholm. They are debating the future of everything, all night, with a lot of cigarettes.",
     "conditions": { "minAge": 17, "maxAge": 30, "minYear": 1968, "maxYear": 1968 }, "weight": 5, "cooldown": 0,
     "choices": [
@@ -47,7 +47,7 @@
     ]
   },
   {
-    "id": "hist_million_programme", "trigger": "history", "title": "A new suburb",
+    "id": "hist_million_programme", "countries": [ "sweden" ], "trigger": "history", "title": "A new suburb",
     "text": "The council is building whole new suburbs: concrete blocks with lifts, balconies, a laundry room and a centre with shops. There is a flat with three rooms free from next month.",
     "conditions": { "minAge": 20, "minYear": 1966, "maxYear": 1975, "ownsHome": false, "livesWithParents": false }, "weight": 2, "cooldown": 20,
     "choices": [
@@ -57,7 +57,7 @@
     ]
   },
   {
-    "id": "hist_nuclear_vote", "trigger": "history", "title": "The referendum",
+    "id": "hist_nuclear_vote", "countries": [ "sweden" ], "trigger": "history", "title": "The referendum",
     "text": "Sweden votes on nuclear power. There are three options, all of them say phase it out sooner or later, and nobody at the dinner table agrees.",
     "conditions": { "minAge": 18, "minYear": 1980, "maxYear": 1980 }, "weight": 5, "cooldown": 0,
     "choices": [
@@ -78,7 +78,7 @@
     ]
   },
   {
-    "id": "hist_krona_crisis", "trigger": "history", "title": "Five hundred percent",
+    "id": "hist_krona_crisis", "countries": [ "sweden" ], "trigger": "history", "title": "Five hundred percent",
     "text": "The radio says the central bank has raised the interest rate to five hundred percent. Your neighbour is standing in the stairwell with his mortgage papers, very pale.",
     "conditions": { "minAge": 18, "minYear": 1992, "maxYear": 1992 }, "weight": 6, "cooldown": 0,
     "choices": [
@@ -92,7 +92,7 @@
     ]
   },
   {
-    "id": "hist_estonia", "trigger": "history", "title": "The ferry",
+    "id": "hist_estonia", "countries": [ "sweden" ], "trigger": "history", "title": "The ferry",
     "text": "The ferry Estonia has sunk in a storm on the Baltic. Over eight hundred people. The list of names is printed in the morning paper and your hands shake as you read it.",
     "conditions": { "minAge": 10, "minYear": 1994, "maxYear": 1994 }, "weight": 5, "cooldown": 0,
     "choices": [
@@ -102,7 +102,7 @@
     ]
   },
   {
-    "id": "hist_eu_vote", "trigger": "history", "title": "Yes or no",
+    "id": "hist_eu_vote", "countries": [ "sweden" ], "trigger": "history", "title": "Yes or no",
     "text": "Sweden votes on joining the European Union. There are YES and NO posters on every lamp post, and the family is split down the middle.",
     "conditions": { "minAge": 18, "minYear": 1994, "maxYear": 1994 }, "weight": 5, "cooldown": 0,
     "choices": [
@@ -123,7 +123,7 @@
     ]
   },
   {
-    "id": "hist_tsunami", "trigger": "history", "title": "Boxing Day",
+    "id": "hist_tsunami", "countries": [ "sweden" ], "trigger": "history", "title": "Boxing Day",
     "text": "The news is about a wave in Thailand. Thousands of Swedes were on holiday there over Christmas. You know at least three families who went.",
     "conditions": { "minAge": 12, "minYear": 2004, "maxYear": 2005 }, "weight": 5, "cooldown": 0,
     "choices": [
@@ -134,7 +134,7 @@
     ]
   },
   {
-    "id": "hist_hot_summer", "trigger": "history", "title": "The hot summer",
+    "id": "hist_hot_summer", "countries": [ "sweden" ], "trigger": "history", "title": "The hot summer",
     "text": "No rain since May. The forests in the north are burning, the lawns are brown, and every lake is full of people.",
     "conditions": { "minAge": 6, "minYear": 2018, "maxYear": 2018 }, "weight": 4, "cooldown": 0,
     "choices": [
@@ -144,7 +144,7 @@
     ]
   },
   {
-    "id": "hist_donald_duck", "title": "Three o'clock",
+    "id": "hist_donald_duck", "countries": [ "sweden" ], "title": "Three o'clock",
     "text": "Christmas Eve, three o'clock. The whole country sits down in front of Donald Duck and his friends, the same cartoons as every year.",
     "conditions": { "minYear": 1960, "minAge": 3 }, "weight": 0.7, "cooldown": 6,
     "choices": [

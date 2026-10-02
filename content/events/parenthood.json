@@ -142,7 +142,7 @@
     ]
   },
   {
-    "id": "parent_graduation", "trigger": "milestone", "title": "Graduation",
+    "id": "parent_graduation", "countries": [ "sweden" ], "trigger": "milestone", "title": "Graduation",
     "text": "{t.name} runs out of the school in a white cap while you hold up a sign with an embarrassing baby photo on it.",
     "conditions": { "minAge": 35 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 18, "maxAge": 19 } },

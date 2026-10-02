@@ -271,6 +271,8 @@ public sealed class GameSession
         for (int i = 0; i < def.Choices.Count; i++)
         {
             var c = def.Choices[i];
+            // A programme this country does not have is not a choice at all.
+            if (EventSystem.StudyProgramme(Ctx, c) is { Countries.Count: > 0 } foreign && !foreign.Countries.Contains(Country.Id)) continue;
             // Trait choices only exist for people with the trait.
             if (c.Trait != null && !Player.HasTrait(c.Trait)) continue;
             string? tag = c.Trait != null && Content.Traits.TryGetValue(c.Trait, out var traitDef) ? traitDef.Name : null;
@@ -564,6 +566,7 @@ public sealed class GameSession
             Ladder = ladder,
             CriminalRecord = p.CriminalRecord.Select(r => $"{r.Year}: {Content.Crimes.GetValueOrDefault(r.CrimeId)?.Name ?? r.CrimeId}, {r.Sentence}").ToList(),
             Effort = p.Effort,
+            GradesFromAge = Country.GradesFromAge,
             CanChooseEffort = p.Activity is Activity.Working or Activity.Studying || p.Activity == Activity.School && p.Age(Year) >= 10,
             PerformanceNote = p.Activity == Activity.Working ? FactorNote(CareerSystem.PerformanceFactors(Ctx, p), "Over 50 helps a promotion; under 30 you risk losing the job.") : null,
             GradesNote = p.Activity is Activity.School or Activity.Studying ? FactorNote(CareerSystem.GradeFactors(Ctx, p), null) : null,

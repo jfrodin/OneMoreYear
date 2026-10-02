@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -17,7 +18,10 @@ public partial class TitleScreen : Control
     private IReadOnlyList<CityDef> _cities = null!;
 
     /// <summary>Where a life can begin: a decade and what the country felt like then (country content).</summary>
-    private static readonly IReadOnlyList<(int Year, string Title)> Decades = GameSession.StartDecades();
+    private IReadOnlyList<(int Year, string Title)> _decades = Array.Empty<(int, string)>();
+    /// <summary>Every country in the content; a choice appears as soon as there is more than one.</summary>
+    private readonly List<CountryDef> _countries = ContentDb.Embedded.Countries.Values.OrderBy(c => c.Name).ToList();
+    private OptionButton? _country;
     private LineEdit _seed = null!;
     private OptionButton _scenario = null!;
     private Label _scenarioInfo = null!;
@@ -64,13 +68,24 @@ public partial class TitleScreen : Control
         var newTitle = Ui.Label("A new life", 26, UiTheme.Accent);
         newTitle.AddThemeFontOverride("font", UiTheme.Heading);
         options.AddChild(newTitle);
+        if (_countries.Count > 1)
+        {
+            var countryRow = Ui.HBox(12);
+            var countryLabel = Ui.Label("Country", 18, UiTheme.Muted);
+            countryLabel.CustomMinimumSize = new Vector2(140, 0);
+            countryRow.AddChild(countryLabel);
+            _country = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+            foreach (var c in _countries) _country.AddItem(c.Name);
+            _country.Selected = Math.Max(0, _countries.FindIndex(c => c.Id == "sweden"));
+            _country.ItemSelected += _ => FillForCountry();
+            countryRow.AddChild(_country);
+            options.AddChild(countryRow);
+        }
         var yearRow = Ui.HBox(12);
         var yearLabel = Ui.Label("Begin in", 18, UiTheme.Muted);
         yearLabel.CustomMinimumSize = new Vector2(140, 0);
         yearRow.AddChild(yearLabel);
         _year = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
-        foreach (var (_, decade) in Decades) _year.AddItem(decade);
-        _year.Selected = 2;
         yearRow.AddChild(_year);
         options.AddChild(yearRow);
 
@@ -99,11 +114,9 @@ public partial class TitleScreen : Control
         _sex = Choice("You are", new[] { "Surprise me", "A boy", "A girl" });
         var whoRow = (HBoxContainer)_sex.GetParent();
         whoRow.AddChild(Ui.Label("in", 18, UiTheme.Muted));
-        _cities = ContentDb.Embedded.Countries["sweden"].Cities;
         _city = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
-        _city.AddItem("Surprise me");
-        foreach (var c in _cities) _city.AddItem(c.Name);
         whoRow.AddChild(_city);
+        FillForCountry();
         _conditions = Choice("Your start", new[] { "Leave it to chance (as intended)" }.Concat(StartChoices.Conditions.Select(c => c.Name)));
         _conditionInfo = Ui.Label("", 15, UiTheme.Faint, wrap: true);
         options.AddChild(_conditionInfo);
@@ -141,7 +154,7 @@ public partial class TitleScreen : Control
         var warning = Ui.Label("For adults (18+). Contains violence, abuse, addiction and crime. Adjust in Settings.", 15, UiTheme.Faint, wrap: true);
         warning.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(warning);
-        var hint = Ui.Label($"Version {Main.Version}  ·  Sweden is the first country. More will follow.", 15, UiTheme.Faint);
+        var hint = Ui.Label($"Version {Main.Version}" + (_countries.Count == 1 ? $"  ·  {_countries[0].Name} is the first country. More will follow." : ""), 15, UiTheme.Faint);
         hint.HorizontalAlignment = HorizontalAlignment.Center;
         col.AddChild(hint);
 
@@ -152,18 +165,37 @@ public partial class TitleScreen : Control
             CallDeferred(nameof(AskAboutContent));
     }
 
+    private CountryDef Country => _countries[_country?.Selected ?? Math.Max(0, _countries.FindIndex(c => c.Id == "sweden"))];
+
+    /// <summary>The decades and cities of the chosen country.</summary>
+    private void FillForCountry()
+    {
+        int previousYear = _decades.Count > 0 && _year.Selected >= 0 ? _decades[_year.Selected].Year : 1970;
+        _decades = GameSession.StartDecades(Country.Id);
+        _year.Clear();
+        foreach (var (_, decade) in _decades) _year.AddItem(decade);
+        int index = _decades.ToList().FindIndex(d => d.Year == previousYear);
+        _year.Selected = index >= 0 ? index : 0;
+        _cities = Country.Cities;
+        _city.Clear();
+        _city.AddItem("Surprise me");
+        foreach (var c in _cities) _city.AddItem(c.Name);
+        _city.Selected = 0;
+    }
+
     private void AskAboutContent() => _main.ShowContentSettings(null, firstTime: true);
 
     private void StartNew()
     {
         string? seed = string.IsNullOrWhiteSpace(_seed.Text) ? null : _seed.Text;
-        int year = Decades[_year.Selected].Year;
+        int year = _decades[_year.Selected].Year;
         string? scenario = SelectedScenario?.Id;
         var choices = new NewGameOptions
         {
             PlayerSex = _sex.Selected switch { 1 => Sex.Male, 2 => Sex.Female, _ => null },
             StartConditions = _conditions.Selected > 0 ? StartChoices.Conditions[_conditions.Selected - 1].Id : null,
             CityId = _city.Selected > 0 ? _cities[_city.Selected - 1].Id : null,
+            CountryId = Country.Id,
         };
         // All slots taken: the player picks which family to replace.
         if (SaveSystem.FirstEmptySlot() == null)

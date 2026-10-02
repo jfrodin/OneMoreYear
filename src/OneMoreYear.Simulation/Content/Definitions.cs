@@ -128,6 +128,14 @@ public sealed class CountryDef
     public int MarriageAge { get; set; } = 18;
     /// <summary>Whether first cousins may become a couple (legal in Sweden).</summary>
     public bool CousinMarriageAllowed { get; set; } = true;
+    // The school system.
+    /// <summary>Age children start school, and the age compulsory school ends and upper secondary (or work) begins.</summary>
+    public int SchoolStartAge { get; set; } = 7;
+    public int SecondaryAge { get; set; } = 16;
+    /// <summary>The age school starts giving grades (year 8 in Sweden).</summary>
+    public int GradesFromAge { get; set; } = 14;
+    /// <summary>What adult education is called here ("Komvux"), for hints; null if there is none.</summary>
+    public string? AdultEducation { get; set; }
     public int PensionAge { get; set; } = 65;
     public double PensionRate { get; set; } = 0.6;
     public double MinimumPension { get; set; }
@@ -208,6 +216,8 @@ public sealed class ProgrammeDef
     /// <summary>Courses for adults (Komvux, vocational courses): nobody starts them straight from school.</summary>
     public int MinAge { get; set; }
     public int MinYear { get; set; } = 1900;
+    /// <summary>The countries that have this programme (Komvux is Swedish); empty = everywhere.</summary>
+    public List<string> Countries { get; set; } = new();
     public List<string> LeadsTo { get; set; } = new();
     public Dictionary<string, double> TraitAffinity { get; set; } = new();
 }
@@ -391,6 +401,8 @@ public sealed class EventDef
     public string? DynamicChoices { get; set; }
     /// <summary>Dark themes the event is about (Model.ContentCategories); hidden when the player turned them down.</summary>
     public List<string> Content { get; set; } = new();
+    /// <summary>The countries the event belongs to (Midsummer is Swedish); empty = everywhere.</summary>
+    public List<string> Countries { get; set; } = new();
     /// <summary>What the player's personality or gifts let them notice (passive checks, shown under the text).</summary>
     public List<InsightDef> Insights { get; set; } = new();
     public ConditionDef? Conditions { get; set; }

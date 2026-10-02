@@ -2,7 +2,7 @@
 // Each comes back now and then with a long cooldown. No dashes.
 [
   {
-    "id": "trad_lucia_child", "title": "Lucia",
+    "id": "trad_lucia_child", "countries": [ "sweden" ], "title": "Lucia",
     "text": "Your class is doing the Lucia procession for the parents. Somebody has to be Lucia, with candles in her hair. Everybody else is a maid, a star boy or a gingerbread man.",
     "conditions": { "minAge": 5, "maxAge": 12, "activity": "School" }, "cooldown": 4,
     "choices": [
@@ -13,7 +13,7 @@
     ]
   },
   {
-    "id": "trad_easter_witch", "title": "Easter witch",
+    "id": "trad_easter_witch", "countries": [ "sweden" ], "title": "Easter witch",
     "text": "Easter. All the children on the street dress up as witches with red cheeks and headscarves and go door to door with drawings, hoping for sweets.",
     "conditions": { "minAge": 4, "maxAge": 10 }, "cooldown": 3,
     "choices": [
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "id": "trad_walpurgis", "title": "Walpurgis night",
+    "id": "trad_walpurgis", "countries": [ "sweden" ], "title": "Walpurgis night",
     "text": "The last night of April. A huge bonfire by the lake, a choir singing to the spring, and everyone stamping their feet against the cold.",
     "conditions": { "minAge": 6 }, "cooldown": 4,
     "choices": [
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "id": "trad_graduation", "trigger": "milestone", "title": "The white cap",
+    "id": "trad_graduation", "countries": [ "sweden" ], "trigger": "milestone", "title": "The white cap",
     "text": "Graduation day. You run out of the school building in a white cap while your family hold up a sign with your baby photo on it.",
     "conditions": { "minAge": 18, "maxAge": 20, "minEducation": "secondary", "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
     "choices": [
@@ -57,7 +57,7 @@
     ]
   },
   {
-    "id": "trad_crayfish", "title": "Crayfish party",
+    "id": "trad_crayfish", "countries": [ "sweden" ], "title": "Crayfish party",
     "text": "August, paper lanterns, silly hats and a table covered in crayfish. Someone has printed the drinking songs.",
     "conditions": { "minAge": 18 }, "cooldown": 3,
     "choices": [
@@ -66,7 +66,7 @@
     ]
   },
   {
-    "id": "trad_national_day", "title": "Sixth of June",
+    "id": "trad_national_day", "countries": [ "sweden" ], "title": "Sixth of June",
     "text": "The National Day. Flags on every pole, and a ceremony in the park where new citizens are welcomed.",
     "conditions": { "minAge": 12, "minYear": 1983 }, "cooldown": 8,
     "choices": [
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "id": "trad_christmas_ham", "title": "The Christmas table",
+    "id": "trad_christmas_ham", "countries": [ "sweden" ], "title": "The Christmas table",
     "text": "Christmas Eve. The ham, the meatballs, the herring, the cabbage, the rice pudding with one almond hidden in it.",
     "conditions": { "minAge": 4 }, "cooldown": 4,
     "choices": [
@@ -87,7 +87,7 @@
     ]
   },
   {
-    "id": "trad_ski_holiday", "title": "Sports holiday",
+    "id": "trad_ski_holiday", "countries": [ "sweden" ], "title": "Sports holiday",
     "text": "The February sports holiday. Half the school is going to the mountains to ski.",
     "conditions": { "minAge": 6, "maxAge": 50, "minMoney": 8000 }, "cooldown": 3,
     "choices": [
@@ -98,7 +98,7 @@
     ]
   },
   {
-    "id": "trad_name_day", "title": "Name day",
+    "id": "trad_name_day", "countries": [ "sweden" ], "title": "Name day",
     "text": "Today is your name day. Only your grandmother remembers.",
     "conditions": { "minAge": 5 }, "cooldown": 6,
     "choices": [

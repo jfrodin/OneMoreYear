@@ -28,7 +28,7 @@
     "leadsTo": [ "trade", "public" ], "traitAffinity": { "social": 1.5 }
   },
   {
-    "id": "komvux", "name": "Upper secondary at Komvux", "level": "secondary", "years": 2, "minAge": 20, "minYear": 1968,
+    "id": "komvux", "countries": [ "sweden" ], "name": "Upper secondary at Komvux", "level": "secondary", "years": 2, "minAge": 20, "minYear": 1968,
     "description": "Adult education: the academic subjects again, at your own pace, with grown-ups in the room. Opens the road to university.",
     "academic": true, "leadsTo": []
   },

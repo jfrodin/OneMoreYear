@@ -21,7 +21,7 @@ public static class SocialSystem
 
         p.Acquaintances.RemoveAll(a => !w.Get(a.Id).IsAlive || p.FriendIds.Contains(a.Id) || p.PartnerId == a.Id);
 
-        bool inSchool = p.Activity is Activity.School or Activity.Studying && age >= 7;
+        bool inSchool = p.Activity is Activity.School or Activity.Studying && age >= ctx.Country.SchoolStartAge;
         string place = PlaceKey(p);
 
         // Leaving a school or a job turns everyone there into "old" acquaintances.

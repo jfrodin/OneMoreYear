@@ -2,6 +2,22 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.33.0 – 2026-10-02 · Ready for more countries
+
+A new country is now only data and events (see `docs/countries.md`).
+
+- **School ages, adult education and the majority heritage** come from the country instead of the
+  code: school starts at 7 in Sweden, upper secondary at 16, grades from 14, adult education is
+  called Komvux.
+- **Events and programmes can belong to a country.** 32 Swedish events are marked as Swedish
+  (Midsummer, Lucia, Dagen H, the krona crisis, military service, Komvux and more); everything else
+  works anywhere.
+- **Money in event text follows the country**: `{money:40}` shows 40 (2020 money) in the local
+  currency at that year's prices.
+- **The title screen** takes cities and decades from the country, and shows a country choice as
+  soon as there is more than one.
+- A test plays a made-up second country with none of Sweden's names, employers, decades or events.
+
 ## 0.32.0 – 2026-10-02 · Every moment gets its turn
 
 A quality pass over all ~470 events, measured with a new tool (`SimRunner --coverage=N` plays N

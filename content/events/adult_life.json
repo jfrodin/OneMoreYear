@@ -14,7 +14,7 @@
     ]
   },
   {
-    "id": "life_midsummer", "title": "Midsummer",
+    "id": "life_midsummer", "countries": [ "sweden" ], "title": "Midsummer",
     "text": "Midsummer's Eve: herring, strawberries, a maypole, and more schnapps than anyone planned.",
     "conditions": { "minAge": 18 }, "cooldown": 3,
     "choices": [
@@ -42,7 +42,7 @@
       { "text": "Do it together", "chance": 0.5, "chanceTraits": { "conflict_averse": 0.1, "hot_tempered": -0.2 },
         "success": { "text": "It stands. It leans slightly. You're very proud of it.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 5, "mutual": true } ] },
         "failure": { "text": "The worst fight of the year, over a wardrobe.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 8 } ] } },
-      { "text": "Pay someone to do it", "effects": [ { "type": "money", "amount": -800 } ], "result": "Worth every krona." }
+      { "text": "Pay someone to do it", "effects": [ { "type": "money", "amount": -800 } ], "result": "Worth every penny." }
     ]
   },
   {
@@ -182,7 +182,7 @@
     ]
   },
   {
-    "id": "life_waterloo", "trigger": "history", "title": "Waterloo",
+    "id": "life_waterloo", "countries": [ "sweden" ], "trigger": "history", "title": "Waterloo",
     "text": "Four Swedes in platform boots and glitter have just won the Eurovision Song Contest. The whole country is singing.",
     "conditions": { "minAge": 6, "minYear": 1974, "maxYear": 1974 }, "weight": 20, "cooldown": 0,
     "choices": [
@@ -193,7 +193,7 @@
     ]
   },
   {
-    "id": "life_palme", "trigger": "history", "title": "The morning after",
+    "id": "life_palme", "countries": [ "sweden" ], "trigger": "history", "title": "The morning after",
     "text": "The radio says the prime minister was shot dead on a Stockholm street last night, walking home from the cinema.",
     "conditions": { "minAge": 8, "minYear": 1986, "maxYear": 1986 }, "weight": 20, "cooldown": 0,
     "choices": [
@@ -223,7 +223,7 @@
     ]
   },
   {
-    "id": "life_storm", "trigger": "history", "title": "The storm",
+    "id": "life_storm", "countries": [ "sweden" ], "trigger": "history", "title": "The storm",
     "text": "A storm tore through the forests last night. Millions of trees down, and the power is out, maybe for weeks.",
     "conditions": { "minAge": 18, "minYear": 2005, "maxYear": 2005 }, "weight": 15, "cooldown": 0,
     "choices": [
@@ -289,12 +289,12 @@
     "text": "Your wallet is gone. Cards, licence, the photo you've carried for years.",
     "conditions": { "minAge": 16 }, "cooldown": 8,
     "choices": [
-      { "text": "Retrace your steps", "chance": 0.4, "success": { "text": "A bus driver has it. Every krona still inside. Faith in humanity restored.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+      { "text": "Retrace your steps", "chance": 0.4, "success": { "text": "A bus driver has it. Every coin still inside. Faith in humanity restored.", "effects": [ { "type": "happiness", "amount": 5 } ] },
         "failure": { "text": "Gone. A day of phone calls to the bank.", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": -3 } ] } }
     ]
   },
   {
-    "id": "life_summer_cottage", "title": "A red cottage",
+    "id": "life_summer_cottage", "countries": [ "sweden" ], "title": "A red cottage",
     "text": "A little red cottage by a lake is for sale. No running water, a wood stove, and a jetty that's seen better days.",
     "conditions": { "minAge": 30, "minMoney": 300000, "notFlags": [ "summer_cottage" ] }, "cooldown": 10,
     "choices": [
@@ -346,7 +346,7 @@
     ]
   },
   {
-    "id": "life_church_or_not", "title": "A letter from the church",
+    "id": "life_church_or_not", "countries": [ "sweden" ], "title": "A letter from the church",
     "text": "A letter from the Church of Sweden: the church tax, and whether you want to stay a member.",
     "conditions": { "minAge": 25, "minYear": 2000 }, "cooldown": 0,
     "choices": [
@@ -415,7 +415,7 @@
     "choices": [
       { "text": "Join", "chance": 0.05,
         "success": { "text": "Five numbers and the bonus ball. Your share: enough for a new car. The office is chaos for a week.", "effects": [ { "type": "money", "amount": 150000 }, { "type": "happiness", "amount": 10 } ] },
-        "failure": { "text": "Years of small stakes and one win of forty kronor. But you were part of it.", "effects": [ { "type": "money", "amount": -1500 } ] } },
+        "failure": { "text": "Years of small stakes and one win of {money:40}. But you were part of it.", "effects": [ { "type": "money", "amount": -1500 } ] } },
       { "text": "Stay out", "result": "If they ever win, you'll never hear the end of it." }
     ]
   },

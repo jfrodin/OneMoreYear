@@ -781,3 +781,53 @@ public class EffortAndLearningTests
         Assert.False(CareerSystem.CanEnter(s.Ctx, teen, komvux));
     }
 }
+
+public class CountryTests
+{
+    /// <summary>A made-up second country: Sweden's numbers, but none of its names, employers, decades or events.</summary>
+    private static ContentDb WithTestland()
+    {
+        var db = ContentDb.LoadEmbedded();
+        var json = System.Text.Json.JsonSerializer.Serialize(db.Countries["sweden"], ContentDb.JsonOptions);
+        var testland = System.Text.Json.JsonSerializer.Deserialize<CountryDef>(json, ContentDb.JsonOptions)!;
+        testland.Id = "testland";
+        testland.Name = "Testland";
+        testland.Decades.Clear();
+        testland.AdultEducation = null;
+        testland.SchoolStartAge = 6;
+        db.Countries["testland"] = testland;
+        return db;
+    }
+
+    [Fact]
+    public void A_second_country_plays_without_anything_Swedish()
+    {
+        var db = WithTestland();
+        Assert.Empty(db.Validate());
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 5, StartYear = 1960, CountryId = "testland" }, db);
+        Assert.Equal("testland", s.Country.Id);
+        Assert.False(EventSystem.Allowed(s.Ctx, db.Events["life_midsummer"]));
+        Assert.True(EventSystem.Allowed(s.Ctx, db.Events["life_dinner_party"]));
+        Assert.False(CareerSystem.CanEnter(s.Ctx, s.Player, db.Programme("komvux")!));
+
+        var bot = new AutoPlayer(5);
+        var shown = new HashSet<string>();
+        for (int i = 0; i < 90 && bot.PlayYear(s); i++)
+            foreach (var p in s.World.PendingEvents) shown.Add(p.EventId);
+        Assert.DoesNotContain(shown, id => db.Events[id].Countries.Count > 0);
+        // No decades in the data: the chapter page still works.
+        Assert.Equal("The 2010s", s.Chapter(2010).Title);
+    }
+
+    [Fact]
+    public void School_ages_come_from_the_country()
+    {
+        var db = WithTestland();
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 5, StartYear = 1980, CountryId = "testland" }, db);
+        var bot = new AutoPlayer(1, useActions: false);
+        int playerId = s.Player.Id;
+        while (s.Player.Age(s.Year) < 6 && bot.PlayYear(s)) { }
+        if (s.Player.Id == playerId && s.Player.IsAlive)
+            Assert.Equal(Activity.School, s.Player.Activity);
+    }
+}

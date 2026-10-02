@@ -8,7 +8,7 @@ public static class PersonFactory
 {
     /// <summary>A first name that fits the person's sex, heritage and birth year (see Names).</summary>
     public static string RandomFirstName(SimContext ctx, Sex sex, string? heritage = null, int? birthYear = null) =>
-        Names.FirstName(ctx, sex, heritage ?? Names.Default, birthYear ?? ctx.Year);
+        Names.FirstName(ctx, sex, heritage ?? Names.Default(ctx), birthYear ?? ctx.Year);
 
     /// <summary>
     /// Creates an adult (or child) with no parents in the world. The heritage is drawn from how common
@@ -155,8 +155,8 @@ public static class PersonFactory
     {
         var rng = ctx.Rng;
         int age = p.Age(ctx.Year);
-        if (age < 7) { p.Activity = Activity.Child; return; }
-        if (age < 16) { p.Activity = Activity.School; return; }
+        if (age < ctx.Country.SchoolStartAge) { p.Activity = Activity.Child; return; }
+        if (age < ctx.Country.SecondaryAge) { p.Activity = Activity.School; return; }
         p.Education = EducationLevel.Primary;
         if (age < 19)
         {

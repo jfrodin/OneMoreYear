@@ -29,12 +29,17 @@ public static partial class TextFormatter
     public static string ByEra(int year, string text) =>
         Era().Replace(text, m => (year >= int.Parse(m.Groups[1].Value) ? m.Groups[3].Value : m.Groups[2].Value).Trim());
 
+    [GeneratedRegex(@"\{money:(\d+)\}")]
+    private static partial Regex MoneyToken();
+
     public static string Format(SimContext ctx, string text, PendingEvent? pending, Person? viewer = null)
     {
         var w = ctx.World;
         var player = w.Player;
         var perspective = viewer ?? player;
         text = ByEra(ctx.Year, text);
+        // {money:20}: an amount in 2020 money, shown in the country's currency at this year's prices.
+        text = MoneyToken().Replace(text, m => EconomySystem.Format(ctx, ctx.Nominal(double.Parse(m.Groups[1].Value))));
         return Token().Replace(text, m =>
         {
             string head = m.Groups[1].Value;

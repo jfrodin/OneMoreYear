@@ -15,7 +15,7 @@
     ]
   },
   {
-    "id": "young_laundry_room", "title": "The laundry room",
+    "id": "young_laundry_room", "countries": [ "sweden" ], "title": "The laundry room",
     "text": "Someone has taken your clothes out of the machine and left them in a wet heap on the floor. There is a note: \"YOUR TIME ENDED 14.00.\"",
     "conditions": { "minAge": 18, "livesWithParents": false, "ownsHome": false }, "cooldown": 12,
     "choices": [
@@ -61,7 +61,7 @@
     ]
   },
   {
-    "id": "young_military_service", "trigger": "milestone", "title": "The letter from the army",
+    "id": "young_military_service", "countries": [ "sweden" ], "trigger": "milestone", "title": "The letter from the army",
     "text": "A brown envelope: you are called for military service. Eleven months, starting in January.",
     "conditions": { "minAge": 18, "maxAge": 20, "sex": "male", "maxYear": 2009, "notFlags": [ "military_service" ] }, "cooldown": 50, "weight": 3,
     "choices": [

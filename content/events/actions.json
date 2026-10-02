@@ -311,7 +311,7 @@
     } ]
   },
   {
-    "id": "self_back_to_school", "trigger": "self", "category": "career", "title": "Go back to school",
+    "id": "self_back_to_school", "countries": [ "sweden" ], "trigger": "self", "category": "career", "title": "Go back to school",
     "conditions": { "minAge": 20, "maxAge": 60, "notActivity": [ "studying" ], "minYear": 1968 },
     "choices": [ {
       "text": "Look at courses", "hint": "Komvux to raise your grades or finish upper secondary, or a vocational course for a new trade.",

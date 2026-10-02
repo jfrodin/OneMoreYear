@@ -73,7 +73,7 @@
     ]
   },
   {
-    "id": "choose_adult_education", "trigger": "situation",
+    "id": "choose_adult_education", "countries": [ "sweden" ], "trigger": "situation",
     "title": "Back to school",
     "text": "Your grades are {grades}. Adult education is free, and you get student aid while you study full time.",
     "choices": [

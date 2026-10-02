@@ -20,7 +20,7 @@
         "result": "It has two rooms and a window. You eat your lunch in it. Your mittens freeze solid." },
       { "text": "Go sledging on the big hill", "chance": 0.8, "chanceAttributes": { "fitness": 0.002 },
         "success": { "text": "Faster than you have ever gone. You walk up a hundred times.", "effects": [ { "type": "happiness", "amount": 8 } ] },
-        "failure": { "text": "A tree. Not a big one. You have a bruise shaped like a map of Gotland for a month.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": -2 } ] } },
+        "failure": { "text": "A tree. Not a big one. You have a bruise shaped like a small island for a month.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": -2 } ] } },
       { "text": "Stay in and read", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "happiness", "amount": 3 } ], "result": "Hot chocolate, a blanket and a whole book in one day." }
     ]
   },

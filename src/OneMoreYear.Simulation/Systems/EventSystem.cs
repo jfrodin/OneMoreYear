@@ -27,8 +27,9 @@ public static class EventSystem
         return pending;
     }
 
-    /// <summary>False for events about a dark theme the player has turned down (content settings).</summary>
-    public static bool Allowed(SimContext ctx, EventDef e) => e.Content.All(ctx.Shown);
+    /// <summary>False for events about a dark theme the player has turned down (content settings), or from another country.</summary>
+    public static bool Allowed(SimContext ctx, EventDef e) =>
+        e.Content.All(ctx.Shown) && (e.Countries.Count == 0 || e.Countries.Contains(ctx.Country.Id));
 
     public static void GenerateRandomEvents(SimContext ctx)
     {
