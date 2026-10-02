@@ -80,4 +80,8 @@ In 0.35.0: `incomeSpread` (1.3) stretches the salary ladder, `unpaidLeave` (0.23
 when a child arrives) and `childcareCost` (daycare under six when nobody is home), family insurance
 through a spouse or parent, the `heritage` condition, and 32 more events of everyday American life.
 
-Not yet: emigration between countries.
+In 0.36.0: emigration. The `emigrate` effect moves the player's household and the story to another
+country; everyone who stays gets `Person.Abroad` and lives on in the old country's cities. All money
+is changed into the new currency (same real value). An heir who lives abroad moves the story back.
+Events can test `"abroad": true` on a role, and use `{country}`, `{homeland}` and `{language}`. Each
+country needs a `self_emigrate_<to>` action for every other country, and a `language`.

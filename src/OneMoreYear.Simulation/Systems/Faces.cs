@@ -18,7 +18,9 @@ public static class Faces
         content ??= Content.ContentDb.Embedded;
         var parents = Kinship.BiologicalParents(w, p).Select(x => Of(w, x, content)).ToList();
         var rng = new SimRandom(w.Seed * 0x9E3779B97F4A7C15UL ^ (ulong)p.Id * 0xBF58476D1CE4E5B9UL);
-        var heritage = content.Names.GetValueOrDefault(w.CountryId)?.Heritages.FirstOrDefault(h => h.Id == p.Heritage);
+        // The heritage can come from another country's names after an emigration.
+        var heritage = content.Names.GetValueOrDefault(w.CountryId)?.Heritages.FirstOrDefault(h => h.Id == p.Heritage)
+                       ?? content.Names.Values.SelectMany(n => n.Heritages).FirstOrDefault(h => h.Id == p.Heritage);
         p.Face = parents.Count == 0 ? Founder(p, rng, heritage) : Child(p, parents, rng);
         Style(p, p.Face, rng);
         return p.Face;

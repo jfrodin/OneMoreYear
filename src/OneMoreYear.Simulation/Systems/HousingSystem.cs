@@ -7,14 +7,20 @@ namespace OneMoreYear.Simulation.Systems;
 /// <summary>Where people live: which city, with their parents, in a shared flat, renting or owning – and moving.</summary>
 public static class HousingSystem
 {
-    public static CityDef City(SimContext ctx, Person p) =>
-        ctx.Country.Cities.FirstOrDefault(c => c.Id == p.CityId) ?? ctx.Country.Cities.FirstOrDefault()
-        ?? new CityDef { Id = "", Name = ctx.Country.Name };
-
-    public static string RandomCityId(SimContext ctx, string? except = null)
+    public static CityDef City(SimContext ctx, Person p)
     {
-        var options = ctx.Country.Cities.Where(c => c.Id != except).ToList();
-        return options.Count == 0 ? "" : ctx.Rng.PickWeighted(options, c => c.Weight)!.Id;
+        // Relatives who stayed in the old country live in its cities.
+        if (p.Abroad is { } abroad && ctx.Content.Countries.TryGetValue(abroad, out var home))
+            return home.Cities.FirstOrDefault(c => c.Id == p.CityId) ?? new CityDef { Id = "", Name = home.Name, PriceFactor = 1 };
+        return ctx.Country.Cities.FirstOrDefault(c => c.Id == p.CityId) ?? ctx.Country.Cities.FirstOrDefault()
+               ?? new CityDef { Id = "", Name = ctx.Country.Name };
+    }
+
+    public static string RandomCityId(SimContext ctx, string? except = null, string? countryId = null)
+    {
+        var country = countryId != null && ctx.Content.Countries.TryGetValue(countryId, out var c) ? c : ctx.Country;
+        var options = country.Cities.Where(x => x.Id != except).ToList();
+        return options.Count == 0 ? "" : ctx.Rng.PickWeighted(options, x => x.Weight)!.Id;
     }
 
     /// <summary>Price of a home in the person's city, nominal kronor: their kind of home, or the one given.</summary>
@@ -116,6 +122,8 @@ public static class HousingSystem
     public static string Describe(SimContext ctx, Person p)
     {
         string city = City(ctx, p).Name;
+        if (p.Abroad != null && ctx.Content.Countries.TryGetValue(p.Abroad, out var home) && !p.Flags.Contains(CareHomeFlag))
+            return city == home.Name ? $"Lives in {home.Name}" : $"Lives in {city}, {home.Name}";
         if (p.Flags.Contains(CareHomeFlag)) return $"Lives in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"Homeless in {city}";
         if (p.LivesWithParents) return $"Lives with parents in {city}";
@@ -203,7 +211,7 @@ public static class HousingSystem
     public static void MoveTo(SimContext ctx, Person p, string? cityId = null)
     {
         var w = ctx.World;
-        string target = cityId ?? RandomCityId(ctx, p.CityId);
+        string target = cityId ?? RandomCityId(ctx, p.CityId, p.Abroad);
         if (target == p.CityId) return;
         var movers = new List<Person> { p };
         if (w.TryGet(p.PartnerId) is { } partner && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) movers.Add(partner);

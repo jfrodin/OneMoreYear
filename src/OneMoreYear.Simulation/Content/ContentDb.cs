@@ -211,6 +211,7 @@ public sealed class ContentDb
                 foreach (var eff in all)
                 {
                     if (!Systems.EffectApplier.KnownTypes.Contains(eff.Type)) errors.Add($"Event {e.Id}: unknown effect type '{eff.Type}'");
+                    if (eff.Type == "emigrate" && (eff.Country == null || !Countries.ContainsKey(eff.Country))) errors.Add($"Event {e.Id}: emigrate to unknown country {eff.Country}");
                     if (eff.Trait != null && !Traits.ContainsKey(eff.Trait)) errors.Add($"Event {e.Id}: unknown trait {eff.Trait}");
                     // Design rule: abusing a child is never something the player can choose to do.
                     if (eff.Type == "crime" && eff.Kind is "child_abuse" or "sexual_assault") errors.Add($"Event {e.Id}: {eff.Kind} can never be a player choice");

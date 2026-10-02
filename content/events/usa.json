@@ -34,6 +34,9 @@
       { "text": "Go to Canada", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "happiness", "amount": -6 },
           { "type": "memory", "kind": "canada", "text": "The years in Canada", "impact": -10 } ],
         "result": "You cross the border at night with one suitcase. Your father does not speak to you for nine years." },
+      { "text": "Go to Sweden", "requires": { "minYear": 1967 }, "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "happiness", "amount": -4 }, { "type": "emigrate", "country": "sweden" },
+          { "type": "memory", "kind": "deserter", "text": "Refusing the war and leaving for Sweden", "impact": -5 } ],
+        "result": "Sweden gives Americans who refuse the war a place to stay. A cold airport, a social worker with good English, a room in Stockholm. Nobody at home will understand." },
       { "text": "Apply as a conscientious objector", "chance": 0.35, "chanceTraits": { "kind": 0.15, "brave": 0.1 },
         "success": { "text": "Two years as an orderly in a veterans' hospital instead. You see what the war does, from the other end.", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "trait_add", "trait": "kind", "chance": 0.15 } ] },
         "failure": { "text": "The board says no. You report in March like everyone else.", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "flag", "flag": "veteran" }, { "type": "ailment_add", "kind": "trauma", "chance": 0.35 }, { "type": "memory", "kind": "vietnam", "text": "Vietnam", "impact": -25 } ] } }

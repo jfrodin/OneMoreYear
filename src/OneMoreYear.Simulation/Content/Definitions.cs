@@ -157,6 +157,8 @@ public sealed class CountryDef
     public string? AdultEducation { get; set; }
     /// <summary>What the school after compulsory school is called ("upper secondary school", "high school").</summary>
     public string SecondarySchool { get; set; } = "upper secondary school";
+    /// <summary>The language people speak at home ("Swedish", "English").</summary>
+    public string Language { get; set; } = "English";
     /// <summary>The everyday word for a rented home ("flat", "apartment").</summary>
     public string Flat { get; set; } = "flat";
     public int PensionAge { get; set; } = 65;
@@ -298,6 +300,8 @@ public sealed class ConditionDef
     public bool? LivesWithParents { get; set; }
     /// <summary>The person's heritage is one of these (see content/names).</summary>
     public List<string>? Heritage { get; set; }
+    /// <summary>Lives in another country than the story (relatives who stayed behind).</summary>
+    public bool? Abroad { get; set; }
     public List<string>? TraitsAny { get; set; }
     public List<string>? TraitsNone { get; set; }
     public List<string>? Flags { get; set; }
@@ -376,6 +380,8 @@ public sealed class EffectDef
     public string? Programme { get; set; }
     /// <summary>Event id for "queue_event".</summary>
     public string? Event { get; set; }
+    /// <summary>emigrate: the country to move to.</summary>
+    public string? Country { get; set; }
     public string? Cause { get; set; }
     public double Chance { get; set; } = 1;
 }

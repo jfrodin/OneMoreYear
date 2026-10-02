@@ -4,6 +4,7 @@
   "id": "sweden",
   "name": "Sweden",
   "currencySymbol": "kr",
+  "language": "Swedish",
   "minStartYear": 1950,
   "maxStartYear": 2020,
   "maleNames": [

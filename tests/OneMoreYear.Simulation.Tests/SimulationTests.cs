@@ -848,6 +848,63 @@ public class CountryTests
     }
 
     [Fact]
+    public void Emigrating_moves_the_story_and_leaves_the_relatives_behind()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 8, StartYear = 1950 });
+        var bot = new AutoPlayer(8, useActions: false);
+        for (int i = 0; i < 25 && bot.PlayYear(s); i++) { }
+        var player = s.Player;
+        var parent = Kinship.Parents(s.World, player).First();
+        player.Money = s.Ctx.Nominal(500_000);
+        double realBefore = s.Ctx.Real(player.Money);
+
+        EmigrationSystem.Emigrate(s.Ctx, player, "usa");
+
+        Assert.Equal("usa", s.Country.Id);
+        Assert.Null(player.Abroad);
+        Assert.Equal("sweden", player.Homeland);
+        Assert.Equal("sweden", parent.Abroad);
+        Assert.Contains(HousingSystem.City(s.Ctx, parent).Id, s.Ctx.Content.Countries["sweden"].Cities.Select(c => c.Id).Append(""));
+        Assert.Contains(HousingSystem.City(s.Ctx, player), s.Country.Cities);
+        // The same real value, now in dollars (less the journey).
+        Assert.InRange(s.Ctx.Real(player.Money), realBefore * 0.15 * 0.9, realBefore * 0.15);
+        Assert.Equal("Sweden", TextFormatter.Format(s.Ctx, "{homeland}", null));
+
+        for (int i = 0; i < 10 && bot.PlayYear(s); i++) { }
+        if (s.Player.Id == player.Id && player.IsAlive)
+        {
+            EmigrationSystem.Emigrate(s.Ctx, player, "sweden");
+            Assert.Equal("sweden", s.Country.Id);
+            Assert.Null(parent.Abroad);
+            Assert.Null(player.Homeland);
+            Assert.DoesNotContain(EmigrationSystem.EmigrantFlag, player.Flags);
+        }
+    }
+
+    [Theory]
+    [InlineData(2UL)]
+    [InlineData(5UL)]
+    [InlineData(9UL)]
+    public void Generations_after_an_emigration_play_without_errors(ulong seed)
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1950 });
+        var bot = new AutoPlayer(seed);
+        var unresolved = new List<string>();
+        bot.OnText = t => { if (t.Contains('{')) unresolved.Add(t); };
+        for (int i = 0; i < 22 && bot.PlayYear(s); i++) { }
+        EmigrationSystem.Emigrate(s.Ctx, s.Player, "usa");
+        var seen = new HashSet<string>();
+        for (int i = 0; i < 120 && bot.PlayYear(s); i++)
+            foreach (var p in s.World.PendingEvents) seen.Add(p.EventId);
+
+        Assert.Empty(unresolved);
+        foreach (var line in s.Chronicle()) Assert.DoesNotContain("{", line.Text);
+        // Whoever plays now lives where the story is.
+        if (!s.GameOver) Assert.Null(s.Player.Abroad);
+        foreach (var p in s.World.People.Where(p => p.IsAlive)) Assert.False(string.IsNullOrEmpty(HousingSystem.Describe(s.Ctx, p)));
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.
@@ -857,8 +914,8 @@ public class CountryTests
             {
                 var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1980, CountryId = country });
                 var bot = new AutoPlayer(seed);
-                for (int i = 0; i < 60 && bot.PlayYear(s); i++)
-                    if (s.World.Ledger.Any(l => l.Label == label)) return true;
+                for (int i = 0; i < 60 && s.World.CountryId == country && bot.PlayYear(s); i++)
+                    if (s.World.CountryId == country && s.World.Ledger.Any(l => l.Label == label)) return true;
             }
             return false;
         }

@@ -52,7 +52,7 @@ When the game is ready for outside testers. Ask the producer before starting.
   3. **United Kingdom** – class, council estates, the NHS, Thatcher, the miners' strike.
   4. **Germany** – a family split by the Wall in 1961, East and West, reunited in 1990.
   5. Later: Poland, Italy or Spain, Japan, Finland.
-  - With several countries, **emigration** becomes a story of its own (to America in the fifties,
+  - [x] Done in 0.36.0: **emigration** becomes a story of its own (to America in the fifties,
     to Sweden with your names and your heritage).
 
 ## Balancing

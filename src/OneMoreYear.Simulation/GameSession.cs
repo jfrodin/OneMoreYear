@@ -172,6 +172,7 @@ public sealed class GameSession
         AilmentSystem.Update(ctx);
         Hardship.Update(ctx);
         CrimeSystem.Update(ctx);
+        EmigrationSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);
 
@@ -871,6 +872,8 @@ public sealed class GameSession
 
     private void SwitchPlayer(Person p)
     {
+        // The next player lives in another country: the story moves there.
+        if (p.Abroad is { } country) EmigrationSystem.Reframe(Ctx, country, EmigrationSystem.Travellers(Ctx, p));
         World.PlayerId = p.Id;
         World.PlayedIds.Add(p.Id);
         InvestmentSystem.ConvertSimple(Ctx, p);

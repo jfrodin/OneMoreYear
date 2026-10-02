@@ -8,15 +8,14 @@ public sealed class SimContext
 {
     public World World { get; }
     public ContentDb Content { get; }
-    public CountryDef Country { get; }
+    /// <summary>The country the story is in; it changes when the player emigrates.</summary>
+    public CountryDef Country => Content.Countries[World.CountryId];
 
     public SimContext(World world, ContentDb content)
     {
         World = world;
         Content = content;
-        Country = content.Countries.TryGetValue(world.CountryId, out var c)
-            ? c
-            : throw new InvalidDataException($"Unknown country: {world.CountryId}");
+        if (!content.Countries.ContainsKey(world.CountryId)) throw new InvalidDataException($"Unknown country: {world.CountryId}");
     }
 
     public SimRandom Rng => World.Rng;

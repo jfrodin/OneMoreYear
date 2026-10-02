@@ -107,6 +107,10 @@ public sealed class Person
     public double CottageValue { get; set; }
     /// <summary>Which city the person lives in (country content).</summary>
     public string? CityId { get; set; }
+    /// <summary>Lives in another country than the one the story is in (set when the player emigrates and they stay); null = here.</summary>
+    public string? Abroad { get; set; }
+    /// <summary>The country an emigrant came from (null for those who never left, or who came back).</summary>
+    public string? Homeland { get; set; }
     /// <summary>Still living in the parents' home.</summary>
     public bool LivesWithParents { get; set; }
     /// <summary>Shares a rented flat with others (cheaper than renting alone).</summary>

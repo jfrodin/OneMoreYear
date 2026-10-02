@@ -6,6 +6,7 @@
   "name": "United States",
   "currencySymbol": "$",
   "currencyBefore": true,
+  "language": "English",
   "contentMoneyScale": 0.15,
   "minStartYear": 1950,
   "maxStartYear": 2020,

@@ -241,6 +241,7 @@ public static class FamilySystem
     public static Person HaveChild(SimContext ctx, Person a, Person? b, int? biologicalFatherId = null, Sex? sex = null)
     {
         var child = PersonFactory.CreateBaby(ctx, a, b, biologicalFatherId, sex);
+        child.Abroad = a.Abroad;
         var w = ctx.World;
         string parents = b == null ? a.FirstName : $"{a.FirstName} and {b.FirstName}";
         w.Log($"{parents} had a {(child.Sex == Sex.Male ? "son" : "daughter")}, {child.FirstName}.", ctx.Importance(true, a, b, child), "family", a.Id, b?.Id ?? a.Id, child.Id);

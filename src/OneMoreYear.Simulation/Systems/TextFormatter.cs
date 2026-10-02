@@ -57,6 +57,9 @@ public static partial class TextFormatter
                     "city" => HousingSystem.City(ctx, player).Name,
                     "secondary" => ctx.Country.SecondarySchool,
                     "flat" => ctx.Country.Flat,
+                    "country" => ctx.Country.Name,
+                    "homeland" => Homeland(ctx, player)?.Name ?? ctx.Country.Name,
+                    "language" => Homeland(ctx, player)?.Language ?? ctx.Country.Language,
                     _ when pending != null && pending.Vars.TryGetValue(head, out var v) => EconomySystem.Format(ctx, ctx.Nominal(v)),
                     _ => m.Value
                 };
@@ -106,6 +109,8 @@ public static partial class TextFormatter
     }
 
     public static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
+
+    private static Content.CountryDef? Homeland(SimContext ctx, Person p) => p.Homeland is { } h ? ctx.Content.Countries.GetValueOrDefault(h) : null;
 
     /// <summary>"a flat", "an apartment".</summary>
     public static string A(string noun) => ("aeiou".Contains(char.ToLowerInvariant(noun.FirstOrDefault())) ? "an " : "a ") + noun;

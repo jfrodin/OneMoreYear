@@ -2,6 +2,19 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.36.0 – 2026-10-02 · Emigration
+
+- **Leave for another country.** A new action, "Emigrate to America" (or "Move to Sweden"), sells your
+  home and investments and takes your partner and children along. Everyone else stays behind and
+  lives on in the old country; the people page says where they live. Money changes into the new
+  currency at the same real value.
+- **Ways out**: a letter from a great uncle in Minnesota (Sweden, 1950 to 1975), and for American
+  men drafted after 1967, refusing the war and going to Sweden.
+- **Life as an emigrant**: homesickness, the accent at work, children who answer in the other
+  language, parents growing old far away, a sibling who visits, the question of going back, the
+  citizenship oath in America and Swedish for immigrants in Sweden. Going back home ends it.
+- If the next player lives in the old country, the story moves back there with them.
+
 ## 0.35.0 – 2026-10-02 · America, deeper
 
 - **American pay is spread wider**: a country can stretch the salary ladder. In the USA the lowest

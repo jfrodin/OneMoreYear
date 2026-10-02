@@ -1,0 +1,128 @@
+// Leaving for another country, and living there. "emigrate" moves the player's household; relatives
+// who stay are "abroad". Tokens: {country} is where you live now, {homeland} and {language} where you came from.
+// No dashes.
+[
+  {
+    "id": "self_emigrate_usa", "countries": [ "sweden" ], "trigger": "self", "category": "life", "title": "Emigrate to America",
+    "conditions": { "minAge": 18, "maxAge": 55, "notActivity": [ "prison" ] },
+    "choices": [
+      { "text": "Sell everything and go", "hint": "Your home and investments are sold. Partner and children come along; everyone else stays.",
+        "effects": [ { "type": "emigrate", "country": "usa" }, { "type": "happiness", "amount": 2 } ],
+        "result": "[[1975: A long flight, a longer line at immigration, and a man in a uniform who says welcome without smiling. || Ten hours in a plane and an hour at passport control. Then the noise, the size of the cars, the size of everything.]]" },
+      { "text": "Not yet", "result": "You look at the map for a long time and put it back in the drawer." }
+    ]
+  },
+  {
+    "id": "self_emigrate_sweden", "countries": [ "usa" ], "trigger": "self", "category": "life", "title": "Move to Sweden",
+    "conditions": { "minAge": 18, "maxAge": 55, "notActivity": [ "prison" ] },
+    "choices": [
+      { "text": "Sell everything and go", "hint": "Your home and investments are sold. Partner and children come along; everyone else stays.",
+        "effects": [ { "type": "emigrate", "country": "sweden" }, { "type": "happiness", "amount": 2 } ],
+        "result": "A grey airport, a bus through pine forest, and a country where everyone waits for the green light even when there are no cars." },
+      { "text": "Not yet", "result": "You read about it on the internet late at night. Free college, long summers, dark winters. Maybe one day." }
+    ]
+  },
+  {
+    "id": "se_letter_from_minnesota", "countries": [ "sweden" ], "title": "A letter from Minnesota",
+    "text": "A letter with American stamps. Your great uncle went over before the war and has a farm machinery business in Minnesota now. He needs young people he can trust. There is a room for you.",
+    "conditions": { "minAge": 18, "maxAge": 30, "minYear": 1950, "maxYear": 1975, "notFlags": [ "minnesota_letter" ] }, "weight": 0.6,
+    "choices": [
+      { "text": "Go to America", "effects": [ { "type": "flag", "flag": "minnesota_letter" }, { "type": "emigrate", "country": "usa" }, { "type": "memory", "kind": "minnesota", "text": "Answering the letter from Minnesota", "impact": 10 } ],
+        "result": "A boat to New York, a train for two days, and a great uncle at the station who speaks a Swedish nobody has used since 1910." },
+      { "text": "Write back no, kindly", "effects": [ { "type": "flag", "flag": "minnesota_letter" } ], "result": "You keep the letter. Now and then, on a bad day at work, you read it again." }
+    ]
+  },
+  {
+    "id": "emig_homesick", "title": "Homesick",
+    "text": "Something small sets it off: a smell from a bakery, a song on the radio, the light on a winter afternoon. For a moment you are back in {homeland}, and then you are not.",
+    "conditions": { "minAge": 12, "flags": [ "emigrant" ] }, "cooldown": 5,
+    "choices": [
+      { "text": "Call home", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 3 } ],
+        "result": "[[1995: The call costs a fortune per minute. You talk fast and say nothing important. It helps anyway. || A video call that freezes every ten seconds. Your mother's face, stuck mid sentence. It helps anyway.]]" },
+      { "text": "Cook the food you grew up with", "effects": [ { "type": "happiness", "amount": 4 } ],
+        "result": "Half the ingredients do not exist here. You improvise. It tastes almost right, which is somehow worse and better at the same time." },
+      { "text": "Push it down and go to work", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "performance", "amount": 2 } ], "result": "You are very productive that week. Nobody asks why." }
+    ]
+  },
+  {
+    "id": "emig_accent", "title": "The accent",
+    "text": "A meeting at work. You say something, and someone repeats it back, slowly, to the room, as if translating. A few people laugh.",
+    "conditions": { "minAge": 18, "maxAge": 65, "flags": [ "emigrant" ], "activity": "working" }, "cooldown": 8,
+    "choices": [
+      { "text": "Laugh with them", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.05 } ], "result": "You laugh. At home you practise the word in the mirror until it sounds like theirs." },
+      { "text": "Correct them, calmly", "chance": 0.6, "chanceTraits": { "brave": 0.15, "charming": 0.15 },
+        "success": { "text": "\"I said it the first time.\" Silence. Then the boss nods and moves on. Nobody does it again.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "performance", "amount": 2 } ] },
+        "failure": { "text": "It comes out sharper than you meant. Now you are the touchy foreigner, too.", "effects": [ { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "emig_child_language", "title": "In the other language",
+    "text": "You ask {t.name} something in {language}, and {t.he} answers in the language of {country} without even noticing.",
+    "conditions": { "minAge": 25, "flags": [ "emigrant" ] }, "cooldown": 12,
+    "target": { "role": "child", "conditions": { "minAge": 5, "maxAge": 14, "abroad": false } },
+    "choices": [
+      { "text": "Insist on {language} at home", "chance": 0.5, "chanceTraits": { "devoted_parent": 0.2 },
+        "success": { "text": "It is a fight for years. Then, at {t.his} grandmother's kitchen table, {t.name} chats away and your mother cries.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 5, "mutual": true }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "{t.He} refuses. By twelve {t.he} understands everything and says nothing back. You let it go.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Let it go", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "This is {t.his} country. You just did not expect it to happen so quickly." }
+    ]
+  },
+  {
+    "id": "emig_parent_far_away", "title": "Far away",
+    "text": "{T.role} is getting old, back in {homeland}. On the phone {t.he} says everything is fine, in the voice that means it is not.",
+    "conditions": { "minAge": 30 },
+    "target": { "role": "parent", "conditions": { "minAge": 65, "abroad": true } }, "cooldown": 6,
+    "choices": [
+      { "text": "Fly home for a month", "effects": [ { "type": "money", "amount": -15000 }, { "type": "performance", "amount": -3 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": 3 } ],
+        "result": "You fix the gutter, sort the pills into little boxes, and sit together in the evenings without saying much. At the airport neither of you says what you are both thinking." },
+      { "text": "Send money", "effects": [ { "type": "transfer", "to": "target", "amount": 20000 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 2, "mutual": true } ],
+        "result": "{T.He} says you should not have. {T.He} uses it for the heating bill." },
+      { "text": "Call more often", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 3, "mutual": true }, { "type": "happiness", "amount": -2 } ],
+        "result": "Sunday evenings, every week. Some calls are ten minutes of weather. Some are not." }
+    ]
+  },
+  {
+    "id": "emig_sibling_visits", "title": "A visitor from home",
+    "text": "{T.role} has saved for two years and is coming to visit. {T.He} wants to see everything: where you live, where you work, what you have become over here.",
+    "conditions": { "minAge": 20 },
+    "target": { "role": "sibling", "conditions": { "minAge": 18, "abroad": true } }, "cooldown": 8,
+    "choices": [
+      { "text": "Show {t.him} the best of {country}", "effects": [ { "type": "money", "amount": -6000 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 5 } ],
+        "result": "Two weeks of being a tourist in your own town. Seeing it through {t.his} eyes, you like it more than you thought." },
+      { "text": "Let {t.him} see real life", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": 6, "mutual": true }, { "type": "happiness", "amount": 2 } ],
+        "result": "The commute, the bills, the neighbour who never says hello. On the last night {t.he} says: so it is the same everywhere. You both laugh until you cry." }
+    ]
+  },
+  {
+    "id": "emig_go_back", "title": "Back home?",
+    "text": "It has been years. Some nights you lie awake and count: the years here, the years there, the people you have lost touch with. You could still go back to {homeland}.",
+    "conditions": { "minAge": 30, "maxAge": 70, "flags": [ "emigrant" ] }, "cooldown": 10, "weight": 0.5,
+    "choices": [
+      { "text": "Stay. This is home now", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "memory", "kind": "stayed", "text": "Deciding that {country} is home", "impact": 8 } ],
+        "result": "You put the thought away. In the morning, your neighbour waves, and you wave back, and that is that." },
+      { "text": "Start looking at flights", "effects": [ { "type": "happiness", "amount": -1 } ],
+        "result": "You do not book anything. But you know now where the button is." }
+    ]
+  },
+  {
+    "id": "us_citizenship", "countries": [ "usa" ], "title": "The oath",
+    "text": "Five years, a test about the Constitution, an interview in a beige office. Now a courtroom full of people from forty countries, all holding small flags.",
+    "conditions": { "minAge": 18, "flags": [ "emigrant" ], "notFlags": [ "us_citizen" ] }, "cooldown": 5,
+    "choices": [
+      { "text": "Take the oath", "effects": [ { "type": "flag", "flag": "us_citizen" }, { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "citizen", "text": "Becoming an American", "impact": 15 } ],
+        "result": "The judge says congratulations in four languages. A woman from Vietnam next to you squeezes your hand. Afterwards there is cake in the lobby." },
+      { "text": "Not yet. You are still from {homeland}", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "The papers stay in the drawer. It feels like a betrayal either way." }
+    ]
+  },
+  {
+    "id": "se_swedish_for_immigrants", "countries": [ "sweden" ], "title": "Swedish for immigrants",
+    "text": "Swedish lessons three mornings a week. Your classmates are an engineer from Chile, a doctor from Iran and a grandmother from Finland. The teacher is very patient.",
+    "conditions": { "minAge": 18, "maxAge": 65, "flags": [ "emigrant" ], "notFlags": [ "learned_swedish" ] }, "cooldown": 3,
+    "choices": [
+      { "text": "Work hard at it", "chance": 0.6, "chanceAttributes": { "smarts": 0.005 },
+        "success": { "text": "One day at the supermarket you argue about a receipt in Swedish and win. You tell everyone that evening.", "effects": [ { "type": "flag", "flag": "learned_swedish" }, { "type": "happiness", "amount": 5 }, { "type": "performance", "amount": 4 } ] },
+        "failure": { "text": "Seventeen vowels. You give up on the eighth and start again in the autumn.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Get by in English", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Everyone speaks English anyway. But they switch back to Swedish the moment you leave the room." }
+    ]
+  }
+]
