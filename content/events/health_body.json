@@ -1,0 +1,185 @@
+// The body: illnesses that are not dramatic, small decisions about health, and getting older in it.
+// No dashes.
+[
+  {
+    "id": "hb_flu", "title": "The flu",
+    "text": "The real flu, not a cold. Everything aches, the ceiling is spinning, and you have an important day at work tomorrow.",
+    "conditions": { "minAge": 16 }, "cooldown": 4,
+    "choices": [
+      { "text": "Stay in bed", "effects": [ { "type": "health", "amount": 1 }, { "type": "performance", "amount": -1 } ], "result": "Five days of soup, daytime television and sleep. You come back to a desk that survived without you." },
+      { "text": "Go in anyway", "effects": [ { "type": "health", "amount": -3 }, { "type": "performance", "amount": 1 } ], "result": "You make it through the day. So does the virus, which spreads through the whole office. Nobody thanks you." }
+    ]
+  },
+  {
+    "id": "hb_dentist", "title": "The dentist",
+    "text": "A tooth has been aching for weeks. You have been eating on the other side and hoping. The dentist has a slot tomorrow morning.",
+    "conditions": { "minAge": 16 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -2500 }, { "type": "health", "amount": 1 } ], "result": "A filling, a lecture about flossing, and the end of a month of pain in forty minutes. You wonder why you waited." },
+      { "text": "Wait a bit longer", "chance": 0.4,
+        "success": { "text": "It stops hurting by itself. You decide not to think about why.", "effects": [] },
+        "failure": { "text": "A root canal, at three times the price, on a Friday afternoon. The dentist does not say I told you so. Her face does.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "health", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "hb_blood_pressure", "title": "The numbers",
+    "text": "A routine check at the doctor's. Your blood pressure is high. Not dangerous yet, the doctor says, but heading that way.",
+    "conditions": { "minAge": 40 }, "cooldown": 15,
+    "choices": [
+      { "text": "Change your habits", "chance": 0.5, "chanceTraits": { "resilient": 0.1, "lazy": -0.2 },
+        "success": { "text": "Less salt, more walking, fewer late nights. A year later the numbers are normal, and you feel ten years younger.", "effects": [ { "type": "health", "amount": 5 }, { "type": "attribute", "kind": "fitness", "amount": 2 } ] },
+        "failure": { "text": "Two good months, then old habits. You take the pills instead. They work, mostly.", "effects": [ { "type": "health", "amount": 1 } ] } },
+      { "text": "Take the pills", "effects": [ { "type": "health", "amount": 2 } ], "result": "One small pill every morning, for the rest of your life. It is a fair deal, all things considered." }
+    ]
+  },
+  {
+    "id": "hb_broken_leg_ski", "title": "The slope",
+    "text": "A skiing holiday, the last run of the day, and a slope you are not quite good enough for. Your friends are already at the bottom.",
+    "conditions": { "minAge": 10, "maxAge": 65 }, "cooldown": 10, "weight": 0.5,
+    "choices": [
+      { "text": "Go for it", "chance": 0.75, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "Fast, terrifying and glorious. You arrive at the bottom in a spray of snow and nobody believes it was you.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "A crack you hear before you feel. Six weeks in plaster and a story you will tell for life, improving it each time.", "effects": [ { "type": "health", "amount": -8 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Take the lift down", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Your friends tease you all evening. Your legs are perfectly fine. You will be skiing at eighty, and they will not." }
+    ]
+  },
+  {
+    "id": "hb_stop_smoking", "title": "The last one",
+    "text": "You have decided: this packet is the last. You have decided this before.",
+    "conditions": { "minAge": 20, "minYear": 1965 }, "cooldown": 8, "weight": 0.6,
+    "choices": [
+      { "text": "Throw it away now", "chance": 0.4, "chanceTraits": { "resilient": 0.2, "addictive": -0.25 },
+        "success": { "text": "Three weeks of misery, then three months of chewing gum, then one day you realise you have not thought about it since Tuesday.", "effects": [ { "type": "health", "amount": 6 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "Four days. A bad day at work. Back to the start, and a little ashamed.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Cut down slowly", "effects": [ { "type": "health", "amount": 2 } ], "result": "Fewer every month. It takes a year. It works, in the end, which is more than most people manage." }
+    ]
+  },
+  {
+    "id": "hb_insomnia_phase", "title": "Three in the morning",
+    "text": "For weeks now you wake at three and lie there until six, thinking about everything you have ever done wrong.",
+    "conditions": { "minAge": 25 }, "cooldown": 8,
+    "choices": [
+      { "text": "Get up and read", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "health", "amount": -1 } ], "result": "You read four novels in a month. The sleep comes back, slowly, by itself." },
+      { "text": "See a doctor", "effects": [ { "type": "money", "amount": -800 }, { "type": "health", "amount": 2 } ], "result": "Less coffee, no screens at night, and a little advice about worrying. It helps more than you expected." }
+    ]
+  },
+  {
+    "id": "hb_new_diet", "title": "The new diet",
+    "text": "Everyone at work is on the same new diet. No bread, no sugar, no joy. They all look very pleased with themselves.",
+    "conditions": { "minAge": 20, "maxAge": 70, "minYear": 1975 }, "cooldown": 8,
+    "choices": [
+      { "text": "Join them", "chance": 0.4,
+        "success": { "text": "You lose some weight and gain a lot of opinions about bread. You keep some of the habits for life.", "effects": [ { "type": "health", "amount": 3 }, { "type": "attribute", "kind": "looks", "amount": 1 } ] },
+        "failure": { "text": "Day nine, a birthday cake in the staff room. You are only human.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Eat the cake", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Someone has to. You do it with dignity." }
+    ]
+  },
+  {
+    "id": "hb_eyesight_reading", "title": "Small print",
+    "text": "The menu has started being printed in very small letters. All menus. Everywhere. At the same time.",
+    "conditions": { "minAge": 42, "maxAge": 55, "notFlags": [ "reading_glasses" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Get reading glasses", "effects": [ { "type": "flag", "flag": "reading_glasses" }, { "type": "money", "amount": -1000 }, { "type": "happiness", "amount": 1 } ], "result": "You look exactly like your mother in them. You can read again, though." },
+      { "text": "Hold things further away", "effects": [ { "type": "flag", "flag": "reading_glasses" } ], "result": "Your arms are not long enough. They will never be long enough. You buy the glasses in March." }
+    ]
+  },
+  {
+    "id": "hb_mole", "title": "The mole",
+    "text": "A mole on your back has changed shape. [[2005: Someone noticed it at the beach || You noticed it in a photo]]. The doctor wants to take it off and have it checked.",
+    "conditions": { "minAge": 30 }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Have it checked", "chance": 0.9,
+        "success": { "text": "Two weeks of waiting, then a phone call: harmless. You walk out of the clinic into the sun and buy flowers for no reason.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "It was something, caught early. A small operation, a scar, and a check every year from now on. You were lucky, and you know it.", "effects": [ { "type": "health", "amount": -4 }, { "type": "memory", "kind": "caught_early", "text": "The mole that was caught in time", "impact": -5 } ] } }
+    ]
+  },
+  {
+    "id": "hb_knee", "title": "The knee",
+    "text": "Your knee has been complaining for years. Now it has stopped complaining and started refusing. A surgeon says a new knee would change your life.",
+    "conditions": { "minAge": 60 }, "cooldown": 30, "weight": 0.5,
+    "choices": [
+      { "text": "Have the operation", "effects": [ { "type": "health", "amount": 4 }, { "type": "happiness", "amount": 4 }, { "type": "money", "amount": -5000 } ], "result": "Three painful months of exercises. Then you walk up a hill you had given up on, and stand at the top for a long time." },
+      { "text": "Learn to live with it", "effects": [ { "type": "health", "amount": -2 } ], "result": "A stick, then a better stick. You know every bench in town now." }
+    ]
+  },
+  {
+    "id": "hb_allergy", "title": "Spring",
+    "text": "This spring, for the first time in your life, the birch pollen has turned your eyes into fountains and your nose into a disaster.",
+    "conditions": { "minAge": 20, "maxAge": 60 }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Antihistamines", "effects": [ { "type": "money", "amount": -300 }, { "type": "happiness", "amount": 1 } ], "result": "You can breathe. You are also slightly sleepy until June. A fair trade." },
+      { "text": "Stay indoors until it passes", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "Three weeks of watching spring through a closed window. It looks lovely. You are told." }
+    ]
+  },
+  {
+    "id": "hb_check_up_fifty", "title": "The check up",
+    "text": "A letter: at fifty, you are invited for a full health check. Blood, heart, everything. It is free. It is also frightening.",
+    "conditions": { "minAge": 50, "maxAge": 52 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go", "chance": 0.8,
+        "success": { "text": "Everything is fine, more or less. A little cholesterol, a little advice. You go home and take the stairs instead of the lift for almost a month.", "effects": [ { "type": "health", "amount": 2 }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "Something to keep an eye on. Not serious, the doctor says, which is not quite the same as nothing. You start walking every evening.", "effects": [ { "type": "health", "amount": 1 }, { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Throw away the letter", "effects": [], "result": "What you do not know cannot hurt you. Probably." }
+    ]
+  },
+  {
+    "id": "hb_running_start", "title": "Couch to five",
+    "text": "You have downloaded a programme that promises to take you from the sofa to running five kilometres in nine weeks.",
+    "conditions": { "minAge": 25, "maxAge": 65, "minYear": 2010 }, "cooldown": 15,
+    "choices": [
+      { "text": "Start tomorrow", "chance": 0.5, "chanceTraits": { "lazy": -0.25, "ambitious": 0.1 },
+        "success": { "text": "Week one is hell. Week five is surprising. Week nine is a park run in the rain, and a medal you did not need but love.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 6 }, { "type": "health", "amount": 3 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "Week three. A rainy Tuesday. The app sends you encouraging notifications for a year.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Walk the dog further instead", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 } ], "result": "The dog is thrilled. So, after a while, are your knees." }
+    ]
+  },
+  {
+    "id": "hb_burnout_warning", "title": "The warning",
+    "text": "You forgot your own phone number today. Yesterday you cried in the car park for no reason you could name. You have not had a day off in months.",
+    "conditions": { "minAge": 25, "maxAge": 65, "activity": "working", "maxHealth": 70 }, "cooldown": 10,
+    "choices": [
+      { "text": "Take sick leave", "effects": [ { "type": "performance", "amount": -4 }, { "type": "health", "amount": 5 }, { "type": "happiness", "amount": 3 } ], "result": "Two months. The first three weeks you sleep. Then you start to notice the trees again. You go back to work slower, and wiser." },
+      { "text": "Push through", "effects": [ { "type": "performance", "amount": 2 }, { "type": "health", "amount": -5 }, { "type": "ailment_add", "kind": "burnout", "chance": 0.4 } ], "result": "You push through. It is the kind of decision that sends its bill later." }
+    ]
+  },
+  {
+    "id": "hb_vaccination", "title": "The jab",
+    "text": "The vaccination programme has reached your age group. A long queue, a short needle, and a sticker you are too old for.",
+    "conditions": { "minAge": 18, "minYear": 2021, "maxYear": 2021 }, "cooldown": 0,
+    "choices": [
+      { "text": "Get it", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": 1 } ], "result": "A sore arm for a day. A feeling, walking out, that the world might be opening again." },
+      { "text": "Wait and see", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You wait. Your family has opinions. Christmas is tense." }
+    ]
+  },
+  {
+    "id": "hb_hearing_loud", "title": "Ringing",
+    "text": "After a concert, your ears ring for two days. A friend who works with sound says you should get earplugs, or one day the ringing will not stop.",
+    "conditions": { "minAge": 16, "maxAge": 40 }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Buy earplugs", "effects": [ { "type": "money", "amount": -200 } ], "result": "You look ridiculous at the next concert. At seventy, you will hear your grandchildren perfectly." },
+      { "text": "It will pass", "effects": [ { "type": "health", "amount": -1 } ], "result": "It passes. Mostly. On quiet nights, years later, there is a faint whistle that you cannot place." }
+    ]
+  },
+  {
+    "id": "hb_menopause", "title": "Hot",
+    "text": "Hot flushes in meetings, nights soaked in sweat, and a temper you do not recognise. Your doctor says it has a name, and that you do not have to just put up with it.",
+    "conditions": { "minAge": 46, "maxAge": 56, "sex": "female" }, "cooldown": 30,
+    "choices": [
+      { "text": "Ask about treatment", "requires": { "minYear": 1960 }, "effects": [ { "type": "health", "amount": 2 }, { "type": "happiness", "amount": 4 } ], "result": "It helps. You sleep again. You tell every friend your age, and half of them go the next week." },
+      { "text": "Get through it", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "resilient", "chance": 0.03 } ], "result": "A fan on your desk, layers of clothes and a lot of gritted teeth. It passes. It takes its time about it." }
+    ]
+  },
+  {
+    "id": "hb_chest_pain", "title": "A pain in the chest",
+    "text": "A pain in your chest, walking up the stairs. It goes away when you sit down. It comes back the next day.",
+    "conditions": { "minAge": 50 }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Go to the hospital", "chance": 0.7,
+        "success": { "text": "Tests, a long night, and a doctor who says it was your back, of all things. You have never been so happy to have a bad back.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "A narrowed artery, caught just in time. A small tube, a night in hospital, and a new respect for the stairs.", "effects": [ { "type": "health", "amount": -5 }, { "type": "memory", "kind": "heart_scare", "text": "The pain on the stairs", "impact": -10 } ] } },
+      { "text": "Ignore it", "chance": 0.6,
+        "success": { "text": "It goes away and does not come back. Luck, not wisdom.", "effects": [] },
+        "failure": { "text": "It comes back on a Sunday, much worse, and an ambulance comes with it.", "effects": [ { "type": "health", "amount": -15 }, { "type": "happiness", "amount": -5 } ] } }
+    ]
+  }
+]

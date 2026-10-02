@@ -1,0 +1,191 @@
+// Money and home: the bills, the leaks, the windfalls and the temptations. No dashes.
+[
+  {
+    "id": "mh_leak", "title": "Water",
+    "text": "You come home to a dripping ceiling. Something upstairs has burst, and the stain is spreading while you watch.",
+    "conditions": { "minAge": 22, "livesWithParents": false }, "cooldown": 15,
+    "choices": [
+      { "text": "Fix it yourself", "chance": 0.5, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "A wrench, a video tutorial and three hours on your back under a sink. It holds. You are unbearable about it for a week.", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "It holds for a day. Then the plumber, and a bigger bill than if you had called him first.", "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Call a plumber", "effects": [ { "type": "money", "amount": -8000 } ], "result": "He arrives four hours later, sucks his teeth at the pipes, and names a figure. You pay it gladly, at that point." }
+    ]
+  },
+  {
+    "id": "mh_lottery_win", "title": "Four numbers",
+    "text": "Four numbers out of seven on the lottery ticket you buy every week out of habit. Not a fortune, but more than a month's pay.",
+    "conditions": { "minAge": 18 }, "cooldown": 30, "weight": 0.3,
+    "choices": [
+      { "text": "Treat the whole family", "effects": [ { "type": "money", "amount": 15000 }, { "type": "happiness", "amount": 6 } ], "result": "A big dinner, presents for the children, and a story that gets bigger every time it is told." },
+      { "text": "Save every penny", "effects": [ { "type": "money", "amount": 30000 }, { "type": "trait_add", "trait": "stingy", "chance": 0.03 } ], "result": "It goes straight into savings. You still buy the ticket every week. Of course you do." }
+    ]
+  },
+  {
+    "id": "mh_car_dealer", "title": "The new car",
+    "text": "A salesman with very white teeth is explaining why you need the bigger model, with the leather seats and the better finance deal.",
+    "conditions": { "minAge": 25, "minMoney": 50000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Buy the big one", "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "vain", "chance": 0.03 } ], "result": "It smells wonderful for six months. The finance lasts six years." },
+      { "text": "Buy the sensible one", "effects": [ { "type": "money", "amount": -30000 }, { "type": "happiness", "amount": 2 } ], "result": "It is grey and reliable and the salesman is visibly disappointed. It lasts eighteen years." },
+      { "text": "Keep the old car another year", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "It makes a new noise every month. You turn the radio up." }
+    ]
+  },
+  {
+    "id": "mh_renovation_kitchen", "title": "The kitchen",
+    "text": "The kitchen is from another decade, and not a good one. Three builders have come to quote. The quotes are all different and all enormous.",
+    "conditions": { "minAge": 30, "ownsHome": true, "minMoney": 80000 }, "cooldown": 20,
+    "choices": [
+      { "text": "Go all in", "chance": 0.6,
+        "success": { "text": "Three months of dust and takeaway, then a kitchen from a magazine. You cook in it every evening as if it might disappear.", "effects": [ { "type": "money", "amount": -100000 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Six months, a builder who stops answering the phone, and a cupboard that still does not close. It is very nice, apart from that.", "effects": [ { "type": "money", "amount": -130000 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Paint the cupboards yourself", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 3 } ], "result": "A weekend, two tins of paint and new handles. It looks almost new. From the door. In soft light." }
+    ]
+  },
+  {
+    "id": "mh_neighbour_tree", "title": "The tree",
+    "text": "The neighbour's tree has grown so big that your garden is in shadow all afternoon. The neighbour loves the tree. The neighbour planted the tree.",
+    "conditions": { "minAge": 30, "ownsHome": true }, "cooldown": 20,
+    "choices": [
+      { "text": "Ask nicely", "chance": 0.5, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "They trim it. You bring a bottle of wine. A summer of afternoon sun and better neighbours.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "They say no, kindly but firmly. You plant ferns. Ferns like shade, it turns out.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Learn to love the shade", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "A hammock under the branches. Summers are cooler than they used to be, anyway." }
+    ]
+  },
+  {
+    "id": "mh_pyramid_scheme", "title": "An opportunity",
+    "text": "An old school friend calls, very excited, about a business opportunity. You just need to buy some stock, and recruit a few friends who will recruit a few friends.",
+    "conditions": { "minAge": 22, "minMoney": 10000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Invest", "requires": { "traitsAny": [ "impulsive", "greedy" ] }, "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": -3 } ], "result": "A garage full of vitamin powder and a friend list that has gone very quiet. Your school friend has moved on to a new opportunity." },
+      { "text": "Politely decline", "effects": [], "result": "They are disappointed, then insistent, then disappointed again. You are invited to fewer parties. You are fine with that." }
+    ]
+  },
+  {
+    "id": "mh_garage_clear", "title": "The garage",
+    "text": "The garage has not had room for a car in nine years. There are boxes in it that have moved house three times without being opened.",
+    "conditions": { "minAge": 35, "ownsHome": true }, "cooldown": 15,
+    "choices": [
+      { "text": "Clear it all out", "effects": [ { "type": "money", "amount": 2000 }, { "type": "happiness", "amount": 4 } ], "result": "A weekend, a skip, a car boot sale. In the last box, your own school reports. You read them all and feel strangely defended." },
+      { "text": "Close the door", "effects": [], "result": "Next spring. Definitely next spring." }
+    ]
+  },
+  {
+    "id": "mh_insurance_claim", "title": "The claim",
+    "text": "A break in. The television, a laptop and your grandmother's ring. The insurance form asks for receipts you have never kept.",
+    "conditions": { "minAge": 25, "livesWithParents": false }, "cooldown": 25, "weight": 0.4,
+    "choices": [
+      { "text": "Claim honestly", "effects": [ { "type": "money", "amount": 8000 }, { "type": "happiness", "amount": -4 } ], "result": "They pay for the television. Not for the ring. Nobody can pay for the ring." },
+      { "text": "Add a few things", "requires": { "traitsAny": [ "dishonest", "greedy", "manipulative" ] }, "chance": 0.7,
+        "success": { "text": "A camera you never had, a watch you never owned. The money comes through. It does not feel as good as you expected.", "effects": [ { "type": "money", "amount": 20000 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.05 } ] },
+        "failure": { "text": "An investigator calls. The claim is rejected, all of it, and your premium doubles.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "mh_payday_splurge", "title": "Pay day",
+    "text": "A bonus has come through, a bit bigger than expected. You have been looking at the same expensive thing in a shop window for a year.",
+    "conditions": { "minAge": 22, "activity": "working" }, "cooldown": 8,
+    "choices": [
+      { "text": "Buy it", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": 5 } ], "result": "It is exactly as good as you hoped. You use it every day for ten years. Worth every penny." },
+      { "text": "Pay off something boring", "effects": [ { "type": "money", "amount": 2000 }, { "type": "trait_add", "trait": "stingy", "chance": 0.02 } ], "result": "The loan is smaller. The shop window is still there. So is the thing in it." }
+    ]
+  },
+  {
+    "id": "mh_housewarming", "title": "Housewarming",
+    "text": "You have finally unpacked the last box. Time for a housewarming party, in a place with four chairs and an awful lot of floor.",
+    "conditions": { "minAge": 20, "maxAge": 60, "livesWithParents": false }, "cooldown": 20,
+    "choices": [
+      { "text": "Invite everyone", "effects": [ { "type": "money", "amount": -2500 }, { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "Forty people, a neighbour who joins in instead of complaining, and someone sleeping in the bath at four. The place is home now." },
+      { "text": "A small dinner", "effects": [ { "type": "money", "amount": -800 }, { "type": "happiness", "amount": 4 } ], "result": "Six people, too much food, and the first time the place feels like yours." }
+    ]
+  },
+  {
+    "id": "mh_noisy_upstairs", "title": "Above",
+    "text": "The new people upstairs walk like elephants, play music until two and seem to rearrange their furniture every night at midnight.",
+    "conditions": { "minAge": 20, "livesWithParents": false, "ownsHome": false }, "cooldown": 15,
+    "choices": [
+      { "text": "Knock on their door", "chance": 0.6, "chanceTraits": { "charming": 0.15, "hot_tempered": -0.25 },
+        "success": { "text": "They are mortified, and very young, and bring you a plant the next day. The music stops at eleven.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "They are not mortified. It gets louder. You buy earplugs and start looking at flats.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Bang on the ceiling with a broom", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "A war of noise that lasts a year. Then they move out, and you almost miss them. Almost." }
+    ]
+  },
+  {
+    "id": "mh_found_money", "title": "In an old coat",
+    "text": "In the pocket of a coat you have not worn for years: a roll of banknotes. You have no memory of putting it there.",
+    "conditions": { "minAge": 18 }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Spend it on something fun", "effects": [ { "type": "money", "amount": 1500 }, { "type": "happiness", "amount": 4 } ], "result": "Money from your past self. A dinner out, toasting a version of you who was apparently very organised." },
+      { "text": "Keep checking other coats", "effects": [ { "type": "money", "amount": 1500 }, { "type": "happiness", "amount": 2 } ], "result": "Nothing in the others. A lot of receipts, a cinema ticket and a phone number you will never call." }
+    ]
+  },
+  {
+    "id": "mh_debt_collector", "title": "The letter",
+    "text": "A letter from a debt collector about a bill you thought you had paid. Interest, fees, and a very threatening font.",
+    "conditions": { "minAge": 20, "maxMoney": 30000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Pay it, and argue later", "effects": [ { "type": "money", "amount": -4000 }, { "type": "happiness", "amount": -2 } ], "result": "You pay. Six months later you find the receipt. Getting the money back takes another six." },
+      { "text": "Fight it", "chance": 0.5, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "Hours on the phone, copies of everything, and finally a letter saying it was a mistake. You frame it.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "You lose, and pay twice the fees. The font was right to be threatening.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "mh_dream_holiday", "title": "Once in a lifetime",
+    "text": "A brochure for a trip you have dreamed about since childhood. Three weeks, the other side of the world. It costs about as much as a car.",
+    "conditions": { "minAge": 25, "minMoney": 80000, "minYear": 1970 }, "cooldown": 20,
+    "choices": [
+      { "text": "Book it", "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "dream_trip", "text": "The trip of a lifetime", "impact": 25 } ], "result": "Better than the brochure. You come home with three thousand photos and one moment, on a beach at dawn, that no photo will ever hold." },
+      { "text": "Some day", "effects": [], "result": "The brochure goes in a drawer. Some day is a long time." }
+    ]
+  },
+  {
+    "id": "mh_selling_home", "title": "The viewing",
+    "text": "Your home is for sale, and the estate agent wants it to look like nobody lives there. Forty strangers are coming through on Sunday.",
+    "conditions": { "minAge": 30, "ownsHome": true }, "cooldown": 20, "weight": 0.3,
+    "choices": [
+      { "text": "Bake bread for the smell", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "It smells like a dream. A couple stays an hour longer than the others. You never find out if it was the bread." },
+      { "text": "Leave it as it is", "effects": [], "result": "The agent sighs at the fridge magnets. A family with three children loves it exactly as it is." }
+    ]
+  },
+  {
+    "id": "mh_pension_advice", "title": "Advice",
+    "text": "A man at the bank wants to talk to you about your pension. He has slides, a pen with the bank's logo, and a product he is very excited about.",
+    "conditions": { "minAge": 35, "maxAge": 60, "minMoney": 50000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Take the product", "chance": 0.4,
+        "success": { "text": "It does exactly what he said. You are almost suspicious of how well it goes.", "effects": [ { "type": "money", "amount": 15000 } ] },
+        "failure": { "text": "The fees eat most of the growth. He has moved to another branch.", "effects": [ { "type": "money", "amount": -10000 } ] } },
+      { "text": "Ask about the fees", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "He goes quiet. You go home and buy a cheap index fund on your own. You take the pen, though." }
+    ]
+  },
+  {
+    "id": "mh_cash_in_attic", "title": "The attic",
+    "text": "Clearing out your parents' attic, you find a painting under a sheet. It might be something. A dealer friend's eyes go very wide.",
+    "conditions": { "minAge": 35 }, "cooldown": 40, "weight": 0.2,
+    "choices": [
+      { "text": "Have it valued properly", "chance": 0.3,
+        "success": { "text": "It is something. Not a masterpiece, but a real painter, and a real price. Your parents bought it for a bottle of wine in 1962.", "effects": [ { "type": "money", "amount": 200000 }, { "type": "happiness", "amount": 7 } ] },
+        "failure": { "text": "A good copy, the expert says, very kindly. It goes back on the wall. You like it more, somehow.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Hang it in the hall", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You never find out. It looks very good in the hall, and that is enough." }
+    ]
+  },
+  {
+    "id": "mh_buy_or_rent_debate", "title": "Dinner party economics",
+    "text": "At a dinner party, a friend explains, at length, why you are throwing money away every month by renting instead of buying.",
+    "conditions": { "minAge": 25, "maxAge": 45, "ownsHome": false, "livesWithParents": false }, "cooldown": 10,
+    "choices": [
+      { "text": "Argue back", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You talk about maintenance, interest and freedom. Neither of you convinces the other. The host changes the subject to holidays, gratefully." },
+      { "text": "Start looking at homes", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You spend the next month on property websites at midnight. Prices have gone up since dinner, it seems." }
+    ]
+  },
+  {
+    "id": "mh_cleaning_day", "title": "The big clean",
+    "text": "A whole Saturday with nothing planned. The house needs cleaning. The sun is shining. The sofa is very comfortable.",
+    "conditions": { "minAge": 20, "livesWithParents": false }, "cooldown": 4,
+    "choices": [
+      { "text": "Clean everything", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "Music loud, windows open, every surface shining by four. You sit in the clean living room like a guest in your own home." },
+      { "text": "The sofa wins", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "lazy", "chance": 0.02 } ], "result": "A film, a nap, another film. The dust will still be there. That is the comforting thing about dust." }
+    ]
+  }
+]

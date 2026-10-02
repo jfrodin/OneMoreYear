@@ -214,6 +214,9 @@ public sealed class ContentDb
                 else if (System.Text.RegularExpressions.Regex.IsMatch(t, @"(?i)\byour \{\w\.role\}"))
                     // {t.role} already says "your brother".
                     errors.Add($"Event {e.Id}: \"your {{t.role}}\" says your twice in \"{t}\"");
+                else if (t.Contains("{[[") || t.Contains("]]}"))
+                    // Era text is not a token: no curly brackets around it.
+                    errors.Add($"Event {e.Id}: era text inside curly brackets in \"{t}\"");
                 else if (t.Contains(" – ") || t.Contains("—"))
                     // House style: no dashes in game text (they read as machine-written). Use a full stop, comma or colon.
                     errors.Add($"Event {e.Id}: dash in \"{t}\"");
