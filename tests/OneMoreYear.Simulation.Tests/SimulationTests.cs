@@ -950,6 +950,19 @@ public class CountryTests
     }
 
     [Fact]
+    public void A_family_trait_shapes_life_for_the_blood()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 6, StartYear = 1970 });
+        var p = s.Player;
+        Assert.DoesNotContain(CareerSystem.GradeFactors(s.Ctx, p), f => f.Label == "A family of readers");
+        s.World.FamilyTraits.Add("readers");
+        Assert.Contains(CareerSystem.GradeFactors(s.Ctx, p), f => f.Label == "A family of readers" && f.Points > 0);
+        Assert.Single(s.FamilyTraits());
+        // Meters are numbers for every kind, even for a young family.
+        Assert.Equal(4, ReputationSystem.Meters(s.Ctx).Count);
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.

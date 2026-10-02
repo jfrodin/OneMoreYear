@@ -1132,6 +1132,10 @@ public partial class GameScreen : Control
             header.AddChild(back);
         }
         _treeTab.AddChild(header);
+        // What the family has become known for (hidden until it happens).
+        var known = S.FamilyTraits();
+        if (known.Count > 0)
+            _treeTab.AddChild(UiTheme.HandLabel($"The {S.World.FamilyName} family: " + string.Join(", ", known.Select(t => t.Name.ToLowerInvariant())), 24, UiTheme.Accent, wrap: true));
         _treeTab.AddChild(Ui.Label("Choose someone to see the family from their place in it. Choose the person in the middle to open their page.",
             15, UiTheme.Muted, wrap: true));
 

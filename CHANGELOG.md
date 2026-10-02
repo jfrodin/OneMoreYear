@@ -2,6 +2,17 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.40.0 – 2026-10-02 · What the family is known for
+
+- **The family's reputation.** Four hidden meters follow how the last three generations of the
+  blood actually live: learning, wealth, warmth and notoriety. When one passes a threshold the family
+  becomes known for it, and it shows in the family tree: *a family of readers*, *old money*, *close
+  knit*, or *a name people whisper about*. It can be lost again.
+- It changes life for everyone of the blood: readers get better grades, old money opens doors at
+  work, a close knit family is a little happier and stays married more often, and a notorious name
+  costs both grades and promotions. The reason shows in the grade and performance lists.
+- `--achievements` also reports the family meters and how often each trait appears.
+
 ## 0.39.0 – 2026-10-02 · What only comes with time
 
 None of this is announced. It happens when the family has lived long enough.

@@ -95,6 +95,7 @@ public static class CareerSystem
         if (Math.Abs(smarts) >= 1) list.Add(("Smarts", smarts));
         if (p.Happiness < 30) list.Add(("Unhappy", -8));
         if (p.Flags.Contains(PartTimeFlag)) list.Add(("Part-time job", -6));
+        list.AddRange(ReputationSystem.GradeFactors(ctx, p));
         return list;
     }
 
@@ -128,6 +129,7 @@ public static class CareerSystem
         double smarts = (p.Smarts - 50) * 0.3;
         if (Math.Abs(smarts) >= 1) list.Add(("Smarts", smarts));
         if (p.Health < 40) list.Add(("Poor health", -15));
+        list.AddRange(ReputationSystem.PerformanceFactors(ctx, p));
         return list;
     }
 

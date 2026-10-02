@@ -22,7 +22,7 @@ public static class LifeSystem
         if (p.Happiness < 25) change -= 1;
         p.Health = Math.Clamp(p.Health + change, 1, 100);
         // Mood drifts back towards a baseline that depends on personality (cheerful, gloomy ...).
-        double baseline = Math.Clamp(60 + ctx.Mod(p, "happiness"), 20, 90);
+        double baseline = Math.Clamp(60 + ctx.Mod(p, "happiness") + ReputationSystem.HappinessBonus(ctx, p), 20, 90);
         p.Happiness = Math.Clamp(p.Happiness + (baseline - p.Happiness) * (0.1 + ctx.Mod(p, "resilience") * 0.1), 0, 100);
         Appearance.UpdateYear(ctx, p);
 

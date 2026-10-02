@@ -183,6 +183,7 @@ public sealed class GameSession
         {
             DreamSystem.Update(ctx);
             LegacySystem.Update(ctx);
+            ReputationSystem.Update(ctx);
             EventSystem.GenerateRandomEvents(ctx);
             w.ActionPoints = ActionPointsFor(Player);
         }
@@ -911,6 +912,9 @@ public sealed class GameSession
     /// </summary>
     public IReadOnlyList<AchievementDef> NewAchievements(IReadOnlySet<string> alreadyUnlocked) =>
         AchievementSystem.NewlyEarned(Ctx, alreadyUnlocked);
+
+    /// <summary>What the family is known for now (ReputationSystem): "A family of readers", "Close knit" ...</summary>
+    public IReadOnlyList<FamilyTraitDef> FamilyTraits() => ReputationSystem.Current(Ctx);
 
     /// <summary>All achievements, in the order they are listed.</summary>
     public static IReadOnlyList<AchievementDef> AllAchievements(ContentDb? content = null) => (content ?? ContentDb.Embedded).Achievements;

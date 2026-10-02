@@ -611,3 +611,21 @@ public sealed class DreamDef
     public string Fulfilled { get; set; } = "";
     public string Failed { get; set; } = "";
 }
+
+/// <summary>
+/// Something the family becomes known for when one of its reputation meters passes a threshold
+/// (ReputationSystem), and loses again when it falls below another. It changes life for the family's own.
+/// </summary>
+public sealed class FamilyTraitDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>learning, wealth, warmth or notoriety.</summary>
+    public string Meter { get; set; } = "";
+    public double Gain { get; set; }
+    public double Lose { get; set; }
+    /// <summary>"A family of readers": shown in the family tree and as the reason in factor lists.</summary>
+    public string Name { get; set; } = "";
+    public string Text { get; set; } = "";
+    public string Gained { get; set; } = "";
+    public string Lost { get; set; } = "";
+}

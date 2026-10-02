@@ -17,6 +17,8 @@ static class AchievementReport
         int maxDesc = 0, maxAge = 0, maxKids = 0, gens = 0, anyOldest = 0, over80 = 0, over90 = 0, died = 0; double maxWorth = 0; var byDecade = new int[12];
         var legacyCount = new Dictionary<string, int>();
         var examples = new List<string>();
+        var traitEver = new Dictionary<string, int>();
+        var meterSum = new Dictionary<string, double>();
         for (int g = 0; g < games; g++)
         {
             var s = GameSession.NewGame(new NewGameOptions { Seed = (ulong)(5000 + g), StartYear = starts[g % starts.Length] });
@@ -46,6 +48,8 @@ static class AchievementReport
             if (deadOld.Count > 0) { anyOldest = Math.Max(anyOldest, deadOld.Max(p => p.DeathYear!.Value - p.BirthYear)); over80 += deadOld.Count(p => p.DeathYear - p.BirthYear >= 80); over90 += deadOld.Count(p => p.DeathYear - p.BirthYear >= 90); died += deadOld.Count(p => p.DeathYear - p.BirthYear >= 20); }
             maxKids = Math.Max(maxKids, played.Max(p => p.ChildIds.Count));
             gens = Math.Max(gens, played.Max(p => p.Generation) - played.Min(p => p.Generation) + 1);
+            foreach (var t in s.Content.FamilyTraits.Values) if (s.World.Chronicle.Any(l => l.Text.Contains($"has become {t.Name.ToLowerInvariant()}"))) traitEver[t.Id] = traitEver.GetValueOrDefault(t.Id) + 1;
+            foreach (var (m, v) in OneMoreYear.Simulation.Systems.ReputationSystem.Meters(s.Ctx)) meterSum[m] = meterSum.GetValueOrDefault(m) + v;
             Console.Error.Write($"\r{g + 1}/{games} families");
         }
         Console.Error.WriteLine();
@@ -55,5 +59,7 @@ static class AchievementReport
         foreach (var a in all) Console.WriteLine($"  {a.Tier,-9} {a.Id,-24} {count[a.Id] * 100 / games,3}%");
         Console.WriteLine("Long-play events: " + string.Join(", ", legacyCount.OrderBy(kv => kv.Key).Select(kv => $"{kv.Key} {kv.Value}")));
         foreach (var x in examples) Console.WriteLine("  " + x);
+        Console.WriteLine("Family meters at the end (average): " + string.Join(", ", meterSum.Select(kv => $"{kv.Key} {kv.Value / games:0.0}")));
+        Console.WriteLine("Families that ever got a trait: " + string.Join(", ", traitEver.Select(kv => $"{kv.Key} {kv.Value * 100 / games}%")));
     }
 }

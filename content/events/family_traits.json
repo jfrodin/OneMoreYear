@@ -1,0 +1,20 @@
+// Queued by ReputationSystem when the family becomes known for something, or stops being. No dashes.
+[
+  {
+    "id": "family_trait_gained", "trigger": "situation",
+    "title": "{family_trait}",
+    "text": "{family_trait_text}",
+    "choices": [
+      { "text": "Wear it with pride", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "It is who you are now. Whoever comes after you will carry it too." },
+      { "text": "It is only a name", "effects": [], "result": "You shrug. But you notice, after that, how often people react to it." }
+    ]
+  },
+  {
+    "id": "family_trait_lost", "trigger": "situation",
+    "title": "Times change",
+    "text": "{family_trait_text}",
+    "choices": [
+      { "text": "Things change", "effects": [], "result": "Every family has its seasons. This is one of them." }
+    ]
+  }
+]

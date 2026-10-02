@@ -46,6 +46,8 @@ public sealed class World
     public List<string> ActionsThisYear { get; set; } = new();
     /// <summary>Things that happened once and count for achievements (set by events and systems).</summary>
     public SortedSet<string> Feats { get; set; } = new(StringComparer.Ordinal);
+    /// <summary>What the family has become known for (ReputationSystem): "learning", "warmth" ...</summary>
+    public SortedSet<string> FamilyTraits { get; set; } = new(StringComparer.Ordinal);
 
     public SimRandom Rng { get; set; } = new();
     public int NextEventUid { get; set; } = 1;

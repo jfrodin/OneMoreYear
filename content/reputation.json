@@ -1,0 +1,26 @@
+// What a family becomes known for (ReputationSystem, docs/endgame.md). Each follows one meter, read
+// from the last three generations of the blood: learning (percent with a degree), wealth (median best
+// net worth, million reference kronor), warmth (how grown children feel about their parents),
+// notoriety (convictions and scandals per ten adults). Gained at "gain", lost below "lose". No dashes.
+[
+  { "id": "readers", "meter": "learning", "gain": 30, "lose": 20,
+    "name": "A family of readers",
+    "text": "Books in every room, and a degree on every other wall. Teachers expect a lot of the children.",
+    "gained": "Somebody counts at Christmas: more degrees than grandchildren under ten. The family has become known for its learning. The children will feel it, at school, for better and worse.",
+    "lost": "The bookshelves are still there, but nobody under thirty reads them. The family is no longer known for its learning." },
+  { "id": "old_money", "meter": "wealth", "gain": 6, "lose": 4,
+    "name": "Old money",
+    "text": "The name opens doors at banks, clubs and offices. Nobody has to explain it.",
+    "gained": "A bank manager calls you by your surname before you have said it. The family has money now, the kind that lasts, and the name opens doors.",
+    "lost": "The family money has thinned out over the generations. The name does not open the doors it used to." },
+  { "id": "close_knit", "meter": "warmth", "gain": 40, "lose": 28,
+    "name": "Close knit",
+    "text": "Sunday dinners nobody misses, and grown children who call because they want to.",
+    "gained": "Someone at work asks how your family manages to like each other so much. You do not have an answer. It is just how you are now: close.",
+    "lost": "Sunday dinners have become birthdays, and birthdays have become cards. The family has drifted apart." },
+  { "id": "notorious", "meter": "notoriety", "gain": 4, "lose": 2,
+    "name": "A name people whisper about",
+    "text": "Too many convictions and too many scandals. Teachers, employers and neighbours know the name.",
+    "gained": "The new neighbour hears your surname and says: oh. Just that. The family has a reputation now, and not a good one.",
+    "lost": "A generation has passed without a scandal. People have started to forget why they used to whisper." }
+]

@@ -56,7 +56,7 @@ public static class FamilySystem
             var player = a.Id == w.PlayerId ? a : b;
             double npcOpinion = w.Opinion(npc.Id, player.Id);
             // A content couple sits around 25 (see Relationship.Opinion); below 10 something is wrong.
-            double leave = npcOpinion < 10 ? baseChance + (10 - npcOpinion) / 150 + ctx.Mod(npc, "divorce") * 0.04 : 0;
+            double leave = (npcOpinion < 10 ? baseChance + (10 - npcOpinion) / 150 + ctx.Mod(npc, "divorce") * 0.04 : 0) * ReputationSystem.SplitFactor(ctx, npc);
             if (years >= 1 && rng.Chance(leave))
             {
                 EventSystem.QueueSituation(ctx, "partner_leaves", new() { ["target"] = npc.Id });
