@@ -1,0 +1,221 @@
+// Life as a couple and as a parent: the ordinary days that make or break a family. No dashes.
+[
+  {
+    "id": "cp_anniversary_forgot", "title": "The date",
+    "text": "{P.name} has been quiet all evening. You check the calendar. It is your anniversary, and you forgot.",
+    "conditions": { "minAge": 22, "hasPartner": true, "minPartnerYears": 2 }, "cooldown": 8,
+    "choices": [
+      { "text": "Confess and grovel", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 2, "mutual": true }, { "type": "happiness", "amount": -1 } ], "result": "A takeaway, a long apology and a promise. {P.name} forgives you around dessert, and reminds you every year after." },
+      { "text": "Pretend you had a surprise planned", "chance": 0.4, "chanceTraits": { "charming": 0.2, "creative": 0.15 },
+        "success": { "text": "A drive to the place you met, a bottle from the corner shop, a blanket from the boot. It works. It actually works.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 6, "mutual": true } ] },
+        "failure": { "text": "The surprise is a petrol station sandwich. {P.name} is not fooled for a second.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "trust", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "cp_snoring", "title": "Every night",
+    "text": "{P.name} snores. Not a little. Like a ferry coming into harbour. You have not slept properly in a month.",
+    "conditions": { "minAge": 30, "hasPartner": true }, "cooldown": 15,
+    "choices": [
+      { "text": "Move to the spare room", "effects": [ { "type": "health", "amount": 2 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -2, "mutual": true } ], "result": "You sleep like a child. Some nights you miss the ferry. Not many." },
+      { "text": "Earplugs and love", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 2, "mutual": true } ], "result": "You get used to it. Years later, in a quiet house, you will find it hard to sleep without it." }
+    ]
+  },
+  {
+    "id": "cp_money_fight", "title": "The receipt",
+    "text": "A receipt on the kitchen table. Something expensive, something {P.name} did not mention. You have both been careful with money this year. Or so you thought.",
+    "conditions": { "minAge": 22, "hasPartner": true }, "cooldown": 8,
+    "choices": [
+      { "text": "Ask calmly", "chance": 0.7, "chanceTraits": { "hot_tempered": -0.25 },
+        "success": { "text": "A present for your birthday. Now you know. You pretend to be surprised in March.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "trust", "amount": 4, "mutual": true } ] },
+        "failure": { "text": "It was for them. A long conversation about money that is really about other things.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -3, "mutual": true } ] } },
+      { "text": "Say nothing, and keep score", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "trust", "amount": -3 } ], "result": "You keep score. Neither of you is winning." }
+    ]
+  },
+  {
+    "id": "cp_dance_class", "title": "Dancing",
+    "text": "{P.name} has signed you both up for dance classes. Tuesday evenings, ten weeks, and a teacher who says anyone can learn.",
+    "conditions": { "minAge": 25, "hasPartner": true }, "cooldown": 20,
+    "choices": [
+      { "text": "Go, and try", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 7, "mutual": true }, { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "You are terrible. You laugh more in ten weeks than in the year before. At a wedding in the autumn you dance, almost in time, and people clap." },
+      { "text": "Find an excuse", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "{P.name} goes with a friend. They come home every Tuesday smiling. You start to wish you had gone." }
+    ]
+  },
+  {
+    "id": "cp_in_laws_christmas", "title": "Whose Christmas",
+    "text": "Every year the same question: Christmas with your family, or with {P.name}'s? This year both mothers have already started cooking.",
+    "conditions": { "minAge": 22, "hasPartner": true }, "cooldown": 4,
+    "choices": [
+      { "text": "Yours", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -2 } ], "result": "Your traditions, your food, your family's jokes. {P.name} is polite all evening. You owe them one." },
+      { "text": "Theirs", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 4 } ], "result": "Their family, their games, their uncle. You come home exhausted and closer than you left." },
+      { "text": "Host it yourselves", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": 2 } ], "result": "Both families, one small flat, one oven. Somebody cries, somebody sings, and everybody agrees, eventually, that it was a success." }
+    ]
+  },
+  {
+    "id": "cp_weekend_away", "title": "Just the weekend",
+    "text": "Grandparents have offered to take the children for a weekend. Two whole days. You and {P.name} look at each other as if you have forgotten how this works.",
+    "conditions": { "minAge": 25, "hasPartner": true, "minChildren": 1 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go somewhere", "effects": [ { "type": "money", "amount": -4000 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 5 } ], "result": "A small hotel, long breakfasts, sentences finished without interruption. On Sunday you both miss the children by lunch." },
+      { "text": "Stay home and sleep", "effects": [ { "type": "health", "amount": 2 }, { "type": "happiness", "amount": 4 } ], "result": "Fourteen hours of sleep. Coffee in bed. It is, honestly, the most romantic thing you can imagine." }
+    ]
+  },
+  {
+    "id": "cp_partner_career", "title": "The offer",
+    "text": "{P.name} has been offered a dream job in another city. Taking it means you would both move, and you would have to start again.",
+    "conditions": { "minAge": 25, "maxAge": 55, "hasPartner": true }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Go together", "effects": [ { "type": "move_city" }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 8 }, { "type": "happiness", "amount": -1 } ], "result": "A new city, a new start, and a partner who will never forget that you came along." },
+      { "text": "Ask them to turn it down", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -8 } ], "result": "They do. They mention it, sometimes, in arguments. Less as the years go by. Not never." }
+    ]
+  },
+  {
+    "id": "cp_kid_lies", "title": "The lie",
+    "text": "You have caught {t.name} in a lie. Not a big one, but a careful, well planned one, told straight to your face.",
+    "target": { "role": "child", "conditions": { "minAge": 7, "maxAge": 15 } },
+    "conditions": { "minAge": 25 }, "cooldown": 10,
+    "choices": [
+      { "text": "Explain why it matters", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 4 } ], "result": "A long talk, a few tears, and a lie you never catch again. That may or may not mean what you hope." },
+      { "text": "Punish it hard", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "fear", "amount": 6 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "A month without anything. {T.he} learns not to lie to you. {T.he} also learns not to tell you things." },
+      { "text": "Admit you lied at that age too", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ], "result": "{T.name} is astonished that you were ever young. It is the beginning of a different kind of conversation." }
+    ]
+  },
+  {
+    "id": "cp_kid_talent_choice", "title": "The audition",
+    "text": "{t.name} has a real talent, the teacher says, and there is an audition for a special school in the city. It would mean long days, a lot of money, and a lot of pressure.",
+    "target": { "role": "child", "conditions": { "minAge": 9, "maxAge": 14 } },
+    "conditions": { "minAge": 30 }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Go for it", "effects": [ { "type": "money", "amount": -30000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ], "result": "Five years of practice, competitions and a few tears. Whatever {t.he} does later, {t.he} knows what it is to work for something." },
+      { "text": "Let {t.him} be a child", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "{T.He} plays for fun, in the bedroom, for whoever will listen. Sometimes you wonder. Mostly you listen." }
+    ]
+  },
+  {
+    "id": "cp_kid_sleepover_first", "title": "The first sleepover",
+    "text": "{t.name} is sleeping at a friend's house for the first time. It is nine in the evening, the house is very quiet, and your phone is very close to your hand.",
+    "target": { "role": "child", "conditions": { "minAge": 5, "maxAge": 9 } },
+    "conditions": { "minAge": 25 }, "cooldown": 30,
+    "choices": [
+      { "text": "Wait by the phone", "chance": 0.6,
+        "success": { "text": "It never rings. In the morning {t.he} has had the best time ever and wants to go again tonight. You are a little hurt.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "It rings at eleven. A small voice wants to come home. You are there in eight minutes, in your slippers.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ] } },
+      { "text": "Enjoy the evening", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A film, a bottle of wine, and a strange feeling, all evening, that you have forgotten something." }
+    ]
+  },
+  {
+    "id": "cp_kid_question_death", "title": "The question",
+    "text": "{t.name} has a question at bedtime. \"Are you going to die?\"",
+    "target": { "role": "child", "conditions": { "minAge": 4, "maxAge": 8 } },
+    "conditions": { "minAge": 25 }, "cooldown": 30,
+    "choices": [
+      { "text": "Tell the truth, gently", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 6 } ], "result": "\"One day, when I am very, very old, and you are very old too.\" {T.He} thinks about it, nods, and asks for a glass of water." },
+      { "text": "Not for a very long time", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 3 } ], "result": "\"How long?\" \"Longer than you can count.\" {T.He} starts counting. {T.He} falls asleep at sixty three." }
+    ]
+  },
+  {
+    "id": "cp_teen_closed_door", "title": "Through the door",
+    "text": "{t.name} has not come out of {t.his} room all weekend except for food. Music through the door. A sign that says Keep Out, in capitals.",
+    "target": { "role": "child", "conditions": { "minAge": 13, "maxAge": 17 } },
+    "conditions": { "minAge": 30 }, "cooldown": 6,
+    "choices": [
+      { "text": "Knock and wait", "chance": 0.5,
+        "success": { "text": "After a minute the door opens. {T.He} lets you in. You sit on the floor and listen to a song {t.he} wants you to hear.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 7, "mutual": true } ] },
+        "failure": { "text": "\"What?\" Through the door. You say nothing in particular. It is still something, you tell yourself.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Leave a sandwich outside", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 } ], "result": "The plate comes back empty. On it, a drawing of a thumbs up. You keep the drawing." }
+    ]
+  },
+  {
+    "id": "cp_teen_first_love_heartbreak", "title": "Heartbroken",
+    "text": "{t.name}'s first love has ended it, by text. {T.He} is sitting on the bathroom floor, sure that life is over.",
+    "target": { "role": "child", "conditions": { "minAge": 14, "maxAge": 19 } },
+    "conditions": { "minAge": 30 }, "cooldown": 10,
+    "choices": [
+      { "text": "Sit on the floor too", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true } ], "result": "You do not say it gets better. You say it hurts. That turns out to be the right thing." },
+      { "text": "Tell your own story", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ], "result": "{T.He} cannot believe someone dumped you once. {T.He} laughs, a little, for the first time all day." }
+    ]
+  },
+  {
+    "id": "cp_adult_child_calls", "title": "Sunday call",
+    "text": "{t.name} lives far away now. The Sunday phone call is getting shorter. Today it is four minutes, most of it about the weather.",
+    "target": { "role": "child", "conditions": { "minAge": 22 } },
+    "conditions": { "minAge": 45 }, "cooldown": 8,
+    "choices": [
+      { "text": "Visit, uninvited", "chance": 0.6,
+        "success": { "text": "{T.He} is surprised, then glad. You meet a partner you did not know existed. You understand a lot more about the four minutes.", "effects": [ { "type": "money", "amount": -3000 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true } ] },
+        "failure": { "text": "{T.He} is busy, and a little annoyed. You see the city alone and go home a day early.", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Ask a real question next Sunday", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 4, "mutual": true } ], "result": "\"Are you happy?\" A pause. Then forty minutes. The weather is not mentioned once." }
+    ]
+  },
+  {
+    "id": "cp_grandchild_name", "title": "The name",
+    "text": "{t.name} is expecting, and has told you the name they have chosen. You do not like it. At all.",
+    "target": { "role": "child", "conditions": { "minAge": 22 } },
+    "conditions": { "minAge": 45 }, "cooldown": 20,
+    "choices": [
+      { "text": "Say it is lovely", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.03 } ], "result": "You say it is lovely. Within a year it is the most beautiful name you have ever heard." },
+      { "text": "Suggest a family name", "chance": 0.3,
+        "success": { "text": "They take your grandmother's name as the middle name. You cry at the christening and pretend it is the incense.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "A long silence. They keep the name. The baby is wonderful. The name is still terrible.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "cp_partner_illness_care", "title": "In sickness",
+    "text": "{P.name} has been ill for a long time now. You have become the one who remembers the pills, the appointments, the good days and the bad.",
+    "target": { "role": "partner", "conditions": { "maxHealth": 45 } },
+    "conditions": { "minAge": 40, "hasPartner": true }, "cooldown": 15, "weight": 0.8,
+    "choices": [
+      { "text": "Do it all yourself", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "health", "amount": -4 }, { "type": "happiness", "amount": -3 } ], "result": "It costs you. You would not have it any other way. On the good days, you laugh like you did at twenty." },
+      { "text": "Ask for help", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 4, "mutual": true }, { "type": "happiness", "amount": 1 } ], "result": "A nurse twice a week, a neighbour on Thursdays. You get your evenings back, and are a better partner for it." }
+    ]
+  },
+  {
+    "id": "cp_old_letters_partner", "title": "In a shoebox",
+    "text": "Looking for something else, you find a shoebox of letters {P.name} wrote to you when you were first together. Neither of you has read them in decades.",
+    "conditions": { "minAge": 45, "hasPartner": true, "minPartnerYears": 15 }, "cooldown": 30,
+    "choices": [
+      { "text": "Read them aloud together", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 5 } ], "result": "You laugh at the spelling, then at what you were worried about, then you are quiet for a while. It is a good evening." },
+      { "text": "Put them back", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You read one, alone, and put the box back exactly where it was. Some things are for later." }
+    ]
+  },
+  {
+    "id": "cp_parent_guilt", "title": "The concert",
+    "text": "{t.name} has the school concert tonight. You have a meeting you cannot move. {T.he} says it does not matter. {T.he} says it a bit too quickly.",
+    "target": { "role": "child", "conditions": { "minAge": 6, "maxAge": 14 } },
+    "conditions": { "minAge": 25, "activity": "working" }, "cooldown": 8,
+    "choices": [
+      { "text": "Leave the meeting", "effects": [ { "type": "performance", "amount": -3 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 7 } ], "result": "You arrive during the second song, out of breath, in the wrong coat. {T.He} sees you and plays the rest looking straight at you." },
+      { "text": "Stay at work", "effects": [ { "type": "performance", "amount": 2 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "Someone films it for you. You watch it in the car park. It is not the same, and you both know it." }
+    ]
+  },
+  {
+    "id": "cp_family_dinner_phones", "title": "Phones at dinner",
+    "text": "Family dinner. Every single person at the table, including you, is looking at a phone.",
+    "conditions": { "minAge": 30, "minChildren": 1, "minYear": 2012 }, "cooldown": 8,
+    "choices": [
+      { "text": "A basket for phones", "chance": 0.5,
+        "success": { "text": "Grumbling for a week, then conversation. Real, annoying, wonderful conversation.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "The basket lasts four days. On the fifth, you are the one who breaks the rule.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Shrug and scroll", "effects": [], "result": "Everyone is together, technically. Somebody laughs at something on their screen and nobody asks what." }
+    ]
+  },
+  {
+    "id": "cp_moving_house_kids", "title": "The move",
+    "text": "The family is moving to a bigger place. The children are furious: new schools, new friends, and the old garden with the tree house left behind.",
+    "conditions": { "minAge": 28, "minChildren": 1 }, "cooldown": 20, "weight": 0.4,
+    "choices": [
+      { "text": "Promise them a new tree house", "effects": [ { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 3 } ], "result": "It takes you all summer and it leans a little. It is the best one in the street. They forgive you by autumn." },
+      { "text": "Let them say goodbye properly", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A last night in the old tree house, with a torch. They carve their names. You carve yours under theirs." }
+    ]
+  },
+  {
+    "id": "cp_couple_therapy", "title": "Someone to listen",
+    "text": "You and {P.name} have had the same argument for a year. A friend suggests a counsellor. {P.name} says only if you go too.",
+    "target": { "role": "partner", "conditions": { "maxOpinion": 20 } },
+    "conditions": { "minAge": 28, "hasPartner": true, "minYear": 1970 }, "cooldown": 15,
+    "choices": [
+      { "text": "Go together", "chance": 0.6,
+        "success": { "text": "Six sessions. The argument was never about the dishes. Once you both say what it was about, it gets quieter at home.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "money", "amount": -6000 } ] },
+        "failure": { "text": "It gets louder before it gets quieter. You are still not sure which way it is going.", "effects": [ { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "We can work it out ourselves", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -2, "mutual": true } ], "result": "You do not work it out. You just stop having the argument out loud." }
+    ]
+  }
+]
