@@ -434,6 +434,12 @@ public static class CareerSystem
         "trade" => "shops",
         "academia" => "universities",
         "media" => "the media",
+        "hospitality" => "restaurants",
+        "police" => "the police",
+        "military" => "the military",
+        "agriculture" => "farming",
+        "arts" => "the arts",
+        "social_work" => "social work",
         _ => occ.Name.ToLowerInvariant(),
     };
 

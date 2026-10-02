@@ -487,12 +487,18 @@ public class FaceTests
     [Fact]
     public void ChildrenLookLikeTheirParentsAndFacesAreStable()
     {
-        // The whole simulated world: everyone with two known biological parents.
-        var s = GameSession.NewGame(new NewGameOptions { Seed = 8, StartYear = 1950 });
-        var bot = new AutoPlayer(8);
-        for (int i = 0; i < 120 && bot.PlayYear(s); i++) { }
-        var w = s.World;
-        var children = w.People.Where(p => Kinship.BiologicalParents(w, p).Count() == 2).Take(60).ToList();
+        // A simulated world with enough children who have two known biological parents (a family can die out early).
+        GameSession s = null!;
+        World w = null!;
+        List<Person> children = new();
+        for (ulong seed = 8; seed < 16 && children.Count < 12; seed++)
+        {
+            s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1950 });
+            var bot = new AutoPlayer(seed);
+            for (int i = 0; i < 120 && bot.PlayYear(s); i++) { }
+            w = s.World;
+            children = w.People.Where(p => Kinship.BiologicalParents(w, p).Count() == 2).Take(60).ToList();
+        }
         Assert.True(children.Count >= 12, $"only {children.Count} children");
 
         double related = children.Average(c => Kinship.BiologicalParents(w, c).Average(p => Distance(Faces.Of(w, c), Faces.Of(w, p))));

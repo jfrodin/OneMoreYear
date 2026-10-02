@@ -31,6 +31,16 @@
     "education:1": [ "{place} Preschool", "{city} Municipal Preschool" ],
     "education": [ "{place} School", "{place} Upper Secondary School", "{place} Middle School", "{city} Adult Education" ],
     "construction": [ "{surname} Construction", "{brand} Bygg AB", "{city} Housing Company", "{brand} Roofing" ],
-    "business": [ "{brand} Group", "{surname} & Partners", "{brand} Capital", "{city} Savings Bank", "{brand} Invest" ]
+    "business": [ "{brand} Group", "{surname} & Partners", "{brand} Capital", "{city} Savings Bank", "{brand} Invest" ],
+    "hospitality": [ "{surname}'s Restaurant", "{city} Grand Hotel", "{place} Inn", "{brand} Pizzeria", "{place} Café" ],
+    "transport": [ "{surname} Transport AB", "{brand} Logistics", "{city} Bus Company", "The Postal Service" ],
+    "police": [ "{city} Police", "The National Police" ],
+    "military": [ "The Armed Forces", "{place} Regiment", "{city} Air Base" ],
+    "agriculture": [ "{surname}'s Farm", "{place} Farm", "{place} Dairy Cooperative" ],
+    "arts": [ "{city} City Theatre", "{brand} Studio", "{city} Symphony Orchestra", "{place} Art Collective" ],
+    "finance": [ "{city} Savings Bank", "{brand} Bank", "{brand} Capital", "{brand} Insurance" ],
+    "social_work": [ "{city} Social Services", "{place} Youth Centre", "{city} Family Support" ],
+    "engineering": [ "{brand} Engineering", "{surname} Consulting Engineers", "{brand} AB", "{city} Energy" ],
+    "science": [ "{city} Research Institute", "{brand} Pharma", "{city} University" ]
   }
 }

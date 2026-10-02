@@ -27,6 +27,8 @@ When the game is ready for outside testers. Ask the producer before starting.
   - Test scenarios are already hidden outside development builds; also leave `scenarios.json` out.
   - The F1 playtest notes, `--load`, `--smoke` and `--screenshots`.
   - The seed field stays (see design-decisions.md, "Shareable seeds").
+- [ ] **Remove every trace of AI** from the game and the repository (producer, 2026-10-02): commit
+  trailers (rewrite the history), comments, docs, tool names. Nothing may hint that AI was involved.
 
 ## Content sprint (before more countries)
 

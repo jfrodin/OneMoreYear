@@ -20,12 +20,12 @@
   {
     "id": "sec_industry", "name": "Industrial technology programme", "localNames": { "usa": "Vocational and technical track" }, "level": "secondary", "years": 3,
     "description": "Machines, production and technology.",
-    "leadsTo": [ "industry" ], "traitAffinity": { "introvert": 1.3 }
+    "leadsTo": [ "industry", "transport" ], "traitAffinity": { "introvert": 1.3 }
   },
   {
     "id": "sec_business", "name": "Business and administration programme", "localNames": { "usa": "Business track" }, "level": "secondary", "years": 3,
     "description": "Sales, retail and office work.",
-    "leadsTo": [ "trade", "public" ], "traitAffinity": { "social": 1.5 }
+    "leadsTo": [ "trade", "public", "hospitality" ], "traitAffinity": { "social": 1.5 }
   },
   {
     "id": "komvux", "countries": [ "sweden" ], "name": "Upper secondary at Komvux", "level": "secondary", "years": 2, "minAge": 20, "minYear": 1968,
@@ -70,12 +70,12 @@
   {
     "id": "uni_engineering", "name": "Engineering", "level": "university", "years": 5, "minGrades": 65,
     "description": "Machines, electronics and, more and more, computers.",
-    "leadsTo": [ "it", "industry" ], "traitAffinity": { "introvert": 1.5 }
+    "leadsTo": [ "engineering", "it", "industry" ], "traitAffinity": { "introvert": 1.5 }
   },
   {
     "id": "uni_economics", "name": "Business and economics", "level": "university", "years": 3, "minGrades": 55,
     "description": "Management, finance and business.",
-    "leadsTo": [ "business", "public", "trade" ], "traitAffinity": { "ambitious": 1.4, "social": 1.2 }
+    "leadsTo": [ "finance", "business", "public", "trade" ], "traitAffinity": { "ambitious": 1.4, "social": 1.2 }
   },
   {
     "id": "uni_teaching", "name": "Teacher education", "level": "university", "years": 4, "minGrades": 45,
@@ -90,11 +90,11 @@
   {
     "id": "uni_science", "name": "Natural sciences", "level": "university", "years": 4, "minGrades": 60,
     "description": "Physics, chemistry, biology, and maybe a career in research.",
-    "leadsTo": [ "academia", "it" ], "traitAffinity": { "introvert": 1.4, "ambitious": 1.2 }
+    "leadsTo": [ "science", "academia", "it" ], "traitAffinity": { "introvert": 1.4, "ambitious": 1.2 }
   },
   {
     "id": "uni_social", "name": "Social sciences", "level": "university", "years": 3, "minGrades": 45,
     "description": "Sociology, political science, psychology.",
-    "leadsTo": [ "public", "academia" ], "traitAffinity": { "social": 1.2 }
+    "leadsTo": [ "social_work", "public", "academia" ], "traitAffinity": { "social": 1.2 }
   }
 ]

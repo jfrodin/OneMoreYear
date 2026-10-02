@@ -29,6 +29,16 @@
     "education:1": [ "{place} Daycare", "{place} Kindergarten" ],
     "education": [ "{place} Elementary School", "{place} High School", "{place} Middle School", "{city} Community College" ],
     "construction": [ "{surname} Construction", "{brand} Builders", "{city} Contracting", "{surname} Roofing" ],
-    "business": [ "{brand} Group", "{surname} & Partners", "{brand} Capital", "{city} Savings Bank", "{brand} Investments" ]
+    "business": [ "{brand} Group", "{surname} & Partners", "{brand} Capital", "{city} Savings Bank", "{brand} Investments" ],
+    "hospitality": [ "{surname}'s Diner", "The {city} Grand Hotel", "{place} Grill", "{brand} Pizza", "{place} Steakhouse" ],
+    "transport": [ "{surname} Trucking", "{brand} Freight", "{city} Transit Authority", "The Postal Service" ],
+    "police": [ "The {city} Police Department", "The {place} County Sheriff" ],
+    "military": [ "The U.S. Army", "The U.S. Navy", "The U.S. Air Force" ],
+    "agriculture": [ "{surname} Family Farm", "{place} Ranch", "{place} Grain Cooperative" ],
+    "arts": [ "The {city} Playhouse", "{brand} Studios", "The {city} Symphony", "{place} Gallery" ],
+    "finance": [ "{city} Savings Bank", "{brand} Bank", "{brand} Capital", "{brand} Insurance" ],
+    "social_work": [ "{place} County Social Services", "{place} Youth Center", "{city} Family Services" ],
+    "engineering": [ "{brand} Engineering", "{surname} and Associates", "{brand} Aerospace", "{city} Power and Light" ],
+    "science": [ "The {city} Research Institute", "{brand} Pharmaceuticals", "{place} State University" ]
   }
 }

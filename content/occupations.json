@@ -121,6 +121,102 @@
     ]
   },
   {
+    "id": "hospitality", "name": "Restaurants", "tags": [ "shop" ], "weight": 0.9,
+    "traitAffinity": { "social": 1.4, "hot_tempered": 1.2, "creative": 1.3 },
+    "levels": [
+      { "title": "Dishwasher", "salary": 250000, "minEducation": "none", "entry": true, "promotionChance": 0.2 },
+      { "title": "Waiter", "salary": 290000, "minEducation": "none", "entry": true, "promotionChance": 0.12 },
+      { "title": "Chef", "salary": 360000, "minEducation": "secondary", "entry": true, "promotionChance": 0.08 },
+      { "title": "Restaurant Manager", "salary": 520000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "transport", "name": "Transport", "tags": [ "manual" ], "weight": 0.9,
+    "traitAffinity": { "introvert": 1.4, "loyal": 1.1 },
+    "levels": [
+      { "title": "Delivery Driver", "salary": 300000, "minEducation": "none", "entry": true, "promotionChance": 0.12 },
+      { "title": "Truck Driver", "salary": 370000, "minEducation": "primary", "entry": true, "promotionChance": 0.08 },
+      { "title": "Dispatcher", "salary": 430000, "minEducation": "secondary", "promotionChance": 0.06 },
+      { "title": "Logistics Manager", "salary": 620000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "police", "name": "Police", "tags": [ "uniform" ], "weight": 0.3,
+    "traitAffinity": { "brave": 2.0, "loyal": 1.4, "hot_tempered": 1.2, "conflict_averse": 0.4 },
+    "levels": [
+      { "title": "Police Officer", "salary": 400000, "minEducation": "secondary", "entry": true, "promotionChance": 0.1 },
+      { "title": "Detective", "salary": 480000, "minEducation": "secondary", "promotionChance": 0.07 },
+      { "title": "Inspector", "salary": 600000, "minEducation": "secondary", "promotionChance": 0.04 },
+      { "title": "Chief of Police", "salary": 900000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "military", "name": "Military", "tags": [ "uniform" ], "weight": 0.25,
+    "traitAffinity": { "brave": 2.0, "loyal": 1.6, "resilient": 1.4, "conflict_averse": 0.5 },
+    "levels": [
+      { "title": "Private", "salary": 280000, "minEducation": "primary", "entry": true, "promotionChance": 0.15 },
+      { "title": "Sergeant", "salary": 380000, "minEducation": "secondary", "promotionChance": 0.08 },
+      { "title": "Officer", "salary": 520000, "minEducation": "secondary", "promotionChance": 0.05 },
+      { "title": "Colonel", "salary": 850000, "minEducation": "university", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "agriculture", "name": "Farming", "tags": [ "manual" ], "weight": 0.4,
+    "traitAffinity": { "introvert": 1.5, "resilient": 1.3, "loyal": 1.2 },
+    "levels": [
+      { "title": "Farm Hand", "salary": 250000, "minEducation": "none", "entry": true, "promotionChance": 0.08 },
+      { "title": "Farmer", "salary": 340000, "minEducation": "primary", "promotionChance": 0.04 },
+      { "title": "Farm Owner", "salary": 520000, "minEducation": "primary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "arts", "name": "The Arts", "tags": [ "creative" ], "weight": 0.2,
+    "traitAffinity": { "creative": 3.0, "eccentric": 2.0, "impulsive": 1.3, "ambitious": 1.2 },
+    "levels": [
+      { "title": "Struggling Artist", "salary": 170000, "minEducation": "none", "entry": true, "promotionChance": 0.06 },
+      { "title": "Working Artist", "salary": 320000, "minEducation": "none", "promotionChance": 0.03 },
+      { "title": "Renowned Artist", "salary": 1100000, "minEducation": "none", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "finance", "name": "Finance", "tags": [ "office" ], "weight": 0.4,
+    "traitAffinity": { "ambitious": 1.8, "greedy": 1.8, "stingy": 1.3 },
+    "levels": [
+      { "title": "Bank Clerk", "salary": 330000, "minEducation": "secondary", "entry": true, "promotionChance": 0.08 },
+      { "title": "Financial Advisor", "salary": 520000, "minEducation": "university", "entry": true, "promotionChance": 0.07, "requiresDegree": [ "uni_economics" ] },
+      { "title": "Branch Manager", "salary": 750000, "minEducation": "university", "promotionChance": 0.04, "requiresDegree": [ "uni_economics" ] },
+      { "title": "Investment Director", "salary": 1600000, "minEducation": "university", "promotionChance": 0, "requiresDegree": [ "uni_economics" ] }
+    ]
+  },
+  {
+    "id": "social_work", "name": "Social Work", "tags": [ "care" ], "weight": 0.4,
+    "traitAffinity": { "kind": 2.0, "generous": 1.5, "resilient": 1.3, "cruel": 0.2 },
+    "levels": [
+      { "title": "Youth Worker", "salary": 310000, "minEducation": "secondary", "entry": true, "promotionChance": 0.1 },
+      { "title": "Social Worker", "salary": 420000, "minEducation": "university", "entry": true, "promotionChance": 0.06, "requiresDegree": [ "uni_social" ] },
+      { "title": "Head of Social Services", "salary": 620000, "minEducation": "university", "promotionChance": 0, "requiresDegree": [ "uni_social" ] }
+    ]
+  },
+  {
+    "id": "engineering", "name": "Engineering", "tags": [ "office" ], "weight": 0.4,
+    "traitAffinity": { "introvert": 1.4, "ambitious": 1.3 },
+    "levels": [
+      { "title": "Junior Engineer", "salary": 450000, "minEducation": "university", "entry": true, "promotionChance": 0.12, "requiresDegree": [ "uni_engineering" ] },
+      { "title": "Engineer", "salary": 560000, "minEducation": "university", "promotionChance": 0.08, "requiresDegree": [ "uni_engineering" ] },
+      { "title": "Senior Engineer", "salary": 700000, "minEducation": "university", "promotionChance": 0.04, "requiresDegree": [ "uni_engineering" ] },
+      { "title": "Chief Engineer", "salary": 950000, "minEducation": "university", "promotionChance": 0, "requiresDegree": [ "uni_engineering" ] }
+    ]
+  },
+  {
+    "id": "science", "name": "Science", "tags": [ "office" ], "weight": 0.25,
+    "traitAffinity": { "introvert": 1.6, "eccentric": 1.4, "ambitious": 1.2 },
+    "levels": [
+      { "title": "Lab Technician", "salary": 340000, "minEducation": "secondary", "entry": true, "promotionChance": 0.08 },
+      { "title": "Research Scientist", "salary": 520000, "minEducation": "university", "entry": true, "promotionChance": 0.05, "requiresDegree": [ "uni_science", "uni_medicine" ] },
+      { "title": "Head of Research", "salary": 850000, "minEducation": "university", "promotionChance": 0, "requiresDegree": [ "uni_science", "uni_medicine" ] }
+    ]
+  },
+  {
     "id": "crime", "name": "Crime", "tags": [ "crime" ], "weight": 0.06,
     "traitAffinity": { "manipulative": 5.0, "impulsive": 3.0, "loyal": 0.3, "criminal": 8.0, "dishonest": 3.0, "greedy": 1.5 },
     "levels": [
