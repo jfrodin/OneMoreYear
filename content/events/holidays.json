@@ -1,0 +1,192 @@
+// The year's days: holidays, parties and the rituals around them. No dashes.
+[
+  {
+    "id": "hol_new_years_eve", "title": "Midnight",
+    "text": "New Year's Eve. Fireworks from every balcony, champagne in plastic glasses, and ten seconds left of the year.",
+    "conditions": { "minAge": 16 }, "cooldown": 6,
+    "choices": [
+      { "text": "Kiss someone at midnight", "requires": { "hasPartner": true }, "effects": [ { "type": "happiness", "amount": 4 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 4, "mutual": true } ], "result": "Ten, nine, eight. Somebody's rocket goes sideways into a hedge. You do not notice." },
+      { "text": "Make a resolution", "chance": 0.25, "chanceTraits": { "ambitious": 0.15, "lazy": -0.15 },
+        "success": { "text": "And you actually keep it. People are astonished, you most of all.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "It lasts until the eleventh of January. A personal record.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Go to bed at half past ten", "effects": [ { "type": "health", "amount": 1 } ], "result": "The fireworks wake you anyway. You wish the year a quiet good night and turn over." }
+    ]
+  },
+  {
+    "id": "hol_valborg", "countries": [ "sweden" ], "title": "Walpurgis Night",
+    "text": "The last night of April. A bonfire on the hill, a choir singing spring in, and the first evening of the year that is almost warm.",
+    "conditions": { "minAge": 6 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go to the bonfire", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Smoke in your hair, cold feet, a choir slightly out of tune. Winter is officially over, whatever the weather says tomorrow." },
+      { "text": "Go to the student party", "requires": { "minAge": 18, "maxAge": 30 }, "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -2 } ], "result": "Champagne breakfast in a park at nine in the morning, and the rest of the day is a rumour." }
+    ]
+  },
+  {
+    "id": "hol_national_day_citizen", "countries": [ "sweden" ], "title": "National Day",
+    "text": "The sixth of June. The town hall is welcoming new citizens with a ceremony, a brass band and small paper flags.",
+    "conditions": { "minAge": 18, "minYear": 1983, "flags": [ "emigrant" ], "notFlags": [ "se_citizen" ] }, "cooldown": 0, "weight": 2,
+    "choices": [
+      { "text": "Go to the ceremony", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "flag", "flag": "se_citizen" }, { "type": "memory", "kind": "citizenship", "text": "The day I became a citizen", "impact": 20 } ], "result": "A speech, a certificate, a blue and yellow flower. You think about {homeland}, and about how far you have come, and you are surprised to be crying." },
+      { "text": "It is just paper", "effects": [ { "type": "flag", "flag": "se_citizen" }, { "type": "happiness", "amount": 1 } ], "result": "The certificate comes in the post. You put it in a drawer with your old passport." }
+    ]
+  },
+  {
+    "id": "hol_midsummer_rain", "countries": [ "sweden" ], "title": "Midsummer, in the rain",
+    "text": "Midsummer Eve, and it is pouring. The herring is in the fridge, the maypole is lying in the wet grass, and the guests are on their way.",
+    "conditions": { "minAge": 18 }, "cooldown": 6,
+    "choices": [
+      { "text": "Dance round the pole anyway", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -1 } ], "result": "Soaked to the skin, singing about little frogs, laughing too hard to finish the verse. The best midsummer in years." },
+      { "text": "Move everything indoors", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Twenty people in a small kitchen, schnapps songs at a volume the neighbours enjoy less than you do." }
+    ]
+  },
+  {
+    "id": "hol_semla", "countries": [ "sweden" ], "title": "Shrove Tuesday",
+    "text": "The bakery window is full of cream buns. Fat Tuesday, one bun a year, the rule says. The rule has never been followed by anyone.",
+    "conditions": { "minAge": 5 }, "cooldown": 5,
+    "choices": [
+      { "text": "Eat one in a bowl of hot milk", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The old way, the way your grandparents did it. Soggy, sweet, perfect." },
+      { "text": "Eat three", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": -1 } ], "result": "The cream was in your nose by the second one. You regret nothing." }
+    ]
+  },
+  {
+    "id": "hol_surstromming", "countries": [ "sweden" ], "title": "The tin",
+    "text": "A neighbour has invited the street to a fermented herring party. The tin is bulging. Someone is opening it under water, in a bucket, outdoors.",
+    "conditions": { "minAge": 16 }, "cooldown": 10, "weight": 0.6,
+    "choices": [
+      { "text": "Try it", "chance": 0.5,
+        "success": { "text": "On thin bread, with potato and onion, and a large drink. To your enormous surprise, you love it.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "The smell arrives before the fish does. You make it behind the shed in time.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Bring a peg for your nose", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The neighbours call you a coward and a foreigner. You eat a hot dog, very happily." }
+    ]
+  },
+  {
+    "id": "hol_sportlov", "countries": [ "sweden" ], "title": "Winter break",
+    "text": "The children have a week off school in February. Half the town is driving north to the mountains, the other half is staying home and pretending not to mind.",
+    "conditions": { "minAge": 28, "minChildren": 1 }, "cooldown": 4,
+    "target": { "role": "child", "conditions": { "minAge": 5, "maxAge": 14 } },
+    "choices": [
+      { "text": "A week in the mountains", "requires": { "minMoney": 15000 }, "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": 6 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true } ], "result": "Ski school, hot chocolate, a queue for the lift that never ends. {t.name} skis better than you by Thursday." },
+      { "text": "Sledging on the local hill", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4, "mutual": true } ], "result": "A thermos, a plastic sledge and a slope behind the school. {t.name} says it is the best week ever, and means it." }
+    ]
+  },
+  {
+    "id": "hol_name_day", "countries": [ "sweden" ], "title": "Name day",
+    "text": "It is your name day. Somebody at home has remembered, and there is a cake on the table and a flag on the cake.",
+    "conditions": { "minAge": 5, "maxAge": 80 }, "cooldown": 8, "weight": 0.5,
+    "choices": [
+      { "text": "Enjoy it", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A small day, a small cake, and the feeling that somebody keeps a calendar with you in it." }
+    ]
+  },
+  {
+    "id": "hol_fiftieth", "title": "Fifty",
+    "text": "You are turning fifty. Your family wants to throw a party. A big one. With speeches.",
+    "conditions": { "minAge": 50, "maxAge": 50 }, "cooldown": 0, "weight": 8,
+    "choices": [
+      { "text": "A big party", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "fiftieth", "text": "My fiftieth birthday party", "impact": 15 } ], "result": "Speeches from people you had forgotten loved you. A slideshow with photos you had hoped were lost. You dance until two and feel about thirty." },
+      { "text": "Run away on a trip", "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 6 } ], "result": "You turn fifty on a beach where nobody knows you. It is the most peaceful birthday you have ever had." },
+      { "text": "Pretend it is not happening", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "It happens anyway. A cake appears at work. Somebody sings." }
+    ]
+  },
+  {
+    "id": "hol_super_bowl", "countries": [ "usa" ], "title": "Super Bowl Sunday",
+    "text": "Super Bowl Sunday. A neighbour has a television the size of a wall, seven kinds of dip, and a lot of opinions.",
+    "conditions": { "minAge": 12, "minYear": 1967 }, "cooldown": 5,
+    "choices": [
+      { "text": "Go to the party", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "health", "amount": -1 } ], "result": "You do not follow the game. You follow the dip. You enjoy the commercials more than anyone in the room." },
+      { "text": "Bet on the game", "chance": 0.5, "chanceTraits": { "addictive": -0.1 },
+        "success": { "text": "Your team wins. You collect, loudly, from people who will remember it.", "effects": [ { "type": "money", "amount": 1000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "A fumble in the fourth quarter. You pay up, and say nothing for the rest of the evening.", "effects": [ { "type": "money", "amount": -1000 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "hol_fourth_fireworks", "countries": [ "usa" ], "title": "Fireworks",
+    "text": "The Fourth of July. Somebody's uncle has brought fireworks from out of state, the kind that are not legal here, and a lighter.",
+    "conditions": { "minAge": 10 }, "cooldown": 6,
+    "choices": [
+      { "text": "Stand well back", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "A spectacular show, a small fire in the neighbour's yard, a garden hose, and everybody cheering." },
+      { "text": "Help light them", "chance": 0.85, "chanceTraits": { "impulsive": -0.15 },
+        "success": { "text": "Rockets in red, white and blue. You feel like a child and an outlaw at the same time.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "One goes off in your hand. The emergency room is full of people like you tonight.", "effects": [ { "type": "health", "amount": -8 }, { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "hol_thanksgiving_politics", "countries": [ "usa" ], "title": "Pass the gravy",
+    "text": "Thanksgiving dinner. Everything is going well, until someone at the table brings up politics.",
+    "conditions": { "minAge": 16 }, "cooldown": 5,
+    "choices": [
+      { "text": "Argue back", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "hot_tempered", "chance": 0.03 } ], "result": "An hour. Raised voices, someone in tears, pie eaten in silence. Next year, the seating plan is a diplomatic document." },
+      { "text": "Change the subject to football", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "It works. It has worked at this table for sixty years. It will work for sixty more." }
+    ]
+  },
+  {
+    "id": "hol_halloween_adult", "countries": [ "usa" ], "title": "The costume",
+    "text": "A Halloween party at a friend's house. Costumes required. It is in two hours and you own nothing.",
+    "conditions": { "minAge": 18, "maxAge": 50 }, "cooldown": 5,
+    "choices": [
+      { "text": "Make something brilliant", "chance": 0.5, "chanceTraits": { "creative": 0.25 },
+        "success": { "text": "Cardboard, tin foil and genius. You win the costume contest. Photographs exist.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Nobody can tell what you are. You spend the evening explaining.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "A sheet with two holes", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Classic. You meet three other ghosts. You form a group." }
+    ]
+  },
+  {
+    "id": "hol_black_friday", "countries": [ "usa" ], "title": "Black Friday",
+    "text": "Five in the morning, a car park full of people waiting for a store to open. There is one television at half price, and there are two hundred people.",
+    "conditions": { "minAge": 18, "minYear": 1990 }, "cooldown": 6,
+    "choices": [
+      { "text": "Run for it", "chance": 0.3, "chanceAttributes": { "fitness": 0.006 },
+        "success": { "text": "You get it. You carry it to the car like a trophy, past people who hate you.", "effects": [ { "type": "money", "amount": 3000 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "An elbow, a trolley over your foot, and an empty shelf. You buy a coffee maker you do not need.", "effects": [ { "type": "money", "amount": -800 }, { "type": "health", "amount": -1 } ] } },
+      { "text": "Go home to bed", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You watch the news footage from under a blanket, eating leftover pie. You won." }
+    ]
+  },
+  {
+    "id": "hol_valentines", "title": "Valentine's Day",
+    "text": "The fourteenth of February. Every restaurant is booked, every shop is red, and {p.name} has gone very quiet about it.",
+    "conditions": { "minAge": 16, "hasPartner": true, "minYear": 1990 }, "cooldown": 5,
+    "choices": [
+      { "text": "Plan something", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 3 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 6, "mutual": true } ], "result": "A table you booked in January. {p.name} is visibly impressed, and slightly suspicious." },
+      { "text": "It is a commercial invention", "chance": 0.5,
+        "success": { "text": "{p.name} agrees completely. You eat pizza on the sofa, very happy, very unromantic.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "{p.name} agreed last year. This year, apparently, {p.name} did not.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "hol_mothers_day_card", "title": "The card",
+    "text": "A handmade card on the breakfast tray. Glitter, glue and a drawing of a person with very long arms. It is apparently you.",
+    "conditions": { "minAge": 22, "minChildren": 1 }, "cooldown": 6,
+    "target": { "role": "child", "conditions": { "minAge": 4, "maxAge": 9 } },
+    "choices": [
+      { "text": "Keep it forever", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4, "mutual": true } ], "result": "It goes in a box. In forty years {t.name} will find it, clearing out your things, and sit on the floor for a long time." }
+    ]
+  },
+  {
+    "id": "hol_anniversary", "title": "The anniversary",
+    "text": "It is your wedding anniversary, and you have just realised it, at four in the afternoon.",
+    "conditions": { "minAge": 22, "married": true }, "cooldown": 6,
+    "choices": [
+      { "text": "Panic buy flowers", "chance": 0.6,
+        "success": { "text": "Petrol station tulips, slightly bruised. {p.name} is touched, and does not ask where they came from.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "The price tag is still on. {p.name} knows exactly where they came from.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": -3 } ] } },
+      { "text": "Admit it", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "respect", "amount": 2 } ], "result": "{p.name} laughs. {p.name} forgot as well. You go out for dinner and tell everyone at the restaurant." }
+    ]
+  },
+  {
+    "id": "hol_school_out", "title": "The last day of school",
+    "text": "The last day before summer. A song in the church or the gym hall, and then ten weeks of nothing stretching out ahead like a field.",
+    "conditions": { "minAge": 7, "maxAge": 15, "activity": "school" }, "cooldown": 4,
+    "choices": [
+      { "text": "Run all the way home", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "Shoes off by the gate. You will not wear them again until August, if you can help it." },
+      { "text": "Say goodbye to the teacher", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "grades", "amount": 1 } ], "result": "A small bunch of flowers from the garden. The teacher keeps it on the desk until it wilts." }
+    ]
+  },
+  {
+    "id": "hol_advent", "title": "The first candle",
+    "text": "The first Sunday of Advent. One candle lit out of four, a star in the window, and the long dark of the year turning towards Christmas.",
+    "conditions": { "minAge": 5 }, "cooldown": 6,
+    "choices": [
+      { "text": "Mulled wine and gingerbread", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "The flat smells of cloves for a week. You eat too many biscuits standing by the window." },
+      { "text": "Start on the presents early", "effects": [ { "type": "money", "amount": -1000 }, { "type": "happiness", "amount": 2 } ], "result": "You are finished by the tenth of December. You will tell people this many times." }
+    ]
+  }
+]
