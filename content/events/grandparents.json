@@ -1,0 +1,197 @@
+// Grandparents and grandchildren, from both sides of the table. No dashes.
+[
+  {
+    "id": "gp_first_grandchild_hold", "title": "Small hands",
+    "text": "You hold {t.name} for the first time. {t.He} weighs almost nothing and grips your finger as if {t.he} has decided something.",
+    "conditions": { "minAge": 40, "notFlags": [ "gp_first_hold" ] }, "cooldown": 0, "weight": 4,
+    "target": { "role": "grandchild", "conditions": { "maxAge": 1 } },
+    "choices": [
+      { "text": "Cry, a little", "effects": [ { "type": "flag", "flag": "gp_first_hold" }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "first_grandchild", "text": "Holding {t.name} for the first time", "impact": 30 } ], "result": "Nobody warned you about this part. You were ready for being old. You were not ready for this." },
+      { "text": "Give advice to the new parents", "effects": [ { "type": "flag", "flag": "gp_first_hold" }, { "type": "happiness", "amount": 6 }, { "type": "relation", "who": "child", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "Your advice is accurate, experienced and completely unwelcome. You will learn to stop. Eventually." }
+    ]
+  },
+  {
+    "id": "gp_babysit_call", "title": "Can you take them?",
+    "text": "A phone call at seven in the morning. The daycare is closed, both parents have to work, and could you possibly take {t.name} today?",
+    "conditions": { "minAge": 45 }, "cooldown": 3,
+    "target": { "role": "grandchild", "conditions": { "minAge": 1, "maxAge": 6 } },
+    "choices": [
+      { "text": "Of course", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "health", "amount": -1 }, { "type": "happiness", "amount": 3 } ], "result": "A day of puddles, crackers and the same picture book eleven times. You sleep at eight, wonderfully tired." },
+      { "text": "Not today, I have plans", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "A pause on the line. \"Of course. No problem.\" It is slightly a problem. You go to your plans anyway, and enjoy them less." }
+    ]
+  },
+  {
+    "id": "gp_spoiling", "title": "Rules at grandma's",
+    "text": "Ice cream before dinner, staying up late, and a second ice cream. {t.name}'s parents have noticed, and they want a word.",
+    "conditions": { "minAge": 45 }, "cooldown": 6,
+    "target": { "role": "grandchild", "conditions": { "minAge": 3, "maxAge": 11 } },
+    "choices": [
+      { "text": "Promise to follow their rules", "effects": [ { "type": "relation", "who": "child", "to": "player", "dim": "respect", "amount": 4 } ], "result": "You follow them, mostly. The ice cream is now called a vegetable." },
+      { "text": "My house, my rules", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "relation", "who": "child", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "A small war, fought at Sunday dinners for years. {t.name} knows exactly whose side to be on." }
+    ]
+  },
+  {
+    "id": "gp_teach_craft", "title": "Something only you know",
+    "text": "{t.name} watches you with great interest while you work with your hands. There are things you know that nobody else in the family knows how to do.",
+    "conditions": { "minAge": 50 }, "cooldown": 8,
+    "target": { "role": "grandchild", "conditions": { "minAge": 7, "maxAge": 15 } },
+    "choices": [
+      { "text": "Teach {t.him}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 8 }, { "type": "memory", "who": "target", "to": "player", "kind": "taught_by_grandparent", "text": "{name} taught me to use my hands", "impact": 15 } ], "result": "Knitting, joinery, how to clean a fish, how to fix a bicycle. Slowly, with patience you never had for your own children." },
+      { "text": "Do it yourself, it is quicker", "effects": [], "result": "It is quicker. In fifty years, nobody in the family will know how it was done." }
+    ]
+  },
+  {
+    "id": "gp_war_stories", "title": "Back in my day",
+    "text": "{t.name} has a school project about the old days and wants to interview you. There is a list of questions, and a recorder.",
+    "conditions": { "minAge": 60 }, "cooldown": 0,
+    "target": { "role": "grandchild", "conditions": { "minAge": 9, "maxAge": 17 } },
+    "choices": [
+      { "text": "Tell the truth, all of it", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "Two hours. {t.name} only needed ten minutes, but {t.he} stays, and the questions stop being on the list." },
+      { "text": "Make it a better story", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 6 } ], "result": "You were braver, poorer and funnier than you were. The project gets top marks. The teacher writes: what a remarkable life." }
+    ]
+  },
+  {
+    "id": "gp_holiday_cottage", "title": "Summer with grandchildren",
+    "text": "All the grandchildren at once, for a week in summer. The house is loud, wet towels everywhere, and someone is always hungry.",
+    "conditions": { "minAge": 55 }, "cooldown": 4,
+    "target": { "role": "grandchild", "conditions": { "minAge": 4, "maxAge": 14 } },
+    "choices": [
+      { "text": "Swimming, games, a bonfire on the last night", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "health", "amount": -2 }, { "type": "money", "amount": -3000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "memory", "who": "target", "to": "player", "kind": "gp_summers", "text": "The summers at {name}'s house", "impact": 20 } ], "result": "A week they will talk about at your funeral. You sleep for three days afterwards." },
+      { "text": "Two days is enough", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Two good days, and a quiet house after. You love them. You love the quiet too." }
+    ]
+  },
+  {
+    "id": "gp_grandchild_secret", "title": "Don't tell mum",
+    "text": "{t.name} tells you something and makes you promise not to tell {t.his} parents. It is not dangerous. It is the kind of thing a teenager needs to tell someone.",
+    "conditions": { "minAge": 50 }, "cooldown": 8,
+    "target": { "role": "grandchild", "conditions": { "minAge": 13, "maxAge": 19 } },
+    "choices": [
+      { "text": "Keep the secret", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12, "mutual": true } ], "result": "You keep it. {t.name} comes back with the next one, and the one after. You become the person {t.he} tells things to." },
+      { "text": "Gently persuade {t.him} to tell them", "chance": 0.5, "chanceTraits": { "charming": 0.15, "kind": 0.1 },
+        "success": { "text": "{t.He} does. It goes better than {t.he} feared. {t.He} thanks you a year later.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 8 } ] },
+        "failure": { "text": "{t.He} feels betrayed, and stops telling you things for a while.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "gp_school_pickup", "title": "Pick up",
+    "text": "You pick {t.name} up from school every Thursday now. Ten minutes of walking, a bun from the bakery, and whatever {t.he} wants to talk about.",
+    "conditions": { "minAge": 55 }, "cooldown": 10,
+    "target": { "role": "grandchild", "conditions": { "minAge": 6, "maxAge": 11 } },
+    "choices": [
+      { "text": "Make it a ritual", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "Every Thursday for five years. When {t.he} is too old to be picked up, {t.he} still comes by on Thursdays." },
+      { "text": "Take the car, it is faster", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Ten minutes in the car with the radio on. Pleasant enough. Not the same." }
+    ]
+  },
+  {
+    "id": "gp_grandchild_graduation", "title": "In the front row",
+    "text": "{t.name} graduates today. Somebody saved you a seat in the front row, because everyone knows your knees.",
+    "conditions": { "minAge": 60 }, "cooldown": 3,
+    "target": { "role": "grandchild", "conditions": { "minAge": 18, "maxAge": 20 } },
+    "choices": [
+      { "text": "Give {t.him} an envelope", "requires": { "minMoney": 20000 }, "effects": [ { "type": "transfer", "to": "target", "amount": 10000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 } ], "result": "Money, and a card in your handwriting. {t.He} keeps the card longer than the money." },
+      { "text": "Just be there", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ], "result": "You clap until your hands hurt. You think about everyone who did not live to see this, and clap for them too." }
+    ]
+  },
+  {
+    "id": "gp_grandchild_distance", "title": "Busy",
+    "text": "{t.name} is grown and busy. The visits have become calls, and the calls have become a text on your birthday.",
+    "conditions": { "minAge": 65 }, "cooldown": 8,
+    "target": { "role": "grandchild", "conditions": { "minAge": 20 } },
+    "choices": [
+      { "text": "Call {t.him} anyway, every Sunday", "chance": 0.6, "chanceTraits": { "kind": 0.1, "charming": 0.1 },
+        "success": { "text": "Three minutes at first, then ten, then an hour. One Sunday {t.he} calls you first.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ] },
+        "failure": { "text": "{t.He} answers, mostly. Distracted, kind, on the way somewhere. It is something.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "That is how it should be", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.03 } ], "result": "You remember being twenty and never calling your own grandmother. It does not help as much as it should." }
+    ]
+  },
+  {
+    "id": "gp_great_grandchild", "title": "Four generations",
+    "text": "A photograph is taken: you, your child, your grandchild and a baby. Four generations on one sofa.",
+    "conditions": { "minAge": 70, "notFlags": [ "gp_four_generations" ] }, "cooldown": 0, "weight": 3,
+    "target": { "role": "grandchild", "conditions": { "minAge": 20, "minChildren": 1 } },
+    "choices": [
+      { "text": "Frame it", "effects": [ { "type": "flag", "flag": "gp_four_generations" }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "four_generations", "text": "The photograph with four generations", "impact": 25 } ], "result": "It hangs in the hall. Visitors stop in front of it. You do not know how you got here, but here you are." }
+    ]
+  },
+  {
+    "id": "gp_grandchild_trouble", "title": "Trouble",
+    "text": "{t.name} is in trouble. Fights at school, or worse. {t.His} parents are at their wits' end and ask if {t.he} can stay with you for a while.",
+    "conditions": { "minAge": 55, "livesWithParents": false }, "cooldown": 15, "weight": 0.6,
+    "target": { "role": "grandchild", "conditions": { "minAge": 13, "maxAge": 18 } },
+    "choices": [
+      { "text": "Take {t.him} in", "chance": 0.6, "chanceTraits": { "kind": 0.1, "devoted_parent": 0.15 },
+        "success": { "text": "A long, quiet term. Chores, homework at the kitchen table, no lectures. {t.He} goes home calmer, and comes back on weekends just because.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15, "mutual": true }, { "type": "memory", "who": "target", "to": "player", "kind": "saved_by_grandparent", "text": "The year I lived with {name}", "impact": 30 } ] },
+        "failure": { "text": "Slammed doors, a broken window, and the police at your door once. {t.He} goes home after a month. You tried.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "money", "amount": -4000 } ] } },
+      { "text": "You are too old for this", "effects": [ { "type": "relation", "who": "child", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "You say no. You are probably right. You lie awake anyway." }
+    ]
+  },
+  {
+    "id": "gp_inheritance_talk", "title": "Who gets what",
+    "text": "At Christmas dinner, a grandchild asks, half joking, who gets the house when you are gone. The table goes very quiet.",
+    "conditions": { "minAge": 70, "ownsHome": true }, "cooldown": 15,
+    "target": { "role": "grandchild", "conditions": { "minAge": 16 } },
+    "choices": [
+      { "text": "Laugh it off", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You laugh. Everyone laughs. Everyone thinks about it the whole way home." },
+      { "text": "Tell them it is all going to charity", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": -3 } ], "result": "It is not true. Watching their faces is the best entertainment you have had in years." }
+    ]
+  },
+  {
+    "id": "gp_grandparent_old_photos", "title": "The box of photographs",
+    "text": "{t.name} takes out a shoebox of old photographs. People you have never seen, in clothes from another century. Everyone has a story, and {t.he} is the only one left who knows them.",
+    "conditions": { "minAge": 10, "maxAge": 50 }, "cooldown": 0,
+    "target": { "role": "grandparent", "conditions": { "minAge": 70 } },
+    "choices": [
+      { "text": "Write the names on the back", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "memory", "kind": "family_photos", "text": "Going through the old photos with {t.name}", "impact": 15 } ], "result": "An afternoon with a pencil. Great aunts, a farm that burned down, a man who went to America and never wrote. Now somebody knows." },
+      { "text": "Look at a few, then go", "effects": [], "result": "Years later, you find the box again. Nobody alive knows who any of them were." }
+    ]
+  },
+  {
+    "id": "gp_grandparent_money_secret", "title": "Folded notes",
+    "text": "Every time you visit, {t.name} presses a folded note into your hand when nobody is looking. \"Don't tell your parents.\"",
+    "conditions": { "minAge": 6, "maxAge": 16 }, "cooldown": 6,
+    "target": { "role": "grandparent" },
+    "choices": [
+      { "text": "Save it", "effects": [ { "type": "money", "amount": 500 }, { "type": "trait_add", "trait": "stingy", "chance": 0.02 } ], "result": "A tin under the bed, slowly filling. You count it on Sundays." },
+      { "text": "Spend it on sweets", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Gone in a day. You remember the feeling of the folded note better than anything you bought." }
+    ]
+  },
+  {
+    "id": "gp_grandparent_dementia_visit", "title": "Who are you?",
+    "text": "{t.name} does not recognise you today. {t.He} is polite, and asks if you are the new nurse.",
+    "conditions": { "minAge": 10, "maxAge": 50 }, "cooldown": 8, "weight": 0.5,
+    "target": { "role": "grandparent", "conditions": { "minAge": 78 } },
+    "choices": [
+      { "text": "Play along, and talk", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "You talk about the weather, about {t.his} grandchildren, about you, as a stranger. {t.He} says you would like them. You hold it together until the car." },
+      { "text": "Keep telling {t.him} who you are", "effects": [ { "type": "happiness", "amount": -5 } ], "result": "{t.He} gets confused, then upset. A nurse asks you, gently, to try a different way next time." }
+    ]
+  },
+  {
+    "id": "gp_grandparent_kitchen", "title": "The recipe",
+    "text": "{t.name} has made the same dish for every family dinner for fifty years. Nobody has ever written it down.",
+    "conditions": { "minAge": 12, "maxAge": 45 }, "cooldown": 0,
+    "target": { "role": "grandparent", "conditions": { "minAge": 65 } },
+    "choices": [
+      { "text": "Ask {t.him} to teach you", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "skill", "kind": "cooking", "amount": 1 }, { "type": "memory", "kind": "family_recipe", "text": "Learning the family recipe from {t.name}", "impact": 15 } ], "result": "No measurements. \"Enough flour. Until it feels right.\" It takes four tries. On the fifth, {t.he} tastes it and nods." },
+      { "text": "There is always next year", "effects": [], "result": "There is not always next year. You try to make it from memory for the rest of your life, and it is never quite right." }
+    ]
+  },
+  {
+    "id": "gp_grandparent_wisdom", "title": "On the porch",
+    "text": "Sitting on the porch with {t.name}, who has been quiet for a long time. Then: \"Can I tell you something I wish someone had told me?\"",
+    "conditions": { "minAge": 14, "maxAge": 35 }, "cooldown": 0,
+    "target": { "role": "grandparent", "conditions": { "minAge": 70 } },
+    "choices": [
+      { "text": "Listen", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.05 }, { "type": "happiness", "amount": 3 }, { "type": "memory", "kind": "grandparent_advice", "text": "What {t.name} told me on the porch", "impact": 18 } ], "result": "It is not wise in the way books are wise. It is about money, regret, and one person {t.he} should have married. You think about it for the rest of your life." }
+    ]
+  },
+  {
+    "id": "gp_grandparent_care", "title": "Sunday visits",
+    "text": "{t.name} lives alone now, and finds the stairs hard. Your parents are stretched thin. Somebody needs to help with shopping and company.",
+    "conditions": { "minAge": 16, "maxAge": 40 }, "cooldown": 10,
+    "target": { "role": "grandparent", "conditions": { "minAge": 75 } },
+    "choices": [
+      { "text": "Take Sundays", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "Groceries, a crossword, coffee that is too strong. Every Sunday for three years, until the last one." },
+      { "text": "You have your own life", "effects": [ { "type": "relation", "who": "parent", "to": "player", "dim": "respect", "amount": -3 } ], "result": "You do. It is true. Afterwards, at the funeral, it feels less true." }
+    ]
+  }
+]

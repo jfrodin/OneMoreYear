@@ -25,8 +25,26 @@ public static class EffectApplier
         {
             null or "player" => w.Player,
             "partner" => w.TryGet(w.Player.PartnerId),
-            _ => pending.Roles.TryGetValue(who, out var id) ? w.Get(id) : null
+            _ when pending.Roles.TryGetValue(who, out var id) => w.Get(id),
+            "child" or "parent" => Link(w, who, pending),
+            _ => null
         };
+    }
+
+    /// <summary>
+    /// "child" and "parent" without a role of their own: the person between the player and a grandchild
+    /// or grandparent target (the grandchild's parent, the grandparent's child).
+    /// </summary>
+    private static Person? Link(World w, string who, PendingEvent pending)
+    {
+        var target = pending.Roles.TryGetValue("target", out var tid) ? w.Get(tid) : null;
+        var candidates = (who == "child" ? w.Player.ChildIds : w.Player.ParentIds).Select(id => w.TryGet(id)).OfType<Person>().Where(p => p.IsAlive).ToList();
+        if (target != null)
+        {
+            var link = candidates.FirstOrDefault(p => who == "child" ? target.ParentIds.Contains(p.Id) : target.ChildIds.Contains(p.Id));
+            if (link != null) return link;
+        }
+        return candidates.FirstOrDefault();
     }
 
     public static void Apply(SimContext ctx, EffectDef e, PendingEvent pending)
