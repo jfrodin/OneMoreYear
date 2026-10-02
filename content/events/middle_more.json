@@ -1,0 +1,220 @@
+// Middle age, 40 to 65: work has a shape, children are leaving, parents are ageing, and there is
+// still time for one more surprise. No dashes.
+[
+  {
+    "id": "mid2_fifty", "title": "Fifty",
+    "text": "Fifty. Someone has hung a banner with an old school photo of you on it, blown up to the size of a door.",
+    "conditions": { "minAge": 50, "maxAge": 50 }, "cooldown": 0,
+    "choices": [
+      { "text": "A big party", "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "fifty", "text": "My fiftieth", "impact": 15 } ], "result": "Old friends, new friends, a speech by your sibling that is far too honest. You dance until two and pay for it until Wednesday." },
+      { "text": "A quiet dinner with the closest", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Six people, a good restaurant, nobody makes a speech. Exactly what you wanted." },
+      { "text": "Run away for the weekend", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": 4 } ], "result": "A hotel by the sea, alone or almost. You turn off your phone. When you turn it on, sixty messages." }
+    ]
+  },
+  {
+    "id": "mid2_mortgage_free", "title": "The last payment",
+    "text": "The last mortgage payment goes out today. The house is yours. Every brick, every leaking tap.",
+    "conditions": { "minAge": 45, "ownsHome": true, "hasMortgage": false, "notFlags": [ "mortgage_free" ] }, "cooldown": 0, "weight": 0.5,
+    "choices": [
+      { "text": "Celebrate", "effects": [ { "type": "flag", "flag": "mortgage_free" }, { "type": "happiness", "amount": 6 } ], "result": "A bottle of something good, at the kitchen table, under the light you never got round to replacing." },
+      { "text": "Start saving the difference", "effects": [ { "type": "flag", "flag": "mortgage_free" }, { "type": "money", "amount": 20000 } ], "result": "Every month, the same amount, into an account you do not touch. Your future self will be grateful." }
+    ]
+  },
+  {
+    "id": "mid2_sabbatical", "title": "A year off",
+    "text": "Your employer offers an unpaid year off. Your job will be there when you come back. Probably.",
+    "conditions": { "minAge": 40, "maxAge": 60, "activity": "working", "minMoney": 100000 }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "money", "amount": -80000 }, { "type": "happiness", "amount": 10 }, { "type": "performance", "amount": -5 }, { "type": "memory", "kind": "sabbatical", "text": "The year off", "impact": 22 } ], "result": "Travel, a long walk across a country, a book you finally read. You come back a different shape. Work notices." },
+      { "text": "Not now", "effects": [], "result": "Not now. There is always a reason, and it is always now." }
+    ]
+  },
+  {
+    "id": "mid2_therapy", "title": "Someone to talk to",
+    "text": "Things have been heavy for a while. A friend gives you the number of someone they went to. You have had it in your wallet for a month.",
+    "conditions": { "minAge": 30, "maxAge": 70, "minYear": 1975 }, "cooldown": 15,
+    "choices": [
+      { "text": "Call", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "resilient", "chance": 0.08 } ], "result": "The first session you talk about the weather. By the tenth you are talking about your father. It helps. Slowly, then more." },
+      { "text": "You can manage", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You manage. That is the word for it, anyway." }
+    ]
+  },
+  {
+    "id": "mid2_motorbike", "title": "The licence",
+    "text": "You have always wanted a motorbike. You are fifty, your knees click, and there is a course starting on Saturday.",
+    "conditions": { "minAge": 45, "maxAge": 62 }, "cooldown": 30,
+    "choices": [
+      { "text": "Do the course", "chance": 0.8,
+        "success": { "text": "You pass on the second try. A second hand bike, a leather jacket, and every Sunday morning on the coast road.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "motorbike", "text": "The Sundays on the bike", "impact": 15 } ] },
+        "failure": { "text": "You drop the bike in the car park in front of a group of nineteen year olds. You take up golf.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Buy the jacket anyway", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 2 } ], "result": "It hangs in the hall. You wear it to the supermarket, sometimes." }
+    ]
+  },
+  {
+    "id": "mid2_band_reunion", "title": "The band",
+    "text": "A message from the drummer of the band you were in at nineteen. They want to do one gig, for old times. The bassist has already said yes.",
+    "conditions": { "minAge": 40, "maxAge": 65 }, "cooldown": 30, "weight": 0.5,
+    "choices": [
+      { "text": "Dust off your instrument", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "band_reunion", "text": "The reunion gig", "impact": 18 } ], "result": "A pub, sixty people, most of them your friends. You are terrible and it is the best night in years." },
+      { "text": "Some things should stay in the past", "effects": [], "result": "They do it without you. Someone sends you a video. You watch it eleven times." }
+    ]
+  },
+  {
+    "id": "mid2_learn_swim", "title": "The secret",
+    "text": "You never learned to swim. Nobody knows, not even your children. Now there is a class for adults at the pool, Thursday nights.",
+    "conditions": { "minAge": 35, "maxAge": 70, "notFlags": [ "can_swim" ] }, "cooldown": 30, "weight": 0.3,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "flag", "flag": "can_swim" }, { "type": "happiness", "amount": 6 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ], "result": "Ten weeks, a float, a patient teacher. Then, one Thursday, a whole length on your own. You cry a bit, and it does not show in the water." },
+      { "text": "Keep the secret", "effects": [], "result": "You stay in the shallow end, laughing at the right moments. Nobody knows." }
+    ]
+  },
+  {
+    "id": "mid2_executor", "title": "The executor",
+    "text": "An old friend has died and left a letter: they want you to handle everything. The will, the house, the family, who are already arguing.",
+    "conditions": { "minAge": 45 }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Do it properly", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "loyal", "chance": 0.05 } ], "result": "Six months of papers, phone calls and one family meeting you will never forget. At the end the eldest daughter hugs you and says thank you." },
+      { "text": "Hand it to a lawyer", "effects": [ { "type": "money", "amount": -5000 } ], "result": "The lawyer is efficient and expensive. You feel guilty, a little, every time you pass their house." }
+    ]
+  },
+  {
+    "id": "mid2_child_wedding_cost", "title": "The wedding budget",
+    "text": "{t.name} is getting married, and the plans keep growing: a venue, a band, a dress that costs more than your first car. {T.He} asks if you can help.",
+    "target": { "role": "child", "conditions": { "minAge": 22 } },
+    "conditions": { "minAge": 45 }, "cooldown": 15,
+    "choices": [
+      { "text": "Pay for most of it", "requires": { "minMoney": 100000 }, "effects": [ { "type": "transfer", "to": "target", "amount": 80000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 } ], "result": "It is a beautiful day. You dance with {t.him} and do not think about the money at all, until January." },
+      { "text": "Give what you can", "effects": [ { "type": "transfer", "to": "target", "amount": 20000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ], "result": "A smaller venue, a friend's band. Nobody remembers the venue. Everyone remembers the speeches." },
+      { "text": "Tell them to elope", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "They do not elope. They do not ask again, either." }
+    ]
+  },
+  {
+    "id": "mid2_renew_vows", "title": "Again",
+    "text": "{P.name} has an idea: to renew your vows. Twenty years on, in front of the people who were there the first time, and the ones who were not born yet.",
+    "conditions": { "minAge": 40, "married": true, "minPartnerYears": 20 }, "cooldown": 30,
+    "choices": [
+      { "text": "Say yes, again", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "vows", "text": "Saying yes again", "impact": 18 } ], "result": "Shorter speeches, better food, and your children rolling their eyes in the front row. It means more this time." },
+      { "text": "Say you do not need to", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -4 } ], "result": "\"We know what we have,\" you say. {P.name} says nothing. You wonder, later, whether that was the right answer." }
+    ]
+  },
+  {
+    "id": "mid2_young_boss", "title": "The new manager",
+    "text": "Your new manager is twenty eight, calls everyone by nicknames and has never heard of the system you built the whole department on.",
+    "conditions": { "minAge": 48, "maxAge": 66, "activity": "working" }, "cooldown": 15,
+    "choices": [
+      { "text": "Teach them, kindly", "effects": [ { "type": "performance", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "By the summer they come to you before every big decision. You never get the title. You get something better." },
+      { "text": "Wait for them to fail", "effects": [ { "type": "performance", "amount": -3 }, { "type": "happiness", "amount": -2 } ], "result": "They do not fail. They get promoted. You are now reporting to their replacement, who is twenty four." }
+    ]
+  },
+  {
+    "id": "mid2_market_stall", "title": "The stall",
+    "text": "Your [[1990: jam || sourdough]] is the best anyone has tasted, everyone says so. There is a free stall at the Saturday market.",
+    "conditions": { "minAge": 35, "maxAge": 70 }, "cooldown": 25,
+    "choices": [
+      { "text": "Take the stall", "chance": 0.6, "chanceTraits": { "charming": 0.1, "ambitious": 0.1, "creative": 0.1 },
+        "success": { "text": "You sell out by eleven. Then every Saturday. It never makes you rich. It makes your Saturdays.", "effects": [ { "type": "money", "amount": 15000 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "It rains. You sell four jars, three to people you know. You eat the rest over the winter.", "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Keep it for the family", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "It stays a family thing. Every Christmas, every child gets a jar, and nobody else in the world." }
+    ]
+  },
+  {
+    "id": "mid2_friend_ill", "title": "The diagnosis",
+    "text": "{t.name} calls to say it is serious. {T.He} says it calmly, the way people do when they have practised saying it.",
+    "target": { "role": "friend", "conditions": { "minAge": 40 } },
+    "conditions": { "minAge": 40 }, "cooldown": 15,
+    "choices": [
+      { "text": "Be there, every week", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 12, "mutual": true }, { "type": "happiness", "amount": -3 } ], "result": "Hospital car parks, bad coffee, long afternoons. {T.he} gets better, slowly. You both know you are different friends now. Closer." },
+      { "text": "Send flowers and keep your distance", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": -5 } ], "result": "You did not know what to say, so you said nothing. {T.he} noticed." }
+    ]
+  },
+  {
+    "id": "mid2_inheritance_aunt", "title": "An aunt you hardly knew",
+    "text": "A letter from a lawyer. An aunt you met maybe four times has left you something in her will: a sum of money, and a box of letters from your grandmother.",
+    "conditions": { "minAge": 35, "maxAge": 70 }, "cooldown": 40, "weight": 0.3,
+    "choices": [
+      { "text": "Read the letters first", "effects": [ { "type": "money", "amount": 60000 }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "aunt_letters", "text": "The letters in the aunt's box", "impact": 12 } ], "result": "Your grandmother at twenty, in love with someone who was not your grandfather. You read them all twice and put them back in the box." },
+      { "text": "Take the money, burn the letters", "requires": { "traitsAny": [ "cruel", "paranoid", "greedy" ] }, "effects": [ { "type": "money", "amount": 60000 } ], "result": "Whatever they said, nobody will read it now. You are never quite sure why you did it." }
+    ]
+  },
+  {
+    "id": "mid2_coach", "title": "Coach",
+    "text": "Your child's football team needs a coach, or there will be no team. Every other parent has suddenly become very interested in their phone.",
+    "conditions": { "minAge": 30, "maxAge": 55 }, "cooldown": 20,
+    "target": { "role": "child", "conditions": { "minAge": 7, "maxAge": 14 } },
+    "choices": [
+      { "text": "Volunteer", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "happiness", "amount": 4 }, { "type": "performance", "amount": -2 } ], "result": "Two seasons of cold mornings, orange slices and losing eleven nil. In the second season you win a match, and you cry more than the children." },
+      { "text": "Look at your phone too", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -2 } ], "result": "Someone's grandfather does it. He is very good. {T.name} talks about him a lot." }
+    ]
+  },
+  {
+    "id": "mid2_back_to_school_child", "title": "The same classroom",
+    "text": "At a parents' evening you realise your child's classroom is the one you sat in, thirty years ago. The radiator is the same. So is one of the teachers.",
+    "conditions": { "minAge": 35, "maxAge": 55, "minChildren": 1 }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Say hello to your old teacher", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "She remembers you, or says she does. She remembers the incident with the frog, which is worse." },
+      { "text": "Sit at your old desk", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Your initials are still there, under the lid, next to someone else's that you never noticed before." }
+    ]
+  },
+  {
+    "id": "mid2_charity_run", "title": "Five kilometres",
+    "text": "The office is doing a charity run. Five kilometres, for a good cause, with your colleagues watching.",
+    "conditions": { "minAge": 30, "maxAge": 65, "activity": "working" }, "cooldown": 10,
+    "choices": [
+      { "text": "Train for it", "chance": 0.7, "chanceAttributes": { "fitness": 0.006 },
+        "success": { "text": "You finish in the middle of the pack, red faced and triumphant. The money goes to the hospital ward where your aunt was treated.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "You walk the last two kilometres next to the man from accounts. You become good friends.", "effects": [ { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Sponsor someone else", "effects": [ { "type": "money", "amount": -500 } ], "result": "You stand at the finish line with a bottle of water and cheer. It is, honestly, the better job." }
+    ]
+  },
+  {
+    "id": "mid2_house_swap", "title": "Someone else's house",
+    "text": "A family in another country wants to swap houses for three weeks in summer. Their photos show a garden, a pool and a very large dog.",
+    "conditions": { "minAge": 30, "maxAge": 65, "ownsHome": true, "minYear": 1960 }, "cooldown": 20,
+    "choices": [
+      { "text": "Swap", "chance": 0.8,
+        "success": { "text": "Three weeks of someone else's life: their coffee machine, their neighbours, their dog. You come home and look at your own house with new eyes.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "house_swap", "text": "The summer in someone else's house", "impact": 12 } ] },
+        "failure": { "text": "Their dog eats your sofa by video. Your neighbours report a party. The pool is green. Still, an adventure.", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "money", "amount": -8000 } ] } },
+      { "text": "Strangers in your bed? No", "effects": [], "result": "You holiday the usual way. It is fine. It is always fine." }
+    ]
+  },
+  {
+    "id": "mid2_dry_month", "title": "A month without",
+    "text": "January. You have decided to go a whole month without a drink. It is the second, and there is a party on Friday.",
+    "conditions": { "minAge": 25, "maxAge": 70, "minYear": 1990 }, "cooldown": 6,
+    "choices": [
+      { "text": "Stick to it", "chance": 0.6, "chanceTraits": { "resilient": 0.15, "addictive": -0.25 },
+        "success": { "text": "You sleep better, you lose a little weight, and you notice how often you used to reach for a glass without thinking.", "effects": [ { "type": "health", "amount": 3 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "The party. A toast. It would have been rude not to. You start again in February, you tell yourself.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Life is short", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You make it to the fourth. Then you decide that moderation is also a kind of discipline." }
+    ]
+  },
+  {
+    "id": "mid2_teen_driving_child", "title": "The car keys",
+    "text": "{t.name} has passed the driving test and is standing in the hall with a hopeful face, asking for the car keys. It is Saturday night.",
+    "target": { "role": "child", "conditions": { "minAge": 17, "maxAge": 20 } },
+    "conditions": { "minAge": 35 }, "cooldown": 10,
+    "choices": [
+      { "text": "Hand them over", "chance": 0.85,
+        "success": { "text": "You lie awake until you hear the car in the drive at 11:58. Two minutes early. You pretend to have been asleep.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 6 }, { "type": "happiness", "amount": 1 } ] },
+        "failure": { "text": "A phone call at midnight: a lamp post, nobody hurt, a bumper on the road. {T.he} cries. You hug {t.him} before you say anything else.", "effects": [ { "type": "money", "amount": -15000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5 } ] } },
+      { "text": "Drive {t.him} yourself", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -2 } ], "result": "You drop {t.him} two streets away from the party, as instructed. It is a start." }
+    ]
+  },
+  {
+    "id": "mid2_old_photo_online", "title": "The photo",
+    "text": "Someone has posted an old photo of you online, from a party in your twenties. Haircut, outfit, the lot. Two hundred people have seen it.",
+    "conditions": { "minAge": 40, "maxAge": 70, "minYear": 2008 }, "cooldown": 15,
+    "choices": [
+      { "text": "Laugh and share it", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "cheerful", "chance": 0.03 } ], "result": "Old friends you had lost touch with comment. Two of them meet you for lunch. The haircut becomes legend." },
+      { "text": "Ask them to take it down", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "They do. By then your children have seen it. There is no taking that down." }
+    ]
+  },
+  {
+    "id": "mid2_garden_project", "title": "The garden",
+    "text": "The garden has been a mess for years. This spring you have a plan, a spade and absolutely no idea what you are doing.",
+    "conditions": { "minAge": 35, "maxAge": 70, "ownsHome": true }, "cooldown": 15,
+    "choices": [
+      { "text": "Dig it all up", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "happiness", "amount": 5 }, { "type": "money", "amount": -4000 } ], "result": "Blisters, a bad back and, by August, tomatoes. Ugly, uneven, delicious tomatoes. You give them to everyone." },
+      { "text": "Pay someone", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": 3 } ], "result": "It looks like a magazine. You sit in it on Sunday mornings and feel like a visitor." }
+    ]
+  }
+]
