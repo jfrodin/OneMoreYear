@@ -1,0 +1,181 @@
+// Hobbies and skills (SkillSystem). "hobby" sets the hobby; "minSkills" and "chanceSkills" use the
+// skill levels, 0 to 10. No dashes.
+[
+  {
+    "id": "self_take_up_hobby", "trigger": "self", "category": "life", "title": "Take up a hobby",
+    "conditions": { "minAge": 10 },
+    "choices": [
+      { "text": "Cooking", "hint": "From burnt toast to a Sunday roast that people talk about.", "effects": [ { "type": "hobby", "kind": "cooking" } ], "result": "A cookbook, a sharp knife and a lot of smoke in the kitchen for the first month." },
+      { "text": "Painting", "hint": "Watercolours at the kitchen table, then maybe a gallery.", "effects": [ { "type": "hobby", "kind": "painting" } ], "result": "A box of paints, a pad of paper and a first painting of a bowl of fruit that you hide from everyone." },
+      { "text": "Music", "hint": "An instrument that slowly stops being furniture.", "effects": [ { "type": "hobby", "kind": "music" } ], "result": "A second hand guitar and three chords. The neighbours learn them too." },
+      { "text": "Writing", "hint": "Notebooks, stories, and perhaps a book one day.", "effects": [ { "type": "hobby", "kind": "writing" } ], "result": "A notebook you carry everywhere and write in when nobody is looking." },
+      { "text": "Gardening", "hint": "Tomatoes nobody can buy in a shop.", "effects": [ { "type": "hobby", "kind": "gardening" } ], "result": "Seeds on the windowsill. Most of them come up. You are absurdly proud." },
+      { "text": "Fixing things", "hint": "Shelves, taps, cars, other people's shelves.", "effects": [ { "type": "hobby", "kind": "handiness" } ], "result": "A toolbox and a broken radio from a flea market. It works by Sunday." },
+      { "text": "Sport", "hint": "Running, football, swimming, whatever keeps you moving.", "effects": [ { "type": "hobby", "kind": "sport" }, { "type": "attribute", "kind": "fitness", "amount": 2 } ], "result": "New shoes and a route around the lake. The first week hurts. The third does not." },
+      { "text": "Chess", "hint": "Sixty four squares and a lifetime of learning.", "effects": [ { "type": "hobby", "kind": "chess" } ], "result": "A board, a book of openings, and a club that meets in the library on Wednesdays." },
+      { "text": "Programming", "requires": { "minYear": 1978 }, "hint": "Making the machine do what you want, one line at a time.", "effects": [ { "type": "hobby", "kind": "programming" } ], "result": "A blinking cursor at midnight, and a program that finally does what you meant." },
+      { "text": "Not now", "result": "There is never enough time. Maybe next year." }
+    ]
+  },
+  {
+    "id": "hob_cook_dinner", "title": "Dinner for eight",
+    "text": "You have offered to cook for eight at your place. Someone's very particular in law is coming.",
+    "conditions": { "minAge": 20, "hobby": "cooking" }, "cooldown": 6,
+    "choices": [
+      { "text": "Try something ambitious", "chance": 0.35, "chanceSkills": { "cooking": 0.06 },
+        "success": { "text": "Three courses, a sauce you had never made before, and silence at the table, the good kind. The in law asks for the recipe.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "skill", "kind": "cooking", "amount": 1 } ] },
+        "failure": { "text": "The sauce splits, the meat is grey. You order pizza and everyone pretends it was the plan.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Cook what you know", "chance": 0.6, "chanceSkills": { "cooking": 0.04 },
+        "success": { "text": "Your best dish, done perfectly. A lovely, unremarkable, happy evening.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "Even your best dish has an off night. Nobody says anything. Everybody eats bread.", "effects": [ { "type": "happiness", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "hob_paint_sell", "title": "Someone wants to buy",
+    "text": "A visitor stops in front of a painting on your wall and asks, quite seriously, how much you want for it.",
+    "conditions": { "minAge": 18, "minSkills": { "painting": 5 } }, "cooldown": 6,
+    "choices": [
+      { "text": "Sell it", "effects": [ { "type": "money", "amount": 8000 }, { "type": "happiness", "amount": 5 } ], "result": "Your first sale. You spend the money on better paint and keep the receipt forever." },
+      { "text": "It is not for sale", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "You say no, and paint another one for them instead. Better, you think." }
+    ]
+  },
+  {
+    "id": "hob_paint_exhibition", "title": "A small show",
+    "text": "The local library wants to show your paintings for a month. Twenty walls, an opening on a Friday, and your name on a little card.",
+    "conditions": { "minAge": 20, "minSkills": { "painting": 7 } }, "cooldown": 15,
+    "choices": [
+      { "text": "Say yes", "chance": 0.5, "chanceSkills": { "painting": 0.04 },
+        "success": { "text": "Six paintings sell. A local newspaper writes a paragraph. Your family comes, all of them, and stands in front of the one of the old house for a long time.", "effects": [ { "type": "money", "amount": 30000 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "exhibition", "text": "My paintings on the library walls", "impact": 20 } ] },
+        "failure": { "text": "One sale, to an aunt. But people stopped and looked, and that is something.", "effects": [ { "type": "money", "amount": 3000 }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "You are not ready", "effects": [], "result": "You will never feel ready. That is the problem, a friend tells you." }
+    ]
+  },
+  {
+    "id": "hob_music_gig", "title": "Open mic",
+    "text": "An open mic night at the pub. Your name is on the list, fourth. Your hands are shaking.",
+    "conditions": { "minAge": 16, "minSkills": { "music": 3 } }, "cooldown": 5,
+    "choices": [
+      { "text": "Play your own song", "chance": 0.4, "chanceSkills": { "music": 0.06 }, "chanceTraits": { "charming": 0.1 },
+        "success": { "text": "The room goes quiet halfway through. Then real applause, and the owner asks if you can do a whole evening next month.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "money", "amount": 1500 }, { "type": "skill", "kind": "music", "amount": 1 } ] },
+        "failure": { "text": "You forget the second verse and hum it. People clap anyway, kindly. You go home and practise until three.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Play a song everyone knows", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "The whole pub sings the chorus. Not your song, but your night." }
+    ]
+  },
+  {
+    "id": "hob_music_wedding", "title": "The wedding band",
+    "text": "A friend's band has lost their player two weeks before a wedding gig. They have heard you play. The pay is good.",
+    "conditions": { "minAge": 18, "minSkills": { "music": 6 } }, "cooldown": 8,
+    "choices": [
+      { "text": "Learn twenty songs in two weeks", "chance": 0.6, "chanceSkills": { "music": 0.04 },
+        "success": { "text": "A marquee, a dance floor, a bride crying at the first dance. You play until one and they ask you to join the band permanently.", "effects": [ { "type": "money", "amount": 6000 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "You fake your way through the middle eight of four songs. Nobody on the dance floor notices. The drummer does.", "effects": [ { "type": "money", "amount": 6000 }, { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Say no", "effects": [], "result": "They find someone else. You hear afterwards that the bride cried at the first dance. You wish it had been your guitar." }
+    ]
+  },
+  {
+    "id": "hob_writing_novel", "title": "The manuscript",
+    "text": "After years of evenings, the novel is finished. Three hundred pages in a drawer. A publisher is accepting submissions.",
+    "conditions": { "minAge": 20, "minSkills": { "writing": 6 } }, "cooldown": 15,
+    "choices": [
+      { "text": "Send it", "chance": 0.15, "chanceSkills": { "writing": 0.04 },
+        "success": { "text": "A phone call on a Tuesday. They want it. A year later your name is on a cover in a shop window, and you walk past four times in one afternoon.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "published", "text": "My book in the shop window", "impact": 30 }, { "type": "feat", "kind": "published_book" } ] },
+        "failure": { "text": "A polite rejection, then another, then eleven more. You put it back in the drawer and start the next one.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "skill", "kind": "writing", "amount": 1 } ] } },
+      { "text": "Keep it for the family", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You print three copies and give them away at Christmas. Your grandchild will find one in an attic, and read it twice." }
+    ]
+  },
+  {
+    "id": "hob_writing_letter_paper", "title": "Letters to the editor",
+    "text": "Something in the local paper has made you furious. You could write a letter. You write well, people say.",
+    "conditions": { "minAge": 20, "minSkills": { "writing": 3 } }, "cooldown": 8,
+    "choices": [
+      { "text": "Write it, carefully", "chance": 0.5, "chanceSkills": { "writing": 0.05 },
+        "success": { "text": "Printed, in full, on a Saturday. People stop you in the supermarket to agree. One person stops you to disagree, at length.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "They cut it to two lines that make you sound mad. You learn something about editors.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Let it go", "effects": [], "result": "You write it anyway, and never send it. It is very good." }
+    ]
+  },
+  {
+    "id": "hob_garden_show", "title": "The vegetable show",
+    "text": "The village show is on Saturday. Your tomatoes are, you secretly believe, the best in the district. So does the man next door about his.",
+    "conditions": { "minAge": 25, "hobby": "gardening" }, "cooldown": 5,
+    "choices": [
+      { "text": "Enter", "chance": 0.3, "chanceSkills": { "gardening": 0.06 },
+        "success": { "text": "First prize. A red rosette, a certificate, and the neighbour not speaking to you until autumn. Perfect.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Highly commended. The neighbour wins. He is very gracious about it, which is unforgivable.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Give them away instead", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "generous", "chance": 0.03 } ], "result": "Bags of tomatoes on every doorstep on the street. Better than a rosette, mostly." }
+    ]
+  },
+  {
+    "id": "hob_handy_neighbour", "title": "Can you have a look?",
+    "text": "Word has got around that you can fix things. A neighbour is at the door with a washing machine that sounds like a helicopter.",
+    "conditions": { "minAge": 18, "minSkills": { "handiness": 4 } }, "cooldown": 4,
+    "choices": [
+      { "text": "Have a look", "chance": 0.5, "chanceSkills": { "handiness": 0.06 },
+        "success": { "text": "A coin stuck in the drum. Twenty minutes. You refuse payment and get a cake every Christmas for ten years.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "skill", "kind": "handiness", "amount": 1 } ] },
+        "failure": { "text": "It floods the kitchen. They buy a new one. They still say hello, just a little less warmly.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Say you are busy", "effects": [], "result": "There is a queue at your door by Easter anyway. Word has got around." }
+    ]
+  },
+  {
+    "id": "hob_handy_house", "title": "Do it yourself",
+    "text": "The bathroom needs redoing. A builder quotes a fortune. You have watched a lot of videos, and you own a lot of tools.",
+    "conditions": { "minAge": 25, "ownsHome": true, "minSkills": { "handiness": 3 } }, "cooldown": 15,
+    "choices": [
+      { "text": "Do it yourself", "chance": 0.4, "chanceSkills": { "handiness": 0.06 },
+        "success": { "text": "Six weekends, one swear jar filled, and a bathroom you show every guest whether they ask or not.", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "The tiles are crooked and the shower leaks into the kitchen. A builder fixes it for more than the original quote.", "effects": [ { "type": "money", "amount": -45000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Pay the builder", "effects": [ { "type": "money", "amount": -35000 } ], "result": "Perfect, in two weeks. You check every joint anyway." }
+    ]
+  },
+  {
+    "id": "hob_sport_race", "title": "The race",
+    "text": "A half marathon in your city. Twenty one kilometres. You have been training, sort of.",
+    "conditions": { "minAge": 16, "maxAge": 70, "minSkills": { "sport": 3 } }, "cooldown": 4,
+    "choices": [
+      { "text": "Race it", "chance": 0.5, "chanceSkills": { "sport": 0.05 }, "chanceAttributes": { "fitness": 0.005 },
+        "success": { "text": "A personal best, legs like jelly, and a medal you wear for the rest of the day, even at the supermarket.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "attribute", "kind": "fitness", "amount": 2 } ] },
+        "failure": { "text": "Cramp at kilometre sixteen. You walk the rest, and the crowd cheers you anyway.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Cheer the others", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A sign, a bell and a lot of shouting. Next year, you tell yourself." }
+    ]
+  },
+  {
+    "id": "hob_chess_tournament", "title": "The tournament",
+    "text": "The regional chess tournament. Seven rounds over a weekend, a hall full of silent people, and coffee that tastes of the urn.",
+    "conditions": { "minAge": 10, "minSkills": { "chess": 4 } }, "cooldown": 4,
+    "choices": [
+      { "text": "Play to win", "chance": 0.25, "chanceSkills": { "chess": 0.06 }, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "Six wins and a draw. A small trophy and a mention in the club newsletter. You replay the last game in your head for a month.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "skill", "kind": "chess", "amount": 1 } ] },
+        "failure": { "text": "Three wins, four losses, and one beautiful game against a twelve year old that you lost brilliantly.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "hob_programming_app", "title": "The side project",
+    "text": "Something you built in the evenings for fun has quietly become popular. A company has written to ask what you want for it.",
+    "conditions": { "minAge": 16, "minSkills": { "programming": 6 }, "minYear": 1985 }, "cooldown": 20,
+    "choices": [
+      { "text": "Sell it", "effects": [ { "type": "money", "amount": 150000 }, { "type": "happiness", "amount": 6 } ], "result": "More money than you have ever seen at once, for something you made at the kitchen table. Your mother asks what it does. You still cannot explain." },
+      { "text": "Keep it and grow it", "chance": 0.25, "chanceSkills": { "programming": 0.04 },
+        "success": { "text": "Two years later it is a company with your name on the door and twelve people who depend on it. Terrifying and wonderful.", "effects": [ { "type": "money", "amount": 500000 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "A bigger company copies it and gives it away for free. You learn a lot. That is what people say when it fails.", "effects": [ { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "hob_teach_child", "title": "Show me",
+    "text": "{t.name} has been watching you at your hobby for weeks, and today asks if you will teach {t.him}.",
+    "conditions": { "minAge": 25 }, "cooldown": 10,
+    "target": { "role": "child", "conditions": { "minAge": 6, "maxAge": 15 } },
+    "choices": [
+      { "text": "Teach {t.him} properly", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 4 } ], "result": "Saturdays together for a year. Then one day {t.he} is better at one thing than you, and you could not be prouder." },
+      { "text": "Let {t.him} find {t.his} own thing", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 2 } ], "result": "{T.He} tries it for a week and moves on. That is fine. It is the asking that you remember." }
+    ]
+  },
+  {
+    "id": "hob_give_up", "title": "Gathering dust",
+    "text": "Your hobby has been gathering dust for a while. Work, children, life. You look at it every evening on the way to the sofa.",
+    "conditions": { "minAge": 30, "maxAge": 60, "minChildren": 1 }, "cooldown": 12,
+    "choices": [
+      { "text": "One evening a week, no matter what", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "It is the best evening of the week. You wonder why you ever stopped." },
+      { "text": "Let it rest for now", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Later, you tell yourself. There will be time later. There usually is, eventually." }
+    ]
+  }
+]

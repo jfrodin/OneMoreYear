@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.49.0 – 2026-10-02 · Hobbies and skills
+
+- **Take up a hobby** (from The Sims' skills): cooking, painting, music, writing, gardening, fixing
+  things, sport, chess or programming. It builds a skill from 0 to 10 over the years, quickly at
+  first and slowly at the end, and shows under your name.
+- Skills change the odds: "Cooking 6 +24" shows next to a choice, the way traits do. They open
+  their own events: selling a painting, a show at the library, an open mic, the wedding band, a
+  novel sent to a publisher, letters to the editor, the vegetable show, fixing the neighbour's
+  washing machine, a bathroom of your own, a half marathon, a chess tournament, a side project that
+  someone wants to buy, teaching a child.
+- Children pick up what they see: a child of a good painter may start painting. Other people find
+  hobbies of their own.
+- A rare achievement for getting a book published.
+
 ## 0.48.0 – 2026-10-02 · Pets
 
 - **Dogs and cats as members of the family** (from The Sims): each has a name, an age and a nature

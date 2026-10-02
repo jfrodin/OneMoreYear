@@ -1049,6 +1049,26 @@ public class CountryTests
     }
 
     [Fact]
+    public void Hobbies_build_skills_that_change_the_odds()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 19, StartYear = 1970 });
+        var bot = new AutoPlayer(19, useActions: false);
+        for (int i = 0; i < 20 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        SkillSystem.TakeUp(s.Ctx, p, "cooking");
+        for (int i = 0; i < 12; i++) { s.World.Year++; SkillSystem.Update(s.Ctx, p); }
+        Assert.True(SkillSystem.Level(p, "cooking") >= 4, $"cooking {SkillSystem.Level(p, "cooking")}");
+        Assert.StartsWith("Cooking", s.Describe(p.Id).Hobby);
+
+        var dinner = s.Content.Events["hob_cook_dinner"];
+        var pending = new PendingEvent { EventId = dinner.Id };
+        double skilled = EventSystem.SuccessChance(s.Ctx, dinner.Choices[0], pending);
+        p.Skills["cooking"] = 0;
+        double novice = EventSystem.SuccessChance(s.Ctx, dinner.Choices[0], pending);
+        Assert.True(skilled > novice);
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // A working player with a newborn: unpaid weeks and daycare in the USA, neither in Sweden.

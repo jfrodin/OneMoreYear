@@ -160,6 +160,7 @@ public sealed class GameSession
             LifeSystem.UpdateHealth(ctx, p);
             if (LifeSystem.CheckDeath(ctx, p)) continue;
             UpbringingSystem.Update(ctx, p);
+            SkillSystem.Update(ctx, p);
             if (p.Age(ctx.Year) == ctx.Country.AdultAge)
             {
                 PersonFactory.RollAdultTraits(ctx, p);
@@ -489,6 +490,7 @@ public sealed class GameSession
                 _ => "None"
             },
             Partner = partnerText,
+            Hobby = SkillSystem.Describe(Ctx, p),
             Pets = p.Id == Player.Id ? PetSystem.InHome(World, p).Select(x => PetSystem.Describe(Ctx, x)).ToList() : Array.Empty<string>(),
             Dream = DreamSystem.Of(Ctx, p) is { } dream ? p.DreamState switch
             {

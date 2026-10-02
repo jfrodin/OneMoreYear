@@ -1,0 +1,21 @@
+// Hobbies and the skills they build (SkillSystem). A skill goes from 0 to 10. No dashes.
+[
+  { "id": "cooking", "name": "Cooking", "traits": [ "creative", "generous" ],
+    "text": "From burnt toast to a Sunday roast that people talk about." },
+  { "id": "painting", "name": "Painting", "traits": [ "creative", "eccentric", "introvert" ],
+    "text": "Watercolours at the kitchen table, then oils, then maybe a gallery." },
+  { "id": "music", "name": "Music", "traits": [ "creative", "social", "charming" ],
+    "text": "An instrument in the corner that slowly stops being furniture." },
+  { "id": "writing", "name": "Writing", "traits": [ "introvert", "creative", "eccentric" ],
+    "text": "Notebooks, then stories, then perhaps a book with your name on it." },
+  { "id": "gardening", "name": "Gardening", "traits": [ "introvert", "loyal" ],
+    "text": "Dirt under your nails and tomatoes nobody can buy in a shop." },
+  { "id": "handiness", "name": "Handiness", "traits": [ "introvert", "stingy" ],
+    "text": "Fixing things yourself: shelves, taps, cars, other people's shelves." },
+  { "id": "sport", "name": "Sport", "traits": [ "brave", "ambitious", "social" ],
+    "text": "Running, football, swimming, whatever keeps you moving." },
+  { "id": "chess", "name": "Chess", "traits": [ "introvert", "ambitious" ],
+    "text": "Sixty four squares and a lifetime of learning how little you know." },
+  { "id": "programming", "name": "Programming", "minYear": 1978, "traits": [ "introvert", "eccentric" ],
+    "text": "Making the machine do what you want, late at night, one line at a time." }
+]

@@ -98,6 +98,9 @@ public sealed class Person
     /// <summary>The life dream the player chose for this person (docs/endgame.md), and how it went.</summary>
     /// <summary>How the child is being raised (UpbringingSystem): warm, strict, free or distant. Null: as the parents are.</summary>
     public string? Upbringing { get; set; }
+    /// <summary>The hobby the person spends free time on (content/hobbies.json), and every skill so far, 0 to 10.</summary>
+    public string? Hobby { get; set; }
+    public SortedDictionary<string, int> Skills { get; set; } = new(StringComparer.Ordinal);
     /// <summary>Values a childhood leaves behind, from -50 to 50: empathy, responsibility, self control.</summary>
     public double Empathy { get; set; }
     public double Responsibility { get; set; }

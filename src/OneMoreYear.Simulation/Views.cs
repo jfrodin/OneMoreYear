@@ -61,6 +61,8 @@ public sealed record PersonView
     public string? Dream { get; init; }
     /// <summary>The pets in the player's home: "Bella the dog, 7, who steals socks".</summary>
     public IReadOnlyList<string> Pets { get; init; } = Array.Empty<string>();
+    /// <summary>"Painting 6 of 10": the hobby and how far along.</summary>
+    public string? Hobby { get; init; }
     public IReadOnlyList<(string Name, string Description, string Tone)> Traits { get; init; } = Array.Empty<(string, string, string)>();
     /// <summary>Something serious going on, e.g. "Struggling with alcohol".</summary>
     public string? Condition { get; init; }

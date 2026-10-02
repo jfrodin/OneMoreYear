@@ -188,6 +188,8 @@ public static class EventSystem
         if (c.MaxChildrenAtHome is { } maxHome && p.ChildIds.Select(w.Get).Count(k => k.IsAlive && k.LivesWithParents) > maxHome) return false;
         if (c.JobTags is { Count: > 0 } tags && ctx.Content.Occupation(p.OccupationId)?.Tags.Any(tags.Contains) != true) return false;
         if (c.Jobs is { Count: > 0 } jobs && (p.OccupationId == null || !jobs.Contains(p.OccupationId))) return false;
+        if (c.MinSkills is { } minSkills && minSkills.Any(kv => SkillSystem.Level(p, kv.Key) < kv.Value)) return false;
+        if (c.Hobby is { } wantHobby && p.Hobby != wantHobby) return false;
         if (c.Pet is { } petKind && (petKind == "none" ? PetSystem.InHome(w, p).Any() : PetSystem.Matching(ctx, p, petKind) == null)) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;
@@ -313,6 +315,9 @@ public static class EventSystem
         string Signed(double v) => (v >= 0 ? "+" : "−") + Math.Round(Math.Abs(v) * 100);
         foreach (var (trait, bonus) in choice.ChanceTraits)
             if (player.HasTrait(trait) && ctx.Content.Traits.TryGetValue(trait, out var def)) parts.Add($"{def.Name} {Signed(bonus)}");
+        foreach (var (skill, perLevel) in choice.ChanceSkills)
+            if (SkillSystem.Level(player, skill) is var lvl && lvl > 0 && ctx.Content.Hobbies.TryGetValue(skill, out var hobby))
+                parts.Add($"{hobby.Name} {lvl} {Signed(lvl * perLevel)}");
         foreach (var (attr, perPoint) in choice.ChanceAttributes)
         {
             double value = attr switch { "smarts" => player.Smarts, "looks" => player.Looks, "fitness" => player.Fitness, "grades" => player.Grades, _ => 50 };
@@ -358,6 +363,8 @@ public static class EventSystem
             var rel = ctx.World.FindRel(relTarget, player.Id);
             foreach (var (dim, perPoint) in choice.ChanceRelation) chance += ((rel?[dim] ?? 0) - 40) * perPoint;
         }
+        foreach (var (skill, perLevel) in choice.ChanceSkills)
+            chance += SkillSystem.Level(player, skill) * perLevel;
         foreach (var (attr, perPoint) in choice.ChanceAttributes)
         {
             double value = attr switch

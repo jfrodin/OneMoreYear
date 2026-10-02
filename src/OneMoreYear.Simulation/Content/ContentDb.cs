@@ -23,6 +23,7 @@ public sealed class ContentDb
     public Dictionary<string, FamilyTraitDef> FamilyTraits { get; } = new();
     public Dictionary<string, HeirloomDef> Heirlooms { get; } = new();
     public Dictionary<string, PetKindDef> PetKinds { get; } = new();
+    public Dictionary<string, HobbyDef> Hobbies { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
     /// <summary>History and life's milestones (a first word, turning eighty): they come for sure, the year their conditions first hold.</summary>
     public List<EventDef> HistoryEvents { get; } = new();
@@ -111,6 +112,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("scenarios.json"))
                 {
                     db.Scenarios.AddRange(Deserialize<List<ScenarioDef>>(json));
+                }
+                else if (path.EndsWith("hobbies.json"))
+                {
+                    foreach (var h in Deserialize<List<HobbyDef>>(json)) db.Hobbies[h.Id] = h;
                 }
                 else if (path.EndsWith("pets.json"))
                 {
@@ -241,12 +246,15 @@ public sealed class ContentDb
             foreach (var c in e.Choices)
             {
                 CheckConditions(e.Id, c.Requires, errors);
+                foreach (var sk in c.ChanceSkills.Keys)
+                    if (!Hobbies.ContainsKey(sk)) errors.Add($"Event {e.Id}: unknown skill {sk}");
                 foreach (var t in c.ChanceTraits.Keys)
                     if (!Traits.ContainsKey(t)) errors.Add($"Event {e.Id}: unknown trait {t}");
                 var all = c.Effects.Concat(c.Success?.Effects ?? new()).Concat(c.Failure?.Effects ?? new());
                 foreach (var eff in all)
                 {
                     if (!Systems.EffectApplier.KnownTypes.Contains(eff.Type)) errors.Add($"Event {e.Id}: unknown effect type '{eff.Type}'");
+                    if (eff.Type is "hobby" or "skill" && (eff.Kind == null || !Hobbies.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown hobby {eff.Kind}");
                     if (eff.Type == "pet_add" && (eff.Kind == null || !PetKinds.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown pet {eff.Kind}");
                     if (eff.Type == "emigrate" && (eff.Country == null || !Countries.ContainsKey(eff.Country))) errors.Add($"Event {e.Id}: emigrate to unknown country {eff.Country}");
                     if (eff.Trait != null && !Traits.ContainsKey(eff.Trait)) errors.Add($"Event {e.Id}: unknown trait {eff.Trait}");
@@ -295,6 +303,8 @@ public sealed class ContentDb
         if (c == null) return;
         foreach (var t in (c.TraitsAny ?? new()).Concat(c.TraitsNone ?? new()))
             if (!Traits.ContainsKey(t)) errors.Add($"Event {eventId}: unknown trait {t}");
+        foreach (var sk in (c.MinSkills?.Keys ?? Enumerable.Empty<string>()).Concat(c.Hobby != null ? new[] { c.Hobby } : Array.Empty<string>()))
+            if (!Hobbies.ContainsKey(sk)) errors.Add($"Event {eventId}: unknown skill {sk}");
         foreach (var job in c.Jobs ?? new())
             if (Occupation(job) == null) errors.Add($"Event {eventId}: unknown occupation {job}");
         foreach (var tag in c.JobTags ?? new())

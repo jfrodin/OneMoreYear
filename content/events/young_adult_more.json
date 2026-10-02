@@ -148,7 +148,7 @@
     "text": "You have invited six people to dinner in a flat with four chairs and two pans. The recipe says it serves four and takes thirty minutes.",
     "conditions": { "minAge": 20, "maxAge": 35 }, "cooldown": 8,
     "choices": [
-      { "text": "Follow the recipe exactly", "chance": 0.55, "chanceTraits": { "creative": 0.1 },
+      { "text": "Follow the recipe exactly", "chance": 0.55, "chanceTraits": { "creative": 0.1 }, "chanceSkills": { "cooking": 0.04 },
         "success": { "text": "It takes two hours and serves six if nobody has seconds. Everybody has seconds. Somebody goes out for pizza. It is a wonderful evening.", "effects": [ { "type": "happiness", "amount": 5 } ] },
         "failure": { "text": "The smoke alarm goes off twice. You order food. The story of the smoke alarm is told at every dinner for years.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
       { "text": "Make the one dish you know", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Your mother's pasta, exactly as she makes it. Two guests ask for the recipe. You call your mother to find out what it is." }

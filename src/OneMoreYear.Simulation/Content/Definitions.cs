@@ -318,6 +318,10 @@ public sealed class ConditionDef
     public List<string>? Jobs { get; set; }
     /// <summary>Has a living pet: "any", "dog" or "cat"; "none" for no pet.</summary>
     public string? Pet { get; set; }
+    /// <summary>At least this level in these skills.</summary>
+    public Dictionary<string, int>? MinSkills { get; set; }
+    /// <summary>Has this hobby now.</summary>
+    public string? Hobby { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
     /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>
@@ -415,6 +419,8 @@ public sealed class ChoiceDef
     public double ChanceOpinion { get; set; }
     /// <summary>Attribute ("smarts", "looks", "fitness", "grades") → added chance per point above 50.</summary>
     public Dictionary<string, double> ChanceAttributes { get; set; } = new();
+    /// <summary>Chance per skill level: { "cooking": 0.03 } adds 3 percent for every level of cooking.</summary>
+    public Dictionary<string, double> ChanceSkills { get; set; } = new();
     /// <summary>How the target feels about the player → added chance per point above 40 (e.g. attraction).</summary>
     public Dictionary<RelDim, double> ChanceRelation { get; set; } = new();
     public OutcomeDef? Success { get; set; }
@@ -655,4 +661,16 @@ public sealed class PetKindDef
     public List<string> Names { get; set; } = new();
     /// <summary>Natures and how each shows: "playful" → "steals socks and brings them back".</summary>
     public Dictionary<string, string> Natures { get; set; } = new();
+}
+
+/// <summary>A hobby and the skill it builds (content/hobbies.json).</summary>
+public sealed class HobbyDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>"Painting": the skill and the hobby share the name.</summary>
+    public string Name { get; set; } = "";
+    public string Text { get; set; } = "";
+    public int MinYear { get; set; } = 1900;
+    /// <summary>People with these traits take it up more often (NPCs) and learn it faster.</summary>
+    public List<string> Traits { get; set; } = new();
 }

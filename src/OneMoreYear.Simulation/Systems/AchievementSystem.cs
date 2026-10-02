@@ -74,6 +74,7 @@ public static class AchievementSystem
         ["myth_true"] = ctx => ctx.World.Feats.Contains("myth_true"),
         ["family_book"] = ctx => ctx.World.Feats.Contains("family_book"),
         ["bought_back"] = ctx => ctx.World.Feats.Contains("bought_back"),
+        ["published"] = ctx => ctx.World.Feats.Contains("published_book"),
     };
 
     public static IEnumerable<string> RuleIds => Checks.Keys;
