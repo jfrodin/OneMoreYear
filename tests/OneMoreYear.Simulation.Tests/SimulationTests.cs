@@ -1003,20 +1003,34 @@ public class CountryTests
     [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
-        // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.
-        bool Has(string country, string label)
+        // A working player with a newborn: unpaid weeks and daycare in the USA, neither in Sweden.
+        (bool Leave, bool Daycare) Run(string country)
         {
-            for (ulong seed = 1; seed <= 20; seed++)
+            bool leave = false, daycare = false;
+            for (ulong seed = 1; seed <= 6 && !(leave && daycare); seed++)
             {
                 var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1980, CountryId = country });
-                var bot = new AutoPlayer(seed);
-                for (int i = 0; i < 60 && s.World.CountryId == country && bot.PlayYear(s); i++)
-                    if (s.World.CountryId == country && s.World.Ledger.Any(l => l.Label == label)) return true;
+                var bot = new AutoPlayer(seed, useActions: false);
+                for (int i = 0; i < 28 && bot.PlayYear(s); i++) { }
+                var p = s.Player;
+                if (!p.IsAlive || s.World.CountryId != country) continue;
+                if (p.Activity != Activity.Working) CareerSystem.Hire(s.Ctx, p);
+                p.LivesWithParents = false;
+                FamilySystem.HaveChild(s.Ctx, p, null);
+                p.Flags.Add(EconomySystem.UnpaidLeaveFlag);
+                for (int i = 0; i < 3 && p.IsAlive && bot.PlayYear(s); i++)
+                {
+                    leave |= s.World.Ledger.Any(l => l.Label == "Unpaid parental leave");
+                    daycare |= s.World.Ledger.Any(l => l.Label == "Daycare");
+                }
             }
-            return false;
+            return (leave, daycare);
         }
-        Assert.True(Has("usa", "Daycare"));
-        Assert.True(Has("usa", "Unpaid parental leave"));
-        Assert.False(Has("sweden", "Daycare"));
+        var usa = Run("usa");
+        Assert.True(usa.Leave);
+        Assert.True(usa.Daycare);
+        var sweden = Run("sweden");
+        Assert.False(sweden.Leave);
+        Assert.False(sweden.Daycare);
     }
 }

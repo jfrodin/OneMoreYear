@@ -1,0 +1,238 @@
+// Teenagers, 13 to 17: the second thinnest part of a life. Big feelings about small things, and
+// a few big things. No dashes.
+[
+  {
+    "id": "teen2_first_kiss", "title": "Behind the gym",
+    "text": "A school disco, a slow song nobody admits to liking, and someone you like walking towards you across the floor.",
+    "conditions": { "minAge": 13, "maxAge": 16, "notFlags": [ "first_kiss" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Dance, and see what happens", "chance": 0.65, "chanceTraits": { "charming": 0.15, "introvert": -0.15 },
+        "success": { "text": "Three minutes, two left feet, and then, behind the gym in the cold, your first kiss. You walk home without touching the ground.", "effects": [ { "type": "flag", "flag": "first_kiss" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "first_kiss", "text": "My first kiss, behind the gym", "impact": 18 } ] },
+        "failure": { "text": "They were walking towards your friend. You find this out in front of everybody.", "effects": [ { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Hide by the snacks", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You eat eleven crisps and watch the whole song from behind a bowl. Next time." }
+    ]
+  },
+  {
+    "id": "teen2_house_party", "title": "Nobody's parents are home",
+    "text": "A party at a house where the parents are away for the weekend. Fifty people, one bathroom, and somebody has found the drinks cabinet.",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go, and stay till the end", "chance": 0.7,
+        "success": { "text": "Music, a kitchen full of people shouting about nothing, and a sunrise from the garage roof. Best night of the year.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "trait_add", "trait": "social", "chance": 0.05 } ] },
+        "failure": { "text": "The police, at one in the morning. Your father, at ten past one, in his slippers.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Go, and leave early", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "You see the best part and miss the worst. On Monday everybody tells you what happened after." },
+      { "text": "Stay home", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.04 } ], "result": "You hear about it for weeks. Some of it sounds fun. Most of it sounds sticky." }
+    ]
+  },
+  {
+    "id": "teen2_cheat_test", "title": "The answers",
+    "text": "Somebody has the answers to tomorrow's maths test, photographed off the teacher's desk. They are going round the class.",
+    "conditions": { "minAge": 13, "maxAge": 18, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Take a look", "chance": 0.75,
+        "success": { "text": "An A. Your parents put it on the fridge. You feel strange every time you walk past it.", "effects": [ { "type": "grades", "amount": 3 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.06 } ] },
+        "failure": { "text": "The teacher noticed half the class got the same wrong answer to question nine. Detention, and a letter home.", "effects": [ { "type": "grades", "amount": -3 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Study instead", "effects": [ { "type": "grades", "amount": 1 } ], "result": "A B minus, all your own. When the scandal breaks a week later, you are the only one in your row not called to the office." }
+    ]
+  },
+  {
+    "id": "teen2_good_teacher", "title": "The one teacher",
+    "text": "A teacher keeps you behind after class. Not to tell you off. To say that the essay you wrote was really good, and to ask if you have ever thought about writing more.",
+    "conditions": { "minAge": 12, "maxAge": 17, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Take it seriously", "effects": [ { "type": "grades", "amount": 4 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.08 }, { "type": "memory", "kind": "good_teacher", "text": "The teacher who believed in me", "impact": 20 } ], "result": "Somebody thinks you are good at something. It changes how you walk down the corridor." },
+      { "text": "Shrug it off", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You shrug. That evening you read your own essay again, twice." }
+    ]
+  },
+  {
+    "id": "teen2_phone_taken", "title": "Confiscated",
+    "text": "[[2005: Your Walkman has been confiscated in class || Your phone has been confiscated in class]], and you will only get it back from the head teacher on Friday.",
+    "conditions": { "minAge": 12, "maxAge": 16, "minYear": 1981, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Survive the week", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "You read a book. You talk to people. You will never admit it was not that bad." },
+      { "text": "Try to get it back early", "chance": 0.3, "chanceTraits": { "charming": 0.25, "manipulative": 0.2 },
+        "success": { "text": "A sad story about your grandmother and a very kind secretary. Back by Tuesday.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "The head teacher has heard about your grandmother before. It is now two weeks.", "effects": [ { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "teen2_coming_out", "title": "Saying it out loud",
+    "text": "You have known for a while that you like [[1990: people you are not supposed to like || people you were not expected to like]]. Your best friend is the first person you could tell.",
+    "conditions": { "minAge": 14, "maxAge": 18, "sameSexAttraction": true, "notFlags": [ "came_out" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Tell them", "chance": 0.8, "chanceTraits": { "brave": 0.1 },
+        "success": { "text": "\"I know,\" they say. \"I was waiting for you to say it.\" Then they hug you, and you both cry, and then laugh about crying.", "effects": [ { "type": "flag", "flag": "came_out" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "came_out", "text": "Telling my best friend who I am", "impact": 25 } ] },
+        "failure": { "text": "They go quiet. A week later they come back and apologise. It still hurt.", "effects": [ { "type": "flag", "flag": "came_out" }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Not yet", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You keep it a little longer. There will be a right time. You hope." }
+    ]
+  },
+  {
+    "id": "teen2_exchange_student", "title": "The exchange student",
+    "text": "An exchange student is living with a family on your street for a year. They know nobody, and they sit alone at lunch.",
+    "conditions": { "minAge": 14, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Sit with them", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.06 }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "exchange_friend", "text": "The friend from the other side of the world", "impact": 12 } ], "result": "A year of swapped music, swapped swear words and a promise to visit. Twenty years later, you do." },
+      { "text": "Leave it to someone else", "effects": [], "result": "Somebody else does. By Christmas they are the most popular person in the year." }
+    ]
+  },
+  {
+    "id": "teen2_school_trip", "title": "The school trip",
+    "text": "The class trip: three days at a youth hostel, two teachers, thirty teenagers and rooms with bunk beds.",
+    "conditions": { "minAge": 12, "maxAge": 16, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Stay up all night talking", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 } ], "result": "Ghost stories, secrets, a pillow fight that breaks a lamp. You sleep through the whole museum the next day." },
+      { "text": "Follow the rules", "effects": [ { "type": "grades", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "You see the museum. It is, honestly, quite interesting. Nobody wants to hear about it." }
+    ]
+  },
+  {
+    "id": "teen2_fight", "title": "The fight",
+    "text": "Someone in the year above has been pushing you around for weeks. Today, in front of everyone, they knock the books out of your hands.",
+    "conditions": { "minAge": 12, "maxAge": 16 }, "cooldown": 0,
+    "choices": [
+      { "text": "Hit back", "requires": { "traitsAny": [ "brave", "hot_tempered" ] }, "chance": 0.5, "chanceAttributes": { "fitness": 0.005 },
+        "success": { "text": "One punch. They go down, mostly from surprise. Nobody pushes you again. You are suspended for three days and do not regret it.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "brave", "chance": 0.08 } ] },
+        "failure": { "text": "A black eye, a ripped jacket, and a long talk in the head teacher's office. But they leave you alone after that. Odd.", "effects": [ { "type": "health", "amount": -3 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Pick up the books and walk away", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.04 } ], "result": "Your face is hot all day. A girl you do not know helps you pick them up and walks with you to class." },
+      { "text": "Tell a teacher", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "It takes a while. But it stops." }
+    ]
+  },
+  {
+    "id": "teen2_parents_divorce", "title": "The kitchen table",
+    "text": "Your parents call everyone to the kitchen table. They have been practising what to say. You can tell, because they are both holding the same mug.",
+    "conditions": { "minAge": 12, "maxAge": 17, "notFlags": [ "teen_heard_divorce" ] }, "cooldown": 0, "weight": 0.25,
+    "choices": [
+      { "text": "Say it is fine", "effects": [ { "type": "flag", "flag": "teen_heard_divorce" }, { "type": "happiness", "amount": -6 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.05 } ], "result": "It is not fine. It is a false alarm, though: they wanted to tell you they are selling the summer cottage. You never tell them what you thought it was." },
+      { "text": "Ask what is going on", "effects": [ { "type": "flag", "flag": "teen_heard_divorce" }, { "type": "happiness", "amount": 2 } ], "result": "They look at each other and laugh. Grandma is moving in. That is all. You laugh too, mostly from relief." }
+    ]
+  },
+  {
+    "id": "teen2_braces", "title": "Metal",
+    "text": "Braces. Two years of them, the dentist says, with a smile that has clearly never had braces.",
+    "conditions": { "minAge": 11, "maxAge": 15, "minYear": 1965 }, "cooldown": 0,
+    "choices": [
+      { "text": "Choose the coloured bands", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Purple and green. If you are going to suffer, you are going to suffer with style." },
+      { "text": "Never smile in photos again", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "attribute", "kind": "looks", "amount": 2 } ], "result": "Two years of closed mouth photos. Then the braces come off, and your smile is the first thing people notice about you." }
+    ]
+  },
+  {
+    "id": "teen2_bad_influence", "title": "The new friend",
+    "text": "A new kid in the year is dangerous and funny and has a moped and an older brother who buys them anything. They want you in their gang.",
+    "conditions": { "minAge": 13, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Join them", "chance": 0.55,
+        "success": { "text": "A summer of trouble that never quite becomes serious. You grow out of it. They do not, and you lose touch.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.06 } ] },
+        "failure": { "text": "A shop window, a police car, a night at the station. Your mother does not speak to you for three days.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "grades", "amount": -3 } ] } },
+      { "text": "Keep your old friends", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.05 } ], "result": "They call you boring. The old friends call you on Friday. Boring wins." }
+    ]
+  },
+  {
+    "id": "teen2_volunteer", "title": "The old people's home",
+    "text": "The school wants every student to volunteer for a month. You are sent to an old people's home, to read the newspaper aloud.",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Do it properly", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.07 }, { "type": "happiness", "amount": 3 }, { "type": "memory", "kind": "old_friend_home", "text": "Reading the paper to Mr. Lind", "impact": 12 } ], "result": "A man of ninety three argues with every article. By the end of the month you go back on Saturdays because you want to." },
+      { "text": "Do the minimum", "effects": [], "result": "You read fast and leave on time. One old lady falls asleep every day. You suspect she is pretending." }
+    ]
+  },
+  {
+    "id": "teen2_piercing", "title": "The needle",
+    "text": "A friend's cousin does piercings in her bedroom, cheap. Ears, nose, eyebrow, wherever you are brave enough.",
+    "conditions": { "minAge": 14, "maxAge": 17, "minYear": 1975 }, "cooldown": 0,
+    "choices": [
+      { "text": "Do it", "chance": 0.75,
+        "success": { "text": "It hurts for a second and looks amazing for a month. Your parents find out at dinner and the soup goes cold.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.05 } ] },
+        "failure": { "text": "It gets infected. A doctor, antibiotics and a lecture you hear in your sleep.", "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Watch your friend do it", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Your friend goes first, goes white, and decides one ear is enough. So do you." }
+    ]
+  },
+  {
+    "id": "teen2_games", "title": "One more level",
+    "text": "[[1995: The new video game console || The new game]] has eaten your summer. It is three in the morning. You are so close.",
+    "conditions": { "minAge": 12, "maxAge": 18, "minYear": 1982 }, "cooldown": 0,
+    "choices": [
+      { "text": "One more level", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "grades", "amount": -2 }, { "type": "health", "amount": -1 } ], "result": "You finish it at dawn. Nobody else in the house cares. You will remember this ending for the rest of your life." },
+      { "text": "Go to bed", "effects": [ { "type": "health", "amount": 1 } ], "result": "You dream about the level anyway. In the dream you win." }
+    ]
+  },
+  {
+    "id": "teen2_summer_romance", "title": "Two weeks in July",
+    "text": "A campsite, a lake, and someone your age in the next tent with a guitar and a laugh you can hear across the water.",
+    "conditions": { "minAge": 14, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Say hello", "chance": 0.6, "chanceTraits": { "charming": 0.15, "social": 0.1, "introvert": -0.1 },
+        "success": { "text": "Two weeks of swimming, late evenings and promises to write. You write for a month. You remember it for fifty years.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "summer_romance", "text": "Two weeks in July, by the lake", "impact": 20 } ] },
+        "failure": { "text": "You say hello. They say hello. Their boyfriend arrives the next day.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Listen to the guitar from your tent", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You never find out their name. You can still hum the song." }
+    ]
+  },
+  {
+    "id": "teen2_pet_dies", "title": "The cat",
+    "text": "The cat you have had since you were four is very old and very ill. The vet says it is kinder not to wait.",
+    "conditions": { "minAge": 12, "maxAge": 17 }, "cooldown": 0, "weight": 0.5,
+    "choices": [
+      { "text": "Be there at the end", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "trait_add", "trait": "resilient", "chance": 0.04 }, { "type": "memory", "kind": "pet_died", "text": "Holding the cat at the vet's", "impact": -12 } ], "result": "You hold it the whole time. It purrs. That is the worst and best part." },
+      { "text": "Say goodbye at home", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "You say goodbye in the kitchen. Your mother goes alone. You do not speak much that evening." }
+    ]
+  },
+  {
+    "id": "teen2_student_council", "title": "The election",
+    "text": "Elections for the student council. The posters are already up. Someone says you should run.",
+    "conditions": { "minAge": 13, "maxAge": 18, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Run", "chance": 0.45, "chanceTraits": { "charming": 0.2, "social": 0.15, "ambitious": 0.1 },
+        "success": { "text": "You win by eleven votes. You get the vending machine fixed, which is more than anyone expected.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.06 } ] },
+        "failure": { "text": "You lose to someone whose campaign was free sweets. You learn something about politics.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Vote for someone else", "effects": [], "result": "Your candidate wins. They do nothing at all. You are not surprised." }
+    ]
+  },
+  {
+    "id": "teen2_glasses", "title": "The board",
+    "text": "You cannot read the board any more, even from the front row. You have been squinting for months and telling no one.",
+    "conditions": { "minAge": 11, "maxAge": 16, "activity": "school" }, "cooldown": 0, "weight": 0.6,
+    "choices": [
+      { "text": "Get glasses", "effects": [ { "type": "grades", "amount": 3 }, { "type": "happiness", "amount": 1 } ], "result": "Leaves on trees. Individual leaves! Nobody told you." },
+      { "text": "Keep squinting", "effects": [ { "type": "grades", "amount": -2 } ], "result": "You copy from the person next to you. Their handwriting is worse than your eyesight." }
+    ]
+  },
+  {
+    "id": "teen2_rival_sibling", "title": "Compared",
+    "text": "\"Your {t.role} was so good at this,\" says the teacher, for the third time this term. {T.name} went to this school before you, and everybody remembers.",
+    "target": { "role": "sibling", "conditions": { "minAge": 15 } },
+    "conditions": { "minAge": 12, "maxAge": 17, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Try to beat {t.him}", "effects": [ { "type": "grades", "amount": 3 }, { "type": "relation", "who": "player", "to": "target", "dim": "envy", "amount": 6 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.05 } ], "result": "You work harder than you ever have. Your grades are better. You are not sure you are happier." },
+      { "text": "Be good at something else", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "creative", "chance": 0.05 } ], "result": "Drama club. Nobody in your family has ever been in drama club. It is all yours." }
+    ]
+  },
+  {
+    "id": "teen2_sports_injury", "title": "The knee",
+    "text": "A bad landing in the match. Your knee makes a sound that makes the whole bench go quiet.",
+    "conditions": { "minAge": 13, "maxAge": 18 }, "cooldown": 0, "weight": 0.5,
+    "choices": [
+      { "text": "Do all the rehab", "effects": [ { "type": "health", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.08 } ], "result": "Six months of boring exercises with an elastic band. You play again by spring, a little slower, a lot wiser." },
+      { "text": "Give up the sport", "effects": [ { "type": "health", "amount": -3 }, { "type": "happiness", "amount": -3 } ], "result": "You never go back. The knee aches when it rains, for the rest of your life, to remind you." }
+    ]
+  },
+  {
+    "id": "teen2_dinner_argument", "title": "At the dinner table",
+    "text": "Dinner. You have just learned something at school that makes everything your parents believe seem wrong, and you have decided to share it.",
+    "conditions": { "minAge": 14, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Argue until dessert", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "happiness", "amount": 1 } ], "result": "Raised voices, a slammed door, and two days later your father brings it up again, quietly, to say you had a point." },
+      { "text": "Keep it to yourself", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.04 } ], "result": "You keep it in your head. It grows there, which is maybe the point." }
+    ]
+  },
+  {
+    "id": "teen2_first_job_interview", "title": "The interview",
+    "text": "A job interview at the supermarket for weekend shifts. You have borrowed a shirt and practised your handshake on the fridge.",
+    "conditions": { "minAge": 15, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Be yourself", "chance": 0.6, "chanceTraits": { "charming": 0.15, "introvert": -0.1 },
+        "success": { "text": "You start on Saturday. Stacking tins, at last a wage, and a manager who thinks you are reliable.", "effects": [ { "type": "money", "amount": 3000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "They give it to someone's nephew. Your handshake was excellent, though.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Exaggerate a little", "chance": 0.7, "chanceTraits": { "manipulative": 0.1, "dishonest": 0.1 },
+        "success": { "text": "Previous experience in retail, you say, meaning the lemonade stand. You get the job.", "effects": [ { "type": "money", "amount": 3000 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.03 } ] },
+        "failure": { "text": "They ask a follow up question. You do not know what a till float is.", "effects": [ { "type": "happiness", "amount": -3 } ] } }
+    ]
+  }
+]
