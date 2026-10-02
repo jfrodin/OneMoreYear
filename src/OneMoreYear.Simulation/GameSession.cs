@@ -277,8 +277,8 @@ public sealed class GameSession
             string? hint = c.Hint == null ? null : TextFormatter.Format(Ctx, c.Hint, pending);
             if (EventSystem.StudyProgramme(Ctx, c) is { } prog)
             {
-                double need = CareerSystem.RequiredGrades(Ctx, Player, prog);
-                hint ??= prog.Description + (need > 0 ? $" Needs grades {need:0} – yours are {Player.Grades:0}." : "");
+                // What it is, and if it is out of reach, exactly why.
+                hint ??= prog.Description + (CareerSystem.WhyNot(Ctx, Player, prog) is { } why ? " " + why : "");
             }
             if (EventSystem.StartsRomance(c) && World.TryGet(Player.PartnerId) is { } partner)
                 hint = $"You're with {partner.FirstName} – this would be an affair." + (hint == null ? "" : " " + hint);
@@ -499,6 +499,18 @@ public sealed class GameSession
 
     // --- School & work, money ---------------------------------------------------------------
 
+    /// <summary>How hard the player works or studies: -1, 0 or 1. Free; it shows next year.</summary>
+    public void SetEffort(int effort) => Player.Effort = Math.Clamp(effort, -1, 1);
+
+    /// <summary>"Heading towards about 68: working hard +12, ambition +15, smarts +3. Luck moves it too."</summary>
+    private static string FactorNote(IReadOnlyList<(string Label, double Points)> factors, string? tail)
+    {
+        double target = Math.Clamp(50 + factors.Sum(f => f.Points), 0, 100);
+        string parts = factors.Count == 0 ? "nothing special pulls it either way"
+            : string.Join(", ", factors.Select(f => $"{f.Label.ToLowerInvariant()} {(f.Points >= 0 ? "+" : "")}{Math.Round(f.Points)}"));
+        return $"Heading towards about {target:0}: {parts}. Luck moves it too, a little every year." + (tail == null ? "" : " " + tail);
+    }
+
     public CareerView Career()
     {
         var p = Player;
@@ -550,7 +562,11 @@ public sealed class GameSession
             PromotionChancePercent = (int)Math.Round(CareerSystem.PromotionChance(Ctx, p) * 100),
             PromotionNote = promotionNote,
             Ladder = ladder,
-            CriminalRecord = p.CriminalRecord.Select(r => $"{r.Year}: {Content.Crimes.GetValueOrDefault(r.CrimeId)?.Name ?? r.CrimeId} – {r.Sentence}").ToList(),
+            CriminalRecord = p.CriminalRecord.Select(r => $"{r.Year}: {Content.Crimes.GetValueOrDefault(r.CrimeId)?.Name ?? r.CrimeId}, {r.Sentence}").ToList(),
+            Effort = p.Effort,
+            CanChooseEffort = p.Activity is Activity.Working or Activity.Studying || p.Activity == Activity.School && p.Age(Year) >= 10,
+            PerformanceNote = p.Activity == Activity.Working ? FactorNote(CareerSystem.PerformanceFactors(Ctx, p), "Over 50 helps a promotion; under 30 you risk losing the job.") : null,
+            GradesNote = p.Activity is Activity.School or Activity.Studying ? FactorNote(CareerSystem.GradeFactors(Ctx, p), null) : null,
         };
     }
 

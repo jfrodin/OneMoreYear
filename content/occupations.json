@@ -45,8 +45,8 @@
     "traitAffinity": { "introvert": 1.5 },
     "levels": [
       { "title": "Support Technician", "salary": 330000, "minEducation": "secondary", "entry": true, "promotionChance": 0.15 },
-      { "title": "Developer", "salary": 500000, "minEducation": "university", "entry": true, "promotionChance": 0.12, "requiresDegree": [ "uni_engineering", "uni_science" ] },
-      { "title": "Senior Developer", "salary": 650000, "minEducation": "university", "promotionChance": 0.06 },
+      { "title": "Developer", "salary": 500000, "minEducation": "secondary", "entry": true, "promotionChance": 0.12, "requiresDegree": [ "uni_engineering", "uni_science", "voc_it" ] },
+      { "title": "Senior Developer", "salary": 650000, "minEducation": "secondary", "promotionChance": 0.06 },
       { "title": "CTO", "salary": 900000, "minEducation": "university", "promotionChance": 0 }
     ]
   },

@@ -2,6 +2,21 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.30.0 – 2026-10-02 · Effort and second chances
+
+- **How hard do you push?** On the School & Work tab: take it easy, do your job, or give it everything.
+  Working hard raises performance (and the chance of promotion) or grades, but costs happiness and
+  health, with a risk of burning out. Taking it easy does the opposite. Free to change; it shows next year.
+- **Performance and grades explained**: "Heading towards about 68: working hard +12, ambition +15,
+  smarts +3. Luck moves it too." Over 50 helps a promotion; under 30 you risk the job.
+- **Go back to school** (from 20, from 1968): evening classes at Komvux to raise your grades, upper
+  secondary at Komvux (opens the road to university), or a vocational course: assistant nurse (1 year),
+  electrician and trades (2 years) or programming (2 years, from 1998, can lead to developer jobs).
+  Adults get student aid while they study.
+- **Why you cannot apply** is written under every programme that is out of reach: the grades needed
+  and yours, a missing diploma, or a course that does not exist yet.
+- A course never lowers your education: a vocational course after university keeps your degree.
+
 ## 0.29.0 – 2026-10-02 · Money with depth
 
 - **Real investments.** The Money tab lists each holding: what you paid in, what it is worth now,

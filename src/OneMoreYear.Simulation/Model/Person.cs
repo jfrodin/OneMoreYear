@@ -81,6 +81,8 @@ public sealed class Person
     /// <summary>Where the person works (a fictional company, hospital, school ...).</summary>
     public string? Employer { get; set; }
     public double Performance { get; set; } = 50;
+    /// <summary>How hard the person works or studies: -1 takes it easy, 0 does the job, 1 gives it everything (the player chooses).</summary>
+    public int Effort { get; set; }
     public int YearsInJob { get; set; }
     /// <summary>Yearly gross income in 2020-kronor (price level adjusted when displayed).</summary>
     public double Income { get; set; }

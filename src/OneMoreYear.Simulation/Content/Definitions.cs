@@ -195,6 +195,9 @@ public sealed class ProgrammeDef
     public double MinGrades { get; set; }
     /// <summary>An academic secondary programme; vocational ones need higher grades for university.</summary>
     public bool Academic { get; set; }
+    /// <summary>Courses for adults (Komvux, vocational courses): nobody starts them straight from school.</summary>
+    public int MinAge { get; set; }
+    public int MinYear { get; set; } = 1900;
     public List<string> LeadsTo { get; set; } = new();
     public Dictionary<string, double> TraitAffinity { get; set; } = new();
 }

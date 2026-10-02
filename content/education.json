@@ -27,7 +27,26 @@
     "description": "Sales, retail and office work.",
     "leadsTo": [ "trade", "public" ], "traitAffinity": { "social": 1.5 }
   },
-
+  {
+    "id": "komvux", "name": "Upper secondary at Komvux", "level": "secondary", "years": 2, "minAge": 20, "minYear": 1968,
+    "description": "Adult education: the academic subjects again, at your own pace, with grown-ups in the room. Opens the road to university.",
+    "academic": true, "leadsTo": []
+  },
+  {
+    "id": "voc_care", "name": "Assistant nurse course", "level": "secondary", "years": 1, "minAge": 20, "minYear": 1970,
+    "description": "One year, then work in a hospital or in elderly care. There is always a job.",
+    "leadsTo": [ "healthcare" ]
+  },
+  {
+    "id": "voc_trades", "name": "Electrician and trades course", "level": "secondary", "years": 2, "minAge": 20, "minYear": 1970,
+    "description": "Wiring, plumbing and building. Hard on the knees, good for the bank account.",
+    "leadsTo": [ "construction", "industry" ]
+  },
+  {
+    "id": "voc_it", "name": "Programming course", "level": "secondary", "years": 2, "minAge": 20, "minYear": 1998,
+    "description": "A higher vocational course in programming. Two years, then the IT companies are hiring.",
+    "leadsTo": [ "it" ]
+  },
   {
     "id": "uni_medicine", "name": "Medicine", "level": "university", "years": 5, "minGrades": 85,
     "description": "The hardest programme to get into. Leads to becoming a doctor.",

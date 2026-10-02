@@ -134,6 +134,12 @@ public sealed record CareerView
     public string? PromotionNote { get; init; }
     public IReadOnlyList<LadderStep> Ladder { get; init; } = Array.Empty<LadderStep>();
     public IReadOnlyList<string> CriminalRecord { get; init; } = Array.Empty<string>();
+    /// <summary>-1 takes it easy, 0 does the job, 1 gives it everything.</summary>
+    public int Effort { get; init; }
+    public bool CanChooseEffort { get; init; }
+    /// <summary>"Heading towards about 68: working hard +12, ambition +15 …" – what moves performance and grades.</summary>
+    public string? PerformanceNote { get; init; }
+    public string? GradesNote { get; init; }
 }
 
 public sealed record LedgerView(string Label, string Amount, double Raw);

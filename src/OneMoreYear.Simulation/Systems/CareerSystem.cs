@@ -84,20 +84,72 @@ public static class CareerSystem
 
     // --- School and studies -----------------------------------------------------------------
 
+    /// <summary>Where grades are heading, and why: the parts that do not depend on luck.</summary>
+    public static IReadOnlyList<(string Label, double Points)> GradeFactors(SimContext ctx, Person p)
+    {
+        var list = new List<(string, double)>();
+        if (p.Effort != 0) list.Add((p.Effort > 0 ? "Studying hard" : "Taking it easy", p.Effort * 8));
+        double career = ctx.Mod(p, "career") * 20;
+        if (Math.Abs(career) >= 1) list.Add((career > 0 ? "Ambition" : "Lack of drive", career));
+        double smarts = (p.Smarts - 50) * 0.7;
+        if (Math.Abs(smarts) >= 1) list.Add(("Smarts", smarts));
+        if (p.Happiness < 30) list.Add(("Unhappy", -8));
+        if (p.Flags.Contains(PartTimeFlag)) list.Add(("Part-time job", -6));
+        return list;
+    }
+
     private static void UpdateGrades(SimContext ctx, Person p)
     {
-        double target = 50 + ctx.Mod(p, "career") * 20 + (p.Smarts - 50) * 0.7
-                        + (p.Happiness < 30 ? -8 : 0) + (p.Flags.Contains(PartTimeFlag) ? -6 : 0);
+        double target = 50 + GradeFactors(ctx, p).Sum(f => f.Points);
         p.Grades = Math.Clamp(p.Grades * 0.7 + target * 0.3 + ctx.Rng.Gaussian(0, 4), 0, 100);
+        EffortToll(ctx, p);
+    }
+
+    /// <summary>Working or studying hard costs something; taking it easy gives a little back.</summary>
+    private static void EffortToll(SimContext ctx, Person p)
+    {
+        if (p.Effort > 0)
+        {
+            p.Happiness = Math.Max(0, p.Happiness - 3);
+            p.Health = Math.Max(1, p.Health - 1);
+            if (p.Age(ctx.Year) >= 18 && ctx.Rng.Chance(0.04)) AilmentSystem.Begin(ctx, p, "burnout");
+        }
+        else if (p.Effort < 0)
+            p.Happiness = Math.Min(100, p.Happiness + 3);
+    }
+
+    /// <summary>Where performance at work is heading, and why: the parts that do not depend on luck.</summary>
+    public static IReadOnlyList<(string Label, double Points)> PerformanceFactors(SimContext ctx, Person p)
+    {
+        var list = new List<(string, double)>();
+        if (p.Effort != 0) list.Add((p.Effort > 0 ? "Working hard" : "Taking it easy", p.Effort * 12));
+        double career = ctx.Mod(p, "career") * 30;
+        if (Math.Abs(career) >= 1) list.Add((career > 0 ? "Ambition" : "Lack of drive", career));
+        double smarts = (p.Smarts - 50) * 0.3;
+        if (Math.Abs(smarts) >= 1) list.Add(("Smarts", smarts));
+        if (p.Health < 40) list.Add(("Poor health", -15));
+        return list;
     }
 
     /// <summary>Can this person get into the programme? University needs a diploma and good enough grades.</summary>
     public static bool CanEnter(SimContext ctx, Person p, ProgrammeDef prog)
     {
-        if (p.Degrees.Contains(prog.Id)) return false;
+        if (p.Degrees.Contains(prog.Id) || p.Age(ctx.Year) < prog.MinAge || ctx.Year < prog.MinYear) return false;
         if (prog.Level == EducationLevel.Secondary) return p.Education >= EducationLevel.Primary;
         if (p.Education < EducationLevel.Secondary) return false;
         return p.Grades >= RequiredGrades(ctx, p, prog);
+    }
+
+    /// <summary>Why this person cannot start the programme, in words for the player; null if they can.</summary>
+    public static string? WhyNot(SimContext ctx, Person p, ProgrammeDef prog)
+    {
+        if (p.Degrees.Contains(prog.Id)) return "You already have this.";
+        if (ctx.Year < prog.MinYear) return $"Not offered yet. It starts around {prog.MinYear}.";
+        if (p.Age(ctx.Year) < prog.MinAge) return $"For adults, from {prog.MinAge}.";
+        if (prog.Level == EducationLevel.Secondary) return p.Education >= EducationLevel.Primary ? null : "You need to finish primary school first.";
+        if (p.Education < EducationLevel.Secondary) return "You need an upper secondary diploma first. Komvux can give you one.";
+        double need = RequiredGrades(ctx, p, prog);
+        return p.Grades >= need ? null : $"Needs grades {need:0}, yours are {p.Grades:0}. Evening classes at Komvux can raise them.";
     }
 
     /// <summary>Vocational secondary programmes need 10 extra grade points for university.</summary>
@@ -133,12 +185,14 @@ public static class CareerSystem
         p.ProgrammeId = prog.Id;
         p.StudyYearsLeft = prog.Years;
         p.OccupationId = null;
-        p.Income = prog.Level == EducationLevel.University ? ctx.Country.StudentIncome : 0;
+        // Student aid at university, and for adults back at school (Komvux, vocational courses).
+        p.Income = prog.Level == EducationLevel.University || p.Age(ctx.Year) >= 20 ? ctx.Country.StudentIncome : 0;
     }
 
     private static void Graduate(SimContext ctx, Person p)
     {
-        p.Education = p.StudyingFor ?? p.Education;
+        // A course never lowers what you already have (a vocational course after university).
+        if (p.StudyingFor is { } level && level > p.Education) p.Education = level;
         p.StudyingFor = null;
         var prog = ctx.Content.Programme(p.ProgrammeId);
         if (prog != null && !p.Degrees.Contains(prog.Id)) p.Degrees.Add(prog.Id);
@@ -262,8 +316,9 @@ public static class CareerSystem
         if (occ == null) { BecomeJobSeeker(p, ctx); return; }
 
         p.YearsInJob++;
-        double target = 50 + ctx.Mod(p, "career") * 30 + (p.Smarts - 50) * 0.3 + (p.Health < 40 ? -15 : 0) + rng.Gaussian(0, 15);
+        double target = 50 + PerformanceFactors(ctx, p).Sum(f => f.Points) + rng.Gaussian(0, 15);
         p.Performance = Math.Clamp(p.Performance * 0.7 + target * 0.3, 0, 100);
+        EffortToll(ctx, p);
 
         if (rng.Chance(0.015 * ctx.Mod(p, "dishonesty")))
         {

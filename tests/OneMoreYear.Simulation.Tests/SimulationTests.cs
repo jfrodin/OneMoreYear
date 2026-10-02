@@ -741,3 +741,43 @@ public class MarketAndHomeTests
         Assert.Equal(before, EconomySystem.NetWorth(s.Ctx, p), 3);
     }
 }
+
+public class EffortAndLearningTests
+{
+    [Fact]
+    public void Effort_moves_performance_and_grades()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 8, StartYear = 1980 });
+        var p = s.Player;
+        double Target(IReadOnlyList<(string, double Points)> f) => f.Sum(x => x.Points);
+        double normal = Target(CareerSystem.PerformanceFactors(s.Ctx, p));
+        s.SetEffort(1);
+        Assert.Equal(normal + 12, Target(CareerSystem.PerformanceFactors(s.Ctx, p)), 3);
+        s.SetEffort(-1);
+        Assert.Equal(normal - 12, Target(CareerSystem.PerformanceFactors(s.Ctx, p)), 3);
+        Assert.Contains(CareerSystem.GradeFactors(s.Ctx, p), f => f.Label == "Taking it easy" && f.Points < 0);
+        s.SetEffort(5);
+        Assert.Equal(1, p.Effort);
+    }
+
+    [Fact]
+    public void Adults_can_go_back_to_school()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 8, StartYear = 1990 });
+        var p = s.Player;
+        p.BirthYear = s.Year - 30;
+        p.Education = EducationLevel.Primary;
+        p.Activity = Activity.Working;
+        var komvux = s.Content.Programme("komvux")!;
+        var law = s.Content.Programme("uni_law")!;
+        Assert.Contains("diploma", CareerSystem.WhyNot(s.Ctx, p, law));
+        Assert.Null(CareerSystem.WhyNot(s.Ctx, p, komvux));
+        Assert.Contains("Not offered yet", CareerSystem.WhyNot(s.Ctx, p, s.Content.Programme("voc_it")!));
+
+        CareerSystem.StartStudies(s.Ctx, p, "komvux");
+        Assert.True(p.Income > 0, "Adults get student aid");
+        // Teenagers are never offered adult education.
+        var teen = PersonFactory.CreateStranger(s.Ctx, Sex.Female, 16);
+        Assert.False(CareerSystem.CanEnter(s.Ctx, teen, komvux));
+    }
+}

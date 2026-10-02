@@ -311,6 +311,15 @@
     } ]
   },
   {
+    "id": "self_back_to_school", "trigger": "self", "category": "career", "title": "Go back to school",
+    "conditions": { "minAge": 20, "maxAge": 60, "notActivity": [ "studying" ], "minYear": 1968 },
+    "choices": [ {
+      "text": "Look at courses", "hint": "Komvux to raise your grades or finish upper secondary, or a vocational course for a new trade.",
+      "effects": [ { "type": "queue_event", "event": "choose_adult_education" } ],
+      "result": "You pick up the course catalogue at the library."
+    } ]
+  },
+  {
     "id": "self_study_hard", "trigger": "self", "category": "career", "title": "Study hard",
     "conditions": { "minAge": 7, "activity": "studying" },
     "choices": [ {

@@ -345,6 +345,34 @@ public partial class GameScreen : Control
         header.AddChild(status);
         _workContent.AddChild(header);
 
+        // How hard you work or study: free to change, it shows next year.
+        if (c.CanChooseEffort)
+        {
+            var effortBox = Ui.VBox(8);
+            effortBox.AddChild(Ui.Label("How hard do you push?", 19, UiTheme.Text));
+            var row = Ui.HBox(8);
+            var group = new ButtonGroup();
+            bool working = c.JobTitle != null && c.Programme == null;
+            foreach (var (value, label, hint) in new[]
+                     {
+                         (-1, "Take it easy", "More time for life: a little happier, but " + (working ? "your performance drops." : "your grades drop.")),
+                         (0, working ? "Do your job" : "Do the work", "The usual. Nothing gained, nothing lost."),
+                         (1, "Give it everything", (working ? "Performance rises, and with it the chance of promotion. " : "Grades rise. ") + "It costs happiness and health, and there is a risk of burning out."),
+                     })
+            {
+                int v = value;
+                var b = Ui.Button(label, () => { S.SetEffort(v); _main.AutoSave(); RefreshWork(); }, 44);
+                b.ToggleMode = true;
+                b.ButtonGroup = group;
+                b.ButtonPressed = c.Effort == value;
+                b.SetMeta("action", true);
+                RegisterHint(b, hint);
+                row.AddChild(b);
+            }
+            effortBox.AddChild(row);
+            _workContent.AddChild(Ui.Card(effortBox));
+        }
+
         // Education
         var edu = Ui.VBox(8);
         edu.AddChild(Ui.Label("Education", 21, UiTheme.Text));
@@ -359,8 +387,9 @@ public partial class GameScreen : Control
         {
             edu.AddChild(Ui.Bar(S.Player.Age(S.Year) < 14 ? "How school goes" : "Grades", grades, grades >= 60 ? UiTheme.Good : grades >= 40 ? UiTheme.Accent : UiTheme.Bad, $"{grades:0}"));
             edu.AddChild(Ui.Label(S.Player.Age(S.Year) < 14
-                ? "No grades yet – they come in year 8. How you do now is where they will start."
-                : "Grades decide which programmes you can get into – Medicine needs about 85, Law 75.", 15, UiTheme.Faint, wrap: true));
+                ? "No grades yet. They come in year 8, and how you do now is where they will start."
+                : "Grades decide which programmes you can get into. Medicine needs about 85, Law 75.", 15, UiTheme.Faint, wrap: true));
+            if (c.GradesNote != null) edu.AddChild(Ui.Label(c.GradesNote, 15, UiTheme.Muted, wrap: true));
         }
         if (c.PartTimeJob) edu.AddChild(Ui.Label("You have a part-time job next to your studies.", 15, UiTheme.Muted));
         _workContent.AddChild(Ui.Card(edu));
@@ -376,6 +405,7 @@ public partial class GameScreen : Control
             work.AddChild(StatRow("In the job", $"{c.YearsInJob} year{(c.YearsInJob == 1 ? "" : "s")}", UiTheme.Text));
             if (c.Performance is { } perf)
                 work.AddChild(Ui.Bar("Performance", perf, perf >= 60 ? UiTheme.Good : perf >= 35 ? UiTheme.Accent : UiTheme.Bad, $"{perf:0}"));
+            if (c.PerformanceNote != null) work.AddChild(Ui.Label(c.PerformanceNote, 15, UiTheme.Muted, wrap: true));
             string promo = c.PromotionChancePercent > 0 ? $"Chance of promotion this year: about {c.PromotionChancePercent}%. " : "";
             if (c.PromotionNote != null || promo != "")
                 work.AddChild(Ui.Label(promo + (c.PromotionNote ?? ""), 15, UiTheme.Muted, wrap: true));
@@ -831,10 +861,12 @@ public partial class GameScreen : Control
                 b.SetMeta("choice", true);
                 if (c.Tag != null) b.AddThemeColorOverride("font_color", UiTheme.AccentDark);
                 string? hint = c.Factors == null ? c.Hint : (c.Hint == null ? c.Factors : $"{c.Hint}   ({c.Factors})");
-                RegisterHint(b, c.Available ? hint : "Not possible right now.");
+                RegisterHint(b, c.Available ? hint : c.Hint ?? "Not possible right now.");
                 box.AddChild(b);
                 // The chance is explained right under the choice, not only in the hint.
                 if (c.Factors != null && c.Available) box.AddChild(Ui.Label("      " + c.Factors, 13, UiTheme.Muted));
+                // And why a choice is out of reach, so nobody has to guess.
+                if (!c.Available && c.Hint != null) box.AddChild(Ui.Label("      " + c.Hint, 13, UiTheme.Faint, wrap: true));
             }
         }
         else if (!string.IsNullOrWhiteSpace(ev.OutcomeText))

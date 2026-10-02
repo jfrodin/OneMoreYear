@@ -73,6 +73,25 @@
     ]
   },
   {
+    "id": "choose_adult_education", "trigger": "situation",
+    "title": "Back to school",
+    "text": "Your grades are {grades}. Adult education is free, and you get student aid while you study full time.",
+    "choices": [
+      { "text": "Evening classes at Komvux, next to everything else", "hint": "Two evenings a week for a year. Raises your grades.",
+        "effects": [ { "type": "grades", "amount": 10 }, { "type": "happiness", "amount": -2 } ],
+        "result": "Two evenings a week in a classroom that smells of floor polish. Your classmates are a bus driver, a retired dentist and a girl of nineteen. You all get better." },
+      { "text": "Upper secondary at Komvux, full time", "effects": [ { "type": "study", "level": "secondary", "programme": "komvux" } ],
+        "result": "You leave your job and go back to school. The first week you feel very old. The second week you do not." },
+      { "text": "Assistant nurse course", "effects": [ { "type": "study", "level": "secondary", "programme": "voc_care" } ],
+        "result": "One year of anatomy, practice placements and early mornings. After that, there is always a job." },
+      { "text": "Electrician and trades course", "effects": [ { "type": "study", "level": "secondary", "programme": "voc_trades" } ],
+        "result": "Two years with your hands. You come home tired in a good way." },
+      { "text": "Programming course", "effects": [ { "type": "study", "level": "secondary", "programme": "voc_it" } ],
+        "result": "Two years of code. Half the class are career changers like you." },
+      { "text": "Not now", "result": "The catalogue goes into a drawer. Maybe next year." }
+    ]
+  },
+  {
     "id": "name_baby", "trigger": "situation", "dynamicChoices": "baby_names",
     "title": "A new baby",
     "text": "{T.role} is here – healthy, loud and perfect. What do you call {t.him}?",
