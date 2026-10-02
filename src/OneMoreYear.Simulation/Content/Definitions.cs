@@ -567,3 +567,19 @@ public sealed class EventPatchDef
     public List<InsightDef> Insights { get; set; } = new();
     public List<ChoiceDef> Choices { get; set; } = new();
 }
+
+/// <summary>
+/// Something to strive for across families (docs/endgame.md). The check is code (AchievementSystem), keyed by id.
+/// Common ones are shown in full; rare and legendary ones show only their hint until unlocked; secret ones are not shown at all.
+/// </summary>
+public sealed class AchievementDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>common, rare, legendary or secret.</summary>
+    public string Tier { get; set; } = "common";
+    public string Name { get; set; } = "";
+    /// <summary>A cryptic line shown while it is locked (rare and legendary).</summary>
+    public string Hint { get; set; } = "";
+    /// <summary>Shown once unlocked: in the game's voice, not "Achievement unlocked".</summary>
+    public string Text { get; set; } = "";
+}

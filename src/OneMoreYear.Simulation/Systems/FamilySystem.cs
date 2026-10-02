@@ -402,6 +402,7 @@ public static class FamilySystem
             x.LastSplitYear = ctx.Year;
             x.LastSplitWithId = y.Id;
             x.LastSplitByThem = x == other;
+            if (married) x.Flags.Add("divorced");
         }
 
         RelationshipSystem.AddMemory(ctx, other, married ? "divorced" : "dumped",

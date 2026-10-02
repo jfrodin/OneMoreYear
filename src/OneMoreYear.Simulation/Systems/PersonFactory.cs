@@ -208,6 +208,7 @@ public static class PersonFactory
                 if (!CareerSystem.QualifiesFor(p, occ.Levels[p.OccupationLevel + 1])) break;
                 p.OccupationLevel++;
             }
+            p.Jobs.Add(occ.Id);
             p.Income = CareerSystem.Salary(ctx, occ.Levels[p.OccupationLevel]);
             p.YearsInJob = rng.Range(0, Math.Max(0, age - 20));
         }

@@ -147,8 +147,14 @@ public partial class TitleScreen : Control
         options.AddChild(start);
         col.AddChild(Ui.Card(options));
 
+        var row = Ui.HBox(10);
+        var achievements = Ui.Button("Achievements", () => _main.ShowAchievements());
+        achievements.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        row.AddChild(achievements);
         var content = Ui.Button("Settings", () => _main.ShowSettings(null));
-        col.AddChild(content);
+        content.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        row.AddChild(content);
+        col.AddChild(row);
         var quit = Ui.Button("Quit", () => GetTree().Quit());
         col.AddChild(quit);
 

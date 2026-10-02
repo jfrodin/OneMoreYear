@@ -373,6 +373,7 @@ public partial class Main : Control
         var game = new GameScreen();
         game.Init(this);
         SetScreen(game);
+        CheckAchievements();
     }
 
     public void ShowSuccession()
@@ -380,6 +381,7 @@ public partial class Main : Control
         var s = new SuccessionScreen();
         s.Init(this);
         SetScreen(s);
+        CheckAchievements();
     }
 
     public void ShowGameOver()
@@ -387,6 +389,7 @@ public partial class Main : Control
         var s = new GameOverScreen();
         s.Init(this);
         SetScreen(s);
+        CheckAchievements();
     }
 
     public void AutoSave()
@@ -971,7 +974,9 @@ public partial class Main : Control
             case 80: Shot("07e_chapter"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); _eraOverride = null; ShowSuccession(); break;
             case 82: Shot("08_succession"); _eraOverride = 1956; ShowGame(); break;
             case 86: Shot("09_era_1956"); _eraOverride = 1987; ShowGame(); break;
-            case 90: Shot("10_era_1987"); GetTree().Quit(); break;
+            case 90: Shot("10_era_1987"); ShowAchievements(); break;
+            case 92: Shot("11_achievements"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); _toasts.Enqueue(GameSession.AllAchievements().First(a => a.Id == "five_generations")); ShowNextToast(); break;
+            case 94: Shot("12_achievement_notice"); GetTree().Quit(); break;
         }
     }
 

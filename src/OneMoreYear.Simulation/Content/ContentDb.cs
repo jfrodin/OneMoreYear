@@ -18,6 +18,7 @@ public sealed class ContentDb
     public Dictionary<string, NamesDef> Names { get; } = new();
     public Dictionary<string, AilmentDef> Ailments { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
+    public List<AchievementDef> Achievements { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
     /// <summary>History and life's milestones (a first word, turning eighty): they come for sure, the year their conditions first hold.</summary>
     public List<EventDef> HistoryEvents { get; } = new();
@@ -101,6 +102,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("scenarios.json"))
                 {
                     db.Scenarios.AddRange(Deserialize<List<ScenarioDef>>(json));
+                }
+                else if (path.EndsWith("achievements.json"))
+                {
+                    db.Achievements.AddRange(Deserialize<List<AchievementDef>>(json));
                 }
                 else if (path.EndsWith("occupations.json"))
                 {
@@ -222,6 +227,18 @@ public sealed class ContentDb
                 if (c.Chance != null && c.Success == null) errors.Add($"Event {e.Id}: choice with chance has no success outcome");
             }
         }
+        // Achievements: every text has a rule and every rule a text.
+        var tiers = new[] { Systems.AchievementSystem.Common, Systems.AchievementSystem.Rare, Systems.AchievementSystem.Legendary, Systems.AchievementSystem.Secret };
+        foreach (var a in Achievements)
+        {
+            if (!Systems.AchievementSystem.RuleIds.Contains(a.Id)) errors.Add($"Achievement {a.Id}: no rule in AchievementSystem");
+            if (!tiers.Contains(a.Tier)) errors.Add($"Achievement {a.Id}: unknown tier {a.Tier}");
+            if (a.Tier is "rare" or "legendary" && string.IsNullOrWhiteSpace(a.Hint)) errors.Add($"Achievement {a.Id}: needs a hint");
+            if (new[] { a.Name, a.Hint, a.Text }.Any(t => t.Contains("–") || t.Contains("—"))) errors.Add($"Achievement {a.Id}: dash in text");
+        }
+        foreach (var id in Systems.AchievementSystem.RuleIds.Where(id => Achievements.All(a => a.Id != id)))
+            errors.Add($"AchievementSystem rule {id} has no text in achievements.json");
+        foreach (var dup in Achievements.GroupBy(a => a.Id).Where(g => g.Count() > 1)) errors.Add($"Achievement {dup.Key} is listed twice");
         return errors;
     }
 

@@ -22,6 +22,7 @@ if (args.FirstOrDefault(a => a.StartsWith("--load=")) is { } loadArg)
 if (args.FirstOrDefault(a => a.StartsWith("--find-seed=")) is { } fs) { SeedSearch.Run(fs["--find-seed=".Length..], args.FirstOrDefault(a => a.StartsWith("--count=")) is { } c ? int.Parse(c[8..]) : 60); return; }
 if (args.Contains("--scenarios")) { ScenarioReport.Run(); return; }
 if (args.Contains("--dating")) { DatingReport.Run(); return; }
+if (args.FirstOrDefault(a => a.StartsWith("--achievements")) is { } ach) { AchievementReport.Run(ach.Contains('=') ? int.Parse(ach[15..]) : 40); return; }
 if (args.FirstOrDefault(a => a.StartsWith("--coverage")) is { } cov) { CoverageReport.Run(cov.Contains('=') ? int.Parse(cov[11..]) : 60, args.FirstOrDefault(a => a.StartsWith("--country="))?["--country=".Length..] ?? "sweden"); return; }
 ulong? givenSeed = args.Length > 0 && ulong.TryParse(args[0], out var s) ? s : null;
 int years = args.Length > 1 && int.TryParse(args[1], out var y) ? y : 120;

@@ -905,6 +905,23 @@ public class CountryTests
     }
 
     [Fact]
+    public void Achievements_are_earned_once_and_follow_the_family()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 4, StartYear = 1950 });
+        var bot = new AutoPlayer(4);
+        var have = new HashSet<string>();
+        for (int i = 0; i < 120 && bot.PlayYear(s); i++)
+            foreach (var a in s.NewAchievements(have))
+                Assert.True(have.Add(a.Id), $"{a.Id} came twice");
+        Assert.Contains("hundred_years", have);
+        Assert.Contains("next_generation", have);
+        Assert.Empty(s.NewAchievements(have));
+        // Secret ones exist, and every one has a text.
+        Assert.Contains(GameSession.AllAchievements(), a => a.Tier == AchievementSystem.Secret);
+        Assert.All(GameSession.AllAchievements(), a => Assert.False(string.IsNullOrWhiteSpace(a.Text)));
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.

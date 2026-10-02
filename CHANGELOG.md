@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.37.0 – 2026-10-02 · Achievements, and longer lives
+
+- **Achievements** (see docs/endgame.md): 24 of them, kept across all your families (outside the save
+  files). Common ones are shown in full. Rare and legendary ones show only a cryptic hint until you
+  earn them. Secret ones are not shown at all, only how many are still hidden. A quiet card appears
+  in the corner when you earn one; the list is on the title screen.
+- Legendary ones are very hard but possible: ten generations, fifty living descendants of the first
+  of you, from the hardest start to among the richest, three doctors in a row, seven generations
+  without a crime, an affair or a divorce.
+- **People now live as long as they should.** Health counted twice against the old, so only one adult
+  in ten reached eighty and almost nobody ninety. Health now counts relative to what is normal at
+  that age: more than half reach eighty, one in five reaches ninety, a few pass a hundred.
+- `SimRunner --achievements=N` shows how often the bot earns each one, and how long people live.
+
 ## 0.36.1 – 2026-10-02 · More childhood
 
 - **29 new events for children and teenagers**, where the pool was thinnest (from 10 to 22 events

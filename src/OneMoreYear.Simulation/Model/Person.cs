@@ -90,6 +90,11 @@ public sealed class Person
     public double Money { get; set; }
     /// <summary>Highest net worth reached, nominal kronor.</summary>
     public double PeakNetWorth { get; set; }
+    /// <summary>Highest and lowest net worth in reference money (Swedish kronor of 2020), comparable across eras and countries.</summary>
+    public double PeakRefWorth { get; set; }
+    public double LowRefWorth { get; set; }
+    /// <summary>Every occupation the person has had (ids), for family achievements like three doctors in a row.</summary>
+    public List<string> Jobs { get; set; } = new();
     public bool OwnsHome { get; set; }
     /// <summary>Market value of the home this person holds (0 when living in a partner's home), nominal.</summary>
     public double HomeValue { get; set; }

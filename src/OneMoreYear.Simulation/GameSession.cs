@@ -163,6 +163,9 @@ public sealed class GameSession
             HousingSystem.Update(ctx, p);
             EconomySystem.Update(ctx, p, market);
             p.PeakNetWorth = Math.Max(p.PeakNetWorth, EconomySystem.NetWorth(ctx, p));
+            double refWorth = ctx.Real(EconomySystem.NetWorth(ctx, p)) / ctx.Country.ContentMoneyScale;
+            p.PeakRefWorth = Math.Max(p.PeakRefWorth, refWorth);
+            p.LowRefWorth = Math.Min(p.LowRefWorth, refWorth);
             if (p.InFamily) LifeSystem.UpdateWill(ctx, p);
         }
 
@@ -886,6 +889,16 @@ public sealed class GameSession
 
     /// <summary>Ends the game when nobody is left to continue the family.</summary>
     public void EndGame() => World.GameOver = true;
+
+    /// <summary>
+    /// Achievements this family has earned that the player did not already have (the UI keeps the
+    /// list across families and calls this after each year, a succession and the end of the game).
+    /// </summary>
+    public IReadOnlyList<AchievementDef> NewAchievements(IReadOnlySet<string> alreadyUnlocked) =>
+        AchievementSystem.NewlyEarned(Ctx, alreadyUnlocked);
+
+    /// <summary>All achievements, in the order they are listed.</summary>
+    public static IReadOnlyList<AchievementDef> AllAchievements(ContentDb? content = null) => (content ?? ContentDb.Embedded).Achievements;
 
     public FamilyStats Stats()
     {

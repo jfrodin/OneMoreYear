@@ -266,6 +266,7 @@ public static class CareerSystem
 
         p.Activity = Activity.Working;
         p.OccupationId = occ.Id;
+        if (!p.Jobs.Contains(occ.Id)) p.Jobs.Add(occ.Id);
         p.OccupationLevel = lvl;
         p.Employer = employer ?? Employers.Name(ctx, p, occ.Id, lvl);
         p.YearsInJob = 0;

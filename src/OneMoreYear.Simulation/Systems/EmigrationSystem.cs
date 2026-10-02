@@ -46,6 +46,12 @@ public static class EmigrationSystem
             x.HomeType = null;
         }
 
+        // Going to the country an ancestor once left: the family has come full circle.
+        var ancestors = new List<Person>();
+        for (var gen = player.ParentIds.Select(w.Get).ToList(); gen.Count > 0; gen = gen.SelectMany(x => x.ParentIds).Select(w.Get).ToList())
+            ancestors.AddRange(gen);
+        if (ancestors.Any(a => a.Homeland == countryId)) w.Feats.Add("full_circle");
+
         Reframe(ctx, countryId, travellers);
 
         // A new start: a city, a job to find, and the tickets.

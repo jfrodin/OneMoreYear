@@ -15,7 +15,7 @@ public static class EffectApplier
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
         "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
-        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate"
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -161,6 +161,9 @@ public static class EffectApplier
                 break;
             case "queue_event":
                 if (e.Event != null) EventSystem.QueueSituation(ctx, e.Event);
+                break;
+            case "feat":
+                if (e.Kind != null) w.Feats.Add(e.Kind);
                 break;
             case "emigrate":
                 if (e.Country != null && who.Id == w.PlayerId) pending.ExtraText.Add(EmigrationSystem.Emigrate(ctx, who, e.Country));

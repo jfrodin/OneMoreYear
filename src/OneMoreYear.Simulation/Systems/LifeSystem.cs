@@ -27,7 +27,7 @@ public static class LifeSystem
         Appearance.UpdateYear(ctx, p);
 
         // Serious illness.
-        double illness = age < 30 ? 0.004 : 0.004 + (age - 30) * 0.0009;
+        double illness = IllnessChance(age);
         if (rng.Chance(illness))
         {
             double hit = rng.Range(15, 40);
@@ -58,8 +58,33 @@ public static class LifeSystem
         int age = p.Age(ctx.Year);
         double baseRate = 0.0002 + 0.000028 * Math.Exp(0.095 * age);
         if (age == 0) baseRate += ctx.Year < 1970 ? 0.012 : 0.003;
-        double healthFactor = Math.Clamp(Math.Exp((60 - p.Health) / 22), 0.3, 25);
+        // The base rate already grows with age, so health counts relative to what is normal at that age:
+        // a typical eighty five year old dies at the base rate, a healthy one less often.
+        double healthFactor = Math.Clamp(Math.Exp((ExpectedHealth(age) - p.Health) / 22), 0.3, 25);
         return Math.Min(0.95, baseRate * healthFactor * ctx.Country.MortalityScale * (1 + ctx.Mod(p, "risk") * 0.5));
+    }
+
+    /// <summary>Chance a year of a serious illness (heart attack, cancer ...), which costs 15 to 40 health.</summary>
+    public static double IllnessChance(int age) => age < 30 ? 0.004 : 0.004 + (age - 30) * 0.0009;
+
+    private static readonly double[] Expected = BuildExpected();
+
+    /// <summary>
+    /// Roughly the average health at an age: the yearly drift in <see cref="UpdateHealth"/> less the
+    /// illnesses an average person has had by then.
+    /// </summary>
+    public static double ExpectedHealth(int age) => Expected[Math.Clamp(age, 0, Expected.Length - 1)];
+
+    private static double[] BuildExpected()
+    {
+        var table = new double[131];
+        double health = 85;
+        for (int age = 0; age < table.Length; age++)
+        {
+            table[age] = Math.Max(5, health);
+            health += age switch { < 30 => 0, < 50 => -0.4, < 70 => -1.1, _ => -2.2 } - IllnessChance(age) * 27.5;
+        }
+        return table;
     }
 
     public static bool CheckDeath(SimContext ctx, Person p)

@@ -109,6 +109,7 @@ public static class SocialSystem
         c.StudyingFor = null;
         c.Activity = Activity.Working;
         c.OccupationId = occ.Id;
+        if (!c.Jobs.Contains(occ.Id)) c.Jobs.Add(occ.Id);
         c.OccupationLevel = level;
         c.Employer = p.Employer;
         c.Income = CareerSystem.Salary(ctx, occ.Levels[level]);
