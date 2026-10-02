@@ -51,6 +51,8 @@ public sealed class World
     public List<Heirloom> Heirlooms { get; set; } = new();
     public List<Pet> Pets { get; set; } = new();
     public List<Business> Businesses { get; set; } = new();
+    /// <summary>The player's small wish for this year (WishSystem); null when there is none.</summary>
+    public Wish? Wish { get; set; }
 
     public SimRandom Rng { get; set; } = new();
     public int NextEventUid { get; set; } = 1;
@@ -182,6 +184,14 @@ public sealed class Pet
     /// <summary>playful, lazy, loyal, grumpy or anxious.</summary>
     public string Nature { get; set; } = "";
     public bool IsAlive => DeathYear == null;
+}
+
+/// <summary>A wish for one year: which one, and about whom.</summary>
+public sealed class Wish
+{
+    public string Id { get; set; } = "";
+    public int? TargetId { get; set; }
+    public int Year { get; set; }
 }
 
 /// <summary>A family business (BusinessSystem). Money in reference kronor of 2020, so it survives emigration.</summary>

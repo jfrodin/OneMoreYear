@@ -50,6 +50,7 @@ public static class AchievementSystem
         ["golden_wedding"] = ctx => Played(ctx).Any(p => p.IsAlive && p.PartnerStatus == PartnerStatus.Married && ctx.Year - p.PartnerSinceYear >= 50),
         ["full_circle"] = ctx => ctx.World.Feats.Contains("full_circle"),
         ["inherited_dream"] = ctx => ctx.World.Feats.Contains("inherited_dream"),
+        ["wish_a_year"] = ctx => Played(ctx).Any(p => p.WishesKept >= 40),
         ["century_heirloom"] = ctx => ctx.World.Heirlooms.Any(h => h.OwnerId == ctx.World.PlayerId && !h.Interrupted && ctx.Year - Math.Max(h.SinceYear, ctx.World.StartYear) >= 100),
 
         // Legendary: very hard, never impossible.

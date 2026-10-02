@@ -208,6 +208,12 @@ public partial class GameScreen : Control
 
         if (!string.IsNullOrEmpty(p.Partner)) _sidebar.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
         if (p.Dream != null) _sidebar.AddChild(UiTheme.HandLabel(p.Dream, 21, UiTheme.Accent, wrap: true));
+        if (S.Wish() is { } wish)
+        {
+            var wishLabel = Ui.Label(wish.Kept ? $"Wish kept: {wish.Text}" : $"This year's wish: {wish.Text}", 15, wish.Kept ? UiTheme.Good : UiTheme.Muted, wrap: true);
+            wishLabel.TooltipText = "A small thing you want this year. Doing it makes you a little happier.";
+            _sidebar.AddChild(wishLabel);
+        }
         if (p.Hobby != null) _sidebar.AddChild(Ui.Label($"Hobby: {p.Hobby}", 14, UiTheme.Faint));
         foreach (var pet in p.Pets) _sidebar.AddChild(Ui.Label(pet, 14, UiTheme.Faint, wrap: true));
         if (p.Condition != null) _sidebar.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad, wrap: true));
@@ -1003,7 +1009,9 @@ public partial class GameScreen : Control
     private void OnAction(string actionId, int? targetId)
     {
         var title = S.Actions(targetId).FirstOrDefault(a => a.Id == actionId)?.Title ?? "";
+        bool wishKept = S.Wish() is { Kept: true };
         var result = S.PerformAction(actionId, targetId);
+        if (!wishKept && S.Wish() is { Kept: true }) result += "\n\nIt was what you wished for this year.";
         _main.AutoSave();
         _main.ShowMessage(title, result, () =>
         {

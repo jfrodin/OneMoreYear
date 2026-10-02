@@ -600,6 +600,27 @@ public sealed class AchievementDef
 /// A life dream (docs/endgame.md): something a played person wants from life. The goal kinds are
 /// code (DreamSystem); everything else is data.
 /// </summary>
+/// <summary>
+/// A small wish for one year (The Sims' wants, WishSystem): something the player can do this year,
+/// by an action or by getting somewhere. Kept, it gives a little happiness.
+/// </summary>
+public sealed class WishDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>"Spend an afternoon with {t.name}": shown in the side panel.</summary>
+    public string Text { get; set; } = "";
+    public ConditionDef? Conditions { get; set; }
+    /// <summary>Who the wish is about (a role as in events), if anyone.</summary>
+    public RoleDef? Target { get; set; }
+    /// <summary>Kept by doing one of these actions this year, with the target when there is one.</summary>
+    public List<string> Actions { get; set; } = new();
+    /// <summary>Or kept by being like this before the year is over.</summary>
+    public ConditionDef? Done { get; set; }
+    public double Weight { get; set; } = 1;
+    public double Happiness { get; set; } = 4;
+    public List<string> Countries { get; set; } = new();
+}
+
 public sealed class DreamDef
 {
     public string Id { get; set; } = "";

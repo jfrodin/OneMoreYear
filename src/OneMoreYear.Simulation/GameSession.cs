@@ -70,6 +70,7 @@ public sealed class GameSession
             HeirloomSystem.GiveStartingHeirlooms(session.Ctx);
             if (scenario != null) Scenarios.ApplyFamily(session.Ctx, scenario);
             session.World.ActionPoints = session.ActionPointsFor(session.Player);
+            session.PickWish();
             if (scenario != null) Scenarios.FastForward(session, scenario);
             return session;
         }
@@ -136,6 +137,7 @@ public sealed class GameSession
         var ctx = Ctx;
         int logStart = w.Chronicle.Count;
 
+        WishSystem.EndOfYear(ctx);
         w.Year++;
         w.PendingEvents.Clear();
         w.ActionsThisYear.Clear();
@@ -196,6 +198,7 @@ public sealed class GameSession
             PetSystem.Update(ctx);
             EventSystem.GenerateRandomEvents(ctx);
             w.ActionPoints = ActionPointsFor(Player);
+            PickWish();
         }
         else
         {
@@ -345,20 +348,8 @@ public sealed class GameSession
 
         foreach (var def in Content.Events.Values.OrderBy(e => e.Id, StringComparer.Ordinal))
         {
-            bool isSelf = def.Trigger == "self";
-            if (def.Trigger != "action" && !isSelf || !EventSystem.Allowed(Ctx, def)) continue;
-            // In prison, only prison life is possible.
-            if ((player.Activity == Activity.Prison) != (def.Category == "prison")) continue;
-            if (isSelf != (target == null)) continue;
-            if (!EventSystem.Matches(Ctx, def.Conditions, player, player)) continue;
-            if (target != null)
-            {
-                if (def.Target == null || !Kinship.MatchesRole(World, player, target, def.Target.Role, distances)) continue;
-                if (!EventSystem.Matches(Ctx, def.Target.Conditions, target, player)) continue;
-            }
+            if (!Possible(def, player, target, distances)) continue;
             var choice = def.Choices[0];
-            if (!EventSystem.Matches(Ctx, choice.Requires, player, player)) continue;
-
             var probe = new PendingEvent { EventId = def.Id };
             if (target != null) probe.Roles["target"] = target.Id;
             int? chance = choice.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, choice, probe) * 100) : null;
@@ -370,9 +361,35 @@ public sealed class GameSession
         return result;
     }
 
+    /// <summary>Can the player take this action, towards the target or alone (ignoring action points)?</summary>
+    private bool Possible(EventDef def, Person player, Person? target, Dictionary<int, int> distances)
+    {
+        bool isSelf = def.Trigger == "self";
+        if (def.Trigger != "action" && !isSelf || !EventSystem.Allowed(Ctx, def)) return false;
+        // In prison, only prison life is possible.
+        if ((player.Activity == Activity.Prison) != (def.Category == "prison")) return false;
+        if (isSelf != (target == null)) return false;
+        if (!EventSystem.Matches(Ctx, def.Conditions, player, player)) return false;
+        if (target != null)
+        {
+            if (def.Target == null || !Kinship.MatchesRole(World, player, target, def.Target.Role, distances)) return false;
+            if (!EventSystem.Matches(Ctx, def.Target.Conditions, target, player)) return false;
+        }
+        return EventSystem.Matches(Ctx, def.Choices[0].Requires, player, player);
+    }
+
     private bool CanAdvanceOrActionsAllowed() => !NeedsSuccession && !GameOver;
 
     private static string ActionKey(string id, int? target) => $"{id}:{target?.ToString() ?? "self"}";
+
+    /// <summary>The player's wish for this year (null if none), and whether it has come true.</summary>
+    public (string Text, bool Kept)? Wish() => WishSystem.Describe(Ctx) is { } text ? (text, WishSystem.Kept(Ctx)) : null;
+
+    private void PickWish()
+    {
+        var distances = Kinship.Distances(World, Player, 3);
+        WishSystem.Pick(Ctx, (id, target) => Content.Events.TryGetValue(id, out var def) && Possible(def, Player, World.TryGet(target), distances));
+    }
 
     public string PerformAction(string actionId, int? targetId)
     {
@@ -913,6 +930,7 @@ public sealed class GameSession
         World.ActionPoints = ActionPointsFor(p);
         SocialSystem.Update(Ctx);
         DreamSystem.Offer(Ctx, p);
+        PickWish();
     }
 
     /// <summary>Ends the game when nobody is left to continue the family.</summary>

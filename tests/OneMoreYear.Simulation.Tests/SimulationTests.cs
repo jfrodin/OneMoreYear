@@ -1069,6 +1069,41 @@ public class CountryTests
     }
 
     [Fact]
+    public void Wishes_come_every_year_and_are_kept_by_doing_them()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 23, StartYear = 1970 });
+        var bot = new AutoPlayer(23, useActions: false);
+        for (int i = 0; i < 18 && bot.PlayYear(s); i++) { }
+        int withWish = 0, kept = 0;
+        for (int i = 0; i < 20 && !s.GameOver; i++)
+        {
+            var p = s.Player;
+            if (s.Wish() is { } wish)
+            {
+                withWish++;
+                var def = WishSystem.Of(s.Ctx)!;
+                Assert.DoesNotContain("{", wish.Text);
+                if (def.Actions.Count > 0 && !wish.Kept)
+                {
+                    var action = s.Actions(s.World.Wish!.TargetId).FirstOrDefault(a => def.Actions.Contains(a.Id) && a.Enabled);
+                    if (action != null)
+                    {
+                        s.PerformAction(action.Id, s.World.Wish.TargetId);
+                        Assert.True(s.Wish()!.Value.Kept, $"{def.Id} kept by {action.Id}");
+                        int before = p.WishesKept;
+                        bot.PlayYear(s);
+                        if (s.Player == p && p.IsAlive) { Assert.Equal(before + 1, p.WishesKept); kept++; }
+                        continue;
+                    }
+                }
+            }
+            if (!bot.PlayYear(s)) break;
+        }
+        Assert.True(withWish >= 15, $"a wish in {withWish} of 20 years");
+        Assert.True(kept >= 5, $"{kept} wishes kept");
+    }
+
+    [Fact]
     public void A_family_business_runs_and_passes_on()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 23, StartYear = 1960 });

@@ -112,6 +112,8 @@ public sealed class Person
     public int? DreamFromId { get; set; }
     /// <summary>The year the dream was last offered (so it is offered once per person).</summary>
     public int? DreamOffered { get; set; }
+    /// <summary>Yearly wishes that came true (WishSystem).</summary>
+    public int WishesKept { get; set; }
     public bool OwnsHome { get; set; }
     /// <summary>Market value of the home this person holds (0 when living in a partner's home), nominal.</summary>
     public double HomeValue { get; set; }

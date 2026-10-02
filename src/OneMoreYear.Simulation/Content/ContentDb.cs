@@ -20,6 +20,7 @@ public sealed class ContentDb
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<AchievementDef> Achievements { get; } = new();
     public Dictionary<string, DreamDef> Dreams { get; } = new();
+    public Dictionary<string, WishDef> Wishes { get; } = new();
     public Dictionary<string, FamilyTraitDef> FamilyTraits { get; } = new();
     public Dictionary<string, HeirloomDef> Heirlooms { get; } = new();
     public Dictionary<string, PetKindDef> PetKinds { get; } = new();
@@ -133,6 +134,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("reputation.json"))
                 {
                     foreach (var t in Deserialize<List<FamilyTraitDef>>(json)) db.FamilyTraits[t.Id] = t;
+                }
+                else if (path.EndsWith("wishes.json"))
+                {
+                    foreach (var x in Deserialize<List<WishDef>>(json)) db.Wishes[x.Id] = x;
                 }
                 else if (path.EndsWith("dreams.json"))
                 {
@@ -288,6 +293,20 @@ public sealed class ContentDb
             if (d.Goal == "job" && Occupation(d.Param) == null) errors.Add($"Dream {d.Id}: unknown occupation {d.Param}");
             foreach (var t in d.Traits.Keys) if (!Traits.ContainsKey(t)) errors.Add($"Dream {d.Id}: unknown trait {t}");
             if (new[] { d.Name, d.Text, d.Fulfilled, d.Failed }.Any(t => string.IsNullOrWhiteSpace(t) || t.Contains("–") || t.Contains("—"))) errors.Add($"Dream {d.Id}: missing text or a dash");
+        }
+        // Wishes: one way to keep them, actions that exist and fit the target, and no dashes.
+        foreach (var x in Wishes.Values)
+        {
+            if ((x.Actions.Count > 0) == (x.Done != null)) errors.Add($"Wish {x.Id}: needs either actions or done, not both");
+            foreach (var a in x.Actions)
+            {
+                if (!Events.TryGetValue(a, out var ev)) errors.Add($"Wish {x.Id}: unknown action {a}");
+                else if (ev.Trigger != (x.Target != null ? "action" : "self")) errors.Add($"Wish {x.Id}: {a} is not a {(x.Target != null ? "targeted" : "self")} action");
+            }
+            if (string.IsNullOrWhiteSpace(x.Text) || x.Text.Contains("–") || x.Text.Contains("—")) errors.Add($"Wish {x.Id}: missing text or a dash");
+            CheckConditions($"wish {x.Id}", x.Conditions, errors);
+            CheckConditions($"wish {x.Id}", x.Done, errors);
+            CheckConditions($"wish {x.Id}", x.Target?.Conditions, errors);
         }
         // Achievements: every text has a rule and every rule a text.
         var tiers = new[] { Systems.AchievementSystem.Common, Systems.AchievementSystem.Rare, Systems.AchievementSystem.Legendary, Systems.AchievementSystem.Secret };
