@@ -298,7 +298,7 @@
     "text": "A little red cottage by a lake is for sale. No running water, a wood stove, and a jetty that's seen better days.",
     "conditions": { "minAge": 30, "minMoney": 300000, "notFlags": [ "summer_cottage" ] }, "cooldown": 10,
     "choices": [
-      { "text": "Buy it", "effects": [ { "type": "money", "amount": -250000 }, { "type": "flag", "flag": "summer_cottage" }, { "type": "happiness", "amount": 10 },
+      { "text": "Buy it", "effects": [ { "type": "buy_cottage", "amount": 250000 }, { "type": "happiness", "amount": 10 },
           { "type": "memory", "kind": "cottage", "text": "Summers at the red cottage", "impact": 20 } ],
         "result": "Every summer from now on: the lake, the mosquitoes, the smell of the wood stove. The family's place." },
       { "text": "Dream about it", "result": "You look at [[2008: the cutting from the paper || the photo on your phone]] sometimes." }

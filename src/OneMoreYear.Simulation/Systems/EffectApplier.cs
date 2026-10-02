@@ -15,7 +15,7 @@ public static class EffectApplier
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
         "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
-        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless"
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -40,6 +40,16 @@ public static class EffectApplier
 
         switch (e.Type)
         {
+            case "buy_cottage":
+                // A summer cottage: paid from savings, kept as an asset that follows the housing market.
+                who.Money -= ctx.Nominal(amount);
+                who.CottageValue += ctx.Nominal(amount);
+                who.Flags.Add("summer_cottage");
+                EconomySystem.Record(ctx, who, "Bought a summer cottage", -ctx.Nominal(amount));
+                break;
+            case "sell_cottage":
+                if (who.CottageValue > 0) pending.ExtraText.Add($"It sells for {EconomySystem.Format(ctx, EconomySystem.SellCottage(ctx, who))}.");
+                break;
             case "money":
                 who.Money += ctx.Nominal(amount);
                 EconomySystem.Record(ctx, who, EventTitle(ctx, pending), ctx.Nominal(amount));

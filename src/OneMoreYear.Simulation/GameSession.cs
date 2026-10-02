@@ -120,6 +120,8 @@ public sealed class GameSession
                 EconomySystem.GiveHome(p, price, price * 0.5);
             }
         }
+        // 0.29: the player's simple funds and shares become real holdings.
+        if (world.Player.IsAlive) InvestmentSystem.ConvertSimple(session.Ctx, world.Player);
         world.SaveVersion = World.CurrentSaveVersion;
         return session;
     }
@@ -336,38 +338,10 @@ public sealed class GameSession
             int? chance = choice.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, choice, probe) * 100) : null;
             bool used = World.ActionsThisYear.Contains(ActionKey(def.Id, targetId));
             string? hint = choice.Hint == null ? null : TextFormatter.Format(Ctx, choice.Hint, probe);
-            if (def.Id == BuyHomeAction) hint = $"{HomePriceText()} {hint}";
             result.Add(new ActionView(def.Id, TextFormatter.Format(Ctx, def.Title, probe), hint, chance,
                 !used && World.ActionPoints > 0 && CanAdvanceOrActionsAllowed(), def.Category));
         }
-        // Buying a home is shown even when it is out of reach, with what it would take.
-        if (target == null && result.All(a => a.Id != BuyHomeAction) && player.Age(Year) >= 20 && !player.OwnsHome
-            && !player.LivesWithParents && player.Activity != Activity.Prison)
-            result.Add(new ActionView(BuyHomeAction, "Buy a home", null, null, false, "money", BuyHomeLocked()));
         return result;
-    }
-
-    private const string BuyHomeAction = "self_buy_home";
-
-    private string HomePriceText()
-    {
-        double price = HousingSystem.HomePrice(Ctx, Player);
-        return $"A home in {HousingSystem.City(Ctx, Player).Name} costs about {EconomySystem.Format(Ctx, price)}.";
-    }
-
-    /// <summary>Why the player cannot buy a home yet: the deposit, or a loan their income cannot carry.</summary>
-    private string BuyHomeLocked()
-    {
-        var p = Player;
-        double price = HousingSystem.HomePrice(Ctx, p);
-        double deposit = price * Country.DownPayment;
-        double income = Ctx.Nominal(EconomySystem.GrossIncome(Ctx, p));
-        var missing = new List<string>();
-        if (p.Money < deposit)
-            missing.Add($"{EconomySystem.Format(Ctx, deposit)} for the down payment (you have {EconomySystem.Format(Ctx, Math.Max(0, p.Money))})");
-        if (price - deposit > Math.Max(income, 1) * 5.5)
-            missing.Add($"an income of at least {EconomySystem.Format(Ctx, (price - deposit) / 5.5)} a year for the bank to lend you the rest");
-        return missing.Count == 0 ? $"{HomePriceText()} Not right now." : $"{HomePriceText()} You need {string.Join(", and ", missing)}.";
     }
 
     private bool CanAdvanceOrActionsAllowed() => !NeedsSuccession && !GameOver;
@@ -593,10 +567,10 @@ public sealed class GameSession
     private List<(string, string)> Assets(Person p)
     {
         var rows = new List<(string, string)>();
-        if (p.Funds >= 1) rows.Add(("Funds", EconomySystem.Format(Ctx, p.Funds)));
-        if (p.Stocks >= 1) rows.Add(("Shares", EconomySystem.Format(Ctx, p.Stocks)));
+        if (EconomySystem.Investments(p) >= 1) rows.Add(("Investments", EconomySystem.Format(Ctx, EconomySystem.Investments(p))));
         if (p.HomeValue > 0) rows.Add(("Home", EconomySystem.Format(Ctx, p.HomeValue)));
         if (p.Mortgage >= 1) rows.Add(("Mortgage", "-" + EconomySystem.Format(Ctx, p.Mortgage)));
+        if (p.CottageValue >= 1) rows.Add(("Summer cottage", EconomySystem.Format(Ctx, p.CottageValue)));
         return rows;
     }
 
@@ -635,10 +609,110 @@ public sealed class GameSession
             ThisYearTotal = Signed(thisYear.Sum(l => l.Raw)),
             LastYear = lastYear,
             LastYearTotal = Signed(lastYear.Sum(l => l.Raw)),
+            Holdings = p.Holdings.Select(HoldingView).OfType<HoldingView>().ToList(),
+            InvestedTotal = EconomySystem.Format(Ctx, EconomySystem.Investments(p)),
+            CannotInvest = CannotInvest(),
+            HomeDescription = HousingSystem.DescribeForPlayer(Ctx, p),
+            HousingPerMonth = HousingPerMonth(p),
+            HasMortgage = p.Mortgage >= 1,
+            Cottage = p.CottageValue > 0 ? EconomySystem.Format(Ctx, p.CottageValue) : null,
+            CanMove = CanMove(p),
         };
     }
 
-    /// <summary>Everything that has happened to the player's circle so far this year.</summary>
+    // --- Investments and homes (free: they do not use up the year's time) ----------------------
+
+    private static int Percent(double v) => (int)Math.Round(v * 100);
+
+    private HoldingView? HoldingView(Holding h)
+    {
+        if (InvestmentSystem.Asset(Ctx, h.AssetId) is not { } a) return null;
+        double change = h.Invested > 0 ? h.Value / h.Invested - 1 : 0;
+        return new HoldingView(a.Id, a.Name, a.Kind, InvestmentSystem.Risk(a), EconomySystem.Format(Ctx, h.Invested),
+            EconomySystem.Format(Ctx, h.Value), Percent(change), Percent(h.LastReturn),
+            h.LastDividend >= 1 ? EconomySystem.Format(Ctx, h.LastDividend) : null, h.SinceYear);
+    }
+
+    private string? CannotInvest()
+    {
+        if (!CanAdvanceOrActionsAllowed() || !Player.IsAlive) return "Not now.";
+        if (Player.Age(Year) < InvestmentSystem.MinAge) return $"You can start investing at {InvestmentSystem.MinAge}, with your parents' help.";
+        if (Player.Activity == Activity.Prison) return "Not from prison.";
+        return Player.Money < 1 ? "You have no savings to invest." : null;
+    }
+
+    /// <summary>The funds and companies on offer this year, with how they have done.</summary>
+    public IReadOnlyList<AssetView> InvestmentOptions() =>
+        InvestmentSystem.AvailableAssets(Ctx).Select(a => new AssetView(a.Id, a.Name, a.Kind, a.Description, InvestmentSystem.Risk(a),
+            InvestmentSystem.Trailing(Ctx, a, 1) is { } one ? Percent(one) : null,
+            InvestmentSystem.Trailing(Ctx, a, 5) is { } five ? Percent(five) : null,
+            Percent(a.Dividend))).ToList();
+
+    /// <summary>The player's savings in nominal money, for the amount slider.</summary>
+    public double Savings => Math.Max(0, Player.Money);
+
+    public string BuyInvestment(string assetId, double nominalAmount)
+    {
+        if (CannotInvest() is { } reason) return reason;
+        return InvestmentSystem.Buy(Ctx, Player, assetId, nominalAmount);
+    }
+
+    public string SellInvestment(string assetId, double share)
+    {
+        if (!CanAdvanceOrActionsAllowed()) return "Not now.";
+        var name = InvestmentSystem.Asset(Ctx, assetId)?.Name ?? "it";
+        double amount = InvestmentSystem.Sell(Ctx, Player, assetId, share);
+        return amount < 1 ? "There was nothing to sell." : $"You sold {name} for {EconomySystem.Format(Ctx, amount)}.";
+    }
+
+    private bool CanMove(Person p) =>
+        CanAdvanceOrActionsAllowed() && p.IsAlive && p.Age(Year) >= Country.AdultAge && p.Activity != Activity.Prison
+        && !p.Flags.Contains(HousingSystem.CareHomeFlag);
+
+    private string? HousingPerMonth(Person p)
+    {
+        if (p.LivesWithParents || p.Flags.Contains(HousingSystem.CareHomeFlag)) return null;
+        var type = HousingSystem.HomeTypeOf(Ctx, p) ?? Country.HomeTypes.FirstOrDefault(t => t.Id == (p.SharesFlat ? "room" : "two_room"));
+        if (type == null) return null;
+        double cost = p.OwnsHome ? HousingSystem.MonthlyOwnerCost(Ctx, p, type) : HousingSystem.MonthlyRent(Ctx, p, type);
+        return EconomySystem.Format(Ctx, cost);
+    }
+
+    /// <summary>Every kind of home in the player's city: rent, price and whether the household can buy it.</summary>
+    public IReadOnlyList<HomeOptionView> HomeOptions()
+    {
+        var p = Player;
+        return Country.HomeTypes.Where(t => t.MinYear <= Year).Select(t => new HomeOptionView(t.Id, t.Name, t.Sleeps,
+            p.HomeType == t.Id && !p.LivesWithParents,
+            t.RentFactor > 0 ? EconomySystem.Format(Ctx, HousingSystem.MonthlyRent(Ctx, p, t)) : null,
+            t.PriceFactor > 0 ? EconomySystem.Format(Ctx, HousingSystem.HomePrice(Ctx, p, t.Id)) : null,
+            t.PriceFactor > 0 ? EconomySystem.Format(Ctx, HousingSystem.MonthlyOwnerCost(Ctx, p, t)) : null,
+            t.PriceFactor > 0 && HousingSystem.CannotBuy(Ctx, p, t) == null,
+            t.PriceFactor > 0 ? HousingSystem.CannotBuy(Ctx, p, t) : null)).ToList();
+    }
+
+    public string ChooseHome(string typeId, bool buy)
+    {
+        var p = Player;
+        if (!CanMove(p)) return "You cannot move right now.";
+        if (Country.HomeTypes.FirstOrDefault(t => t.Id == typeId) is not { } type) return "That home does not exist.";
+        return buy ? HousingSystem.Buy(Ctx, p, type) : HousingSystem.Rent(Ctx, p, type);
+    }
+
+    public string RepayMortgage(double share)
+    {
+        if (!CanAdvanceOrActionsAllowed()) return "Not now.";
+        double paid = EconomySystem.RepayMortgage(Ctx, Player, share);
+        return paid < 1 ? "You have no savings to pay with." : $"You paid {EconomySystem.Format(Ctx, paid)} off the loan. {EconomySystem.Format(Ctx, Player.Mortgage)} is left.";
+    }
+
+    public string SellCottage()
+    {
+        if (!CanAdvanceOrActionsAllowed()) return "Not now.";
+        double amount = EconomySystem.SellCottage(Ctx, Player);
+        return amount < 1 ? "You have no cottage." : $"The cottage is sold for {EconomySystem.Format(Ctx, amount)}.";
+    }
+
     /// <summary>This year's lines, with what happened to the player told to them: "You inherited …".</summary>
     public IReadOnlyList<ChronicleLine> NewsThisYear() =>
         RelevantLines(World.Chronicle.Where(e => e.Year == Year)).Select(l => l with { Text = ToYou(l.Text) }).ToList();
@@ -738,6 +812,7 @@ public sealed class GameSession
     {
         World.PlayerId = p.Id;
         World.PlayedIds.Add(p.Id);
+        InvestmentSystem.ConvertSimple(Ctx, p);
         World.EventHistory.Clear();
         World.PendingEvents.Clear();
         World.ActionsThisYear.Clear();

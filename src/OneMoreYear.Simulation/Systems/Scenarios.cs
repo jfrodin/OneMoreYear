@@ -63,6 +63,7 @@ public static class Scenarios
         p.StudyYearsLeft = 0;
         if (p.HomeValue > 0) EconomySystem.SellHome(ctx, p, log: false);
         p.Money = p.Funds = p.Stocks = 0;
+        p.Holdings.Clear();
         p.OwnsHome = false;
         p.SharesFlat = false;
         p.LivesWithParents = true;

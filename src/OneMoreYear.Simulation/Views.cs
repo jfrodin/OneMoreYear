@@ -139,6 +139,16 @@ public sealed record CareerView
 public sealed record LedgerView(string Label, string Amount, double Raw);
 
 /// <summary>Everything the Money tab shows.</summary>
+/// <summary>A fund or company that can be bought this year. Percentages are whole numbers (12 = +12 %); null when too young to say.</summary>
+public sealed record AssetView(string Id, string Name, string Kind, string Description, string Risk, int? LastYearPercent, int? FiveYearPercent, int DividendPercent);
+
+/// <summary>One of the player's holdings.</summary>
+public sealed record HoldingView(string AssetId, string Name, string Kind, string Risk, string Invested, string Value, int ChangePercent, int LastYearPercent, string? Dividend, int SinceYear);
+
+/// <summary>A kind of home in the player's city: what renting and buying it would cost, and whether it is possible.</summary>
+public sealed record HomeOptionView(string TypeId, string Name, int Sleeps, bool Current,
+    string? RentPerMonth, string? Price, string? OwnPerMonth, bool CanBuy, string? CannotBuyReason);
+
 public sealed record MoneyView
 {
     public string Money { get; init; } = "";
@@ -157,6 +167,18 @@ public sealed record MoneyView
     public string ThisYearTotal { get; init; } = "";
     public IReadOnlyList<LedgerView> LastYear { get; init; } = Array.Empty<LedgerView>();
     public string LastYearTotal { get; init; } = "";
+    /// <summary>The player's funds and shares, one row each.</summary>
+    public IReadOnlyList<HoldingView> Holdings { get; init; } = Array.Empty<HoldingView>();
+    public string InvestedTotal { get; init; } = "";
+    /// <summary>Why the player cannot invest right now (too young, no savings), or null.</summary>
+    public string? CannotInvest { get; init; }
+    /// <summary>"A three-room flat in Umeå", and roughly what living there costs a month.</summary>
+    public string HomeDescription { get; init; } = "";
+    public string? HousingPerMonth { get; init; }
+    public bool HasMortgage { get; init; }
+    public string? Cottage { get; init; }
+    /// <summary>Whether the player can choose a new home (an adult, not in prison or a care home).</summary>
+    public bool CanMove { get; init; }
 }
 
 /// <summary>Everything needed to draw a person's portrait and figure. Genes are 0–1.</summary>

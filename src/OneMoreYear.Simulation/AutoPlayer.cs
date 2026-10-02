@@ -54,6 +54,15 @@ public sealed class AutoPlayer
             }
         }
 
+        // Now and then: a fund or a company, or selling something (so long runs exercise the market).
+        if (_useActions && !session.NeedsSuccession && session.Money().CannotInvest == null && _rng.Chance(0.15))
+        {
+            var options = session.InvestmentOptions();
+            if (options.Count > 0) session.BuyInvestment(options[_rng.Next(options.Count)].Id, session.Savings * 0.2);
+        }
+        else if (_useActions && !session.NeedsSuccession && session.Player.Holdings.Count > 0 && _rng.Chance(0.05))
+            session.SellInvestment(session.Player.Holdings[0].AssetId, 0.5);
+
         // Actions can create new events (job offers, university applications).
         AnswerEvents(session);
 

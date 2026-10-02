@@ -38,6 +38,10 @@ public static class EconomySystem
         double before = p.Money;
         p.Money *= 1 + (p.Money > 0 ? market.Bank : market.Debt);
         Record(ctx, p, before > 0 ? "Interest on your savings" : "Interest on debt", p.Money - before);
+        // The player has real holdings; an heir or an old save may still have the simple kind.
+        if (p.Id == ctx.World.PlayerId) InvestmentSystem.ConvertSimple(ctx, p);
+        if (p.Holdings.Count > 0) InvestmentSystem.Update(ctx, p);
+        if (p.CottageValue > 0) p.CottageValue *= 1 + market.Housing;
         if (p.Funds > 0)
         {
             double change = p.Funds * market.Stocks;
@@ -80,7 +84,10 @@ public static class EconomySystem
             double kids = Kinship.Children(ctx.World, p).Count(k => k.IsAlive && k.Age(ctx.Year) < 18);
             // Food and the rest (60 %) cost the same everywhere; housing (40 %) depends on the city and how you live.
             // Owners pay running costs here and the mortgage separately.
-            double homeFactor = p.OwnsHome ? 0.45 : p.SharesFlat && !sharesHome ? 0.55 : 1.0;
+            var homeType = HousingSystem.HomeTypeOf(ctx, p);
+            double homeFactor = p.OwnsHome ? 0.45 * (homeType?.PriceFactor > 0 ? homeType.PriceFactor : 1)
+                : p.SharesFlat && !sharesHome ? 0.55
+                : homeType?.RentFactor > 0 ? homeType.RentFactor : 1.0;
             double living = c.LivingCostAdult * (0.6 + 0.4 * HousingSystem.City(ctx, p).PriceFactor * homeFactor) * (sharesHome ? 0.8 : 1);
             double children = kids * c.LivingCostChild * (sharesHome ? 0.5 : 1);
             Record(ctx, p, $"Living costs in {HousingSystem.City(ctx, p).Name}" + (sharesHome ? " (your share)" : ""), -ctx.Nominal(living));
@@ -94,7 +101,7 @@ public static class EconomySystem
                 saved = surplus * saveRate;
                 Record(ctx, p, "Everything else you spent", -ctx.Nominal(surplus - saved));
             }
-            else if (p.Money + p.Funds + p.Stocks > 0)
+            else if (p.Money + Investments(p) > 0)
             {
                 // Savings pay for the gap before anyone else does.
                 saved = surplus;
@@ -161,7 +168,7 @@ public static class EconomySystem
     private static void SpendFromWealth(SimContext ctx, Person p)
     {
         double buffer = ctx.Nominal(ctx.Country.LivingCostAdult * 2);
-        double wealth = p.Money + p.Funds + p.Stocks;
+        double wealth = p.Money + Investments(p);
         if (wealth <= buffer) return;
         double spend = (wealth - buffer) * Math.Clamp(0.04 + ctx.Mod(p, "spending") * 0.03, 0.02, 0.1);
         if (p.Money < spend)
@@ -171,6 +178,7 @@ public static class EconomySystem
             p.Funds -= fromFunds;
             p.Stocks -= sell - fromFunds;
             p.Money += sell;
+            if (p.Money < spend) sell += InvestmentSystem.Raise(ctx, p, spend - Math.Max(0, p.Money));
             Record(ctx, p, "Sold investments to pay for your lifestyle", sell);
         }
         p.Money -= spend;
@@ -182,14 +190,15 @@ public static class EconomySystem
     /// <summary>Debt is paid with funds and shares before it grows.</summary>
     private static void CoverDebtWithInvestments(SimContext ctx, Person p)
     {
-        if (p.Money >= 0 || p.Funds + p.Stocks <= 0) return;
+        if (p.Money >= 0 || Investments(p) <= 0) return;
         double need = -p.Money;
         double fromFunds = Math.Min(need, p.Funds);
         double fromStocks = Math.Min(need - fromFunds, p.Stocks);
         p.Funds -= fromFunds;
         p.Stocks -= fromStocks;
         p.Money += fromFunds + fromStocks;
-        Record(ctx, p, "Sold investments to cover debt", fromFunds + fromStocks);
+        double fromHoldings = p.Money < 0 ? InvestmentSystem.Raise(ctx, p, -p.Money) : 0;
+        Record(ctx, p, "Sold investments to cover debt", fromFunds + fromStocks + fromHoldings);
     }
 
     /// <summary>How much of their spare money a person likes to invest – careful people less, risk-takers more.</summary>
@@ -213,6 +222,13 @@ public static class EconomySystem
     {
         double amount = Math.Max(0, p.Money) * Math.Clamp(share, 0, 1);
         if (amount < 1) return 0;
+        // The player buys a real fund or company.
+        if (p.Id == ctx.World.PlayerId && p.Age(ctx.Year) < InvestmentSystem.MinAge) return 0;
+        if (p.Id == ctx.World.PlayerId && InvestmentSystem.DefaultFor(ctx, kind) is { } asset)
+        {
+            InvestmentSystem.Buy(ctx, p, asset.Id, amount);
+            return amount;
+        }
         p.Money -= amount;
         if (kind == "stocks") p.Stocks += amount; else p.Funds += amount;
         Record(ctx, p, kind == "stocks" ? "Bought shares" : "Put money in funds", -amount);
@@ -222,9 +238,10 @@ public static class EconomySystem
     /// <summary>Sells all funds and shares. Returns the amount.</summary>
     public static double SellInvestments(SimContext ctx, Person p)
     {
-        double amount = p.Funds + p.Stocks;
+        double amount = p.Funds + p.Stocks + InvestmentSystem.Value(p);
         p.Money += amount;
         p.Funds = p.Stocks = 0;
+        p.Holdings.Clear();
         Record(ctx, p, "Sold your investments", amount);
         return amount;
     }
@@ -233,7 +250,10 @@ public static class EconomySystem
     public static double SaveRate(SimContext ctx, Person p) => Math.Clamp(0.3 - ctx.Mod(p, "spending"), 0.05, 0.6);
 
     /// <summary>Net worth in nominal kronor, including home equity.</summary>
-    public static double NetWorth(SimContext ctx, Person p) => p.Money + p.Funds + p.Stocks + HomeEquity(p);
+    public static double NetWorth(SimContext ctx, Person p) => p.Money + Investments(p) + HomeEquity(p) + p.CottageValue;
+
+    /// <summary>Everything invested: the simple funds and shares, and the player'"'"'s own holdings.</summary>
+    public static double Investments(Person p) => p.Funds + p.Stocks + InvestmentSystem.Value(p);
 
     /// <summary>What the home is worth minus what is left of the loan (0 for someone living in a partner's home).</summary>
     public static double HomeEquity(Person p) => p.OwnsHome ? p.HomeValue - p.Mortgage : 0;
@@ -281,6 +301,19 @@ public static class EconomySystem
         p.OwnsHome = false;
         if (ctx.World.TryGet(p.PartnerId) is { HomeValue: <= 0 } partner) partner.OwnsHome = false;
         return equity;
+    }
+
+    /// <summary>Sells the summer cottage. Returns the amount.</summary>
+    public static double SellCottage(SimContext ctx, Person p)
+    {
+        double amount = p.CottageValue;
+        if (amount <= 0) return 0;
+        p.Money += amount;
+        p.CottageValue = 0;
+        p.Flags.Remove("summer_cottage");
+        Record(ctx, p, "Sold the summer cottage", amount);
+        if (p.InFamily) ctx.World.Log($"{p.FirstName} sold the summer cottage.", 1, "economy", p.Id);
+        return amount;
     }
 
     /// <summary>Pays off part of the mortgage with savings. Returns the amount.</summary>

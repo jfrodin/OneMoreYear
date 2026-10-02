@@ -97,6 +97,12 @@ public sealed class Person
     /// <summary>Savings in index funds, and in single company shares (riskier), nominal.</summary>
     public double Funds { get; set; }
     public double Stocks { get; set; }
+    /// <summary>The player's own investments, one per fund or company (others keep the simple Funds and Stocks).</summary>
+    public List<Holding> Holdings { get; set; } = new();
+    /// <summary>The kind of home (country homeTypes); null for the usual home of the city.</summary>
+    public string? HomeType { get; set; }
+    /// <summary>Market value of a summer cottage, nominal (0 = none).</summary>
+    public double CottageValue { get; set; }
     /// <summary>Which city the person lives in (country content).</summary>
     public string? CityId { get; set; }
     /// <summary>Still living in the parents' home.</summary>
@@ -166,4 +172,16 @@ public sealed class CrimeRecord
     public string CrimeId { get; set; } = "";
     /// <summary>"3 years in prison", "a fine of 5,000 kr" ...</summary>
     public string Sentence { get; set; } = "";
+}
+
+/// <summary>Money in one fund or company: what was paid in (nominal) and what it is worth now.</summary>
+public sealed class Holding
+{
+    public string AssetId { get; set; } = "";
+    public double Invested { get; set; }
+    public double Value { get; set; }
+    public int SinceYear { get; set; }
+    /// <summary>Last year's return (0.12 = +12 %) and dividend paid out (nominal), for the money tab.</summary>
+    public double LastReturn { get; set; }
+    public double LastDividend { get; set; }
 }

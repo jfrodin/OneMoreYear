@@ -9,13 +9,6 @@ namespace OneMoreYear.Simulation.Systems;
 /// </summary>
 public static class Employers
 {
-    /// <summary>FNV-1a: the same on every machine and run (string.GetHashCode is not).</summary>
-    private static ulong StableHash(string s)
-    {
-        ulong h = 14695981039346656037UL;
-        foreach (char c in s) h = (h ^ c) * 1099511628211UL;
-        return h;
-    }
 
     /// <summary>An employer for this person and career. <paramref name="salt"/> separates several offers the same year.</summary>
     public static string? Name(SimContext ctx, Person p, string occupationId, int level, int salt = 0)
@@ -25,7 +18,7 @@ public static class Employers
             || templates.Count == 0)
             return null;
         var rng = new SimRandom(ctx.World.Seed ^ ((ulong)p.Id * 0x9E3779B97F4A7C15UL) ^ ((ulong)ctx.Year << 20) ^ ((ulong)(salt + 1) * 0xC2B2AE3D27D4EB4FUL)
-                                ^ StableHash(occupationId) * 0x165667B19E3779F9UL);
+                                ^ StableHash.Of(occupationId) * 0x165667B19E3779F9UL);
         string city = HousingSystem.City(ctx, p).Name;
         string text = rng.Pick(templates);
         // Each placeholder is filled separately, so "{surname} & {surname}" gets two different names.

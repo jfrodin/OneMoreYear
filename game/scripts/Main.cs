@@ -751,6 +751,36 @@ public partial class Main : Control
 
     public bool HasModal => _overlayLayer.GetChildCount() > 0;
 
+    /// <summary>
+    /// Shows <paramref name="content"/> as a modal card and returns the function that closes it.
+    /// Escape (or B on a controller) closes it too; focus goes back to where it was.
+    /// </summary>
+    public System.Action ShowDialog(Control content, Control? focus = null, System.Action? onClose = null)
+    {
+        var previousFocus = GetViewport().GuiGetFocusOwner();
+        var dim = new ColorRect { Color = new Color(0, 0, 0, 0.6f), MouseFilter = MouseFilterEnum.Stop };
+        dim.SetAnchorsPreset(LayoutPreset.FullRect);
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        dim.AddChild(center);
+        bool closed = false;
+        void Close()
+        {
+            if (closed) return;
+            closed = true;
+            _overlayLayer.RemoveChild(dim);
+            dim.QueueFree();
+            if (IsInstanceValid(previousFocus) && previousFocus!.IsInsideTree() && previousFocus.IsVisibleInTree())
+                previousFocus.GrabFocus();
+            onClose?.Invoke();
+        }
+        dim.AddChild(new CancelCatcher(Close));
+        center.AddChild(Ui.Card(content, UiTheme.Panel, UiTheme.AccentDark));
+        _overlayLayer.AddChild(dim);
+        if (focus != null) Ui.FocusLater(focus);
+        return Close;
+    }
+
     // --- Smoke test -----------------------------------------------------------------------------
     // Run with:  Godot --path game -- --smoke   (add --headless for no window)
     // Plays through the real UI for a few hundred steps and quits; errors show up in the log.
@@ -835,9 +865,17 @@ public partial class Main : Control
             case 40: Shot("03_family"); break;
             case 42: if (_screen is GameScreen g2) g2.ShowTab(2); break;
             case 50: Shot("04_work"); break;
-            case 52: if (_screen is GameScreen g3) g3.ShowTab(3); break;
-            case 60: Shot("05_money"); break;
-            case 62: if (_screen is GameScreen g4) g4.ShowTab(4); break;
+            case 52:
+                // A little money to show the investments and the home card.
+                Session!.Player.Money = 900_000;
+                Session.BuyInvestment("sweden_fund", 200_000);
+                Session.BuyInvestment("telelink", 60_000);
+                Session.ChooseHome("three_room", buy: false);
+                if (_screen is GameScreen g3) { g3.Refresh(); g3.ShowTab(3); }
+                break;
+            case 60: Shot("05_money"); if (_screen is GameScreen gi) gi.TourInvestDialog(); break;
+            case 63: Shot("05b_invest"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen gh) gh.TourHomeDialog(); break;
+            case 66: Shot("05c_homes"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen g4) g4.ShowTab(4); break;
             case 70: Shot("06_tree"); if (_screen is GameScreen gt) gt.FocusTreeOnGrandfather(); break;
             case 71: Shot("06b_tree_grandfather"); break;
             case 72: ShowContentSettings(Session); break;
@@ -881,5 +919,20 @@ public partial class Main : Control
             if (FindButton(child) is { } found) return found;
         }
         return null;
+    }
+}
+
+/// <summary>Closes a dialog on Escape / B, whatever has focus inside it.</summary>
+public partial class CancelCatcher : Node
+{
+    private readonly System.Action _onCancel;
+    public CancelCatcher() : this(() => { }) { }
+    public CancelCatcher(System.Action onCancel) => _onCancel = onCancel;
+
+    public override void _UnhandledInput(InputEvent e)
+    {
+        if (!e.IsActionPressed("ui_cancel")) return;
+        GetViewport().SetInputAsHandled();
+        _onCancel();
     }
 }

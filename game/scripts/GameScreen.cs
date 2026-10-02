@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -442,11 +443,14 @@ public partial class GameScreen : Control
         if (m.Home != null) summary.AddChild(Ui.Label(m.Home, 16, UiTheme.Muted, wrap: true));
         summary.AddChild(Ui.Label(m.MarketNote, 15, UiTheme.Muted, wrap: true));
         summary.AddChild(Ui.Label(
-            $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs (and a mortgage) are paid first. Of what is left, you save about " +
-            $"{m.SaveRatePercent}% – your personality decides how careful you are. Money in the bank keeps its value; funds and shares " +
-            "grow more over time but can crash. If your income doesn't cover the basics, savings pay first, then welfare pays half the gap " +
+            $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs and the home are paid first. Of what is left, you save about " +
+            $"{m.SaveRatePercent}%, depending on your personality. Money in the bank roughly keeps its value. Funds and shares " +
+            "grow more over time but can crash. If your income does not cover the basics, savings pay first, then welfare pays half the gap " +
             "and the rest becomes debt.", 15, UiTheme.Faint, wrap: true));
         _moneyContent.AddChild(Ui.Card(summary));
+
+        _moneyContent.AddChild(InvestmentsCard(m));
+        _moneyContent.AddChild(HomeCard(m));
 
         _moneyContent.AddChild(LedgerCard($"This year ({m.Year})", m.ThisYear, m.ThisYearTotal));
         if (m.LastYear.Count > 0) _moneyContent.AddChild(LedgerCard($"Last year ({m.Year - 1})", m.LastYear, m.LastYearTotal));
@@ -455,10 +459,307 @@ public partial class GameScreen : Control
         if (actions.Count > 0)
         {
             var box = Ui.VBox(10);
-            box.AddChild(Ui.Label("What do you want to do?", 19, UiTheme.Text));
+            box.AddChild(Ui.Label("Also", 19, UiTheme.Text));
             box.AddChild(ActionButtons(actions, null));
             _moneyContent.AddChild(Ui.Card(box));
         }
+    }
+
+    // --- Investments --------------------------------------------------------------------------
+
+    private static string Pct(int v) => (v > 0 ? "+" : "") + v + " %";
+    private static Color PctColor(int v) => v > 0 ? UiTheme.Good : v < 0 ? UiTheme.Bad : UiTheme.Muted;
+
+    private static Label Cell(string text, float width, Color color, int size = 16)
+    {
+        var l = Ui.Label(text, size, color);
+        l.CustomMinimumSize = new Vector2(width, 0);
+        l.HorizontalAlignment = HorizontalAlignment.Right;
+        return l;
+    }
+
+    private Control InvestmentsCard(MoneyView m)
+    {
+        var box = Ui.VBox(8);
+        var head = Ui.HBox(12);
+        var title = Ui.Label("Your investments", 20, UiTheme.Text);
+        title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        head.AddChild(title);
+        head.AddChild(Ui.Label(m.InvestedTotal, 19, UiTheme.Accent));
+        box.AddChild(head);
+
+        if (m.Holdings.Count == 0)
+            box.AddChild(Ui.Label("Nothing invested yet. Funds spread the risk over many companies; a single company can double, or go bankrupt.", 15, UiTheme.Muted, wrap: true));
+        else
+        {
+            var columns = Ui.HBox(10);
+            var spacer = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            columns.AddChild(spacer);
+            foreach (var (text, width) in new[] { ("Paid in", 120f), ("Worth now", 130f), ("Change", 90f), ("Last year", 90f), ("", 90f) })
+                columns.AddChild(Cell(text, width, UiTheme.Faint, 14));
+            box.AddChild(columns);
+            foreach (var h in m.Holdings)
+            {
+                var row = Ui.HBox(10);
+                var name = Ui.VBox(0);
+                name.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                name.AddChild(Ui.Label(h.Name, 17, UiTheme.Text));
+                name.AddChild(Ui.Label($"{(h.Kind == "fund" ? "Fund" : "Shares")}  ·  {h.Risk} risk  ·  since {h.SinceYear}" +
+                                       (h.Dividend != null ? $"  ·  dividend {h.Dividend}" : ""), 13, UiTheme.Muted));
+                row.AddChild(name);
+                row.AddChild(Cell(h.Invested, 120, UiTheme.Muted));
+                row.AddChild(Cell(h.Value, 130, UiTheme.Text, 17));
+                row.AddChild(Cell(Pct(h.ChangePercent), 90, PctColor(h.ChangePercent)));
+                row.AddChild(Cell(Pct(h.LastYearPercent), 90, PctColor(h.LastYearPercent)));
+                var id = h.AssetId;
+                string holdingName = h.Name;
+                var sell = Ui.Button("Sell", () => ShowSellDialog(id, holdingName), 40);
+                sell.CustomMinimumSize = new Vector2(90, 40);
+                sell.SetMeta("action", true);
+                RegisterHint(sell, $"Sell some or all of your {h.Name}.");
+                row.AddChild(sell);
+                box.AddChild(row);
+            }
+        }
+        var invest = Ui.Button("Invest…", ShowInvestDialog, 46);
+        invest.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+        invest.Disabled = m.CannotInvest != null;
+        invest.SetMeta("action", true);
+        RegisterHint(invest, m.CannotInvest ?? "Choose a fund or a company, and how much of your savings to put in.");
+        box.AddChild(invest);
+        return Ui.Card(box);
+    }
+
+    private void ShowInvestDialog()
+    {
+        var options = S.InvestmentOptions();
+        var box = Ui.VBox(12);
+        box.CustomMinimumSize = new Vector2(860, 0);
+        box.AddChild(Ui.Label("Invest", 28, UiTheme.Accent));
+        box.AddChild(Ui.Label($"You have {EconomySystemFormat(S.Savings)} in the bank.", 17, UiTheme.Muted));
+
+        var list = Ui.VBox(6);
+        var group = new ButtonGroup();
+        var description = Ui.Label("", 15, UiTheme.Muted, wrap: true);
+        description.CustomMinimumSize = new Vector2(0, 44);
+        Button? first = null;
+        foreach (var a in options)
+        {
+            string stats = $"Last year {(a.LastYearPercent is { } ly ? Pct(ly) : "new")}  ·  five years {(a.FiveYearPercent is { } fy ? Pct(fy) : "too new to say")}" +
+                           (a.DividendPercent > 0 ? $"  ·  dividend about {a.DividendPercent} %" : "");
+            var b = new Button
+            {
+                Text = $"{a.Name}   ({(a.Kind == "fund" ? "fund" : "shares")}, {a.Risk.ToLowerInvariant()} risk)\n{stats}",
+                ToggleMode = true, ButtonGroup = group, Alignment = HorizontalAlignment.Left,
+                CustomMinimumSize = new Vector2(0, 58), SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            };
+            b.SetMeta("asset", a.Id);
+            string text = a.Description;
+            b.FocusEntered += () => description.Text = text;
+            b.MouseEntered += () => description.Text = text;
+            b.Toggled += on => { if (on) description.Text = text; };
+            list.AddChild(b);
+            first ??= b;
+        }
+        if (first != null) first.ButtonPressed = true;
+        var scroll = Ui.Scroll(list);
+        scroll.CustomMinimumSize = new Vector2(0, Mathf.Min(420, options.Count * 64 + 8));
+        box.AddChild(scroll);
+        box.AddChild(description);
+
+        double max = Math.Max(1, Math.Floor(S.Savings));
+        var amountLabel = Ui.Label("", 18, UiTheme.Text);
+        var slider = new HSlider { MinValue = 0, MaxValue = max, Step = Math.Max(1, Math.Round(max / 200)), Value = Math.Round(max * 0.25),
+            CustomMinimumSize = new Vector2(0, 36), SizeFlagsHorizontal = SizeFlags.ExpandFill, FocusMode = FocusModeEnum.All };
+        void ShowAmount() => amountLabel.Text = $"Amount: {EconomySystemFormat(slider.Value)}";
+        slider.ValueChanged += _ => ShowAmount();
+        ShowAmount();
+        var amountRow = Ui.HBox(10);
+        amountLabel.CustomMinimumSize = new Vector2(240, 0);
+        amountRow.AddChild(amountLabel);
+        amountRow.AddChild(slider);
+        box.AddChild(amountRow);
+        var quick = Ui.HBox(8);
+        foreach (var (label, share) in new[] { ("10 %", 0.1), ("25 %", 0.25), ("50 %", 0.5), ("All", 1.0) })
+        {
+            double s = share;
+            quick.AddChild(Ui.Button(label, () => slider.Value = Math.Floor(max * s), 40));
+        }
+        box.AddChild(quick);
+
+        System.Action close = () => { };
+        var buttons = Ui.HBox(10);
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        buttons.AddChild(Ui.Button("Cancel", () => close(), 46));
+        var confirm = Ui.Button("Invest", () =>
+        {
+            if (group.GetPressedButton() is not { } chosen || slider.Value < 1) return;
+            string result = S.BuyInvestment(chosen.GetMeta("asset").AsString(), slider.Value);
+            close();
+            _main.AutoSave();
+            RefreshAll();
+            _main.ShowMessage("Invested", result);
+        }, 46);
+        UiTheme.MakePrimary(confirm);
+        confirm.CustomMinimumSize = new Vector2(160, 46);
+        buttons.AddChild(confirm);
+        box.AddChild(buttons);
+        close = _main.ShowDialog(box, first ?? (Control)confirm);
+    }
+
+    private void ShowSellDialog(string assetId, string name)
+    {
+        var box = Ui.VBox(14);
+        box.CustomMinimumSize = new Vector2(520, 0);
+        box.AddChild(Ui.Label($"Sell {name}", 26, UiTheme.Accent));
+        box.AddChild(Ui.Label("The money goes into your bank account.", 17, UiTheme.Muted, wrap: true));
+        System.Action close = () => { };
+        void Sell(double share)
+        {
+            string result = S.SellInvestment(assetId, share);
+            close();
+            _main.AutoSave();
+            RefreshAll();
+            _main.ShowMessage("Sold", result);
+        }
+        var buttons = Ui.HBox(10);
+        var half = Ui.Button("Sell half", () => Sell(0.5), 46);
+        buttons.AddChild(half);
+        buttons.AddChild(Ui.Button("Sell all", () => Sell(1), 46));
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        buttons.AddChild(Ui.Button("Cancel", () => close(), 46));
+        box.AddChild(buttons);
+        close = _main.ShowDialog(box, half);
+    }
+
+    private string EconomySystemFormat(double nominal) => OneMoreYear.Simulation.Systems.EconomySystem.Format(S.Ctx, nominal);
+
+    // --- Home ---------------------------------------------------------------------------------
+
+    private Control HomeCard(MoneyView m)
+    {
+        var box = Ui.VBox(8);
+        box.AddChild(Ui.Label("Your home", 20, UiTheme.Text));
+        box.AddChild(Ui.Label(m.HomeDescription + ".", 17, UiTheme.Text, wrap: true));
+        if (m.HousingPerMonth != null) box.AddChild(Ui.Label($"It costs about {m.HousingPerMonth} a month to live there.", 15, UiTheme.Muted, wrap: true));
+        if (m.Home != null) box.AddChild(Ui.Label(m.Home, 15, UiTheme.Muted, wrap: true));
+        if (m.Cottage != null) box.AddChild(Ui.Label($"Your summer cottage is worth about {m.Cottage}.", 15, UiTheme.Muted, wrap: true));
+
+        var buttons = new HFlowContainer();
+        buttons.AddThemeConstantOverride("h_separation", 8);
+        buttons.AddThemeConstantOverride("v_separation", 8);
+        var find = Ui.Button("Find a new home…", ShowHomeDialog, 46);
+        find.Disabled = !m.CanMove;
+        find.SetMeta("action", true);
+        RegisterHint(find, m.CanMove ? "See what homes in your city cost to rent or buy." : "You cannot move right now.");
+        buttons.AddChild(find);
+        if (m.HasMortgage)
+        {
+            var repay = Ui.Button("Pay extra on the loan", ShowRepayDialog, 46);
+            repay.SetMeta("action", true);
+            RegisterHint(repay, "A smaller loan means less interest every year.");
+            buttons.AddChild(repay);
+        }
+        if (m.Cottage != null)
+        {
+            var sell = Ui.Button("Sell the summer cottage", () => _main.ShowConfirm("Sell the cottage?", $"It is worth about {m.Cottage}.", () =>
+            {
+                string result = S.SellCottage();
+                _main.AutoSave();
+                RefreshAll();
+                _main.ShowMessage("Sold", result);
+            }), 46);
+            sell.SetMeta("action", true);
+            buttons.AddChild(sell);
+        }
+        box.AddChild(buttons);
+        return Ui.Card(box);
+    }
+
+    private void ShowHomeDialog()
+    {
+        var options = S.HomeOptions();
+        var box = Ui.VBox(10);
+        box.CustomMinimumSize = new Vector2(900, 0);
+        box.AddChild(Ui.Label("Find a new home", 28, UiTheme.Accent));
+        box.AddChild(Ui.Label("Prices are for your city. Buying needs a down payment and an income the bank will lend on; if you own a home now, it is sold first.",
+            15, UiTheme.Muted, wrap: true));
+        System.Action close = () => { };
+        Control? firstButton = null;
+        var list = Ui.VBox(10);
+        foreach (var o in options)
+        {
+            var row = Ui.VBox(4);
+            var top = Ui.HBox(10);
+            var name = Ui.Label(o.Name + (o.Current ? "  (where you live now)" : ""), 18, o.Current ? UiTheme.Accent : UiTheme.Text);
+            name.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            top.AddChild(name);
+            top.AddChild(Ui.Label(o.Sleeps == 1 ? "for one" : $"fits {o.Sleeps}", 14, UiTheme.Muted));
+            row.AddChild(top);
+            var buttons = Ui.HBox(8);
+            string typeId = o.TypeId, typeName = o.Name.ToLowerInvariant();
+            if (o.RentPerMonth != null)
+            {
+                var rent = Ui.Button($"Rent  ·  {o.RentPerMonth} a month", () => _main.ShowConfirm($"Rent {typeName}?",
+                    $"The rent is about {o.RentPerMonth} a month.", () => ChooseHome(typeId, false, close)), 42);
+                rent.Disabled = o.Current;
+                buttons.AddChild(rent);
+                firstButton ??= rent.Disabled ? null : rent;
+            }
+            if (o.Price != null)
+            {
+                var buy = Ui.Button($"Buy  ·  {o.Price}  (about {o.OwnPerMonth} a month)", () => _main.ShowConfirm($"Buy {typeName}?",
+                    $"It costs about {o.Price}. With the loan and running costs, about {o.OwnPerMonth} a month.", () => ChooseHome(typeId, true, close)), 42);
+                buy.Disabled = !o.CanBuy;
+                RegisterHint(buy, o.CannotBuyReason ?? $"Costs about {o.Price}.");
+                buttons.AddChild(buy);
+                firstButton ??= buy.Disabled ? null : buy;
+            }
+            row.AddChild(buttons);
+            if (!o.CanBuy && o.CannotBuyReason != null && o.Price != null) row.AddChild(Ui.Label(o.CannotBuyReason, 13, UiTheme.Faint, wrap: true));
+            list.AddChild(row);
+        }
+        var scroll = Ui.Scroll(list);
+        scroll.CustomMinimumSize = new Vector2(0, Mathf.Min(520, GetViewportRect().Size.Y - 260));
+        box.AddChild(scroll);
+        var cancel = Ui.Button("Stay where you are", () => close(), 46);
+        cancel.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+        box.AddChild(cancel);
+        close = _main.ShowDialog(box, firstButton ?? cancel);
+    }
+
+    private void ChooseHome(string typeId, bool buy, System.Action closeDialog)
+    {
+        string result = S.ChooseHome(typeId, buy);
+        closeDialog();
+        _main.AutoSave();
+        RefreshAll();
+        _main.ShowMessage(buy ? "A new home" : "Moving", result);
+    }
+
+    private void ShowRepayDialog()
+    {
+        var box = Ui.VBox(14);
+        box.CustomMinimumSize = new Vector2(520, 0);
+        box.AddChild(Ui.Label("Pay extra on the loan", 26, UiTheme.Accent));
+        box.AddChild(Ui.Label("Money from your savings goes straight to the bank.", 17, UiTheme.Muted, wrap: true));
+        System.Action close = () => { };
+        void Repay(double share)
+        {
+            string result = S.RepayMortgage(share);
+            close();
+            _main.AutoSave();
+            RefreshAll();
+            _main.ShowMessage("The loan", result);
+        }
+        var buttons = Ui.HBox(10);
+        var quarter = Ui.Button("A quarter of your savings", () => Repay(0.25), 46);
+        buttons.AddChild(quarter);
+        buttons.AddChild(Ui.Button("As much as you can", () => Repay(1), 46));
+        buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        buttons.AddChild(Ui.Button("Cancel", () => close(), 46));
+        box.AddChild(buttons);
+        close = _main.ShowDialog(box, quarter);
     }
 
     private static Control LedgerCard(string title, IReadOnlyList<LedgerView> lines, string total)
@@ -818,6 +1119,11 @@ public partial class GameScreen : Control
     // --- Smoke test (automated run through the real UI, see Main) ------------------------
 
     public void ShowTab(int tab) => _tabs.CurrentTab = tab;
+
+    // Screenshot tour only.
+    public void Refresh() => RefreshAll();
+    public void TourInvestDialog() => ShowInvestDialog();
+    public void TourHomeDialog() => ShowHomeDialog();
 
     /// <summary>Screenshot tour: the tree around the oldest played ancestor's father.</summary>
     public void FocusTreeOnGrandfather()

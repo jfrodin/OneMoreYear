@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.29.0 – 2026-10-02 · Money with depth
+
+- **Real investments.** The Money tab lists each holding: what you paid in, what it is worth now,
+  the change in percent, last year, and the dividend. Buy and sell straight from the tab, any
+  amount, without using up the year's time. From 15, with your parents' help.
+- **Ten funds and companies**, each with its own risk and its own luck: a Swedish stock fund, a
+  bond fund (from 1985), a global fund (1987), a technology fund (1995), and fictional companies
+  like Norrbruk (forest and steel, a steady dividend), Vasabanken, Svea Pharma, the property company
+  Kronhus, Telelink (telecom) and Nordvolt (batteries, from 2017). History hits the right ones: the
+  banks and property in 1991–92, technology in 2000–02, banks again in 2008. Companies can go
+  bankrupt. The same seed always has the same market.
+- **Homes you can see.** "Find a new home" shows six kinds of home in your city, from a room in a
+  shared flat to a detached house, with the rent, the price and roughly what owning costs a month.
+  Buying shows exactly what is missing (down payment or income); a partner's savings and income
+  count, and the home you own is sold first. Bigger homes cost more to live in.
+- **The summer cottage** is now an asset with a value that follows the housing market, and can be sold.
+- Paying extra on the mortgage is a button on the home card. The old money actions are gone.
+- Older saves: your funds and shares become holdings in the Swedish stock fund and Norrbruk.
+
 ## 0.28.1 – 2026-10-02 · Traditions and friends
 
 - **The Swedish year (10)**: Lucia, Easter witches, Walpurgis night, the first day of school, the white

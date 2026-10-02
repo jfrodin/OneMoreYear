@@ -83,7 +83,7 @@
     "choices": [
       { "text": "Go", "effects": [ { "type": "move_city", "kind": "vimmerby" }, { "type": "happiness", "amount": 4 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 12 } ],
         "result": "The first winter is long and dark and the well freezes. In spring there are cranes on the field and {p.name} cries at the sight of them." },
-      { "text": "Suggest a summer place instead", "requires": { "minMoney": 200000 }, "effects": [ { "type": "money", "amount": -150000 }, { "type": "flag", "flag": "summer_cottage" }, { "type": "happiness", "amount": 6 } ],
+      { "text": "Suggest a summer place instead", "requires": { "minMoney": 200000 }, "effects": [ { "type": "buy_cottage", "amount": 150000 }, { "type": "happiness", "amount": 6 } ],
         "result": "Weekends and summers. A compromise that turns out to be the best idea either of you ever had." },
       { "text": "Say no", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 10 } ], "result": "{p.He} keeps the advert. You find it years later in a drawer." }
     ]

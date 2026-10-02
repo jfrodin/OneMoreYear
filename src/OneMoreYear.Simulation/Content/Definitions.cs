@@ -36,6 +36,43 @@ public sealed class HistoricalEventDef
     public double SavingsFactor { get; set; } = 1;
 }
 
+/// <summary>
+/// Something to invest in. Each year it returns the bank rate plus <see cref="Beta"/> times the stock
+/// market's excess return, plus luck of its own (<see cref="Spread"/>), unless history decides
+/// (<see cref="Shocks"/>). Shares pay a dividend; funds keep theirs.
+/// </summary>
+public sealed class AssetDef
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    /// <summary>"fund" or "shares".</summary>
+    public string Kind { get; set; } = "fund";
+    public string Description { get; set; } = "";
+    public double Beta { get; set; } = 1;
+    public double Spread { get; set; }
+    /// <summary>Yearly dividend as a share of the value (shares only).</summary>
+    public double Dividend { get; set; }
+    /// <summary>Yearly chance of going bankrupt (companies).</summary>
+    public double Bankruptcy { get; set; }
+    public int MinYear { get; set; } = 1900;
+    /// <summary>Returns forced by history, by year: the IT crash, the bank crisis.</summary>
+    public Dictionary<int, double> Shocks { get; set; } = new();
+}
+
+/// <summary>A kind of home. Price is relative to the country's typical home in the city; rent to the usual housing cost.</summary>
+public sealed class HomeTypeDef
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    /// <summary>0 = not for sale (a room in a shared flat).</summary>
+    public double PriceFactor { get; set; }
+    /// <summary>0 = not for rent (most houses).</summary>
+    public double RentFactor { get; set; }
+    /// <summary>How many people it suits, for the hint ("fits a family").</summary>
+    public int Sleeps { get; set; } = 2;
+    public int MinYear { get; set; } = 1900;
+}
+
 public sealed class CityDef
 {
     public string Id { get; set; } = "";
@@ -109,6 +146,10 @@ public sealed class CountryDef
     public double WifeTakesNameChance { get; set; } = 0.7;
     public List<CityDef> Cities { get; set; } = new();
     public List<HistoricalEventDef> HistoricalEvents { get; set; } = new();
+    /// <summary>Funds and companies the player can invest in (fictional companies, real kinds of risk).</summary>
+    public List<AssetDef> Investments { get; set; } = new();
+    /// <summary>Kinds of home, from a room in a shared flat to a house; prices and rents relative to the city.</summary>
+    public List<HomeTypeDef> HomeTypes { get; set; } = new();
 }
 
 public sealed class OccupationLevelDef

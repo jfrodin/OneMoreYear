@@ -17,8 +17,100 @@ public static class HousingSystem
         return options.Count == 0 ? "" : ctx.Rng.PickWeighted(options, c => c.Weight)!.Id;
     }
 
-    /// <summary>Price of a home in the person's city, nominal kronor.</summary>
-    public static double HomePrice(SimContext ctx, Person p) => ctx.Nominal(ctx.Country.HomePrice) * City(ctx, p).PriceFactor;
+    /// <summary>Price of a home in the person's city, nominal kronor: their kind of home, or the one given.</summary>
+    public static double HomePrice(SimContext ctx, Person p, string? typeId = null)
+    {
+        var type = ctx.Country.HomeTypes.FirstOrDefault(t => t.Id == (typeId ?? p.HomeType));
+        double factor = type is { PriceFactor: > 0 } ? type.PriceFactor : 1;
+        return ctx.Nominal(ctx.Country.HomePrice) * City(ctx, p).PriceFactor * factor;
+    }
+
+    public static HomeTypeDef? HomeTypeOf(SimContext ctx, Person p) =>
+        p.HomeType == null ? null : ctx.Country.HomeTypes.FirstOrDefault(t => t.Id == p.HomeType);
+
+    /// <summary>The people a home is for: the person and a partner they live with.</summary>
+    private static List<Person> Household(SimContext ctx, Person p)
+    {
+        var list = new List<Person> { p };
+        if (ctx.World.TryGet(p.PartnerId) is { } partner && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) list.Add(partner);
+        return list;
+    }
+
+    /// <summary>Rent for a kind of home in the person's city, nominal per month (the housing part of living costs).</summary>
+    public static double MonthlyRent(SimContext ctx, Person p, HomeTypeDef type) =>
+        ctx.Nominal(ctx.Country.LivingCostAdult * 0.4 * City(ctx, p).PriceFactor * type.RentFactor) / 12;
+
+    /// <summary>Roughly what owning costs per month: interest and paying off the loan, plus running costs.</summary>
+    public static double MonthlyOwnerCost(SimContext ctx, Person p, HomeTypeDef type)
+    {
+        double price = HomePrice(ctx, p, type.Id);
+        var m = Market.For(ctx, ctx.Year);
+        double loan = price * (1 - ctx.Country.DownPayment);
+        double running = ctx.Nominal(ctx.Country.LivingCostAdult * 0.4 * City(ctx, p).PriceFactor * 0.45 * type.PriceFactor);
+        return (loan * (m.MortgageRate + ctx.Country.Amortization) + running) / 12;
+    }
+
+    /// <summary>Why the person cannot buy this kind of home, or null if they can (their household's savings and incomes count).</summary>
+    public static string? CannotBuy(SimContext ctx, Person p, HomeTypeDef type)
+    {
+        if (type.PriceFactor <= 0) return "Not for sale.";
+        if (p.Age(ctx.Year) < ctx.Country.AdultAge) return "You are too young to buy a home.";
+        var household = Household(ctx, p);
+        double price = HomePrice(ctx, p, type.Id);
+        double deposit = price * ctx.Country.DownPayment;
+        // What the current home would sell for counts towards the down payment.
+        double cash = household.Sum(x => Math.Max(0, x.Money) + (x.HomeValue > 0 ? x.HomeValue - x.Mortgage : 0));
+        double income = household.Sum(x => ctx.Nominal(EconomySystem.GrossIncome(ctx, x)));
+        var missing = new List<string>();
+        if (cash < deposit) missing.Add($"{EconomySystem.Format(ctx, deposit)} for the down payment (you have {EconomySystem.Format(ctx, cash)})");
+        if (price - deposit > Math.Max(income, 1) * 5.5)
+            missing.Add($"an income of {EconomySystem.Format(ctx, (price - deposit) / 5.5)} a year for the bank to lend you the rest");
+        return missing.Count == 0 ? null : "You need " + string.Join(", and ", missing) + ".";
+    }
+
+    /// <summary>Leaves the current home: sells it if the household owns it, or moves out of the parents' home.</summary>
+    private static void LeaveCurrentHome(SimContext ctx, Person p)
+    {
+        foreach (var x in Household(ctx, p))
+        {
+            if (x.HomeValue > 0) EconomySystem.SellHome(ctx, x);
+            x.OwnsHome = false;
+            x.LivesWithParents = false;
+            x.SharesFlat = false;
+        }
+    }
+
+    /// <summary>The player rents a kind of home in their city.</summary>
+    public static string Rent(SimContext ctx, Person p, HomeTypeDef type)
+    {
+        if (type.RentFactor <= 0) return "That kind of home is not for rent.";
+        LeaveCurrentHome(ctx, p);
+        foreach (var x in Household(ctx, p))
+        {
+            x.HomeType = type.Id;
+            x.SharesFlat = type.Id == "room";
+        }
+        ctx.World.Log($"{p.FirstName} moved into {type.Name.ToLowerInvariant()} in {City(ctx, p).Name}.", ctx.Importance(false, p), "home", p.Id);
+        return $"You move into {type.Name.ToLowerInvariant()}. The rent is about {EconomySystem.Format(ctx, MonthlyRent(ctx, p, type))} a month.";
+    }
+
+    /// <summary>The player buys a kind of home in their city (selling the current one first).</summary>
+    public static string Buy(SimContext ctx, Person p, HomeTypeDef type)
+    {
+        if (CannotBuy(ctx, p, type) is { } reason) return reason;
+        // A partner's savings make up what is missing for the down payment.
+        LeaveCurrentHome(ctx, p);
+        double deposit = HomePrice(ctx, p, type.Id) * ctx.Country.DownPayment;
+        foreach (var x in Household(ctx, p).Where(x => x != p && x.Money > 0))
+        {
+            double take = Math.Min(x.Money, Math.Max(0, deposit - p.Money));
+            p.Money += take;
+            x.Money -= take;
+        }
+        foreach (var x in Household(ctx, p)) x.HomeType = type.Id;
+        EconomySystem.BuyHome(ctx, p);
+        return $"The keys are yours: {type.Name.ToLowerInvariant()} in {City(ctx, p).Name}.";
+    }
 
     /// <summary>"Rents a flat in Malmö", "Lives with parents in Umeå" ...</summary>
     public static string Describe(SimContext ctx, Person p)
@@ -27,9 +119,27 @@ public static class HousingSystem
         if (p.Flags.Contains(CareHomeFlag)) return $"Lives in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"Homeless in {city}";
         if (p.LivesWithParents) return $"Lives with parents in {city}";
-        if (p.OwnsHome) return $"Owns a home in {city}";
-        if (p.PartnerId != null && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) return $"Rents a home with their partner in {city}";
-        return p.SharesFlat ? $"Shares a flat in {city}" : $"Rents a flat in {city}";
+        // "Owns a terraced house in Umeå", "Rents a one-room flat in Malmö".
+        string? kind = HomeTypeOf(ctx, p) is { } t && t.Id != "room" ? t.Name.ToLowerInvariant() : null;
+        if (p.OwnsHome) return $"Owns {kind ?? "a home"} in {city}";
+        if (p.SharesFlat) return $"Shares a flat in {city}";
+        if (p.PartnerId != null && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) return $"Rents {kind ?? "a home"} with their partner in {city}";
+        return $"Rents {kind ?? "a flat"} in {city}";
+    }
+
+    /// <summary>The same as <see cref="Describe"/>, told to the player: "You rent a three-room flat with Anna in Umeå."</summary>
+    public static string DescribeForPlayer(SimContext ctx, Person p)
+    {
+        string city = City(ctx, p).Name;
+        if (p.Flags.Contains(CareHomeFlag)) return $"You live in a care home in {city}";
+        if (p.Flags.Contains(Hardship.HomelessFlag)) return $"You have no home, in {city}";
+        if (p.LivesWithParents) return $"You live with your parents in {city}";
+        string? kind = HomeTypeOf(ctx, p) is { } t && t.Id != "room" ? t.Name.ToLowerInvariant() : null;
+        string with = ctx.World.TryGet(p.PartnerId) is { } partner && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married
+            ? $" with {partner.FirstName}" : "";
+        if (p.OwnsHome) return p.HomeValue > 0 || with == "" ? $"You own {kind ?? "your home"}{with} in {city}" : $"You live in {Kinship.Genitive(ctx.World.Get(p.PartnerId!.Value).FirstName)} home in {city}";
+        if (p.SharesFlat) return $"You share a flat in {city}";
+        return $"You rent {kind ?? "a flat"}{with} in {city}";
     }
 
     /// <summary>Young adults move out of their parents' home – the player decides through an event.</summary>

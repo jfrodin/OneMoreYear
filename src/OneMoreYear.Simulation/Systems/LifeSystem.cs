@@ -140,10 +140,12 @@ public static class LifeSystem
         {
             EconomySystem.GiveHome(widow, dead.HomeValue, dead.Mortgage);
             widow.MortgageStart = dead.MortgageStart;
+            widow.HomeType = dead.HomeType;
             dead.HomeValue = dead.Mortgage = dead.MortgageStart = 0;
         }
         double estate = EconomySystem.NetWorth(ctx, dead);
-        dead.Money = dead.Funds = dead.Stocks = 0;
+        dead.Money = dead.Funds = dead.Stocks = dead.CottageValue = 0;
+        dead.Holdings.Clear();
         dead.HomeValue = dead.Mortgage = dead.MortgageStart = 0;
         dead.OwnsHome = false;
         if (estate <= 0)

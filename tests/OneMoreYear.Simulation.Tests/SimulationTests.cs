@@ -405,19 +405,6 @@ public class CrimeTests
     }
 
     [Fact]
-    public void Buying_a_home_out_of_reach_says_what_it_takes()
-    {
-        var s = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1970 });
-        var p = s.Player;
-        p.BirthYear = s.Year - 25;
-        p.LivesWithParents = false;
-        p.Money = 0;
-        var buy = Assert.Single(s.Actions(null), a => a.Id == "self_buy_home");
-        Assert.False(buy.Enabled);
-        Assert.Contains("down payment", buy.Locked);
-    }
-
-    [Fact]
     public void A_player_who_wants_love_usually_finds_it()
     {
         string[] love = { "A proposal", "Your place or mine?", "Baby talk", "A spark", "Saturday dance", "A dinner party", "Stuck", "A match", "Someone likes you", "After work" };
@@ -552,6 +539,7 @@ public class InvestmentTests
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 4, StartYear = 1990 });
         var p = s.Player;
+        p.BirthYear = s.Year - 30;
         p.Money = 2_000_000;
         p.Income = 600_000;
         p.LivesWithParents = false;
@@ -562,9 +550,9 @@ public class InvestmentTests
         Assert.Equal(before, EconomySystem.NetWorth(s.Ctx, p), 3);
 
         double invested = EconomySystem.Invest(s.Ctx, p, "funds", 0.5);
-        Assert.Equal(invested, p.Funds, 3);
+        Assert.Equal(invested, InvestmentSystem.Value(p), 3);
         EconomySystem.SellInvestments(s.Ctx, p);
-        Assert.Equal(0, p.Funds);
+        Assert.Empty(p.Holdings);
         Assert.Equal(before, EconomySystem.NetWorth(s.Ctx, p), 3);
     }
 
@@ -655,5 +643,101 @@ public class InsightTests
         // A trait choice can be chosen only with the trait.
         p.Traits.Remove("charming");
         Assert.Throws<InvalidOperationException>(() => s.Choose(pending.Uid, tagged.Index));
+    }
+}
+
+public class MarketAndHomeTests
+{
+    private static GameSession Adult(int year, double money)
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = year });
+        var p = s.Player;
+        p.BirthYear = s.Year - 30;
+        p.LivesWithParents = false;
+        p.Money = money;
+        return s;
+    }
+
+    [Fact]
+    public void Holdings_follow_their_asset_and_pay_dividends()
+    {
+        var s = Adult(1985, 200_000);
+        var p = s.Player;
+        Assert.Contains(s.InvestmentOptions(), a => a.Id == "norrbruk");
+        s.BuyInvestment("norrbruk", 100_000);
+        Assert.Equal(100_000, p.Money, 3);
+        var h = Assert.Single(p.Holdings);
+        double before = h.Value;
+        double money = p.Money;
+        InvestmentSystem.Update(s.Ctx, p);
+        double expected = InvestmentSystem.Return(s.Ctx, InvestmentSystem.Asset(s.Ctx, "norrbruk")!, s.Year);
+        if (expected > -1)
+        {
+            Assert.Equal(before * (1 + expected), h.Value, 3);
+            Assert.True(p.Money > money, "Norrbruk pays a dividend");
+        }
+        // The same world always has the same market.
+        Assert.Equal(expected, InvestmentSystem.Return(Adult(1985, 0).Ctx, InvestmentSystem.Asset(s.Ctx, "norrbruk")!, s.Year), 9);
+    }
+
+    [Fact]
+    public void History_hits_the_right_assets()
+    {
+        var s = Adult(1995, 0);
+        var tech = InvestmentSystem.Asset(s.Ctx, "tech_fund")!;
+        var bank = InvestmentSystem.Asset(s.Ctx, "vasabanken")!;
+        Assert.True(InvestmentSystem.Return(s.Ctx, tech, 2001) < -0.2);
+        Assert.True(InvestmentSystem.Return(s.Ctx, bank, 1992) < -0.4 || InvestmentSystem.BankruptIn(s.Ctx, bank, 1992));
+        Assert.Contains(s.InvestmentOptions(), a => a.Id == "tech_fund");
+        Assert.DoesNotContain(Adult(1960, 0).InvestmentOptions(), a => a.Id == "tech_fund");
+    }
+
+    [Fact]
+    public void Young_players_cannot_invest()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 3, StartYear = 1990 });
+        s.Player.Money = 5000;
+        Assert.NotNull(s.Money().CannotInvest);
+        Assert.Contains("15", s.BuyInvestment("sweden_fund", 1000));
+        Assert.Empty(s.Player.Holdings);
+    }
+
+    [Fact]
+    public void Homes_can_be_rented_and_bought_by_type()
+    {
+        var s = Adult(1990, 0);
+        var p = s.Player;
+        var options = s.HomeOptions();
+        var house = Assert.Single(options, o => o.TypeId == "house");
+        Assert.False(house.CanBuy);
+        Assert.Contains("down payment", house.CannotBuyReason);
+        Assert.Null(house.RentPerMonth);
+
+        s.ChooseHome("three_room", buy: false);
+        Assert.Equal("three_room", p.HomeType);
+        Assert.False(p.OwnsHome);
+        Assert.StartsWith("Rents a three-room flat", HousingSystem.Describe(s.Ctx, p));
+
+        p.Money = 5_000_000;
+        p.Income = 900_000;
+        Assert.True(s.HomeOptions().Single(o => o.TypeId == "terraced").CanBuy);
+        s.ChooseHome("terraced", buy: true);
+        Assert.True(p.OwnsHome);
+        Assert.Equal(HousingSystem.HomePrice(s.Ctx, p, "terraced"), p.HomeValue, 3);
+        Assert.True(HousingSystem.HomePrice(s.Ctx, p, "house") > HousingSystem.HomePrice(s.Ctx, p, "one_room"));
+    }
+
+    [Fact]
+    public void A_summer_cottage_is_an_asset()
+    {
+        var s = Adult(1990, 500_000);
+        var p = s.Player;
+        double before = EconomySystem.NetWorth(s.Ctx, p);
+        EffectApplier.Apply(s.Ctx, new Content.EffectDef { Type = "buy_cottage", Amount = 250000 }, new PendingEvent { EventId = "x" });
+        Assert.True(p.CottageValue > 0);
+        Assert.Equal(before, EconomySystem.NetWorth(s.Ctx, p), 3);
+        s.SellCottage();
+        Assert.Equal(0, p.CottageValue);
+        Assert.Equal(before, EconomySystem.NetWorth(s.Ctx, p), 3);
     }
 }
