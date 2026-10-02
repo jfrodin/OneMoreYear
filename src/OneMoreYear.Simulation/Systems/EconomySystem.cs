@@ -17,6 +17,11 @@ public static class EconomySystem
     }
 
     /// <summary>Gross yearly income in 2020-kronor, including a part-time job while studying.</summary>
+    /// <summary>Set on a parent when a child arrives where leave is unpaid; the next pay is smaller.</summary>
+    public const string UnpaidLeaveFlag = "unpaid_leave";
+    /// <summary>The player went back to work early: only half the unpaid weeks.</summary>
+    public const string ShortLeaveFlag = "short_leave";
+
     public static double GrossIncome(SimContext ctx, Person p) =>
         p.Income + (p.Activity == Activity.Studying && p.Flags.Contains(CareerSystem.PartTimeFlag) ? ctx.Country.PartTimeIncome : 0);
 
@@ -60,6 +65,12 @@ public static class EconomySystem
         if (age < 18 && p.Activity != Activity.Working) return;
 
         double gross = GrossIncome(ctx, p);
+        if (p.Flags.Remove(UnpaidLeaveFlag))
+        {
+            double lost = p.Activity == Activity.Working ? p.Income * c.UnpaidLeave * (p.Flags.Remove(ShortLeaveFlag) ? 0.5 : 1) : 0;
+            gross -= lost;
+            if (lost > 0) Record(ctx, p, "Unpaid parental leave", -ctx.Nominal(lost));
+        }
         // Tuition, where university is not free: it becomes student debt.
         if (ctx.Country.UniversityFee > 0 && p.Activity == Activity.Studying && p.StudyingFor == EducationLevel.University)
         {
@@ -96,6 +107,13 @@ public static class EconomySystem
                 : homeType?.RentFactor > 0 ? homeType.RentFactor : 1.0;
             double living = c.LivingCostAdult * (0.6 + 0.4 * HousingSystem.City(ctx, p).PriceFactor * homeFactor) * (sharesHome ? 0.8 : 1);
             double children = kids * c.LivingCostChild * (sharesHome ? 0.5 : 1);
+            // Daycare, where it is not part of what a child costs anyway: only when nobody is home.
+            var partnerAtHome = sharesHome ? ctx.World.TryGet(p.PartnerId) : null;
+            int little = Kinship.Children(ctx.World, p).Count(k => k.IsAlive && k.Age(ctx.Year) is >= 1 and < 6);
+            double daycare = c.ChildcareCost > 0 && little > 0 && p.Activity == Activity.Working && (partnerAtHome == null || partnerAtHome.Activity == Activity.Working)
+                ? little * c.ChildcareCost * (sharesHome ? 0.5 : 1) : 0;
+            if (daycare > 0) Record(ctx, p, "Daycare", -ctx.Nominal(daycare));
+            children += daycare;
             Record(ctx, p, $"Living costs in {HousingSystem.City(ctx, p).Name}" + (sharesHome ? " (your share)" : ""), -ctx.Nominal(living));
             if (children > 0) Record(ctx, p, kids == 1 ? "Your child" : $"Your {kids} children", -ctx.Nominal(children));
             double mortgage = ctx.Real(MortgageCost(ctx, p, market));

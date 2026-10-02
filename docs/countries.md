@@ -21,6 +21,7 @@ already copes with all of that missing.
 | `ageOfConsent`, `adultAge`, `cohabitWithConsentAge`, `marriageAge`, `cousinMarriageAllowed` | The law | 15, 18, 16, 18, true |
 | `schoolStartAge`, `secondaryAge`, `gradesFromAge` | The school system | 7, 16, 14 |
 | `adultEducation` | What adult education is called, for hints; leave out if there is none | Komvux |
+| `incomeSpread`, `unpaidLeave`, `childcareCost` | Salary ladder stretch around the median, pay lost to unpaid parental leave, daycare per child under six | 1, 0, 0 (USA 1.3, 0.23, 9 000) |
 | `secondarySchool`, `flat` | Everyday words, also as `{secondary}`, `{flat}` and `{a.flat}` in event text | upper secondary school, flat |
 | `pensionAge`, `pensionRate`, `minimumPension` | Retirement | 65, 0.65, 110 000 |
 | `mortalityScale` | Life expectancy compared to Sweden | 1.0 |
@@ -75,5 +76,8 @@ investments with US crashes, high school tracks, community college, and events f
 Kennedy, the March on Washington, Woodstock, the bicentennial, Challenger, September 11, the 2008
 foreclosures, prom, the driving test, Thanksgiving, the Fourth, Halloween and more.
 
-Not yet: no paid parental leave, tipping, credit scores, insurance through the employer as its own
-mechanic, a wider spread of incomes than the shared salary ladder gives.
+In 0.35.0: `incomeSpread` (1.3) stretches the salary ladder, `unpaidLeave` (0.23 of a year's pay
+when a child arrives) and `childcareCost` (daycare under six when nobody is home), family insurance
+through a spouse or parent, the `heritage` condition, and 32 more events of everyday American life.
+
+Not yet: emigration between countries.

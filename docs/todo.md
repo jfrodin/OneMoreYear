@@ -47,7 +47,7 @@ When the game is ready for outside testers. Ask the producer before starting.
 - [ ] **More countries**, in this order:
   1. [x] Prepare: done in 0.33.0, see docs/countries.md. (Was: move everything Swedish into country data: welfare, schools,
      pensions, currency, laws, holidays) – so a new country is only data and events.
-  2. [x] **USA**, playable in 0.34.0 (left: parental leave, tipping, credit scores, employer insurance; see docs/countries.md). Why: the biggest market, English, and the biggest contrast: healthcare that can ruin a
+  2. [x] **USA**, playable in 0.34.0 , deepened in 0.35.0 (pay spread, unpaid leave, daycare, 32 more events). Why: the biggest market, English, and the biggest contrast: healthcare that can ruin a
      family, student debt, suburbs, the Vietnam draft, no parental leave.
   3. **United Kingdom** – class, council estates, the NHS, Thatcher, the miners' strike.
   4. **Germany** – a family split by the Wall in 1961, East and West, reunited in 1990.

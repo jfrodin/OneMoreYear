@@ -846,4 +846,24 @@ public class CountryTests
         Assert.Equal("a flat", TextFormatter.Format(sweden.Ctx, "{a.flat}", null));
         Assert.Equal("after_primary", EventSystem.QueueSituation(sweden.Ctx, "after_primary")?.EventId);
     }
+
+    [Fact]
+    public void American_parents_pay_for_leave_and_daycare()
+    {
+        // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.
+        bool Has(string country, string label)
+        {
+            for (ulong seed = 1; seed <= 20; seed++)
+            {
+                var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1980, CountryId = country });
+                var bot = new AutoPlayer(seed);
+                for (int i = 0; i < 60 && bot.PlayYear(s); i++)
+                    if (s.World.Ledger.Any(l => l.Label == label)) return true;
+            }
+            return false;
+        }
+        Assert.True(Has("usa", "Daycare"));
+        Assert.True(Has("usa", "Unpaid parental leave"));
+        Assert.False(Has("sweden", "Daycare"));
+    }
 }

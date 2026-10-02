@@ -242,8 +242,15 @@ public static class CareerSystem
         return w;
     }
 
-    /// <summary>A job level's yearly salary in this country's 2020 money (the content is in Swedish kronor).</summary>
-    public static double Salary(SimContext ctx, OccupationLevelDef level) => ctx.Ref(level.Salary);
+    /// <summary>The median salary in the content (Swedish kronor of 2020); the country's income spread pivots around it.</summary>
+    public const double MedianContentSalary = 480_000;
+
+    /// <summary>
+    /// A job level's yearly salary in this country's 2020 money. The content is in Swedish kronor; incomeSpread
+    /// above 1 stretches the ladder (the USA: low pay lower, top pay much higher).
+    /// </summary>
+    public static double Salary(SimContext ctx, OccupationLevelDef level) =>
+        ctx.Ref(MedianContentSalary * Math.Pow(level.Salary / MedianContentSalary, ctx.Country.IncomeSpread));
 
     /// <summary>Finds a job for the person. Returns false if nothing fits their education.</summary>
     public static bool Hire(SimContext ctx, Person p, string? occupationId = null, int? level = null, string? employer = null)

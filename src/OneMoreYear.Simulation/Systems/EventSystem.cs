@@ -198,6 +198,7 @@ public static class EventSystem
         if (c.HasMortgage is { } hm && (p.Mortgage >= 1) != hm) return false;
         if (c.HoldsHome is { } hh && (p.HomeValue > 0) != hh) return false;
         if (c.LivesWithParents is { } lwp && p.LivesWithParents != lwp) return false;
+        if (c.Heritage is { Count: > 0 } heritage && !heritage.Contains(p.Heritage)) return false;
         if (c.TraitsAny is { Count: > 0 } any && !any.Any(p.HasTrait)) return false;
         if (c.TraitsNone is { Count: > 0 } none && none.Any(p.HasTrait)) return false;
         if (c.Flags is { } flags && !flags.All(p.Flags.Contains)) return false;

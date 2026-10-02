@@ -184,10 +184,15 @@ public static class FamilySystem
             var other = w.TryGet(e.ParentBId);
             var child = HaveChild(ctx, p, other);
             child.IsAdopted = e.Adoption;
+            // Where parental leave is unpaid, one working parent (usually the mother) loses weeks of pay.
+            if (ctx.Country.UnpaidLeave > 0 && new[] { p, other }.OfType<Person>().Where(x => x.Activity == Activity.Working).OrderBy(x => x.Sex == Sex.Female ? 0 : 1).FirstOrDefault() is { } parent)
+                parent.Flags.Add(EconomySystem.UnpaidLeaveFlag);
             if (p.Id == w.PlayerId || other?.Id == w.PlayerId)
             {
                 var pending = EventSystem.QueueSituation(ctx, "name_baby", new() { ["target"] = child.Id });
                 if (pending != null) pending.Options = BabyNames(ctx, child);
+                if (ctx.Country.UnpaidLeave > 0 && (w.Player.Activity == Activity.Working || w.TryGet(w.Player.PartnerId)?.Activity == Activity.Working))
+                    EventSystem.QueueSituation(ctx, "back_to_work", new() { ["target"] = child.Id });
             }
         }
     }

@@ -73,7 +73,7 @@
   },
   {
     "id": "friend_borrowed_money", "title": "Still waiting",
-    "text": "{t.name} borrowed money from you a year ago. {t.He} has not mentioned it since, and has just been on holiday to [[1990: the Canary Islands. || Thailand.]]",
+    "text": "{t.name} borrowed money from you a year ago. {t.He} has not mentioned it since, and has just come home from [[1990: a beach holiday abroad. || two weeks in Thailand.]]",
     "conditions": { "minAge": 18 },
     "target": { "role": "friend", "conditions": { "minAge": 18 } }, "cooldown": 15, "weight": 0.6,
     "choices": [

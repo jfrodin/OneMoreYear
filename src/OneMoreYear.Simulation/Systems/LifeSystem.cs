@@ -36,13 +36,17 @@ public static class LifeSystem
             if (p.InFamily || p.Id == ctx.World.PlayerId)
                 ctx.World.Log($"{p.FirstName} was struck by {what}.", ctx.Importance(false, p), "health", p.Id);
             p.Happiness -= 10;
-            // Where healthcare is not free, illness costs money: less with insurance through work, or after 65.
+            // Where healthcare is not free, illness costs money: less with insurance through your own or your spouse's job, or after 65.
             if (ctx.Country.MedicalBill > 0)
             {
-                bool covered = p.Activity == Activity.Working || p.Age(ctx.Year) >= 65;
+                bool covered = p.Activity == Activity.Working || p.Age(ctx.Year) >= 65
+                               || (p.PartnerStatus == PartnerStatus.Married && ctx.World.TryGet(p.PartnerId)?.Activity == Activity.Working)
+                               || (p.Age(ctx.Year) < 18 && Kinship.Parents(ctx.World, p).Any(x => x.IsAlive && x.Activity == Activity.Working));
                 double bill = ctx.Nominal(ctx.Country.MedicalBill * (covered ? 0.15 : 1));
-                p.Money -= bill;
-                EconomySystem.Record(ctx, p, "Hospital bills", -bill);
+                // A child's bills go to a parent.
+                var payer = p.Age(ctx.Year) < 18 ? Kinship.Parents(ctx.World, p).FirstOrDefault(x => x.IsAlive) ?? p : p;
+                payer.Money -= bill;
+                EconomySystem.Record(ctx, payer, payer == p ? "Hospital bills" : $"Hospital bills for {p.FirstName}", -bill);
                 if (!covered && (p.InFamily || p.Id == ctx.World.PlayerId))
                     ctx.World.Log($"{p.FirstName} had no insurance. The hospital bills came to {EconomySystem.Format(ctx, bill)}.", ctx.Importance(false, p), "economy", p.Id);
             }

@@ -35,7 +35,7 @@
     ]
   },
   {
-    "id": "trad_first_day_school", "trigger": "milestone", "title": "The first day",
+    "id": "trad_first_day_school", "countries": [ "sweden" ], "trigger": "milestone", "title": "The first day",
     "text": "Your first day at school. A new rucksack, shoes that pinch, and a teacher who knows your name already.",
     "conditions": { "minAge": 7, "maxAge": 7 }, "weight": 6, "cooldown": 0,
     "choices": [

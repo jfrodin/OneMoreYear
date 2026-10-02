@@ -2,6 +2,30 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.35.0 – 2026-10-02 · America, deeper
+
+- **American pay is spread wider**: a country can stretch the salary ladder. In the USA the lowest
+  jobs pay less and the top jobs far more (a chief executive can earn half a million), while the
+  median stays near $45,000. Living costs and debt interest in the USA are retuned to match; about one
+  adult in ten ends up in debt.
+- **Babies cost more in America**: parental leave is unpaid (a working parent loses twelve weeks of
+  pay, or six if you go back early), and daycare costs money for children under six when nobody is
+  home. A new situation asks how long you stay home, or whether you quit.
+- **Insurance through the family**: a spouse's job or a parent's job covers you; a child's hospital
+  bills go to the parent.
+- **33 more American events** (32 in daily life and history, plus the leave situation): duck and cover, Elvis and the Beatles on Ed Sullivan, the Cuban missile
+  crisis, the lunch counter sit ins, Dr. King, redlining, busing, Levittown, church potlucks, the
+  recruiter, credit cards and credit scores, the mall, tipping, plant closings, hurricanes, summer
+  camp, spring break, rush week, jury duty, the 1979 gas lines, MTV, Los Angeles 1992, election night
+  2008, the opioid prescription, the Surgeon General, Medicare, retiring to Florida, the Social
+  Security check and the first day of kindergarten.
+- Events can ask for a **heritage** (some of the civil rights events are told from a Black
+  family's side).
+- Fixed: people who began the game as pensioners in the USA got a pension of $120,000.
+- A few Swedish details left the shared events (the Canary Islands, the folk high school, the Tax
+  Agency); the first day of school at seven is now Swedish only.
+- The content check catches job tags that no occupation has; `--wealth` shows pay spread and debt.
+
 ## 0.34.0 – 2026-10-02 · The United States
 
 A second country. Choose it on the title screen.

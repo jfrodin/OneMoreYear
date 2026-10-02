@@ -274,6 +274,23 @@
     ]
   },
   {
+    "id": "back_to_work", "countries": [ "usa" ], "trigger": "situation",
+    "title": "Twelve weeks",
+    "text": "{t.name} is three weeks old. The law gives a parent twelve weeks off to keep the job. It says nothing about paying for them.",
+    "choices": [
+      { "text": "Go back after six weeks", "requires": { "flags": [ "unpaid_leave" ] }, "effects": [ { "type": "flag", "flag": "short_leave" }, { "type": "happiness", "amount": -4 } ],
+        "result": "You cry in the car on the first morning and look at photos of {t.name} at every break. The paycheck helps. Nothing else does." },
+      { "text": "Take all twelve weeks", "requires": { "flags": [ "unpaid_leave" ] }, "effects": [ { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "baby_weeks", "text": "The twelve weeks with {t.name}", "impact": 12 } ],
+        "result": "Three months of nothing but the baby. The savings account takes the hit. You would do it again." },
+      { "text": "Quit and stay home", "requires": { "flags": [ "unpaid_leave" ] }, "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 3 } ],
+        "result": "Daycare would cost almost what you earn anyway. You hand in your notice and tell yourself it is for a few years." },
+      { "text": "Take a week and go back", "requires": { "notFlags": [ "unpaid_leave" ] }, "effects": [ { "type": "happiness", "amount": 1 } ],
+        "result": "One week of no sleep, then back to the office with a photo on your desk. You call home at lunch every day." },
+      { "text": "Use your vacation days", "requires": { "notFlags": [ "unpaid_leave" ] }, "effects": [ { "type": "happiness", "amount": 3 }, { "type": "performance", "amount": -3 } ],
+        "result": "Three weeks at home, all the vacation you had. Your boss is not thrilled. The baby is." }
+    ]
+  },
+  {
     "id": "us_graduation", "countries": [ "usa" ], "trigger": "milestone", "title": "Cap and gown",
     "text": "High school graduation on the football field. Folding chairs, a valedictorian who talks too long, and your name read out wrong.",
     "conditions": { "minAge": 17, "maxAge": 20, "minEducation": "secondary", "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,

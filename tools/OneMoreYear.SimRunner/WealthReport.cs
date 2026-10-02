@@ -11,8 +11,12 @@ static class WealthReport
         if (adults.Count == 0) return;
         double Real(double v) => ctx.Real(v) / 1e6;
         var worth = adults.Select(p => Real(EconomySystem.NetWorth(ctx, p))).OrderBy(v => v).ToList();
-        Console.WriteLine($"Wealth {s.Year} (million 2020-kr, {adults.Count} adults): median {worth[worth.Count / 2]:0.0}, " +
+        Console.WriteLine($"Wealth {s.Year} (million, 2020 money, {adults.Count} adults): median {worth[worth.Count / 2]:0.0}, " +
                           $"90th {worth[(int)(worth.Count * 0.9)]:0.0}, max {worth[^1]:0.0}");
+        var incomes = adults.Where(p => p.Activity == OneMoreYear.Simulation.Model.Activity.Working).Select(p => p.Income / 1e3).OrderBy(v => v).ToList();
+        if (incomes.Count > 0)
+            Console.WriteLine($"  Working incomes (thousand, 2020 money): 10th {incomes[(int)(incomes.Count * 0.1)]:0}, median {incomes[incomes.Count / 2]:0}, " +
+                              $"90th {incomes[(int)(incomes.Count * 0.9)]:0}, max {incomes[^1]:0}  · in debt: {adults.Count(p => EconomySystem.NetWorth(ctx, p) < 0)} of {adults.Count}");
         foreach (var p in adults.OrderByDescending(p => EconomySystem.NetWorth(ctx, p)).Take(5))
             Console.WriteLine($"  {p.FullName,-24} {p.Age(s.Year),3}  cash {Real(p.Money),7:0.0}  funds {Real(p.Funds),7:0.0}  shares {Real(p.Stocks),7:0.0}  " +
                               $"home {Real(p.HomeValue),6:0.0}  loan {Real(p.Mortgage),6:0.0}  income {p.Income / 1e3:0}k  {CareerSystem.ActivityText(ctx, p)}");

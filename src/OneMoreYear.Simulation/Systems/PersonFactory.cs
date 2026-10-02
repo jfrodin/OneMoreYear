@@ -195,7 +195,7 @@ public static class PersonFactory
         else if (age >= ctx.Country.PensionAge)
         {
             p.Activity = Activity.Retired;
-            p.Income = Math.Max(ctx.Country.MinimumPension, 300000 * ctx.Country.PensionRate);
+            p.Income = Math.Max(ctx.Country.MinimumPension, ctx.Ref(300000) * ctx.Country.PensionRate);
         }
         else if (rng.Chance(0.9) && CareerSystem.Hire(ctx, p))
         {

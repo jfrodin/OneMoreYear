@@ -1,0 +1,333 @@
+// American everyday life across the decades: suburbs, church, the military, money on credit, the mall,
+// race and the long road of civil rights, layoffs in the Rust Belt, Florida, Medicare. Only in the USA. No dashes.
+[
+  {
+    "id": "us_duck_and_cover", "countries": [ "usa" ], "trigger": "history", "title": "Duck and cover",
+    "text": "The school bell rings three times and everyone dives under their desk with their hands over their neck. The teacher says it is just practice for the atom bomb.",
+    "conditions": { "minAge": 6, "maxAge": 12, "minYear": 1951, "maxYear": 1962 },
+    "choices": [
+      { "text": "Do it properly", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You lie awake that night wondering if a desk would really help. Nobody you ask is sure." },
+      { "text": "Giggle with the kid next to you", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You both get sent to the hall. It is the most fun you have had all week." }
+    ]
+  },
+  {
+    "id": "us_elvis", "countries": [ "usa" ], "trigger": "history", "title": "The Ed Sullivan Show",
+    "text": "Sunday night. A young man from Memphis is on the Ed Sullivan Show, and the cameras only show him from the waist up.",
+    "conditions": { "minAge": 6, "maxAge": 30, "minYear": 1956, "maxYear": 1956 },
+    "choices": [
+      { "text": "Scream at the television", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "elvis", "text": "Elvis on Ed Sullivan", "impact": 10 } ], "result": "Your father leaves the room in disgust. You buy the record on Monday with your lunch money." },
+      { "text": "Agree with your parents", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Hound dog. Honestly. What is the world coming to." }
+    ]
+  },
+  {
+    "id": "us_cuban_missiles", "countries": [ "usa" ], "trigger": "history", "title": "Thirteen days",
+    "text": "The President is on television. There are Soviet missiles in Cuba, ninety miles away. People are buying canned food and filling the bathtub with water.",
+    "conditions": { "minAge": 8, "minYear": 1962, "maxYear": 1962 },
+    "choices": [
+      { "text": "Stock up the basement", "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": -3 } ], "result": "Canned peaches, a radio and a flashlight. Thirteen days later it is over and you eat peaches until spring." },
+      { "text": "Go to church and pray", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "The church is open all night. You have never seen so many people in it on a weekday." }
+    ]
+  },
+  {
+    "id": "us_beatles", "countries": [ "usa" ], "trigger": "history", "title": "Four boys from Liverpool",
+    "text": "Seventy million people are watching the Ed Sullivan Show tonight. Four boys from England with strange haircuts.",
+    "conditions": { "minAge": 8, "maxAge": 25, "minYear": 1964, "maxYear": 1964 },
+    "choices": [
+      { "text": "Grow your hair out", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "beatles", "text": "The night the Beatles were on TV", "impact": 10 } ], "result": "Your mother says it looks like a mop. That is the whole point." },
+      { "text": "Stick to Sinatra", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "It will pass, you say. It does not pass." }
+    ]
+  },
+  {
+    "id": "us_lunch_counter", "countries": [ "usa" ], "trigger": "history", "title": "The lunch counter",
+    "text": "Students from the college are sitting at the whites only lunch counter downtown, day after day, while people pour ketchup on their heads. They need more people.",
+    "conditions": { "minAge": 16, "maxAge": 30, "minYear": 1960, "maxYear": 1961, "heritage": [ "african_american" ] },
+    "choices": [
+      { "text": "Take a seat", "chance": 0.85, "chanceTraits": { "brave": 0.1 },
+        "success": { "text": "You sit for six hours without moving while men shout in your ear. Months later, the counter serves everyone. You were part of that.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "brave", "chance": 0.15 }, { "type": "memory", "kind": "sit_in", "text": "Sitting at the lunch counter", "impact": 28 } ] },
+        "failure": { "text": "The police arrest the whole row. A night in jail, and your mother at the station in her church hat, prouder than she will admit.", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "brave", "chance": 0.2 }, { "type": "memory", "kind": "sit_in", "text": "Arrested at the sit in", "impact": 20 } ] } },
+      { "text": "Bring them food and water", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You are not ready to sit. But you are there, every afternoon, with sandwiches." }
+    ]
+  },
+  {
+    "id": "us_mlk_murdered", "countries": [ "usa" ], "trigger": "history", "title": "Memphis",
+    "text": "Dr. King has been shot on a motel balcony in Memphis. On the radio, cities are burning.",
+    "conditions": { "minAge": 8, "minYear": 1968, "maxYear": 1968 },
+    "choices": [
+      { "text": "Go to the church vigil", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "memory", "kind": "mlk", "text": "The night Dr. King was shot", "impact": -15 } ], "result": "Candles, a choir and a preacher who cannot finish his sentence. Everyone holds hands. Nobody wants to go home." },
+      { "text": "Stay inside with the doors locked", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "Sirens all night. In the morning your street looks the same, and nothing is." }
+    ]
+  },
+  {
+    "id": "us_redlining", "countries": [ "usa" ], "title": "The wrong side of the line",
+    "text": "The house is perfect and you can afford it. The bank man looks at your application, then at you, and says the neighbourhood is not right for your family.",
+    "conditions": { "minAge": 24, "maxAge": 50, "minYear": 1950, "maxYear": 1975, "heritage": [ "african_american" ], "ownsHome": false }, "cooldown": 30, "weight": 2,
+    "choices": [
+      { "text": "Find another bank", "chance": 0.3, "chanceTraits": { "ambitious": 0.1, "charming": 0.1 },
+        "success": { "text": "Six banks. The seventh, run by a man from your church, says yes. You carry the first box over the threshold and sit down on it for a while.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "The answer is always some version of the same. You rent for another ten years and save every penny.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "memory", "kind": "redlined", "text": "The house the bank would not let us buy", "impact": -18 } ] } },
+      { "text": "Say nothing and walk out", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "memory", "kind": "redlined", "text": "The house the bank would not let us buy", "impact": -15 } ],
+        "result": "On the way home you pass the street with the house. A white family is looking at it." }
+    ]
+  },
+  {
+    "id": "us_busing", "countries": [ "usa" ], "title": "The bus across town",
+    "text": "The court has ordered the schools mixed. From September, {t.name} goes by bus to a school across town. Some of the neighbours are furious.",
+    "conditions": { "minAge": 28, "minYear": 1971, "maxYear": 1978 },
+    "target": { "role": "child", "conditions": { "minAge": 7, "maxAge": 15 } }, "cooldown": 20,
+    "choices": [
+      { "text": "Put {t.him} on the bus", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 4 } ],
+        "result": "Rocks hit the bus on the first morning. By the spring, {t.name} has a best friend from the other side of town and you have learned something about your neighbours." },
+      { "text": "Move to the suburbs", "requires": { "minMoney": 30000 }, "effects": [ { "type": "money", "amount": -30000 }, { "type": "happiness", "amount": -1 } ],
+        "result": "Half the street does the same. The new school is all white and nobody says why." },
+      { "text": "Pay for a private school", "requires": { "minMoney": 40000 }, "effects": [ { "type": "money", "amount": -40000 } ],
+        "result": "Uniforms, tuition and a bumper sticker. You tell people it is about the education." }
+    ]
+  },
+  {
+    "id": "us_suburb_move", "countries": [ "usa" ], "title": "Levittown",
+    "text": "A brand new suburb outside the city. Identical houses, a lawn each, a carport, and a down payment a veteran can manage.",
+    "conditions": { "minAge": 24, "maxAge": 40, "minYear": 1950, "maxYear": 1965, "ownsHome": false, "married": true }, "cooldown": 30,
+    "choices": [
+      { "text": "Sign the papers", "requires": { "canBuyHome": true }, "effects": [ { "type": "buy_home" }, { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "suburb", "text": "Our first house in the suburbs", "impact": 15 } ],
+        "result": "A lawnmower, a barbecue and neighbours exactly like you. On Saturdays the whole street washes its cars at the same time." },
+      { "text": "Stay in the city", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You like the noise, the corner store and the people who are not like you." }
+    ]
+  },
+  {
+    "id": "us_church_potluck", "countries": [ "usa" ], "title": "The potluck",
+    "text": "The church potluck on Sunday. Every family brings a dish, and the casseroles are judged in silence by the older ladies.",
+    "conditions": { "minAge": 20 }, "cooldown": 6,
+    "choices": [
+      { "text": "Bring your best casserole", "chance": 0.6, "chanceTraits": { "creative": 0.1 },
+        "success": { "text": "Mrs. Henderson asks for the recipe. You are in.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Your dish comes home almost full. Nobody says anything. That is worse.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Bring store bought cookies", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "The cookies go first. The older ladies notice the packaging." },
+      { "text": "Skip church this week", "effects": [], "result": "Your mother hears about it by Monday." }
+    ]
+  },
+  {
+    "id": "us_enlist", "countries": [ "usa" ], "title": "The recruiter",
+    "text": "A recruiter sets up a table in the school cafeteria. College money, a steady paycheck, and the world to see.",
+    "conditions": { "minAge": 17, "maxAge": 19, "minYear": 1974, "notFlags": [ "veteran" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Enlist", "chance": 0.85,
+        "success": { "text": "Four years. Boot camp in Georgia, a base in Germany, and a sergeant who teaches you more than any teacher did. You come home with money for college.", "effects": [ { "type": "flag", "flag": "veteran" }, { "type": "money", "amount": 150000 }, { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "trait_add", "trait": "resilient", "chance": 0.1 }, { "type": "memory", "kind": "army", "text": "Four years in the army", "impact": 12 } ] },
+        "failure": { "text": "A deployment you will not talk about. You come home with money for college and nightmares that do not go away.", "effects": [ { "type": "flag", "flag": "veteran" }, { "type": "money", "amount": 150000 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.6 }, { "type": "memory", "kind": "army", "text": "The deployment", "impact": -20 } ] } },
+      { "text": "Take a pamphlet and leave", "effects": [], "result": "The pamphlet stays in your locker until graduation." }
+    ]
+  },
+  {
+    "id": "us_credit_card", "countries": [ "usa" ], "title": "Pre approved",
+    "text": "A letter in the mailbox: you are pre approved for a credit card with a five thousand dollar limit. No questions asked.",
+    "conditions": { "minAge": 18, "maxAge": 40, "minYear": 1975 }, "cooldown": 15,
+    "choices": [
+      { "text": "Use it for everything", "requires": { "traitsAny": [ "impulsive", "lazy", "vain" ] }, "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": 3 } ],
+        "result": "A stereo, a leather jacket, dinners out. By Christmas the minimum payment is more than your rent." },
+      { "text": "Keep it for emergencies", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "It lives in your wallet, in a little paper sleeve, for years." },
+      { "text": "Cut it in half", "effects": [ { "type": "trait_add", "trait": "stingy", "chance": 0.03 } ], "result": "Your father taught you: if you cannot pay cash, you cannot afford it." }
+    ]
+  },
+  {
+    "id": "us_credit_score", "countries": [ "usa" ], "title": "The number",
+    "text": "The loan officer turns the screen towards you. A three digit number that decides your interest rate, your apartment and apparently your future.",
+    "conditions": { "minAge": 22, "maxAge": 50, "minYear": 1989 }, "cooldown": 12,
+    "choices": [
+      { "text": "Look at the number", "chance": 0.6, "chanceTraits": { "stingy": 0.2, "impulsive": -0.2 },
+        "success": { "text": "Seven hundred and sixty. The officer smiles. You get the good rate, and you are smug for a week.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "money", "amount": 10000 } ] },
+        "failure": { "text": "Five hundred and eighty. An old phone bill you forgot about. The rate is higher, and so is the deposit.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "money", "amount": -15000 } ] } }
+    ]
+  },
+  {
+    "id": "us_mall", "countries": [ "usa" ], "title": "The mall",
+    "text": "Saturday at the mall. A food court, a fountain full of pennies, and everyone from school pretending not to look at each other.",
+    "conditions": { "minAge": 12, "maxAge": 18, "minYear": 1970, "maxYear": 2010 }, "cooldown": 4,
+    "choices": [
+      { "text": "Hang out by the fountain", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Pretzels, an orange drink and four hours of nothing at all. It is the best day of the week." },
+      { "text": "Get a job at the pretzel stand", "effects": [ { "type": "money", "amount": 10000 }, { "type": "happiness", "amount": 1 } ], "result": "You smell of butter and salt all summer. You also have money." },
+      { "text": "Try the arcade", "requires": { "maxYear": 1999 }, "effects": [ { "type": "money", "amount": -500 }, { "type": "happiness", "amount": 4 } ], "result": "Your initials on the high score list of Pac Man, for one glorious week." }
+    ]
+  },
+  {
+    "id": "us_tipping", "countries": [ "usa" ], "title": "The tip",
+    "text": "Dinner out with friends. The bill comes, and someone has to work out the tip.",
+    "conditions": { "minAge": 18 }, "cooldown": 8,
+    "choices": [
+      { "text": "Tip twenty percent", "effects": [ { "type": "money", "amount": -600 }, { "type": "happiness", "amount": 2 } ], "result": "The waitress looks like she has been on her feet for ten hours. You remember what that was like." },
+      { "text": "Tip ten and argue about it", "requires": { "traitsAny": [ "stingy", "greedy" ] }, "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Your friends quietly add a few bills when you are not looking." },
+      { "text": "Leave a huge tip", "requires": { "traitsAny": [ "generous", "kind" ] }, "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 4 } ], "result": "You watch through the window as the waitress counts it twice and sits down for a moment." }
+    ]
+  },
+  {
+    "id": "us_plant_closing", "countries": [ "usa" ], "title": "The plant",
+    "text": "A notice on the board at the plant: the line is moving to Mexico. Six months. Thirty years of work, and a box for your things.",
+    "conditions": { "minAge": 30, "maxAge": 60, "minYear": 1979, "maxYear": 2010, "jobTags": [ "manual" ] }, "cooldown": 30,
+    "choices": [
+      { "text": "Retrain", "effects": [ { "type": "fire" }, { "type": "grades", "amount": 5 }, { "type": "happiness", "amount": -5 } ],
+        "result": "A government program, a classroom full of men your age, and computers none of you have touched before." },
+      { "text": "Move south for work", "effects": [ { "type": "fire" }, { "type": "job_find" }, { "type": "happiness", "amount": -4 }, { "type": "memory", "kind": "rust_belt", "text": "Leaving town when the plant closed", "impact": -12 } ],
+        "result": "A U Haul, a long drive and a new job in Texas that pays less. Your old town has a Dollar General where the union hall used to be." },
+      { "text": "Stay and fight for the plant", "chance": 0.15,
+        "success": { "text": "A buyer is found at the last minute. Half the jobs are saved. Yours is one of them.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "The rallies, the letters to the congressman, the local news. The plant closes anyway.", "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -8 } ] } }
+    ]
+  },
+  {
+    "id": "us_hurricane", "countries": [ "usa" ], "title": "Hurricane warning",
+    "text": "A hurricane is coming up the coast. The governor says to leave. The highway is already one long line of cars.",
+    "conditions": { "minAge": 18 }, "cooldown": 30, "weight": 0.3,
+    "choices": [
+      { "text": "Evacuate", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": -2 } ], "result": "Eleven hours to go two hundred miles. When you come back, the roof is fine and the fridge smells of death." },
+      { "text": "Board up and stay", "chance": 0.75, "chanceTraits": { "brave": 0.05 },
+        "success": { "text": "A long night of wind. The tree in the yard comes down, missing the house by a yard.", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "money", "amount": -8000 } ] },
+        "failure": { "text": "The water comes up through the floor. You spend the night in the attic with a flashlight and the dog.", "effects": [ { "type": "happiness", "amount": -10 }, { "type": "money", "amount": -150000 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.25 } ] } }
+    ]
+  },
+  {
+    "id": "us_summer_camp", "countries": [ "usa" ], "title": "Summer camp",
+    "text": "Four weeks at a camp by a lake in the woods. Canoes, campfires, bug juice and a cabin of kids you have never met.",
+    "conditions": { "minAge": 8, "maxAge": 14 }, "cooldown": 5,
+    "choices": [
+      { "text": "Go and love it", "chance": 0.75, "chanceTraits": { "social": 0.15, "introvert": -0.2 },
+        "success": { "text": "Color war, a first crush, and a friend you write letters to for years. You cry when the bus comes.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "camp", "text": "Summers at camp", "impact": 14 } ] },
+        "failure": { "text": "Homesick from the first night. You write a letter home every day begging to be picked up.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Stay home", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "A summer of sprinklers, popsicles and too much television." }
+    ]
+  },
+  {
+    "id": "us_spring_break", "countries": [ "usa" ], "title": "Spring break",
+    "text": "Spring break. Your friends are driving to Florida in a car with no air conditioning and six people in it.",
+    "conditions": { "minAge": 18, "maxAge": 23, "activity": "studying" }, "cooldown": 3,
+    "choices": [
+      { "text": "Squeeze in", "chance": 0.8,
+        "success": { "text": "A week on the beach, a sunburn you can see from space, and stories that get better every year.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "money", "amount": -6000 } ] },
+        "failure": { "text": "The car breaks down in Georgia. You spend the week in a motel by the highway. It is still somehow great.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "money", "amount": -8000 } ] } },
+      { "text": "Stay and study", "effects": [ { "type": "grades", "amount": 2 } ], "result": "The library is empty and very quiet. You get a lot done and feel a little sorry for yourself." }
+    ]
+  },
+  {
+    "id": "us_fraternity", "countries": [ "usa" ], "title": "Rush week",
+    "text": "Rush week at college. The Greek houses want new members, and they all promise brothers or sisters for life.",
+    "conditions": { "minAge": 18, "maxAge": 20, "activity": "studying" }, "cooldown": 10,
+    "choices": [
+      { "text": "Pledge", "chance": 0.7, "chanceTraits": { "social": 0.15, "charming": 0.1 },
+        "success": { "text": "Two months of being yelled at, then you are in. Parties, a network, and friends who will be at your wedding.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "grades", "amount": -3 }, { "type": "trait_add", "trait": "social", "chance": 0.05 } ] },
+        "failure": { "text": "They do not give you a bid. You pretend not to care and care a lot.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Not your thing", "effects": [ { "type": "grades", "amount": 2 } ], "result": "You find your people in the student paper instead." }
+    ]
+  },
+  {
+    "id": "us_jury_duty", "countries": [ "usa" ], "title": "Jury duty",
+    "text": "A summons for jury duty. A robbery case, two weeks, twelve strangers in a room with bad coffee.",
+    "conditions": { "minAge": 21 }, "cooldown": 15,
+    "choices": [
+      { "text": "Serve", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "performance", "amount": -2 } ], "result": "The argument in the jury room goes on for two days. You change your mind three times. You never forget the defendant's face." },
+      { "text": "Try to get out of it", "chance": 0.5, "chanceTraits": { "manipulative": 0.2 },
+        "success": { "text": "You tell the lawyer you have strong opinions about everything. You are excused before lunch.", "effects": [] },
+        "failure": { "text": "The judge has heard every excuse. You serve.", "effects": [ { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "us_garage_sale", "countries": [ "usa" ], "title": "Garage sale",
+    "text": "The garage is full. A sign on the lamp post, a card table in the driveway, and everything must go.",
+    "conditions": { "minAge": 30 }, "cooldown": 10,
+    "choices": [
+      { "text": "Price everything to sell", "effects": [ { "type": "money", "amount": 3000 }, { "type": "happiness", "amount": 3 } ], "result": "A neighbour buys your old lamp, a stranger buys your wedding china, and you buy someone's fondue set on the way home." },
+      { "text": "Haggle over every quarter", "requires": { "traitsAny": [ "stingy", "ambitious" ] }, "effects": [ { "type": "money", "amount": 4000 } ], "result": "You make more than you expected and lose a friend over a toaster." }
+    ]
+  },
+  {
+    "id": "us_gas_lines", "countries": [ "usa" ], "trigger": "history", "title": "Odd and even",
+    "text": "Gas is rationed. Cars with odd license plates fill up on odd days. The line at the station goes round the block, and the station runs dry before noon.",
+    "conditions": { "minAge": 18, "minYear": 1979, "maxYear": 1979 },
+    "choices": [
+      { "text": "Get up at four to wait in line", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "health", "amount": -1 } ], "result": "You read a whole novel in the line. A man two cars ahead pulls a gun over a place. Nobody calls the police." },
+      { "text": "Ride a bicycle to work", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "happiness", "amount": 1 } ], "result": "Everyone laughs at you for a month. Then half the office is doing it too." }
+    ]
+  },
+  {
+    "id": "us_mtv", "countries": [ "usa" ], "title": "I want my MTV",
+    "text": "Your parents finally got cable. There is a channel that plays music videos all day and all night.",
+    "conditions": { "minAge": 10, "maxAge": 22, "minYear": 1981, "maxYear": 1990 }, "cooldown": 30,
+    "choices": [
+      { "text": "Watch it until three in the morning", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "grades", "amount": -2 } ], "result": "Michael Jackson, Madonna and a band from England with very big hair. School can wait." },
+      { "text": "Learn the dance moves", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 2 } ], "result": "You practise the moonwalk on the kitchen floor in your socks until your mother bans it." }
+    ]
+  },
+  {
+    "id": "us_la_riots", "countries": [ "usa" ], "trigger": "history", "title": "The verdict",
+    "text": "The officers who beat Rodney King on video have been acquitted. Los Angeles is on fire on every channel.",
+    "conditions": { "minAge": 12, "minYear": 1992, "maxYear": 1992 },
+    "choices": [
+      { "text": "Watch it all night", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "memory", "kind": "la_1992", "text": "Watching Los Angeles burn in 1992", "impact": -8 } ], "result": "A man on television asks if we can all get along. Nobody in your house has an answer." },
+      { "text": "Talk about it with your family", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "The conversation at dinner goes places it never has before. Some of it is hard to hear." }
+    ]
+  },
+  {
+    "id": "us_obama", "countries": [ "usa" ], "trigger": "history", "title": "Election night",
+    "text": "Election night. The networks call it at eleven. The next President is a Black man named Barack Obama.",
+    "conditions": { "minAge": 12, "minYear": 2008, "maxYear": 2008 },
+    "choices": [
+      { "text": "Watch the speech in Chicago", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "obama", "text": "Election night 2008", "impact": 10 } ], "result": "A crowd in a park, people crying who never cry. Your grandmother calls and does not say anything for a long time." },
+      { "text": "Turn it off in disgust", "requires": { "traitsAny": [ "hot_tempered", "paranoid" ] }, "effects": [ { "type": "happiness", "amount": -3 } ], "result": "You go to bed early and do not read a newspaper for a week." }
+    ]
+  },
+  {
+    "id": "us_opioids", "countries": [ "usa" ], "content": [ "addiction" ], "title": "The prescription",
+    "text": "After the operation on your back, the doctor writes a prescription for pain pills. Take as needed, he says. They are completely safe.",
+    "conditions": { "minAge": 25, "maxAge": 65, "minYear": 1998, "maxYear": 2018 }, "cooldown": 30, "weight": 0.5,
+    "choices": [
+      { "text": "Take them as prescribed", "chance": 0.7, "chanceTraits": { "addictive": -0.4, "resilient": 0.1 },
+        "success": { "text": "The pain goes, the bottle runs out, you throw it away. Years later you read the news and think about how lucky you were.", "effects": [ { "type": "health", "amount": 3 } ] },
+        "failure": { "text": "The bottle runs out. The pain comes back, or something like it. You find a second doctor, then a third. Then someone who is not a doctor.", "effects": [ { "type": "trait_add", "trait": "addictive" }, { "type": "health", "amount": -10 }, { "type": "happiness", "amount": -8 }, { "type": "memory", "kind": "pills", "text": "The pills after the operation", "impact": -25 } ] } },
+      { "text": "Tough it out with ibuprofen", "requires": { "traitsAny": [ "resilient", "paranoid", "hypochondriac" ] }, "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": -2 } ], "result": "Two bad months. You never fill the prescription." }
+    ]
+  },
+  {
+    "id": "us_tobacco", "countries": [ "usa" ], "title": "The Surgeon General",
+    "text": "The Surgeon General says cigarettes cause cancer. It is on the front page. You are holding one as you read it.",
+    "conditions": { "minAge": 18, "minYear": 1964, "maxYear": 1970, "notFlags": [ "quit_smoking_us" ] }, "cooldown": 30,
+    "choices": [
+      { "text": "Quit right now", "chance": 0.35, "chanceTraits": { "resilient": 0.2, "addictive": -0.2 },
+        "success": { "text": "Cold turkey. Three weeks of being unbearable. Then you notice you can taste your food again.", "effects": [ { "type": "flag", "flag": "quit_smoking_us" }, { "type": "health", "amount": 6 }, { "type": "happiness", "amount": -2 } ] },
+        "failure": { "text": "Four days. Then a party, a friend, a lighter. Next year, you tell yourself.", "effects": [ { "type": "health", "amount": -2 } ] } },
+      { "text": "Switch to filters", "effects": [ { "type": "health", "amount": -1 } ], "result": "The man in the advertisement says they are milder. You choose to believe him." }
+    ]
+  },
+  {
+    "id": "us_medicare", "countries": [ "usa" ], "trigger": "milestone", "title": "Sixty five",
+    "text": "A red, white and blue card in the mail. Medicare. For the first time since you lost your last job, a doctor's visit will not cost you a week's sleep.",
+    "conditions": { "minAge": 65, "maxAge": 67, "minYear": 1966, "notFlags": [ "medicare" ] },
+    "choices": [
+      { "text": "Book every appointment you put off", "effects": [ { "type": "flag", "flag": "medicare" }, { "type": "health", "amount": 5 }, { "type": "happiness", "amount": 4 } ],
+        "result": "Eyes, teeth, the knee, the thing on your back you have been worrying about. It is nothing. You cry a little in the parking lot anyway." }
+    ]
+  },
+  {
+    "id": "us_florida", "countries": [ "usa" ], "title": "Florida",
+    "text": "Your friends from the bowling league are retiring to Florida. A condo near the beach, golf every morning and no snow ever again.",
+    "conditions": { "minAge": 64, "maxAge": 78, "activity": "retired" }, "cooldown": 15,
+    "choices": [
+      { "text": "Go south", "requires": { "minMoney": 50000 }, "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": 7 }, { "type": "health", "amount": 2 }, { "type": "memory", "kind": "florida", "text": "Retiring to Florida", "impact": 14 } ],
+        "result": "Sunshine, early bird specials at four thirty and a pool you swim in every morning. The grandchildren visit at Easter and complain about the humidity." },
+      { "text": "Stay near the grandchildren", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Winters are long. The grandchildren come over on Sundays. That is worth more than a beach." }
+    ]
+  },
+  {
+    "id": "us_social_security", "countries": [ "usa" ], "title": "The check",
+    "text": "The Social Security check is late, and the rent is due on Friday. You look at the number in your checkbook for a long time.",
+    "conditions": { "minAge": 66, "activity": "retired", "maxMoney": 10000 }, "cooldown": 10,
+    "choices": [
+      { "text": "Call your children", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "money", "amount": 5000 } ], "result": "Your son sends money without asking a single question. That almost makes it worse." },
+      { "text": "Take a job bagging groceries", "requires": { "minHealth": 50 }, "effects": [ { "type": "money", "amount": 8000 }, { "type": "health", "amount": -2 }, { "type": "happiness", "amount": 1 } ], "result": "The young manager calls you sir. You are good at it, and the regulars ask for your lane." }
+    ]
+  },
+  {
+    "id": "us_pledge", "countries": [ "usa" ], "trigger": "milestone", "title": "The first day",
+    "text": "First day of kindergarten. A lunchbox with a cartoon on it, a cubby with your name, and every morning the whole class stands with a hand on its heart for the pledge.",
+    "conditions": { "minAge": 5, "maxAge": 6, "notFlags": [ "first_school_day" ] },
+    "choices": [
+      { "text": "Hold your mother's hand to the door", "effects": [ { "type": "flag", "flag": "first_school_day" }, { "type": "happiness", "amount": 3 } ], "result": "You let go at the door. Your mother does not let go of the doorframe for some time." },
+      { "text": "Run straight in", "effects": [ { "type": "flag", "flag": "first_school_day" }, { "type": "happiness", "amount": 5 } ], "result": "You do not even turn around. Your mother tells the story for thirty years." }
+    ]
+  }
+]

@@ -110,6 +110,12 @@ public sealed class CountryDef
     public double MedicalBill { get; set; }
     /// <summary>Share of a shortfall that welfare covers when savings are gone (the rest becomes debt).</summary>
     public double WelfareShare { get; set; } = 0.5;
+    /// <summary>How stretched the salary ladder is: 1 keeps the content's Swedish spread, 1.3 is American.</summary>
+    public double IncomeSpread { get; set; } = 1.0;
+    /// <summary>The share of a year's pay a working parent loses when a child arrives, where leave is unpaid (USA: 12 weeks). 0 where leave is paid.</summary>
+    public double UnpaidLeave { get; set; }
+    /// <summary>Daycare per child under 6 a year, when no parent stays home. 0 where it is part of the child's living cost.</summary>
+    public double ChildcareCost { get; set; }
     public int MinStartYear { get; set; } = 1950;
     public int MaxStartYear { get; set; } = 2020;
     public List<string> MaleNames { get; set; } = new();
@@ -290,6 +296,8 @@ public sealed class ConditionDef
     /// <summary>Owns the home themselves (not just living in a partner's).</summary>
     public bool? HoldsHome { get; set; }
     public bool? LivesWithParents { get; set; }
+    /// <summary>The person's heritage is one of these (see content/names).</summary>
+    public List<string>? Heritage { get; set; }
     public List<string>? TraitsAny { get; set; }
     public List<string>? TraitsNone { get; set; }
     public List<string>? Flags { get; set; }

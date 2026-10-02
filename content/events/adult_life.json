@@ -25,7 +25,7 @@
     ]
   },
   {
-    "id": "life_charter_trip", "title": "Charter",
+    "id": "life_charter_trip", "countries": [ "sweden" ], "title": "Charter",
     "text": "Everyone at work is going to the Canary Islands this winter. Two weeks of sun, all inclusive.",
     "conditions": { "minAge": 20, "minYear": 1965, "minMoney": 15000 }, "cooldown": 5,
     "choices": [
@@ -266,7 +266,7 @@
   },
   {
     "id": "life_night_course", "title": "Evening classes",
-    "text": "The folk high school offers evening courses: Italian, pottery, philosophy, car mechanics.",
+    "text": "The adult education centre has evening classes: Italian, pottery, philosophy, car mechanics.",
     "conditions": { "minAge": 25 }, "cooldown": 6,
     "choices": [
       { "text": "Philosophy", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 3 } ], "result": "You leave with more questions than you came with. That's the point, the teacher says." },
@@ -327,7 +327,7 @@
   },
   {
     "id": "life_tax_refund", "title": "A letter from the Tax Agency",
-    "text": "An envelope from the Tax Agency. You open it with your heart in your throat.",
+    "text": "An envelope from the tax office. You open it with your heart in your throat.",
     "conditions": { "minAge": 20, "hasJob": true }, "cooldown": 4,
     "choices": [
       { "text": "Read it", "chance": 0.6,
