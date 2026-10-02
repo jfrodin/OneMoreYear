@@ -14,6 +14,8 @@ static class CoverageReport
         var seen = content.Events.Keys.ToDictionary(k => k, _ => 0);
         var livesWith = content.Events.Keys.ToDictionary(k => k, _ => 0);
         int lives = 0, playerYears = 0, eventsShown = 0;
+        var bandEvents = new int[10];
+        var bandYears = new int[10];
         int[] starts = { 1950, 1960, 1970, 1980, 1990, 2000 };
 
         for (int g = 0; g < games; g++)
@@ -36,8 +38,10 @@ static class CoverageReport
                     seen[p.EventId]++;
                     thisLife.Add(p.EventId);
                     eventsShown++;
+                    bandEvents[Math.Min(s.Player.Age(s.Year) / 10, 9)]++;
                 }
                 playerYears++;
+                bandYears[Math.Min(s.Player.Age(s.Year) / 10, 9)]++;
                 if (!bot.PlayYear(s)) break;
             }
             foreach (var id in thisLife) livesWith[id]++;
@@ -47,6 +51,8 @@ static class CoverageReport
         Console.Error.WriteLine();
 
         Console.WriteLine($"{games} games, {lives} lives, {playerYears} player years, {eventsShown} events shown ({(double)eventsShown / playerYears:0.00} per year).");
+        Console.WriteLine("Events per year by age: " + string.Join(", ", Enumerable.Range(0, 10).Where(b => bandYears[b] > 0).Select(b => $"{b * 10}s {(double)bandEvents[b] / bandYears[b]:0.0}")));
+        Console.WriteLine("Random events open by age (pool size): " + string.Join(", ", new[] { 3, 8, 13, 17, 22, 27, 35, 45, 55, 65, 75, 85 }.Select(a => $"{a}: {content.Events.Values.Count(e => e.Trigger == "random" && (e.Countries.Count == 0 || e.Countries.Contains(countryId)) && (e.Conditions?.MinAge ?? 0) <= a && (e.Conditions?.MaxAge ?? 200) >= a)}")));
         Console.WriteLine();
         var never = content.Events.Values.Where(e => seen[e.Id] == 0 && e.Trigger is "random").OrderBy(e => e.Id).ToList();
         Console.WriteLine($"Random events that never appeared ({never.Count}):");

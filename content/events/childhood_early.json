@@ -1,0 +1,290 @@
+// Small children, 2 to 12: the years with the fewest events. Short, concrete moments seen from low down.
+// Choices shape traits a little. No dashes.
+[
+  {
+    "id": "early_puddle", "title": "The puddle",
+    "text": "The biggest puddle you have ever seen, right outside the door. You are wearing your good shoes.",
+    "conditions": { "minAge": 2, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Jump in it", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.1 } ], "result": "Up to your knees. It is worth every word you hear afterwards." },
+      { "text": "Walk round it", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You walk round it very carefully, looking at it the whole time." }
+    ]
+  },
+  {
+    "id": "early_no", "title": "No",
+    "text": "You have learned a new word. It is \"no\", and it works on everything.",
+    "conditions": { "minAge": 2, "maxAge": 3 }, "cooldown": 0,
+    "choices": [
+      { "text": "Use it all day", "effects": [ { "type": "trait_add", "trait": "hot_tempered", "chance": 0.05 }, { "type": "happiness", "amount": 2 } ], "result": "No to the coat, no to the bath, no to the ice cream, which you regret." },
+      { "text": "Save it for vegetables", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A small, focused campaign. It does not work either." }
+    ]
+  },
+  {
+    "id": "early_hide_and_seek", "title": "Hide and seek",
+    "text": "Hide and seek with the big kids. You have found the perfect place: behind the curtain, with your feet sticking out.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Stay absolutely still", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "They find you in eleven seconds. You are amazed every single time." },
+      { "text": "Giggle", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "cheerful", "chance": 0.05 } ], "result": "You give yourself away immediately and laugh so hard you fall over." }
+    ]
+  },
+  {
+    "id": "early_kitchen_help", "title": "Helping",
+    "text": "{T.role} is baking and you want to help. You have a chair to stand on and a very serious face.",
+    "target": { "role": "parent" },
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Crack the eggs", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 4, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "Two in the bowl, one on the floor, one on you. {T.He} says it is the best cake {t.he} has ever made." },
+      { "text": "Lick the spoon", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "This is the real reason anyone bakes." }
+    ]
+  },
+  {
+    "id": "early_bedtime_story", "title": "One more",
+    "text": "The story is finished. {T.role} closes the book and turns off the light. You are not even a little bit tired.",
+    "target": { "role": "parent" },
+    "conditions": { "minAge": 2, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Ask for one more", "chance": 0.5, "success": { "text": "{T.He} sighs and opens the book again. You are asleep by page two.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 4, "mutual": true }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "\"Tomorrow.\" You make up your own story in the dark. It has a dragon in it.", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.05 } ] } },
+      { "text": "Ask a big question", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 } ], "result": "\"Where do people go when they die?\" {T.He} sits back down on the bed for a long time." }
+    ]
+  },
+  {
+    "id": "early_haircut", "title": "Scissors",
+    "text": "You have found the scissors. Your hair is right there.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Give yourself a fringe", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "attribute", "kind": "looks", "amount": -1 } ], "result": "It is in all the photos that year. Your family still brings it up at weddings." },
+      { "text": "Cut the doll's hair instead", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The doll never recovers. You feel bad about it for years." }
+    ]
+  },
+  {
+    "id": "early_sandbox", "title": "The sandbox",
+    "text": "Another child in the sandbox has the red bucket. You want the red bucket.",
+    "conditions": { "minAge": 2, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "trait_add", "trait": "greedy", "chance": 0.05 }, { "type": "happiness", "amount": 1 } ], "result": "Tears, a grown up, a long talk about sharing. You keep thinking about the red bucket." },
+      { "text": "Offer your spade for it", "effects": [ { "type": "trait_add", "trait": "social", "chance": 0.07 }, { "type": "happiness", "amount": 4 } ], "result": "A deal. Then a sandcastle together. Then a friend, for the rest of the afternoon." },
+      { "text": "Wait", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.05 } ], "result": "You wait all afternoon. The other child goes home with it." }
+    ]
+  },
+  {
+    "id": "early_night_terror", "title": "Something under the bed",
+    "text": "There is definitely something under the bed. You heard it move.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Run to your parents' bed", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You sleep sideways between them with your feet in someone's face. Everyone else sleeps badly." },
+      { "text": "Look", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.08 }, { "type": "happiness", "amount": 1 } ], "result": "A sock. A very suspicious sock." }
+    ]
+  },
+  {
+    "id": "early_first_swim", "title": "Armbands",
+    "text": "Swimming lessons. Armbands, a cold pool and a teacher who says the water is lovely.",
+    "conditions": { "minAge": 4, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Jump in", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "happiness", "amount": 4 } ], "result": "You go under, come up spluttering, and want to do it again." },
+      { "text": "Cling to the edge", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Three lessons on the edge. On the fourth you let go, and you never tell anyone how scared you were." }
+    ]
+  },
+  {
+    "id": "early_dead_bird", "title": "The bird",
+    "text": "There is a small bird lying on the path. It is not moving.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Give it a funeral", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.08 }, { "type": "happiness", "amount": -1 } ], "result": "A shoebox, a hole under the bush and a speech. You visit the grave for a week." },
+      { "text": "Poke it with a stick", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "You have a lot of questions. Nobody wants to answer them at dinner." }
+    ]
+  },
+  {
+    "id": "early_grown_up_clothes", "title": "Dressing up",
+    "text": "The wardrobe is open. There are shoes with heels, a tie, a hat and a coat that goes all the way to the floor.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Put on all of it", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "vain", "chance": 0.03 } ], "result": "You walk into the living room as someone very important. Somebody takes a photograph that ends up on a fridge for decades." },
+      { "text": "Play shop with it", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.04 } ], "result": "You sell your father his own hat. Twice." }
+    ]
+  },
+  {
+    "id": "early_stitches", "title": "The edge of the table",
+    "text": "You were running in the kitchen, which you are not allowed to do. Now there is blood, and everyone is shouting.",
+    "conditions": { "minAge": 2, "maxAge": 7 }, "cooldown": 0, "weight": 0.6,
+    "choices": [
+      { "text": "Be brave at the hospital", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.05 }, { "type": "health", "amount": -1 } ], "result": "Three stitches and a lollipop. You show the scar to everyone for a year." },
+      { "text": "Scream the place down", "effects": [ { "type": "health", "amount": -1 } ], "result": "The nurse has heard worse. Probably." }
+    ]
+  },
+  {
+    "id": "early_snow_angel", "title": "First snow",
+    "text": "It snowed in the night. Everything is white and quiet and nobody has walked on it yet.",
+    "conditions": { "minAge": 2, "maxAge": 8 }, "cooldown": 0,
+    "choices": [
+      { "text": "Make a snow angel", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Snow down your neck, in your boots, in your ears. Perfect." },
+      { "text": "Catch snowflakes on your tongue", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "You stand with your mouth open in the yard until someone calls you in for cocoa." }
+    ]
+  },
+  {
+    "id": "child_lemonade_stand", "title": "The stand",
+    "text": "A table by the road, a jug of juice and a cardboard sign. Business is about to begin.",
+    "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 0,
+    "choices": [
+      { "text": "Charge a fair price", "effects": [ { "type": "money", "amount": 100 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.05 }, { "type": "happiness", "amount": 4 } ], "result": "The postman, two neighbours and a confused tourist. You count the coins four times." },
+      { "text": "Give it away free", "effects": [ { "type": "trait_add", "trait": "generous", "chance": 0.07 }, { "type": "happiness", "amount": 4 } ], "result": "You run out in ten minutes and have the best afternoon of the summer." },
+      { "text": "Drink the stock", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The business fails. You are not thirsty." }
+    ]
+  },
+  {
+    "id": "child_magnifying_glass", "title": "The magnifying glass",
+    "text": "A magnifying glass, a sunny day and a whole world in the grass that nobody else has noticed.",
+    "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 0,
+    "choices": [
+      { "text": "Study the ants", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "happiness", "amount": 3 } ], "result": "You fill a notebook with drawings of ants. You give them names. Some of them have families." },
+      { "text": "Burn a leaf", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.04 } ], "result": "A thin line of smoke. A small, thrilling feeling of power." }
+    ]
+  },
+  {
+    "id": "child_tree_climb", "title": "The tall tree",
+    "text": "There is a tree behind the school that only the oldest kids have climbed to the top of.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Climb it", "chance": 0.75, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "You can see the whole town from up there. Your name goes into the bark with a key.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "brave", "chance": 0.07 } ] },
+        "failure": { "text": "The branch makes a sound you will never forget. A broken arm and a cast that everyone signs.", "effects": [ { "type": "health", "amount": -5 }, { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Watch from the ground", "effects": [], "result": "You cheer for the others. Next year, maybe." }
+    ]
+  },
+  {
+    "id": "child_secret_club", "title": "The club",
+    "text": "You and two friends have started a secret club. It has a password, a hut and rules nobody follows.",
+    "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Be the leader", "effects": [ { "type": "trait_add", "trait": "ambitious", "chance": 0.06 }, { "type": "happiness", "amount": 4 } ], "result": "A badge, a title and a mutiny within a week." },
+      { "text": "Let a new kid join", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.06 }, { "type": "happiness", "amount": 4 } ], "result": "The others grumble. The new kid brings biscuits, and the grumbling stops." },
+      { "text": "Keep it to the three of you", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "loyal", "chance": 0.05 } ], "result": "The three of you swear an oath with spit. You mean every word." }
+    ]
+  },
+  {
+    "id": "child_report_card", "title": "The report",
+    "text": "The school report is in your bag. You have not opened it. You know roughly what it says.",
+    "conditions": { "minAge": 8, "maxAge": 15, "activity": "school" }, "cooldown": 3,
+    "choices": [
+      { "text": "Hand it over at dinner", "effects": [ { "type": "trait_remove", "trait": "dishonest" }, { "type": "grades", "amount": 1 } ], "result": "Your parents read it in silence, then together. Then they ask what you need help with." },
+      { "text": "Lose it on the way home", "chance": 0.4, "chanceTraits": { "dishonest": 0.2, "manipulative": 0.1 },
+        "success": { "text": "Nobody asks. You do not know whether to feel lucky or a little forgotten.", "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.05 } ] },
+        "failure": { "text": "The school calls. Your mother has the voice. You are grounded for two weeks.", "effects": [ { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "child_shoplift_sweets", "title": "The sweets",
+    "text": "The shop is busy, the sweets are right by the door, and your friend dares you.",
+    "conditions": { "minAge": 8, "maxAge": 13 }, "cooldown": 0,
+    "choices": [
+      { "text": "Do it", "chance": 0.7,
+        "success": { "text": "Out the door, round the corner, heart pounding. The sweets taste of nothing much.", "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.07 }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "A hand on your shoulder. The owner calls your parents. You have to go back and apologise to his face.", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "trait_remove", "trait": "dishonest" } ] } },
+      { "text": "Say no", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.03 } ], "result": "Your friend calls you a baby. A week later they get caught, and you feel very grown up." }
+    ]
+  },
+  {
+    "id": "child_star_gazing", "title": "Stars",
+    "text": "Somebody wakes you in the middle of the night and carries you out in a blanket. The sky is full of shooting stars.",
+    "conditions": { "minAge": 4, "maxAge": 11 }, "cooldown": 0,
+    "choices": [
+      { "text": "Count them", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "memory", "kind": "shooting_stars", "text": "The night of the shooting stars", "impact": 10 } ], "result": "You lose count at thirty one and fall asleep wrapped up on the grass." },
+      { "text": "Make a wish on every one", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "You never tell anyone what you wished for. Some of it comes true." }
+    ]
+  },
+  {
+    "id": "child_hospital_visit", "title": "Visiting hours",
+    "text": "{T.role} is in hospital. The corridors smell strange, and everyone talks in quiet voices.",
+    "target": { "role": "grandparent", "conditions": { "minAge": 60 } },
+    "conditions": { "minAge": 5, "maxAge": 12 }, "cooldown": 6,
+    "choices": [
+      { "text": "Bring a drawing", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "happiness", "amount": -1 } ], "result": "{T.He} props it up on the table by the bed and shows it to every nurse." },
+      { "text": "Hide behind your parent", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "{T.Name} looks small in the big bed. {T.He} winks at you anyway." }
+    ]
+  },
+  {
+    "id": "child_new_sibling_room", "title": "Sharing a room",
+    "text": "From now on you share a room with {t.name}. There is a line of tape down the middle of the floor.",
+    "target": { "role": "sibling", "conditions": { "minAge": 2, "maxAge": 14 } },
+    "conditions": { "minAge": 5, "maxAge": 14 }, "cooldown": 20,
+    "choices": [
+      { "text": "Defend your side", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": -3, "mutual": true }, { "type": "happiness", "amount": -1 } ], "result": "A year of border disputes. The tape is renewed every Sunday." },
+      { "text": "Whisper after lights out", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 7, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "Ghost stories, secrets and laughing into the pillow until someone bangs on the wall." }
+    ]
+  },
+  {
+    "id": "teen_job_first_pay", "title": "The first pay",
+    "text": "Your first summer job. A real envelope with real money and your name on it.",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Save it", "effects": [ { "type": "money", "amount": 4000 }, { "type": "trait_add", "trait": "stingy", "chance": 0.04 } ], "result": "You open a bank account and check the balance more often than is healthy." },
+      { "text": "Spend it on clothes", "effects": [ { "type": "money", "amount": 500 }, { "type": "happiness", "amount": 5 }, { "type": "attribute", "kind": "looks", "amount": 1 } ], "result": "A jacket you will remember all your life. It was worth it." },
+      { "text": "Buy something for your family", "effects": [ { "type": "money", "amount": 2500 }, { "type": "trait_add", "trait": "generous", "chance": 0.06 }, { "type": "happiness", "amount": 4 } ], "result": "Flowers for your mother. She cries a little, which is embarrassing for everyone." }
+    ]
+  },
+  {
+    "id": "teen_mirror", "title": "The mirror",
+    "text": "A spot on your nose, the morning of the school photo. The mirror is not your friend today.",
+    "conditions": { "minAge": 12, "maxAge": 16 }, "cooldown": 0,
+    "choices": [
+      { "text": "Squeeze it", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "It is now three times the size. It is in the photo forever." },
+      { "text": "Laugh it off", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "cheerful", "chance": 0.04 } ], "result": "You pull a face at the camera. It becomes your favourite school photo." },
+      { "text": "Stay home sick", "effects": [ { "type": "grades", "amount": -1 }, { "type": "trait_add", "trait": "vain", "chance": 0.04 } ], "result": "You are a blank space in that year's class picture." }
+    ]
+  },
+  {
+    "id": "teen_parents_embarrass", "title": "In front of everyone",
+    "text": "{T.role} picks you up from school, rolls down the window, and calls you by your baby name in front of everyone.",
+    "target": { "role": "parent" },
+    "conditions": { "minAge": 12, "maxAge": 16 }, "cooldown": 0,
+    "choices": [
+      { "text": "Die quietly", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You walk to the car very slowly, looking at the ground. {T.He} has no idea what {t.he} did." },
+      { "text": "Tell {t.him} never again", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": -2 } ], "result": "{T.He} promises. {T.He} does it again at your graduation." },
+      { "text": "Wave back", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 4, "mutual": true }, { "type": "trait_add", "trait": "cheerful", "chance": 0.04 } ], "result": "Your friends laugh. Then one of them says your mum is actually funny." }
+    ]
+  },
+  {
+    "id": "teen_all_nighter", "title": "The night before",
+    "text": "A big test tomorrow. You have not opened the book. It is ten o'clock at night.",
+    "conditions": { "minAge": 13, "maxAge": 19, "activity": "studying" }, "cooldown": 2,
+    "choices": [
+      { "text": "Stay up all night", "chance": 0.5, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "Coffee, panic and a strange calm at four in the morning. You pass. You remember none of it a week later.", "effects": [ { "type": "grades", "amount": 2 }, { "type": "health", "amount": -1 } ] },
+        "failure": { "text": "You fall asleep on page forty and wake up at seven with the book stuck to your face.", "effects": [ { "type": "grades", "amount": -3 } ] } },
+      { "text": "Sleep and hope", "effects": [ { "type": "grades", "amount": -1 }, { "type": "happiness", "amount": 1 } ], "result": "You guess on half of it. You get exactly the grade you deserve, and you know it." }
+    ]
+  },
+  {
+    "id": "teen_concert", "title": "The concert",
+    "text": "Your favourite band is playing in the big city. Your parents say you are too young. Your friends are going anyway.",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Sneak out and go", "chance": 0.6,
+        "success": { "text": "Pushed against the barrier, singing every word, sweat and lights. You get home at three and climb in through the window.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "first_concert", "text": "My first concert", "impact": 15 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.05 } ] },
+        "failure": { "text": "Your father is waiting in the kitchen with the light on. The concert was great. The month after is not.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "memory", "kind": "first_concert", "text": "My first concert, and what came after", "impact": 8 } ] } },
+      { "text": "Ask again, nicely", "chance": 0.35, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "They say yes, if your older cousin goes too. Your cousin is cooler than you thought.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "first_concert", "text": "My first concert", "impact": 14 } ] },
+        "failure": { "text": "No means no. You listen to the live recording a hundred times instead.", "effects": [ { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "teen_driving_lesson_parent", "title": "Practice driving",
+    "text": "{T.role} takes you out to practise driving in an empty car park. {T.He} is gripping the handle above the door very hard.",
+    "target": { "role": "parent", "conditions": { "minAge": 30 } },
+    "conditions": { "minAge": 15, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go faster than you should", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": -3 }, { "type": "happiness", "amount": 4 } ], "result": "Third gear in a car park. {T.Name} says nothing for the whole drive home, which is worse than shouting." },
+      { "text": "Listen to every word", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 5, "mutual": true } ], "result": "Mirror, signal, mirror. {T.He} lets go of the handle after twenty minutes. A small victory for you both." }
+    ]
+  },
+  {
+    "id": "teen_part_of_something", "title": "Belonging",
+    "text": "There is a group at school that does something: a choir, a chess club, a youth theatre, a football team. They meet on Thursdays. Someone asks if you want to come.",
+    "conditions": { "minAge": 13, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go on Thursday", "effects": [ { "type": "trait_add", "trait": "social", "chance": 0.08 }, { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "belonging", "text": "Thursdays with the group", "impact": 12 } ], "result": "Awkward for two weeks. Then you cannot imagine your week without it." },
+      { "text": "Not your kind of thing", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.05 } ], "result": "Thursdays stay quiet. You read a lot that year." }
+    ]
+  }
+]

@@ -2,6 +2,16 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.36.1 – 2026-10-02 · More childhood
+
+- **29 new events for children and teenagers**, where the pool was thinnest (from 10 to 22 events
+  open at age three): puddles, the word no, hide and seek, baking, bedtime stories, scissors, the
+  sandbox, swimming, a dead bird, dressing up, stitches, first snow, a lemonade stand, the tall tree,
+  a secret club, the school report, the sweets by the door, shooting stars, visiting a grandparent in
+  hospital, sharing a room, the first pay, the school photo, embarrassing parents, the night before
+  a test, the first concert, driving practice and finding a group to belong to.
+- `--coverage` shows events per year and the size of the event pool by age.
+
 ## 0.36.0 – 2026-10-02 · Emigration
 
 - **Leave for another country.** A new action, "Emigrate to America" (or "Move to Sweden"), sells your
