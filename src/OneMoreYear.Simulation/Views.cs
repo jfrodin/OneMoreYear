@@ -252,3 +252,9 @@ public sealed record UpbringingView(int ChildId, string Name, int Age, string St
 
 /// <summary>A business the player runs: what it is worth, how the last year went, and how many have run it.</summary>
 public sealed record BusinessView(int Id, string Name, string Kind, int Since, string Value, string LastProfit, bool LastYearGood, int Owners);
+
+/// <summary>A home the player lets out. LastNet is last year's rent after costs and interest.</summary>
+public sealed record RentalView(int Id, string Name, int Since, int Owners, string Value, string? Loan, string LastNet, bool LastYearGood, bool HasYear);
+
+/// <summary>A kind of home the player could buy to let: its price and the cash it takes.</summary>
+public sealed record RentalOptionView(string TypeId, string Name, string Price, string CashNeeded, bool CanAfford);

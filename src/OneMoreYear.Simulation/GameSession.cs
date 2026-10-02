@@ -186,6 +186,7 @@ public sealed class GameSession
         CrimeSystem.Update(ctx);
         EmigrationSystem.Update(ctx);
         BusinessSystem.Update(ctx);
+        RentalSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);
 
@@ -639,6 +640,7 @@ public sealed class GameSession
         if (p.HomeValue > 0) rows.Add(("Home", EconomySystem.Format(Ctx, p.HomeValue)));
         if (p.Mortgage >= 1) rows.Add(("Mortgage", "-" + EconomySystem.Format(Ctx, p.Mortgage)));
         if (p.CottageValue >= 1) rows.Add(("Summer cottage", EconomySystem.Format(Ctx, p.CottageValue)));
+        if (RentalSystem.OwnsRental(World, p)) rows.Add(("Homes you let, after loans", EconomySystem.Format(Ctx, RentalSystem.Equity(Ctx, p))));
         return rows;
     }
 
@@ -950,6 +952,31 @@ public sealed class GameSession
 
     /// <summary>Sells one of the player's businesses. Returns what happened.</summary>
     public string SellBusiness(int id) => World.Businesses.FirstOrDefault(b => b.Id == id && b.IsOpen && b.OwnerId == Player.Id) is { } b ? BusinessSystem.Sell(Ctx, b, Player) : "";
+
+    /// <summary>Homes the player lets out (RentalSystem).</summary>
+    public IReadOnlyList<RentalView> Rentals() => RentalSystem.OwnedBy(World, Player).Select(r => new RentalView(r.Id,
+        TextFormatter.Capitalize(r.Name), r.BoughtYear, r.Owners.Count, EconomySystem.Format(Ctx, Ctx.NominalRef(r.Value)),
+        r.Loan >= 1 ? EconomySystem.Format(Ctx, Ctx.NominalRef(r.Loan)) : null,
+        EconomySystem.Format(Ctx, Ctx.NominalRef(Math.Abs(r.LastNet))), r.LastNet >= 0, r.LastNet != 0)).ToList();
+
+    /// <summary>What the player could buy to let in their city: price, cash needed, and whether there is enough.</summary>
+    public IReadOnlyList<RentalOptionView> RentalOptions()
+    {
+        if (!Player.IsAlive || Player.Age(Year) < 18 || Player.Activity == Activity.Prison) return Array.Empty<RentalOptionView>();
+        return RentalSystem.Options(Ctx, Player).Select(o =>
+        {
+            double cash = Ctx.NominalRef(RentalSystem.CashNeeded(Ctx, o.Price));
+            return new RentalOptionView(o.Type.Id, o.Type.Name, EconomySystem.Format(Ctx, Ctx.NominalRef(o.Price)), EconomySystem.Format(Ctx, cash), Player.Money >= cash);
+        }).ToList();
+    }
+
+    public string BuyRental(string typeId)
+    {
+        RentalSystem.Buy(Ctx, Player, typeId, out var message);
+        return message;
+    }
+
+    public string SellRental(int id) => World.Rentals.FirstOrDefault(r => r.Id == id && r.IsHeld && r.OwnerId == Player.Id) is { } r ? RentalSystem.Sell(Ctx, r, Player) : "";
 
     /// <summary>The player's children under eighteen and how each is raised (UpbringingSystem).</summary>
     public IReadOnlyList<UpbringingView> Upbringing() => Kinship.Children(World, Player)

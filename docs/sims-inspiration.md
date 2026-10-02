@@ -1,6 +1,6 @@
 # Vad vi kan låna från The Sims (förslag)
 
-*Status: förslag till producenten, 2026-10-02. Inget är byggt.*
+*Status: 2026-10-03. Byggt: uppfostran (2), hobbyer och färdigheter (1), husdjur (3), eget företag (4), årets önskan (7) och hyresfastighet (5). Kvar: rykte (6), hemmet (8), livets album (9).*
 
 The Sims är ett spel om ögonblick: du styr en persons timmar. One More Year är ett spel om år och
 generationer: du styr vad som händer med ett liv. Det mesta i The Sims går därför inte att kopiera

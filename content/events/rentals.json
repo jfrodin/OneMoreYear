@@ -1,0 +1,116 @@
+// Homes let out (RentalSystem). {rental} names the home ("the two-room flat in Malmö"),
+// {rental_value} its worth, {rental_years} how long it has been in the family's hands. No dashes.
+[
+  {
+    "id": "rental_inherited", "trigger": "situation", "title": "An inheritance",
+    "text": "{t.name} has left you {rental}. It is worth about {rental_value}, and there is a tenant in it who has lived there longer than you can remember.",
+    "choices": [
+      { "text": "Keep letting it", "hint": "Rent every year, and its value follows the housing market.", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You introduce yourself to the tenant, who already knows exactly who you are, and how {t.name} liked things done." },
+      { "text": "Sell it", "hint": "Money now. The loan is paid off first.", "effects": [ { "type": "rental", "kind": "sell" } ], "result": "A sign in the window, viewings on a Sunday, and the keys go to strangers." }
+    ]
+  },
+  {
+    "id": "rent_not_paying", "title": "The rent is late",
+    "text": "The tenant in {rental} has not paid for three months. The phone goes to voicemail. The neighbours say the lights are on.",
+    "conditions": { "minAge": 18, "ownsRental": true }, "cooldown": 6,
+    "choices": [
+      { "text": "Go round and talk", "chance": 0.55, "chanceTraits": { "charming": 0.1, "kind": 0.1, "hot_tempered": -0.15 },
+        "success": { "text": "A lost job, a divorce, a lot of shame. You agree on a plan. The money comes, slowly, all of it.", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.03 } ] },
+        "failure": { "text": "Promises at the door. Nothing in the account. In the end you lose the three months and they leave.", "effects": [ { "type": "money", "amount": -25000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Start an eviction", "effects": [ { "type": "money", "amount": -30000 }, { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "greedy", "chance": 0.03 } ], "result": "Lawyers, letters, a bailiff. Months later the flat is empty and you are poorer, and a little harder." }
+    ]
+  },
+  {
+    "id": "rent_water_damage", "title": "Water",
+    "text": "A call at six in the morning: water is coming through the ceiling of the flat below {rental}. A pipe, or a washing machine, or both.",
+    "conditions": { "minAge": 18, "ownsRental": true }, "cooldown": 8,
+    "choices": [
+      { "text": "Call the insurance company", "chance": 0.6,
+        "success": { "text": "They pay most of it. You still spend a month on the phone to plumbers and an angry downstairs neighbour.", "effects": [ { "type": "money", "amount": -10000 } ] },
+        "failure": { "text": "A clause in small print. The floors, the walls, the neighbour's ceiling: all yours to pay.", "effects": [ { "type": "money", "amount": -80000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Fix it yourself", "requires": { "minSkills": { "handiness": 4 } }, "effects": [ { "type": "money", "amount": -20000 }, { "type": "skill", "kind": "handiness", "amount": 1 } ], "result": "Three weekends with a dehumidifier and a new pipe. The tenant brings you coffee and is very impressed." }
+    ]
+  },
+  {
+    "id": "rent_good_tenant", "title": "A good tenant",
+    "text": "The tenant in {rental} sends a card at Christmas, pays on the first of every month and once fixed the dripping tap without asking.",
+    "conditions": { "minAge": 18, "ownsRental": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Leave the rent alone this year", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": 3 } ], "result": "A small thank you, in money. The next Christmas card is twice as long." },
+      { "text": "Count your blessings", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Good tenants are rarer than good flats. You know it, and so do they." }
+    ]
+  },
+  {
+    "id": "rent_tenant_wants_to_buy", "title": "An offer",
+    "text": "The tenant in {rental} has lived there for years and wants to buy it. They offer a little more than it is worth, and they mean it.",
+    "conditions": { "minAge": 18, "ownsRental": true }, "cooldown": 15, "weight": 0.6,
+    "choices": [
+      { "text": "Sell it to them", "effects": [ { "type": "rental", "kind": "value", "amount": 150000 }, { "type": "rental", "kind": "sell" }, { "type": "happiness", "amount": 3 } ], "result": "A handshake in the kitchen they have cooked in for years. Somebody cries a little. Not you. Mostly not you." },
+      { "text": "Keep it in the family", "effects": [], "result": "You say no, kindly. They understand. They do not quite forgive you." }
+    ]
+  },
+  {
+    "id": "rent_renovate", "title": "The old kitchen",
+    "text": "The kitchen in {rental} is from another decade, and so is the bathroom. A builder says he can do both before the next tenant moves in.",
+    "conditions": { "minAge": 18, "ownsRental": true, "minMoney": 150000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Do it properly", "chance": 0.7,
+        "success": { "text": "New tiles, a new oven, a bathroom you would like at home. The flat is worth more, and the next tenant pays more.", "effects": [ { "type": "money", "amount": -150000 }, { "type": "rental", "kind": "value", "amount": 220000 } ] },
+        "failure": { "text": "The builder takes the deposit and disappears for a month. It gets done in the end, late, and for more.", "effects": [ { "type": "money", "amount": -200000 }, { "type": "rental", "kind": "value", "amount": 150000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "A coat of paint will do", "effects": [ { "type": "money", "amount": -10000 } ], "result": "White over everything. It looks fine in the photos." }
+    ]
+  },
+  {
+    "id": "rent_child_asks", "title": "Can I live there?",
+    "text": "{t.name} needs somewhere to live and has heard that the lease on {rental} is ending.",
+    "conditions": { "minAge": 38, "ownsRental": true }, "cooldown": 12,
+    "target": { "role": "child", "conditions": { "minAge": 18, "maxAge": 32 } },
+    "choices": [
+      { "text": "Let {t.him} have it for free", "effects": [ { "type": "money", "amount": -50000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ], "result": "A year without rent, and {t.name} on {t.his} feet. {t.He} hangs a picture of you in the hall, as a joke, and leaves it there." },
+      { "text": "Give it to {t.him}", "effects": [ { "type": "rental", "kind": "give" }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15, "mutual": true }, { "type": "memory", "who": "target", "to": "player", "kind": "gift_home", "text": "The day {name} gave me the keys", "impact": 25 } ], "result": "The keys in an envelope, with a note in your handwriting. {t.name} does not say anything for quite a long time." },
+      { "text": "Charge {t.him} the going rate", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 3 } ], "result": "Business is business, you tell {t.him}. {t.He} pays on time and mentions it at every family dinner." }
+    ]
+  },
+  {
+    "id": "rent_tenants_union", "countries": [ "sweden" ], "title": "The rent negotiation",
+    "text": "The tenants' union has written about the rent for {rental}. They think it is too high. They have a list of reasons.",
+    "conditions": { "minAge": 18, "ownsRental": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Agree to a lower rent", "effects": [ { "type": "money", "amount": -8000 }, { "type": "rental", "kind": "value", "amount": -40000 } ], "result": "A lower rent, signed on official paper. Swedish to the bone." },
+      { "text": "Take it to the rent tribunal", "chance": 0.45,
+        "success": { "text": "The tribunal agrees with you. The tenant stops saying hello on the stairs.", "effects": [ { "type": "money", "amount": -3000 } ] },
+        "failure": { "text": "The tribunal agrees with them, and adds costs.", "effects": [ { "type": "money", "amount": -15000 }, { "type": "rental", "kind": "value", "amount": -40000 } ] } }
+    ]
+  },
+  {
+    "id": "rent_short_let", "title": "By the night",
+    "text": "A friend says you could make far more letting {rental} to tourists by the night. Strangers with suitcases, every weekend.",
+    "conditions": { "minAge": 18, "ownsRental": true, "minYear": 2010 }, "cooldown": 15,
+    "choices": [
+      { "text": "Try it for a year", "chance": 0.5,
+        "success": { "text": "Nearly full all summer. Cleaning every Monday, keys in a little box by the door, and a great deal of money.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "A party that ends with the police, a broken window and a neighbour who reports you to everyone. Back to a normal lease.", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "A normal tenant is fine", "effects": [], "result": "A person who lives there, knows the neighbours and waters the plants. You sleep better." }
+    ]
+  },
+  {
+    "id": "rent_old_tenant", "title": "The old tenant",
+    "text": "The old woman who rents {rental} has lived there for thirty one years. Her rent has barely changed. The agent says you could double it with someone new.",
+    "conditions": { "minAge": 25, "ownsRental": true }, "cooldown": 20, "weight": 0.6,
+    "choices": [
+      { "text": "Let her stay as long as she likes", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "She stays another nine years. Her children write to you after the funeral. You keep the letter." },
+      { "text": "Raise the rent", "effects": [ { "type": "money", "amount": 20000 }, { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "greedy", "chance": 0.04 } ], "result": "She moves to her daughter's, three hundred kilometres away. The new tenant pays twice as much and never says hello." }
+    ]
+  },
+  {
+    "id": "rent_fire", "title": "Smoke",
+    "text": "A candle, a curtain, a moment's inattention. There has been a fire in {rental}. Nobody is hurt, but the kitchen is black.",
+    "conditions": { "minAge": 18, "ownsRental": true }, "cooldown": 30, "weight": 0.3,
+    "choices": [
+      { "text": "Rebuild", "chance": 0.7,
+        "success": { "text": "The insurance pays. Six months without rent, and then a flat that smells of new paint.", "effects": [ { "type": "money", "amount": -40000 } ] },
+        "failure": { "text": "The insurance pays a fraction. The rest comes out of your savings, and the tenant's apology is no help at all.", "effects": [ { "type": "money", "amount": -150000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Sell it as it is", "effects": [ { "type": "rental", "kind": "value", "amount": -300000 }, { "type": "rental", "kind": "sell" } ], "result": "A builder buys it for a price that makes you wince, and has it looking new in a month." }
+    ]
+  }
+]

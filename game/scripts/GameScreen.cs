@@ -492,6 +492,7 @@ public partial class GameScreen : Control
         _moneyContent.AddChild(InvestmentsCard(m));
         _moneyContent.AddChild(HomeCard(m));
         if (S.Businesses() is { Count: > 0 } businesses) _moneyContent.AddChild(BusinessCard(businesses));
+        if (S.Rentals().Count > 0 || S.RentalOptions().Count > 0) _moneyContent.AddChild(RentalCard(S.Rentals()));
         _heirloomCard = S.Heirlooms() is { Count: > 0 } heirlooms ? HeirloomsCard(heirlooms) : null;
         if (_heirloomCard != null) _moneyContent.AddChild(_heirloomCard);
 
@@ -703,6 +704,81 @@ public partial class GameScreen : Control
             box.AddChild(item);
         }
         return Ui.Card(box);
+    }
+
+    /// <summary>Homes the player lets out: worth, loan, last year's rent, and a way to buy or sell.</summary>
+    private Control RentalCard(IReadOnlyList<RentalView> rentals)
+    {
+        var box = Ui.VBox(10);
+        box.AddChild(Ui.Label("Homes to let", 20, UiTheme.Text));
+        if (rentals.Count == 0)
+            box.AddChild(Ui.Label("Buy a flat or a house and let it out: rent every year, a value that follows the housing market, and something to leave the family. Tenants come with it.",
+                15, UiTheme.Muted, wrap: true));
+        foreach (var r in rentals)
+        {
+            var item = Ui.VBox(3);
+            item.AddChild(Ui.Label(r.Name, 18, UiTheme.Accent, wrap: true));
+            item.AddChild(Ui.Label($"In the family since {r.Since}" + (r.Owners > 1 ? $", owned by {r.Owners} of the family so far" : "") + $". Worth about {r.Value}" +
+                (r.Loan != null ? $", with {r.Loan} left on the loan." : ", and paid off."), 15, UiTheme.Muted, wrap: true));
+            if (r.HasYear)
+                item.AddChild(Ui.Label(r.LastYearGood ? $"Last year it brought in {r.LastNet} after costs and interest." : $"Last year it cost you {r.LastNet} more than it brought in.",
+                    15, r.LastYearGood ? UiTheme.Text : UiTheme.Bad, wrap: true));
+            int id = r.Id;
+            string name = r.Name;
+            var sell = Ui.Button("Sell it", () => _main.ShowConfirm($"Sell {name.ToLowerInvariant()}?", $"It is worth about {r.Value}. The loan is paid off from the price.", () =>
+            {
+                string result = S.SellRental(id);
+                _main.AutoSave();
+                RefreshAll();
+                _main.ShowMessage("Sold", result);
+            }), 42);
+            sell.SetMeta("action", true);
+            sell.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            item.AddChild(sell);
+            box.AddChild(item);
+        }
+        if (S.RentalOptions().Count > 0)
+        {
+            var buy = Ui.Button("Buy a home to let…", ShowRentalDialog, 46);
+            buy.SetMeta("action", true);
+            buy.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            RegisterHint(buy, "See what a home to let costs in your city.");
+            box.AddChild(buy);
+        }
+        return Ui.Card(box);
+    }
+
+    private void ShowRentalDialog()
+    {
+        var box = Ui.VBox(10);
+        box.CustomMinimumSize = new Vector2(760, 0);
+        box.AddChild(Ui.Label("Buy a home to let", 28, UiTheme.Accent));
+        box.AddChild(Ui.Label("Prices are for your city. The bank lends the rest, but wants a quarter of the price from you, and there are fees. " +
+                              "The rent pays the loan's interest and the running costs, most years. Some years a tenant does not pay, or a pipe bursts.",
+            15, UiTheme.Muted, wrap: true));
+        System.Action close = () => { };
+        Control? first = null;
+        foreach (var o in S.RentalOptions())
+        {
+            string typeId = o.TypeId, typeName = o.Name.ToLowerInvariant();
+            var b = Ui.Button($"{o.Name}  ·  {o.Price}  ·  {o.CashNeeded} from you", () => _main.ShowConfirm($"Buy {typeName} to let?",
+                $"It costs about {o.Price}. You pay {o.CashNeeded} now; the bank lends the rest.", () =>
+                {
+                    string result = S.BuyRental(typeId);
+                    close();
+                    _main.AutoSave();
+                    RefreshAll();
+                    _main.ShowMessage("A home to let", result);
+                }), 44);
+            b.Disabled = !o.CanAfford;
+            RegisterHint(b, o.CanAfford ? $"You pay {o.CashNeeded} now." : $"You need {o.CashNeeded} in the bank.");
+            box.AddChild(b);
+            first ??= b.Disabled ? null : b;
+        }
+        var cancel = Ui.Button("Not now", () => close(), 46);
+        cancel.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+        box.AddChild(cancel);
+        close = _main.ShowDialog(box, first ?? cancel);
     }
 
     public void ScrollMoneyToEnd()

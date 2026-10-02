@@ -324,6 +324,7 @@ public sealed class ConditionDef
     public string? Hobby { get; set; }
     /// <summary>Runs a family business (true) or does not (false).</summary>
     public bool? RunsBusiness { get; set; }
+    public bool? OwnsRental { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
     /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>

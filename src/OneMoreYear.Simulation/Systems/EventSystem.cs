@@ -115,6 +115,7 @@ public static class EventSystem
         foreach (var (name, v) in def.Vars) pending.Vars[name] = ComputeVar(ctx, v, pending);
         // An event about the family pet names it.
         if (def.Conditions?.RunsBusiness == true && BusinessSystem.OwnedBy(w, player).FirstOrDefault() is { } business) BusinessSystem.Fill(ctx, pending, business);
+        if (def.Conditions?.OwnsRental == true && RentalSystem.OwnedBy(w, player).ToList() is { Count: > 0 } rentals) RentalSystem.Fill(ctx, pending, rentals[ctx.Rng.Next(rentals.Count)]);
         if (def.Conditions?.Pet is { } petKind && petKind != "none" && PetSystem.Matching(ctx, player, petKind) is { } pet) PetSystem.Fill(ctx, pending, pet);
         return pending;
     }
@@ -192,6 +193,7 @@ public static class EventSystem
         if (c.MinSkills is { } minSkills && minSkills.Any(kv => SkillSystem.Level(p, kv.Key) < kv.Value)) return false;
         if (c.Hobby is { } wantHobby && p.Hobby != wantHobby) return false;
         if (c.RunsBusiness is { } runs && BusinessSystem.RunsBusiness(w, p) != runs) return false;
+        if (c.OwnsRental is { } letting && RentalSystem.OwnsRental(w, p) != letting) return false;
         if (c.Pet is { } petKind && (petKind == "none" ? PetSystem.InHome(w, p).Any() : PetSystem.Matching(ctx, p, petKind) == null)) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;

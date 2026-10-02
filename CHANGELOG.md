@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.52.0 – 2026-10-03 · Small wishes, and a flat to let
+
+- **The year's wish** (from The Sims' wants): every year you want one small thing that fits your life
+  just now. Spend more time with your mother, really talk to your partner again, make peace with a
+  brother, get in shape, find work, ask for a raise, get a place of your own. It shows in the side
+  panel. Do it and it turns green, and at the end of the year you are a little happier. Nothing
+  happens if you do not. 30 kinds of wish.
+- A rare achievement for keeping forty wishes in one life.
+- **Homes to let** (from The Sims' For Rent): on the money tab, buy a flat or a house in your city
+  and let it out. You pay a quarter of the price and fees, the bank lends the rest. Every year the
+  rent pays the interest and the running costs, mostly, and the value follows the housing market.
+  It counts in your net worth.
+- It stays in the family: at death it goes whole to the will's favourite, the eldest grown child or
+  the partner. If it comes to you, you choose to keep it or sell it. Relatives with money to spare
+  buy their own.
+- 11 events with tenants: the rent is late, water through the ceiling, a good tenant, an offer to
+  buy, the old kitchen, a child who wants to live there (or be given it), the tenants' union,
+  letting by the night, the old woman who has lived there thirty one years, a fire.
+
 ## 0.51.0 – 2026-10-03 · A thousand moments
 
 - **Over a thousand events.** 102 new ones in six groups:

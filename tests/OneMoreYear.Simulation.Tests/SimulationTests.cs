@@ -1104,6 +1104,31 @@ public class CountryTests
     }
 
     [Fact]
+    public void A_home_to_let_pays_rent_and_is_inherited()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 29, StartYear = 1970 });
+        var bot = new AutoPlayer(29, useActions: false);
+        for (int i = 0; i < 20 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        var option = s.RentalOptions().First();
+        Assert.Contains("need", s.BuyRental(option.TypeId).ToLowerInvariant());
+        p.Money += s.Ctx.NominalRef(5_000_000);
+        double before = EconomySystem.NetWorth(s.Ctx, p);
+        s.BuyRental(option.TypeId);
+        var rental = Assert.Single(RentalSystem.OwnedBy(s.World, p));
+        Assert.True(Math.Abs(EconomySystem.NetWorth(s.Ctx, p) - before) < before * 0.1, "buying moves money into the home, not away");
+        for (int i = 0; i < 5; i++) { s.World.Year++; RentalSystem.Update(s.Ctx); }
+        Assert.NotEqual(0, rental.LastNet);
+        Assert.Single(s.Rentals());
+
+        // At death it goes whole to an heir, or into the estate.
+        var heir = RentalSystem.Heir(s.Ctx, p);
+        LifeSystem.Die(s.Ctx, p, "an accident");
+        if (heir != null) Assert.Equal(heir.Id, rental.OwnerId);
+        else Assert.False(rental.IsHeld);
+    }
+
+    [Fact]
     public void A_family_business_runs_and_passes_on()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 23, StartYear = 1960 });

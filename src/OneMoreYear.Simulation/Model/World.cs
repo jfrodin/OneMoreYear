@@ -51,6 +51,7 @@ public sealed class World
     public List<Heirloom> Heirlooms { get; set; } = new();
     public List<Pet> Pets { get; set; } = new();
     public List<Business> Businesses { get; set; } = new();
+    public List<Rental> Rentals { get; set; } = new();
     /// <summary>The player's small wish for this year (WishSystem); null when there is none.</summary>
     public Wish? Wish { get; set; }
 
@@ -208,4 +209,24 @@ public sealed class Business
     /// <summary>Everyone who has owned it, in order.</summary>
     public List<int> Owners { get; set; } = new();
     public bool IsOpen => ClosedYear == null;
+}
+
+/// <summary>A home bought to let (RentalSystem). Money in reference kronor of 2020, so it survives emigration.</summary>
+public sealed class Rental
+{
+    public int Id { get; set; }
+    public int OwnerId { get; set; }
+    /// <summary>"two-room flat": the kind of home, without an article.</summary>
+    public string Kind { get; set; } = "";
+    public string City { get; set; } = "";
+    public double Value { get; set; }
+    public double Loan { get; set; }
+    public int BoughtYear { get; set; }
+    /// <summary>Last year's rent after costs and interest (can be negative).</summary>
+    public double LastNet { get; set; }
+    public int? SoldYear { get; set; }
+    /// <summary>Everyone who has owned it, in order.</summary>
+    public List<int> Owners { get; set; } = new();
+    public bool IsHeld => SoldYear == null;
+    public string Name => $"the {Kind} in {City}";
 }
