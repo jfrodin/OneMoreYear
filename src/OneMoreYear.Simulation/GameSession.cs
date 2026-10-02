@@ -182,6 +182,7 @@ public sealed class GameSession
         if (Player.IsAlive)
         {
             DreamSystem.Update(ctx);
+            LegacySystem.Update(ctx);
             EventSystem.GenerateRandomEvents(ctx);
             w.ActionPoints = ActionPointsFor(Player);
         }

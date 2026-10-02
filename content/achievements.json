@@ -69,6 +69,10 @@
     "text": "No parent should bury a child. You buried all of yours, and kept getting up in the morning." },
   { "id": "cell_to_corner_office", "tier": "secret", "name": "From the cell to the corner office",
     "text": "Years behind bars, and then the top of the ladder. Some people at work know. Nobody says a thing." },
+  { "id": "myth_true", "tier": "secret", "name": "The rumour was true",
+    "text": "Every family has a story nobody believes. Yours turned out to be true, and worse." },
+  { "id": "family_book", "tier": "secret", "name": "The family book",
+    "text": "Eight generations, bound in one book. Somewhere in it is every one of you who got this far." },
   { "id": "one_hundred_ten", "tier": "secret", "name": "A hundred and ten",
     "text": "A hundred and ten years. The doctors have stopped giving advice and started asking for it." }
 ]

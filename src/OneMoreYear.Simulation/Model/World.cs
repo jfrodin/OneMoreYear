@@ -117,6 +117,8 @@ public sealed class PendingEvent
     public string EventId { get; set; } = "";
     public Dictionary<string, int> Roles { get; set; } = new();
     public Dictionary<string, double> Vars { get; set; } = new();
+    /// <summary>Generated text for the event: {myth}, {truth}, {diary} ... (set by the system that queued it).</summary>
+    public Dictionary<string, string> Words { get; set; } = new();
     public bool Resolved { get; set; }
     public int? ChosenIndex { get; set; }
     public string? OutcomeText { get; set; }

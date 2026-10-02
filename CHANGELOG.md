@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.39.0 – 2026-10-02 · What only comes with time
+
+None of this is announced. It happens when the family has lived long enough.
+
+- **Family myths**: from the third generation, old stories about your own dead ancestors are told at
+  dinner, grown in the telling and built from what really happened to them (a prison sentence
+  becomes an outlaw who was never caught, a death at forty becomes a hero in a fire). Ask the oldest
+  relative, or dig in the archives for the truth. Some truths are worse than the story.
+- **The diary** of a played ancestor turns up, with their strongest memories in their own words.
+- **A genealogist** writes in the fifth generation; **a hundred years** since the first of you is
+  marked; **a reunion** when the family is big enough; **a book** about the family in the eighth
+  generation.
+- Two new secret achievements.
+
 ## 0.38.0 – 2026-10-02 · Life dreams
 
 - **Every played person can have a dream.** At sixteen, or when the story passes to them, you choose

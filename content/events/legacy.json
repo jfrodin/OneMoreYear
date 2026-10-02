@@ -1,0 +1,75 @@
+// What only comes after long play (docs/endgame.md), queued by LegacySystem. Never announced.
+// {myth}, {truth}, {diary} and the other words are generated from the family's own history. No dashes.
+[
+  {
+    "id": "family_myth", "trigger": "situation",
+    "title": "The old story",
+    "text": "At a family dinner, someone tells it again, the way it is always told: {myth}. Everyone nods. It is the story about {t.role}, {t.name}.",
+    "choices": [
+      { "text": "Leave the legend alone", "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "Some stories are better than the truth. This one will be told again, a little bigger, at the next dinner." },
+      { "text": "Ask the oldest relative what really happened", "effects": [ { "type": "happiness", "amount": 1 } ],
+        "result": "{truth} You decide whether to tell the others." },
+      { "text": "Dig in the attic and the archives", "chance": 0.6, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "{truth}", "effects": [ { "type": "reveal_myth" }, { "type": "memory", "kind": "family_truth", "text": "What I found out about {t.name}", "impact": -5 } ] },
+        "failure": { "text": "Boxes of photographs nobody can put names to, and receipts for things that no longer exist. The story stays a story.", "effects": [] } }
+    ]
+  },
+  {
+    "id": "legacy_diary", "trigger": "situation",
+    "title": "The diary",
+    "text": "Clearing out a cupboard, you find a notebook with a cracked cover. It belonged to {t.name}, {t.role}. The handwriting is small and careful: \"{diary}\"",
+    "choices": [
+      { "text": "Read it all, in one night", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "diary", "text": "Reading {t.name}'s diary", "impact": 18 } ],
+        "result": "By morning you know {t.name} better than anyone alive ever did. Some pages you read twice. One you wish you had not read at all." },
+      { "text": "Give it to the children", "effects": [ { "type": "happiness", "amount": 3 } ],
+        "result": "They pass it round at Christmas. Somebody laughs at one page and cries at the next." }
+    ]
+  },
+  {
+    "id": "legacy_genealogist", "trigger": "situation",
+    "title": "A letter from a stranger",
+    "text": "A genealogist has been studying your family. The first of you, {t.name}, was born in {founder_born}. Since then, {blood} people have carried that blood, over {generations} generations of your telling.",
+    "choices": [
+      { "text": "Ask for the whole chart", "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "family_chart", "text": "The chart of the whole family", "impact": 12 } ],
+        "result": "A roll of paper as long as the hallway. You find yourself at the bottom, a small name among hundreds, and feel oddly proud." },
+      { "text": "Some things are better not known", "effects": [], "result": "You put the letter in a drawer. Every few years, you take it out and read it again." }
+    ]
+  },
+  {
+    "id": "legacy_centenary", "trigger": "situation",
+    "title": "A hundred years",
+    "text": "Today it is a hundred years since {t.name} was born, the first of you whose story you know. {T.He} {founder_years}. The family is talking about doing something.",
+    "choices": [
+      { "text": "Gather everyone for a dinner", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "centenary", "text": "A hundred years since {t.name}", "impact": 15 } ],
+        "result": "Old photographs on the table, four generations arguing about who looks like whom, and a toast to someone half of them never met." },
+      { "text": "Visit the grave, alone", "effects": [ { "type": "happiness", "amount": 2 } ],
+        "result": "Flowers, a few quiet words, and the feeling that someone, somewhere, would be pleased." }
+    ]
+  },
+  {
+    "id": "legacy_reunion", "trigger": "situation",
+    "title": "The reunion",
+    "text": "{living} living descendants of {t.name}. Somebody has finally organised it: a field, a tent, name tags, and a family tree printed on a banner.",
+    "choices": [
+      { "text": "Give a speech", "chance": 0.6, "chanceTraits": { "charming": 0.2, "social": 0.1, "introvert": -0.2 },
+        "success": { "text": "You talk about where the family came from. A cousin you have never met cries. Then everyone eats too much cake.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "reunion", "text": "The great family reunion", "impact": 20 } ] },
+        "failure": { "text": "You forget half of it. Nobody minds. The children are playing football with a second cousin's hat.", "effects": [ { "type": "happiness", "amount": 4 } ] } },
+      { "text": "Find the oldest one there and listen", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "reunion", "text": "Listening to the oldest at the reunion", "impact": 15 } ],
+        "result": "A great aunt in a folding chair tells you three stories nobody else knows. You write them down on a napkin." }
+    ]
+  },
+  {
+    "id": "legacy_book", "trigger": "situation",
+    "title": "The family book",
+    "text": "A publisher wants to print the family's story. {generations} generations, letters, photographs, and the old stories, true and otherwise. They need a title.",
+    "choices": [
+      { "text": "Call it One More Year", "effects": [ { "type": "feat", "kind": "family_book" }, { "type": "happiness", "amount": 6 } ],
+        "result": "Because that is how it went. One year, and then one more, and then another, until there were all of you." },
+      { "text": "Name it after the first of you", "effects": [ { "type": "feat", "kind": "family_book" }, { "type": "happiness", "amount": 5 } ],
+        "result": "{t.name}'s name on the cover. Somewhere, you like to think, {t.he} is embarrassed and delighted." },
+      { "text": "Some stories should stay in the family", "effects": [ { "type": "happiness", "amount": 1 } ],
+        "result": "You say no. But you write it all down anyway, by hand, for whoever comes next." }
+    ]
+  }
+]

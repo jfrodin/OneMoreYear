@@ -63,6 +63,7 @@ public static partial class TextFormatter
                     "dream" => DreamSystem.Of(ctx, player)?.Name.ToLowerInvariant() ?? "",
                     "dream_fulfilled" => DreamSystem.Of(ctx, player)?.Fulfilled ?? "",
                     "dream_failed" => DreamSystem.Of(ctx, player)?.Failed ?? "",
+                    _ when pending != null && pending.Words.TryGetValue(head, out var word) => word,
                     _ when pending != null && pending.Vars.TryGetValue(head, out var v) => EconomySystem.Format(ctx, ctx.Nominal(v)),
                     _ => m.Value
                 };

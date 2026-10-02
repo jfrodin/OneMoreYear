@@ -70,6 +70,8 @@ public static class AchievementSystem
         ["cell_to_corner_office"] = ctx => Played(ctx).Any(p => p.CriminalRecord.Any(r => r.Sentence.Contains("prison")) && p.Activity == Activity.Working
             && ctx.Content.Occupation(p.OccupationId) is { } occ && occ.Id != "crime" && p.OccupationLevel >= occ.Levels.Count - 1),
         ["one_hundred_ten"] = ctx => Played(ctx).Any(p => AgeReached(ctx, p) >= 110),
+        ["myth_true"] = ctx => ctx.World.Feats.Contains("myth_true"),
+        ["family_book"] = ctx => ctx.World.Feats.Contains("family_book"),
     };
 
     public static IEnumerable<string> RuleIds => Checks.Keys;

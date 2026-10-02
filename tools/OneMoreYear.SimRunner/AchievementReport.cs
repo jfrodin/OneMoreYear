@@ -15,6 +15,8 @@ static class AchievementReport
         var count = all.ToDictionary(a => a.Id, _ => 0);
         int[] starts = { 1950, 1960, 1970, 1980 };
         int maxDesc = 0, maxAge = 0, maxKids = 0, gens = 0, anyOldest = 0, over80 = 0, over90 = 0, died = 0; double maxWorth = 0; var byDecade = new int[12];
+        var legacyCount = new Dictionary<string, int>();
+        var examples = new List<string>();
         for (int g = 0; g < games; g++)
         {
             var s = GameSession.NewGame(new NewGameOptions { Seed = (ulong)(5000 + g), StartYear = starts[g % starts.Length] });
@@ -23,6 +25,15 @@ static class AchievementReport
             for (int year = 0; year < 220; year++)
             {
                 foreach (var a in s.NewAchievements(have)) { have.Add(a.Id); count[a.Id]++; }
+                foreach (var e in s.World.PendingEvents.Where(e => e.EventId.StartsWith("legacy_") || e.EventId == "family_myth"))
+                {
+                    legacyCount[e.EventId] = legacyCount.GetValueOrDefault(e.EventId) + 1;
+                    if (examples.Count(x => x.StartsWith(e.EventId)) < 2)
+                    {
+                        var view = s.DescribeEvent(e);
+                        examples.Add($"{e.EventId} ({s.Year}): {view.Text}");
+                    }
+                }
                 if (!bot.PlayYear(s)) break;
             }
             foreach (var a in s.NewAchievements(have)) { have.Add(a.Id); count[a.Id]++; }
@@ -42,5 +53,7 @@ static class AchievementReport
         Console.WriteLine($"Best seen: {maxDesc} living descendants of the founder, {gens} generations played, richest {maxWorth / 1e6:0.0} M ref, oldest {maxAge}, most children {maxKids}; anyone oldest {anyOldest}, of adults who died: {over80 * 100 / Math.Max(1, died)}% reached 80, {over90 * 100.0 / Math.Max(1, died):0.0}% reached 90");
         Console.WriteLine("Adult deaths by age (cohorts born from start minus 20 to start plus 60): " + string.Join(", ", Enumerable.Range(2, 10).Select(d => $"{d * 10}s {byDecade[d] * 100.0 / Math.Max(1, byDecade.Sum()):0}%")));
         foreach (var a in all) Console.WriteLine($"  {a.Tier,-9} {a.Id,-24} {count[a.Id] * 100 / games,3}%");
+        Console.WriteLine("Long-play events: " + string.Join(", ", legacyCount.OrderBy(kv => kv.Key).Select(kv => $"{kv.Key} {kv.Value}")));
+        foreach (var x in examples) Console.WriteLine("  " + x);
     }
 }
