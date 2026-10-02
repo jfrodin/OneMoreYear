@@ -1,0 +1,215 @@
+// Working life by trade: care, office, manual, school, shop. What your job is should show in your
+// days. No dashes.
+[
+  {
+    "id": "job_care_night_patient", "title": "The night shift",
+    "text": "Three in the morning on the ward. An old man who cannot sleep asks if you have a minute. You have eleven other patients.",
+    "conditions": { "minAge": 18, "activity": "working", "jobTags": [ "care" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Sit with him for ten minutes", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "performance", "amount": -1 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "He tells you about his wife, who died in this hospital forty years ago. He sleeps after that. You remember him for the rest of your life." },
+      { "text": "Promise to come back later", "effects": [ { "type": "performance", "amount": 1 } ], "result": "When you come back he is asleep. You stand in the doorway for a moment anyway." }
+    ]
+  },
+  {
+    "id": "job_care_mistake", "title": "The wrong dose",
+    "text": "Checking the charts at the end of your shift, you see it: a colleague has given a patient the wrong dose. The patient seems fine. Nobody else has noticed.",
+    "conditions": { "minAge": 20, "activity": "working", "jobTags": [ "care" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Report it", "effects": [ { "type": "performance", "amount": 3 }, { "type": "happiness", "amount": -2 } ], "result": "It is the right thing. Your colleague does not speak to you for a month. Then they thank you, quietly, in the car park." },
+      { "text": "Talk to your colleague first", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "They go white, then report it themselves. You both sleep badly that week, and better after." }
+    ]
+  },
+  {
+    "id": "job_care_thank_you", "title": "A card",
+    "text": "A card arrives at the ward, addressed to you by name. A family thanking you for the last weeks of their mother's life.",
+    "conditions": { "minAge": 20, "activity": "working", "jobTags": [ "care" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Pin it up in the staff room", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "It stays on the board for years, curling at the corners. On bad days you read it." },
+      { "text": "Take it home", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "thank_you_card", "text": "The card from the family", "impact": 10 } ], "result": "It goes in a box with the others. There are more cards in that box than you would ever admit." }
+    ]
+  },
+  {
+    "id": "job_office_presentation", "title": "The presentation",
+    "text": "You are presenting to the board tomorrow. Forty slides, nine executives, and the projector has a history of betrayal.",
+    "conditions": { "minAge": 22, "activity": "working", "jobTags": [ "office" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Rehearse all night", "chance": 0.7, "chanceAttributes": { "smarts": 0.004 }, "chanceTraits": { "charming": 0.1 },
+        "success": { "text": "Smooth, confident, and the chief executive asks a question you prepared for. Afterwards, a nod across the corridor that means more than a raise.", "effects": [ { "type": "performance", "amount": 6 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "The projector dies on slide three. You do the rest from memory, badly. Someone says it was very brave.", "effects": [ { "type": "performance", "amount": -3 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Cut it to ten slides", "chance": 0.6,
+        "success": { "text": "They are out ten minutes early and delighted about it. Nobody has ever made a board meeting short before.", "effects": [ { "type": "performance", "amount": 5 } ] },
+        "failure": { "text": "Someone asks for the data you cut. You promise to send it. You never hear about it again.", "effects": [ { "type": "performance", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "job_office_affair_rumour", "title": "The rumour",
+    "text": "There is a rumour at work about you and a colleague. It is not true. Everyone seems to believe it.",
+    "conditions": { "minAge": 22, "activity": "working", "jobTags": [ "office" ] }, "cooldown": 12,
+    "choices": [
+      { "text": "Laugh it off", "chance": 0.6, "chanceTraits": { "cheerful": 0.15, "paranoid": -0.2 },
+        "success": { "text": "It dies in a week, replaced by a better rumour about someone in accounts.", "effects": [] } ,
+        "failure": { "text": "It follows you for a year. Even your partner asks, once, in a careful voice.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Find out who started it", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.04 } ], "result": "You find out. It was someone you trusted. That is worse than the rumour." }
+    ]
+  },
+  {
+    "id": "job_office_weekend_email", "title": "Saturday",
+    "text": "Saturday morning, breakfast, children in pyjamas. Your phone buzzes: an email from your boss, marked urgent.",
+    "conditions": { "minAge": 22, "activity": "working", "jobTags": [ "office" ], "minYear": 2000 }, "cooldown": 4,
+    "choices": [
+      { "text": "Answer it", "effects": [ { "type": "performance", "amount": 2 }, { "type": "happiness", "amount": -2 } ], "result": "It takes four hours and was not urgent. Breakfast went cold. The children noticed." },
+      { "text": "It can wait until Monday", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "performance", "amount": -1 } ], "result": "On Monday it has solved itself. It usually does." }
+    ]
+  },
+  {
+    "id": "job_manual_injury", "title": "The ladder",
+    "text": "End of a long day. The ladder is not quite steady, and the job is almost finished. Getting the other ladder means going back to the van.",
+    "conditions": { "minAge": 18, "activity": "working", "jobTags": [ "manual" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Fetch the other ladder", "effects": [ { "type": "performance", "amount": -1 } ], "result": "Ten minutes lost. Nothing happens. That is the point." },
+      { "text": "Just finish it", "chance": 0.85,
+        "success": { "text": "Done. Home in time for dinner. You will do it again, and one day you will remember this ladder.", "effects": [ { "type": "performance", "amount": 1 } ] },
+        "failure": { "text": "A wobble, a fall, a wrist in plaster for six weeks. Your foreman says nothing, which is worse than shouting.", "effects": [ { "type": "health", "amount": -8 }, { "type": "money", "amount": -5000 } ] } }
+    ]
+  },
+  {
+    "id": "job_manual_pride", "title": "Built to last",
+    "text": "You drive past something you built years ago. It is still standing, still in use, and a family is coming out of the front door.",
+    "conditions": { "minAge": 30, "activity": "working", "jobTags": [ "manual" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Stop and look", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "built_to_last", "text": "The house I built, still standing", "impact": 10 } ], "result": "You notice a crooked gutter you always meant to fix. Nobody else ever will. It makes you smile." },
+      { "text": "Point it out to your children", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "\"I built that.\" They are not impressed. In thirty years, one of them will say the same thing to their own child." }
+    ]
+  },
+  {
+    "id": "job_manual_apprentice_trouble", "title": "The apprentice",
+    "text": "Your apprentice is nineteen, late every morning, and has a natural talent you have not seen in twenty years.",
+    "conditions": { "minAge": 35, "activity": "working", "jobTags": [ "manual" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Be hard on them", "chance": 0.5,
+        "success": { "text": "They grumble, then improve. Ten years later they have their own firm and send you a crate of beer every Christmas.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "performance", "amount": 2 } ] },
+        "failure": { "text": "They quit in the spring. You see them sometimes at the supermarket. Neither of you says hello.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Find out why they are late", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "happiness", "amount": 3 } ], "result": "A sick mother, two buses, a little brother to get to school. You start picking them up on your way." }
+    ]
+  },
+  {
+    "id": "job_school_difficult_parent", "title": "The parent",
+    "text": "A parent has booked a meeting to complain about their child's grade. They have brought a folder, a highlighter and a lawyer's tone of voice.",
+    "conditions": { "minAge": 22, "activity": "working", "jobTags": [ "school" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Stand firm, politely", "chance": 0.6, "chanceTraits": { "brave": 0.1, "conflict_averse": -0.2 },
+        "success": { "text": "An hour later they leave without a word. The grade stands. The child comes to you the next week and says sorry about their parent.", "effects": [ { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "They go to the head teacher, who changes the grade. You learn something about the job they never taught at college.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Give a little", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Half a grade. Everybody leaves unhappy, which is how you know it was a compromise." }
+    ]
+  },
+  {
+    "id": "job_school_former_pupil", "title": "A former pupil",
+    "text": "A young adult stops you in the street. You taught them ten years ago. They want to tell you that you were the reason they became a nurse.",
+    "conditions": { "minAge": 35, "activity": "working", "jobTags": [ "school" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Pretend you remember them", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "You do not, not really. It does not matter. You walk the rest of the way home a little taller." },
+      { "text": "Ask them everything", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "former_pupil", "text": "The pupil who became a nurse", "impact": 15 } ], "result": "Coffee turns into lunch. They remember things you said that you have no memory of saying. You will be more careful with what you say from now on." }
+    ]
+  },
+  {
+    "id": "job_school_trip_disaster", "title": "The class trip",
+    "text": "Thirty children, one museum, one coach, and at the head count before leaving there are twenty nine.",
+    "conditions": { "minAge": 22, "activity": "working", "jobTags": [ "school" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Stay calm and search", "chance": 0.9,
+        "success": { "text": "Found in the gift shop, trying on a Viking helmet. Your heart starts again around the motorway.", "effects": [ { "type": "happiness", "amount": -1 } ] },
+        "failure": { "text": "Two hours, the museum staff, a security guard and finally the police find her asleep in the dinosaur room. The parents are surprisingly understanding. The head teacher is not.", "effects": [ { "type": "performance", "amount": -5 }, { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "job_shop_shoplifter", "title": "The shoplifter",
+    "text": "You see a teenager slip a sandwich into their jacket. They look hungry, scared and very young.",
+    "conditions": { "minAge": 18, "activity": "working", "jobTags": [ "shop" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Stop them", "effects": [ { "type": "performance", "amount": 2 }, { "type": "happiness", "amount": -2 } ], "result": "Security, a phone call, a mother who arrives crying. It is your job. It does not feel like it." },
+      { "text": "Pay for it yourself", "effects": [ { "type": "money", "amount": -50 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "happiness", "amount": 3 } ], "result": "You catch their eye and nod at the door. They go. You put the coins in the till when nobody is looking." },
+      { "text": "Look the other way", "effects": [], "result": "The sandwich is never mentioned. Neither is the next one, or the one after." }
+    ]
+  },
+  {
+    "id": "job_shop_regular", "title": "The regular",
+    "text": "An old man has come in every morning for years: one newspaper, one pastry, one comment about the weather. This morning he has not come.",
+    "conditions": { "minAge": 18, "activity": "working", "jobTags": [ "shop" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Ask around", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "A neighbour tells you he is in hospital. You send a card from the shop. He comes back two months later and says the weather has been terrible." },
+      { "text": "Keep his pastry aside, just in case", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You keep it until closing, then eat it yourself. You do the same the next day, and the next." }
+    ]
+  },
+  {
+    "id": "job_shop_rude_customer", "title": "The customer",
+    "text": "A customer is shouting at you about a price you do not set, a policy you did not make, and a queue you cannot make shorter.",
+    "conditions": { "minAge": 16, "activity": "working", "jobTags": [ "shop" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Smile and apologise", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.03 } ], "result": "They leave. The next customer says: I do not know how you do it. Neither do you." },
+      { "text": "Tell them what you think", "requires": { "traitsAny": [ "hot_tempered", "brave" ] }, "chance": 0.5,
+        "success": { "text": "The whole queue applauds. Your manager pretends not to have heard, and buys you a coffee.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "They ask for your name and your manager's. A formal warning arrives on Friday.", "effects": [ { "type": "performance", "amount": -6 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "job_any_office_party", "title": "After the party",
+    "text": "The morning after the work party. You remember most of it. You are worried about the part you do not remember.",
+    "conditions": { "minAge": 20, "maxAge": 65, "activity": "working" }, "cooldown": 6,
+    "choices": [
+      { "text": "Walk in like nothing happened", "chance": 0.6,
+        "success": { "text": "Nothing happened, it turns out. Somebody else sang on the table.", "effects": [ { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "There is a video. There is always a video.", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "performance", "amount": -2 } ] } },
+      { "text": "Call in sick", "effects": [ { "type": "performance", "amount": -2 } ], "result": "Everyone knows exactly why. Somebody leaves a packet of painkillers on your desk." }
+    ]
+  },
+  {
+    "id": "job_any_long_service", "title": "Twenty five years",
+    "text": "Twenty five years at the same place. There is a cake in the staff room with your name on it, spelled almost correctly.",
+    "conditions": { "minAge": 45, "activity": "working" }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Make a short speech", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "long_service", "text": "Twenty five years at work", "impact": 10 } ], "result": "You thank people. Two of them are no longer alive, and you thank them too. It is quiet for a moment, then everyone eats cake." },
+      { "text": "Eat the cake and get back to work", "effects": [ { "type": "performance", "amount": 2 } ], "result": "A watch, a handshake, a slice of cake. By two o'clock it is a normal Tuesday." }
+    ]
+  },
+  {
+    "id": "job_any_strike_vote", "title": "The vote",
+    "text": "The union is voting on a strike. Better pay, everyone agrees, but your savings would last about three weeks.",
+    "conditions": { "minAge": 20, "maxAge": 66, "activity": "working", "jobTags": [ "manual", "care", "school", "shop" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Vote to strike", "chance": 0.6,
+        "success": { "text": "Ten days on the picket line, soup from a van, and in the end a deal better than anyone hoped.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "money", "amount": 15000 } ] },
+        "failure": { "text": "Six weeks. Then a deal no better than the first offer. Your savings are gone. The friendships from the picket line are not.", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Vote against", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You are outvoted. You strike anyway, because everyone else does. Somebody knows how you voted." }
+    ]
+  },
+  {
+    "id": "job_any_colleague_cries", "title": "In the stairwell",
+    "text": "You find a colleague crying in the stairwell. You do not know them well. They try to pretend they are fine.",
+    "conditions": { "minAge": 20, "maxAge": 66, "activity": "working" }, "cooldown": 10,
+    "choices": [
+      { "text": "Sit down on the step", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ], "result": "A divorce, a sick child, a landlord. You do not fix anything. You listen for twenty minutes. Years later, they still say hello like an old friend." },
+      { "text": "Give them some privacy", "effects": [], "result": "You take the lift instead. You think about the stairwell all afternoon." }
+    ]
+  },
+  {
+    "id": "job_any_retirement_plan", "title": "How many years left",
+    "text": "A pension statement arrives. You do the sums: how many more years of this, and how much there will be at the end.",
+    "conditions": { "minAge": 50, "maxAge": 64, "activity": "working" }, "cooldown": 10,
+    "choices": [
+      { "text": "Save more, retire on time", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": 1 } ], "result": "A little less now, a little more later. It is the least exciting decision you will ever make, and one of the best." },
+      { "text": "Dream about retiring early", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A cottage, a boat, a lot of reading. The sums say no. You keep the dream in a drawer for later." }
+    ]
+  },
+  {
+    "id": "job_any_wrong_email", "title": "Sent",
+    "text": "You have just sent an email complaining about your boss. To your boss.",
+    "conditions": { "minAge": 20, "maxAge": 66, "activity": "working", "minYear": 1998 }, "cooldown": 15,
+    "choices": [
+      { "text": "Walk into their office and own it", "chance": 0.55, "chanceTraits": { "brave": 0.15, "charming": 0.15 },
+        "success": { "text": "They read it, laugh, and say you have a point about the meetings. Nobody ever mentions it again.", "effects": [ { "type": "performance", "amount": 2 }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "They read it, do not laugh, and remember it for exactly as long as you work there.", "effects": [ { "type": "performance", "amount": -6 } ] } },
+      { "text": "Pretend it was a joke", "effects": [ { "type": "performance", "amount": -3 } ], "result": "Nobody believes it was a joke. Everybody pretends to. That is the office." }
+    ]
+  }
+]
