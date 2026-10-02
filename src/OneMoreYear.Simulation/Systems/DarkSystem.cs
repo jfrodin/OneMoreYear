@@ -332,7 +332,7 @@ public static class DarkSystem
         if (!ctx.Rng.Chance(chance)) return;
         var trait = ctx.Rng.Pick(TraumaTraits);
         if (PersonFactory.TryAddTrait(ctx, p, trait) && p.Id == ctx.World.PlayerId)
-            ctx.World.Log($"{p.FirstName} became {TextFormatter.More(ctx.Content.Traits[trait].Name)}{(cause == null ? "" : $", after: “{cause}”")}.", 2, "trait", p.Id);
+            ctx.World.Log($"{p.FirstName} became {TextFormatter.More(ctx.Content.Traits[trait].Name)}{(cause == null ? "" : $", after: “{TextFormatter.ByEra(ctx.Year, cause)}”")}.", 2, "trait", p.Id);
     }
 
     /// <summary>Old age softens some edges.</summary>

@@ -1,0 +1,193 @@
+// Swedish everyday life across the decades. Only in Sweden. No dashes.
+[
+  {
+    "id": "se_colour_tv", "countries": [ "sweden" ], "trigger": "history", "title": "In colour",
+    "text": "Swedish television is broadcasting in colour. The neighbours have bought a set, and half the street is invited round to see the weather forecast in green and blue.",
+    "conditions": { "minAge": 5, "minYear": 1970, "maxYear": 1970 },
+    "choices": [
+      { "text": "Go round and watch", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Everybody is too orange. Nobody cares. The children sit closer to the screen than they are allowed to." },
+      { "text": "Save up for your own", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 3 } ], "result": "It takes a year. The first programme you watch is the news. It is still somehow wonderful." }
+    ]
+  },
+  {
+    "id": "se_chernobyl", "countries": [ "sweden" ], "trigger": "history", "title": "The rain",
+    "text": "Something has happened at a nuclear plant in the Soviet Union, and the radioactive cloud came down with the rain over Sweden. The radio says not to pick mushrooms or berries this year.",
+    "conditions": { "minAge": 6, "minYear": 1986, "maxYear": 1986 },
+    "choices": [
+      { "text": "Do as they say", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "No chanterelles, no lingonberries, no blueberry pie in August. It feels like the forest has been closed." },
+      { "text": "Pick them anyway", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "health", "amount": -1 } ], "result": "Your grandmother says she survived the war, she can survive a cloud. You eat the pie. It tastes the same, which is the frightening part." }
+    ]
+  },
+  {
+    "id": "se_systembolaget_friday", "countries": [ "sweden" ], "title": "Friday at four",
+    "text": "Friday afternoon, and the queue at the state liquor shop goes out the door and round the corner. You need one bottle of wine for tonight.",
+    "conditions": { "minAge": 20 }, "cooldown": 6,
+    "choices": [
+      { "text": "Join the queue", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Forty minutes. You meet your old teacher, a neighbour and someone you once dated. Everybody pretends not to see what everybody else is buying." },
+      { "text": "Do without", "effects": [], "result": "Squash and good company. Nobody misses the wine. Almost nobody." }
+    ]
+  },
+  {
+    "id": "se_berry_picking", "countries": [ "sweden" ], "title": "In the forest",
+    "text": "August, and the forest is full of blueberries. Anyone may pick them, anywhere, as long as they leave the place as they found it.",
+    "conditions": { "minAge": 5 }, "cooldown": 4,
+    "choices": [
+      { "text": "Pick until your fingers are blue", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "Two buckets, a hundred mosquito bites and a pie that evening that is better than anything in a shop." },
+      { "text": "Look for chanterelles instead", "chance": 0.4,
+        "success": { "text": "A golden carpet under a spruce, in a spot you will never tell anyone about. Not even your children. Maybe in your will.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Three hours, one chanterelle and a fly agaric you photograph for no reason.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "se_saturday_sweets", "countries": [ "sweden" ], "title": "Saturday sweets",
+    "text": "Saturday. The one day of the week for sweets. A paper bag, a wall of pick and mix, and a very strict budget.",
+    "conditions": { "minAge": 4, "maxAge": 12 }, "cooldown": 0,
+    "choices": [
+      { "text": "Choose very, very carefully", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "stingy", "chance": 0.03 } ], "result": "Twenty minutes for twenty sweets. You save the best one until Sunday evening, and it is worth it." },
+      { "text": "Eat the whole bag at once", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -1 } ], "result": "Gone before the cartoons start. A stomach ache before they end. Same again next Saturday." }
+    ]
+  },
+  {
+    "id": "se_semla", "countries": [ "sweden" ], "title": "Fat Tuesday",
+    "text": "Shrove Tuesday, and the bakery window is full of cream buns with almond paste. They have been in the shops since Christmas, but today is the real day.",
+    "conditions": { "minAge": 4 }, "cooldown": 3,
+    "choices": [
+      { "text": "Eat one in hot milk, the old way", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Your grandfather swears it is the only way. You swear it is soggy. You eat it anyway." },
+      { "text": "Eat three", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "health", "amount": -1 } ], "result": "A king died of eating too many of these, people say. You understand him completely." }
+    ]
+  },
+  {
+    "id": "se_vasaloppet", "countries": [ "sweden" ], "title": "Ninety kilometres",
+    "text": "A colleague has signed up for the big ski race: ninety kilometres through the forest in winter. There is one place left on the team.",
+    "conditions": { "minAge": 20, "maxAge": 65 }, "cooldown": 15,
+    "choices": [
+      { "text": "Sign up", "chance": 0.6, "chanceAttributes": { "fitness": 0.008 },
+        "success": { "text": "Eleven hours, blueberry soup at every station, and a finish line you cross in the dark, crying. You get a medal and cannot walk for a week.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 4 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "ski_race", "text": "Finishing the ninety kilometres", "impact": 20 } ] },
+        "failure": { "text": "You stop at kilometre forty seven, at a station with hot soup and a bus. You will never tell anyone exactly where you stopped.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Watch it on TV at seven in the morning", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Coffee, a blanket, and the satisfying feeling of watching other people suffer for nine hours." }
+    ]
+  },
+  {
+    "id": "se_moose", "countries": [ "sweden" ], "title": "On the road",
+    "text": "Driving home through the forest at dusk. A moose steps out onto the road, enormous, and looks straight at your headlights.",
+    "conditions": { "minAge": 18 }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Brake hard", "chance": 0.85,
+        "success": { "text": "It stands in the road for a full minute, then walks off as if you were not there. You sit with your hands shaking on the wheel.", "effects": [ { "type": "happiness", "amount": -1 } ] },
+        "failure": { "text": "Not quite hard enough. The car is wrecked. You walk away with a cut on your forehead, and the moose walks away too.", "effects": [ { "type": "health", "amount": -6 }, { "type": "money", "amount": -30000 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.1 } ] } }
+    ]
+  },
+  {
+    "id": "se_hockey_final", "countries": [ "sweden" ], "title": "The final",
+    "text": "Sweden against Finland in the ice hockey final. The whole country is in front of the TV. Your Finnish neighbour has invited you round, and is wearing the shirt.",
+    "conditions": { "minAge": 8, "minYear": 1957 }, "cooldown": 10,
+    "choices": [
+      { "text": "Go, and wear yours", "chance": 0.5,
+        "success": { "text": "Sweden wins in overtime. You are very gracious. Your neighbour does not speak to you until Midsummer.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Finland wins. Your neighbour is very gracious, for about four seconds.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Watch at home, alone, in silence", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You shout at the screen anyway. The cat leaves the room." }
+    ]
+  },
+  {
+    "id": "se_fika", "countries": [ "sweden" ], "title": "Fika",
+    "text": "Three o'clock at work. Coffee and buns in the break room, every day, and you are new. Skipping it would be noticed.",
+    "conditions": { "minAge": 18, "maxAge": 66, "activity": "working" }, "cooldown": 8,
+    "choices": [
+      { "text": "Always go", "effects": [ { "type": "performance", "amount": 2 }, { "type": "trait_add", "trait": "social", "chance": 0.04 } ], "result": "Within a month you know who is getting divorced, who is applying for what, and where the good biscuits are hidden." },
+      { "text": "Bring the buns on Friday", "effects": [ { "type": "money", "amount": -300 }, { "type": "performance", "amount": 3 }, { "type": "happiness", "amount": 2 } ], "result": "Cinnamon buns, still warm. You are, from this day on, a valued member of the team." }
+    ]
+  },
+  {
+    "id": "se_cottage_queue", "countries": [ "sweden" ], "title": "The holiday queue",
+    "text": "The first day of the industrial holiday. Half of Sweden is in the same queue on the same motorway, heading to the same lakes, with the same caravans.",
+    "conditions": { "minAge": 20, "minYear": 1960, "hasPartner": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Leave at four in the morning", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "So did everyone else. You still arrive by lunch, and that first swim in the lake washes the whole year off." },
+      { "text": "Stay home in the empty city", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A whole city to yourself for four weeks. Parks, empty buses, and outdoor cinema. Your secret holiday." }
+    ]
+  },
+  {
+    "id": "se_melodifestivalen", "countries": [ "sweden" ], "title": "Saturday night",
+    "text": "The song contest is on, the family is on the sofa with crisps, and everyone has already chosen a favourite and a song to hate.",
+    "conditions": { "minAge": 6, "minYear": 1959 }, "cooldown": 3,
+    "choices": [
+      { "text": "Vote by phone", "requires": { "minYear": 1999 }, "effects": [ { "type": "happiness", "amount": 3 }, { "type": "money", "amount": -50 } ], "result": "Your song comes fourth. You will be bitter about it until next February." },
+      { "text": "Mock every song", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "The best part of the evening, always. Then the song you mocked most wins, and you hum it for a year." }
+    ]
+  },
+  {
+    "id": "se_surstromming", "countries": [ "sweden" ], "title": "Surströmming",
+    "text": "A neighbour from the north has opened a tin of fermented herring in the garden. The smell has reached your kitchen, two houses away. You are invited.",
+    "conditions": { "minAge": 12 }, "cooldown": 15,
+    "choices": [
+      { "text": "Try it, properly", "chance": 0.5,
+        "success": { "text": "Thin bread, potatoes, onion, and a cold beer. It is, against all reason, delicious. You become a person who invites people to this.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "One bite. You smile politely. You smell it in your hair until Wednesday.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Close the windows", "effects": [], "result": "The smell gets in anyway. It always gets in." }
+    ]
+  },
+  {
+    "id": "se_parental_leave_dad", "countries": [ "sweden" ], "title": "Daddy leave",
+    "text": "Your partner is going back to work, and the parental leave is yours now: six months at home with the baby, on most of your salary.",
+    "conditions": { "minAge": 20, "sex": "male", "minYear": 1974, "hasPartner": true, "activity": "working" }, "cooldown": 30,
+    "target": { "role": "child", "conditions": { "maxAge": 1 } },
+    "choices": [
+      { "text": "Take all of it", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 12 }, { "type": "happiness", "amount": 5 }, { "type": "performance", "amount": -2 }, { "type": "memory", "kind": "dad_leave", "text": "Six months at home with {t.name}", "impact": 20 } ], "result": "Pushchairs, cafés full of other fathers, and a small person who now reaches for you first when they fall. You would not trade it for anything." },
+      { "text": "Take a month", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 4 } ], "result": "A month is lovely. Your boss is relieved. Your partner is less impressed than your boss." }
+    ]
+  },
+  {
+    "id": "se_tax_return", "countries": [ "sweden" ], "title": "The brown envelope",
+    "text": "The tax return arrives. These days it is already filled in, and you only have to check it and say yes.",
+    "conditions": { "minAge": 18, "minYear": 1995 }, "cooldown": 8,
+    "choices": [
+      { "text": "Approve it by text message", "requires": { "minYear": 2005 }, "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Thirty seconds. A refund in June. Your parents remember filling it in by hand at the kitchen table for a whole weekend." },
+      { "text": "Go through every line", "effects": [ { "type": "money", "amount": 1500 } ], "result": "You find a deduction they missed. A small, quiet victory over the state." }
+    ]
+  },
+  {
+    "id": "se_after_work_beer", "countries": [ "sweden" ], "title": "After work",
+    "text": "Thursday. Someone at work suggests a drink after work. In Sweden this has its own word, and it means you are expected.",
+    "conditions": { "minAge": 20, "maxAge": 55, "activity": "working", "minYear": 1985 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go, for one", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "performance", "amount": 1 } ], "result": "One becomes three. You learn more about the company in two hours than in two years of meetings." },
+      { "text": "Go home", "effects": [], "result": "Nobody minds. You hear about it on Friday, at the coffee machine." }
+    ]
+  },
+  {
+    "id": "se_queue_number", "countries": [ "sweden" ], "title": "Number 74",
+    "text": "The chemist's. A machine gives you a number: 74. The screen says 23.",
+    "conditions": { "minAge": 18, "minYear": 1970 }, "cooldown": 8,
+    "choices": [
+      { "text": "Wait patiently", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "trait_add", "trait": "resilient", "chance": 0.02 } ], "result": "Forty minutes. Nobody pushes in. Nobody would dream of it. This is Sweden." },
+      { "text": "Come back tomorrow", "effects": [], "result": "Tomorrow you get number 12. The screen says 11. It is the best day of the week." }
+    ]
+  },
+  {
+    "id": "se_spring_light", "countries": [ "sweden" ], "title": "The first warm day",
+    "text": "The first warm day after a long winter. Every café has put its chairs outside, and every chair has someone in it, eyes closed, face to the sun.",
+    "conditions": { "minAge": 6 }, "cooldown": 4,
+    "choices": [
+      { "text": "Find a chair", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Ten degrees, a coat, a coffee and the sun on your face. Everybody in the country is happy for exactly one afternoon." },
+      { "text": "Walk by the water", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "The ice is breaking up in the harbour. Somebody is already swimming. Somebody is always already swimming." }
+    ]
+  },
+  {
+    "id": "se_dark_november", "countries": [ "sweden" ], "title": "November",
+    "text": "November. Dark when you leave for work, dark when you come home, and grey in between. The candles are lit in every window on the street.",
+    "conditions": { "minAge": 14 }, "cooldown": 5,
+    "choices": [
+      { "text": "Candles, blankets and long dinners", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You make it cosy, the way everyone here learns to. The dark becomes a reason to stay in with people you love." },
+      { "text": "Buy a light therapy lamp", "requires": { "minYear": 1990 }, "effects": [ { "type": "money", "amount": -800 }, { "type": "happiness", "amount": 3 } ], "result": "Twenty minutes every morning with a very bright lamp. You feel slightly ridiculous and much better." }
+    ]
+  },
+  {
+    "id": "se_last_day_of_school", "countries": [ "sweden" ], "title": "The last day",
+    "text": "The last day of school before summer. Everyone in the church in their best clothes, singing the old summer hymn about the flowers, while outside it is finally June.",
+    "conditions": { "minAge": 7, "maxAge": 16, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Sing along", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "You know every word without knowing how. Then the doors open, and there are ten weeks of summer, all at once." },
+      { "text": "Run out first", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "You are out of the door before the organ stops. The whole summer is in front of you, and it smells of cut grass." }
+    ]
+  }
+]

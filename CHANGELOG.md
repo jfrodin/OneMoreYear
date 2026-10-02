@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.45.0 – 2026-10-02 · Work, couples and Sweden
+
+749 events now.
+
+- **21 for working life, by trade**: night shifts and thank you cards in care, presentations and
+  weekend emails in offices, ladders and apprentices in the trades, difficult parents and lost
+  children on school trips, shoplifters and regulars in shops, and for everyone: the work party, the
+  wrong email, the strike vote, twenty five years.
+- **21 for couples and parents**: the forgotten anniversary, snoring, whose Christmas, a dance class,
+  a weekend without the children, a partner's dream job in another city, a child's lie, a teenager
+  behind a closed door, a first heartbreak, the shorter Sunday calls, caring for a sick partner,
+  couples therapy.
+- **20 for Swedish everyday life**: colour television in 1970, the Chernobyl rain in 1986, Friday at
+  the liquor shop, blueberries and chanterelles, Saturday sweets, cream buns on Shrove Tuesday, the
+  ninety kilometre ski race, a moose on the road, the hockey final against Finland, fika, the
+  holiday queue, a father's parental leave, number 74, the first warm day, November, the last day of
+  school.
+- Fixed: an event title with era text could appear unformatted in the chronicle.
+
 ## 0.44.0 – 2026-10-02 · More life in every age
 
 From 599 to 687 events, aimed at the parts of a life with the fewest:

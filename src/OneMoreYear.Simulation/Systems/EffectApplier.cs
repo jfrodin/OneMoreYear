@@ -81,7 +81,7 @@ public static class EffectApplier
                 break;
             case "trait_add":
                 if (e.Trait != null && PersonFactory.TryAddTrait(ctx, who, e.Trait) && who.Id == w.PlayerId)
-                    w.Log($"{who.FirstName} became {TextFormatter.More(ctx.Content.Traits[e.Trait].Name)}{(ctx.Content.Events.TryGetValue(pending.EventId, out var src) ? $", after: “{src.Title}”" : "")}.", 2, "trait", who.Id);
+                    w.Log($"{who.FirstName} became {TextFormatter.More(ctx.Content.Traits[e.Trait].Name)}{(ctx.Content.Events.TryGetValue(pending.EventId, out var src) ? $", after: “{TextFormatter.Format(ctx, src.Title, pending)}”" : "")}.", 2, "trait", who.Id);
                 break;
             case "trait_remove":
                 if (e.Trait != null) who.Traits.Remove(e.Trait);
