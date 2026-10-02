@@ -1,0 +1,188 @@
+// The smallest years, 2 to 6, seen from very low down. No dashes.
+[
+  {
+    "id": "tod_first_day_care", "title": "The first morning",
+    "text": "The first morning at [[1975: the nursery || preschool]]. A room full of other children, a woman with a kind voice, and your parent turning towards the door.",
+    "conditions": { "minAge": 1, "maxAge": 3, "notFlags": [ "first_daycare" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Hold on to a leg", "effects": [ { "type": "flag", "flag": "first_daycare" }, { "type": "happiness", "amount": -2 } ], "result": "Ten minutes of crying. Then there is a box of building blocks, and you forget to look for the door." },
+      { "text": "Run straight to the toys", "effects": [ { "type": "flag", "flag": "first_daycare" }, { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "social", "chance": 0.04 } ], "result": "You do not even wave. Your parent cries in the car instead." }
+    ]
+  },
+  {
+    "id": "tod_why", "title": "Why?",
+    "text": "Why is the sky blue? Why do dogs bark? Why do people die? Why? Why? Why?",
+    "conditions": { "minAge": 3, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Keep asking", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 } ], "result": "Somewhere around the forty third why, a grown up says \"because I said so\". You file this away as an unsatisfactory answer." },
+      { "text": "Make up your own answers", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.06 } ], "result": "The sky is blue because someone painted it. Dogs bark because they are telling secrets. You are very sure about both." }
+    ]
+  },
+  {
+    "id": "tod_potty", "title": "A big step",
+    "text": "No more nappies. A small plastic seat, a lot of praise, and a lot of waiting.",
+    "conditions": { "minAge": 2, "maxAge": 3 }, "cooldown": 0,
+    "choices": [
+      { "text": "Do it properly", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "A sticker on the chart. Then another. You have never been so proud of anything in your life." },
+      { "text": "Refuse on principle", "effects": [ { "type": "trait_add", "trait": "hot_tempered", "chance": 0.02 } ], "result": "A battle of wills lasting six weeks. You win most of the battles. They win the war." }
+    ]
+  },
+  {
+    "id": "tod_blanket", "title": "The blanket",
+    "text": "Your blanket is grey, smells of you, and has a hole in one corner. It has been washed. You noticed. You are very upset.",
+    "conditions": { "minAge": 2, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Carry it everywhere anyway", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "To the shop, to the park, to grandma's. It is lost twice and found twice. At forty, it is in a box in the attic." },
+      { "text": "Give it to the teddy", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "The teddy needs it more, you decide. It is the first time you are brave without noticing." }
+    ]
+  },
+  {
+    "id": "tod_tantrum", "title": "In the supermarket",
+    "text": "The supermarket. A packet of biscuits at exactly your eye level. The answer is no. The floor is right there.",
+    "conditions": { "minAge": 2, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Lie down and scream", "effects": [ { "type": "trait_add", "trait": "hot_tempered", "chance": 0.04 }, { "type": "happiness", "amount": -1 } ], "result": "An old lady tuts. A young mother smiles in sympathy. You get carried out like a sack of potatoes, still screaming." },
+      { "text": "Sulk silently", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You stare at the biscuits all the way to the till. At the till, your father buys them. Victory by patience." }
+    ]
+  },
+  {
+    "id": "tod_animals", "title": "At the farm",
+    "text": "A visit to a farm. There is a cow, and it is much, much bigger than in the books.",
+    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Pat the cow", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "happiness", "amount": 4 } ], "result": "It is warm and breathes on you. You talk about the cow for a week." },
+      { "text": "Hide behind your parent", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You prefer the chickens. Chickens are your size." }
+    ]
+  },
+  {
+    "id": "tod_drawing", "title": "On the wall",
+    "text": "You have found the crayons, and the wall in the hall is very white and very big.",
+    "conditions": { "minAge": 2, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Draw the whole family", "effects": [ { "type": "trait_add", "trait": "creative", "chance": 0.06 }, { "type": "happiness", "amount": 3 } ], "result": "A family of potatoes with legs. Your mother is very angry, then takes a photo of it before she scrubs it off. The photo is in an album forever." },
+      { "text": "Draw on paper", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A sun with a face. It goes on the fridge. You check it is still there every morning." }
+    ]
+  },
+  {
+    "id": "tod_grandma_lap", "title": "Grandma's lap",
+    "text": "Your grandmother has a song she sings only to you, about a little bird. Nobody else knows the words.",
+    "conditions": { "minAge": 1, "maxAge": 5 }, "cooldown": 0,
+    "target": { "role": "grandparent", "conditions": { "sex": "female" } },
+    "choices": [
+      { "text": "Ask for it again", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "memory", "kind": "grandma_song", "text": "{t.name}'s song about the little bird", "impact": 15 } ], "result": "Again. And again. Sixty years later, you will sing it to a child of your own, and not know where you learned it." }
+    ]
+  },
+  {
+    "id": "tod_hide_vegetables", "title": "Under the plate",
+    "text": "Peas. Small, green, and you have been told you cannot leave the table until they are gone.",
+    "conditions": { "minAge": 2, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Feed them to the dog", "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.03 }, { "type": "happiness", "amount": 2 } ], "result": "The dog is your accomplice for years. The dog keeps secrets better than anyone." },
+      { "text": "Eat them, one at a time", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.03 } ], "result": "Forty five minutes. Forty three peas. You never forget the count." }
+    ]
+  },
+  {
+    "id": "tod_lost_tooth_fall", "title": "The swing",
+    "text": "The big swing in the park. Higher, you shout. Higher!",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Higher!", "chance": 0.8,
+        "success": { "text": "Your toes touch the sky. You are sure of it. You will be sure of it all your life.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "You let go at the top. A bruise, a cut lip, and a great deal of crying, mostly from your father.", "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Just a little", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Gentle swinging, singing to yourself. Nobody rushes you. A perfect afternoon." }
+    ]
+  },
+  {
+    "id": "tod_new_shoes", "title": "New shoes",
+    "text": "New shoes. They light up when you walk. You have never owned anything so beautiful.",
+    "conditions": { "minAge": 3, "maxAge": 6, "minYear": 1990 }, "cooldown": 0,
+    "choices": [
+      { "text": "Stamp all the way home", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "Stamp, flash, stamp, flash. You refuse to take them off at bedtime." },
+      { "text": "Save them for best", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "stingy", "chance": 0.02 } ], "result": "Kept in the box for a special day. By the special day, your feet have grown." }
+    ]
+  },
+  {
+    "id": "tod_imaginary_shop", "title": "The shop",
+    "text": "You have opened a shop under the kitchen table. Stones cost one leaf. Leaves cost two stones. Business is slow.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Lower your prices", "effects": [ { "type": "trait_add", "trait": "ambitious", "chance": 0.04 }, { "type": "happiness", "amount": 3 } ], "result": "Your grandfather buys everything you have. He pays in real coins. You are rich." },
+      { "text": "Close early", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "The shop becomes a hospital. The teddy has a broken leg. Business is much better." }
+    ]
+  },
+  {
+    "id": "tod_bath", "title": "Bath time",
+    "text": "Bath time. You do not want bath time. You have never wanted bath time.",
+    "conditions": { "minAge": 2, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Run away naked", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Down the hall, through the living room, past the guests. You are caught behind the sofa, giggling." },
+      { "text": "Get in, and refuse to get out", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "An hour later, wrinkled like a raisin, you are lifted out against your will. Bath time is now your favourite time." }
+    ]
+  },
+  {
+    "id": "tod_dark_room", "title": "The door",
+    "text": "Bedtime. You want the door open. A little bit more. A little bit more. With the hall light on.",
+    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Negotiate", "effects": [ { "type": "trait_add", "trait": "manipulative", "chance": 0.02 }, { "type": "happiness", "amount": 2 } ], "result": "A crack, then a hand's width, then wide open. A future in diplomacy." },
+      { "text": "Be brave", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.04 } ], "result": "Door closed. Eyes closed. You count the cars passing on the road outside until you are asleep." }
+    ]
+  },
+  {
+    "id": "tod_birthday_four", "title": "Four",
+    "text": "Your fourth birthday. A cake shaped like an animal that nobody can identify, and six children from preschool running around the living room.",
+    "conditions": { "minAge": 4, "maxAge": 4 }, "cooldown": 0,
+    "choices": [
+      { "text": "Blow out all four candles", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "It takes three goes and a lot of spit. Everyone eats the cake anyway." },
+      { "text": "Hide under the table", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.05 }, { "type": "happiness", "amount": 1 } ], "result": "Too many people, too much noise. Your grandmother brings you a piece of cake under the table and stays there with you." }
+    ]
+  },
+  {
+    "id": "tod_hospital_born", "title": "The new one",
+    "text": "In the hospital, a tiny red person is asleep in your mother's arms. Everyone says this is {t.role}, {t.name}. You are not sure you ordered one.",
+    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 0,
+    "target": { "role": "sibling", "conditions": { "maxAge": 0 } },
+    "choices": [
+      { "text": "Give {t.him} your toy", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "You put your second best car in the cot. Everyone says aww. You did not give the best one. You are not stupid." },
+      { "text": "Ask when it is going back", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Everybody laughs. You were not joking." }
+    ]
+  },
+  {
+    "id": "tod_mud_pies", "title": "Mud",
+    "text": "It has rained, and the garden has a patch of the most perfect mud you have ever seen.",
+    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Bake mud pies", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "creative", "chance": 0.03 } ], "result": "Twelve pies, each decorated with a flower. You serve them to your parents, who pretend to eat them, very convincingly." },
+      { "text": "Roll in it", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "Head to toe. They hose you down in the garden. Best day ever." }
+    ]
+  },
+  {
+    "id": "tod_parent_sick", "title": "Quiet",
+    "text": "Your mother has been in bed for days. You have been told to be quiet. The house feels different, and you do not know why.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0, "weight": 0.4,
+    "choices": [
+      { "text": "Bring her a drawing", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 } ], "result": "She props it up by the bed. She smiles at it. Later, when she is well again, it is still there." },
+      { "text": "Be very, very good", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.04 } ], "result": "You play by yourself in your room for a week. Nobody tells you anything. You remember the silence for a long time." }
+    ]
+  },
+  {
+    "id": "tod_cartoon", "title": "Saturday morning",
+    "text": "Saturday morning, before the grown ups are awake. The television, a bowl of cereal, and cartoons.",
+    "conditions": { "minAge": 3, "maxAge": 9, "minYear": 1960 }, "cooldown": 0,
+    "choices": [
+      { "text": "Watch until they wake up", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Three hours. You know every song by heart. You will still know some of them at seventy." },
+      { "text": "Make breakfast for everyone", "chance": 0.4,
+        "success": { "text": "Toast, slightly burnt, and juice, slightly spilled, on a tray. Your parents eat it in bed and say it is the best breakfast ever.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ] },
+        "failure": { "text": "The smoke alarm wakes them instead. Cereal for everyone.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "tod_where_babies", "title": "The question",
+    "text": "At dinner, in front of your grandparents, you ask where babies come from.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Insist on an answer", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "Your grandfather chokes on a potato. Your mother says \"from the hospital\". You decide to find out yourself later." },
+      { "text": "Accept the stork story", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A very big bird. It makes sense. You watch the sky for months." }
+    ]
+  }
+]
