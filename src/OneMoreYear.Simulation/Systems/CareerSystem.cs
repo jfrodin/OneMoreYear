@@ -426,6 +426,17 @@ public static class CareerSystem
     public static string JobName(string title) =>
         string.Join(' ', title.Split(' ').Select(w => w.Skip(1).Any(char.IsUpper) ? w : w.ToLowerInvariant()));
 
+    /// <summary>A field of work mid-sentence: "worked in healthcare", "in the public sector", "in IT".</summary>
+    public static string FieldName(Content.OccupationDef occ) => occ.Id switch
+    {
+        "public" => "the public sector",
+        "it" => "IT",
+        "trade" => "shops",
+        "academia" => "universities",
+        "media" => "the media",
+        _ => occ.Name.ToLowerInvariant(),
+    };
+
     public static string EducationName(SimContext ctx, EducationLevel level) => level switch
     {
         EducationLevel.Primary => "primary school",

@@ -50,6 +50,7 @@ static class AchievementReport
             gens = Math.Max(gens, played.Max(p => p.Generation) - played.Min(p => p.Generation) + 1);
             foreach (var t in s.Content.FamilyTraits.Values) if (s.World.Chronicle.Any(l => l.Text.Contains($"has become {t.Name.ToLowerInvariant()}"))) traitEver[t.Id] = traitEver.GetValueOrDefault(t.Id) + 1;
             foreach (var (m, v) in OneMoreYear.Simulation.Systems.ReputationSystem.Meters(s.Ctx)) meterSum[m] = meterSum.GetValueOrDefault(m) + v;
+            if (g < 4) examples.Add($"epilogue: {s.Epilogue().Words}");
             Console.Error.Write($"\r{g + 1}/{games} families");
         }
         Console.Error.WriteLine();

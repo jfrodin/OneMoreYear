@@ -929,6 +929,9 @@ public sealed class GameSession
     /// <summary>All achievements, in the order they are listed.</summary>
     public static IReadOnlyList<AchievementDef> AllAchievements(ContentDb? content = null) => (content ?? ContentDb.Embedded).Achievements;
 
+    /// <summary>The last page of the family, in words (EpilogueSystem).</summary>
+    public EpilogueView Epilogue() => EpilogueSystem.Write(Ctx);
+
     public FamilyStats Stats()
     {
         var fam = World.People.Where(p => p.InFamily || p.IsBlood).ToList();

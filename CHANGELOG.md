@@ -2,6 +2,17 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.43.0 – 2026-10-02 · The last page
+
+- **When a family's story ends, it gets a last page in words**, written from what it actually did:
+  *"A family that mostly worked in healthcare, and did well enough. They stayed close, through all
+  of it. There were books in every house. One of them lived to 97."* Then every life you played, with
+  its work, its children and its dream.
+- **Your families**: a new list on the title screen keeps the last page of every family you have
+  finished, the most remarkable first. The order comes from a score that is never shown.
+- **End a story yourself**: in the settings, "End this family's story" (after asking).
+- Fields of work read naturally in sentences ("in the public sector", "in IT").
+
 ## 0.42.0 – 2026-10-02 · The future
 
 The game goes on to 2180, but its content used to stop around 2025. Now families that last get:

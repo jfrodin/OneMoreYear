@@ -236,3 +236,9 @@ public sealed record ChapterView(int Year, string Title, string Name, string Tex
 
 /// <summary>An heirloom the player keeps: its story, what it would fetch, and who it is promised to.</summary>
 public sealed record HeirloomView(int Id, string Name, string Text, string History, string Value, string? PromisedTo);
+
+/// <summary>The last page of a family: what it was, in words, and the lives played. Score is for sorting a list of families, never shown as a number to beat.</summary>
+public sealed record EpilogueView(string FamilyName, int FromYear, int ToYear, string Words, IReadOnlyList<PlayedLifeView> Lives, int Score);
+
+/// <summary>"Anna Berglund, 1950 to 2034. A nurse. Lived the dream: a big family."</summary>
+public sealed record PlayedLifeView(string Name, string Years, string Summary);

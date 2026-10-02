@@ -384,6 +384,23 @@ public partial class Main : Control
         CheckAchievements();
     }
 
+    /// <summary>Ends the family's story by choice, after asking: the last page follows.</summary>
+    private void ConfirmEndStory(GameSession game)
+    {
+        var box = Ui.VBox(12);
+        box.CustomMinimumSize = new Vector2(560, 0);
+        box.AddChild(Ui.Label("End the story here?", 26, UiTheme.Accent));
+        box.AddChild(Ui.Label($"The {game.World.FamilyName} family's story ends in {game.Year}, and you will see its last page. This cannot be undone.", 17, UiTheme.Muted, wrap: true));
+        var row = Ui.HBox(10);
+        System.Action close = () => { };
+        var keep = Ui.Button("Keep going", () => close(), 46);
+        var end = Ui.Button("End it here", () => { close(); game.EndGame(); AutoSave(); ShowGameOver(); }, 46);
+        row.AddChild(keep);
+        row.AddChild(end);
+        box.AddChild(row);
+        close = ShowDialog(box, keep);
+    }
+
     public void ShowGameOver()
     {
         var s = new GameOverScreen();
@@ -521,6 +538,8 @@ public partial class Main : Control
         var buttons = Ui.HBox(10);
         buttons.AddChild(Ui.Button("Content settings…", () => { Close(); ShowContentSettings(game); }, 46));
         buttons.AddChild(Ui.Button("How to play", () => { Close(); ShowIntroduction(); }, 46));
+        if (game != null && !game.GameOver)
+            buttons.AddChild(Ui.Button("End this family's story…", () => { Close(); ConfirmEndStory(game); }, 46));
         buttons.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
         var done = Ui.Button("Done", Close, 46);
         UiTheme.MakePrimary(done);
@@ -981,7 +1000,8 @@ public partial class Main : Control
             case 94: Shot("12_achievement_notice"); _eraOverride = 2045; ShowGame(); break;
             case 98: Shot("13_era_2045"); _eraOverride = 2105; ShowGame(); break;
             case 102: Shot("14_era_2105"); ShowChapter(Session!.Chapter(2050)); break;
-            case 104: Shot("15_chapter_2050"); GetTree().Quit(); break;
+            case 104: Shot("15_chapter_2050"); foreach (var c in _toastLayer?.GetChildren() ?? new Godot.Collections.Array<Node>()) c.QueueFree(); _eraOverride = null; Session!.EndGame(); ShowGameOver(); break;
+            case 108: Shot("16_the_end"); GetTree().Quit(); break;
         }
     }
 

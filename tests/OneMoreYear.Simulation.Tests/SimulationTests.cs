@@ -986,6 +986,20 @@ public class CountryTests
     }
 
     [Fact]
+    public void The_last_page_is_words_about_the_family()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 31, StartYear = 1960 });
+        var bot = new AutoPlayer(31);
+        for (int i = 0; i < 90 && bot.PlayYear(s); i++) { }
+        var e = s.Epilogue();
+        Assert.StartsWith("A family", e.Words);
+        Assert.DoesNotContain("{", e.Words);
+        Assert.DoesNotContain(" – ", e.Words);
+        Assert.Equal(s.World.PlayedIds.Count, e.Lives.Count);
+        Assert.True(e.Score > 0);
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.

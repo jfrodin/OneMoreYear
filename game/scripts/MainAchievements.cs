@@ -79,9 +79,34 @@ public partial class Main
         tween.TweenProperty(card, "modulate:a", 0f, instant ? 0 : 0.8);
         tween.TweenCallback(Callable.From(() =>
         {
-            card.QueueFree();
+            if (IsInstanceValid(card)) card.QueueFree();
             ShowNextToast();
         }));
+    }
+
+    /// <summary>Your finished families, best first: the last page of each.</summary>
+    public void ShowFamilies()
+    {
+        var box = Ui.VBox(12);
+        box.CustomMinimumSize = new Vector2(820, 0);
+        box.AddChild(UiTheme.HeadingLabel("Your families", 30, UiTheme.Accent));
+        var list = Ui.VBox(16);
+        foreach (var f in FamilyArchive.All)
+        {
+            var item = Ui.VBox(3);
+            item.AddChild(Ui.Label($"The {f.Name} family, {f.From} to {f.To}", 20, UiTheme.Text));
+            item.AddChild(UiTheme.HandLabel(f.Words, 21, UiTheme.Muted, wrap: true));
+            item.AddChild(Ui.Label(f.Lives == 1 ? "1 life played" : $"{f.Lives} lives played", 13, UiTheme.Faint));
+            list.AddChild(item);
+        }
+        var scroll = new ScrollContainer { CustomMinimumSize = new Vector2(820, 520), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
+        list.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        scroll.AddChild(list);
+        box.AddChild(scroll);
+        System.Action close = () => { };
+        var ok = Ui.Button("Close", () => close(), 48);
+        box.AddChild(ok);
+        close = ShowDialog(box, ok);
     }
 
     /// <summary>

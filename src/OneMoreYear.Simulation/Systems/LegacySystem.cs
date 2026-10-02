@@ -187,7 +187,7 @@ public static class LegacySystem
                 $"{name} was not the best in the country. But {He(a)} got the one thing {He(a)} wanted: {dream.Name.ToLowerInvariant()}. That was enough.", null, "dream");
         if (a.Jobs.LastOrDefault() is { } job && ctx.Content.Occupation(job) is { } occ)
             yield return new(a, man ? $"{name} was so strong {He(a)} once lifted a car off a man with {His(a)} bare hands" : $"{name} could outwork any three men and still have dinner on the table at six",
-                $"{name} worked in {occ.Name.ToLowerInvariant()} for most of {His(a)} life, and was tired most evenings, like everybody else.", null, "work", 0.35);
+                $"{name} worked in {CareerSystem.FieldName(occ)} for most of {His(a)} life, and was tired most evenings, like everybody else.", null, "work", 0.35);
     }
 
     /// <summary>Digging into a myth about a hidden killing brings it to light.</summary>

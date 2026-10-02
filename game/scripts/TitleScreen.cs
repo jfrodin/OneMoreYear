@@ -151,6 +151,12 @@ public partial class TitleScreen : Control
         var achievements = Ui.Button("Achievements", () => _main.ShowAchievements());
         achievements.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         row.AddChild(achievements);
+        if (FamilyArchive.All.Count > 0)
+        {
+            var families = Ui.Button("Families", () => _main.ShowFamilies());
+            families.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            row.AddChild(families);
+        }
         var content = Ui.Button("Settings", () => _main.ShowSettings(null));
         content.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         row.AddChild(content);

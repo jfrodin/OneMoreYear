@@ -1,6 +1,6 @@
 # Slutspel och långsiktig motivation (förslag)
 
-*Status: förslag till producenten, inte beslutat. Skrivet 2026-10-02.*
+*Status: genomfört 2026-10-02 (0.37.0 till 0.43.0). Producenten valde dolda saker: synliga namn på vanliga prestationer, kryptiska ledtrådar på sällsynta och legendariska, helt dolda hemliga. Slutbetyget är ord; ett dolt värde sorterar listan över släkter. Livsdrömmen finns alltid men väljs.*
 
 Frågan: varför spelar man vidare efter tio generationer, och vad strävar man mot?
 
