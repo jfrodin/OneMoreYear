@@ -65,6 +65,9 @@ public static class CareerSystem
             if (isPlayer) { QueueJobOffers(ctx, p); return; }
         }
 
+        // Owners run their own business (BusinessSystem): no boss, no pension age.
+        if (p.Activity == Activity.Working && BusinessSystem.RunsBusiness(ctx.World, p)) return;
+
         if (age >= ctx.Country.PensionAge && p.Activity is Activity.Working or Activity.Unemployed)
         {
             Retire(ctx, p);

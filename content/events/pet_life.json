@@ -3,7 +3,7 @@
 [
   {
     "id": "self_get_pet", "trigger": "self", "category": "life", "title": "Get a pet",
-    "conditions": { "minAge": 18, "livesWithParents": false },
+    "conditions": { "minAge": 18, "livesWithParents": false, "pet": "none" },
     "choices": [
       { "text": "A dog", "hint": "Walks every day, whatever the weather. Loyal to the end.", "effects": [ { "type": "pet_add", "kind": "dog" }, { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 6 } ],
         "result": "A shelter, a wagging tail, and a pair of eyes that decide it for you. {pet} comes home the same day." },

@@ -2,6 +2,21 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.50.0 – 2026-10-02 · The family business
+
+- **Start a business** (from The Sims' Get to Work): a bakery, a café, a restaurant, a repair
+  workshop, a shop, a building firm, a gallery, a music school, a software company or a garden
+  centre, named after the family. You become its owner: no boss, no pension age.
+- Every year it makes a profit or a loss, from your skill (a baker who can cook does better), the
+  economy and luck. You draw a living from it; the rest builds its value. A run of bad years can sink
+  it, and the debts are yours.
+- **It passes down the family**: at death or at seventy it goes to the will's favourite, the eldest
+  grown child or the partner. If it comes to you, you choose to run it or sell it. Others in the
+  family start businesses of their own.
+- 13 events: inheriting it, handing it on, going under, a bad year, a second place, hiring family,
+  an offer from a chain, twenty five years, the short till, never a day off, a review.
+- Your business is on the money tab. A rare achievement for a business run by three of the family.
+
 ## 0.49.0 – 2026-10-02 · Hobbies and skills
 
 - **Take up a hobby** (from The Sims' skills): cooking, painting, music, writing, gardening, fixing

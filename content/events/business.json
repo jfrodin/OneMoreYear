@@ -1,0 +1,131 @@
+// Family businesses (BusinessSystem). {business}, {business_kind}, {business_value}, {business_profit}
+// and {business_years} name the business the player runs. Money in reference kronor of 2020. No dashes.
+[
+  {
+    "id": "self_start_business", "trigger": "self", "category": "career", "title": "Start a business",
+    "conditions": { "minAge": 20, "maxAge": 65, "runsBusiness": false, "minMoney": 200000 },
+    "choices": [
+      { "text": "A bakery", "hint": "Up at four, flour everywhere. Goes better if you can cook.", "effects": [ { "type": "start_business", "kind": "bakery" } ], "result": "A lease, an oven, and a sign you paint yourself." },
+      { "text": "A café", "hint": "Coffee, cake and regulars. Goes better if you can cook.", "effects": [ { "type": "start_business", "kind": "cafe" } ], "result": "Six tables, a coffee machine you are a little afraid of, and a chalkboard menu." },
+      { "text": "A restaurant", "hint": "Expensive, risky, wonderful if it works. Cooking helps a lot.", "effects": [ { "type": "start_business", "kind": "restaurant" } ], "result": "A kitchen, a dining room, and the most terrifying opening night of your life." },
+      { "text": "A repair workshop", "hint": "Steady, if you are good with your hands.", "effects": [ { "type": "start_business", "kind": "workshop" } ], "result": "A garage, a set of tools and a phone number on a card in the supermarket." },
+      { "text": "A shop", "hint": "Shelves, a till, and the whole street through the door.", "effects": [ { "type": "start_business", "kind": "shop" } ], "result": "Stock, a bell over the door, and your name in the window." },
+      { "text": "A building firm", "hint": "Kitchens first, then houses. Handiness helps.", "effects": [ { "type": "start_business", "kind": "builder" } ], "result": "A van with your name on the side. You drive it very carefully." },
+      { "text": "A gallery", "hint": "A gamble. Goes better if you know painting.", "effects": [ { "type": "start_business", "kind": "gallery" } ], "result": "White walls, good lights, and other people's paintings waiting to be loved." },
+      { "text": "A music school", "hint": "Steady and loud. You will need to play well.", "effects": [ { "type": "start_business", "kind": "music_school" } ], "result": "Two rooms, a piano, and a waiting list by the end of the first month." },
+      { "text": "A software company", "requires": { "minYear": 1980 }, "hint": "Nothing or everything. Programming helps.", "effects": [ { "type": "start_business", "kind": "software" } ], "result": "A rented office, three desks, and a whiteboard covered in arrows." },
+      { "text": "A garden centre", "hint": "Busy every spring. Gardening helps.", "effects": [ { "type": "start_business", "kind": "garden_centre" } ], "result": "A greenhouse, a till and ten thousand plants that all need watering." },
+      { "text": "Not yet", "result": "You keep the idea in a drawer, with the others." }
+    ]
+  },
+  {
+    "id": "business_inherited", "trigger": "situation", "title": "{business}",
+    "text": "{T.name} has left {business} to you. {business_years} years of work, worth about {business_value}. Everybody is waiting to see what you will do.",
+    "choices": [
+      { "text": "Run it yourself", "effects": [ { "type": "business", "kind": "run" }, { "type": "memory", "kind": "family_business", "text": "Taking over {business}", "impact": 15 } ],
+        "result": "You hang your coat where {t.name} hung theirs. The staff watch you for a month. Then they stop watching." },
+      { "text": "Sell it", "effects": [ { "type": "business", "kind": "sell" }, { "type": "happiness", "amount": -2 } ],
+        "result": "A buyer is found quickly. On the last day, you take the old sign home and put it in the garage." }
+    ]
+  },
+  {
+    "id": "business_handover", "trigger": "situation", "title": "Who takes over?",
+    "text": "You are getting older, and {business} needs someone with more years ahead of them. {T.name} has been helping out for years.",
+    "choices": [
+      { "text": "Hand it to {t.name}", "effects": [ { "type": "business", "kind": "hand_over" }, { "type": "happiness", "amount": 4 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true } ],
+        "result": "A handshake, a set of keys, and a long lunch where you tell every story. You come in on Fridays anyway, to help, you say." },
+      { "text": "Sell it", "effects": [ { "type": "business", "kind": "sell" } ], "result": "A good price, and a strange first Monday with nowhere to go." },
+      { "text": "Keep going a bit longer", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Not yet. You are not ready, and neither is it. Probably." }
+    ]
+  },
+  {
+    "id": "business_failed", "trigger": "situation", "title": "Closed",
+    "text": "{business} is finished. The bank has stopped lending, the bills have stopped waiting. A sign on the door says closed, in your handwriting.",
+    "choices": [
+      { "text": "Start again, one day", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.1 }, { "type": "happiness", "amount": -4 } ], "result": "You keep the keys. Some people start again. You might be one of them." },
+      { "text": "Never again", "effects": [ { "type": "happiness", "amount": -6 } ], "result": "A job with a salary and somebody else's worries. It feels like failure for a long time, then like relief." }
+    ]
+  },
+  {
+    "id": "business_bad_year", "title": "The numbers",
+    "text": "The accountant has the year's numbers for {business}. She is not smiling. A customer you relied on has gone elsewhere.",
+    "conditions": { "minAge": 20, "runsBusiness": true }, "cooldown": 5,
+    "choices": [
+      { "text": "Cut costs hard", "chance": 0.6, "chanceTraits": { "stingy": 0.15 },
+        "success": { "text": "Fewer hours, cheaper suppliers, no Christmas party. It survives the year, a little leaner.", "effects": [ { "type": "business", "kind": "value", "amount": 100000 }, { "type": "happiness", "amount": -2 } ] },
+        "failure": { "text": "The cuts cost you your best employee and two regulars. It is a hard year either way.", "effects": [ { "type": "business", "kind": "value", "amount": -150000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Put your own savings in", "requires": { "minMoney": 100000 }, "effects": [ { "type": "money", "amount": -100000 }, { "type": "business", "kind": "value", "amount": 100000 } ], "result": "It hurts to watch the money go. The business breathes again." }
+    ]
+  },
+  {
+    "id": "business_expand", "title": "A second place",
+    "text": "{business} is doing well. A shop has come free in the next town, and the landlord likes you.",
+    "conditions": { "minAge": 25, "runsBusiness": true, "minMoney": 200000 }, "cooldown": 10,
+    "choices": [
+      { "text": "Expand", "chance": 0.55, "chanceTraits": { "ambitious": 0.1 },
+        "success": { "text": "Two places, twice the staff, twice the worry, and by the second year twice the profit.", "effects": [ { "type": "money", "amount": -200000 }, { "type": "business", "kind": "value", "amount": 600000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "The second place never takes off. You close it after eighteen months and take the loss.", "effects": [ { "type": "money", "amount": -200000 }, { "type": "business", "kind": "value", "amount": -50000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "One is enough", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You know every customer by name. That is worth more than a second sign." }
+    ]
+  },
+  {
+    "id": "business_hire_relative", "title": "Family first",
+    "text": "{t.name} needs a job, and you need help at {business}. Everyone says never hire family.",
+    "conditions": { "minAge": 25, "runsBusiness": true }, "cooldown": 10,
+    "target": { "role": "family", "conditions": { "minAge": 16, "maxAge": 40, "activity": "unemployed" } },
+    "choices": [
+      { "text": "Hire {t.him}", "chance": 0.6,
+        "success": { "text": "{T.He} turns out to be good at it. Better than you at some things. You start to think about who will take over one day.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "business", "kind": "value", "amount": 50000 } ] },
+        "failure": { "text": "Late, careless, and impossible to fire at Christmas dinner. Everyone was right.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": -6, "mutual": true }, { "type": "business", "kind": "value", "amount": -30000 } ] } },
+      { "text": "Keep business and family apart", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "{T.He} understands. Mostly. It comes up at a wedding, years later." }
+    ]
+  },
+  {
+    "id": "business_offer", "title": "An offer",
+    "text": "A big chain wants to buy {business}. The offer is more than it is worth on paper. They would keep the name. Probably.",
+    "conditions": { "minAge": 30, "runsBusiness": true }, "cooldown": 15,
+    "choices": [
+      { "text": "Sell", "effects": [ { "type": "business", "kind": "value", "amount": 300000 }, { "type": "business", "kind": "sell" } ], "result": "A signature, a handshake and a very large number in your account. Two years later the name is gone from the sign." },
+      { "text": "Not for sale", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "\"Everyone has a price,\" says their man. Not today, you say, and you mean it." }
+    ]
+  },
+  {
+    "id": "business_anniversary", "title": "Twenty five years",
+    "text": "{business} is twenty five years old. The regulars want a party. Someone has found a photo of opening day.",
+    "conditions": { "minAge": 30, "runsBusiness": true }, "cooldown": 20,
+    "choices": [
+      { "text": "Throw a party", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 6 }, { "type": "business", "kind": "value", "amount": 50000 } ], "result": "Half the town comes. Old customers bring their grandchildren. The local paper takes a photo of you under the sign." },
+      { "text": "Just another day", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You open at the same time, like always. At closing time you stand outside and look at the sign for a while." }
+    ]
+  },
+  {
+    "id": "business_employee_theft", "title": "The till",
+    "text": "The till has been short for months. Small amounts. You have a fair idea who it is, and you like them.",
+    "conditions": { "minAge": 25, "runsBusiness": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Confront them", "chance": 0.6, "chanceTraits": { "brave": 0.1 },
+        "success": { "text": "Tears, a story about a sick mother, and a promise to pay it back. They do, every penny. They stay for twenty years.", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.03 } ] },
+        "failure": { "text": "They deny it, quit, and tell everyone you accused them of stealing. The till is never short again.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Call the police", "effects": [ { "type": "business", "kind": "value", "amount": 20000 }, { "type": "happiness", "amount": -2 } ], "result": "It is them. A conviction, a fine. You feel worse than you expected." }
+    ]
+  },
+  {
+    "id": "business_long_hours", "title": "Never closed",
+    "text": "You have not had a day off from {business} in two years. Your family has started making jokes about it, and they are not really jokes.",
+    "conditions": { "minAge": 25, "runsBusiness": true, "hasPartner": true }, "cooldown": 8,
+    "choices": [
+      { "text": "Close on Sundays", "effects": [ { "type": "business", "kind": "value", "amount": -30000 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 4 } ], "result": "Less money, more breakfasts. Nobody in the family remembers the money." },
+      { "text": "Push through another year", "effects": [ { "type": "business", "kind": "value", "amount": 50000 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -6, "mutual": true }, { "type": "health", "amount": -2 } ], "result": "Another good year for the business. Another birthday missed." }
+    ]
+  },
+  {
+    "id": "business_review", "title": "A review",
+    "text": "Someone has written about {business} [[2008: in the local paper || online]]. A lot of people have read it.",
+    "conditions": { "minAge": 20, "runsBusiness": true }, "cooldown": 6,
+    "choices": [
+      { "text": "Read it", "chance": 0.6,
+        "success": { "text": "Glowing. A queue on Saturday. You print it and stick it in the window.", "effects": [ { "type": "business", "kind": "value", "amount": 80000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "Unfair, cruel, and about something that happened on your worst day. A quiet month follows.", "effects": [ { "type": "business", "kind": "value", "amount": -60000 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  }
+]

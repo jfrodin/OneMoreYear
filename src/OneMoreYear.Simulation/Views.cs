@@ -249,3 +249,6 @@ public sealed record PlayedLifeView(string Name, string Years, string Summary);
 
 /// <summary>One of the player's children at home and how they are being raised.</summary>
 public sealed record UpbringingView(int ChildId, string Name, int Age, string Style, bool Chosen, string? Shaping);
+
+/// <summary>A business the player runs: what it is worth, how the last year went, and how many have run it.</summary>
+public sealed record BusinessView(int Id, string Name, string Kind, int Since, string Value, string LastProfit, bool LastYearGood, int Owners);

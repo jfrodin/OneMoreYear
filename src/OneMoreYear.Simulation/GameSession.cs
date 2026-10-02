@@ -183,6 +183,7 @@ public sealed class GameSession
         Hardship.Update(ctx);
         CrimeSystem.Update(ctx);
         EmigrationSystem.Update(ctx);
+        BusinessSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);
 
@@ -923,6 +924,14 @@ public sealed class GameSession
     /// </summary>
     public IReadOnlyList<AchievementDef> NewAchievements(IReadOnlySet<string> alreadyUnlocked) =>
         AchievementSystem.NewlyEarned(Ctx, alreadyUnlocked);
+
+    /// <summary>The businesses the player runs (BusinessSystem).</summary>
+    public IReadOnlyList<BusinessView> Businesses() => BusinessSystem.OwnedBy(World, Player).Select(b => new BusinessView(b.Id, b.Name,
+        Content.BusinessKinds.GetValueOrDefault(b.Kind)?.Name ?? b.Kind, b.FoundedYear, EconomySystem.Format(Ctx, Ctx.NominalRef(Math.Max(0, b.Value))),
+        EconomySystem.Format(Ctx, Ctx.NominalRef(b.LastProfit)), b.LastProfit >= 0, b.Owners.Count)).ToList();
+
+    /// <summary>Sells one of the player's businesses. Returns what happened.</summary>
+    public string SellBusiness(int id) => World.Businesses.FirstOrDefault(b => b.Id == id && b.IsOpen && b.OwnerId == Player.Id) is { } b ? BusinessSystem.Sell(Ctx, b, Player) : "";
 
     /// <summary>The player's children under eighteen and how each is raised (UpbringingSystem).</summary>
     public IReadOnlyList<UpbringingView> Upbringing() => Kinship.Children(World, Player)

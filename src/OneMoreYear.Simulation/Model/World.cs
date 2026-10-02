@@ -50,6 +50,7 @@ public sealed class World
     public SortedSet<string> FamilyTraits { get; set; } = new(StringComparer.Ordinal);
     public List<Heirloom> Heirlooms { get; set; } = new();
     public List<Pet> Pets { get; set; } = new();
+    public List<Business> Businesses { get; set; } = new();
 
     public SimRandom Rng { get; set; } = new();
     public int NextEventUid { get; set; } = 1;
@@ -181,4 +182,20 @@ public sealed class Pet
     /// <summary>playful, lazy, loyal, grumpy or anxious.</summary>
     public string Nature { get; set; } = "";
     public bool IsAlive => DeathYear == null;
+}
+
+/// <summary>A family business (BusinessSystem). Money in reference kronor of 2020, so it survives emigration.</summary>
+public sealed class Business
+{
+    public int Id { get; set; }
+    public string Kind { get; set; } = "";
+    public string Name { get; set; } = "";
+    public int OwnerId { get; set; }
+    public int FoundedYear { get; set; }
+    public double Value { get; set; }
+    public double LastProfit { get; set; }
+    public int? ClosedYear { get; set; }
+    /// <summary>Everyone who has owned it, in order.</summary>
+    public List<int> Owners { get; set; } = new();
+    public bool IsOpen => ClosedYear == null;
 }

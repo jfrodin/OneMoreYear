@@ -322,6 +322,8 @@ public sealed class ConditionDef
     public Dictionary<string, int>? MinSkills { get; set; }
     /// <summary>Has this hobby now.</summary>
     public string? Hobby { get; set; }
+    /// <summary>Runs a family business (true) or does not (false).</summary>
+    public bool? RunsBusiness { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
     /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>
@@ -673,4 +675,23 @@ public sealed class HobbyDef
     public int MinYear { get; set; } = 1900;
     /// <summary>People with these traits take it up more often (NPCs) and learn it faster.</summary>
     public List<string> Traits { get; set; } = new();
+}
+
+/// <summary>A kind of business someone can start (content/businesses.json). Money in reference kronor of 2020.</summary>
+public sealed class BusinessKindDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>"bakery": "Start a bakery".</summary>
+    public string Name { get; set; } = "";
+    /// <summary>Name patterns: {surname}, {first}, {city}.</summary>
+    public List<string> Names { get; set; } = new();
+    public string Text { get; set; } = "";
+    public double StartCost { get; set; }
+    /// <summary>A normal year's profit at the start.</summary>
+    public double Profit { get; set; }
+    /// <summary>How much a year can swing, as a share of the profit.</summary>
+    public double Risk { get; set; } = 0.5;
+    /// <summary>The skill that helps (content/hobbies.json), if any.</summary>
+    public string? Skill { get; set; }
+    public int MinYear { get; set; } = 1900;
 }

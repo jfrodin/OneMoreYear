@@ -1069,6 +1069,29 @@ public class CountryTests
     }
 
     [Fact]
+    public void A_family_business_runs_and_passes_on()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 23, StartYear = 1960 });
+        var bot = new AutoPlayer(23, useActions: false);
+        for (int i = 0; i < 30 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        p.Money = s.Ctx.NominalRef(2_000_000);
+        var b = BusinessSystem.Start(s.Ctx, p, "bakery", out _)!;
+        Assert.NotNull(b);
+        Assert.Equal("business", p.OccupationId);
+        Assert.Equal(b.Name, p.Employer);
+        Assert.Single(s.Businesses());
+        for (int i = 0; i < 5; i++) { s.World.Year++; BusinessSystem.Update(s.Ctx); }
+        Assert.NotEqual(0, b.LastProfit);
+        // A child takes it on when the owner is gone.
+        var child = FamilySystem.HaveChild(s.Ctx, p, null);
+        child.BirthYear = s.Year - 30;
+        child.Activity = Activity.Unemployed;
+        BusinessSystem.PassOn(s.Ctx, b, p);
+        if (b.IsOpen) Assert.Equal(child.Id, b.OwnerId);
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // A working player with a newborn: unpaid weeks and daycare in the USA, neither in Sweden.

@@ -75,6 +75,7 @@ public static class AchievementSystem
         ["family_book"] = ctx => ctx.World.Feats.Contains("family_book"),
         ["bought_back"] = ctx => ctx.World.Feats.Contains("bought_back"),
         ["published"] = ctx => ctx.World.Feats.Contains("published_book"),
+        ["family_firm"] = ctx => ctx.World.Businesses.Any(b => b.IsOpen && b.Owners.Distinct().Count() >= 3),
     };
 
     public static IEnumerable<string> RuleIds => Checks.Keys;

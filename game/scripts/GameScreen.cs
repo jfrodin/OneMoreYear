@@ -485,6 +485,7 @@ public partial class GameScreen : Control
 
         _moneyContent.AddChild(InvestmentsCard(m));
         _moneyContent.AddChild(HomeCard(m));
+        if (S.Businesses() is { Count: > 0 } businesses) _moneyContent.AddChild(BusinessCard(businesses));
         _heirloomCard = S.Heirlooms() is { Count: > 0 } heirlooms ? HeirloomsCard(heirlooms) : null;
         if (_heirloomCard != null) _moneyContent.AddChild(_heirloomCard);
 
@@ -674,6 +675,29 @@ public partial class GameScreen : Control
 
     /// <summary>Screenshot tour: the bottom of the money tab.</summary>
     private Control? _heirloomCard;
+
+    /// <summary>The player's own business: its worth, last year, and a way to sell.</summary>
+    private Control BusinessCard(IReadOnlyList<BusinessView> businesses)
+    {
+        var box = Ui.VBox(10);
+        box.AddChild(Ui.Label(businesses.Count == 1 ? "Your business" : "Your businesses", 20, UiTheme.Text));
+        foreach (var b in businesses)
+        {
+            var item = Ui.VBox(3);
+            item.AddChild(UiTheme.HandLabel(b.Name, 26, UiTheme.Accent));
+            item.AddChild(Ui.Label($"A {b.Kind}, since {b.Since}" + (b.Owners > 1 ? $", run by {b.Owners} of the family so far" : ""), 15, UiTheme.Muted, wrap: true));
+            item.AddChild(Ui.Label($"Worth about {b.Value}. Last year: {(b.LastYearGood ? "a profit of " : "a loss, ")}{b.LastProfit.TrimStart('-')}.", 15,
+                b.LastYearGood ? UiTheme.Text : UiTheme.Bad, wrap: true));
+            int id = b.Id;
+            var sell = Ui.Button($"Sell {b.Name}", () => _main.ShowMessage(b.Name, S.SellBusiness(id), RefreshAll), 42);
+            sell.SetMeta("action", true);
+            sell.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            RegisterHint(sell, "Money now, and the end of a family business.");
+            item.AddChild(sell);
+            box.AddChild(item);
+        }
+        return Ui.Card(box);
+    }
 
     public void ScrollMoneyToEnd()
     {
