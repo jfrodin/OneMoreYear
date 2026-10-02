@@ -1,0 +1,199 @@
+// Friends: made, kept, lost and found again. No dashes.
+[
+  {
+    "id": "fr_birthday_forgot", "title": "The birthday",
+    "text": "It is {t.name}'s birthday today. You remember at eleven at night, from a photo of the party you were not at.",
+    "target": { "role": "friend", "conditions": { "minAge": 16 } },
+    "conditions": { "minAge": 16 }, "cooldown": 8,
+    "choices": [
+      { "text": "Call right now", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 2, "mutual": true } ], "result": "{T.He} picks up, a bit drunk, and forgives you instantly. You promise lunch. You actually have it." },
+      { "text": "Send a message tomorrow", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "A thumbs up in reply. Nothing more. It stays with you longer than it should." }
+    ]
+  },
+  {
+    "id": "fr_moving_help", "title": "The van",
+    "text": "{t.name} is moving on Saturday, to a fourth floor {flat} with no lift, and has asked if you can help. You have plans. Sort of.",
+    "target": { "role": "friend", "conditions": { "minAge": 18 } },
+    "conditions": { "minAge": 18, "maxAge": 60 }, "cooldown": 8,
+    "choices": [
+      { "text": "Help all day", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "health", "amount": -1 } ], "result": "A sofa that does not fit the stairwell, pizza on the floor, and the kind of tired that comes with being a good friend." },
+      { "text": "Help for an hour", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 2, "mutual": true } ], "result": "You carry the light boxes and leave before the sofa. Everyone notices exactly when you leave." },
+      { "text": "Have a bad back that day", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -5 } ], "result": "{T.He} sees your photos from the lake on Sunday. Neither of you says anything." }
+    ]
+  },
+  {
+    "id": "fr_secret_told", "title": "In confidence",
+    "text": "{t.name} has told you something in confidence: an affair, a debt, a diagnosis. Now someone else in your group is asking what is wrong with {t.him}.",
+    "target": { "role": "friend", "conditions": { "minAge": 18 } },
+    "conditions": { "minAge": 18 }, "cooldown": 10,
+    "choices": [
+      { "text": "Keep the secret", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 6 }, { "type": "trait_add", "trait": "loyal", "chance": 0.04 } ], "result": "\"I don't know,\" you say. Years later, {t.name} tells you that you were the only one who never told." },
+      { "text": "Hint at it", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -12 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.04 } ], "result": "Just a hint. By Friday everyone knows. {T.name} knows exactly where it came from." }
+    ]
+  },
+  {
+    "id": "fr_drift_apart", "title": "Drifting",
+    "text": "You and {t.name} used to talk every day. Now it is a message every few months, and you are not sure whose turn it is.",
+    "target": { "role": "friend", "conditions": { "minAge": 20 } },
+    "conditions": { "minAge": 25 }, "cooldown": 10,
+    "choices": [
+      { "text": "Book a weekend together", "effects": [ { "type": "money", "amount": -3000 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true } ], "result": "Ten minutes of awkwardness, then thirty hours of talking. You are still the same two idiots. You book the next one before you leave." },
+      { "text": "Let it fade", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": -5, "mutual": true } ], "result": "Nobody decides it. It just happens. Some friendships are for a part of a life." }
+    ]
+  },
+  {
+    "id": "fr_friend_wedding_ex", "title": "Seated next to",
+    "text": "At a friend's wedding, the seating plan has put you next to your ex. Someone thought this would be funny, or did not think at all.",
+    "conditions": { "minAge": 22, "maxAge": 50 }, "cooldown": 10,
+    "target": { "role": "ex", "conditions": { "minAge": 20 } },
+    "choices": [
+      { "text": "Make the best of it", "chance": 0.6, "chanceTraits": { "charming": 0.15, "resilient": 0.1 },
+        "success": { "text": "It turns out you can laugh about it all now. You dance once, as friends. It feels like closing a door gently.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": -8, "mutual": true }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "Three courses of polite small talk and one sharp remark over dessert. You leave before the cake.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Swap place cards", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You end up next to a very old great uncle who tells you about the war for two hours. It is the best conversation of the night." }
+    ]
+  },
+  {
+    "id": "fr_new_neighbour", "title": "The new neighbours",
+    "text": "New neighbours have moved in next door. They are about your age, and they have just knocked to borrow a screwdriver.",
+    "conditions": { "minAge": 25, "maxAge": 80, "livesWithParents": false }, "cooldown": 15,
+    "target": { "role": "new_person", "ageOffsetMin": -6, "ageOffsetMax": 6 },
+    "choices": [
+      { "text": "Invite them in for coffee", "effects": [ { "type": "friend_add", "who": "player", "to": "target" }, { "type": "happiness", "amount": 4 } ], "result": "The screwdriver is forgotten. Three hours later you have new friends and a standing invitation to their barbecue." },
+      { "text": "Lend the screwdriver", "effects": [], "result": "They return it a month later, with a bottle of wine. A good start." }
+    ]
+  },
+  {
+    "id": "fr_old_friend_in_trouble", "content": [ "suicide" ], "title": "The late call",
+    "text": "{t.name} calls at two in the morning. {T.He} has been drinking, {t.his} marriage is over, and {t.he} is standing on a bridge. {T.He} just wants to talk.",
+    "target": { "role": "friend", "conditions": { "minAge": 25 } },
+    "conditions": { "minAge": 25 }, "cooldown": 20, "weight": 0.3,
+    "choices": [
+      { "text": "Keep talking and go there", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 15, "mutual": true }, { "type": "health", "amount": -1 }, { "type": "memory", "kind": "bridge_call", "text": "The night on the bridge with {t.name}", "impact": 15 } ], "result": "You talk the whole way, in your coat over your pyjamas. You find {t.him} sitting on the kerb, not the bridge. You sit there together until it gets light." },
+      { "text": "Call for help", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true } ], "result": "The police find {t.him} within the hour. {T.He} is angry with you for a month. Then {t.he} thanks you, and means it." }
+    ]
+  },
+  {
+    "id": "fr_book_club", "title": "The book club",
+    "text": "A neighbour is starting a book club. Monthly, one book, a lot of wine, and, you suspect, not much discussion of the book.",
+    "conditions": { "minAge": 25 }, "cooldown": 20,
+    "choices": [
+      { "text": "Join", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "Ten years later the book club still meets. Nobody has finished a book in years. Nobody wants it to stop." },
+      { "text": "Read alone", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "You read the books anyway, out of curiosity. You would have had a lot to say." }
+    ]
+  },
+  {
+    "id": "fr_lend_money_friend", "title": "Just until Friday",
+    "text": "{t.name} needs to borrow money. Not a lot. \"Just until Friday,\" {t.he} says. It was just until Friday last time, too.",
+    "target": { "role": "friend", "conditions": { "minAge": 20 } },
+    "conditions": { "minAge": 20, "minMoney": 5000 }, "cooldown": 8,
+    "choices": [
+      { "text": "Lend it", "chance": 0.5,
+        "success": { "text": "Friday, exactly, with an apology and a coffee. You feel bad for doubting {t.him}.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": 5, "mutual": true } ] },
+        "failure": { "text": "Friday comes and goes. So do several more. You decide the friendship is worth more than the money, mostly.", "effects": [ { "type": "money", "amount": -3000 }, { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": -6 } ] } },
+      { "text": "Say no, kindly", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "{T.He} says it is fine and finds it elsewhere. Something is slightly different between you after that." }
+    ]
+  },
+  {
+    "id": "fr_group_holiday", "title": "Seven friends, one villa",
+    "text": "Your old friends are renting a house abroad together for a week, like you did at twenty. Seven people, one kitchen, a lot of history.",
+    "conditions": { "minAge": 28, "maxAge": 65, "minMoney": 15000, "minYear": 1975 }, "cooldown": 12,
+    "choices": [
+      { "text": "Go", "chance": 0.7,
+        "success": { "text": "Long dinners, old jokes, a swim at midnight. On the last night someone cries about getting older, and everybody laughs, and then everybody cries.", "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "friends_villa", "text": "The week in the villa with the old gang", "impact": 15 } ] },
+        "failure": { "text": "An argument about money on day two that is really about something from 1998. You come home a day early and a friend short.", "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Look at the photos instead", "effects": [], "result": "They look like they had a wonderful time. They did. Next time, they say. You hope so." }
+    ]
+  },
+  {
+    "id": "fr_friend_success", "title": "Good news",
+    "text": "{t.name} has had enormous success: a promotion, a book, a fortune, all at once. Everybody is talking about it.",
+    "target": { "role": "friend", "conditions": { "minAge": 25 } },
+    "conditions": { "minAge": 25 }, "cooldown": 15,
+    "choices": [
+      { "text": "Be happy for {t.him}, really", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 5, "mutual": true }, { "type": "happiness", "amount": 2 } ], "result": "You throw {t.him} a dinner. {T.He} is more nervous about all this than you realised. You are the friend who did not change." },
+      { "text": "Feel the envy", "requires": { "traitsAny": [ "jealous", "ambitious", "greedy" ] }, "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "envy", "amount": 10 }, { "type": "happiness", "amount": -3 } ], "result": "You congratulate {t.him} with a smile that hurts your face. You check {t.his} news every day after that, and hate yourself for it." }
+    ]
+  },
+  {
+    "id": "fr_reunion_online", "title": "A group chat",
+    "text": "Someone has started a group chat for your old class. Forty people, thirty years, and a photo of you all at fifteen.",
+    "conditions": { "minAge": 35, "minYear": 2008 }, "cooldown": 15,
+    "choices": [
+      { "text": "Join in", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Who married whom, who lives where, who did not make it. A teacher you all hated turns out to have been kind to someone in a way nobody knew." },
+      { "text": "Mute it", "effects": [], "result": "Four hundred unread messages by Friday. You read them all on Sunday night, in bed, smiling." }
+    ]
+  },
+  {
+    "id": "fr_godparent", "title": "Godparent",
+    "text": "{t.name} has asked you to be godparent to {t.his} new baby. It means birthdays, advice, and a promise for a very long time.",
+    "target": { "role": "friend", "conditions": { "minAge": 22 } },
+    "conditions": { "minAge": 22, "maxAge": 60 }, "cooldown": 15,
+    "choices": [
+      { "text": "Say yes", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 5 } ], "result": "You never miss a birthday. Twenty years later, the baby, now an adult, calls you for advice before calling their parents." },
+      { "text": "Say you are honoured, but no", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "You explain. {T.He} understands. A little." }
+    ]
+  },
+  {
+    "id": "fr_friend_politics", "title": "The other side",
+    "text": "{t.name} has started posting things you strongly disagree with. Every week, more of them. You have been friends since you were seven.",
+    "target": { "role": "friend", "conditions": { "minAge": 25 } },
+    "conditions": { "minAge": 25, "minYear": 2010 }, "cooldown": 15,
+    "choices": [
+      { "text": "Call {t.him}, do not argue online", "chance": 0.6,
+        "success": { "text": "An hour on the phone. You still disagree. But you remember who the other is, and that is the important part.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 4, "mutual": true } ] },
+        "failure": { "text": "It turns into a shouting match. You do not speak for a year.", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": -10, "mutual": true } ] } },
+      { "text": "Hide the posts, keep the friend", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You see each other at Christmas and talk about everything else. It works, most of the time." }
+    ]
+  },
+  {
+    "id": "fr_new_friend_late", "title": "A new friend at sixty",
+    "text": "At a course for something you never thought you would try, you meet someone you click with at once. You thought you were done making friends.",
+    "conditions": { "minAge": 55 }, "cooldown": 15,
+    "target": { "role": "new_person", "ageOffsetMin": -8, "ageOffsetMax": 8 },
+    "choices": [
+      { "text": "Suggest a coffee", "effects": [ { "type": "friend_add", "who": "player", "to": "target" }, { "type": "happiness", "amount": 6 } ], "result": "Coffee becomes a weekly walk. A late friendship has a different taste: no history, no rivalry, just the two of you as you are now." },
+      { "text": "Keep it to the course", "effects": [], "result": "A nice person on Tuesdays. When the course ends, you wonder what would have happened." }
+    ]
+  },
+  {
+    "id": "fr_shared_secret_childhood", "title": "We never told",
+    "text": "{t.name} brings it up after a few glasses: that thing the two of you did when you were fourteen. Nobody ever found out. You both still laugh about it, and then don't.",
+    "target": { "role": "friend", "conditions": { "minAge": 30 } },
+    "conditions": { "minAge": 30 }, "cooldown": 20,
+    "choices": [
+      { "text": "Laugh until you cry", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "happiness", "amount": 4 } ], "result": "The fire brigade. The goat. The headmaster's car. You are fourteen again for an hour." },
+      { "text": "Admit you still feel bad", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "trust", "amount": 5, "mutual": true } ], "result": "So does {t.he}. You talk about it properly for the first time. It feels lighter after." }
+    ]
+  },
+  {
+    "id": "fr_friend_dies_young", "title": "Too soon",
+    "text": "The news comes by phone: {t.name} has died. An accident. You saw {t.him} two weeks ago and talked about nothing, the way you do when you think there is time.",
+    "trigger": "situation",
+    "choices": [
+      { "text": "Help the family", "effects": [ { "type": "happiness", "amount": -8 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ], "result": "You do the practical things: the flowers, the phone calls, the food. It helps, a little. The grief comes later, in the supermarket, in front of {t.his} favourite biscuits." },
+      { "text": "Go back to the last conversation", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "memory", "kind": "last_talk", "text": "The last time I saw {t.name}", "impact": -15 } ], "result": "You go over it again and again. You would give a great deal to have said something that mattered." }
+    ]
+  },
+  {
+    "id": "fr_friend_moves_abroad", "title": "Leaving",
+    "text": "{t.name} is moving to the other side of the world. The farewell party is on Saturday. You promised each other you would always live in the same city.",
+    "target": { "role": "friend", "conditions": { "minAge": 20, "maxAge": 50 } },
+    "conditions": { "minAge": 20 }, "cooldown": 15,
+    "choices": [
+      { "text": "Promise to visit", "chance": 0.5,
+        "success": { "text": "You visit, twice in ten years. Each time, it is as if no time has passed. That is what real friends are.", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "Life gets in the way. The calls get rarer. But on {t.his} birthday, every year, you call, and {t.he} always answers.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Give a speech at the party", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true } ], "result": "You get through two sentences before your voice goes. {T.He} hugs you in front of everyone. Nobody minds." }
+    ]
+  },
+  {
+    "id": "fr_childhood_friend_found", "title": "A name in the paper",
+    "text": "A name you have not thought about in thirty years, in the local paper: your best friend from primary school, running a bakery on the other side of town.",
+    "conditions": { "minAge": 35 }, "cooldown": 30, "weight": 0.5,
+    "choices": [
+      { "text": "Go and buy a loaf", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "childhood_friend", "text": "Finding my old friend at the bakery", "impact": 12 } ], "result": "Recognition takes a second, then a shriek, then flour all over your coat. You get your bread free for the rest of your life." },
+      { "text": "Leave it as a memory", "effects": [], "result": "Some people are better as you remember them. You drive past the bakery sometimes, and slow down." }
+    ]
+  }
+]

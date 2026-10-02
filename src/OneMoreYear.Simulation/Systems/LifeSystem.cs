@@ -137,7 +137,10 @@ public static class LifeSystem
             && Kinship.Siblings(w, player).Any(s => s.IsAlive) && ctx.Rng.Chance(0.5))
             EventSystem.QueueSituation(ctx, "mid_inheritance_furniture", new() { ["target"] = p.Id });
         // An old friend's family may ask the player to speak at the funeral.
-        if (player.IsAlive && player.FriendIds.Contains(p.Id) && player.Age(ctx.Year) >= 30 && ctx.Rng.Chance(0.4))
+        // A friend who dies young is a different kind of loss.
+        if (player.IsAlive && player.FriendIds.Contains(p.Id) && age < 50 && player.Age(ctx.Year) >= 18)
+            EventSystem.QueueSituation(ctx, "fr_friend_dies_young", new() { ["target"] = p.Id });
+        else if (player.IsAlive && player.FriendIds.Contains(p.Id) && player.Age(ctx.Year) >= 30 && ctx.Rng.Chance(0.4))
             EventSystem.QueueSituation(ctx, "friend_funeral_speech", new() { ["target"] = p.Id });
 
         int? spouseId = p.PartnerStatus == PartnerStatus.Married ? p.PartnerId : null;
