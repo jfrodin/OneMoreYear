@@ -1,0 +1,214 @@
+// Young adults, 18 to 35: the first everything. No dashes.
+[
+  {
+    "id": "ya2_first_car", "title": "The first car",
+    "text": "A used car from a man who swears it has only been driven by his mother. It has rust, a cassette player and one door that opens from the inside only.",
+    "conditions": { "minAge": 18, "maxAge": 30, "minMoney": 15000 }, "cooldown": 30,
+    "choices": [
+      { "text": "Buy it", "chance": 0.7,
+        "success": { "text": "It starts every morning, eventually. Five years of road trips, moves and a back seat full of other people's furniture.", "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "first_car", "text": "My first car", "impact": 12 } ] },
+        "failure": { "text": "The gearbox goes in week two. The man's mother, it turns out, raced it.", "effects": [ { "type": "money", "amount": -18000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Keep taking the bus", "effects": [ { "type": "money", "amount": 2000 } ], "result": "The bus is fine. You read more books than anyone you know." }
+    ]
+  },
+  {
+    "id": "ya2_backpacking", "title": "The backpack",
+    "text": "A friend is going travelling for six months with a backpack and very little money. There is room for one more.",
+    "conditions": { "minAge": 19, "maxAge": 28, "minYear": 1965, "minMoney": 20000 }, "cooldown": 30,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -18000 }, { "type": "happiness", "amount": 9 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "memory", "kind": "backpacking", "text": "Six months with a backpack", "impact": 25 } ], "result": "Night buses, cheap hostels, a fever in a town you cannot pronounce. You come home thinner and certain of things you cannot put into words." },
+      { "text": "Stay and work", "effects": [ { "type": "money", "amount": 10000 }, { "type": "performance", "amount": 3 } ], "result": "Your friend sends postcards from places you look up in an atlas. You get promoted. It is a fair trade, mostly." }
+    ]
+  },
+  {
+    "id": "ya2_bad_roommate", "title": "The roommate",
+    "text": "Your roommate has stopped paying their half of the bills, has a new partner who never leaves, and uses your toothbrush. You are fairly sure about the toothbrush.",
+    "conditions": { "minAge": 18, "maxAge": 30, "livesWithParents": false, "ownsHome": false }, "cooldown": 15,
+    "choices": [
+      { "text": "Have it out", "chance": 0.5, "chanceTraits": { "brave": 0.15, "conflict_averse": -0.2 },
+        "success": { "text": "A long, loud evening. They pay up, the partner leaves, and you buy a new toothbrush and hide it.", "effects": [ { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "They cry, you apologise, nothing changes. You move out in spring.", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "money", "amount": -5000 } ] } },
+      { "text": "Leave passive aggressive notes", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.04 } ], "result": "The fridge is covered in notes by March. They reply in kind. It is the most you have ever talked." }
+    ]
+  },
+  {
+    "id": "ya2_dating_app", "title": "Swipe",
+    "text": "[[2012: A dating site || A dating app]] promises someone perfect for you within a few miles. You have been looking at the profiles for an hour.",
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -5, "ageOffsetMax": 5 },
+    "conditions": { "minAge": 20, "maxAge": 45, "minYear": 2002, "hasPartner": false }, "cooldown": 6,
+    "choices": [
+      { "text": "Go on a date", "chance": 0.4, "chanceTraits": { "charming": 0.15, "social": 0.1 }, "chanceAttributes": { "looks": 0.004 },
+        "success": { "text": "They are funnier than their photos and kinder than their profile. You talk until the café closes, and agree to do it again.", "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Their photos were from ten years ago and their opinions from fifty. You leave after one drink.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Delete it", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You delete it. You download it again on Sunday night. Everyone does." }
+    ]
+  },
+  {
+    "id": "ya2_wedding_guest_speech", "title": "Best friend's wedding",
+    "text": "Your best friend is getting married and wants you to give a speech. Two hundred guests, an open bar, and a lot of stories you cannot tell.",
+    "conditions": { "minAge": 22, "maxAge": 40 }, "cooldown": 10,
+    "choices": [
+      { "text": "Write something heartfelt", "chance": 0.7, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "People laugh, then cry, then laugh again. Your friend's new mother in law asks for a copy.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "charming", "chance": 0.03 } ] },
+        "failure": { "text": "You tell the one story you should not have. The bride laughs. The groom's grandmother does not.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Keep it to two minutes", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Short, sweet, done. Everyone is grateful. The uncle after you speaks for half an hour." }
+    ]
+  },
+  {
+    "id": "ya2_overdraft", "title": "The overdraft",
+    "text": "The bank statement arrives. You are overdrawn, again, and you are not entirely sure how. There was a weekend. There were taxis.",
+    "conditions": { "minAge": 18, "maxAge": 30, "maxMoney": 5000 }, "cooldown": 6,
+    "choices": [
+      { "text": "Make a budget", "effects": [ { "type": "money", "amount": 3000 }, { "type": "trait_add", "trait": "stingy", "chance": 0.04 } ], "result": "A spreadsheet with colours. You stick to it for nine weeks, which is nine more than ever before." },
+      { "text": "Call home", "effects": [ { "type": "money", "amount": 5000 }, { "type": "happiness", "amount": -2 } ], "result": "A sigh, a transfer, and a lecture you can recite along with them. You will pay it back. Probably." }
+    ]
+  },
+  {
+    "id": "ya2_career_doubt", "title": "Is this it?",
+    "text": "Monday morning, on the way to a job you trained years for, you realise you do not like it. You have not liked it for a while.",
+    "conditions": { "minAge": 25, "maxAge": 38, "activity": "working" }, "cooldown": 15,
+    "choices": [
+      { "text": "Quit and start over", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "start_over", "text": "The Monday I quit", "impact": 12 } ], "result": "Terrifying and right. Your parents are not thrilled. You have never slept so well." },
+      { "text": "Give it one more year", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "performance", "amount": 2 } ], "result": "One more year becomes three. Some days are good. You stop asking the question, mostly." }
+    ]
+  },
+  {
+    "id": "ya2_gym", "title": "The gym",
+    "text": "A new year, a new gym card, and a personal trainer called Kim who seems personally offended by your posture.",
+    "conditions": { "minAge": 20, "maxAge": 45, "minYear": 1980 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go three times a week", "chance": 0.4, "chanceTraits": { "lazy": -0.2, "ambitious": 0.1 },
+        "success": { "text": "By summer you can run up the stairs without thinking about it. Kim almost smiles.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "happiness", "amount": 3 }, { "type": "money", "amount": -4000 } ] },
+        "failure": { "text": "You go four times in January and pay for the rest of the year. The gym thanks you for your support.", "effects": [ { "type": "money", "amount": -4000 } ] } },
+      { "text": "Walk instead", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 } ], "result": "Free, outdoors, and nobody shouts. Sometimes the simple answer is right." }
+    ]
+  },
+  {
+    "id": "ya2_parents_visit", "title": "Inspection",
+    "text": "Your parents are coming to see your new place for the first time. You have two hours to make it look like an adult lives here.",
+    "conditions": { "minAge": 19, "maxAge": 30, "livesWithParents": false }, "cooldown": 20,
+    "choices": [
+      { "text": "Clean everything", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Your mother opens the one cupboard you did not do. She says nothing. She says it very loudly." },
+      { "text": "Let them see how you live", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.03 } ], "result": "Your father fixes the tap and your mother fills the freezer. You were secretly hoping for both." }
+    ]
+  },
+  {
+    "id": "ya2_night_out", "title": "The night out",
+    "text": "Saturday night, a city, five friends, no plan. It is already eleven and nobody has decided anything.",
+    "conditions": { "minAge": 18, "maxAge": 32 }, "cooldown": 3,
+    "choices": [
+      { "text": "Dance till closing", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 }, { "type": "money", "amount": -1500 } ], "result": "Sweat, terrible music you love, chips on the kerb at four. Sunday is a write off. Worth it." },
+      { "text": "A quiet bar and long talks", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "money", "amount": -800 } ], "result": "You find out more about your friends in one night than in a year. One of them is moving abroad. You are glad you were there." },
+      { "text": "Home by midnight", "effects": [ { "type": "health", "amount": 1 } ], "result": "The group chat the next morning is full of photos. You are in none of them, and you have no headache." }
+    ]
+  },
+  {
+    "id": "ya2_promotion_rival", "title": "One promotion",
+    "text": "There is one promotion, and two of you who want it: you, and the friend who started the same week as you.",
+    "conditions": { "minAge": 24, "maxAge": 40, "activity": "working" }, "cooldown": 12,
+    "choices": [
+      { "text": "Go for it, fairly", "chance": 0.5, "chanceAttributes": { "smarts": 0.004 }, "chanceTraits": { "ambitious": 0.15 },
+        "success": { "text": "You get it. Your friend buys you a drink and means it. Mostly.", "effects": [ { "type": "promote" }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "They get it. You buy them a drink and mean it. Mostly.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Go for it, any way you can", "requires": { "traitsAny": [ "manipulative", "ambitious", "greedy" ] }, "chance": 0.7,
+        "success": { "text": "A word in the right ear, a doubt raised about their numbers. You get it. Your friend never quite looks at you the same way.", "effects": [ { "type": "promote" }, { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "manipulative", "chance": 0.05 } ] },
+        "failure": { "text": "The boss sees exactly what you are doing. Neither of you gets it, and everyone knows why.", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Let them have it", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "Your friend gets it, and remembers who stepped aside. Years later, they return the favour." }
+    ]
+  },
+  {
+    "id": "ya2_moving_city", "title": "A new city",
+    "text": "Your first weeks in a city where you know nobody. The flat is empty, the evenings are long, and the neighbours nod but never stop.",
+    "conditions": { "minAge": 19, "maxAge": 35, "livesWithParents": false }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Say yes to everything", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.06 } ], "result": "A pottery class, a quiz team, a running club. Most of it is not for you. The quiz team becomes your people." },
+      { "text": "Give it time", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "introvert", "chance": 0.04 } ], "result": "It takes a year. Then one day the man at the corner shop asks if you want the usual, and you realise you live here." }
+    ]
+  },
+  {
+    "id": "ya2_tattoo", "title": "The tattoo",
+    "text": "You have been drawing the design for months. The tattoo parlour has a slot on Thursday, and you have the money for once.",
+    "conditions": { "minAge": 18, "maxAge": 40, "minYear": 1970 }, "cooldown": 20,
+    "choices": [
+      { "text": "Get it", "effects": [ { "type": "money", "amount": -2500 }, { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.04 } ], "result": "It hurts more than they said and looks better than you hoped. Your grandmother asks if it washes off." },
+      { "text": "Sleep on it, again", "effects": [], "result": "You have been sleeping on it for nine years. The design is still in the drawer." }
+    ]
+  },
+  {
+    "id": "ya2_first_funeral", "title": "The first one",
+    "text": "Someone your own age has died. A friend from school, an accident. It is the first funeral you have been to where the person in the coffin is young.",
+    "conditions": { "minAge": 18, "maxAge": 30 }, "cooldown": 30, "weight": 0.3,
+    "choices": [
+      { "text": "Go, and stay for the wake", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "memory", "kind": "young_funeral", "text": "The first funeral for someone my age", "impact": -15 } ], "result": "Old classmates in borrowed suits, stories nobody can finish. Afterwards, you call your parents just to hear their voices." },
+      { "text": "Send a card", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "You could not face it. You think about it more than you thought you would." }
+    ]
+  },
+  {
+    "id": "ya2_cooking", "title": "Dinner for six",
+    "text": "You have invited six people to dinner in a flat with four chairs and two pans. The recipe says it serves four and takes thirty minutes.",
+    "conditions": { "minAge": 20, "maxAge": 35 }, "cooldown": 8,
+    "choices": [
+      { "text": "Follow the recipe exactly", "chance": 0.55, "chanceTraits": { "creative": 0.1 },
+        "success": { "text": "It takes two hours and serves six if nobody has seconds. Everybody has seconds. Somebody goes out for pizza. It is a wonderful evening.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "The smoke alarm goes off twice. You order food. The story of the smoke alarm is told at every dinner for years.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Make the one dish you know", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Your mother's pasta, exactly as she makes it. Two guests ask for the recipe. You call your mother to find out what it is." }
+    ]
+  },
+  {
+    "id": "ya2_volunteer_abroad", "title": "Somewhere you are needed",
+    "text": "An organisation is looking for volunteers to build a school abroad for a summer. Hard work, no pay, a bunk in a dormitory.",
+    "conditions": { "minAge": 19, "maxAge": 30, "minYear": 1960 }, "cooldown": 30, "weight": 0.5,
+    "choices": [
+      { "text": "Sign up", "effects": [ { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "kind", "chance": 0.07 }, { "type": "memory", "kind": "volunteer_abroad", "text": "The summer we built the school", "impact": 18 } ], "result": "You learn to mix cement, to wash in a bucket and how little you actually need. The children write to you for years." },
+      { "text": "Send money instead", "effects": [ { "type": "money", "amount": -2000 } ], "result": "A photo arrives at Christmas: a finished school, a lot of smiling children, and your name on a list on the wall." }
+    ]
+  },
+  {
+    "id": "ya2_first_payslip", "title": "Tax",
+    "text": "Your first real payslip. A good salary, you thought. Then you see the line that says tax.",
+    "conditions": { "minAge": 18, "maxAge": 26, "activity": "working", "notFlags": [ "first_payslip" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Grumble", "effects": [ { "type": "flag", "flag": "first_payslip" }, { "type": "happiness", "amount": -1 } ], "result": "You grumble to your parents, who laugh for a long time. Welcome to being a grown up, they say." },
+      { "text": "Spend what is left on something silly", "effects": [ { "type": "flag", "flag": "first_payslip" }, { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 4 } ], "result": "A record player, a good jacket, a dinner out. Your first silly thing, bought with your own money. It feels enormous." }
+    ]
+  },
+  {
+    "id": "ya2_breakup_friends", "title": "Who gets the friends",
+    "text": "After the break up, your shared friends are having a birthday party. Your ex will be there. So will everyone you know.",
+    "conditions": { "minAge": 20, "maxAge": 40, "hasPartner": false }, "cooldown": 10,
+    "choices": [
+      { "text": "Go, and be gracious", "chance": 0.6, "chanceTraits": { "resilient": 0.15, "hot_tempered": -0.2 },
+        "success": { "text": "A polite hello, one dance with someone new, home by one. Your friends tell you afterwards that you won the evening.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "Two drinks too many and a conversation in the kitchen you will replay for weeks.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Stay home", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You watch the photos appear online one by one. Next time, you tell yourself." }
+    ]
+  },
+  {
+    "id": "ya2_side_job", "title": "Evenings and weekends",
+    "text": "Money is tight. A friend can get you shifts at a restaurant in the evenings and at weekends, on top of your job.",
+    "conditions": { "minAge": 20, "maxAge": 35, "activity": "working", "maxMoney": 20000 }, "cooldown": 10,
+    "choices": [
+      { "text": "Take the shifts", "effects": [ { "type": "money", "amount": 25000 }, { "type": "happiness", "amount": -3 }, { "type": "health", "amount": -2 } ], "result": "Eight months of tired. Then the debt is gone, and you sleep for a whole weekend." },
+      { "text": "Cut back instead", "effects": [ { "type": "money", "amount": 8000 }, { "type": "happiness", "amount": -1 } ], "result": "Fewer nights out, cheaper food, no new clothes. It is boring. It works." }
+    ]
+  },
+  {
+    "id": "ya2_sibling_baby", "title": "Aunt or uncle",
+    "text": "{T.role}, {t.name}, has had a baby. You are holding your first niece or nephew, very carefully, as if it might break.",
+    "target": { "role": "sibling", "conditions": { "minAge": 20, "minChildren": 1, "maxChildren": 1 } },
+    "conditions": { "minAge": 18, "maxAge": 40 }, "cooldown": 15, "weight": 0.5,
+    "choices": [
+      { "text": "Be the fun one", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "happiness", "amount": 5 } ], "result": "Loud presents, sweets before dinner, the first one to teach them a rude word. A role you were born for." },
+      { "text": "Offer to babysit", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 9, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "{T.name} nearly cries with gratitude. The baby screams for two hours and then falls asleep on your chest. You do not move until morning." }
+    ]
+  },
+  {
+    "id": "ya2_politics_argument", "title": "The argument",
+    "text": "A family dinner. Your uncle says something about the news, and you have opinions now, and you are not twelve any more.",
+    "conditions": { "minAge": 18, "maxAge": 30 }, "cooldown": 6,
+    "choices": [
+      { "text": "Argue it out", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "Nobody changes their mind. Your grandmother brings out dessert very loudly. Your uncle winks at you as you leave." },
+      { "text": "Change the subject", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.03 } ], "result": "The weather, the football, your cousin's new job. Peace, of a kind." }
+    ]
+  }
+]

@@ -196,7 +196,7 @@
   },
   {
     "id": "teen2_rival_sibling", "title": "Compared",
-    "text": "\"Your {t.role} was so good at this,\" says the teacher, for the third time this term. {T.name} went to this school before you, and everybody remembers.",
+    "text": "\"{T.role} was so good at this,\" says the teacher, for the third time this term. {T.name} went to this school before you, and everybody remembers.",
     "target": { "role": "sibling", "conditions": { "minAge": 15 } },
     "conditions": { "minAge": 12, "maxAge": 17, "activity": "school" }, "cooldown": 0,
     "choices": [
