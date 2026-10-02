@@ -2,6 +2,22 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.42.0 – 2026-10-02 · The future
+
+The game goes on to 2180, but its content used to stop around 2025. Now families that last get:
+
+- **A chapter page for every decade to the 2170s**, in Sweden and the USA: the warm decade, machines
+  that answer, the long lives, the sea walls, the great repair, a new century, people on the Moon,
+  the forests coming back.
+- **Front page news from the future**: heat summers, the four day week, the first Swede on the Moon,
+  a market crash caused by machines, the American tricentennial, a child born on Mars.
+- **12 events of everyday future life**: the voice in the kitchen, hot nights, a care robot for a
+  parent, grown meat, a great great aunt turning a hundred and twenty, a week on the Moon, the four
+  day week, wolves at the edge of town, the sea wall vote, old paper photographs, genetic screening,
+  and retraining when the machines take your job.
+- **Seven new looks for the decades after 2030.** From the 2160s the album returns to the sepia and
+  typewriter it began with.
+
 ## 0.41.0 – 2026-10-02 · Heirlooms
 
 - **Things that stay in the family.** The oldest of the family start with an heirloom each: a pocket

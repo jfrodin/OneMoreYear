@@ -37,6 +37,20 @@ public static class UiTheme
         new(2010, "Inter", new("efece5"), new("fffdf9"), new("23262b"), new("0f7f73"), new("2f8a4e"), new("c0392b"), new("3a6fb0"), new(1f, 1f, 1f)),
         // A serif comes back; coral.
         new(2020, "Fraunces", new("f1ebe3"), new("fffaf4"), new("2a2420"), new("c9563a"), new("3f8a50"), new("b83a2e"), new("3a6fb0"), new(1f, 0.99f, 0.97f)),
+        // The warm decade: sand and sage.
+        new(2030, "Inter", new("ece6d6"), new("fbf8ef"), new("26291f"), new("5f7a3a"), new("3f8a50"), new("b5452e"), new("3d6f8a"), new(1f, 0.98f, 0.93f)),
+        // Machines that answer: slate and electric cyan.
+        new(2040, "Rajdhani", new("dde3e8"), new("f5f8fa"), new("17222b"), new("0f8fb0"), new("2f8a6e"), new("c03a4a"), new("4a5fc0"), new(0.97f, 1f, 1.02f)),
+        // Quiet towns and long lives: moss and soft paper.
+        new(2060, "Fraunces", new("e3e6da"), new("f7f9f1"), new("232a22"), new("4f7d5a"), new("3f8a50"), new("a8473a"), new("466f96"), new(0.98f, 1f, 0.96f)),
+        // The great repair: earth and terracotta.
+        new(2080, "PlayfairDisplay", new("eadfcf"), new("fbf5ec"), new("2e241c"), new("b0603a"), new("4f8040"), new("a83a2e"), new("3f6a8a"), new(1f, 0.95f, 0.88f)),
+        // A new century: ivory and gold.
+        new(2100, "PlayfairDisplay", new("efe9da"), new("fffcf3"), new("2a251a"), new("a8822a"), new("4a7f45"), new("a8402e"), new("3f6590"), new(1f, 0.97f, 0.9f)),
+        // The old stories: blue grey, like an archive.
+        new(2130, "Inter", new("e2e6ea"), new("f8fafb"), new("1f2630"), new("5a6f8f"), new("3f7f60"), new("a8443a"), new("3a6fb0"), new(0.98f, 0.99f, 1.02f)),
+        // Back to the beginning: sepia and typewriter, the album closing its circle.
+        new(2160, "SpecialElite", new("e3d4b2"), new("f2e8d0"), new("3a2a1a"), new("8a4a1f"), new("4d7535"), new("9b3526"), new("3d5b78"), new(1f, 0.87f, 0.68f)),
     };
 
     // Declared first: the fonts below are loaded through it during static initialisation.

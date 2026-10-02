@@ -978,7 +978,10 @@ public partial class Main : Control
             case 86: Shot("09_era_1956"); _eraOverride = 1987; ShowGame(); break;
             case 90: Shot("10_era_1987"); ShowAchievements(); break;
             case 92: Shot("11_achievements"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); _toasts.Enqueue(GameSession.AllAchievements().First(a => a.Id == "five_generations")); ShowNextToast(); break;
-            case 94: Shot("12_achievement_notice"); GetTree().Quit(); break;
+            case 94: Shot("12_achievement_notice"); _eraOverride = 2045; ShowGame(); break;
+            case 98: Shot("13_era_2045"); _eraOverride = 2105; ShowGame(); break;
+            case 102: Shot("14_era_2105"); ShowChapter(Session!.Chapter(2050)); break;
+            case 104: Shot("15_chapter_2050"); GetTree().Quit(); break;
         }
     }
 

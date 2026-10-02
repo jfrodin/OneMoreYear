@@ -1,0 +1,117 @@
+// Life after 2030: only families that last long enough ever see these. Plausible, gentle, never
+// about real people or parties. No dashes.
+[
+  {
+    "id": "fut_assistant", "title": "The voice in the kitchen",
+    "text": "The household assistant has started to finish your sentences. Today it reminded you of your mother's birthday before you remembered it yourself.",
+    "conditions": { "minAge": 20, "minYear": 2035 }, "cooldown": 15,
+    "choices": [
+      { "text": "Let it run your life", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "lazy", "chance": 0.05 } ], "result": "Bills paid, birthdays remembered, groceries ordered. You have never been so organised, or so bored." },
+      { "text": "Turn it off for a month", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "You forget two appointments and one birthday. You also read three books. It evens out." }
+    ]
+  },
+  {
+    "id": "fut_heat_night", "title": "The hot night",
+    "text": "The fourth night in a row above thirty degrees. Nobody on the street is sleeping. People sit on their balconies at three in the morning, fanning themselves.",
+    "conditions": { "minAge": 6, "minYear": 2030 }, "cooldown": 6,
+    "choices": [
+      { "text": "Sleep in the cellar", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Cool concrete, a mattress and the smell of old apples. Best sleep you have had in a week." },
+      { "text": "Sit outside with the neighbours", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "social", "chance": 0.04 } ], "result": "You meet more neighbours in one hot night than in ten years. Somebody brings ice. Somebody brings a guitar." }
+    ]
+  },
+  {
+    "id": "fut_robot_care", "title": "The care robot",
+    "text": "{T.role} is getting frail, and the council offers a care robot to live in {t.his} {flat}: it lifts, cooks, reminds and calls for help. Or there is still the old way: you.",
+    "target": { "role": "parent", "conditions": { "minAge": 78 } },
+    "conditions": { "minAge": 40, "minYear": 2045 }, "cooldown": 15,
+    "choices": [
+      { "text": "Accept the robot", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -2 } ], "result": "It is very good at its job. {T.name} names it after a dog {t.he} had as a child and talks to it more than to you." },
+      { "text": "Visit every day instead", "effects": [ { "type": "performance", "amount": -4 }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true } ], "result": "It is exhausting. It is also the last long conversation of your parent's life, spread over two years." }
+    ]
+  },
+  {
+    "id": "fut_lab_meat", "title": "Grown, not raised",
+    "text": "The family dinner has steak on the table. It was grown in a vat in an industrial park. {P.name} says you cannot taste the difference.",
+    "conditions": { "minAge": 18, "minYear": 2040, "hasPartner": true }, "cooldown": 20,
+    "choices": [
+      { "text": "Eat it and say nothing", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You can taste the difference. You do not say so. Some things are not worth an argument." },
+      { "text": "Refuse on principle", "requires": { "traitsAny": [ "paranoid", "hot_tempered", "eccentric" ] }, "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You eat the potatoes and tell a long story about your grandmother's pig. Nobody listens." }
+    ]
+  },
+  {
+    "id": "fut_hundred_twenty", "title": "A hundred and twenty",
+    "text": "A great great aunt is turning a hundred and twenty, and the whole family is invited. She still does the crossword in pen.",
+    "conditions": { "minAge": 10, "minYear": 2070 }, "cooldown": 25, "weight": 0.5,
+    "choices": [
+      { "text": "Go, and ask about the old days", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "old_aunt", "text": "The aunt who was a hundred and twenty", "impact": 10 } ], "result": "She tells you about a time when phones had to be held in your hand and everyone had a car of their own. You assume she is making half of it up." },
+      { "text": "Send a video", "effects": [], "result": "She watches it, she says, three times. She did not like the music." }
+    ]
+  },
+  {
+    "id": "fut_moon_holiday", "title": "A week on the Moon",
+    "text": "A week at a hotel on the Moon. A low gravity pool, a view of the Earth from the restaurant. It costs about as much as a small house.",
+    "conditions": { "minAge": 25, "minYear": 2080, "minMoney": 2000000 }, "cooldown": 30,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -1500000 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "moon", "text": "A week on the Moon", "impact": 25 } ], "result": "You float, you laugh, you throw up once. On the last night you look at the Earth for an hour and find your own country, very small." },
+      { "text": "Spend it on the family", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A new roof, a car for the eldest, a fund for the grandchildren. The Moon will still be there." }
+    ]
+  },
+  {
+    "id": "fut_four_day_week", "title": "Fridays",
+    "text": "A four day week. Every Friday is yours now, and you are not quite sure what to do with them.",
+    "conditions": { "minAge": 22, "maxAge": 66, "minYear": 2048, "activity": "working" }, "cooldown": 30,
+    "choices": [
+      { "text": "Learn something new", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "happiness", "amount": 3 } ], "result": "Pottery, Japanese, carpentry. By the third year you can make a bowl, order a meal in Tokyo and fix a chair." },
+      { "text": "Spend them with the family", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Long breakfasts, walks, the children's football. It turns out that this is what the extra day was for." },
+      { "text": "Take a second job", "effects": [ { "type": "money", "amount": 60000 }, { "type": "happiness", "amount": -3 } ], "result": "More money, no Fridays. Your grandfather would have understood." }
+    ]
+  },
+  {
+    "id": "fut_rewilding", "title": "The wolves",
+    "text": "Wolves have been seen at the edge of town, for the first time in centuries. Half the town is thrilled, the other half has stopped walking the dog after dark.",
+    "conditions": { "minAge": 10, "minYear": 2090 }, "cooldown": 30,
+    "choices": [
+      { "text": "Go out at dawn to see them", "chance": 0.4, "success": { "text": "Grey shapes at the treeline, watching you, then gone. You will never forget it.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "wolves", "text": "The morning I saw the wolves", "impact": 15 } ] },
+        "failure": { "text": "Three cold mornings and nothing but deer. Then your neighbour sees them from her kitchen window, in her dressing gown.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "Keep the children in", "effects": [], "result": "They complain for a month. The wolves never come closer than the edge of the woods." }
+    ]
+  },
+  {
+    "id": "fut_sea_wall", "title": "The sea wall",
+    "text": "The town votes on a sea wall. It would protect the old harbour, cost a fortune in taxes, and block the view from every house on the shore.",
+    "conditions": { "minAge": 18, "minYear": 2060, "maxYear": 2110 }, "cooldown": 40,
+    "choices": [
+      { "text": "Vote for the wall", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": 1 } ], "result": "It goes up over six years. The first big storm breaks against it, and the whole town comes out to watch." },
+      { "text": "Vote to move inland instead", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "The harbour is slowly given back to the sea. On calm days you can see the old church roof under the water." }
+    ]
+  },
+  {
+    "id": "fut_old_photos", "title": "The old photographs",
+    "text": "A box of photographs on paper, actual paper, from more than a hundred years ago. Faces nobody can name any more, at a beach, at a wedding, in front of a car with fins.",
+    "conditions": { "minAge": 14, "minYear": 2075 }, "cooldown": 30,
+    "choices": [
+      { "text": "Try to work out who they all are", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "With the family archive you name eleven of the fourteen faces. One of them looks exactly like you." },
+      { "text": "Frame the best one", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A woman laughing at something outside the picture. Nobody knows what. It hangs in your hall for the rest of your life." }
+    ]
+  },
+  {
+    "id": "fut_gene_check", "title": "The screening",
+    "text": "Before the baby comes, the clinic offers a full genetic screening. It will tell you what illnesses the child is likely to get, decades from now.",
+    "conditions": { "minAge": 20, "maxAge": 48, "minYear": 2045, "hasPartner": true }, "cooldown": 20, "weight": 0.5,
+    "choices": [
+      { "text": "Find out everything", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "A long list of percentages. Most of them small. You read it once and put it away, and still think about one line late at night." },
+      { "text": "Some things are better not known", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "The child will be who the child will be. Your grandparents managed without a list." }
+    ]
+  },
+  {
+    "id": "fut_retrain", "title": "Again",
+    "text": "The machines have learned to do your job. The company offers a year of retraining, paid, in something the machines cannot do yet.",
+    "conditions": { "minAge": 30, "maxAge": 60, "minYear": 2040, "activity": "working" }, "cooldown": 25, "weight": 0.6,
+    "choices": [
+      { "text": "Retrain in care work", "effects": [ { "type": "grades", "amount": 5 }, { "type": "happiness", "amount": 1 } ], "result": "Old people still want a human hand to hold. It turns out you are good at holding it." },
+      { "text": "Fight to keep the job", "chance": 0.4, "chanceTraits": { "ambitious": 0.2, "manipulative": 0.1 },
+        "success": { "text": "You make yourself the one who checks what the machine does. For now, that is a job.", "effects": [ { "type": "performance", "amount": 5 } ] },
+        "failure": { "text": "They thank you for your years of service. A machine prints the letter.", "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -6 } ] } }
+    ]
+  }
+]

@@ -77,7 +77,22 @@
     { "year": 1990, "name": "the long boom", "text": "The Cold War is over. Jobs are easy to find, the internet arrives in the den, and a dot com makes your neighbour rich." },
     { "year": 2000, "name": "September and the crash", "text": "Two towers fall on a Tuesday morning. Two wars follow. Then the housing market collapses and takes the banks with it." },
     { "year": 2010, "name": "the smartphone decade", "text": "Everyone carries the internet in a pocket. Student loans, side hustles, and a country that argues about everything." },
-    { "year": 2020, "name": "the pandemic and after", "text": "Schools close, hospitals fill, offices empty. Then prices go up, and nothing quite goes back to normal." }
+    { "year": 2020, "name": "the pandemic and after", "text": "Schools close, hospitals fill, offices empty. Then prices go up, and nothing quite goes back to normal." },
+    { "year": 2030, "name": "the hot decade", "text": "Heat waves, wildfire smoke over half the country, and electric pickups in every driveway. People start moving north." },
+    { "year": 2040, "name": "machines that answer", "text": "Software writes the code, reads the scans and drives the trucks. Half the country retrains. The other half argues about it on television." },
+    { "year": 2050, "name": "the long lives", "text": "Living to a hundred is ordinary. Retirement starts at seventy, and lasts thirty years if you are lucky and saved." },
+    { "year": 2060, "name": "the northern move", "text": "Phoenix empties in the summer. Minnesota and Michigan boom. Old farm towns fill up with people from the coasts." },
+    { "year": 2070, "name": "the sea walls", "text": "Miami builds walls, New Orleans builds higher. Whole neighbourhoods on the coast are bought out and given back to the water." },
+    { "year": 2080, "name": "the great repair", "text": "Prairies replanted, rivers unblocked, buffalo back on the plains. A generation decides to fix what its grandparents broke." },
+    { "year": 2090, "name": "the century turns", "text": "Children born now may see 2200. Grandparents tell stories about phones you had to hold in your hand." },
+    { "year": 2100, "name": "a new century", "text": "Fireworks over a country that is older, warmer and still arguing. Some things never change." },
+    { "year": 2110, "name": "the slow years", "text": "A quiet stretch. Small towns, long lives, and a lot of people who have decided that enough is enough." },
+    { "year": 2120, "name": "the far fields", "text": "A few thousand Americans live on the Moon and Mars. The rest watch the launches from the back porch." },
+    { "year": 2130, "name": "the old stories", "text": "Everybody has their family history on file. Grandchildren know the names of ancestors their grandparents never heard of." },
+    { "year": 2140, "name": "the second spring", "text": "The forests are coming back. Wolves in Ohio, elk in Pennsylvania, and wild horses on land that used to be suburbs." },
+    { "year": 2150, "name": "the long view", "text": "Historians write about the twentieth century like it was the beginning of everything. Your family was there for all of it." },
+    { "year": 2160, "name": "the quiet century", "text": "Long lives, small families, and a country that has finally learned to slow down. Mostly." },
+    { "year": 2170, "name": "one more year", "text": "Another decade, another chapter. In a drawer somewhere, there is a photograph of the first of you, looking out at a world they could never have imagined." }
   ],
   "investments": [
     { "id": "us_index_fund", "name": "Stock index fund", "kind": "fund", "beta": 1.0, "spread": 0.03, "minYear": 1976,
@@ -145,6 +160,17 @@
     { "year": 2001, "text": "On September 11, terrorists fly planes into the World Trade Center and the Pentagon.", "jobLossChance": 0.02, "savingsFactor": 0.88 },
     { "year": 2005, "text": "Hurricane Katrina drowns New Orleans." },
     { "year": 2008, "text": "The housing bubble bursts and the banks fall with it. Millions lose their homes.", "jobLossChance": 0.05, "savingsFactor": 0.7 },
-    { "year": 2020, "text": "The pandemic shuts down the country. Twenty million lose their jobs in a month.", "jobLossChance": 0.05, "savingsFactor": 0.95 }
+    { "year": 2020, "text": "The pandemic shuts down the country. Twenty million lose their jobs in a month.", "jobLossChance": 0.05, "savingsFactor": 0.95 },
+    { "year": 2034, "text": "The hottest summer on record. Wildfire smoke turns the sky orange from California to New York." },
+    { "year": 2042, "text": "Thinking machines take over most office work. Millions of jobs disappear in a year.", "jobLossChance": 0.05, "savingsFactor": 0.9 },
+    { "year": 2048, "text": "Congress passes a guaranteed basic income for workers replaced by machines." },
+    { "year": 2058, "text": "Americans return to the Moon to stay. The first base opens near the south pole." },
+    { "year": 2066, "text": "A hurricane floods Miami for a month. The city starts building walls.", "savingsFactor": 0.95 },
+    { "year": 2071, "text": "The world market crashes when the machines that run it make the same mistake at once.", "jobLossChance": 0.04, "savingsFactor": 0.75 },
+    { "year": 2076, "text": "The tricentennial: three hundred years. Parades in every town, and fireworks on the Moon." },
+    { "year": 2100, "text": "The new century begins. A hundred and five year old veteran rings a bell in Philadelphia." },
+    { "year": 2122, "text": "The first child is born on Mars. Her grandparents watch from Ohio." },
+    { "year": 2134, "text": "A great depression, the first in a hundred years. Nobody alive remembers how it feels.", "jobLossChance": 0.05, "savingsFactor": 0.7 },
+    { "year": 2158, "text": "Buffalo herds cross the interstate in Nebraska, and the highway is closed for a week to let them pass." }
   ]
 }

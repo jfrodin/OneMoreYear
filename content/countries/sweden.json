@@ -75,7 +75,22 @@
     { "year": 1990, "name": "crisis and the EU", "text": "The krona collapses and interest rates reach 500 percent. Half a million jobs disappear. Sweden joins the European Union, and the internet arrives." },
     { "year": 2000, "name": "everyone online", "text": "Mobile phones in every pocket, the IT bubble bursts, and a wave in Thailand takes hundreds of Swedish lives." },
     { "year": 2010, "name": "smartphones", "text": "Everyone is looking at a screen. Home prices only go one way, and the summers get hotter." },
-    { "year": 2020, "name": "the pandemic and after", "text": "Working from the kitchen table, grandparents behind windows, and then a world that will not settle down." }
+    { "year": 2020, "name": "the pandemic and after", "text": "Working from the kitchen table, grandparents behind windows, and then a world that will not settle down." },
+    { "year": 2030, "name": "the warm decade", "text": "Summers that never seem to end, forest fires in the north, and every car on the street suddenly quiet. Midsummer is moved into the shade." },
+    { "year": 2040, "name": "machines that answer", "text": "The machines can talk, write and diagnose. Half of every job is done by something that never sleeps. People argue about what work is for." },
+    { "year": 2050, "name": "the long lives", "text": "A hundredth birthday is no longer news. Four generations at every christening, and pensions that have to last forty years." },
+    { "year": 2060, "name": "the quiet towns", "text": "The cities grow and the small towns empty. Houses by the lakes sell for a song, and some people buy whole villages." },
+    { "year": 2070, "name": "the sea walls", "text": "The water is rising. Gothenburg builds walls, the archipelago loses islands, and the Baltic is warmer than anyone can remember." },
+    { "year": 2080, "name": "the great repair", "text": "Forests replanted, rivers set free, roofs covered in grass. A generation decides to fix what its grandparents broke." },
+    { "year": 2090, "name": "the century turns", "text": "Children born this decade may see the year 2200. The old talk about the strange world of the 2020s, and nobody believes them." },
+    { "year": 2100, "name": "a new century", "text": "Fireworks over a different country: older, warmer, quieter. Some things never change. The queue for the Christmas ham is one of them." },
+    { "year": 2110, "name": "the slow years", "text": "Nothing very big happens, and that turns out to be wonderful. People grow vegetables, raise children and argue about the weather." },
+    { "year": 2120, "name": "the far fields", "text": "There are people living on the Moon now, a few hundred of them. Some of them are Swedes, and they still celebrate Midsummer, indoors." },
+    { "year": 2130, "name": "the old stories", "text": "Every family has a genealogy and an archive of its own. Children know more about their great great grandparents than those people knew about themselves." },
+    { "year": 2140, "name": "the second spring", "text": "The forests have come back. Elk wander through what used to be suburbs. The north is green from May to October." },
+    { "year": 2150, "name": "the long view", "text": "Two hundred years since the war ended. Historians call the twentieth century the beginning of everything. Your family was there for all of it." },
+    { "year": 2160, "name": "the quiet century", "text": "Life is long and mostly gentle. People still fall in love, fall out, have children and wonder what it was all for." },
+    { "year": 2170, "name": "one more year", "text": "Another decade, another chapter. Somewhere in a drawer, there is a photograph of the first of you, looking out at a world they could never have imagined." }
   ],
   "investments": [
     { "id": "sweden_fund", "name": "Swedish stock fund", "kind": "fund", "beta": 1.0, "spread": 0.03, "minYear": 1958,
@@ -134,6 +149,19 @@
     { "year": 1995, "text": "Sweden joins the European Union." },
     { "year": 2004, "text": "The Indian Ocean tsunami strikes thousands of Swedish holidaymakers." },
     { "year": 2008, "text": "The financial crisis spreads across the world. The stock market crashes.", "jobLossChance": 0.03, "savingsFactor": 0.8 },
-    { "year": 2020, "text": "The pandemic shuts down the world. The elderly are told to isolate.", "jobLossChance": 0.02, "savingsFactor": 0.95 }
+    { "year": 2020, "text": "The pandemic shuts down the world. The elderly are told to isolate.", "jobLossChance": 0.02, "savingsFactor": 0.95 },
+    { "year": 2033, "text": "The hottest summer ever measured. Forest fires burn for weeks in Norrland." },
+    { "year": 2038, "text": "The last petrol car is sold in Sweden. Petrol stations become cafés." },
+    { "year": 2044, "text": "Thinking machines take over most office work. Unions demand a four day week.", "jobLossChance": 0.04 },
+    { "year": 2047, "text": "The four day week becomes law." },
+    { "year": 2056, "text": "A Swede walks on the Moon. Schools stop to watch." },
+    { "year": 2063, "text": "A storm surge floods the coast of Skåne. The government promises sea walls.", "savingsFactor": 0.95 },
+    { "year": 2071, "text": "The world market crashes when the machines that run it all make the same mistake at once.", "jobLossChance": 0.04, "savingsFactor": 0.75 },
+    { "year": 2085, "text": "Sweden's population passes twelve million. A third of them are over seventy." },
+    { "year": 2100, "text": "The new century begins. A hundred year old woman lights the first firework in Stockholm." },
+    { "year": 2118, "text": "The first permanent village on the Moon. Its cook is from Umeå." },
+    { "year": 2134, "text": "A great depression, the first in a hundred years. Nobody alive remembers how it feels.", "jobLossChance": 0.05, "savingsFactor": 0.7 },
+    { "year": 2150, "text": "Two hundred years after the war, Sweden celebrates a peace that has lasted longer than any in history." },
+    { "year": 2166, "text": "Wolves are seen in the outskirts of Stockholm for the first time in three hundred years." }
   ]
 }
