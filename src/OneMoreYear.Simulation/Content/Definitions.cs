@@ -314,6 +314,8 @@ public sealed class ConditionDef
     public List<string>? HasRole { get; set; }
     /// <summary>The person's job must have one of these workplace tags.</summary>
     public List<string>? JobTags { get; set; }
+    /// <summary>Works in one of these occupations (ids from occupations.json).</summary>
+    public List<string>? Jobs { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
     /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>

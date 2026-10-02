@@ -185,6 +185,7 @@ public static class EventSystem
         if (c.SameSexAttraction is { } ssa && p.AttractedToSameSex != ssa) return false;
         if (c.MaxChildrenAtHome is { } maxHome && p.ChildIds.Select(w.Get).Count(k => k.IsAlive && k.LivesWithParents) > maxHome) return false;
         if (c.JobTags is { Count: > 0 } tags && ctx.Content.Occupation(p.OccupationId)?.Tags.Any(tags.Contains) != true) return false;
+        if (c.Jobs is { Count: > 0 } jobs && (p.OccupationId == null || !jobs.Contains(p.OccupationId))) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;
         if (c.MaxChildren is { } maxK && kids > maxK) return false;

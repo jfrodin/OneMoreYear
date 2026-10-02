@@ -1,0 +1,222 @@
+// Events for the newer careers: restaurants, transport, police, military, farming, the arts, finance,
+// social work, engineering and science. No dashes.
+[
+  {
+    "id": "nt_kitchen_rush", "title": "Saturday night",
+    "text": "Saturday night, a full restaurant, two cooks off sick, and forty orders on the rail.",
+    "conditions": { "minAge": 16, "activity": "working", "jobs": [ "hospitality" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Take charge of the kitchen", "chance": 0.6, "chanceTraits": { "ambitious": 0.1, "hot_tempered": -0.1 },
+        "success": { "text": "Every plate out, nothing sent back. At one in the morning the owner pours everyone a drink and looks at you differently.", "effects": [ { "type": "performance", "amount": 6 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "A burnt risotto, a furious table, and you shouting things you will have to apologise for on Monday.", "effects": [ { "type": "performance", "amount": -3 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Keep your head down", "effects": [ { "type": "health", "amount": -1 } ], "result": "You survive. Everyone survives. Nobody remembers how." }
+    ]
+  },
+  {
+    "id": "nt_food_critic", "title": "The critic",
+    "text": "A waiter whispers that the man at table seven is the newspaper's food critic. He has ordered your dish.",
+    "conditions": { "minAge": 20, "activity": "working", "jobs": [ "hospitality" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Cook it exactly as always", "chance": 0.55, "chanceTraits": { "creative": 0.15 },
+        "success": { "text": "Four stars. The review calls it honest. The restaurant is full for a month.", "effects": [ { "type": "performance", "amount": 8 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Two stars. He liked the bread. You frame the review anyway, upside down.", "effects": [ { "type": "performance", "amount": -2 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Show off", "chance": 0.35,
+        "success": { "text": "A risk that pays off. The review calls you the most exciting cook in the city.", "effects": [ { "type": "performance", "amount": 10 }, { "type": "happiness", "amount": 7 } ] },
+        "failure": { "text": "Too much on the plate. \"Trying too hard,\" says the review. It stings for years.", "effects": [ { "type": "performance", "amount": -4 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "nt_long_haul", "title": "The long haul",
+    "text": "Three in the morning on an empty motorway, five hundred kilometres still to go, and your eyes are closing.",
+    "conditions": { "minAge": 20, "activity": "working", "jobs": [ "transport" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Pull over and sleep", "effects": [ { "type": "performance", "amount": -1 }, { "type": "health", "amount": 1 } ], "result": "Two hours in a lay by. You arrive late. You arrive." },
+      { "text": "Push on with coffee", "chance": 0.85,
+        "success": { "text": "Radio loud, window open, and the sunrise over a valley you have driven through a hundred times and never really seen.", "effects": [ { "type": "performance", "amount": 2 } ] },
+        "failure": { "text": "A rumble strip wakes you as the truck drifts. You pull over, shaking, and sleep after all.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.05 } ] } }
+    ]
+  },
+  {
+    "id": "nt_bus_regulars", "title": "The route",
+    "text": "The same bus route for years. You know the regulars: the student who is always late, the old man with the dog, the nurse coming off the night shift.",
+    "conditions": { "minAge": 25, "activity": "working", "jobs": [ "transport" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Wait for the student, again", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "Ten seconds behind schedule. Years later, a young doctor stops you in the street to say thank you for all those mornings." },
+      { "text": "Keep to the timetable", "effects": [ { "type": "performance", "amount": 2 } ], "result": "On time, every time. The company gives you a certificate. The student learns to run." }
+    ]
+  },
+  {
+    "id": "nt_police_first_call", "title": "The call",
+    "text": "A domestic disturbance call. Shouting through the door, a child crying somewhere inside. Your partner looks at you.",
+    "conditions": { "minAge": 20, "activity": "working", "jobs": [ "police" ] }, "cooldown": 6,
+    "content": [ "violence" ],
+    "choices": [
+      { "text": "Talk them down", "chance": 0.65, "chanceTraits": { "charming": 0.15, "hot_tempered": -0.2 },
+        "success": { "text": "An hour at a kitchen table, a man in tears, a woman with a bag packed, a child asleep at last. Nobody gets hurt tonight.", "effects": [ { "type": "performance", "amount": 4 }, { "type": "happiness", "amount": -1 } ] },
+        "failure": { "text": "It goes wrong fast. A struggle, a cut hand, and an arrest. You think about the child for weeks.", "effects": [ { "type": "health", "amount": -3 }, { "type": "happiness", "amount": -4 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.08 } ] } }
+    ]
+  },
+  {
+    "id": "nt_police_bribe", "title": "An envelope",
+    "text": "After a traffic stop, a businessman leaves an envelope on the passenger seat of your patrol car. It is thick. Nobody saw.",
+    "conditions": { "minAge": 22, "activity": "working", "jobs": [ "police" ] }, "cooldown": 20,
+    "choices": [
+      { "text": "Report it", "effects": [ { "type": "performance", "amount": 4 }, { "type": "trait_add", "trait": "loyal", "chance": 0.04 } ], "result": "He is charged. You are commended. Some colleagues are colder after that, which tells you something about them." },
+      { "text": "Keep it", "requires": { "traitsAny": [ "greedy", "dishonest", "manipulative" ] }, "chance": 0.7,
+        "success": { "text": "A holiday you could not afford. A favour you will one day be asked for. It comes, three years later.", "effects": [ { "type": "money", "amount": 50000 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.08 } ] },
+        "failure": { "text": "Internal affairs had been watching him for months. They had been watching you too.", "effects": [ { "type": "fire" }, { "type": "convicted", "kind": "fraud" } ] } }
+    ]
+  },
+  {
+    "id": "nt_police_cold_case", "title": "The cold case",
+    "text": "A file from thirty years ago, a girl who never came home. Your boss says leave it. Something about it will not leave you.",
+    "conditions": { "minAge": 30, "activity": "working", "jobs": [ "police" ] }, "cooldown": 20,
+    "choices": [
+      { "text": "Work it in your own time", "chance": 0.3, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "A name nobody checked, an address nobody visited. Eighteen months later, an arrest. Her sister hugs you outside the court.", "effects": [ { "type": "performance", "amount": 10 }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "cold_case", "text": "Solving the cold case", "impact": 22 } ] },
+        "failure": { "text": "A year of evenings and nothing. You put the file back. You never quite stop thinking about it.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Leave it", "effects": [], "result": "There are new cases every day. That is what you tell yourself." }
+    ]
+  },
+  {
+    "id": "nt_military_deploy", "title": "Deployment",
+    "text": "Your unit is being sent abroad for six months, on a peacekeeping mission. You leave in three weeks.",
+    "conditions": { "minAge": 19, "maxAge": 50, "activity": "working", "jobs": [ "military" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Go", "chance": 0.85,
+        "success": { "text": "Heat, dust, boredom and two days you will never talk about. You come home browner, thinner and very quiet at the dinner table for a while.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "performance", "amount": 5 }, { "type": "memory", "kind": "deployment", "text": "Six months abroad with the unit", "impact": 5 } ] },
+        "failure": { "text": "A roadside bomb. Two of your friends do not come home. You do, and part of you does not.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "health", "amount": -8 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.6 }, { "type": "memory", "kind": "deployment", "text": "The friends who did not come home", "impact": -35 } ] } },
+      { "text": "Ask to stay home for family reasons", "chance": 0.4,
+        "success": { "text": "Granted. You train the next group instead. Some of them do not come home either.", "effects": [ { "type": "happiness", "amount": -1 } ] },
+        "failure": { "text": "Denied. You go after all.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "nt_military_drill", "title": "Inspection",
+    "text": "A surprise inspection at six in the morning. Your boots, your bed, your locker. Your sergeant is looking for someone to make an example of.",
+    "conditions": { "minAge": 18, "maxAge": 40, "activity": "working", "jobs": [ "military" ] }, "cooldown": 5,
+    "choices": [
+      { "text": "Stand perfectly still", "chance": 0.7,
+        "success": { "text": "He passes you by. Someone else gets fifty push ups in the rain. You feel bad for them, and relieved.", "effects": [ { "type": "performance", "amount": 2 } ] },
+        "failure": { "text": "A speck of dust. Fifty push ups in the rain. You laugh about it at forty.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "happiness", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "nt_farm_harvest", "title": "The harvest",
+    "text": "The weather report says rain from Thursday. The harvest is not in. It is Monday.",
+    "conditions": { "minAge": 16, "activity": "working", "jobs": [ "agriculture" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Work day and night", "chance": 0.7, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "The last load is in the barn as the first drops fall. You sleep for fourteen hours.", "effects": [ { "type": "money", "amount": 20000 }, { "type": "health", "amount": -2 } ] },
+        "failure": { "text": "Half of it in. The rest rots in the field. A bad year, the kind farmers talk about for decades.", "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Call the neighbours", "effects": [ { "type": "money", "amount": 10000 }, { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "Three tractors arrive at dawn. You will help them next year. That is how it works out here." }
+    ]
+  },
+  {
+    "id": "nt_farm_calving", "title": "In the barn",
+    "text": "Two in the morning in the barn, a cow in trouble with a calf that is the wrong way round. The vet is an hour away.",
+    "conditions": { "minAge": 18, "activity": "working", "jobs": [ "agriculture" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Do it yourself", "chance": 0.6, "chanceTraits": { "resilient": 0.1 },
+        "success": { "text": "Your arm up to the shoulder, a lot of swearing, and then a wet, wobbling calf in the straw. You name it after your mother.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "The calf does not make it. The cow does. You stand in the yard at dawn for a long time.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "money", "amount": -5000 } ] } },
+      { "text": "Wait for the vet", "effects": [ { "type": "money", "amount": -3000 } ], "result": "The vet arrives at three, saves them both, and has coffee at your kitchen table until five." }
+    ]
+  },
+  {
+    "id": "nt_farm_sell_land", "title": "The developer",
+    "text": "A developer wants to buy the bottom field to build houses. The money would clear every debt the farm has. Your grandfather drained that field by hand.",
+    "conditions": { "minAge": 35, "activity": "working", "jobs": [ "agriculture" ] }, "cooldown": 30,
+    "choices": [
+      { "text": "Sell", "effects": [ { "type": "money", "amount": 400000 }, { "type": "happiness", "amount": -3 } ], "result": "Forty houses, a playground, children on bikes where cows used to be. Your debts are gone. So is the view." },
+      { "text": "Keep the land", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "loyal", "chance": 0.04 } ], "result": "You tell him no. Your grandfather would have said worse. The debts stay, and so does the field." }
+    ]
+  },
+  {
+    "id": "nt_art_exhibition", "title": "The exhibition",
+    "text": "A small gallery has offered you a show. Two weeks, twenty works on the walls, and an opening night with cheap wine.",
+    "conditions": { "minAge": 20, "activity": "working", "jobs": [ "arts" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Show your bravest work", "chance": 0.4, "chanceTraits": { "creative": 0.15, "eccentric": 0.1 },
+        "success": { "text": "A critic comes, then a collector. Four works sell on the first night. You have to sit down on the floor of the toilet for a minute.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "promote" }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "Your mother, three friends and a man who came in out of the rain. One sale, to your mother.", "effects": [ { "type": "money", "amount": 3000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Show what sells", "effects": [ { "type": "money", "amount": 20000 }, { "type": "happiness", "amount": -1 } ], "result": "Pretty landscapes, sold out in a week. You wonder, walking home, who painted them." }
+    ]
+  },
+  {
+    "id": "nt_art_day_job", "title": "The day job",
+    "text": "The rent is due, the art is not selling, and a friend can get you a steady office job with a pension.",
+    "conditions": { "minAge": 25, "maxAge": 50, "activity": "working", "jobs": [ "arts" ], "maxMoney": 30000 }, "cooldown": 10,
+    "choices": [
+      { "text": "Take the office job", "effects": [ { "type": "job_find" }, { "type": "happiness", "amount": -3 } ], "result": "Money every month, for the first time in years. You paint at weekends, then less, then at Christmas." },
+      { "text": "Keep going", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ], "result": "Noodles, borrowed money and a lot of hope. At least you are doing the thing. That has to count for something." }
+    ]
+  },
+  {
+    "id": "nt_finance_client", "title": "The client",
+    "text": "An old client wants to move all his savings into something you know is a terrible idea. It would earn you a large commission.",
+    "conditions": { "minAge": 22, "activity": "working", "jobs": [ "finance" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Talk him out of it", "effects": [ { "type": "performance", "amount": -2 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "No commission. A year later, when that investment collapses, he sends you a bottle of whisky and a long letter." },
+      { "text": "Take the commission", "requires": { "traitsAny": [ "greedy", "manipulative", "ambitious" ] }, "effects": [ { "type": "money", "amount": 30000 }, { "type": "performance", "amount": 4 }, { "type": "trait_add", "trait": "greedy", "chance": 0.04 } ], "result": "It is his money and his choice, you tell yourself. You tell yourself that again when it collapses." }
+    ]
+  },
+  {
+    "id": "nt_finance_crash_day", "title": "Red screens",
+    "text": "The market is falling faster than anyone has seen. Every screen on the trading floor is red, and every phone is ringing.",
+    "conditions": { "minAge": 22, "activity": "working", "jobs": [ "finance" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Stay calm and sell nothing", "chance": 0.6,
+        "success": { "text": "Two terrible weeks, then a slow recovery. Your clients who listened to you are fine. They remember that.", "effects": [ { "type": "performance", "amount": 6 } ] },
+        "failure": { "text": "It keeps falling for a year. Some clients never forgive you.", "effects": [ { "type": "performance", "amount": -5 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Sell everything", "chance": 0.4,
+        "success": { "text": "Out at the right moment, by pure luck. Everyone thinks you are a genius. You know better.", "effects": [ { "type": "performance", "amount": 8 } ] },
+        "failure": { "text": "Out at the bottom. The market turns the next week. You do not sleep for a month.", "effects": [ { "type": "performance", "amount": -6 }, { "type": "health", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "nt_social_case", "title": "The case",
+    "text": "A family on your caseload: a mother trying hard, a father who is not, three children with too many bruises and too many excuses.",
+    "conditions": { "minAge": 22, "activity": "working", "jobs": [ "social_work" ] }, "cooldown": 8,
+    "content": [ "violence" ],
+    "choices": [
+      { "text": "Take the children into care", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "performance", "amount": 3 } ], "result": "The hardest day of your working life. The mother screams at you. Five years later she writes to say you did the right thing." },
+      { "text": "Give the mother another chance, with support", "chance": 0.5,
+        "success": { "text": "She leaves him. It works. The children stay with her, and are safe.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "She goes back to him. You read about it later. You never fully forgive yourself.", "effects": [ { "type": "happiness", "amount": -8 }, { "type": "ailment_add", "kind": "depression", "chance": 0.08 } ] } }
+    ]
+  },
+  {
+    "id": "nt_engineer_bridge", "title": "The calculation",
+    "text": "Checking an old design, you find a mistake in the load calculations for a bridge that opened last year. Your mistake.",
+    "conditions": { "minAge": 25, "activity": "working", "jobs": [ "engineering" ] }, "cooldown": 20,
+    "choices": [
+      { "text": "Tell your boss immediately", "effects": [ { "type": "performance", "amount": -3 }, { "type": "trait_add", "trait": "brave", "chance": 0.04 } ], "result": "The bridge closes for two weeks of reinforcement. It is embarrassing and expensive, and nobody is ever hurt. Your boss trusts you more after, not less." },
+      { "text": "Fix it quietly in the next inspection", "requires": { "traitsAny": [ "dishonest", "paranoid", "conflict_averse" ] }, "chance": 0.8,
+        "success": { "text": "It is reinforced in the spring as routine maintenance. Nobody ever knows. You drive over it sometimes, holding your breath.", "effects": [ { "type": "happiness", "amount": -2 } ] },
+        "failure": { "text": "A crack appears before the inspection. The investigation finds your name in ten minutes.", "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -8 } ] } }
+    ]
+  },
+  {
+    "id": "nt_engineer_patent", "title": "An idea",
+    "text": "You have had an idea, at the kitchen table, that would make your company's main product half the price to build. It is your idea. Your contract says it is theirs.",
+    "conditions": { "minAge": 25, "activity": "working", "jobs": [ "engineering", "science", "it" ] }, "cooldown": 20,
+    "choices": [
+      { "text": "Give it to the company", "effects": [ { "type": "promote" }, { "type": "money", "amount": 20000 } ], "result": "A promotion and a bonus. Your name on the patent, under the company's, in smaller letters." },
+      { "text": "Quit and build it yourself", "chance": 0.3, "chanceTraits": { "ambitious": 0.15, "brave": 0.1 },
+        "success": { "text": "Two years of risk, lawyers and investors. Then a factory with your name on the gate.", "effects": [ { "type": "job_find" }, { "type": "money", "amount": 500000 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "The company sues. You settle. You go back to a job, a little poorer and a lot wiser.", "effects": [ { "type": "money", "amount": -100000 }, { "type": "happiness", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "nt_science_result", "title": "The result",
+    "text": "After three years of experiments, a result that could change the field. Or a mistake in your equipment. Only more time will tell, and the conference deadline is next week.",
+    "conditions": { "minAge": 25, "activity": "working", "jobs": [ "science", "academia" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Check it all again first", "effects": [ { "type": "performance", "amount": 2 } ], "result": "It was the equipment. You are the only person who will ever know how close you came to being very publicly wrong." },
+      { "text": "Present it", "chance": 0.3,
+        "success": { "text": "It holds. A standing ovation, invitations from three countries, and a journal cover.", "effects": [ { "type": "promote" }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "discovery", "text": "The result that held", "impact": 25 } ] },
+        "failure": { "text": "A colleague finds the flaw in the questions. Polite applause. A long flight home.", "effects": [ { "type": "performance", "amount": -6 }, { "type": "happiness", "amount": -5 } ] } }
+    ]
+  }
+]

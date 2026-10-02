@@ -289,6 +289,8 @@ public sealed class ContentDb
         if (c == null) return;
         foreach (var t in (c.TraitsAny ?? new()).Concat(c.TraitsNone ?? new()))
             if (!Traits.ContainsKey(t)) errors.Add($"Event {eventId}: unknown trait {t}");
+        foreach (var job in c.Jobs ?? new())
+            if (Occupation(job) == null) errors.Add($"Event {eventId}: unknown occupation {job}");
         foreach (var tag in c.JobTags ?? new())
             if (!Occupations.Any(o => o.Tags.Contains(tag))) errors.Add($"Event {eventId}: no occupation has the tag {tag}");
     }

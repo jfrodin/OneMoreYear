@@ -15,6 +15,7 @@ static class WealthReport
                           $"90th {worth[(int)(worth.Count * 0.9)]:0.0}, max {worth[^1]:0.0}");
         var incomes = adults.Where(p => p.Activity == OneMoreYear.Simulation.Model.Activity.Working).Select(p => p.Income / 1e3).OrderBy(v => v).ToList();
         if (incomes.Count > 0)
+            Console.WriteLine("  Jobs: " + string.Join(", ", adults.Where(p => p.Activity == OneMoreYear.Simulation.Model.Activity.Working).GroupBy(p => p.OccupationId).OrderByDescending(g => g.Count()).Select(g => $"{g.Key} {g.Count()}")));
             Console.WriteLine($"  Working incomes (thousand, 2020 money): 10th {incomes[(int)(incomes.Count * 0.1)]:0}, median {incomes[incomes.Count / 2]:0}, " +
                               $"90th {incomes[(int)(incomes.Count * 0.9)]:0}, max {incomes[^1]:0}  · in debt: {adults.Count(p => EconomySystem.NetWorth(ctx, p) < 0)} of {adults.Count}");
         foreach (var p in adults.OrderByDescending(p => EconomySystem.NetWorth(ctx, p)).Take(5))
