@@ -147,6 +147,9 @@ public static class LifeSystem
             partner.PartnerId = null;
             partner.PartnerStatus = PartnerStatus.None;
             partner.Flags.Add("widowed");
+            // The player lost a long partner: the first Christmas alone comes this year.
+            if (partner.Id == w.PlayerId && partner.Age(ctx.Year) >= 50 && ctx.Year - p.PartnerSinceYear >= 10)
+                EventSystem.QueueSituation(ctx, "late_first_christmas_alone", new() { ["target"] = p.Id });
             partner.LastSplitYear = ctx.Year;
             partner.LastSplitWithId = p.Id;
             partner.LastSplitByThem = false;

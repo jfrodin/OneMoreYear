@@ -1,0 +1,193 @@
+// The last decades: 70 to 100. People live longer now, and these years should not be empty.
+// Gentle, specific, sometimes funny. No dashes.
+[
+  {
+    "id": "late_hearing_aid", "title": "Pardon?",
+    "text": "The grandchildren have started talking louder at dinner, and slower. Someone has left a leaflet about hearing aids on your chair.",
+    "conditions": { "minAge": 70 }, "cooldown": 30,
+    "choices": [
+      { "text": "Get them", "effects": [ { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 4 } ], "result": "Birds. You had forgotten about birds. And the fridge hums, it turns out, all the time." },
+      { "text": "Pretend you heard", "requires": { "traitsAny": [ "vain", "paranoid", "hot_tempered" ] }, "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You nod at the right moments, mostly. Once you agree to something and find out later it was a cruise." },
+      { "text": "Ask them to sit closer", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "They do. It is nicer, anyway, with everyone a bit closer." }
+    ]
+  },
+  {
+    "id": "late_new_love", "title": "At the day centre",
+    "text": "There is someone at the day centre who saves you a seat, laughs at your jokes and has started wearing a nice shirt on Thursdays.",
+    "conditions": { "minAge": 72, "hasPartner": false }, "cooldown": 15,
+    "choices": [
+      { "text": "Ask them to dinner", "chance": 0.6, "chanceTraits": { "charming": 0.15, "introvert": -0.15 },
+        "success": { "text": "Dinner, then a film, then coffee every morning. Your children are scandalised and delighted in equal parts.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "late_love", "text": "Falling in love at the day centre", "impact": 22 } ] },
+        "failure": { "text": "\"I like you very much,\" they say, \"as a friend.\" You still sit together on Thursdays.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
+      { "text": "You are too old for this", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You tell yourself so all the way home. You are not sure you believe it." }
+    ]
+  },
+  {
+    "id": "late_grandchild_money", "title": "Just this once",
+    "text": "{t.name} is on the phone, embarrassed. A rent payment, a broken car, a month that went wrong. {T.he} would never normally ask.",
+    "target": { "role": "grandchild", "conditions": { "minAge": 20 } },
+    "conditions": { "minAge": 65, "minMoney": 30000 }, "cooldown": 8,
+    "choices": [
+      { "text": "Send it, and do not mention it again", "effects": [ { "type": "transfer", "to": "target", "amount": 20000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10 } ], "result": "You never mention it. {T.he} never forgets it." },
+      { "text": "Send half, with advice", "effects": [ { "type": "transfer", "to": "target", "amount": 10000 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 4 } ], "result": "Twenty minutes on budgeting, which {t.he} listens to politely. Then a thank you card, which is more than you expected." },
+      { "text": "Say no", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -6 } ], "result": "{T.he} says it is fine. It is not quite fine." }
+    ]
+  },
+  {
+    "id": "late_old_dog", "title": "The old dog",
+    "text": "The dog is old now, like you. Grey around the muzzle, slow on the stairs. You walk the same short loop every morning, both of you stopping to rest.",
+    "conditions": { "minAge": 68 }, "cooldown": 25,
+    "choices": [
+      { "text": "Keep walking together", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "health", "amount": 1 } ], "result": "One morning in spring the dog does not get up. You sit with it for a long time. The loop is very quiet afterwards." },
+      { "text": "Get a puppy as well", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -1 } ], "result": "The old dog is outraged for a week, then teaches the puppy everything. You laugh more than you have in years." }
+    ]
+  },
+  {
+    "id": "late_first_christmas_alone", "trigger": "situation", "title": "The first Christmas",
+    "text": "The first Christmas without {t.name}. The decorations are in the attic where {t.he} put them, in boxes labelled in {t.his} handwriting.",
+    "choices": [
+      { "text": "Put them up anyway", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "memory", "kind": "first_christmas", "text": "The first Christmas alone", "impact": -8 } ], "result": "It takes all day. You cry over a paper star a grandchild made thirty years ago. Then the tree is up, and it looks right." },
+      { "text": "Go to the children's", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Noise, wrapping paper and a grandchild on your knee. It is easier there. It is also harder, at night, in the guest room." }
+    ]
+  },
+  {
+    "id": "late_choir", "title": "The choir",
+    "text": "The local choir is looking for voices. Average age seventy eight. They rehearse on Tuesdays and argue about tempo.",
+    "conditions": { "minAge": 66 }, "cooldown": 20,
+    "choices": [
+      { "text": "Join", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "social", "chance": 0.05 }, { "type": "memory", "kind": "choir", "text": "Singing in the choir", "impact": 12 } ], "result": "You are not good. Nobody is very good. On the night of the Christmas concert, it does not matter in the slightest." },
+      { "text": "Listen from the back", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You go to every concert. They save you a seat by the radiator." }
+    ]
+  },
+  {
+    "id": "late_will_talk", "title": "The talk",
+    "text": "You have asked the children over for coffee to talk about what happens after. Nobody wants to start. Someone is cutting a cake very slowly.",
+    "conditions": { "minAge": 72, "minChildren": 2 }, "cooldown": 30,
+    "choices": [
+      { "text": "Split everything equally", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Everybody nods, relieved. Later, in the car, two of them argue about the clock in the hall." },
+      { "text": "Say who gets what, and why", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Honest, and specific. One of them leaves early. One of them hugs you at the door for longer than usual." },
+      { "text": "Change the subject", "effects": [], "result": "You talk about the weather, the grandchildren and the cake. It can wait. It always can, until it cannot." }
+    ]
+  },
+  {
+    "id": "late_cataract", "title": "Clouds",
+    "text": "The world has gone soft at the edges, as if someone breathed on the glass. The doctor says cataracts, and a small operation.",
+    "conditions": { "minAge": 68 }, "cooldown": 40,
+    "choices": [
+      { "text": "Have the operation", "effects": [ { "type": "health", "amount": 2 }, { "type": "happiness", "amount": 5 } ], "result": "Twenty minutes, a patch for a day, and then colours. You had no idea the curtains were that blue." },
+      { "text": "Wait and see", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You get used to it. You stop driving at night. Faces at the far end of the table are guesses." }
+    ]
+  },
+  {
+    "id": "late_estranged_child", "title": "The letter",
+    "text": "A letter from {t.name}. You have not really spoken in years. Two pages, careful handwriting, and the words: I would like to see you, if you would like that too.",
+    "target": { "role": "child", "conditions": { "minAge": 30, "maxOpinion": 15 } },
+    "conditions": { "minAge": 65 }, "cooldown": 20,
+    "choices": [
+      { "text": "Write back the same day", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 15, "mutual": true }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "reconciled", "text": "When {t.name} came back", "impact": 25 } ], "result": "A café, both of you early, both of you nervous. You talk for four hours. Neither of you mentions the old thing. Next time, maybe." },
+      { "text": "You are not ready", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "You put the letter in the drawer with the others. You read it again on bad nights." }
+    ]
+  },
+  {
+    "id": "late_sibling_dies", "title": "The last one",
+    "text": "{T.role}, {t.name}, is very ill. The doctors talk about weeks. Of all the children you grew up with, there are only the two of you left.",
+    "target": { "role": "sibling", "conditions": { "minAge": 65, "maxHealth": 40 } },
+    "conditions": { "minAge": 65 }, "cooldown": 20,
+    "choices": [
+      { "text": "Sit with {t.him} every day", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": -3 }, { "type": "memory", "kind": "sibling_end", "text": "The last weeks with {t.name}", "impact": 15 } ], "result": "You talk about your parents, the old house, a summer when you were nine and ten. You are the only two people alive who remember it." },
+      { "text": "Call, but stay away", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You cannot bear the hospital. You call every evening. {T.he} understands, or says so." }
+    ]
+  },
+  {
+    "id": "late_teach_grandchild", "title": "The recipe",
+    "text": "{t.name} wants to learn to make the dish you have made for every birthday for forty years. There is no written recipe. There never was.",
+    "target": { "role": "grandchild", "conditions": { "minAge": 10 } },
+    "conditions": { "minAge": 62 }, "cooldown": 20,
+    "choices": [
+      { "text": "Teach {t.him}, properly", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 4 } ], "result": "A whole Saturday. {T.he} writes it down as you go: a handful of this, until it looks right. Now it will outlive you." },
+      { "text": "Say it is a secret", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "\"When I'm gone,\" you say. {T.he} rolls {t.his} eyes. You start writing it down that night, just in case." }
+    ]
+  },
+  {
+    "id": "late_hospital_week", "title": "A week in hospital",
+    "text": "A week in hospital after a fall. The food is beige, the nights are loud, and the man in the next bed tells the same story about his boat every morning.",
+    "conditions": { "minAge": 75, "maxHealth": 60 }, "cooldown": 10,
+    "choices": [
+      { "text": "Make friends with the ward", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "By Thursday you know every nurse's children's names. The boat story gets better each time." },
+      { "text": "Count the days", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "health", "amount": 2 } ], "result": "Seven days, exactly. You go home and sleep for two of them." }
+    ]
+  },
+  {
+    "id": "late_language", "title": "Never too late",
+    "text": "A course at the library: Italian for beginners. Everyone in it is over seventy. The teacher is twenty five and terrified.",
+    "conditions": { "minAge": 70 }, "cooldown": 25,
+    "choices": [
+      { "text": "Sign up", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "happiness", "amount": 4 } ], "result": "You never get past ordering coffee and asking where the station is. On the class trip to Rome, it turns out to be all you need." },
+      { "text": "Maybe next term", "effects": [], "result": "There is always a next term. Until there is not." }
+    ]
+  },
+  {
+    "id": "late_photo_album", "title": "Who is that?",
+    "text": "{t.name} has found the old photo albums and wants to know who everyone is. Some of the faces you have not thought about in fifty years.",
+    "target": { "role": "grandchild", "conditions": { "minAge": 7 } },
+    "conditions": { "minAge": 65 }, "cooldown": 15,
+    "choices": [
+      { "text": "Tell every story", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 7, "mutual": true }, { "type": "happiness", "amount": 5 } ], "result": "An afternoon of weddings, bad haircuts and people long gone. {T.name} writes names on the backs of the photos, in pencil, carefully." },
+      { "text": "Skip a few pages", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "There are some pictures you turn quickly. {T.he} notices, and does not ask. Clever child." }
+    ]
+  },
+  {
+    "id": "late_oldest_at_funeral", "title": "The oldest one there",
+    "text": "Another funeral. Looking around the church, you realise you are the oldest person in the room. Nobody in the front pews remembers the person in the coffin as young. Except you.",
+    "conditions": { "minAge": 82 }, "cooldown": 15,
+    "choices": [
+      { "text": "Tell them who she was at twenty", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "At the coffee afterwards, a crowd gathers around your chair. You tell them about a dance a lifetime ago, and the young people laugh in all the right places." },
+      { "text": "Sit quietly at the back", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You leave before the coffee. On the bus home you count the ones who are left. It does not take long." }
+    ]
+  },
+  {
+    "id": "late_garden", "title": "The last garden",
+    "text": "Your knees have given up on the vegetable patch. A neighbour's teenager offers to dig it, if you tell them what to plant.",
+    "conditions": { "minAge": 75 }, "cooldown": 20,
+    "choices": [
+      { "text": "Accept, and boss them about", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Two summers of potatoes, beans and arguments about the right depth for onions. They come to your funeral, years later, with a jar of their own honey." },
+      { "text": "Let it go to grass", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "It turns into lawn, then meadow. Bees like it, at least." }
+    ]
+  },
+  {
+    "id": "late_big_birthday", "title": "Ninety",
+    "text": "Ninety. The family has rented a room, hung up a banner and made a slideshow of your life that you are not allowed to see before.",
+    "conditions": { "minAge": 90, "maxAge": 90 }, "cooldown": 0,
+    "choices": [
+      { "text": "Make a speech", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "ninety", "text": "My ninetieth", "impact": 20 } ], "result": "You had something prepared. You forget it, and say something better. Four generations clap, and the smallest one claps the longest." },
+      { "text": "Just watch the slideshow", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "ninety", "text": "My ninetieth", "impact": 18 } ], "result": "Ninety years in twelve minutes, set to music you never liked. You cry at a photo of a kitchen you had forgotten." }
+    ]
+  },
+  {
+    "id": "late_last_trip", "title": "One more trip",
+    "text": "A coach tour for pensioners: two weeks, six countries, a guide with a little flag. The brochure promises comfortable shoes are all you need.",
+    "conditions": { "minAge": 70, "minMoney": 30000, "minHealth": 45 }, "cooldown": 15,
+    "choices": [
+      { "text": "Book it", "effects": [ { "type": "money", "amount": -25000 }, { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "coach_tour", "text": "The coach tour", "impact": 15 } ], "result": "Cathedrals, a lake, too much bread, and a widow from the next town who becomes your pen friend for the rest of your life." },
+      { "text": "The armchair is fine", "effects": [], "result": "You watch a travel programme instead. The presenter is very young and in a great hurry." }
+    ]
+  },
+  {
+    "id": "late_kindness_stranger", "title": "A stranger at the shop",
+    "text": "Your shopping bag splits at the bus stop. Oranges everywhere. A young man with headphones stops, picks them all up, and carries the bags to your door.",
+    "conditions": { "minAge": 75 }, "cooldown": 20,
+    "choices": [
+      { "text": "Insist on giving him something", "effects": [ { "type": "money", "amount": -200 }, { "type": "happiness", "amount": 4 } ], "result": "He refuses, then takes an orange. You tell the story at every family dinner for a year." },
+      { "text": "Grumble about young people anyway", "requires": { "traitsAny": [ "hot_tempered", "paranoid", "cruel" ] }, "effects": [ { "type": "happiness", "amount": 1 } ], "result": "He was very nice, you admit later. Probably an exception." }
+    ]
+  },
+  {
+    "id": "late_letter_future", "title": "For later",
+    "text": "Your great grandchild is too young to remember you. Someone suggests writing a letter, to be opened when they are grown.",
+    "conditions": { "minAge": 78 }, "cooldown": 40,
+    "choices": [
+      { "text": "Write it", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "letter_future", "text": "The letter to the future", "impact": 15 } ], "result": "Four drafts. In the end it is short: who you were, what you learned, and that you held them once, when they were very small, and they smelled of milk and bread." },
+      { "text": "Record a video", "requires": { "minYear": 2010 }, "effects": [ { "type": "happiness", "amount": 4 } ], "result": "You talk to the camera for twenty minutes and forget it is there. It is the most honest thing you have ever said." }
+    ]
+  }
+]
