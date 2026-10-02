@@ -1,0 +1,153 @@
+// University and college life: the years between home and everything else. No dashes.
+[
+  {
+    "id": "uni_first_week", "title": "Freshers' week",
+    "text": "The first week at university. A new city, a room in a corridor of strangers, and a hundred people handing you leaflets for clubs.",
+    "conditions": { "minAge": 18, "maxAge": 26, "activity": "studying", "minEducation": "secondary", "notFlags": [ "uni_first_week" ] }, "cooldown": 0, "weight": 5,
+    "choices": [
+      { "text": "Say yes to every party", "effects": [ { "type": "flag", "flag": "uni_first_week" }, { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "social", "chance": 0.05 } ], "result": "Seven nights, four hangovers and the three people who will be your closest friends for the next forty years." },
+      { "text": "Join one club and go home early", "effects": [ { "type": "flag", "flag": "uni_first_week" }, { "type": "happiness", "amount": 3 }, { "type": "grades", "amount": 1 } ], "result": "The chess club, the climbing club, or the choir. A small group that feels like home by October." }
+    ]
+  },
+  {
+    "id": "uni_lecturer", "title": "The lecturer",
+    "text": "A lecturer who makes the subject come alive. You stay after class to ask a question, and end up talking for an hour.",
+    "conditions": { "minAge": 18, "activity": "studying", "minEducation": "secondary" }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Ask to help with research", "chance": 0.5, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "A summer in a lab or an archive. Your name in a footnote. A letter of recommendation that opens doors for years.", "effects": [ { "type": "grades", "amount": 5 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.05 } ] },
+        "failure": { "text": "Kind, but busy. The conversation stays with you anyway.", "effects": [ { "type": "grades", "amount": 1 } ] } },
+      { "text": "Just keep listening", "effects": [ { "type": "grades", "amount": 2 }, { "type": "happiness", "amount": 2 } ], "result": "You never miss a lecture. It is the only course you remember in detail at sixty." }
+    ]
+  },
+  {
+    "id": "uni_group_project", "title": "The group project",
+    "text": "A group project with four people. One does nothing, one does everything wrong, one has disappeared, and the deadline is Friday.",
+    "conditions": { "minAge": 18, "activity": "studying", "minEducation": "secondary" }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Do it all yourself", "effects": [ { "type": "grades", "amount": 3 }, { "type": "happiness", "amount": -3 }, { "type": "health", "amount": -1 } ], "result": "Three nights without sleep. A top mark, shared with three people who send you a thumbs up." },
+      { "text": "Call a meeting and assign tasks", "chance": 0.5, "chanceTraits": { "charming": 0.15, "ambitious": 0.1 },
+        "success": { "text": "It works, barely. You learn more about managing people than about the subject.", "effects": [ { "type": "grades", "amount": 2 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.03 } ] },
+        "failure": { "text": "Nobody comes. You do it all yourself anyway, angrier.", "effects": [ { "type": "grades", "amount": 2 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "uni_change_subject", "title": "The wrong subject",
+    "text": "Halfway through the second year, you realise you do not want to do this for the rest of your life. You want to do something else entirely.",
+    "conditions": { "minAge": 19, "activity": "studying", "minEducation": "secondary" }, "cooldown": 0, "weight": 1.5,
+    "choices": [
+      { "text": "Finish what you started", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.04 } ], "result": "You finish. It is a degree, and degrees open doors. Some of them lead somewhere you want to go." },
+      { "text": "Tell your parents you are changing", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "money", "amount": -5000 } ], "result": "A difficult phone call, a lost year, and the relief of doing something that feels like yours." }
+    ]
+  },
+  {
+    "id": "uni_flatmates", "title": "The student house",
+    "text": "Five students, one house, one fridge, and a cleaning rota that nobody has looked at since September.",
+    "conditions": { "minAge": 18, "maxAge": 28, "activity": "studying" }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Be the one who cleans", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.04 } ], "result": "You clean. Nobody notices until you stop. Then everybody notices." },
+      { "text": "Throw a house party instead", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "The house has never been dirtier or happier. The landlord keeps the deposit, and it was worth it." }
+    ]
+  },
+  {
+    "id": "uni_exam_fail", "title": "Failed",
+    "text": "You have failed an important exam. The resit is in August, and the summer job you had planned is in July.",
+    "conditions": { "minAge": 18, "activity": "studying", "minEducation": "secondary", "maxGrades": 60 }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Study all summer", "chance": 0.75, "chanceAttributes": { "smarts": 0.005 },
+        "success": { "text": "A pass in August. A summer of libraries. You never fail anything again.", "effects": [ { "type": "grades", "amount": 3 }, { "type": "happiness", "amount": -2 } ] },
+        "failure": { "text": "Failed again. A year delayed, and a very long talk with your parents.", "effects": [ { "type": "grades", "amount": -3 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Work the summer job, wing the resit", "chance": 0.4,
+        "success": { "text": "A pass, by one point. Money in the bank, and a lot of luck.", "effects": [ { "type": "money", "amount": 15000 } ] },
+        "failure": { "text": "Not even close. The money from July pays for the extra year.", "effects": [ { "type": "money", "amount": 15000 }, { "type": "grades", "amount": -4 }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "uni_exchange_year", "title": "A year abroad",
+    "text": "The university offers an exchange year in another country. A new language, a new city, a grant that almost covers it.",
+    "conditions": { "minAge": 19, "maxAge": 26, "activity": "studying", "minEducation": "secondary", "minYear": 1987 }, "cooldown": 0, "weight": 2,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 8 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "memory", "kind": "exchange_year", "text": "My year abroad as a student", "impact": 22 } ], "result": "Cheap wine, terrible grammar, friends from twelve countries, and a version of yourself you did not know existed." },
+      { "text": "Stay", "effects": [ { "type": "grades", "amount": 2 } ], "result": "You finish a semester early. Your friends who went come back changed, and you are a little jealous." }
+    ]
+  },
+  {
+    "id": "uni_student_loan_party", "title": "The grant day",
+    "text": "Student money day. For about forty eight hours, everyone in your corridor is rich.",
+    "conditions": { "minAge": 18, "maxAge": 28, "activity": "studying" }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Celebrate", "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 4 } ], "result": "A proper dinner out, drinks after, and pasta with ketchup for the rest of the month." },
+      { "text": "Budget it, carefully", "effects": [ { "type": "money", "amount": 1500 }, { "type": "trait_add", "trait": "stingy", "chance": 0.03 } ], "result": "A spreadsheet. You are the only person on the corridor eating vegetables in week four." }
+    ]
+  },
+  {
+    "id": "uni_protest", "title": "The occupation",
+    "text": "Students have occupied the main building in protest. There are banners, guitars and very long meetings. Your friends are inside.",
+    "conditions": { "minAge": 18, "activity": "studying", "minEducation": "secondary" }, "cooldown": 0, "weight": 1.5,
+    "choices": [
+      { "text": "Join them", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "brave", "chance": 0.04 }, { "type": "grades", "amount": -2 }, { "type": "memory", "kind": "occupation", "text": "The week we occupied the university", "impact": 12 } ], "result": "A week on a sleeping bag, arguing about everything until dawn. Nothing much changes. You do." },
+      { "text": "Go to the library instead", "effects": [ { "type": "grades", "amount": 2 } ], "result": "The library is very quiet that week. You get a great deal done and feel slightly guilty." }
+    ]
+  },
+  {
+    "id": "uni_thesis", "title": "The thesis",
+    "text": "The final thesis. Six months, one subject, and a supervisor who answers emails once a fortnight.",
+    "conditions": { "minAge": 20, "activity": "studying", "minEducation": "secondary" }, "cooldown": 0, "weight": 2,
+    "choices": [
+      { "text": "Pour everything into it", "chance": 0.6, "chanceAttributes": { "smarts": 0.005 },
+        "success": { "text": "It gets the top mark. Your supervisor suggests a doctorate. You frame the cover page.", "effects": [ { "type": "grades", "amount": 6 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Good, not brilliant. It is done, and done is all that matters, everyone says.", "effects": [ { "type": "grades", "amount": 2 } ] } },
+      { "text": "Do enough to pass", "effects": [ { "type": "grades", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "It passes. Nobody ever asks to read it. Nobody ever asks to read anyone's." }
+    ]
+  },
+  {
+    "id": "uni_romance_classmate", "title": "Study partner",
+    "text": "You and a classmate have been studying together all term. The studying has started to involve a lot less studying.",
+    "conditions": { "minAge": 18, "maxAge": 30, "activity": "studying", "hasPartner": false }, "cooldown": 3, "weight": 2,
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -2, "ageOffsetMax": 3 },
+    "choices": [
+      { "text": "Say something", "chance": 0.55, "chanceTraits": { "charming": 0.15, "brave": 0.1, "introvert": -0.1 },
+        "success": { "text": "It turns out they had been waiting for you to say it. Exams go slightly worse. Everything else goes much better.", "effects": [ { "type": "start_dating", "to": "target" }, { "type": "happiness", "amount": 6 }, { "type": "grades", "amount": -1 } ] },
+        "failure": { "text": "A kind no. The rest of the term is awkward in the library.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Keep it about the books", "effects": [ { "type": "grades", "amount": 2 } ], "result": "Top marks for both of you. You wonder, for years, what would have happened." }
+    ]
+  },
+  {
+    "id": "uni_graduation_day", "title": "Graduation",
+    "text": "Graduation day. A gown, a hat that does not fit, and your family in the third row, trying to work the camera.",
+    "conditions": { "minAge": 20, "minEducation": "university", "notFlags": [ "uni_graduated_event" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Walk across the stage", "effects": [ { "type": "flag", "flag": "uni_graduated_event" }, { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "uni_graduation", "text": "My graduation day", "impact": 20 } ], "result": "Your name, read out slightly wrong. A handshake. Your mother crying in the third row. Done." },
+      { "text": "Skip the ceremony", "effects": [ { "type": "flag", "flag": "uni_graduated_event" }, { "type": "happiness", "amount": 1 } ], "result": "The diploma comes in the post. Your mother is still annoyed about it twenty years later." }
+    ]
+  },
+  {
+    "id": "uni_doubt_debt", "title": "Is it worth it?",
+    "text": "A friend left university to start working and now has a car, a flat and a holiday booked. You have a bunk bed and a lot of reading.",
+    "conditions": { "minAge": 19, "maxAge": 30, "activity": "studying", "minEducation": "secondary" }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Keep going", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.03 } ], "result": "In ten years your friend will ask you about how to apply. You will try not to look pleased." },
+      { "text": "Drop out and get a job", "requires": { "traitsAny": [ "impulsive", "lazy", "greedy" ] }, "effects": [ { "type": "job_find" }, { "type": "happiness", "amount": 3 } ], "result": "A salary, at last. You tell yourself you can always go back. Some people do." }
+    ]
+  },
+  {
+    "id": "uni_part_time_bar", "title": "Behind the bar",
+    "text": "A job behind the student bar, three nights a week. Good money, terrible hours, and everyone you know on the other side of the counter.",
+    "conditions": { "minAge": 18, "maxAge": 28, "activity": "studying" }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "money", "amount": 12000 }, { "type": "grades", "amount": -2 }, { "type": "trait_add", "trait": "social", "chance": 0.04 } ], "result": "You learn to pour a pint, settle a fight and remember three hundred names. More useful, in the end, than half your courses." },
+      { "text": "Focus on studying", "effects": [ { "type": "grades", "amount": 2 } ], "result": "Fewer friends, better marks, and more pasta." }
+    ]
+  },
+  {
+    "id": "uni_mentor_job", "title": "The internship",
+    "text": "A summer internship at a company in your field. Unpaid, or almost. A foot in the door, everyone says.",
+    "conditions": { "minAge": 19, "maxAge": 30, "activity": "studying", "minEducation": "secondary", "minYear": 1970 }, "cooldown": 3, "weight": 2,
+    "choices": [
+      { "text": "Take it", "chance": 0.6, "chanceTraits": { "ambitious": 0.1, "charming": 0.1 },
+        "success": { "text": "Coffee, photocopying, and then one real task you do well. They offer you a job before you graduate.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "grades", "amount": 3 }, { "type": "flag", "flag": "internship_offer" } ] },
+        "failure": { "text": "Coffee and photocopying, all summer. A line on your CV, at least.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "grades", "amount": 1 } ] } },
+      { "text": "Take a paid summer job instead", "effects": [ { "type": "money", "amount": 20000 } ], "result": "Picking strawberries, painting fences or stacking shelves. Money in the bank, and a tan." }
+    ]
+  }
+]
