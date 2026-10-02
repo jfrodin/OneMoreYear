@@ -1,0 +1,205 @@
+// Heavier themes: addiction in the family, mental health, infidelity, control and violence.
+// Every event is tagged with its content category so the content settings can hide it.
+// The player is never the one who does violence to a partner or a child. No dashes.
+[
+  {
+    "id": "mt_partner_drinking", "content": [ "addiction" ], "title": "The bottles",
+    "text": "You find empty bottles behind the boxes in the cellar. A lot of them. {p.name} said {p.he} had stopped.",
+    "conditions": { "minAge": 20, "hasPartner": true }, "cooldown": 4, "weight": 2,
+    "target": { "role": "partner", "conditions": { "addicted": true } },
+    "choices": [
+      { "text": "Confront {t.him}, gently", "chance": 0.35, "chanceTraits": { "kind": 0.1, "charming": 0.1 },
+        "success": { "text": "A long night, a lot of crying, and in the morning {t.he} calls a clinic. It is the start of something, not the end.", "effects": [ { "type": "recover", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 } ] },
+        "failure": { "text": "Denial, then anger, then a door slammed. The bottles move to a new hiding place.", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 5 } ] } },
+      { "text": "Pour them all out", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "It feels like doing something. It is not. New ones appear within the week." },
+      { "text": "Say nothing", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.05 } ], "result": "You put the boxes back exactly as they were, and you start counting, every week, without wanting to." }
+    ]
+  },
+  {
+    "id": "mt_parent_drinking_child", "content": [ "addiction" ], "title": "Friday nights",
+    "text": "On Friday nights {t.name} changes. Louder, then sad, then asleep on the sofa. You have learned to make your own dinner.",
+    "conditions": { "minAge": 8, "maxAge": 17, "livesWithParents": true }, "cooldown": 5, "weight": 2,
+    "target": { "role": "parent", "conditions": { "addicted": true } },
+    "choices": [
+      { "text": "Tell a teacher", "chance": 0.6,
+        "success": { "text": "The teacher listens, properly. A counsellor, a phone call home, a lot of shame, and slowly, help.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 } ] },
+        "failure": { "text": "The teacher says it is probably not as bad as you think. You stop telling people things.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "trait_add", "trait": "introvert", "chance": 0.05 } ] } },
+      { "text": "Cover for {t.him}", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.04 }, { "type": "trait_add", "trait": "resilient", "chance": 0.04 } ], "result": "You become very good at excuses. Sick again. Working late. You are a child and you sound like an adult." },
+      { "text": "Stay at a friend's on Fridays", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Their house is calm and smells of dinner. Their parents ask no questions. You will remember that kindness all your life." }
+    ]
+  },
+  {
+    "id": "mt_sibling_gambling", "content": [ "addiction" ], "title": "A loan",
+    "text": "{t.name} needs money, quickly. {t.He} will not say what for, but you have seen the [[2008: betting slips in {t.his} jacket || betting apps on {t.his} phone]].",
+    "conditions": { "minAge": 20, "minMoney": 10000 }, "cooldown": 6, "weight": 2,
+    "target": { "role": "sibling", "conditions": { "addicted": true, "minAge": 18 } },
+    "choices": [
+      { "text": "Lend it", "effects": [ { "type": "transfer", "to": "target", "amount": 20000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ], "result": "{t.He} promises to pay it back by summer. You both know {t.he} will not." },
+      { "text": "Offer to pay for help instead", "chance": 0.35,
+        "success": { "text": "{t.He} is furious, then quiet, then says yes. A group on Tuesday evenings. It holds.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "recover", "who": "target" } ] },
+        "failure": { "text": "\"I don't have a problem. I have a cash flow issue.\" {t.He} hangs up.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -6 } ] } },
+      { "text": "Say no", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 6 }, { "type": "happiness", "amount": -2 } ], "result": "{t.He} finds the money somewhere else. You do not want to know where." }
+    ]
+  },
+  {
+    "id": "mt_adult_child_using", "content": [ "addiction" ], "title": "Your child",
+    "text": "{t.name} has lost weight, lost a job, and keeps asking to borrow money for things that do not exist. You know. You have known for a while.",
+    "conditions": { "minAge": 38 }, "cooldown": 5, "weight": 2,
+    "target": { "role": "child", "conditions": { "addicted": true, "minAge": 17 } },
+    "choices": [
+      { "text": "Pay for rehab", "requires": { "minMoney": 40000 }, "chance": 0.5, "chanceTraits": { "devoted_parent": 0.1 },
+        "success": { "text": "Ninety days. A thinner, clearer {t.name} on the other side, who hugs you for a long time at the gate.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "recover", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ] },
+        "failure": { "text": "{t.He} leaves after a week. The money is gone. You would pay it again tomorrow.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Stop giving money", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 8 } ], "result": "Tough love, the counsellor calls it. It does not feel like love. It feels like closing a door on your child." },
+      { "text": "Keep giving, just in case", "effects": [ { "type": "transfer", "to": "target", "amount": 15000 }, { "type": "happiness", "amount": -4 } ], "result": "At least you know where {t.he} is when {t.he} comes for money. That is what you tell yourself." }
+    ]
+  },
+  {
+    "id": "mt_friend_addiction", "content": [ "addiction" ], "title": "Not the same",
+    "text": "{t.name} has stopped turning up. When {t.he} does, {t.he} is somewhere else behind {t.his} eyes.",
+    "conditions": { "minAge": 18 }, "cooldown": 6, "weight": 1.5,
+    "target": { "role": "friend", "conditions": { "addicted": true } },
+    "choices": [
+      { "text": "Keep showing up for {t.him}", "chance": 0.3, "chanceTraits": { "loyal": 0.15 },
+        "success": { "text": "Months of it. Then one night {t.he} says, \"I need help,\" and you drive {t.him} there.", "effects": [ { "type": "recover", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 15, "mutual": true } ] },
+        "failure": { "text": "You show up. {t.He} does not. It wears you down slowly, the way water wears stone.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Step away", "effects": [ { "type": "friend_remove", "to": "target" }, { "type": "happiness", "amount": -2 } ], "result": "You have to, for your own sake. You still ask mutual friends about {t.him} sometimes, late at night." }
+    ]
+  },
+  {
+    "id": "mt_panic_attack", "content": [ "mental_health" ], "title": "In the supermarket",
+    "text": "In the queue at the supermarket your heart starts racing, your hands go numb and you are certain, absolutely certain, that you are dying.",
+    "conditions": { "minAge": 16, "notAilments": [ "anxiety" ] }, "cooldown": 15, "weight": 0.6,
+    "choices": [
+      { "text": "Go to the emergency room", "effects": [ { "type": "money", "amount": -1000 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.5 } ], "result": "Your heart is fine, they say. It was panic. You feel foolish and frightened at the same time, which is a new combination." },
+      { "text": "Leave the trolley and walk out", "effects": [ { "type": "ailment_add", "kind": "anxiety", "chance": 0.7 }, { "type": "happiness", "amount": -4 } ], "result": "You sit in the car until it passes. You do not go back to that supermarket for a year." }
+    ]
+  },
+  {
+    "id": "mt_therapy_first", "content": [ "mental_health" ], "title": "The first session",
+    "text": "A waiting room with a box of tissues on every surface. Your name is called. You have not said any of this out loud to anyone.",
+    "conditions": { "minAge": 16, "ailmentsAny": [ "depression", "anxiety", "trauma", "burnout" ], "minYear": 1965 }, "cooldown": 8,
+    "choices": [
+      { "text": "Say all of it", "effects": [ { "type": "ailment_treat" }, { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 3 } ], "result": "Fifty minutes go very quickly. You cry, which you did not plan. You book the next one before you leave." },
+      { "text": "Talk about the weather", "effects": [ { "type": "money", "amount": -1200 } ], "result": "You are very charming. The therapist is very patient. You do not go back. Maybe next year." }
+    ]
+  },
+  {
+    "id": "mt_dark_winter", "content": [ "mental_health" ], "countries": [ "sweden" ], "title": "November",
+    "text": "It is dark when you leave in the morning and dark when you come home. It has been grey for six weeks. Everything is heavy.",
+    "conditions": { "minAge": 16 }, "cooldown": 6,
+    "choices": [
+      { "text": "Buy a daylight lamp", "requires": { "minYear": 1985 }, "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 3 } ], "result": "Twenty minutes every morning in front of a very bright box. Ridiculous. It works, a bit." },
+      { "text": "Go for a walk at lunch, every day", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "Half an hour of grey light is still light. You count the days to the solstice, and then the minutes." },
+      { "text": "Stay in", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "ailment_add", "kind": "depression", "chance": 0.08 } ], "result": "The sofa, the blanket, the television. It is easier. It is also how it starts, sometimes." }
+    ]
+  },
+  {
+    "id": "mt_new_mother_low", "content": [ "mental_health" ], "title": "Not what they said",
+    "text": "Everyone said it would be the happiest time of your life. You have a beautiful baby, and you feel nothing at all, except tired and afraid.",
+    "conditions": { "minAge": 18, "sex": "female" }, "cooldown": 30, "weight": 2,
+    "target": { "role": "child", "conditions": { "maxAge": 0 } },
+    "choices": [
+      { "text": "Tell the nurse at the check up", "chance": 0.75,
+        "success": { "text": "The nurse has heard it many times. It has a name. There is help. Months later, one morning, you look at {t.name} and feel everything at once.", "effects": [ { "type": "ailment_add", "kind": "depression", "chance": 0.4 }, { "type": "ailment_treat" }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "\"All new mothers are tired.\" You nod and go home.", "effects": [ { "type": "ailment_add", "kind": "depression", "chance": 0.6 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Pretend everything is fine", "effects": [ { "type": "ailment_add", "kind": "depression", "chance": 0.6 }, { "type": "happiness", "amount": -6 } ], "result": "You smile in the photographs. You are very good at it. Nobody asks." }
+    ]
+  },
+  {
+    "id": "mt_burnout_warning", "content": [ "mental_health" ], "title": "The word",
+    "text": "You stood in the shower this morning and forgot what shampoo was for. Yesterday you cried in the car park. A colleague uses a word you do not want to hear.",
+    "conditions": { "minAge": 25, "maxAge": 64, "activity": "working", "notAilments": [ "burnout" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Go to the doctor and take leave", "effects": [ { "type": "performance", "amount": -5 }, { "type": "health", "amount": 3 }, { "type": "happiness", "amount": 2 } ], "result": "Eight weeks off. The first three you sleep. Then, slowly, you start to notice birds again." },
+      { "text": "Push through until the holidays", "effects": [ { "type": "ailment_add", "kind": "burnout", "chance": 0.5 }, { "type": "health", "amount": -3 } ], "result": "The holidays come. You get ill on the first day off, as if your body was waiting for permission." }
+    ]
+  },
+  {
+    "id": "mt_partner_phone", "content": [ "infidelity" ], "title": "Face down",
+    "text": "{p.name} has started keeping {p.his} phone face down. Showering with it in the bathroom. Smiling at it in a way you have not seen for a long time.",
+    "conditions": { "minAge": 22, "hasPartner": true, "minYear": 2005 }, "cooldown": 8,
+    "target": { "role": "partner" },
+    "choices": [
+      { "text": "Look at it while {t.he} sleeps", "chance": 0.5, "chanceTraits": { "paranoid": -0.2 },
+        "success": { "text": "A surprise party. For you. Planned in a group chat with thirty people. You feel terrible, and then wonderful.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "jealous", "chance": 0.03 } ] },
+        "failure": { "text": "It is exactly what you thought. Messages, months of them. You put the phone back, very carefully, and lie awake until morning.", "effects": [ { "type": "happiness", "amount": -10 }, { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 15 } ] } },
+      { "text": "Ask {t.him}", "chance": 0.6,
+        "success": { "text": "\"It's work. It's just work.\" It is, as it turns out. You feel foolish, and relieved, and still a little uneasy.", "effects": [ { "type": "happiness", "amount": 1 } ] },
+        "failure": { "text": "A long pause. Too long. Then the truth, or most of it.", "effects": [ { "type": "happiness", "amount": -10 }, { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 12 }, { "type": "breakup", "chance": 0.3 } ] } },
+      { "text": "Trust {t.him}", "effects": [], "result": "You decide not to become a person who checks phones. It is a good decision. It is also a hard one." }
+    ]
+  },
+  {
+    "id": "mt_old_flame_message", "content": [ "infidelity" ], "title": "A message",
+    "text": "A friend request from someone you loved at nineteen. Then a message: \"I think about you sometimes. Do you ever think about me?\"",
+    "conditions": { "minAge": 30, "maxAge": 65, "hasPartner": true, "minYear": 2007 }, "cooldown": 15, "weight": 0.8,
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -2, "ageOffsetMax": 2 },
+    "choices": [
+      { "text": "Write back", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "start_affair", "to": "target", "chance": 0.4 } ], "result": "One message becomes forty. You delete them every night. You tell yourself it is only words." },
+      { "text": "Delete it and tell {p.name}", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "respect", "amount": 5 } ], "result": "{p.name} laughs, then goes quiet, then holds your hand a little tighter on the walk that evening." },
+      { "text": "Delete it and never mention it", "effects": [], "result": "Gone. You think about it more than you would like to admit, for about a month." }
+    ]
+  },
+  {
+    "id": "mt_partner_confession", "content": [ "infidelity" ], "title": "Something I have to tell you",
+    "text": "{p.name} sits you down at the kitchen table, both hands around a cup that has gone cold. \"Something happened. Last year. It is over. I need you to know.\"",
+    "conditions": { "minAge": 25, "hasPartner": true, "minPartnerYears": 5 }, "cooldown": 20, "weight": 0.5,
+    "target": { "role": "partner", "conditions": { "traitsAny": [ "unfaithful", "impulsive" ] } },
+    "choices": [
+      { "text": "Try to forgive", "chance": 0.5, "chanceTraits": { "kind": 0.1, "loyal": 0.1, "jealous": -0.2 },
+        "success": { "text": "Couples therapy. A year of very hard conversations. On the other side, something different, maybe stronger.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "money", "amount": -10000 }, { "type": "relation", "who": "player", "to": "target", "dim": "respect", "amount": 5 } ] },
+        "failure": { "text": "You try. You cannot. Every late evening at work is a question you cannot stop asking.", "effects": [ { "type": "happiness", "amount": -10 }, { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 15 } ] } },
+      { "text": "Ask {t.him} to leave", "effects": [ { "type": "breakup" }, { "type": "happiness", "amount": -12 }, { "type": "memory", "kind": "betrayed", "to": "target", "text": "The night {t.name} told me", "impact": -30 } ], "result": "A suitcase in the hall by ten. The kitchen table, afterwards, is the loneliest place you have ever sat." }
+    ]
+  },
+  {
+    "id": "mt_controlling_partner", "content": [ "violence" ], "title": "Who were you talking to?",
+    "text": "{p.name} goes through your things now. Asks where you were, and with whom, and why it took so long. Your friends have stopped calling, because {p.he} does not like them.",
+    "conditions": { "minAge": 18, "hasPartner": true }, "cooldown": 15, "weight": 0.5,
+    "target": { "role": "partner", "conditions": { "traitsAny": [ "jealous", "manipulative", "hot_tempered", "cruel" ] } },
+    "choices": [
+      { "text": "Call your oldest friend", "chance": 0.6, "chanceTraits": { "brave": 0.15, "resilient": 0.1 },
+        "success": { "text": "\"I wondered when you would call.\" A spare room, a long talk, and the first clear look at your own life in years.", "effects": [ { "type": "breakup" }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "got_out", "to": "target", "text": "The day I left {t.name}", "impact": 15 } ] },
+        "failure": { "text": "You call, but you cannot say it out loud. You talk about the weather. You hang up and delete the call.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Try harder to keep the peace", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "trait_add", "trait": "conflict_averse", "chance": 0.08 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.2 } ], "result": "You stop seeing people. You start explaining everything in advance. It makes no difference. It never does." }
+    ]
+  },
+  {
+    "id": "mt_bar_fight_witness", "content": [ "violence" ], "title": "Outside the bar",
+    "text": "Closing time. Two men are shouting outside the bar, and then one of them is on the ground and the other one is still kicking.",
+    "conditions": { "minAge": 18, "maxAge": 50 }, "cooldown": 10, "weight": 0.6,
+    "choices": [
+      { "text": "Step in", "chance": 0.55, "chanceAttributes": { "fitness": 0.006 }, "chanceTraits": { "brave": 0.1 },
+        "success": { "text": "You shout, you get between them, and it stops. The man on the ground is bleeding but conscious. You give a statement at three in the morning, shaking.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.08 }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "A fist you did not see coming. A broken nose, a night in the emergency room, and the other man is gone.", "effects": [ { "type": "health", "amount": -8 }, { "type": "money", "amount": -2000 } ] } },
+      { "text": "Call the police", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "They come in eleven minutes. Eleven very long minutes. You hear later that he lived." },
+      { "text": "Walk away fast", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "You walk away. You read about it in the paper on Monday. You read it several times." }
+    ]
+  },
+  {
+    "id": "mt_mugged", "content": [ "violence" ], "title": "Your wallet",
+    "text": "A dark street, two people behind you, and then a knife and a voice telling you to give them everything.",
+    "conditions": { "minAge": 16 }, "cooldown": 20, "weight": 0.4,
+    "choices": [
+      { "text": "Give them everything", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": -6 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.15 } ], "result": "Ten seconds and they are gone. Your hands shake for an hour. For months you cross the street when you hear footsteps." },
+      { "text": "Run", "chance": 0.6, "chanceAttributes": { "fitness": 0.006 },
+        "success": { "text": "You run faster than you have since school. They do not follow. You sit on your own doorstep laughing and crying.", "effects": [ { "type": "happiness", "amount": -2 } ] },
+        "failure": { "text": "They catch you. A cut on your arm, and the wallet anyway.", "effects": [ { "type": "health", "amount": -10 }, { "type": "money", "amount": -3000 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.2 } ] } }
+    ]
+  },
+  {
+    "id": "mt_suicide_friend_call", "content": [ "suicide" ], "title": "Late call",
+    "text": "{t.name} calls at two in the morning. {t.His} voice is flat and calm, and {t.he} says goodbye in a way that makes the hair on your arms stand up.",
+    "conditions": { "minAge": 16 }, "cooldown": 30, "weight": 0.3,
+    "target": { "role": "friend", "conditions": { "minAge": 15 } },
+    "choices": [
+      { "text": "Keep {t.him} talking and call for help", "chance": 0.85,
+        "success": { "text": "An hour on the phone, while someone else calls an ambulance on another line. {t.He} is alive. Years later {t.he} says, \"You know what you did that night.\"", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 20, "mutual": true }, { "type": "memory", "who": "target", "to": "player", "kind": "saved_life", "text": "The night {name} kept me on the phone", "impact": 40 } ] },
+        "failure": { "text": "The line goes dead. The ambulance gets there first, but not in time. Nobody can tell you anything that makes it better, and some people try.", "effects": [ { "type": "death", "who": "target", "cause": "suicide" }, { "type": "happiness", "amount": -20 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.4 } ] } },
+      { "text": "Drive over, now", "chance": 0.8,
+        "success": { "text": "The door is unlocked. You sit on the floor with {t.him} until morning. Then you drive {t.him} to the clinic, and stay.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 20, "mutual": true } ] },
+        "failure": { "text": "You get there too late. You will drive that road in your dreams for the rest of your life.", "effects": [ { "type": "death", "who": "target", "cause": "suicide" }, { "type": "happiness", "amount": -20 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.5 } ] } }
+    ]
+  }
+]
