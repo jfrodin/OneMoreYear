@@ -483,6 +483,8 @@ public partial class GameScreen : Control
 
         _moneyContent.AddChild(InvestmentsCard(m));
         _moneyContent.AddChild(HomeCard(m));
+        _heirloomCard = S.Heirlooms() is { Count: > 0 } heirlooms ? HeirloomsCard(heirlooms) : null;
+        if (_heirloomCard != null) _moneyContent.AddChild(_heirloomCard);
 
         _moneyContent.AddChild(LedgerCard($"This year ({m.Year})", m.ThisYear, m.ThisYearTotal));
         if (m.LastYear.Count > 0) _moneyContent.AddChild(LedgerCard($"Last year ({m.Year - 1})", m.LastYear, m.LastYearTotal));
@@ -667,6 +669,37 @@ public partial class GameScreen : Control
     private string EconomySystemFormat(double nominal) => OneMoreYear.Simulation.Systems.EconomySystem.Format(S.Ctx, nominal);
 
     // --- Home ---------------------------------------------------------------------------------
+
+    /// <summary>Screenshot tour: the bottom of the money tab.</summary>
+    private Control? _heirloomCard;
+
+    public void ScrollMoneyToEnd()
+    {
+        if (_moneyContent.GetParent()?.GetParent() is ScrollContainer scroll && _heirloomCard != null) scroll.EnsureControlVisible(_heirloomCard);
+    }
+
+    /// <summary>The family's things the player keeps, with their story; selling takes them out of the family.</summary>
+    private Control HeirloomsCard(IReadOnlyList<HeirloomView> heirlooms)
+    {
+        var box = Ui.VBox(10);
+        box.AddChild(Ui.Label("Things that stay in the family", 20, UiTheme.Text));
+        foreach (var h in heirlooms)
+        {
+            var item = Ui.VBox(3);
+            item.AddChild(UiTheme.HandLabel(h.Name, 24, UiTheme.Accent));
+            item.AddChild(Ui.Label(h.Text, 15, UiTheme.Muted, wrap: true));
+            item.AddChild(Ui.Label(h.History, 14, UiTheme.Faint, wrap: true));
+            item.AddChild(Ui.Label(h.PromisedTo != null ? $"Promised to {h.PromisedTo}. A dealer would pay about {h.Value}." : $"A dealer would pay about {h.Value}.", 14, UiTheme.Faint, wrap: true));
+            int id = h.Id;
+            var sell = Ui.Button($"Sell {h.Name}", () => _main.ShowMessage(h.Name, S.SellHeirloom(id) + " It is no longer in the family.", RefreshAll), 42);
+            sell.SetMeta("action", true);
+            sell.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            RegisterHint(sell, "Money now. The story leaves the family with it.");
+            item.AddChild(sell);
+            box.AddChild(item);
+        }
+        return Ui.Card(box);
+    }
 
     private Control HomeCard(MoneyView m)
     {

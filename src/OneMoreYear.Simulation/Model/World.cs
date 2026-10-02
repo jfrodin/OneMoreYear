@@ -48,6 +48,7 @@ public sealed class World
     public SortedSet<string> Feats { get; set; } = new(StringComparer.Ordinal);
     /// <summary>What the family has become known for (ReputationSystem): "learning", "warmth" ...</summary>
     public SortedSet<string> FamilyTraits { get; set; } = new(StringComparer.Ordinal);
+    public List<Heirloom> Heirlooms { get; set; } = new();
 
     public SimRandom Rng { get; set; } = new();
     public int NextEventUid { get; set; } = 1;
@@ -136,4 +137,31 @@ public sealed class LedgerLine
     public int Year { get; set; }
     public string Label { get; set; } = "";
     public double Amount { get; set; }
+}
+
+/// <summary>Something that stays in the family and collects its history (HeirloomSystem).</summary>
+public sealed class Heirloom
+{
+    public int Id { get; set; }
+    /// <summary>The kind (content/heirlooms.json).</summary>
+    public string Kind { get; set; } = "";
+    /// <summary>"Erik's pocket watch": named after the first owner.</summary>
+    public string Name { get; set; } = "";
+    /// <summary>Who has it now; null when it is lost or sold out of the family.</summary>
+    public int? OwnerId { get; set; }
+    /// <summary>Promised to someone when the owner dies.</summary>
+    public int? PromisedToId { get; set; }
+    public int SinceYear { get; set; }
+    /// <summary>The year it left the family (sold or stolen), if it did.</summary>
+    public int? GoneYear { get; set; }
+    public bool Sold { get; set; }
+    /// <summary>Left the family at some point (and maybe came back): it no longer counts as unbroken.</summary>
+    public bool Interrupted { get; set; }
+    public List<HeirloomEntry> History { get; set; } = new();
+}
+
+public sealed class HeirloomEntry
+{
+    public int Year { get; set; }
+    public string Text { get; set; } = "";
 }

@@ -50,6 +50,7 @@ public static class AchievementSystem
         ["golden_wedding"] = ctx => Played(ctx).Any(p => p.IsAlive && p.PartnerStatus == PartnerStatus.Married && ctx.Year - p.PartnerSinceYear >= 50),
         ["full_circle"] = ctx => ctx.World.Feats.Contains("full_circle"),
         ["inherited_dream"] = ctx => ctx.World.Feats.Contains("inherited_dream"),
+        ["century_heirloom"] = ctx => ctx.World.Heirlooms.Any(h => h.OwnerId == ctx.World.PlayerId && !h.Interrupted && ctx.Year - Math.Max(h.SinceYear, ctx.World.StartYear) >= 100),
 
         // Legendary: very hard, never impossible.
         ["ten_generations"] = ctx => GenerationsPlayed(ctx) >= 10,
@@ -72,6 +73,7 @@ public static class AchievementSystem
         ["one_hundred_ten"] = ctx => Played(ctx).Any(p => AgeReached(ctx, p) >= 110),
         ["myth_true"] = ctx => ctx.World.Feats.Contains("myth_true"),
         ["family_book"] = ctx => ctx.World.Feats.Contains("family_book"),
+        ["bought_back"] = ctx => ctx.World.Feats.Contains("bought_back"),
     };
 
     public static IEnumerable<string> RuleIds => Checks.Keys;

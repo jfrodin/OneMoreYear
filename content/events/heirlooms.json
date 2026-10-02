@@ -1,0 +1,57 @@
+// Heirlooms (HeirloomSystem): {heirloom}, {heirloom_history}, {heirloom_value}, {heirloom_price} and
+// {heirloom_text} are filled in by the system. No dashes.
+[
+  {
+    "id": "heirloom_inherited", "trigger": "situation",
+    "title": "{heirloom}",
+    "text": "It is yours now: {heirloom}. {heirloom_text} The family has kept a list of everyone who had it: {heirloom_history}",
+    "choices": [
+      { "text": "Keep it close", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "memory", "kind": "heirloom", "text": "When {heirloom} came to me", "impact": 10 } ],
+        "result": "You put it where you will see it every day. Your line in its story has begun." },
+      { "text": "Sell it", "effects": [ { "type": "heirloom", "kind": "sell" }, { "type": "happiness", "amount": -3 } ],
+        "result": "A dealer looks at it for a long time and names a price. You take it. Somebody in the family will never forgive you." }
+    ]
+  },
+  {
+    "id": "heirloom_story", "trigger": "situation",
+    "title": "Whose was it?",
+    "text": "{t.name} has found {heirloom} and wants to know everything about it. Who had it before you? {heirloom_history}",
+    "choices": [
+      { "text": "Tell every story, and promise it to {t.him}", "effects": [ { "type": "heirloom", "kind": "promise" }, { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 6, "mutual": true } ],
+        "result": "{t.name} listens with big eyes, then very carefully puts it back. \"When I'm old,\" {t.he} says, \"I'll tell my children.\"" },
+      { "text": "Tell the stories, promise nothing", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 3, "mutual": true } ],
+        "result": "An afternoon of old names and old places. {t.name} remembers more of it than you expected." },
+      { "text": "Tell {t.him} not to touch it", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": -3 } ],
+        "result": "{t.name} puts it back and never asks about it again." }
+    ]
+  },
+  {
+    "id": "heirloom_appraisal", "trigger": "situation",
+    "title": "What is it worth?",
+    "text": "An antiques dealer at a market sees a photo of {heirloom} and gets very interested. {T.He} would pay {heirloom_value}, cash, today.",
+    "choices": [
+      { "text": "Sell", "effects": [ { "type": "heirloom", "kind": "sell" } ], "result": "The dealer wraps it in newspaper. That is the strangest part: the newspaper." },
+      { "text": "It is not for sale", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "\"Everything is for sale,\" says the dealer. Not this, you say, and mean it." }
+    ]
+  },
+  {
+    "id": "heirloom_stolen", "trigger": "situation",
+    "title": "Gone",
+    "text": "The door has been forced. The television is still there. {heirloom} is not.",
+    "choices": [
+      { "text": "Report it", "effects": [ { "type": "heirloom", "kind": "stolen" }, { "type": "happiness", "amount": -6 } ],
+        "result": "The police write it down and say they will be in touch. They are not. You keep looking in pawn shop windows for years." }
+    ]
+  },
+  {
+    "id": "heirloom_found", "trigger": "situation",
+    "title": "Lot forty two",
+    "text": "In an auction catalogue, between a lamp and a box of postcards: {heirloom}. There is no mistaking it. It left the family years ago. The estimate is {heirloom_price}.",
+    "choices": [
+      { "text": "Bid, whatever it costs", "effects": [ { "type": "heirloom", "kind": "buy_back" }, { "type": "happiness", "amount": 6 } ],
+        "result": "You hold your paddle up until everyone else gives up. It is coming home." },
+      { "text": "Let it go", "effects": [ { "type": "happiness", "amount": -2 } ],
+        "result": "You watch the hammer fall on a stranger's bid. Somewhere, it is starting a new story with a new family." }
+    ]
+  }
+]

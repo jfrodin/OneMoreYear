@@ -2,6 +2,19 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.41.0 – 2026-10-02 · Heirlooms
+
+- **Things that stay in the family.** The oldest of the family start with an heirloom each: a pocket
+  watch, a wedding ring, a recipe book, a violin, a painting, a medal, a quilt, a writing desk,
+  silver spoons or a bundle of letters. Each is named after its first owner and keeps a line of
+  history for every owner after.
+- They pass on at death: to whoever they were promised to, or the will's favourite, the partner or
+  the eldest child. A child may ask about one, and you can promise it to them. A dealer may want to
+  buy it, a burglar may take it, and sometimes, years later, it turns up at an auction.
+- Your heirlooms are on the money tab, with their story and what a dealer would pay.
+- Two achievements: a rare one for keeping something in the family for a hundred years, and a
+  secret one for buying something back.
+
 ## 0.40.0 – 2026-10-02 · What the family is known for
 
 - **The family's reputation.** Four hidden meters follow how the last three generations of the

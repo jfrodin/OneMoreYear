@@ -959,11 +959,13 @@ public partial class Main : Control
                 Session.BuyInvestment("sweden_fund", 200_000);
                 Session.BuyInvestment("telelink", 60_000);
                 Session.ChooseHome("three_room", buy: false);
+                if (Session.Heirlooms().Count == 0) OneMoreYear.Simulation.Systems.HeirloomSystem.Create(Session.Ctx, Session.Player, "pocket_watch", "found it in a drawer at a parent's house");
                 if (_screen is GameScreen g3) { g3.Refresh(); g3.ShowTab(3); }
                 break;
             case 60: Shot("05_money"); if (_screen is GameScreen gi) gi.TourInvestDialog(); break;
             case 63: Shot("05b_invest"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen gh) gh.TourHomeDialog(); break;
-            case 66: Shot("05c_homes"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen g4) g4.ShowTab(4); break;
+            case 66: Shot("05c_homes"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen gs) gs.ScrollMoneyToEnd(); break;
+            case 68: Shot("05d_heirlooms"); if (_screen is GameScreen g4) g4.ShowTab(4); break;
             case 70: Shot("06_tree"); if (_screen is GameScreen gt) gt.FocusTreeOnGrandfather(); break;
             case 71: Shot("06b_tree_grandfather"); break;
             case 72: ShowContentSettings(Session); break;

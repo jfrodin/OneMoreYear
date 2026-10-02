@@ -21,6 +21,7 @@ public sealed class ContentDb
     public List<AchievementDef> Achievements { get; } = new();
     public Dictionary<string, DreamDef> Dreams { get; } = new();
     public Dictionary<string, FamilyTraitDef> FamilyTraits { get; } = new();
+    public Dictionary<string, HeirloomDef> Heirlooms { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
     /// <summary>History and life's milestones (a first word, turning eighty): they come for sure, the year their conditions first hold.</summary>
     public List<EventDef> HistoryEvents { get; } = new();
@@ -104,6 +105,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("scenarios.json"))
                 {
                     db.Scenarios.AddRange(Deserialize<List<ScenarioDef>>(json));
+                }
+                else if (path.EndsWith("heirlooms.json"))
+                {
+                    foreach (var h in Deserialize<List<HeirloomDef>>(json)) db.Heirlooms[h.Id] = h;
                 }
                 else if (path.EndsWith("reputation.json"))
                 {
@@ -237,6 +242,8 @@ public sealed class ContentDb
                 if (c.Chance != null && c.Success == null) errors.Add($"Event {e.Id}: choice with chance has no success outcome");
             }
         }
+        foreach (var h in Heirlooms.Values)
+            if (new[] { h.Name, h.Text }.Any(x => string.IsNullOrWhiteSpace(x) || x.Contains("–") || x.Contains("—"))) errors.Add($"Heirloom {h.Id}: missing text or a dash");
         foreach (var t in FamilyTraits.Values)
         {
             if (t.Meter is not ("learning" or "wealth" or "warmth" or "notoriety")) errors.Add($"Family trait {t.Id}: unknown meter {t.Meter}");

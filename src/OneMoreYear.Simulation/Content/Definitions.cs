@@ -629,3 +629,14 @@ public sealed class FamilyTraitDef
     public string Gained { get; set; } = "";
     public string Lost { get; set; } = "";
 }
+
+/// <summary>A kind of heirloom (content/heirlooms.json).</summary>
+public sealed class HeirloomDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>"pocket watch": the heirloom is called "Erik's pocket watch".</summary>
+    public string Name { get; set; } = "";
+    public string Text { get; set; } = "";
+    /// <summary>What it would sell for when new to the family, in reference kronor; antiques gain with age.</summary>
+    public double Value { get; set; }
+}

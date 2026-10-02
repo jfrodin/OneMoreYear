@@ -67,6 +67,7 @@ public sealed class GameSession
             var session = new GameSession(world, content);
             StartingFamily.Create(session.Ctx, options);
             StartChoices.Apply(session.Ctx, options.StartConditions);
+            HeirloomSystem.GiveStartingHeirlooms(session.Ctx);
             if (scenario != null) Scenarios.ApplyFamily(session.Ctx, scenario);
             session.World.ActionPoints = session.ActionPointsFor(session.Player);
             if (scenario != null) Scenarios.FastForward(session, scenario);
@@ -184,6 +185,7 @@ public sealed class GameSession
             DreamSystem.Update(ctx);
             LegacySystem.Update(ctx);
             ReputationSystem.Update(ctx);
+            HeirloomSystem.Update(ctx);
             EventSystem.GenerateRandomEvents(ctx);
             w.ActionPoints = ActionPointsFor(Player);
         }
@@ -912,6 +914,14 @@ public sealed class GameSession
     /// </summary>
     public IReadOnlyList<AchievementDef> NewAchievements(IReadOnlySet<string> alreadyUnlocked) =>
         AchievementSystem.NewlyEarned(Ctx, alreadyUnlocked);
+
+    /// <summary>What the player keeps of the family's things (HeirloomSystem).</summary>
+    public IReadOnlyList<HeirloomView> Heirlooms() => HeirloomSystem.OwnedBy(World, Player).Select(h => new HeirloomView(h.Id, h.Name,
+        Content.Heirlooms.TryGetValue(h.Kind, out var def) ? def.Text : "", HeirloomSystem.HistoryText(h),
+        EconomySystem.Format(Ctx, HeirloomSystem.Value(Ctx, h)), World.TryGet(h.PromisedToId)?.FirstName)).ToList();
+
+    /// <summary>Sells an heirloom out of the family. Returns what happened.</summary>
+    public string SellHeirloom(int id) => World.Heirlooms.FirstOrDefault(h => h.Id == id && h.OwnerId == Player.Id) is { } h ? HeirloomSystem.Sell(Ctx, Player, h) : "";
 
     /// <summary>What the family is known for now (ReputationSystem): "A family of readers", "Close knit" ...</summary>
     public IReadOnlyList<FamilyTraitDef> FamilyTraits() => ReputationSystem.Current(Ctx);

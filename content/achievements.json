@@ -41,6 +41,9 @@
   { "id": "inherited_dream", "tier": "rare", "name": "For both of us",
     "hint": "Finish what someone else started.",
     "text": "A parent's dream that never came true, and a child who made it come true anyway." },
+  { "id": "century_heirloom", "tier": "rare", "name": "Kept",
+    "hint": "Something small, held on to for a hundred years, and in your hands at the end of them.",
+    "text": "A hundred years in the family, never sold, never lost. Every owner wrote a line in its story." },
   { "id": "full_circle", "tier": "rare", "name": "Full circle",
     "hint": "Someone left. Someone else went back.",
     "text": "An ancestor left this country with two suitcases. Generations later, someone came back to it." },
@@ -73,6 +76,8 @@
     "text": "Every family has a story nobody believes. Yours turned out to be true, and worse." },
   { "id": "family_book", "tier": "secret", "name": "The family book",
     "text": "Eight generations, bound in one book. Somewhere in it is every one of you who got this far." },
+  { "id": "bought_back", "tier": "secret", "name": "Back where it belongs",
+    "text": "It left the family once. You found it again, and paid what it took to bring it home." },
   { "id": "one_hundred_ten", "tier": "secret", "name": "A hundred and ten",
     "text": "A hundred and ten years. The doctors have stopped giving advice and started asking for it." }
 ]

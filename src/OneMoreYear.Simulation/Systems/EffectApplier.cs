@@ -15,7 +15,7 @@ public static class EffectApplier
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
         "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
-        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth"
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth", "heirloom"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -161,6 +161,9 @@ public static class EffectApplier
                 break;
             case "queue_event":
                 if (e.Event != null) EventSystem.QueueSituation(ctx, e.Event);
+                break;
+            case "heirloom":
+                if (HeirloomSystem.Apply(ctx, pending, e.Kind) is { Length: > 0 } heirloomText) pending.ExtraText.Add(heirloomText);
                 break;
             case "reveal_myth":
                 LegacySystem.RevealMythSecret(ctx, pending);

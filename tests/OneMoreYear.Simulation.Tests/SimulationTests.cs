@@ -963,6 +963,29 @@ public class CountryTests
     }
 
     [Fact]
+    public void Heirlooms_pass_down_and_keep_their_story()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 21, StartYear = 1950 });
+        Assert.NotEmpty(s.World.Heirlooms);
+        var h = s.World.Heirlooms[0];
+        var firstOwner = s.World.Get(h.OwnerId!.Value);
+        var bot = new AutoPlayer(21, useActions: false);
+        for (int i = 0; i < 80 && bot.PlayYear(s) && firstOwner.IsAlive; i++) { }
+        if (!firstOwner.IsAlive)
+        {
+            Assert.True(h.History.Count >= 2, "the death should add a line to the story");
+            Assert.NotEqual(firstOwner.Id, h.OwnerId);
+        }
+        // Selling takes it out of the family.
+        var mine = HeirloomSystem.Create(s.Ctx, s.Player, "pocket_watch", "bought it");
+        double before = s.Player.Money;
+        s.SellHeirloom(mine.Id);
+        Assert.True(s.Player.Money > before);
+        Assert.Null(mine.OwnerId);
+        Assert.True(mine.Interrupted);
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.

@@ -108,6 +108,7 @@ public static class LifeSystem
         p.DeathYear = ctx.Year;
         p.CauseOfDeath = cause;
         if (p.Id == w.PlayerId) DreamSystem.OnDeath(ctx, p);
+        HeirloomSystem.OnDeath(ctx, p);
         int age = p.Age(ctx.Year);
 
         bool close = p.Id == w.PlayerId || (w.Player.IsAlive && Kinship.Distances(w, w.Player, 2).ContainsKey(p.Id));

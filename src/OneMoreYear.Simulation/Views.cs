@@ -233,3 +233,6 @@ public sealed record FamilyFocusView(
 
 /// <summary>The page that opens a new decade: its name, what it was like, and the family since the last chapter.</summary>
 public sealed record ChapterView(int Year, string Title, string Name, string Text, string PlayerLine, IReadOnlyList<string> FamilyLines);
+
+/// <summary>An heirloom the player keeps: its story, what it would fetch, and who it is promised to.</summary>
+public sealed record HeirloomView(int Id, string Name, string Text, string History, string Value, string? PromisedTo);
