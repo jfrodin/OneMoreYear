@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.38.0 – 2026-10-02 · Life dreams
+
+- **Every played person can have a dream.** At sixteen, or when the story passes to them, you choose
+  from three that fit who they are (an ambitious person is offered the corner office, a devoted
+  parent a big family), or none at all. 22 dreams: become a doctor, a lawyer, a teacher, get to the
+  top, a degree, a big family, live to see grandchildren, find the one, a house with a garden, get
+  rich, a fortune, live in another country, live to ninety, a summer cottage (Sweden), a family that
+  stays close, grow old together, never break a promise and more.
+- The dream shows under your name. It comes true (a memory, happiness, and your children remember
+  it), or it is lost at its deadline or at the end of a life.
+- **A dream can be inherited.** A child may take over the dream a parent never reached, and finish it
+  for both of them.
+- Two new achievements: a dream come true, and a hidden one for finishing a parent's dream.
+
 ## 0.37.0 – 2026-10-02 · Achievements, and longer lives
 
 - **Achievements** (see docs/endgame.md): 24 of them, kept across all your families (outside the save

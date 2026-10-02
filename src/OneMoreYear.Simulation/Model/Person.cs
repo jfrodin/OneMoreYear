@@ -95,6 +95,14 @@ public sealed class Person
     public double LowRefWorth { get; set; }
     /// <summary>Every occupation the person has had (ids), for family achievements like three doctors in a row.</summary>
     public List<string> Jobs { get; set; } = new();
+    /// <summary>The life dream the player chose for this person (docs/endgame.md), and how it went.</summary>
+    public string? Dream { get; set; }
+    public DreamState DreamState { get; set; }
+    public int DreamYear { get; set; }
+    /// <summary>The parent whose unfinished dream this person took over, if any.</summary>
+    public int? DreamFromId { get; set; }
+    /// <summary>The year the dream was last offered (so it is offered once per person).</summary>
+    public int? DreamOffered { get; set; }
     public bool OwnsHome { get; set; }
     /// <summary>Market value of the home this person holds (0 when living in a partner's home), nominal.</summary>
     public double HomeValue { get; set; }
@@ -196,3 +204,5 @@ public sealed class Holding
     public double LastReturn { get; set; }
     public double LastDividend { get; set; }
 }
+
+public enum DreamState { None, Active, Fulfilled, Failed }

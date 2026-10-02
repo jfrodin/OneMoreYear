@@ -60,6 +60,9 @@ public static partial class TextFormatter
                     "country" => ctx.Country.Name,
                     "homeland" => Homeland(ctx, player)?.Name ?? ctx.Country.Name,
                     "language" => Homeland(ctx, player)?.Language ?? ctx.Country.Language,
+                    "dream" => DreamSystem.Of(ctx, player)?.Name.ToLowerInvariant() ?? "",
+                    "dream_fulfilled" => DreamSystem.Of(ctx, player)?.Fulfilled ?? "",
+                    "dream_failed" => DreamSystem.Of(ctx, player)?.Failed ?? "",
                     _ when pending != null && pending.Vars.TryGetValue(head, out var v) => EconomySystem.Format(ctx, ctx.Nominal(v)),
                     _ => m.Value
                 };

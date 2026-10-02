@@ -15,6 +15,8 @@
   { "id": "centenarian", "tier": "rare", "name": "A hundred candles",
     "hint": "Blow them out in one breath. All of them.",
     "text": "A hundred years. A letter from someone important, and a cake nobody dares to light all at once." },
+  { "id": "dreamer", "tier": "common", "name": "A dream come true",
+    "text": "One thing, at the end, that made it all worth it. You got it." },
   { "id": "emigrant", "tier": "common", "name": "Two suitcases",
     "text": "Everything you owned, everything you knew, and a ticket that only went one way." },
 
@@ -36,6 +38,9 @@
   { "id": "golden_wedding", "tier": "rare", "name": "Fifty years",
     "hint": "Gold, after half a century.",
     "text": "Fifty years married. They still argue about how to load the dishwasher, and they still hold hands in the car." },
+  { "id": "inherited_dream", "tier": "rare", "name": "For both of us",
+    "hint": "Finish what someone else started.",
+    "text": "A parent's dream that never came true, and a child who made it come true anyway." },
   { "id": "full_circle", "tier": "rare", "name": "Full circle",
     "hint": "Someone left. Someone else went back.",
     "text": "An ancestor left this country with two suitcases. Generations later, someone came back to it." },

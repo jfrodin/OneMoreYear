@@ -19,6 +19,7 @@ public sealed class ContentDb
     public Dictionary<string, AilmentDef> Ailments { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<AchievementDef> Achievements { get; } = new();
+    public Dictionary<string, DreamDef> Dreams { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
     /// <summary>History and life's milestones (a first word, turning eighty): they come for sure, the year their conditions first hold.</summary>
     public List<EventDef> HistoryEvents { get; } = new();
@@ -102,6 +103,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("scenarios.json"))
                 {
                     db.Scenarios.AddRange(Deserialize<List<ScenarioDef>>(json));
+                }
+                else if (path.EndsWith("dreams.json"))
+                {
+                    foreach (var d in Deserialize<List<DreamDef>>(json)) db.Dreams[d.Id] = d;
                 }
                 else if (path.EndsWith("achievements.json"))
                 {
@@ -226,6 +231,14 @@ public sealed class ContentDb
                 }
                 if (c.Chance != null && c.Success == null) errors.Add($"Event {e.Id}: choice with chance has no success outcome");
             }
+        }
+        // Dreams: known goals, traits and occupations, and no dashes.
+        foreach (var d in Dreams.Values)
+        {
+            if (!Systems.DreamSystem.Goals.Contains(d.Goal)) errors.Add($"Dream {d.Id}: unknown goal {d.Goal}");
+            if (d.Goal == "job" && Occupation(d.Param) == null) errors.Add($"Dream {d.Id}: unknown occupation {d.Param}");
+            foreach (var t in d.Traits.Keys) if (!Traits.ContainsKey(t)) errors.Add($"Dream {d.Id}: unknown trait {t}");
+            if (new[] { d.Name, d.Text, d.Fulfilled, d.Failed }.Any(t => string.IsNullOrWhiteSpace(t) || t.Contains("–") || t.Contains("—"))) errors.Add($"Dream {d.Id}: missing text or a dash");
         }
         // Achievements: every text has a rule and every rule a text.
         var tiers = new[] { Systems.AchievementSystem.Common, Systems.AchievementSystem.Rare, Systems.AchievementSystem.Legendary, Systems.AchievementSystem.Secret };

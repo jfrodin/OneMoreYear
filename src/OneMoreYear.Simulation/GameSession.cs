@@ -181,6 +181,7 @@ public sealed class GameSession
 
         if (Player.IsAlive)
         {
+            DreamSystem.Update(ctx);
             EventSystem.GenerateRandomEvents(ctx);
             w.ActionPoints = ActionPointsFor(Player);
         }
@@ -254,6 +255,12 @@ public sealed class GameSession
         // Generated choices first (job offers), then the event's own.
         for (int i = 0; i < pending.Options.Count; i++)
         {
+            if (def.DynamicChoices == "dreams")
+            {
+                var (dreamName, dreamText) = DreamSystem.Describe(Ctx, pending.Options[i]);
+                choices.Add(new ChoiceView(i, dreamName, dreamText, null, true));
+                continue;
+            }
             if (def.DynamicChoices == "baby_names")
             {
                 choices.Add(new ChoiceView(i, pending.Options[i], i == 0 ? "The name you had in mind." : null, null, true));
@@ -472,6 +479,12 @@ public sealed class GameSession
                 _ => "None"
             },
             Partner = partnerText,
+            Dream = DreamSystem.Of(Ctx, p) is { } dream ? p.DreamState switch
+            {
+                DreamState.Fulfilled => $"Lived the dream: {dream.Name.ToLowerInvariant()}",
+                DreamState.Failed => $"A dream that never came true: {dream.Name.ToLowerInvariant()}",
+                _ => $"Dream: {dream.Name.ToLowerInvariant()}" + (p.DreamFromId is { } from ? $", for {World.Get(from).FirstName}" : ""),
+            } : null,
             Traits = p.Traits.Where(Content.Traits.ContainsKey)
                 .Select(t => (Content.Traits[t].Name, Content.Traits[t].Description, Content.Traits[t].Tone)).ToList(),
             Condition = !p.IsAlive ? null
@@ -885,6 +898,7 @@ public sealed class GameSession
         World.ActionsThisYear.Clear();
         World.ActionPoints = ActionPointsFor(p);
         SocialSystem.Update(Ctx);
+        DreamSystem.Offer(Ctx, p);
     }
 
     /// <summary>Ends the game when nobody is left to continue the family.</summary>

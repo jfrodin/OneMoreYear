@@ -207,6 +207,7 @@ public partial class GameScreen : Control
         _sidebar.AddChild(top);
 
         if (!string.IsNullOrEmpty(p.Partner)) _sidebar.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
+        if (p.Dream != null) _sidebar.AddChild(UiTheme.HandLabel(p.Dream, 21, UiTheme.Accent, wrap: true));
         if (p.Condition != null) _sidebar.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad, wrap: true));
 
         var traits = new HFlowContainer();
@@ -1030,6 +1031,7 @@ public partial class GameScreen : Control
         col.AddChild(Ui.Label(p.Alive ? $"{p.RoleLabel}  ·  Age {p.Age}" : $"{p.RoleLabel}  ·  {p.BirthYear}–{p.DeathYear}", 18, UiTheme.Accent));
         col.AddChild(Ui.Label(p.Occupation, 16, UiTheme.Muted, wrap: true));
         if (!string.IsNullOrEmpty(p.Partner)) col.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
+        if (p.Dream != null) col.AddChild(UiTheme.HandLabel(p.Dream, 21, UiTheme.Accent, wrap: true));
         col.AddChild(Ui.Label(p.AppearanceText, 15, UiTheme.Faint, wrap: true));
         if (p.Condition != null) col.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad));
         header.AddChild(col);

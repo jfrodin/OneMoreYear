@@ -583,3 +583,31 @@ public sealed class AchievementDef
     /// <summary>Shown once unlocked: in the game's voice, not "Achievement unlocked".</summary>
     public string Text { get; set; } = "";
 }
+
+/// <summary>
+/// A life dream (docs/endgame.md): something a played person wants from life. The goal kinds are
+/// code (DreamSystem); everything else is data.
+/// </summary>
+public sealed class DreamDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>"Become a doctor": shown as the choice and in the side panel.</summary>
+    public string Name { get; set; } = "";
+    /// <summary>One line on why this person wants it.</summary>
+    public string Text { get; set; } = "";
+    /// <summary>job, top_job, degree, children, grandchildren, married, home, big_home, wealth, emigrate, age, cottage, close_family, golden_wedding, never_divorced.</summary>
+    public string Goal { get; set; } = "";
+    public string? Param { get; set; }
+    public double Amount { get; set; }
+    /// <summary>How much more (or less) likely the dream is offered to people with these traits.</summary>
+    public Dictionary<string, double> Traits { get; set; } = new();
+    /// <summary>Offered only between these ages.</summary>
+    public int MinAge { get; set; } = 16;
+    public int MaxAge { get; set; } = 60;
+    /// <summary>Given up at this age if not fulfilled (null: it lasts a lifetime).</summary>
+    public int? Deadline { get; set; }
+    public int MinYear { get; set; } = 1900;
+    public List<string> Countries { get; set; } = new();
+    public string Fulfilled { get; set; } = "";
+    public string Failed { get; set; } = "";
+}

@@ -39,6 +39,7 @@ public static class AchievementSystem
         ["next_generation"] = ctx => ctx.World.PlayedIds.Count >= 2,
         ["centenarian"] = ctx => Played(ctx).Any(p => AgeReached(ctx, p) >= 100),
         ["emigrant"] = ctx => Played(ctx).Any(p => p.Memories.Any(m => m.Kind == "emigrated")),
+        ["dreamer"] = ctx => ctx.World.Feats.Contains("dream"),
 
         // Rare: they take intent, or luck.
         ["five_generations"] = ctx => LongestLivingLine(ctx) >= 5,
@@ -48,6 +49,7 @@ public static class AchievementSystem
         ["hundred_years"] = ctx => !ctx.World.GameOver && ctx.Year - ctx.World.StartYear >= 100,
         ["golden_wedding"] = ctx => Played(ctx).Any(p => p.IsAlive && p.PartnerStatus == PartnerStatus.Married && ctx.Year - p.PartnerSinceYear >= 50),
         ["full_circle"] = ctx => ctx.World.Feats.Contains("full_circle"),
+        ["inherited_dream"] = ctx => ctx.World.Feats.Contains("inherited_dream"),
 
         // Legendary: very hard, never impossible.
         ["ten_generations"] = ctx => GenerationsPlayed(ctx) >= 10,

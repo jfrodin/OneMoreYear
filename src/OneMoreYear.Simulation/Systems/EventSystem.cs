@@ -390,6 +390,8 @@ public static class EventSystem
                 HousingSystem.MoveTo(ctx, player, pending.Options[choiceIndex]);
                 texts.Add($"You pack everything and move to {HousingSystem.City(ctx, player).Name}.");
             }
+            else if (def.DynamicChoices == "dreams")
+                texts.Add(DreamSystem.Choose(ctx, player, pending.Options[choiceIndex]));
             else if (def.DynamicChoices == "baby_names" && ctx.World.TryGet(pending.Roles.GetValueOrDefault("target")) is { } baby)
             {
                 FamilySystem.Rename(ctx, baby, pending.Options[choiceIndex]);

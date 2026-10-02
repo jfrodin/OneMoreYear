@@ -1,0 +1,29 @@
+// Life dreams (content/dreams.json): the choice, and the moments one comes true or is lost.
+// Queued by DreamSystem. No dashes.
+[
+  {
+    "id": "choose_dream", "trigger": "situation", "dynamicChoices": "dreams",
+    "title": "What do you want?",
+    "text": "Lying awake one night, {name} thinks about what a life is for. Not every day of it. Just one thing, at the end, that would make it worth it.",
+    "choices": [
+      { "text": "No big dreams. Just live", "result": "Maybe that is the wisest dream of all. Time will tell." }
+    ]
+  },
+  {
+    "id": "dream_fulfilled", "trigger": "situation",
+    "title": "A dream come true",
+    "text": "{dream_fulfilled}",
+    "choices": [
+      { "text": "Remember this", "result": "Whatever happens now, this happened." }
+    ]
+  },
+  {
+    "id": "dream_failed", "trigger": "situation",
+    "title": "A dream let go",
+    "text": "{dream_failed}",
+    "choices": [
+      { "text": "Let it go", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You fold it up and put it away. Some dreams are only for a part of a life." },
+      { "text": "Hold on to it", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "It stays with you. Maybe one of your children will want it too." }
+    ]
+  }
+]

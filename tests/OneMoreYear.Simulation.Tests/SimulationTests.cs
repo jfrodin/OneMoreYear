@@ -922,6 +922,34 @@ public class CountryTests
     }
 
     [Fact]
+    public void Dreams_come_true_and_can_be_inherited()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 12, StartYear = 1960 });
+        var bot = new AutoPlayer(12, useActions: false);
+        for (int i = 0; i < 17 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        Assert.NotNull(p.DreamOffered);
+
+        DreamSystem.Choose(s.Ctx, p, "first_degree");
+        p.Education = EducationLevel.University;
+        DreamSystem.Update(s.Ctx);
+        Assert.Equal(DreamState.Fulfilled, p.DreamState);
+        Assert.Contains("dream", s.World.Feats);
+        Assert.StartsWith("Lived the dream", s.Describe(p.Id).Dream);
+
+        // A parent's lost dream is offered to the child.
+        var parent = Kinship.Parents(s.World, p).First();
+        parent.Dream = "teacher";
+        parent.DreamState = DreamState.Failed;
+        p.Dream = null;
+        p.DreamState = DreamState.None;
+        s.World.PendingEvents.Clear();
+        DreamSystem.Offer(s.Ctx, p);
+        var choice = s.World.PendingEvents.Single(e => e.EventId == DreamSystem.ChooseEvent);
+        Assert.Contains(choice.Options, o => o.StartsWith(DreamSystem.InheritPrefix + "teacher"));
+    }
+
+    [Fact]
     public void American_parents_pay_for_leave_and_daycare()
     {
         // Over a few lives, the player's ledger shows unpaid leave and daycare in the USA, never in Sweden.
