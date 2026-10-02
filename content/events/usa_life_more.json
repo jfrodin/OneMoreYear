@@ -1,0 +1,199 @@
+// More American everyday life. Only in the USA. No dashes.
+[
+  {
+    "id": "us2_drive_in", "countries": [ "usa" ], "title": "The drive in",
+    "text": "Friday night at the drive in movie theater. A double feature, a speaker hooked on the car window, and a back seat full of blankets.",
+    "conditions": { "minAge": 14, "maxAge": 30, "minYear": 1950, "maxYear": 1985 }, "cooldown": 4,
+    "choices": [
+      { "text": "Watch the movie", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "A monster from outer space, popcorn on the dashboard, and fog on the windshield by the second feature." },
+      { "text": "Do not watch the movie", "requires": { "hasPartner": true }, "effects": [ { "type": "happiness", "amount": 5 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 4, "mutual": true } ], "result": "You could not say what the movie was about. You remember the night for fifty years." }
+    ]
+  },
+  {
+    "id": "us2_friday_football", "countries": [ "usa" ], "title": "Friday night lights",
+    "text": "High school football under the lights. The whole town is in the bleachers, the band is playing, and it is the game against your oldest rival.",
+    "conditions": { "minAge": 13, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Cheer in the student section", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "Painted faces, a last second field goal, and a whole town hugging strangers in the parking lot." },
+      { "text": "Play in the marching band", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "creative", "chance": 0.03 } ], "result": "A uniform with a plume, cold fingers on a trumpet, and the halftime show you practised all summer. You did not miss a note. Almost." }
+    ]
+  },
+  {
+    "id": "us2_county_fair", "countries": [ "usa" ], "title": "The county fair",
+    "text": "The county fair is in town: rides, fried everything, livestock competitions and a pie contest your aunt has won six years running.",
+    "conditions": { "minAge": 5 }, "cooldown": 4,
+    "choices": [
+      { "text": "Ride the Ferris wheel", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "At the top it stops for a minute. The whole county spread out below you, lights coming on, and the smell of funnel cake." },
+      { "text": "Enter something in a competition", "chance": 0.3,
+        "success": { "text": "A blue ribbon. Your aunt congratulates you through her teeth.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "An honourable mention, which the judge says very kindly, which is worse.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "us2_black_friday", "countries": [ "usa" ], "title": "Black Friday",
+    "text": "Five in the morning, the day after Thanksgiving. The line outside the store goes round the parking lot, and the television you want is half price, for the first ten customers.",
+    "conditions": { "minAge": 18, "minYear": 1985 }, "cooldown": 6,
+    "choices": [
+      { "text": "Join the line", "chance": 0.4,
+        "success": { "text": "Customer number nine. You carry it to the car like a trophy, past a man who is crying.", "effects": [ { "type": "money", "amount": 2000 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "Number fourteen. You buy a blender you do not need, out of spite.", "effects": [ { "type": "money", "amount": -500 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Stay in bed with leftovers", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A turkey sandwich at ten in the morning, in your pajamas. This is what freedom feels like." }
+    ]
+  },
+  {
+    "id": "us2_hoa_letter", "countries": [ "usa" ], "title": "The association",
+    "text": "A letter from the homeowners' association: your grass is half an inch too long, and your mailbox is an unapproved shade of blue.",
+    "conditions": { "minAge": 25, "ownsHome": true, "minYear": 1970 }, "cooldown": 10,
+    "choices": [
+      { "text": "Mow and repaint", "effects": [ { "type": "money", "amount": -300 }, { "type": "happiness", "amount": -1 } ], "result": "Approved Shade Number Four. The neighbour who reported you waves. You wave back. You remember." },
+      { "text": "Run for the board", "chance": 0.5, "chanceTraits": { "ambitious": 0.15, "charming": 0.1 },
+        "success": { "text": "You win, and change the rules about mailboxes. Power, it turns out, is very small and very sweet.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "You lose to the neighbour who reported you. The mailbox is fined monthly.", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "us2_hunting", "countries": [ "usa" ], "title": "Opening day",
+    "text": "Opening day of deer season. Your uncle has an orange vest for you, a thermos of coffee, and a stand in the woods he has used for thirty years.",
+    "conditions": { "minAge": 12, "maxAge": 70 }, "cooldown": 8,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "Four hours of silence in the cold. You see two deer and do not fire. Your uncle says that is the best part, and you believe him." },
+      { "text": "Stay home", "effects": [], "result": "He brings you venison chili anyway. It is excellent." }
+    ]
+  },
+  {
+    "id": "us2_sat", "countries": [ "usa" ], "title": "The test",
+    "text": "A Saturday morning, a number two pencil, and four hours that will decide which colleges will look at you.",
+    "conditions": { "minAge": 16, "maxAge": 18, "activity": "school", "minYear": 1950 }, "cooldown": 0,
+    "choices": [
+      { "text": "Take a prep course", "effects": [ { "type": "money", "amount": -6000 }, { "type": "grades", "amount": 4 } ], "result": "Tricks, timings and a lot of vocabulary you will never use. Your score goes up. So does your opinion of the test, a little." },
+      { "text": "Just take it", "chance": 0.5, "chanceAttributes": { "smarts": 0.008 },
+        "success": { "text": "A good score, without the course. You never tell anyone how little you studied.", "effects": [ { "type": "grades", "amount": 3 } ] },
+        "failure": { "text": "Not your best. You take it again in the fall, and it is better.", "effects": [ { "type": "grades", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "us2_homecoming", "countries": [ "usa" ], "title": "Homecoming",
+    "text": "Homecoming week: a parade, a dance, and someone has nominated you for the court. Your name is on a poster in the cafeteria.",
+    "conditions": { "minAge": 15, "maxAge": 18, "activity": "school" }, "cooldown": 0, "weight": 0.5,
+    "choices": [
+      { "text": "Campaign", "chance": 0.35, "chanceTraits": { "charming": 0.2, "social": 0.15 }, "chanceAttributes": { "looks": 0.004 },
+        "success": { "text": "A crown, a sash, and a ride on the back of a convertible through the whole town. Your mother takes two hundred photos.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "homecoming", "text": "The homecoming court", "impact": 12 } ] },
+        "failure": { "text": "You come third. You dance anyway, and have more fun than the winner, who has to stand on a stage.", "effects": [ { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Take your name off", "effects": [ { "type": "trait_add", "trait": "introvert", "chance": 0.03 } ], "result": "You watch the parade from the curb with your friends, eating cotton candy. No regrets." }
+    ]
+  },
+  {
+    "id": "us2_youth_group", "countries": [ "usa" ], "title": "Youth group",
+    "text": "The church youth group goes on a summer trip to build houses in another state. Your parents think it would be good for you. Your friends are going.",
+    "conditions": { "minAge": 13, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "happiness", "amount": 5 } ], "result": "A week of hammers, sunburn, campfire songs and a first crush. You come home with a blister and a different idea of what a summer is for." },
+      { "text": "Stay home", "effects": [], "result": "A quiet week. The photos look fun. Next year, maybe." }
+    ]
+  },
+  {
+    "id": "us2_diner", "countries": [ "usa" ], "title": "The diner",
+    "text": "The same diner, the same booth, every Sunday morning for twenty years. The waitress starts pouring your coffee when she sees your car.",
+    "conditions": { "minAge": 40 }, "cooldown": 15,
+    "choices": [
+      { "text": "Order the usual", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Two eggs, hash browns and the sports page. Some things should never change." },
+      { "text": "Leave her a letter when she retires", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "Twenty years of coffee in one card. She pins it behind the counter. It is still there when the diner closes." }
+    ]
+  },
+  {
+    "id": "us2_snow_day", "countries": [ "usa" ], "title": "Snow day",
+    "text": "The radio is reading the school closings in alphabetical order. They are at the letters before yours. Everyone in the kitchen is holding their breath.",
+    "conditions": { "minAge": 6, "maxAge": 17, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Pray to the snow", "chance": 0.6,
+        "success": { "text": "Your school is called. You scream. Your mother groans. The whole day is sledding, hot chocolate and doing nothing at all.", "effects": [ { "type": "happiness", "amount": 7 } ] },
+        "failure": { "text": "Two hour delay. You go to school in snow pants and resentment.", "effects": [ { "type": "happiness", "amount": -1 } ] } }
+    ]
+  },
+  {
+    "id": "us2_401k", "countries": [ "usa" ], "title": "The match",
+    "text": "HR explains the retirement plan: the company will match what you put in, up to six percent. Free money, they say. It does not feel like free money when your paycheck shrinks.",
+    "conditions": { "minAge": 22, "maxAge": 50, "activity": "working", "minYear": 1981 }, "cooldown": 20,
+    "choices": [
+      { "text": "Put in the full six percent", "effects": [ { "type": "money", "amount": 25000 }, { "type": "happiness", "amount": -1 } ], "result": "You will not notice it in a year. At sixty five, you will notice it very much." },
+      { "text": "Maybe next year", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Next year becomes ten years. A man on the radio explains compound interest. You turn it off." }
+    ]
+  },
+  {
+    "id": "us2_bbq_contest", "countries": [ "usa" ], "title": "The cook off",
+    "text": "The town barbecue cook off. Your uncle has entered his brisket every year for a decade and never placed. This year he wants your help.",
+    "conditions": { "minAge": 16 }, "cooldown": 8,
+    "choices": [
+      { "text": "Stay up all night with the smoker", "chance": 0.3,
+        "success": { "text": "Third place. Your uncle cries. He has the ribbon framed in his kitchen and tells everyone it was a family effort.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Not placed, again. But the brisket at four in the morning, eaten with your fingers next to the smoker, is the best thing you have ever tasted.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Come for the eating", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": -1 } ], "result": "Fourteen kinds of barbecue and a judge's wife who slips you seconds. Glorious." }
+    ]
+  },
+  {
+    "id": "us2_christmas_lights", "countries": [ "usa" ], "title": "The lights",
+    "text": "The family across the street has put up forty thousand Christmas lights, a singing reindeer and a sleigh on the roof. Your one string of bulbs looks sad.",
+    "conditions": { "minAge": 25, "ownsHome": true }, "cooldown": 6,
+    "choices": [
+      { "text": "Go big", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 4 } ], "result": "Two weekends on a ladder and an electricity bill that makes you sit down. Cars slow down to look. Worth it." },
+      { "text": "Admire theirs", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You sit on your porch with hot cider and enjoy the show for free. The best seat in the neighbourhood." }
+    ]
+  },
+  {
+    "id": "us2_bake_sale", "countries": [ "usa" ], "title": "The bake sale",
+    "text": "The school bake sale. You signed up to bring three dozen cupcakes, and it is ten at night, and you have no eggs.",
+    "conditions": { "minAge": 25, "minChildren": 1 }, "cooldown": 6,
+    "target": { "role": "child", "conditions": { "minAge": 5, "maxAge": 12 } },
+    "choices": [
+      { "text": "Drive to the 24 hour store", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "health", "amount": -1 } ], "result": "Cupcakes at one in the morning, frosted by hand. {T.name} sells all of them by ten and tells everyone you made them. You did." },
+      { "text": "Buy cookies and put them on a plate", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Another parent recognises the brand. You hold eye contact. Neither of you says anything. A silent bond is formed." }
+    ]
+  },
+  {
+    "id": "us2_4h_calf", "countries": [ "usa" ], "title": "The calf",
+    "text": "A calf to raise for the 4-H show: feed it, wash it, walk it, every day for a year. At the end, it will be sold at auction.",
+    "conditions": { "minAge": 9, "maxAge": 15 }, "cooldown": 0, "weight": 0.4,
+    "choices": [
+      { "text": "Raise it", "effects": [ { "type": "trait_add", "trait": "devoted_parent", "chance": 0.03 }, { "type": "happiness", "amount": 3 }, { "type": "money", "amount": 2000 }, { "type": "memory", "kind": "calf", "text": "Raising the calf for the fair", "impact": 10 } ], "result": "A year of early mornings and a calf that follows you like a dog. At the auction you cry, and use the money for college, the way it is meant to work." },
+      { "text": "Say it is too sad", "effects": [], "result": "You help your friend with theirs instead. You cry at the auction anyway." }
+    ]
+  },
+  {
+    "id": "us2_pickup", "countries": [ "usa" ], "title": "The truck",
+    "text": "A pickup truck. Your father has had the same model for thirty years and says a family without a truck is helpless in an emergency.",
+    "conditions": { "minAge": 22, "minMoney": 30000 }, "cooldown": 20,
+    "choices": [
+      { "text": "Buy one", "effects": [ { "type": "money", "amount": -35000 }, { "type": "happiness", "amount": 4 } ], "result": "Within a month everyone you know has asked you to help them move. Your father was right about emergencies." },
+      { "text": "Borrow his when you need it", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "He lends it every time, with a lecture about the clutch. You would not have it any other way." }
+    ]
+  },
+  {
+    "id": "us2_town_hall", "countries": [ "usa" ], "title": "The town meeting",
+    "text": "The town council is voting on a new shopping center where the old woods are. The meeting is tonight, and anyone can speak for three minutes.",
+    "conditions": { "minAge": 25 }, "cooldown": 15,
+    "choices": [
+      { "text": "Speak", "chance": 0.4, "chanceTraits": { "charming": 0.15, "brave": 0.1 },
+        "success": { "text": "Your three minutes about the woods where you played as a child get a round of applause. The vote is delayed a year. Then two.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Your voice shakes, the clock runs out, and the vote passes five to two. But the old men in the back row shake your hand.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Watch on local TV", "effects": [], "result": "Three hours of procedure, then a vote. The shopping center is built. You shop there, eventually. Everybody does." }
+    ]
+  },
+  {
+    "id": "us2_road_side_stand", "countries": [ "usa" ], "title": "Sweet corn",
+    "text": "A hand painted sign by the highway: SWEET CORN, honor system, a coffee can for the money. Nobody is watching.",
+    "conditions": { "minAge": 16 }, "cooldown": 6,
+    "choices": [
+      { "text": "Pay, and a little extra", "effects": [ { "type": "money", "amount": -50 }, { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "kind", "chance": 0.02 } ], "result": "The best corn of the summer, boiled ten minutes later with butter and salt. The farmer would have liked you." },
+      { "text": "Take an ear and drive off", "requires": { "traitsAny": [ "dishonest", "greedy" ] }, "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.03 } ], "result": "It tastes exactly the same. That is the strange part. You do not stop there again." }
+    ]
+  },
+  {
+    "id": "us2_moving_west", "countries": [ "usa" ], "title": "California",
+    "text": "A cousin out west says there are jobs, sunshine and room for everybody. You have never seen the Pacific.",
+    "conditions": { "minAge": 20, "maxAge": 40, "maxYear": 1990 }, "cooldown": 30, "weight": 0.5,
+    "choices": [
+      { "text": "Load up the car", "effects": [ { "type": "move_city", "kind": "los_angeles" }, { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "go_west", "text": "Driving west", "impact": 15 } ], "result": "Five days across the country, a motel every night, and then the ocean, bigger than anything. You stand in it with your shoes on." },
+      { "text": "Stay where your people are", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Your cousin sends photos of palm trees every Christmas. You send photos of snow. Both of you are a little jealous." }
+    ]
+  }
+]

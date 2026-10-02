@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.46.0 – 2026-10-02 · Friends, money, health, more America
+
+825 events now.
+
+- **19 about friends**: forgotten birthdays, moving day, a secret told in confidence, drifting apart,
+  your ex at a friend's wedding, new neighbours, a late phone call, a book club, a godchild, a friend
+  on the other side politically, a new friend at sixty, a friend who dies young (its own situation
+  now), a childhood friend found again.
+- **19 about money and home**: a burst pipe, four lottery numbers, a car salesman, the kitchen, the
+  neighbour's tree, a pyramid scheme, the garage, an insurance claim, the noisy flat upstairs, the
+  debt collector, the trip of a lifetime, a painting in the attic.
+- **19 about health and the body**: the flu, the dentist, blood pressure, the ski slope, the last
+  cigarette, sleepless nights, reading glasses, a mole, a new knee, the check up at fifty, the first
+  run, a warning sign of burnout, the menopause, a pain in the chest.
+- **20 more for the USA**: the drive in, Friday night football, the county fair, Black Friday, the
+  homeowners' association, opening day of deer season, the SAT, homecoming, the diner, a snow day, the
+  401(k) match, the barbecue cook off, Christmas lights, a 4-H calf, driving west to California.
+- The content check also catches era text inside curly brackets.
+
 ## 0.45.0 – 2026-10-02 · Work, couples and Sweden
 
 749 events now.
