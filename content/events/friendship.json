@@ -20,7 +20,7 @@
     "choices": [
       { "text": "Help all day", "effects": [ { "type": "health", "amount": -1 }, { "type": "attribute", "kind": "fitness", "amount": 1 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 },
           { "type": "memory", "who": "target", "to": "player", "kind": "helped_move", "text": "{name} carried my piano up four flights", "impact": 12 } ],
-        "result": "The piano gets stuck on the second floor for forty minutes. Afterwards, pizza on the floor among the boxes. Your back hurts for a week and it was a good day." },
+        "result": "The piano gets stuck on the second floor for forty minutes. Afterwards, [[1972: sandwiches || pizza]] on the floor among the boxes. Your back hurts for a week and it was a good day." },
       { "text": "Suddenly have other plans", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ], "result": "{t.He} hires students. You see the photos afterwards. It looked fun." }
     ]
   },

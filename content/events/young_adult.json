@@ -2,7 +2,7 @@
 // you are without anyone watching. No dashes.
 [
   {
-    "id": "young_first_flat", "title": "Your own key",
+    "id": "young_first_flat", "trigger": "milestone", "title": "Your own key",
     "text": "A one-room flat on the fourth floor without a lift. The kitchen is a cupboard with a hotplate. It is yours.",
     "conditions": { "minAge": 18, "maxAge": 26, "livesWithParents": false, "notFlags": [ "first_flat" ] }, "cooldown": 50, "weight": 2,
     "choices": [
@@ -61,7 +61,7 @@
     ]
   },
   {
-    "id": "young_military_service", "title": "The letter from the army",
+    "id": "young_military_service", "trigger": "milestone", "title": "The letter from the army",
     "text": "A brown envelope: you are called for military service. Eleven months, starting in January.",
     "conditions": { "minAge": 18, "maxAge": 20, "sex": "male", "maxYear": 2009, "notFlags": [ "military_service" ] }, "cooldown": 50, "weight": 3,
     "choices": [
@@ -111,7 +111,7 @@
     ]
   },
   {
-    "id": "young_first_salary", "title": "Payday",
+    "id": "young_first_salary", "trigger": "milestone", "title": "Payday",
     "text": "Your first real salary has arrived. More money than you have ever had at once.",
     "conditions": { "minAge": 18, "maxAge": 28, "hasJob": true, "notFlags": [ "first_salary" ] }, "cooldown": 50, "weight": 2,
     "choices": [

@@ -9,8 +9,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
    an affair) read oddly, and the order is unclear. Options: one story per person, told in order;
    a front page with one headline and a few short items; or something else than a newspaper
    (a Christmas letter, a page in the album). The producer has not decided yet – wait for them.
-2. [ ] Keep checking texts for anachronisms (use `[[year: before || after]]`). Also programme
-   names, like "Computer science" before the 1970s.
+2. [ ] Keep an eye on anachronisms in new text (use `[[year: before || after]]`). Run `SimRunner --coverage` after adding events.
 
 ## Closed test build (planned, not yet)
 

@@ -35,7 +35,7 @@
     ]
   },
   {
-    "id": "trad_first_day_school", "title": "The first day",
+    "id": "trad_first_day_school", "trigger": "milestone", "title": "The first day",
     "text": "Your first day at school. A new rucksack, shoes that pinch, and a teacher who knows your name already.",
     "conditions": { "minAge": 7, "maxAge": 7 }, "weight": 6, "cooldown": 0,
     "choices": [
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "id": "trad_graduation", "title": "The white cap",
+    "id": "trad_graduation", "trigger": "milestone", "title": "The white cap",
     "text": "Graduation day. You run out of the school building in a white cap while your family hold up a sign with your baby photo on it.",
     "conditions": { "minAge": 18, "maxAge": 20, "minEducation": "secondary", "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
     "choices": [

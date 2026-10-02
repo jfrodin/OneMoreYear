@@ -244,6 +244,7 @@ public static class CareerSystem
     {
         var options = ctx.Content.Occupations
             .Where(o => occupationId == null || o.Id == occupationId)
+            .Where(o => o.MinYear <= ctx.Year || occupationId != null)
             .Where(o => EntryLevel(p, o) >= 0 || level != null)
             .ToList();
         if (options.Count == 0) return false;
@@ -275,7 +276,7 @@ public static class CareerSystem
         for (int i = 0; i < max; i++) if (rng.Chance(quality)) count++;
         if (count == 0 && rng.Chance(0.5)) count = 1; // something simple usually turns up
 
-        var pool = ctx.Content.Occupations.Where(o => EntryLevel(p, o) >= 0 && o.Id != p.OccupationId).ToList();
+        var pool = ctx.Content.Occupations.Where(o => EntryLevel(p, o) >= 0 && o.Id != p.OccupationId && o.MinYear <= ctx.Year).ToList();
         var offers = new List<string>();
         for (int i = 0; i < count && pool.Count > 0; i++)
         {

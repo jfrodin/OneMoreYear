@@ -1,7 +1,7 @@
 // The later years: retirement, grandchildren, health, loss, love again, looking back. Ages 60+.
 [
   {
-    "id": "old_last_day_at_work", "title": "The last day",
+    "id": "old_last_day_at_work", "trigger": "milestone", "title": "The last day",
     "text": "Cake in the staff room, a speech that's a little too long, a card signed by people you've never met. After all these years, it's over.",
     "conditions": { "minAge": 60, "maxAge": 68, "activity": "retired" }, "cooldown": 0, "weight": 6,
     "choices": [
@@ -142,7 +142,7 @@
     ]
   },
   {
-    "id": "old_golden_wedding", "title": "Fifty years",
+    "id": "old_golden_wedding", "trigger": "milestone", "title": "Fifty years",
     "text": "Fifty years married to {p.name}. The children are planning a party and pretending you don't know.",
     "conditions": { "minAge": 65, "married": true, "minPartnerYears": 50 }, "cooldown": 0,
     "choices": [

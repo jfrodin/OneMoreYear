@@ -50,8 +50,8 @@
     "text": "You've invited six people to dinner. The recipe said forty minutes. It has been two hours.",
     "conditions": { "minAge": 22, "livesWithParents": false }, "cooldown": 5,
     "choices": [
-      { "text": "Order pizza and laugh about it", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ],
-        "result": "It becomes the dinner everyone remembers. \"The one with the pizza.\"" },
+      { "text": "[[1972: Make sandwiches and laugh about it || Order pizza and laugh about it]]", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ],
+        "result": "It becomes the dinner everyone remembers. \"The one with the [[1972: sandwiches || pizza]].\"" },
       { "text": "Keep cooking", "chance": 0.5, "success": { "text": "At ten o'clock, a triumph. Everyone is starving and it's the best thing they've ever eaten.", "effects": [ { "type": "happiness", "amount": 6 } ] },
         "failure": { "text": "Charred on the outside, raw in the middle. People are very polite.", "effects": [ { "type": "happiness", "amount": -3 } ] } }
     ]
@@ -94,11 +94,11 @@
   },
   {
     "id": "life_burglary", "title": "The window",
-    "text": "You come home to a broken window. The TV is gone, the drawers are on the floor, and your grandmother's ring is missing.",
+    "text": "You come home to a broken window. [[1960: The radio || The TV]] is gone, the drawers are on the floor, and your grandmother's ring is missing.",
     "conditions": { "minAge": 20, "livesWithParents": false }, "cooldown": 15, "weight": 0.6,
     "choices": [
       { "text": "Call the insurance company", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": -5 } ],
-        "result": "They pay for the TV. Nobody can pay for the ring." },
+        "result": "They pay for the [[1960: radio || TV]]. Nobody can pay for the ring." },
       { "text": "Install every lock there is", "effects": [ { "type": "money", "amount": -6000 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.15 } ],
         "result": "Three locks, an alarm, a sticker about the alarm. You still check the door twice at night." }
     ]
@@ -173,7 +173,7 @@
     ]
   },
   {
-    "id": "life_moon_landing", "title": "One small step",
+    "id": "life_moon_landing", "trigger": "history", "title": "One small step",
     "text": "It's the middle of the night and everyone you know is up, gathered around a flickering television. A man is about to walk on the moon.",
     "conditions": { "minAge": 5, "minYear": 1969, "maxYear": 1969 }, "weight": 20, "cooldown": 0,
     "choices": [
@@ -182,7 +182,7 @@
     ]
   },
   {
-    "id": "life_waterloo", "title": "Waterloo",
+    "id": "life_waterloo", "trigger": "history", "title": "Waterloo",
     "text": "Four Swedes in platform boots and glitter have just won the Eurovision Song Contest. The whole country is singing.",
     "conditions": { "minAge": 6, "minYear": 1974, "maxYear": 1974 }, "weight": 20, "cooldown": 0,
     "choices": [
@@ -193,7 +193,7 @@
     ]
   },
   {
-    "id": "life_palme", "title": "The morning after",
+    "id": "life_palme", "trigger": "history", "title": "The morning after",
     "text": "The radio says the prime minister was shot dead on a Stockholm street last night, walking home from the cinema.",
     "conditions": { "minAge": 8, "minYear": 1986, "maxYear": 1986 }, "weight": 20, "cooldown": 0,
     "choices": [
@@ -223,7 +223,7 @@
     ]
   },
   {
-    "id": "life_storm", "title": "The storm",
+    "id": "life_storm", "trigger": "history", "title": "The storm",
     "text": "A storm tore through the forests last night. Millions of trees down, and the power is out, maybe for weeks.",
     "conditions": { "minAge": 18, "minYear": 2005, "maxYear": 2005 }, "weight": 15, "cooldown": 0,
     "choices": [

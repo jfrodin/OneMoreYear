@@ -41,7 +41,7 @@
     ]
   },
   {
-    "id": "it", "name": "IT", "tags": [ "office" ], "weight": 0.8,
+    "id": "it", "name": "IT", "tags": [ "office" ], "weight": 0.8, "minYear": 1965,
     "traitAffinity": { "introvert": 1.5 },
     "levels": [
       { "title": "Support Technician", "salary": 330000, "minEducation": "secondary", "entry": true, "promotionChance": 0.15 },

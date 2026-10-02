@@ -7,7 +7,7 @@
     "conditions": { "minAge": 18, "hasPartner": true, "livesWithParents": false }, "cooldown": 6,
     "choices": [
       { "text": "Do them, loudly", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 3 } ],
-        "result": "Every plate goes into the rack with a clatter. {p.name} turns up the television." },
+        "result": "Every plate goes into the rack with a clatter. {p.name} turns up the [[1960: radio || television]]." },
       { "text": "Suggest a rota", "chance": 0.6, "chanceTraits": { "charming": 0.1, "hot_tempered": -0.2 },
         "success": { "text": "A rota on the fridge, with magnets. It lasts. It actually lasts.", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 3, "mutual": true } ] },
         "failure": { "text": "The rota becomes a weapon. Who did Tuesday becomes a question you argue about for years.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 4 } ] } },
@@ -56,7 +56,7 @@
   },
   {
     "id": "couple_money_secret", "title": "The statement",
-    "text": "You open a bank statement by mistake. {p.name} has a credit card you did not know about, and a debt on it you did not know about.",
+    "text": "You open a bank statement by mistake. {p.name} has [[1975: a loan from a finance company || a credit card]] you did not know about, and a debt on it you did not know about.",
     "conditions": { "minAge": 22, "hasPartner": true, "minPartnerYears": 2 }, "cooldown": 20, "weight": 0.5,
     "choices": [
       { "text": "Ask {p.him} calmly", "chance": 0.6, "chanceTraits": { "kind": 0.1, "hot_tempered": -0.25 },
@@ -143,7 +143,7 @@
         "result": "{p.He} sighs, and then laughs. You make it up with dinner. You put a reminder in [[2000: the calendar || your phone]] for every year after." },
       { "text": "Pretend you have a surprise planned", "chance": 0.5, "chanceTraits": { "dishonest": 0.15, "creative": 0.15 },
         "success": { "text": "You improvise a picnic by the water with everything you can grab from the kitchen. {p.He} never finds out.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 6 } ] },
-        "failure": { "text": "The surprise is a pizza. {p.He} knows. {p.He} always knows.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 5 } ] } }
+        "failure": { "text": "The surprise is [[1972: a tin of meatballs || a pizza]]. {p.He} knows. {p.He} always knows.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "bitterness", "amount": 5 } ] } }
     ]
   }
 ]

@@ -63,8 +63,8 @@
     "leadsTo": [ "law" ], "traitAffinity": { "ambitious": 1.6, "manipulative": 1.5 }
   },
   {
-    "id": "uni_engineering", "name": "Computer science and engineering", "level": "university", "years": 5, "minGrades": 65,
-    "description": "Software, engineering and technology.",
+    "id": "uni_engineering", "name": "Engineering", "level": "university", "years": 5, "minGrades": 65,
+    "description": "Machines, electronics and, more and more, computers.",
     "leadsTo": [ "it", "industry" ], "traitAffinity": { "introvert": 1.5 }
   },
   {

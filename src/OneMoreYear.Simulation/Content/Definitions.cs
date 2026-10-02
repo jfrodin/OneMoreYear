@@ -222,6 +222,8 @@ public sealed class OccupationDef
     public List<OccupationLevelDef> Levels { get; set; } = new();
     /// <summary>Kind of workplace, used by events: "office", "manual", "care", "school" ...</summary>
     public List<string> Tags { get; set; } = new();
+    /// <summary>The first year anyone does this job (IT work did not exist in 1950).</summary>
+    public int MinYear { get; set; } = 1900;
 }
 
 /// <summary>

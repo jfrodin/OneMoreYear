@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "old_birthday_80", "title": "Eighty",
+    "id": "old_birthday_80", "trigger": "milestone", "title": "Eighty",
     "text": "The family wants to throw a big party for your eightieth. You would honestly prefer a quiet coffee.",
     "conditions": { "minAge": 80, "maxAge": 80 }, "weight": 5, "cooldown": 0,
     "choices": [
@@ -56,13 +56,13 @@
   },
   {
     "id": "old_childhood_home", "title": "The old house",
-    "text": "You drive past the house you grew up in. Somebody has painted it yellow. There is a trampoline where the apple tree was.",
-    "conditions": { "minAge": 65, "flags": [ "driving_licence" ] }, "cooldown": 30,
+    "text": "[[1960: You walk past || You drive past]] the house you grew up in. Somebody has painted it yellow. There is a trampoline where the apple tree was.",
+    "conditions": { "minAge": 65 }, "cooldown": 30,
     "choices": [
       { "text": "Knock on the door", "chance": 0.5, "chanceTraits": { "charming": 0.15, "social": 0.1 },
         "success": { "text": "A young family lets you in. Your room is a nursery now. The crack in the window frame is still there, the one you made with a hockey stick when you were nine.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "childhood_home", "text": "Standing in my old room again", "impact": 15 } ] },
         "failure": { "text": "Nobody is home. You stand at the gate a bit too long and a neighbour comes out to ask if you are lost.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
-      { "text": "Keep driving", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Better to keep it the way it was." }
+      { "text": "Keep going", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Better to keep it the way it was." }
     ]
   },
   {

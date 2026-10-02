@@ -62,7 +62,7 @@
     "choices": [
       { "text": "Medicine", "effects": [ { "type": "study", "level": "university", "programme": "uni_medicine" } ], "result": "You're in! Five years until you're a doctor." },
       { "text": "Law", "effects": [ { "type": "study", "level": "university", "programme": "uni_law" } ], "result": "You're in. Law school starts in the autumn." },
-      { "text": "Computer science and engineering", "effects": [ { "type": "study", "level": "university", "programme": "uni_engineering" } ], "result": "You're in. Time to learn to code." },
+      { "text": "Engineering", "effects": [ { "type": "study", "level": "university", "programme": "uni_engineering" } ], "result": "You're in. [[1975: Slide rules and drawing boards. || Time to learn to code.]]" },
       { "text": "Natural sciences", "effects": [ { "type": "study", "level": "university", "programme": "uni_science" } ], "result": "You're in. Labs, formulas and late nights." },
       { "text": "Media and journalism", "effects": [ { "type": "study", "level": "university", "programme": "uni_journalism" } ], "result": "You're in. Your first byline is waiting." },
       { "text": "Business and economics", "effects": [ { "type": "study", "level": "university", "programme": "uni_economics" } ], "result": "You're in. Spreadsheets await." },
@@ -106,7 +106,7 @@
         "text": "Rent a flat of your own",
         "hint": "Freedom, and every bill is yours.",
         "effects": [ { "type": "move_out", "kind": "rent" }, { "type": "happiness", "amount": 8 } ],
-        "result": "The first night in your own flat you eat pizza on the floor. It's perfect."
+        "result": "The first night in your own flat you eat [[1972: sandwiches || pizza]] on the floor. It's perfect."
       },
       {
         "text": "Share a flat with friends",

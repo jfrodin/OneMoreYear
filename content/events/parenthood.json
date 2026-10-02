@@ -1,7 +1,7 @@
 // Being a parent, from the sleepless first year to the child who moves back home at thirty.
 [
   {
-    "id": "parent_sleepless", "title": "Three in the morning",
+    "id": "parent_sleepless", "trigger": "milestone", "title": "Three in the morning",
     "text": "{t.name} has been screaming since midnight. You've tried everything. It's three in the morning and you haven't slept properly in four months.",
     "conditions": { "minAge": 16 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "maxAge": 1 } },
@@ -14,7 +14,7 @@
     ]
   },
   {
-    "id": "parent_first_word", "title": "The first word",
+    "id": "parent_first_word", "trigger": "milestone", "title": "The first word",
     "text": "{t.name} points at you and says something that is very nearly a word.",
     "conditions": { "minAge": 16 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 1, "maxAge": 1 } },
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "id": "parent_preschool", "title": "The first morning",
+    "id": "parent_preschool", "trigger": "milestone", "title": "The first morning",
     "text": "The first morning at preschool. {t.name} holds on to your leg and screams as if you're leaving forever.",
     "conditions": { "minAge": 16 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 1, "maxAge": 3 } },
@@ -142,7 +142,7 @@
     ]
   },
   {
-    "id": "parent_graduation", "title": "Graduation",
+    "id": "parent_graduation", "trigger": "milestone", "title": "Graduation",
     "text": "{t.name} runs out of the school in a white cap while you hold up a sign with an embarrassing baby photo on it.",
     "conditions": { "minAge": 35 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 18, "maxAge": 19 } },
@@ -233,7 +233,7 @@
     ]
   },
   {
-    "id": "parent_school_choice", "title": "Which school?",
+    "id": "parent_school_choice", "trigger": "milestone", "title": "Which school?",
     "text": "{t.name} is choosing what to study at upper secondary school. {t.He} wants to do music. You were thinking of something more... sensible.",
     "conditions": { "minAge": 30 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 15, "maxAge": 15 } },

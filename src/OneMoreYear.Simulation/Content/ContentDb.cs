@@ -19,6 +19,8 @@ public sealed class ContentDb
     public Dictionary<string, AilmentDef> Ailments { get; } = new();
     public Dictionary<string, EventDef> Events { get; } = new();
     public List<EventDef> RandomEvents { get; } = new();
+    /// <summary>History and life's milestones (a first word, turning eighty): they come for sure, the year their conditions first hold.</summary>
+    public List<EventDef> HistoryEvents { get; } = new();
 
     public static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -118,6 +120,7 @@ public sealed class ContentDb
             target.Choices.AddRange(patch.Choices);
         }
         db.RandomEvents.AddRange(db.Events.Values.Where(e => e.Trigger == "random").OrderBy(e => e.Id, StringComparer.Ordinal));
+        db.HistoryEvents.AddRange(db.Events.Values.Where(e => e.Trigger is "history" or "milestone").OrderBy(e => e.Id, StringComparer.Ordinal));
         return db;
     }
 

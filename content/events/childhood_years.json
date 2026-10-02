@@ -58,7 +58,7 @@
     ]
   },
   {
-    "id": "child_pocket_money", "title": "Pocket money",
+    "id": "child_pocket_money", "trigger": "milestone", "title": "Pocket money",
     "text": "You get pocket money for the first time. Every Saturday, a few coins of your own.",
     "conditions": { "minAge": 6, "maxAge": 9, "notFlags": [ "pocket_money" ] }, "cooldown": 50, "weight": 2,
     "choices": [
@@ -149,7 +149,7 @@
   },
   {
     "id": "child_sleepover", "title": "Sleepover",
-    "text": "Your first sleepover at a friend's house. Their family eats dinner in front of the television, which is incredible.",
+    "text": "Your first sleepover at a friend's house. Their family eats dinner [[1960: listening to the radio || in front of the television]], which is incredible.",
     "conditions": { "minAge": 6, "maxAge": 11 }, "cooldown": 4,
     "choices": [
       { "text": "Stay up all night", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -1 } ],

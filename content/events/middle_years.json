@@ -195,7 +195,7 @@
   },
   {
     "id": "mid_hearing", "title": "Pardon?",
-    "text": "Your family say you have the television too loud. You say they mumble. At dinner you nod at things you did not hear.",
+    "text": "Your family say you have the [[1960: radio || television]] too loud. You say they mumble. At dinner you nod at things you did not hear.",
     "conditions": { "minAge": 55 }, "cooldown": 25,
     "choices": [
       { "text": "Get a hearing aid", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 4 } ],
@@ -241,7 +241,7 @@
   {
     "id": "mid_long_marriage", "title": "Silver",
     "text": "Twenty-five years married. {p.name} has booked a table at the restaurant where you had your first proper dinner. It is a pizzeria now.",
-    "conditions": { "married": true, "minPartnerYears": 25 }, "cooldown": 50,
+    "conditions": { "married": true, "minPartnerYears": 25, "minYear": 1975 }, "cooldown": 50,
     "choices": [
       { "text": "Order pizza and tell old stories", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 8, "mutual": true },
           { "type": "memory", "kind": "silver_wedding", "to": "partner", "text": "Our silver wedding, at the pizzeria", "impact": 20 } ],
@@ -254,7 +254,7 @@
   {
     "id": "mid_retirement_party", "title": "Cake in the staff room",
     "text": "The last day. A cake, a card everyone has signed, and a speech by a manager who started three years ago.",
-    "conditions": { "minAge": 60, "hasJob": true }, "cooldown": 50, "weight": 0.5,
+    "conditions": { "minAge": 64, "maxAge": 64, "hasJob": true }, "cooldown": 50, "trigger": "milestone",
     "choices": [
       { "text": "Give a speech of your own", "effects": [ { "type": "happiness", "amount": 5 } ],
         "result": "You thank the cleaner by name. She is the only one who cries." },

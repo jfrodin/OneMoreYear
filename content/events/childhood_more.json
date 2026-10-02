@@ -164,7 +164,7 @@
       { "text": "Let {t.name} look after you", "effects": [
           { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10, "mutual": true },
           { "type": "memory", "kind": "sick_with_grandparent", "to": "target", "text": "{t.name} looked after me when I had chickenpox", "impact": 12 } ],
-        "result": "Card games, soup and far too much television. It is almost worth the itching." },
+        "result": "Card games, soup and far too [[1958: many comics || much television]]. It is almost worth the itching." },
       { "text": "Scratch", "effects": [ { "type": "attribute", "kind": "looks", "amount": -1 } ],
         "result": "You get a small scar above your eyebrow. You'll have it forever." }
     ]

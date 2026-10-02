@@ -45,11 +45,22 @@ public static class EventSystem
         {
             var candidates = ctx.Content.RandomEvents.Where(e => IsEligible(ctx, e, player, distances)).ToList();
             var def = ctx.Rng.PickWeighted(candidates, e => e.Weight);
-            if (def == null) return;
+            if (def == null) break;
             var pending = CreatePending(ctx, def, player, distances);
             if (pending == null) continue;
             w.PendingEvents.Add(pending);
             w.EventHistory[def.Id] = w.Year;
+        }
+
+        // History and milestones do not compete with everyday life: Dagen H comes in 1967, a first word at one.
+        int history = 0;
+        foreach (var def in ctx.Content.HistoryEvents)
+        {
+            if (history >= 3 || !IsEligible(ctx, def, player, distances)) continue;
+            if (CreatePending(ctx, def, player, distances) is not { } pending) continue;
+            w.PendingEvents.Add(pending);
+            w.EventHistory[def.Id] = w.Year;
+            history++;
         }
     }
 

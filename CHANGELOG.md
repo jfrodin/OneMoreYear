@@ -2,6 +2,24 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.32.0 – 2026-10-02 · Every moment gets its turn
+
+A quality pass over all ~470 events, measured with a new tool (`SimRunner --coverage=N` plays N
+games from every decade and counts what reaches the player).
+
+- **History comes for sure.** Dagen H, the 1958 World Cup final, the EU vote, the millennium and the
+  other moments of history used to compete with 400 everyday events and almost never appeared. Now
+  they come in their year, whenever you are old enough.
+- **Life's milestones come for sure too**: a baby's first word and the sleepless nights, preschool,
+  your first day at school, the white cap, your own key, your first salary, military service, a
+  child's graduation, turning eighty, the golden wedding, the last day at work.
+- **No event dominates**: the most common ones appear in under a third of all lives.
+- **Fixes**: the old childhood home no longer needs a driving licence from the new driving test; a
+  teenager can buy the moped with the parents' help; the retirement party comes at 64, not 60.
+- **Things in their time**: no pizza before the 1970s, no television before 1956, a loan from a
+  finance company before credit cards. IT jobs exist from 1965, and "Computer science" is now
+  "Engineering" (slide rules before 1975, code after).
+
 ## 0.31.0 – 2026-10-02 · Chapters
 
 - **A new decade, a new chapter.** When a decade begins, a full page opens the chapter: "The 1990s",

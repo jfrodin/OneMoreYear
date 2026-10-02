@@ -128,10 +128,13 @@
   {
     "id": "teen_moped", "title": "Two wheels",
     "text": "A boy down the road is selling his moped. It is loud, it smells of petrol, and it means freedom.",
-    "conditions": { "minAge": 15, "maxAge": 17, "minMoney": 3000 }, "cooldown": 20,
+    "conditions": { "minAge": 15, "maxAge": 17 }, "cooldown": 20,
     "choices": [
-      { "text": "Buy it", "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 8 }, { "type": "flag", "flag": "had_moped" } ],
+      { "text": "Buy it with your savings", "requires": { "minMoney": 3000 }, "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 8 }, { "type": "flag", "flag": "had_moped" } ],
         "result": "You ride it to school, to the lake, to nowhere in particular. Your mother stands at the window every time you leave." },
+      { "text": "Ask your parents to help", "chance": 0.45, "chanceTraits": { "charming": 0.2, "manipulative": 0.15 },
+        "success": { "text": "Your father says no twice and then pays half, on the condition that you wear a helmet. You wear it to the end of the road.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "flag", "flag": "had_moped" } ] },
+        "failure": { "text": "\"When you can pay for it yourself.\" You start saving. The moped is sold to someone else.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
       { "text": "Tune it to go faster", "requires": { "traitsAny": [ "impulsive", "criminal" ] }, "chance": 0.7,
         "success": { "text": "Seventy kilometres an hour on a road meant for forty. You have never felt so alive.", "effects": [ { "type": "money", "amount": -3500 }, { "type": "happiness", "amount": 9 } ] },
         "failure": { "text": "The police stop you outside the shop. A fine, and a phone call home.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": -4 } ] } },
