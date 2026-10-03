@@ -110,7 +110,7 @@ public sealed class World
         Chronicle.Add(new LogEntry
         {
             Year = Year,
-            Text = text,
+            Text = Systems.TextFormatter.DoubleStop(text),
             Importance = importance,
             Category = category,
             PersonIds = people.Distinct().ToList()

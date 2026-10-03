@@ -430,7 +430,7 @@ public static class EventSystem
             }
             pending.Resolved = true;
             pending.ChosenIndex = choiceIndex;
-            pending.OutcomeText = string.Join(" ", texts);
+            pending.OutcomeText = TextFormatter.DoubleStop(string.Join(" ", texts));
             return pending.OutcomeText;
         }
         var choice = def.Choices[choiceIndex - pending.Options.Count];
@@ -456,7 +456,7 @@ public static class EventSystem
 
         pending.Resolved = true;
         pending.ChosenIndex = choiceIndex;
-        pending.OutcomeText = string.Join(" ", texts);
+        pending.OutcomeText = TextFormatter.DoubleStop(string.Join(" ", texts));
         return pending.OutcomeText;
     }
 

@@ -32,6 +32,9 @@ public static partial class TextFormatter
     [GeneratedRegex(@"\{money:(\d+)\}")]
     private static partial Regex MoneyToken();
 
+    /// <summary>"Co.." becomes "Co.", while "..." stays.</summary>
+    public static string DoubleStop(string text) => System.Text.RegularExpressions.Regex.Replace(text, @"(?<!\.)\.\.(?!\.)", ".");
+
     public static string Format(SimContext ctx, string text, PendingEvent? pending, Person? viewer = null)
     {
         var w = ctx.World;
@@ -112,6 +115,8 @@ public static partial class TextFormatter
         });
         // A token at the start of a sentence ("{t.role} calls") must not leave it in lower case.
         text = SentenceStart().Replace(text, m => m.Groups[1].Value + char.ToUpperInvariant(m.Groups[2].Value[0]));
+        // A name that ends in a full stop ("Harris Cleaning Co.") at the end of a sentence.
+        text = DoubleStop(text);
         return text.Length > 0 && char.IsLower(text[0]) ? Capitalize(text) : text;
     }
 
