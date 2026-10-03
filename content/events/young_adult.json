@@ -51,7 +51,7 @@
     ]
   },
   {
-    "id": "young_interrail", "title": "Interrail",
+    "id": "young_interrail", "group": "backpacking", "title": "Interrail",
     "text": "A month on European trains with a rucksack and a friend. Night trains, hostels, bread and cheese on station platforms.",
     "conditions": { "minAge": 18, "maxAge": 26, "minYear": 1972, "minMoney": 8000 }, "cooldown": 10,
     "choices": [

@@ -2,7 +2,7 @@
 // days. No dashes.
 [
   {
-    "id": "job_care_night_patient", "title": "The night shift",
+    "id": "job_care_night_patient", "group": "care_night_shift", "title": "The night shift",
     "text": "Three in the morning on the ward. An old man who cannot sleep asks if you have a minute. You have eleven other patients.",
     "conditions": { "minAge": 18, "activity": "working", "jobTags": [ "care" ] }, "cooldown": 6,
     "choices": [
@@ -11,7 +11,7 @@
     ]
   },
   {
-    "id": "job_care_mistake", "title": "The wrong dose",
+    "id": "job_care_mistake", "group": "wrong_dose", "title": "The wrong dose",
     "text": "Checking the charts at the end of your shift, you see it: a colleague has given a patient the wrong dose. The patient seems fine. Nobody else has noticed.",
     "conditions": { "minAge": 20, "activity": "working", "jobTags": [ "care" ] }, "cooldown": 15,
     "choices": [
@@ -82,7 +82,7 @@
     ]
   },
   {
-    "id": "job_manual_apprentice_trouble", "title": "The apprentice",
+    "id": "job_manual_apprentice_trouble", "group": "apprentice", "title": "The apprentice",
     "text": "Your apprentice is nineteen, late every morning, and has a natural talent you have not seen in twenty years.",
     "conditions": { "minAge": 35, "activity": "working", "jobTags": [ "manual" ] }, "cooldown": 15,
     "choices": [
@@ -142,7 +142,7 @@
     ]
   },
   {
-    "id": "job_shop_rude_customer", "title": "The customer",
+    "id": "job_shop_rude_customer", "group": "rude_customer", "title": "The customer",
     "text": "A customer is shouting at you about a price you do not set, a policy you did not make, and a queue you cannot make shorter.",
     "conditions": { "minAge": 16, "activity": "working", "jobTags": [ "shop" ] }, "cooldown": 4,
     "choices": [

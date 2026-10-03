@@ -11,7 +11,7 @@
     ]
   },
   {
-    "id": "fr_moving_help", "title": "The van",
+    "id": "fr_moving_help", "group": "moving_help", "title": "The van",
     "text": "{t.name} is moving on Saturday, to a fourth floor {flat} with no lift, and has asked if you can help. You have plans. Sort of.",
     "target": { "role": "friend", "conditions": { "minAge": 18 } },
     "conditions": { "minAge": 18, "maxAge": 60 }, "cooldown": 8,
@@ -64,7 +64,7 @@
     ]
   },
   {
-    "id": "fr_old_friend_in_trouble", "content": [ "suicide" ], "title": "The late call",
+    "id": "fr_old_friend_in_trouble", "group": "late_call", "content": [ "suicide" ], "title": "The late call",
     "text": "{t.name} calls at two in the morning. {T.He} has been drinking, {t.his} marriage is over, and {t.he} is standing on a bridge. {T.He} just wants to talk.",
     "target": { "role": "friend", "conditions": { "minAge": 25 } },
     "conditions": { "minAge": 25 }, "cooldown": 20, "weight": 0.3,
@@ -83,7 +83,7 @@
     ]
   },
   {
-    "id": "fr_lend_money_friend", "title": "Just until Friday",
+    "id": "fr_lend_money_friend", "group": "lend_to_friend", "title": "Just until Friday",
     "text": "{t.name} needs to borrow money. Not a lot. \"Just until Friday,\" {t.he} says. It was just until Friday last time, too.",
     "target": { "role": "friend", "conditions": { "minAge": 20 } },
     "conditions": { "minAge": 20, "minMoney": 5000 }, "cooldown": 8,

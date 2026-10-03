@@ -173,7 +173,7 @@
     ]
   },
   {
-    "id": "se_dark_november", "countries": [ "sweden" ], "title": "November",
+    "id": "se_dark_november", "group": "dark_november", "countries": [ "sweden" ], "title": "November",
     "text": "November. Dark when you leave for work, dark when you come home, and grey in between. The candles are lit in every window on the street.",
     "conditions": { "minAge": 14 }, "cooldown": 5,
     "choices": [

@@ -13,7 +13,7 @@
     ]
   },
   {
-    "id": "fame_open_mic", "title": "Open mic",
+    "id": "fame_open_mic", "group": "open_mic", "title": "Open mic",
     "text": "An open mic night at a bar in town. Your name is on the list, fourth from the bottom. Your hands are shaking.",
     "conditions": { "minAge": 16, "maxAge": 45, "minSkills": { "music": 3 } }, "cooldown": 4,
     "choices": [
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "id": "fame_manuscript", "title": "The manuscript",
+    "id": "fame_manuscript", "group": "the_novel", "title": "The manuscript",
     "text": "Four hundred pages, five years of evenings. The novel is finished. There are publishers, and there is a drawer.",
     "conditions": { "minAge": 20, "minSkills": { "writing": 5 }, "notJobs": [ "writing" ] }, "cooldown": 8, "weight": 1.5,
     "choices": [
@@ -36,7 +36,7 @@
     ]
   },
   {
-    "id": "fame_exhibition", "title": "A gallery",
+    "id": "fame_exhibition", "group": "first_exhibition", "title": "A gallery",
     "text": "A small gallery has seen your paintings and offers you the back room for two weeks in spring. You would need to frame thirty canvases.",
     "conditions": { "minAge": 20, "minSkills": { "painting": 5 }, "notJobs": [ "arts" ] }, "cooldown": 8,
     "choices": [

@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "ya2_backpacking", "title": "The backpack",
+    "id": "ya2_backpacking", "group": "backpacking", "title": "The backpack",
     "text": "A friend is going travelling for six months with a backpack and very little money. There is room for one more.",
     "conditions": { "minAge": 19, "maxAge": 28, "minYear": 1965, "minMoney": 20000 }, "cooldown": 30,
     "choices": [
@@ -44,7 +44,7 @@
     ]
   },
   {
-    "id": "ya2_wedding_guest_speech", "title": "Best friend's wedding",
+    "id": "ya2_wedding_guest_speech", "group": "wedding_speech", "title": "Best friend's wedding",
     "text": "Your best friend is getting married and wants you to give a speech. Two hundred guests, an open bar, and a lot of stories you cannot tell.",
     "conditions": { "minAge": 22, "maxAge": 40 }, "cooldown": 10,
     "choices": [
@@ -144,7 +144,7 @@
     ]
   },
   {
-    "id": "ya2_cooking", "title": "Dinner for six",
+    "id": "ya2_cooking", "group": "dinner_party", "title": "Dinner for six",
     "text": "You have invited six people to dinner in a flat with four chairs and two pans. The recipe says it serves four and takes thirty minutes.",
     "conditions": { "minAge": 20, "maxAge": 35 }, "cooldown": 8,
     "choices": [

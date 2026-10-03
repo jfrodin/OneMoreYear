@@ -13,7 +13,7 @@
     ]
   },
   {
-    "id": "friend_moving_help", "title": "Moving day",
+    "id": "friend_moving_help", "group": "moving_help", "title": "Moving day",
     "text": "{t.name} is moving and needs help carrying. Fourth floor, no lift, and a piano.",
     "conditions": { "minAge": 18, "maxAge": 60 },
     "target": { "role": "friend", "conditions": { "minAge": 18 } }, "cooldown": 6,

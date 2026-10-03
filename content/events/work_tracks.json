@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "wt_med_mistake", "title": "The wrong dose",
+    "id": "wt_med_mistake", "group": "wrong_dose", "title": "The wrong dose",
     "text": "You notice it too late: the dose you wrote yesterday was ten times what it should have been. The patient is fine, so far. Nobody else has noticed.",
     "conditions": { "minAge": 24, "jobs": [ "medicine", "healthcare" ] }, "cooldown": 15, "weight": 0.6,
     "choices": [
@@ -144,7 +144,7 @@
     ]
   },
   {
-    "id": "wt_driver_lonely_road", "title": "The night road",
+    "id": "wt_driver_lonely_road", "group": "night_driving", "title": "The night road",
     "text": "The last stretch of a long run, two in the morning, the road empty and straight. Your eyes keep closing.",
     "conditions": { "minAge": 21, "jobs": [ "transport" ] }, "cooldown": 6,
     "choices": [
@@ -167,7 +167,7 @@
     ]
   },
   {
-    "id": "wt_military_deployment", "title": "Orders",
+    "id": "wt_military_deployment", "group": "deployment", "title": "Orders",
     "text": "Your unit is being sent abroad on a peacekeeping mission. Six months. It is what you trained for.",
     "conditions": { "minAge": 20, "maxAge": 50, "jobs": [ "military" ] }, "cooldown": 10,
     "choices": [

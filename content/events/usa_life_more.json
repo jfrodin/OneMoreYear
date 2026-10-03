@@ -30,7 +30,7 @@
     ]
   },
   {
-    "id": "us2_black_friday", "countries": [ "usa" ], "title": "Black Friday",
+    "id": "us2_black_friday", "group": "black_friday", "countries": [ "usa" ], "title": "Black Friday",
     "text": "Five in the morning, the day after Thanksgiving. The line outside the store goes round the parking lot, and the television you want is half price, for the first ten customers.",
     "conditions": { "minAge": 18, "minYear": 1985 }, "cooldown": 6,
     "choices": [

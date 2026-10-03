@@ -105,7 +105,7 @@
     ]
   },
   {
-    "id": "gp_great_grandchild", "title": "Four generations",
+    "id": "gp_great_grandchild", "group": "four_generations", "title": "Four generations",
     "text": "A photograph is taken: you, your child, your grandchild and a baby. Four generations on one sofa.",
     "conditions": { "minAge": 70, "notFlags": [ "gp_four_generations" ] }, "cooldown": 0, "weight": 3,
     "target": { "role": "grandchild", "conditions": { "minAge": 20, "minChildren": 1 } },
@@ -146,7 +146,7 @@
     ]
   },
   {
-    "id": "gp_grandparent_money_secret", "title": "Folded notes",
+    "id": "gp_grandparent_money_secret", "group": "grandparent_money", "title": "Folded notes",
     "text": "Every time you visit, {t.name} presses a folded note into your hand when nobody is looking. \"Don't tell your parents.\"",
     "conditions": { "minAge": 6, "maxAge": 16 }, "cooldown": 6,
     "target": { "role": "grandparent" },

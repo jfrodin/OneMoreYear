@@ -13,7 +13,7 @@
     ]
   },
   {
-    "id": "teen2_house_party", "title": "Nobody's parents are home",
+    "id": "teen2_house_party", "group": "teen_house_party", "title": "Nobody's parents are home",
     "text": "A party at a house where the parents are away for the weekend. Fifty people, one bathroom, and somebody has found the drinks cabinet.",
     "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
     "choices": [
@@ -36,7 +36,7 @@
     ]
   },
   {
-    "id": "teen2_good_teacher", "title": "The one teacher",
+    "id": "teen2_good_teacher", "group": "the_teacher", "title": "The one teacher",
     "text": "A teacher keeps you behind after class. Not to tell you off. To say that the essay you wrote was really good, and to ask if you have ever thought about writing more.",
     "conditions": { "minAge": 12, "maxAge": 17, "activity": "school" }, "cooldown": 0,
     "choices": [
@@ -106,7 +106,7 @@
     ]
   },
   {
-    "id": "teen2_braces", "title": "Metal",
+    "id": "teen2_braces", "group": "braces", "title": "Metal",
     "text": "Braces. Two years of them, the dentist says, with a smile that has clearly never had braces.",
     "conditions": { "minAge": 11, "maxAge": 15, "minYear": 1965 }, "cooldown": 0,
     "choices": [

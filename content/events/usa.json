@@ -160,7 +160,7 @@
     ]
   },
   {
-    "id": "us_fourth_of_july", "countries": [ "usa" ], "title": "The Fourth",
+    "id": "us_fourth_of_july", "group": "fourth_of_july", "countries": [ "usa" ], "title": "The Fourth",
     "text": "The Fourth of July. A barbecue in the backyard, and fireworks your cousin bought from a stand across the state line.",
     "conditions": { "minAge": 5 }, "cooldown": 4,
     "choices": [
@@ -193,7 +193,7 @@
     ]
   },
   {
-    "id": "us_super_bowl", "countries": [ "usa" ], "title": "Super Bowl Sunday",
+    "id": "us_super_bowl", "group": "super_bowl", "countries": [ "usa" ], "title": "Super Bowl Sunday",
     "text": "Super Bowl Sunday. A party at a friend's, chicken wings, and a bet on the game you know nothing about.",
     "conditions": { "minAge": 16, "minYear": 1967 }, "cooldown": 4,
     "choices": [

@@ -52,7 +52,7 @@
     ]
   },
   {
-    "id": "mid_parent_falls", "title": "The phone call",
+    "id": "mid_parent_falls", "group": "parent_hospital", "title": "The phone call",
     "text": "{t.Role}, {t.name}, has fallen on the bathroom floor and lay there for hours before a neighbour heard. {t.He} is in hospital and asks for you.",
     "conditions": { "minAge": 35 },
     "target": { "role": "parent", "conditions": { "minAge": 72 } }, "cooldown": 8, "weight": 1.5,
@@ -91,7 +91,7 @@
     ]
   },
   {
-    "id": "mid_health_check", "title": "Numbers",
+    "id": "mid_health_check", "group": "health_numbers", "title": "Numbers",
     "text": "The company health check. The nurse looks at the screen and then at you. \"Your blood pressure is a bit high. Do you drink much coffee?\"",
     "conditions": { "minAge": 45, "maxAge": 64, "hasJob": true }, "cooldown": 10,
     "choices": [
@@ -145,7 +145,7 @@
     ]
   },
   {
-    "id": "mid_menopause", "title": "Hot",
+    "id": "mid_menopause", "group": "menopause", "title": "Hot",
     "text": "You wake at three in the morning soaked through, for the fourth night in a row. In the meeting today you forgot a word you have used all your life.",
     "conditions": { "minAge": 46, "maxAge": 56, "sex": "female" }, "cooldown": 30,
     "choices": [
@@ -252,7 +252,7 @@
     ]
   },
   {
-    "id": "mid_retirement_party", "title": "Cake in the staff room",
+    "id": "mid_retirement_party", "group": "last_day_at_work", "title": "Cake in the staff room",
     "text": "The last day. A cake, a card everyone has signed, and a speech by a manager who started three years ago.",
     "conditions": { "minAge": 64, "maxAge": 64, "hasJob": true }, "cooldown": 50, "trigger": "milestone",
     "choices": [

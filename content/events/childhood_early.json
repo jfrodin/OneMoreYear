@@ -69,7 +69,7 @@
     ]
   },
   {
-    "id": "early_night_terror", "title": "Something under the bed",
+    "id": "early_night_terror", "group": "under_the_bed", "title": "Something under the bed",
     "text": "There is definitely something under the bed. You heard it move.",
     "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
     "choices": [
@@ -78,7 +78,7 @@
     ]
   },
   {
-    "id": "early_first_swim", "title": "Armbands",
+    "id": "early_first_swim", "group": "swimming_lessons", "title": "Armbands",
     "text": "Swimming lessons. Armbands, a cold pool and a teacher who says the water is lovely.",
     "conditions": { "minAge": 4, "maxAge": 7 }, "cooldown": 0,
     "choices": [
@@ -114,7 +114,7 @@
     ]
   },
   {
-    "id": "early_snow_angel", "title": "First snow",
+    "id": "early_snow_angel", "group": "first_snow", "title": "First snow",
     "text": "It snowed in the night. Everything is white and quiet and nobody has walked on it yet.",
     "conditions": { "minAge": 2, "maxAge": 8 }, "cooldown": 0,
     "choices": [

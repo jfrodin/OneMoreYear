@@ -66,7 +66,7 @@
     ]
   },
   {
-    "id": "trad_national_day", "countries": [ "sweden" ], "title": "Sixth of June",
+    "id": "trad_national_day", "group": "national_day", "countries": [ "sweden" ], "title": "Sixth of June",
     "text": "The National Day. Flags on every pole, and a ceremony in the park where new citizens are welcomed.",
     "conditions": { "minAge": 12, "minYear": 1983 }, "cooldown": 8,
     "choices": [
@@ -87,7 +87,7 @@
     ]
   },
   {
-    "id": "trad_ski_holiday", "countries": [ "sweden" ], "title": "Sports holiday",
+    "id": "trad_ski_holiday", "group": "winter_break", "countries": [ "sweden" ], "title": "Sports holiday",
     "text": "The February sports holiday. Half the school is going to the mountains to ski.",
     "conditions": { "minAge": 6, "maxAge": 50, "minMoney": 8000 }, "cooldown": 3,
     "choices": [

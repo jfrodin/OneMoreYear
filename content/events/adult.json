@@ -60,7 +60,7 @@
     ]
   },
   {
-    "id": "adult_parent_sick", "oncePerTarget": true, "title": "A call from the hospital",
+    "id": "adult_parent_sick", "group": "parent_hospital", "oncePerTarget": true, "title": "A call from the hospital",
     "text": "{t.role} has fallen ill and can't manage alone. Someone needs to help.",
     "conditions": { "minAge": 25 },
     "target": { "role": "parent", "conditions": { "minAge": 60 } }, "cooldown": 6,
@@ -282,7 +282,7 @@
     ]
   },
   {
-    "id": "adult_parent_moves_in", "oncePerTarget": true, "title": "Moving in",
+    "id": "adult_parent_moves_in", "group": "parent_moves_in", "oncePerTarget": true, "title": "Moving in",
     "text": "{t.role} can no longer manage alone and asks if {t.he} can move in with you.",
     "conditions": { "minAge": 35 },
     "target": { "role": "parent", "conditions": { "minAge": 72 } }, "cooldown": 10,
@@ -305,7 +305,7 @@
     ]
   },
   {
-    "id": "adult_ex_encounter", "oncePerTarget": true, "title": "An old flame",
+    "id": "adult_ex_encounter", "group": "old_flame", "oncePerTarget": true, "title": "An old flame",
     "text": "You bump into {t.name}, your ex, at the supermarket. The past comes rushing back.",
     "conditions": { "minAge": 20 },
     "target": { "role": "ex" }, "cooldown": 5,
@@ -384,7 +384,7 @@
     ]
   },
   {
-    "id": "adult_partner_dream_job", "title": "The dream job",
+    "id": "adult_partner_dream_job", "group": "partner_job_offer", "title": "The dream job",
     "text": "{t.name} has been offered {t.his} dream job, but it's far from {city}.",
     "conditions": { "minAge": 22, "maxAge": 60 },
     "target": { "role": "partner", "conditions": { "hasJob": true } }, "cooldown": 10,

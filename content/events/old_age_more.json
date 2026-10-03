@@ -2,7 +2,7 @@
 // No dashes.
 [
   {
-    "id": "old_allotment", "title": "The allotment",
+    "id": "old_allotment", "group": "allotment", "title": "The allotment",
     "text": "A plot has come free at the allotments by the railway. Ten square metres of earth and a shed with a broken window.",
     "conditions": { "minAge": 63, "notFlags": [ "allotment" ] }, "cooldown": 20,
     "choices": [
@@ -34,7 +34,7 @@
     ]
   },
   {
-    "id": "old_swimming", "title": "The pool",
+    "id": "old_swimming", "group": "learn_to_swim", "title": "The pool",
     "text": "The swimming baths have a class for pensioners on Thursday mornings. You never learned to swim properly.",
     "conditions": { "minAge": 66 }, "cooldown": 30,
     "choices": [

@@ -82,7 +82,7 @@
     ]
   },
   {
-    "id": "teen_teacher_believes", "title": "After class",
+    "id": "teen_teacher_believes", "group": "the_teacher", "title": "After class",
     "text": "Your teacher asks you to stay behind. You are sure you are in trouble. Instead {t.he} says you have a real talent and should think about what you do with it.",
     "conditions": { "minAge": 13, "maxAge": 18, "activity": "School", "minGrades": 55 },
     "target": { "role": "new_person", "ageOffsetMin": 20, "ageOffsetMax": 35 }, "cooldown": 30, "weight": 0.6,
@@ -142,7 +142,7 @@
     ]
   },
   {
-    "id": "teen_best_friend_moves", "title": "Moving away",
+    "id": "teen_best_friend_moves", "group": "friend_moves_away", "title": "Moving away",
     "text": "Your best friend's family is moving to another city in the summer. You promise to write every week.",
     "conditions": { "minAge": 12, "maxAge": 17 }, "cooldown": 15, "weight": 0.6,
     "choices": [

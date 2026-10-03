@@ -26,7 +26,7 @@
     ]
   },
   {
-    "id": "nt_long_haul", "title": "The long haul",
+    "id": "nt_long_haul", "group": "night_driving", "title": "The long haul",
     "text": "Three in the morning on an empty motorway, five hundred kilometres still to go, and your eyes are closing.",
     "conditions": { "minAge": 20, "activity": "working", "jobs": [ "transport" ] }, "cooldown": 6,
     "choices": [
@@ -79,7 +79,7 @@
     ]
   },
   {
-    "id": "nt_military_deploy", "title": "Deployment",
+    "id": "nt_military_deploy", "group": "deployment", "title": "Deployment",
     "text": "Your unit is being sent abroad for six months, on a peacekeeping mission. You leave in three weeks.",
     "conditions": { "minAge": 19, "maxAge": 50, "activity": "working", "jobs": [ "military" ] }, "cooldown": 8,
     "choices": [
@@ -133,7 +133,7 @@
     ]
   },
   {
-    "id": "nt_art_exhibition", "title": "The exhibition",
+    "id": "nt_art_exhibition", "group": "first_exhibition", "title": "The exhibition",
     "text": "A small gallery has offered you a show. Two weeks, twenty works on the walls, and an opening night with cheap wine.",
     "conditions": { "minAge": 20, "activity": "working", "jobs": [ "arts" ] }, "cooldown": 8,
     "choices": [

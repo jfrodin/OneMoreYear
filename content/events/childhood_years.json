@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "child_snow_day", "title": "Snow",
+    "id": "child_snow_day", "group": "first_snow", "title": "Snow",
     "text": "It snowed all night. The school bus cannot get through and the whole world is white and silent.",
     "conditions": { "minAge": 4, "maxAge": 12 }, "cooldown": 3,
     "choices": [
@@ -81,7 +81,7 @@
     ]
   },
   {
-    "id": "child_scared_of_dark", "title": "Under the bed",
+    "id": "child_scared_of_dark", "group": "under_the_bed", "title": "Under the bed",
     "text": "Something is definitely under the bed. You heard it move.",
     "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 4,
     "choices": [

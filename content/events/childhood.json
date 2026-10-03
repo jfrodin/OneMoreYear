@@ -189,7 +189,7 @@
     ]
   },
   {
-    "id": "child_new_kid", "title": "The new kid",
+    "id": "child_new_kid", "group": "new_kid", "title": "The new kid",
     "text": "A new student, {t.name}, joins your class. {t.He} sits alone at lunch.",
     "conditions": { "minAge": 6, "maxAge": 15 },
     "target": { "role": "new_person", "ageOffsetMin": 0, "ageOffsetMax": 0 },

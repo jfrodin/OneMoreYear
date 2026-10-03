@@ -25,7 +25,7 @@
     ]
   },
   {
-    "id": "work_apprentice", "title": "The apprentice",
+    "id": "work_apprentice", "group": "apprentice", "title": "The apprentice",
     "text": "You have been given an apprentice. Nineteen, clever, and convinced he already knows everything.",
     "conditions": { "minAge": 35, "hasJob": true, "jobTags": [ "manual" ] }, "cooldown": 15,
     "choices": [
@@ -35,7 +35,7 @@
     ]
   },
   {
-    "id": "work_care_night_patient", "title": "Night shift",
+    "id": "work_care_night_patient", "group": "care_night_shift", "title": "Night shift",
     "text": "Three in the morning on the ward. The old woman in room eight is awake and frightened and asks you to hold her hand.",
     "conditions": { "minAge": 18, "hasJob": true, "jobTags": [ "care" ] }, "cooldown": 8,
     "choices": [

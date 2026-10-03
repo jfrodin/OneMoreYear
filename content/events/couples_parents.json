@@ -1,7 +1,7 @@
 // Life as a couple and as a parent: the ordinary days that make or break a family. No dashes.
 [
   {
-    "id": "cp_anniversary_forgot", "title": "The date",
+    "id": "cp_anniversary_forgot", "group": "forgot_anniversary", "title": "The date",
     "text": "{P.name} has been quiet all evening. You check the calendar. It is your anniversary, and you forgot.",
     "conditions": { "minAge": 22, "hasPartner": true, "minPartnerYears": 2 }, "cooldown": 8,
     "choices": [
@@ -51,7 +51,7 @@
     ]
   },
   {
-    "id": "cp_weekend_away", "title": "Just the weekend",
+    "id": "cp_weekend_away", "group": "weekend_for_two", "title": "Just the weekend",
     "text": "Grandparents have offered to take the children for a weekend. Two whole days. You and {P.name} look at each other as if you have forgotten how this works.",
     "conditions": { "minAge": 25, "hasPartner": true, "minChildren": 1 }, "cooldown": 6,
     "choices": [
@@ -60,7 +60,7 @@
     ]
   },
   {
-    "id": "cp_partner_career", "title": "The offer",
+    "id": "cp_partner_career", "group": "partner_job_offer", "title": "The offer",
     "text": "{P.name} has been offered a dream job in another city. Taking it means you would both move, and you would have to start again.",
     "conditions": { "minAge": 25, "maxAge": 55, "hasPartner": true }, "cooldown": 20, "weight": 0.5,
     "choices": [
@@ -168,7 +168,7 @@
     ]
   },
   {
-    "id": "cp_old_letters_partner", "title": "In a shoebox",
+    "id": "cp_old_letters_partner", "group": "old_letters", "title": "In a shoebox",
     "text": "Looking for something else, you find a shoebox of letters {P.name} wrote to you when you were first together. Neither of you has read them in decades.",
     "conditions": { "minAge": 45, "hasPartner": true, "minPartnerYears": 15 }, "cooldown": 30,
     "choices": [

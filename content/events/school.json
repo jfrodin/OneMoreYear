@@ -146,7 +146,7 @@
     ]
   },
   {
-    "id": "school_popular_party", "title": "The party",
+    "id": "school_popular_party", "group": "teen_house_party", "title": "The party",
     "text": "The biggest party of the year, at a house whose parents are away. You are invited. Your best friend from before is not.",
     "conditions": { "minAge": 14, "maxAge": 18, "clique": "popular" }, "cooldown": 3,
     "choices": [

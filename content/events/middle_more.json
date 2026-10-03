@@ -59,7 +59,7 @@
     ]
   },
   {
-    "id": "mid2_learn_swim", "title": "The secret",
+    "id": "mid2_learn_swim", "group": "learn_to_swim", "title": "The secret",
     "text": "You never learned to swim. Nobody knows, not even your children. Now there is a class for adults at the pool, Thursday nights.",
     "conditions": { "minAge": 35, "maxAge": 70, "notFlags": [ "can_swim" ] }, "cooldown": 30, "weight": 0.3,
     "choices": [

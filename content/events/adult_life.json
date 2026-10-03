@@ -46,7 +46,7 @@
     ]
   },
   {
-    "id": "life_dinner_party", "title": "Dinner party",
+    "id": "life_dinner_party", "group": "dinner_party", "title": "Dinner party",
     "text": "You've invited six people to dinner. The recipe said forty minutes. It has been two hours.",
     "conditions": { "minAge": 22, "livesWithParents": false }, "cooldown": 5,
     "choices": [
@@ -79,7 +79,7 @@
     ]
   },
   {
-    "id": "life_best_man", "title": "The speech",
+    "id": "life_best_man", "group": "wedding_speech", "title": "The speech",
     "text": "{t.name} is getting married and wants you to give a speech. In front of a hundred and twenty people.",
     "conditions": { "minAge": 20 }, "cooldown": 6,
     "target": { "role": "friend", "conditions": { "minAge": 20 } },
@@ -115,7 +115,7 @@
     ]
   },
   {
-    "id": "life_allotment", "title": "The allotment",
+    "id": "life_allotment", "group": "allotment", "title": "The allotment",
     "text": "A plot has come free at the allotments. Ten square metres of soil, a shed, and an old man next door who has opinions about potatoes.",
     "conditions": { "minAge": 30 }, "cooldown": 0,
     "choices": [
@@ -138,7 +138,7 @@
     ]
   },
   {
-    "id": "life_friend_loan", "title": "Between friends",
+    "id": "life_friend_loan", "group": "lend_to_friend", "title": "Between friends",
     "text": "{t.name} needs to borrow money. A lot. \"You'll get it back by Christmas, I swear.\"",
     "conditions": { "minAge": 20, "minMoney": 30000 }, "cooldown": 6,
     "target": { "role": "friend", "conditions": { "minAge": 20 } },
@@ -399,7 +399,7 @@
     ]
   },
   {
-    "id": "life_insomnia", "title": "Four in the morning",
+    "id": "life_insomnia", "group": "insomnia", "title": "Four in the morning",
     "text": "You've been waking at four every morning for weeks, thinking about everything and nothing.",
     "conditions": { "minAge": 25, "maxHealth": 80 }, "cooldown": 6,
     "choices": [
@@ -420,7 +420,7 @@
     ]
   },
   {
-    "id": "life_reunion_first_love", "title": "An old flame",
+    "id": "life_reunion_first_love", "group": "old_flame", "title": "An old flame",
     "text": "In the supermarket queue: your first love. Older, still with that laugh.",
     "conditions": { "minAge": 35, "hasPartner": true }, "cooldown": 0,
     "choices": [

@@ -31,7 +31,7 @@
     ]
   },
   {
-    "id": "ties_sibling_wedding_speech", "title": "The speech",
+    "id": "ties_sibling_wedding_speech", "group": "wedding_speech", "title": "The speech",
     "text": "{t.name} is getting married and has asked you to give a speech. You have known {t.him} longer than anyone in that room.",
     "conditions": { "minAge": 20 },
     "target": { "role": "sibling", "conditions": { "minAge": 20, "hasPartner": true } }, "cooldown": 30, "weight": 0.6,
@@ -91,7 +91,7 @@
     ]
   },
   {
-    "id": "ties_parent_moves_in", "title": "The spare room",
+    "id": "ties_parent_moves_in", "group": "parent_moves_in", "title": "The spare room",
     "text": "{t.Role}, {t.name}, can no longer manage the stairs at home. {t.He} has not asked. {t.He} would never ask.",
     "conditions": { "minAge": 35, "livesWithParents": false },
     "target": { "role": "parent", "conditions": { "minAge": 75, "hasPartner": false } }, "cooldown": 20, "weight": 0.7,
@@ -119,7 +119,7 @@
     ]
   },
   {
-    "id": "ties_grandparent_money", "title": "A fifty",
+    "id": "ties_grandparent_money", "group": "grandparent_money", "title": "A fifty",
     "text": "{t.Role}, {t.name}, presses a folded note into your hand when nobody is looking. \"Don't tell your mother.\"",
     "conditions": { "minAge": 6, "maxAge": 22 },
     "target": { "role": "grandparent" }, "cooldown": 3,

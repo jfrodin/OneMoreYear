@@ -19,7 +19,7 @@
     ]
   },
   {
-    "id": "tt_braces", "title": "Metal mouth",
+    "id": "tt_braces", "group": "braces", "title": "Metal mouth",
     "text": "The dentist says braces. Two years. Wire, rubber bands, and a photo for the school catalogue in the middle of it.",
     "conditions": { "minAge": 11, "maxAge": 15, "minYear": 1965 }, "cooldown": 0,
     "choices": [
@@ -39,7 +39,7 @@
     ]
   },
   {
-    "id": "tt_heartbreak", "title": "The end of the world",
+    "id": "tt_heartbreak", "group": "teen_heartbreak", "title": "The end of the world",
     "text": "The person you have been in love with for three weeks has started holding hands with someone else, in the corridor, in front of everyone.",
     "conditions": { "minAge": 13, "maxAge": 17 }, "cooldown": 4,
     "choices": [

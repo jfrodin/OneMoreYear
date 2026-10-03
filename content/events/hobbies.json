@@ -40,7 +40,7 @@
     ]
   },
   {
-    "id": "hob_paint_exhibition", "title": "A small show",
+    "id": "hob_paint_exhibition", "group": "first_exhibition", "title": "A small show",
     "text": "The local library wants to show your paintings for a month. Twenty walls, an opening on a Friday, and your name on a little card.",
     "conditions": { "minAge": 20, "minSkills": { "painting": 7 } }, "cooldown": 15,
     "choices": [
@@ -51,7 +51,7 @@
     ]
   },
   {
-    "id": "hob_music_gig", "title": "Open mic",
+    "id": "hob_music_gig", "group": "open_mic", "title": "Open mic",
     "text": "An open mic night at the pub. Your name is on the list, fourth. Your hands are shaking.",
     "conditions": { "minAge": 16, "minSkills": { "music": 3 } }, "cooldown": 5,
     "choices": [
@@ -73,7 +73,7 @@
     ]
   },
   {
-    "id": "hob_writing_novel", "title": "The manuscript",
+    "id": "hob_writing_novel", "group": "the_novel", "title": "The manuscript",
     "text": "After years of evenings, the novel is finished. Three hundred pages in a drawer. A publisher is accepting submissions.",
     "conditions": { "minAge": 20, "minSkills": { "writing": 6 } }, "cooldown": 15,
     "choices": [

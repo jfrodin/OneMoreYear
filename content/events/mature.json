@@ -85,7 +85,7 @@
     ]
   },
   {
-    "id": "mt_dark_winter", "content": [ "mental_health" ], "countries": [ "sweden" ], "title": "November",
+    "id": "mt_dark_winter", "group": "dark_november", "content": [ "mental_health" ], "countries": [ "sweden" ], "title": "November",
     "text": "It is dark when you leave in the morning and dark when you come home. It has been grey for six weeks. Everything is heavy.",
     "conditions": { "minAge": 16 }, "cooldown": 6,
     "choices": [
@@ -107,7 +107,7 @@
     ]
   },
   {
-    "id": "mt_burnout_warning", "content": [ "mental_health" ], "title": "The word",
+    "id": "mt_burnout_warning", "group": "burnout_warning", "content": [ "mental_health" ], "title": "The word",
     "text": "You stood in the shower this morning and forgot what shampoo was for. Yesterday you cried in the car park. A colleague uses a word you do not want to hear.",
     "conditions": { "minAge": 25, "maxAge": 64, "activity": "working", "notAilments": [ "burnout" ] }, "cooldown": 10,
     "choices": [
@@ -189,7 +189,7 @@
     ]
   },
   {
-    "id": "mt_suicide_friend_call", "content": [ "suicide" ], "title": "Late call",
+    "id": "mt_suicide_friend_call", "group": "late_call", "content": [ "suicide" ], "title": "Late call",
     "text": "{t.name} calls at two in the morning. {t.His} voice is flat and calm, and {t.he} says goodbye in a way that makes the hair on your arms stand up.",
     "conditions": { "minAge": 16 }, "cooldown": 30, "weight": 0.3,
     "target": { "role": "friend", "conditions": { "minAge": 15 } },

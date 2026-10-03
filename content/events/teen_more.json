@@ -83,7 +83,7 @@
     ]
   },
   {
-    "id": "teen_heartbreak", "title": "Someone else",
+    "id": "teen_heartbreak", "group": "teen_heartbreak", "title": "Someone else",
     "text": "The person you've liked all year is holding hands with someone else in the corridor.",
     "conditions": { "minAge": 13, "maxAge": 17, "hasPartner": false }, "cooldown": 3,
     "choices": [

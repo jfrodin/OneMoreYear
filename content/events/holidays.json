@@ -31,7 +31,7 @@
     ]
   },
   {
-    "id": "hol_national_day_citizen", "countries": [ "sweden" ], "title": "National Day",
+    "id": "hol_national_day_citizen", "group": "national_day", "countries": [ "sweden" ], "title": "National Day",
     "text": "The sixth of June. The town hall is welcoming new citizens with a ceremony, a brass band and small paper flags.",
     "conditions": { "minAge": 18, "minYear": 1983, "flags": [ "emigrant" ], "notFlags": [ "se_citizen" ] }, "cooldown": 0, "weight": 2,
     "choices": [
@@ -60,7 +60,7 @@
     ]
   },
   {
-    "id": "hol_sportlov", "countries": [ "sweden" ], "title": "Winter break",
+    "id": "hol_sportlov", "group": "winter_break", "countries": [ "sweden" ], "title": "Winter break",
     "text": "The children have a week off school in February. Half the town is driving north to the mountains, the other half is staying home and pretending not to mind.",
     "conditions": { "minAge": 28, "minChildren": 1 }, "cooldown": 4,
     "target": { "role": "child", "conditions": { "minAge": 5, "maxAge": 14 } },
@@ -88,7 +88,7 @@
     ]
   },
   {
-    "id": "hol_super_bowl", "countries": [ "usa" ], "title": "Super Bowl Sunday",
+    "id": "hol_super_bowl", "group": "super_bowl", "countries": [ "usa" ], "title": "Super Bowl Sunday",
     "text": "Super Bowl Sunday. A neighbour has a television the size of a wall, seven kinds of dip, and a lot of opinions.",
     "conditions": { "minAge": 12, "minYear": 1967 }, "cooldown": 5,
     "choices": [
@@ -99,7 +99,7 @@
     ]
   },
   {
-    "id": "hol_fourth_fireworks", "countries": [ "usa" ], "title": "Fireworks",
+    "id": "hol_fourth_fireworks", "group": "fourth_of_july", "countries": [ "usa" ], "title": "Fireworks",
     "text": "The Fourth of July. Somebody's uncle has brought fireworks from out of state, the kind that are not legal here, and a lighter.",
     "conditions": { "minAge": 10 }, "cooldown": 6,
     "choices": [
@@ -130,7 +130,7 @@
     ]
   },
   {
-    "id": "hol_black_friday", "countries": [ "usa" ], "title": "Black Friday",
+    "id": "hol_black_friday", "group": "black_friday", "countries": [ "usa" ], "title": "Black Friday",
     "text": "Five in the morning, a car park full of people waiting for a store to open. There is one television at half price, and there are two hundred people.",
     "conditions": { "minAge": 18, "minYear": 1990 }, "cooldown": 6,
     "choices": [
@@ -161,7 +161,7 @@
     ]
   },
   {
-    "id": "hol_anniversary", "title": "The anniversary",
+    "id": "hol_anniversary", "group": "forgot_anniversary", "title": "The anniversary",
     "text": "It is your wedding anniversary, and you have just realised it, at four in the afternoon.",
     "conditions": { "minAge": 22, "married": true }, "cooldown": 6,
     "choices": [

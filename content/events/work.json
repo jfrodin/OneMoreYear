@@ -136,7 +136,7 @@
     ]
   },
   {
-    "id": "work_customer", "title": "The customer from hell",
+    "id": "work_customer", "group": "rude_customer", "title": "The customer from hell",
     "text": "A customer is shouting at you over a receipt from 2009. The queue behind him is getting longer and angrier.",
     "conditions": { "minAge": 16, "hasJob": true, "jobTags": [ "shop" ] }, "cooldown": 3,
     "choices": [

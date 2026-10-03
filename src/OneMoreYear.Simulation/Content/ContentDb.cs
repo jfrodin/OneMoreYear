@@ -312,6 +312,9 @@ public sealed class ContentDb
             if (x.Skill != null && !Hobbies.ContainsKey(x.Skill)) errors.Add($"Home project {x.Id}: unknown skill {x.Skill}");
             if (new[] { x.Name, x.Text, x.Done, x.Overrun }.Any(t => string.IsNullOrWhiteSpace(t) || t.Contains("–") || t.Contains("—"))) errors.Add($"Home project {x.Id}: missing text or a dash");
         }
+        // Groups tell one moment in several ways: a group of one is a typo.
+        foreach (var lone in Events.Values.Where(e => e.Group != null).GroupBy(e => e.Group).Where(g => g.Count() < 2))
+            errors.Add($"Event {lone.First().Id}: group {lone.Key} has only this event");
         // Wishes: one way to keep them, actions that exist and fit the target, and no dashes.
         foreach (var x in Wishes.Values)
         {

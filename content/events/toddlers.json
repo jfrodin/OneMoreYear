@@ -10,7 +10,7 @@
     ]
   },
   {
-    "id": "tod_why", "title": "Why?",
+    "id": "tod_why", "group": "why_questions", "title": "Why?",
     "text": "Why is the sky blue? Why do dogs bark? Why do people die? Why? Why? Why?",
     "conditions": { "minAge": 3, "maxAge": 5 }, "cooldown": 0,
     "choices": [
@@ -73,7 +73,7 @@
     ]
   },
   {
-    "id": "tod_hide_vegetables", "title": "Under the plate",
+    "id": "tod_hide_vegetables", "group": "vegetables", "title": "Under the plate",
     "text": "Peas. Small, green, and you have been told you cannot leave the table until they are gone.",
     "conditions": { "minAge": 2, "maxAge": 7 }, "cooldown": 0,
     "choices": [
@@ -102,7 +102,7 @@
     ]
   },
   {
-    "id": "tod_imaginary_shop", "title": "The shop",
+    "id": "tod_imaginary_shop", "group": "imaginary_shop", "title": "The shop",
     "text": "You have opened a shop under the kitchen table. Stones cost one leaf. Leaves cost two stones. Business is slow.",
     "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
     "choices": [
@@ -129,7 +129,7 @@
     ]
   },
   {
-    "id": "tod_birthday_four", "title": "Four",
+    "id": "tod_birthday_four", "group": "little_birthday", "title": "Four",
     "text": "Your fourth birthday. A cake shaped like an animal that nobody can identify, and six children from preschool running around the living room.",
     "conditions": { "minAge": 4, "maxAge": 4 }, "cooldown": 0,
     "choices": [

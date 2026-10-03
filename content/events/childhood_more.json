@@ -1,7 +1,7 @@
 // More of growing up: small moments that become memories. Ages 3–12.
 [
   {
-    "id": "child_scared_dark", "title": "Under the bed",
+    "id": "child_scared_dark", "group": "under_the_bed", "title": "Under the bed",
     "text": "There is something under the bed. You are almost sure of it. You call for {t.name}.",
     "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 0,
     "target": { "role": "parent" },
@@ -183,7 +183,7 @@
     ]
   },
   {
-    "id": "child_best_friend_moves", "title": "Moving away",
+    "id": "child_best_friend_moves", "group": "friend_moves_away", "title": "Moving away",
     "text": "{t.name} comes over with red eyes. {t.His} family is moving to another city, far away.",
     "conditions": { "minAge": 8, "maxAge": 13 }, "cooldown": 0,
     "target": { "role": "friend", "conditions": { "maxAge": 15 } },
@@ -257,7 +257,7 @@
     ]
   },
   {
-    "id": "child_lunch_table", "title": "The new kid",
+    "id": "child_lunch_table", "group": "new_kid", "title": "The new kid",
     "text": "A new kid starts in your class and has to sit alone at lunch. {t.name} whispers that you shouldn't sit there either.",
     "conditions": { "minAge": 8, "maxAge": 12 }, "cooldown": 0,
     "target": { "role": "classmate" },

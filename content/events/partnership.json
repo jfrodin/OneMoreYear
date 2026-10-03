@@ -89,7 +89,7 @@
     ]
   },
   {
-    "id": "couple_second_honeymoon", "title": "Just the two of you",
+    "id": "couple_second_honeymoon", "group": "weekend_for_two", "title": "Just the two of you",
     "text": "The children are old enough to look after themselves for a week. For the first time in years it could be just the two of you.",
     "conditions": { "minAge": 38, "married": true, "minChildren": 1, "minMoney": 15000 }, "cooldown": 10,
     "choices": [
@@ -114,7 +114,7 @@
     ]
   },
   {
-    "id": "couple_old_love_letters", "title": "In the attic",
+    "id": "couple_old_love_letters", "group": "old_letters", "title": "In the attic",
     "text": "In a box in the attic you find the letters you and {p.name} wrote to each other the first year. You were so young.",
     "conditions": { "minAge": 45, "hasPartner": true, "minPartnerYears": 20 }, "cooldown": 30,
     "choices": [
@@ -135,7 +135,7 @@
     ]
   },
   {
-    "id": "couple_anniversary_forgot", "title": "The date",
+    "id": "couple_anniversary_forgot", "group": "forgot_anniversary", "title": "The date",
     "text": "It is your anniversary. You only realise when {p.name} comes down to breakfast in a dress shirt and with a small wrapped box.",
     "conditions": { "minAge": 20, "hasPartner": true, "minPartnerYears": 2 }, "cooldown": 8,
     "choices": [

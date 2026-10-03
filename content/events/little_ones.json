@@ -20,7 +20,7 @@
     ]
   },
   {
-    "id": "lo_vegetables", "title": "Green things",
+    "id": "lo_vegetables", "group": "vegetables", "title": "Green things",
     "text": "There is something green on your plate. It was not there yesterday. Nobody asked you.",
     "conditions": { "minAge": 2, "maxAge": 6, "livesWithParents": true }, "cooldown": 3,
     "choices": [
@@ -30,7 +30,7 @@
     ]
   },
   {
-    "id": "lo_birthday_party", "title": "The party",
+    "id": "lo_birthday_party", "group": "little_birthday", "title": "The party",
     "text": "Your birthday party. Eight children, one cake shaped like an animal nobody can identify, and a game where someone always cries.",
     "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 3,
     "choices": [
@@ -62,7 +62,7 @@
     ]
   },
   {
-    "id": "lo_swimming_lessons", "title": "The deep end",
+    "id": "lo_swimming_lessons", "group": "swimming_lessons", "title": "The deep end",
     "text": "Swimming lessons. The teacher wants you to let go of the side. The water looks very deep and very green.",
     "conditions": { "minAge": 4, "maxAge": 7 }, "cooldown": 0,
     "choices": [
@@ -73,7 +73,7 @@
     ]
   },
   {
-    "id": "lo_imaginary_shop", "title": "The shop",
+    "id": "lo_imaginary_shop", "group": "imaginary_shop", "title": "The shop",
     "text": "You have opened a shop in the hall. You sell stones, buttons and a spoon. Prices are high.",
     "conditions": { "minAge": 3, "maxAge": 7, "livesWithParents": true }, "cooldown": 4,
     "target": { "role": "parent" },
@@ -122,7 +122,7 @@
     ]
   },
   {
-    "id": "lo_snow", "title": "First snow",
+    "id": "lo_snow", "group": "first_snow", "title": "First snow",
     "text": "You wake up and everything outside is white. The whole world has been changed in the night.",
     "conditions": { "minAge": 2, "maxAge": 7 }, "countries": [ "sweden" ], "cooldown": 3,
     "choices": [
@@ -171,7 +171,7 @@
     ]
   },
   {
-    "id": "lo_why_sky", "title": "But why",
+    "id": "lo_why_sky", "group": "why_questions", "title": "But why",
     "text": "Why is the sky blue? Why do people die? Why can't the cat talk? Why is that man's nose so big? Why?",
     "conditions": { "minAge": 3, "maxAge": 6, "livesWithParents": true }, "cooldown": 5,
     "target": { "role": "parent" },

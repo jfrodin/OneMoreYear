@@ -22,7 +22,7 @@
     ]
   },
   {
-    "id": "hb_blood_pressure", "title": "The numbers",
+    "id": "hb_blood_pressure", "group": "health_numbers", "title": "The numbers",
     "text": "A routine check at the doctor's. Your blood pressure is high. Not dangerous yet, the doctor says, but heading that way.",
     "conditions": { "minAge": 40 }, "cooldown": 15,
     "choices": [
@@ -55,7 +55,7 @@
     ]
   },
   {
-    "id": "hb_insomnia_phase", "title": "Three in the morning",
+    "id": "hb_insomnia_phase", "group": "insomnia", "title": "Three in the morning",
     "text": "For weeks now you wake at three and lie there until six, thinking about everything you have ever done wrong.",
     "conditions": { "minAge": 25 }, "cooldown": 8,
     "choices": [
@@ -134,7 +134,7 @@
     ]
   },
   {
-    "id": "hb_burnout_warning", "title": "The warning",
+    "id": "hb_burnout_warning", "group": "burnout_warning", "title": "The warning",
     "text": "You forgot your own phone number today. Yesterday you cried in the car park for no reason you could name. You have not had a day off in months.",
     "conditions": { "minAge": 25, "maxAge": 65, "activity": "working", "maxHealth": 70 }, "cooldown": 10,
     "choices": [
@@ -161,7 +161,7 @@
     ]
   },
   {
-    "id": "hb_menopause", "title": "Hot",
+    "id": "hb_menopause", "group": "menopause", "title": "Hot",
     "text": "Hot flushes in meetings, nights soaked in sweat, and a temper you do not recognise. Your doctor says it has a name, and that you do not have to just put up with it.",
     "conditions": { "minAge": 46, "maxAge": 56, "sex": "female" }, "cooldown": 30,
     "choices": [

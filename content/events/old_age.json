@@ -1,7 +1,7 @@
 // The later years: retirement, grandchildren, health, loss, love again, looking back. Ages 60+.
 [
   {
-    "id": "old_last_day_at_work", "trigger": "milestone", "title": "The last day",
+    "id": "old_last_day_at_work", "group": "last_day_at_work", "trigger": "milestone", "title": "The last day",
     "text": "Cake in the staff room, a speech that's a little too long, a card signed by people you've never met. After all these years, it's over.",
     "conditions": { "minAge": 60, "maxAge": 68, "activity": "retired" }, "cooldown": 0, "weight": 6,
     "choices": [
@@ -272,7 +272,7 @@
     ]
   },
   {
-    "id": "old_great_grandchild", "title": "Four generations",
+    "id": "old_great_grandchild", "group": "four_generations", "title": "Four generations",
     "text": "{t.name} puts the baby in your arms: your great-grandchild. Someone takes a photo: four generations on one sofa.",
     "conditions": { "minAge": 70 }, "cooldown": 0,
     "target": { "role": "grandchild", "conditions": { "minAge": 18, "minChildren": 1 } },
