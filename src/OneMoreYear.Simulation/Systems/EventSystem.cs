@@ -190,10 +190,14 @@ public static class EventSystem
         if (c.MaxChildrenAtHome is { } maxHome && p.ChildIds.Select(w.Get).Count(k => k.IsAlive && k.LivesWithParents) > maxHome) return false;
         if (c.JobTags is { Count: > 0 } tags && ctx.Content.Occupation(p.OccupationId)?.Tags.Any(tags.Contains) != true) return false;
         if (c.Jobs is { Count: > 0 } jobs && (p.OccupationId == null || !jobs.Contains(p.OccupationId))) return false;
+        if (c.NotJobs is { Count: > 0 } notJobs && p.OccupationId != null && notJobs.Contains(p.OccupationId)) return false;
         if (c.MinSkills is { } minSkills && minSkills.Any(kv => SkillSystem.Level(p, kv.Key) < kv.Value)) return false;
         if (c.Hobby is { } wantHobby && p.Hobby != wantHobby) return false;
         if (c.RunsBusiness is { } runs && BusinessSystem.RunsBusiness(w, p) != runs) return false;
         if (c.OwnsRental is { } letting && RentalSystem.OwnsRental(w, p) != letting) return false;
+        if (c.MinFame is { } minFame && p.Fame < minFame) return false;
+        if (c.MaxFame is { } maxFame && p.Fame > maxFame) return false;
+        if (c.MinPeakFame is { } peak && p.PeakFame < peak) return false;
         if (c.Pet is { } petKind && (petKind == "none" ? PetSystem.InHome(w, p).Any() : PetSystem.Matching(ctx, p, petKind) == null)) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;

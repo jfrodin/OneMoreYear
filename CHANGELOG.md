@@ -2,6 +2,24 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.57.0 – 2026-10-03 · Fame
+
+- **Creative careers, and they are hard.** Three new tracks: music (bar musician, session
+  musician, recording artist, star), writing (freelance writer, published author, bestselling
+  author, literary giant) and sport (semi pro, professional, national team, sporting legend; the
+  body says stop at 36). The arts track now needs painting skill too.
+- Every step up needs a high hobby skill (6, 8, then 10), and promotions are rare: the top takes
+  decades, if it comes at all. Working in the field is practice, so the skill keeps growing.
+- **The way in:** with skill 5 you can try to make it ("Try to make it in music", "Try to get
+  published", "Try to live from your art", "Try to turn professional", the last only before 25).
+  Most attempts fail. There are also chances that come by themselves: an open mic, a scout.
+- **Fame**: the higher steps make you known, first in your town, then in the country, then famous,
+  then a household name. Fame multiplies the pay, shows under your job, and fades when you stop.
+- 16 events of fame: recognised in the supermarket, the big interview, the tabloid front page,
+  the flop, a fan's letter, a fan who comes too close, the gala, your parent's name at school, the
+  day nobody knows who you are, a charity, the knee.
+- Two achievements: a household name (rare), and three famous lives in one family (legendary).
+
 ## 0.56.0 – 2026-10-03 · One story per person
 
 - **The newspaper tells one story per person.** Everything that happened to the same person is told

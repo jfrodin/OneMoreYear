@@ -173,9 +173,9 @@
     "id": "arts", "name": "The Arts", "tags": [ "creative" ], "weight": 0.2,
     "traitAffinity": { "creative": 3.0, "eccentric": 2.0, "impulsive": 1.3, "ambitious": 1.2 },
     "levels": [
-      { "title": "Struggling Artist", "salary": 170000, "minEducation": "none", "entry": true, "promotionChance": 0.06 },
-      { "title": "Working Artist", "salary": 320000, "minEducation": "none", "promotionChance": 0.03 },
-      { "title": "Renowned Artist", "salary": 1100000, "minEducation": "none", "promotionChance": 0 }
+      { "title": "Struggling Artist", "salary": 170000, "minEducation": "none", "entry": true, "promotionChance": 0.1, "skill": "painting", "minSkill": 3 },
+      { "title": "Working Artist", "salary": 320000, "minEducation": "none", "promotionChance": 0.05, "skill": "painting", "minSkill": 6, "fame": 1 },
+      { "title": "Renowned Artist", "salary": 1100000, "minEducation": "none", "promotionChance": 0, "skill": "painting", "minSkill": 9, "fame": 7 }
     ]
   },
   {
@@ -223,6 +223,36 @@
       { "title": "Petty Criminal", "salary": 150000, "minEducation": "none", "entry": true, "promotionChance": 0.12 },
       { "title": "Drug Dealer", "salary": 320000, "minEducation": "none", "promotionChance": 0.06 },
       { "title": "Gang Leader", "salary": 800000, "minEducation": "none", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "music", "name": "Music", "tags": [ "creative" ], "weight": 0.1,
+    "traitAffinity": { "creative": 3.0, "eccentric": 1.6, "social": 1.3, "impulsive": 1.2 },
+    "levels": [
+      { "title": "Bar Musician", "salary": 160000, "minEducation": "none", "entry": true, "promotionChance": 0.12, "skill": "music", "minSkill": 4 },
+      { "title": "Session Musician", "salary": 300000, "minEducation": "none", "promotionChance": 0.07, "skill": "music", "minSkill": 6, "fame": 1 },
+      { "title": "Recording Artist", "salary": 520000, "minEducation": "none", "promotionChance": 0.04, "skill": "music", "minSkill": 8, "fame": 6 },
+      { "title": "Star", "salary": 1500000, "minEducation": "none", "promotionChance": 0, "skill": "music", "minSkill": 10, "fame": 12 }
+    ]
+  },
+  {
+    "id": "writing", "name": "Writing", "tags": [ "creative" ], "weight": 0.1,
+    "traitAffinity": { "creative": 2.5, "introvert": 1.5, "eccentric": 1.3, "gloomy": 1.2 },
+    "levels": [
+      { "title": "Freelance Writer", "salary": 200000, "minEducation": "secondary", "entry": true, "promotionChance": 0.12, "skill": "writing", "minSkill": 4 },
+      { "title": "Published Author", "salary": 330000, "minEducation": "secondary", "promotionChance": 0.07, "skill": "writing", "minSkill": 6, "fame": 1.5 },
+      { "title": "Bestselling Author", "salary": 700000, "minEducation": "secondary", "promotionChance": 0.04, "skill": "writing", "minSkill": 8, "fame": 6 },
+      { "title": "Literary Giant", "salary": 1200000, "minEducation": "secondary", "promotionChance": 0, "skill": "writing", "minSkill": 10, "fame": 9 }
+    ]
+  },
+  {
+    "id": "sport", "name": "Sport", "tags": [ "sport" ], "weight": 0.1, "maxAge": 36,
+    "traitAffinity": { "ambitious": 1.8, "brave": 1.4, "hot_tempered": 1.2 },
+    "levels": [
+      { "title": "Semi-Pro Athlete", "salary": 180000, "minEducation": "none", "entry": true, "promotionChance": 0.15, "skill": "sport", "minSkill": 5 },
+      { "title": "Professional Athlete", "salary": 450000, "minEducation": "none", "promotionChance": 0.08, "skill": "sport", "minSkill": 7, "fame": 2 },
+      { "title": "National Team Player", "salary": 900000, "minEducation": "none", "promotionChance": 0.04, "skill": "sport", "minSkill": 9, "fame": 9 },
+      { "title": "Sporting Legend", "salary": 2500000, "minEducation": "none", "promotionChance": 0, "skill": "sport", "minSkill": 10, "fame": 14 }
     ]
   }
 ]

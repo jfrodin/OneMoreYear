@@ -208,6 +208,11 @@ public sealed class OccupationLevelDef
     public double PromotionChance { get; set; } = 0.1;
     /// <summary>If set, one of these degrees (programme ids) is needed for this level.</summary>
     public List<string>? RequiresDegree { get; set; }
+    /// <summary>A hobby skill this level needs (music, writing, painting, sport), and how much of it (0 to 10).</summary>
+    public string? Skill { get; set; }
+    public int MinSkill { get; set; }
+    /// <summary>How much fame a year at this level brings (FameSystem); 0 for ordinary jobs.</summary>
+    public double Fame { get; set; }
 }
 
 /// <summary>A crime someone can commit (content/crimes.json).</summary>
@@ -262,6 +267,8 @@ public sealed class OccupationDef
     public List<OccupationLevelDef> Levels { get; set; } = new();
     /// <summary>Kind of workplace, used by events: "office", "manual", "care", "school" ...</summary>
     public List<string> Tags { get; set; } = new();
+    /// <summary>The age when the body says stop (sport): the career ends, whatever the level.</summary>
+    public int? MaxAge { get; set; }
     /// <summary>The first year anyone does this job (IT work did not exist in 1950).</summary>
     public int MinYear { get; set; } = 1900;
 }
@@ -318,6 +325,8 @@ public sealed class ConditionDef
     public List<string>? JobTags { get; set; }
     /// <summary>Works in one of these occupations (ids from occupations.json).</summary>
     public List<string>? Jobs { get; set; }
+    /// <summary>Not working in any of these fields right now.</summary>
+    public List<string>? NotJobs { get; set; }
     /// <summary>Has a living pet: "any", "dog" or "cat"; "none" for no pet.</summary>
     public string? Pet { get; set; }
     /// <summary>At least this level in these skills.</summary>
@@ -327,6 +336,9 @@ public sealed class ConditionDef
     /// <summary>Runs a family business (true) or does not (false).</summary>
     public bool? RunsBusiness { get; set; }
     public bool? OwnsRental { get; set; }
+    public double? MinFame { get; set; }
+    public double? MaxFame { get; set; }
+    public double? MinPeakFame { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
     /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>

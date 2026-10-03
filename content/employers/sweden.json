@@ -41,6 +41,11 @@
     "finance": [ "{city} Savings Bank", "{brand} Bank", "{brand} Capital", "{brand} Insurance" ],
     "social_work": [ "{city} Social Services", "{place} Youth Centre", "{city} Family Support" ],
     "engineering": [ "{brand} Engineering", "{surname} Consulting Engineers", "{brand} AB", "{city} Energy" ],
-    "science": [ "{city} Research Institute", "{brand} Pharma", "{city} University" ]
+    "science": [ "{city} Research Institute", "{brand} Pharma", "{city} University" ],
+    "music": [ "{brand} Records", "{city} Jazz Club", "{place} Studios", "The {city} Folk Park" ],
+    "writing": [ "{brand} Publishing", "{surname} & Co Publishers", "{city} Literary Agency" ],
+    "sport": [ "{city} FF", "{place} IF", "{city} Athletics Club", "{place} BK" ],
+    "sport:2": [ "The National Team" ],
+    "sport:3": [ "The National Team" ]
   }
 }

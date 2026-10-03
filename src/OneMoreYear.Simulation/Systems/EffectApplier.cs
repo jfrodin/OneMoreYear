@@ -15,7 +15,7 @@ public static class EffectApplier
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
         "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
-        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth", "heirloom", "pet_add", "pet_rehome", "hobby", "skill", "start_business", "business", "rental"
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth", "heirloom", "pet_add", "pet_rehome", "hobby", "skill", "start_business", "business", "rental", "fame", "career"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -186,6 +186,13 @@ public static class EffectApplier
                     if (BusinessSystem.Start(ctx, who, e.Kind, out var startText) is { } started) BusinessSystem.Fill(ctx, pending, started);
                     if (startText.Length > 0) pending.ExtraText.Add(startText);
                 }
+                break;
+            case "fame":
+                FameSystem.Change(who, amount);
+                break;
+            case "career":
+                // Taken on in a field (a record deal, a publisher), if the person is good enough for it.
+                if (e.Kind != null && who.OccupationId != e.Kind && ctx.Content.Occupation(e.Kind) is { } field && CareerSystem.EntryLevel(who, field) >= 0) CareerSystem.Hire(ctx, who, field.Id);
                 break;
             case "rental":
                 if (RentalSystem.Apply(ctx, pending, e.Kind, amount) is { Length: > 0 } rentalText) pending.ExtraText.Add(rentalText);

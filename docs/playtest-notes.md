@@ -422,3 +422,21 @@ _playtest-saves/2026-10-03_152804.png · playtest-saves/2026-10-03_152804.json_
 Om min mamma came trough something borde vi säga de ti smam mening om det gälelr smam person. Inte ha det som två helt separata saker. Det tar bot inlevelsen i story tellingen tycke rjag.
 
 _playtest-saves/2026-10-03_152850.png · playtest-saves/2026-10-03_152850.json_
+
+### 2026-10-03 15:31 · v0.52.0  ·  1976  ·  Marcus Holm, 6  ·  This Year  ·  seed VDCX73TB
+
+Every saturday, a few coins of you own" betyder det att jag frå nnu alltid säljer läsk på gatan på lördgaar?
+
+_playtest-saves/2026-10-03_153100.png · playtest-saves/2026-10-03_153100.json_
+
+### 2026-10-03 15:33 · v0.52.0  ·  1978  ·  Marcus Holm, 8  ·  This Year  ·  seed VDCX73TB
+
+kaffe för en 8åring? Känns märkligt
+
+_playtest-saves/2026-10-03_153306.png · playtest-saves/2026-10-03_153306.json_
+
+### 2026-10-03 15:34 · v0.52.0  ·  1979  ·  Marcus Holm, 9  ·  People  ·  seed VDCX73TB
+
+När man klicka rpå olika persopner så visas sidorna olika om du fattar? Ibladn nedscrollat, ibladn i toppen etc etc
+
+_playtest-saves/2026-10-03_153410.png · playtest-saves/2026-10-03_153410.json_

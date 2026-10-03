@@ -63,6 +63,8 @@ public sealed record PersonView
     public IReadOnlyList<string> Pets { get; init; } = Array.Empty<string>();
     /// <summary>"Painting 6 of 10": the hobby and how far along.</summary>
     public string? Hobby { get; init; }
+    /// <summary>"Known in Malmö", "Famous" ... (FameSystem), or null.</summary>
+    public string? Fame { get; init; }
     public IReadOnlyList<(string Name, string Description, string Tone)> Traits { get; init; } = Array.Empty<(string, string, string)>();
     /// <summary>Something serious going on, e.g. "Struggling with alcohol".</summary>
     public string? Condition { get; init; }

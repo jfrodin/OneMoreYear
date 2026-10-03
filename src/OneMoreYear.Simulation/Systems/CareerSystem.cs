@@ -219,7 +219,8 @@ public static class CareerSystem
         level.RequiresDegree is not { Count: > 0 } req || req.Any(p.Degrees.Contains);
 
     public static bool QualifiesFor(Person p, OccupationLevelDef level) =>
-        level.MinEducation <= p.Education && HasDegreeFor(p, level);
+        level.MinEducation <= p.Education && HasDegreeFor(p, level)
+        && (level.Skill == null || p.Skills.GetValueOrDefault(level.Skill) >= level.MinSkill);
 
     /// <summary>The best level someone can be hired into directly, or -1.</summary>
     public static int EntryLevel(Person p, OccupationDef occ)

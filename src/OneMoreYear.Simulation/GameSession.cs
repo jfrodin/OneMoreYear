@@ -169,6 +169,7 @@ public sealed class GameSession
                 UpbringingSystem.BecomeAdult(ctx, p);
             }
             CareerSystem.Update(ctx, p, jobLoss);
+            FameSystem.Update(ctx, p);
             HousingSystem.Update(ctx, p);
             HomeProjectSystem.Update(ctx, p);
             EconomySystem.Update(ctx, p, market);
@@ -573,6 +574,7 @@ public sealed class GameSession
             },
             Partner = partnerText,
             Hobby = SkillSystem.Describe(Ctx, p),
+            Fame = FameSystem.Label(Ctx, p),
             Pets = p.Id == Player.Id ? PetSystem.InHome(World, p).Select(x => PetSystem.Describe(Ctx, x)).ToList() : Array.Empty<string>(),
             Dream = DreamSystem.Of(Ctx, p) is { } dream ? p.DreamState switch
             {

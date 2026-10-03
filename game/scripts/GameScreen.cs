@@ -203,6 +203,7 @@ public partial class GameScreen : Control
         nameCol.AddChild(Ui.Label(p.Name, 24, UiTheme.Text, wrap: true));
         nameCol.AddChild(Ui.Label($"Age {p.Age}  ·  {S.Year}", 18, UiTheme.Accent));
         nameCol.AddChild(Ui.Label(p.Occupation, 16, UiTheme.Muted, wrap: true));
+        if (p.Fame != null) nameCol.AddChild(Ui.Label(p.Fame, 15, UiTheme.Accent));
         top.AddChild(nameCol);
         _sidebar.AddChild(top);
 
@@ -1226,6 +1227,7 @@ public partial class GameScreen : Control
         col.AddChild(Ui.Label(p.Name, 28, UiTheme.Text, wrap: true));
         col.AddChild(Ui.Label(p.Alive ? $"{p.RoleLabel}  ·  Age {p.Age}" : $"{p.RoleLabel}  ·  {p.BirthYear}–{p.DeathYear}", 18, UiTheme.Accent));
         col.AddChild(Ui.Label(p.Occupation, 16, UiTheme.Muted, wrap: true));
+        if (p.Fame != null) col.AddChild(Ui.Label(p.Fame, 15, UiTheme.Accent));
         if (!string.IsNullOrEmpty(p.Partner)) col.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
         if (p.Dream != null) col.AddChild(UiTheme.HandLabel(p.Dream, 21, UiTheme.Accent, wrap: true));
         col.AddChild(Ui.Label(p.AppearanceText, 15, UiTheme.Faint, wrap: true));

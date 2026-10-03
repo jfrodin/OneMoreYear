@@ -1104,6 +1104,36 @@ public class CountryTests
     }
 
     [Fact]
+    public void Creative_careers_need_skill_and_bring_fame()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 37, StartYear = 1970 });
+        var bot = new AutoPlayer(37, useActions: false);
+        for (int i = 0; i < 20 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        var music = s.Content.Occupation("music")!;
+        p.Skills["music"] = 2;
+        Assert.Equal(-1, CareerSystem.EntryLevel(p, music));
+        p.Skills["music"] = 10;
+        Assert.True(CareerSystem.Hire(s.Ctx, p, "music", level: 3));
+        for (int i = 0; i < 6; i++) { s.World.Year++; FameSystem.Update(s.Ctx, p); }
+        Assert.True(p.Fame >= FameSystem.National, $"fame {p.Fame}");
+        Assert.True(p.Income > CareerSystem.Salary(s.Ctx, music.Levels[3]));
+        Assert.NotNull(s.Describe(p.Id).Fame);
+
+        // Out of the business, fame fades; an athlete stops at the age limit.
+        CareerSystem.BecomeJobSeeker(p, s.Ctx);
+        double famous = p.Fame;
+        s.World.Year++;
+        FameSystem.Update(s.Ctx, p);
+        Assert.True(p.Fame < famous);
+        p.Skills["sport"] = 10;
+        CareerSystem.Hire(s.Ctx, p, "sport");
+        p.BirthYear = s.Year - 40;
+        FameSystem.Update(s.Ctx, p);
+        Assert.NotEqual("sport", p.OccupationId);
+    }
+
+    [Fact]
     public void Home_projects_add_value_and_wear_out()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 31, StartYear = 1970 });

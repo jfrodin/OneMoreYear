@@ -1,0 +1,191 @@
+// Fame (FameSystem): the way into a creative career, and life once people know your name.
+// A breakthrough needs a high skill and luck; most attempts fail. No dashes.
+[
+  {
+    "id": "fame_demo_tape", "title": "The demo",
+    "text": "You have recorded four songs in a friend's basement. They are good. You think they are good. A record company has an address.",
+    "conditions": { "minAge": 16, "maxAge": 40, "minSkills": { "music": 5 }, "notJobs": [ "music" ] }, "cooldown": 6, "weight": 1.5,
+    "choices": [
+      { "text": "Send it to every label there is", "chance": 0.04, "chanceSkills": { "music": 0.025 }, "chanceTraits": { "charming": 0.05, "creative": 0.05 },
+        "success": { "text": "A phone call, three weeks later. Someone in an office liked track two. Liked it a lot. There is a contract, small print and all.", "effects": [ { "type": "career", "kind": "music" }, { "type": "fame", "amount": 4 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "breakthrough", "text": "The call from the record company", "impact": 30 } ] },
+        "failure": { "text": "Silence, and two polite letters saying no. You keep playing anyway.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "skill", "kind": "music", "amount": 1 } ] } },
+      { "text": "Keep it for yourself", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The songs stay in the basement. Some evenings you play them for nobody, and that is enough." }
+    ]
+  },
+  {
+    "id": "fame_open_mic", "title": "Open mic",
+    "text": "An open mic night at a bar in town. Your name is on the list, fourth from the bottom. Your hands are shaking.",
+    "conditions": { "minAge": 16, "maxAge": 45, "minSkills": { "music": 3 } }, "cooldown": 4,
+    "choices": [
+      { "text": "Play the song you wrote", "chance": 0.45, "chanceSkills": { "music": 0.05 }, "chanceTraits": { "brave": 0.1, "introvert": -0.1 },
+        "success": { "text": "Silence, and then the room is yours. Somebody asks if you play anywhere else. You do now.", "effects": [ { "type": "fame", "amount": 3 }, { "type": "happiness", "amount": 6 }, { "type": "skill", "kind": "music", "amount": 1 } ] },
+        "failure": { "text": "You forget the second verse and hum it. People are kind. That is almost worse.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Play a cover everyone knows", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The whole bar sings along. It is not your song, but it is your night." }
+    ]
+  },
+  {
+    "id": "fame_manuscript", "title": "The manuscript",
+    "text": "Four hundred pages, five years of evenings. The novel is finished. There are publishers, and there is a drawer.",
+    "conditions": { "minAge": 20, "minSkills": { "writing": 5 }, "notJobs": [ "writing" ] }, "cooldown": 8, "weight": 1.5,
+    "choices": [
+      { "text": "Send it to publishers", "chance": 0.03, "chanceSkills": { "writing": 0.025 },
+        "success": { "text": "A publisher wants it. An editor with red pens and strong opinions, a cover with your name on it, and a launch party where somebody in the family cries.", "effects": [ { "type": "career", "kind": "writing" }, { "type": "fame", "amount": 5 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "breakthrough", "text": "My first book in my hands", "impact": 30 } ] },
+        "failure": { "text": "Twenty seven rejections. One of them handwritten, which you keep. You start the next one.", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "skill", "kind": "writing", "amount": 1 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ] } },
+      { "text": "Print a few copies yourself", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": 4 } ], "result": "Fifty copies. Your family gets one each at Christmas. Your aunt reads it twice and finds herself in chapter four." },
+      { "text": "Put it in the drawer", "effects": [], "result": "It stays in the drawer. One day, someone in the family will find it." }
+    ]
+  },
+  {
+    "id": "fame_exhibition", "title": "A gallery",
+    "text": "A small gallery has seen your paintings and offers you the back room for two weeks in spring. You would need to frame thirty canvases.",
+    "conditions": { "minAge": 20, "minSkills": { "painting": 5 }, "notJobs": [ "arts" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Do it", "chance": 0.06, "chanceSkills": { "painting": 0.025 },
+        "success": { "text": "A critic comes. A good review. Eleven paintings sold. The gallery wants you back, and wants you to stop doing anything else.", "effects": [ { "type": "money", "amount": 40000 }, { "type": "career", "kind": "arts" }, { "type": "fame", "amount": 4 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "Wine, friends, two paintings sold, both to your parents. It was still a real exhibition.", "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "You are not ready", "effects": [], "result": "Maybe next spring. The paintings lean against the wall, facing it." }
+    ]
+  },
+  {
+    "id": "fame_scout", "title": "The scout",
+    "text": "A man in a club jacket has been watching your last three games from the stands. After the match he asks for a word.",
+    "conditions": { "minAge": 16, "maxAge": 24, "minSkills": { "sport": 5 }, "notJobs": [ "sport" ] }, "cooldown": 3, "weight": 1.5,
+    "choices": [
+      { "text": "Go for the trial", "chance": 0.06, "chanceSkills": { "sport": 0.025 }, "chanceAttributes": { "fitness": 0.003 },
+        "success": { "text": "Two days of running until you are sick, and then a contract. Small money, early mornings, and your name on the team sheet.", "effects": [ { "type": "career", "kind": "sport" }, { "type": "fame", "amount": 2 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "breakthrough", "text": "Signing my first contract", "impact": 30 } ] },
+        "failure": { "text": "Not quite fast enough, they say. You go home and train twice as hard, or you stop. One of the two.", "effects": [ { "type": "happiness", "amount": -6 }, { "type": "skill", "kind": "sport", "amount": 1 } ] } },
+      { "text": "Stay with your studies", "effects": [ { "type": "grades", "amount": 2 } ], "result": "You keep playing on Sundays. The man in the club jacket signs someone else, who never makes it either." }
+    ]
+  },
+  {
+    "id": "fame_recognised", "title": "Recognised",
+    "text": "In the queue at the supermarket, a woman keeps looking at you. Then: \"Sorry, but are you...?\"",
+    "conditions": { "minAge": 16, "minFame": 15 }, "cooldown": 3,
+    "choices": [
+      { "text": "Yes, and smile", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "She wants something for her daughter. [[2005: An autograph on the back of a receipt. || A selfie, slightly blurred.]] You walk home a few centimetres taller." },
+      { "text": "\"People always say that\"", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "She does not believe you. You buy the milk and leave quickly." }
+    ]
+  },
+  {
+    "id": "fame_interview", "title": "The interview",
+    "text": "A national [[1980: newspaper || TV programme]] wants an interview. A long one, about your work, your childhood and \"what drives you\".",
+    "conditions": { "minAge": 18, "minFame": 30 }, "cooldown": 4,
+    "choices": [
+      { "text": "Be honest", "chance": 0.6, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "People write to you afterwards. Strangers, saying they felt the same. It is the best thing you have ever done that was not work.", "effects": [ { "type": "fame", "amount": 6 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "They print the one thing you said about your father. He reads it. He does not call for a month.", "effects": [ { "type": "fame", "amount": 4 }, { "type": "relation", "who": "parent", "to": "player", "dim": "closeness", "amount": -8 } ] } },
+      { "text": "Stick to the work", "effects": [ { "type": "fame", "amount": 2 } ], "result": "Polite, professional, slightly dull. The headline calls you \"private\". You will take it." }
+    ]
+  },
+  {
+    "id": "fame_tabloid", "content": [ "infidelity" ], "title": "The front page",
+    "text": "A gossip paper has a photograph of you laughing with someone at a restaurant. The headline suggests a great deal more than laughing.",
+    "conditions": { "minAge": 20, "minFame": 40, "hasPartner": true }, "cooldown": 6,
+    "choices": [
+      { "text": "Sue them", "chance": 0.5,
+        "success": { "text": "A retraction, small, on page eleven. And money, which you give to charity in public.", "effects": [ { "type": "money", "amount": 50000 }, { "type": "fame", "amount": 2 } ] },
+        "failure": { "text": "A year of lawyers and a story that runs and runs because you would not let it go.", "effects": [ { "type": "money", "amount": -150000 }, { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Say nothing", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "trust", "amount": -6 }, { "type": "happiness", "amount": -3 } ], "result": "It is gone in a week. At home, it takes longer." }
+    ]
+  },
+  {
+    "id": "fame_flop", "title": "The flop",
+    "text": "The new [[1975: record || album]], the new book, the new season: everyone had been waiting for it. The reviews are in. They are terrible.",
+    "conditions": { "minAge": 20, "minFame": 25, "jobTags": [ "creative", "sport" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Read every review", "effects": [ { "type": "fame", "amount": -8 }, { "type": "happiness", "amount": -8 }, { "type": "ailment_add", "kind": "depression", "chance": 0.1 } ], "result": "Every word. Some of them twice. You can quote them years later, in the middle of the night." },
+      { "text": "Get straight back to work", "chance": 0.4, "chanceTraits": { "resilient": 0.2 },
+        "success": { "text": "The next one is the best thing you have ever done. Some say the flop was necessary. You do not agree, but you let them say it.", "effects": [ { "type": "fame", "amount": 4 }, { "type": "performance", "amount": 10 } ] },
+        "failure": { "text": "The next one is fine. Fine is not what people remember.", "effects": [ { "type": "fame", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "fame_fan_letter", "title": "A letter",
+    "text": "Among the fan mail, a letter in careful handwriting. A teenager, writing that your work got them through the worst year of their life.",
+    "conditions": { "minAge": 18, "minFame": 20 }, "cooldown": 5,
+    "choices": [
+      { "text": "Write back by hand", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "fan_letter", "text": "The letter from the girl who made it through", "impact": 18 } ], "result": "Two pages. Twenty years later, a grown woman comes up to you at a signing with your letter, folded soft, in her hand." },
+      { "text": "Pin it above the desk", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "It stays there through three moves. On bad days you read it again." }
+    ]
+  },
+  {
+    "id": "fame_stalker", "content": [ "violence" ], "title": "Too close",
+    "text": "The same person has been outside your house four evenings in a row. They wave when you look out. The letters have started to say \"we\".",
+    "conditions": { "minAge": 18, "minFame": 45 }, "cooldown": 15, "weight": 0.4,
+    "choices": [
+      { "text": "Call the police", "chance": 0.7,
+        "success": { "text": "A restraining order, and then nothing. You still check the street before you open the curtains, for years.", "effects": [ { "type": "happiness", "amount": -4 } ] },
+        "failure": { "text": "There is not much they can do, they say. You move, in the end, and do not tell anyone the address.", "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": -8 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.3 } ] } },
+      { "text": "Hire security", "requires": { "minMoney": 100000 }, "effects": [ { "type": "money", "amount": -80000 }, { "type": "happiness", "amount": -2 } ], "result": "A large quiet man in the car outside. The waving stops. So does a little of your freedom." }
+    ]
+  },
+  {
+    "id": "fame_award", "title": "The gala",
+    "text": "You are nominated for the big prize of the year. A gala, a borrowed outfit, cameras on a red carpet, and an envelope.",
+    "conditions": { "minAge": 20, "minFame": 50, "jobTags": [ "creative", "sport" ] }, "cooldown": 5,
+    "choices": [
+      { "text": "Prepare a speech, just in case", "chance": 0.3, "chanceSkills": { "music": 0.02, "writing": 0.02, "painting": 0.02, "sport": 0.02 },
+        "success": { "text": "Your name. You forget the speech entirely and say something true instead. It is the clip everyone shares.", "effects": [ { "type": "fame", "amount": 10 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "award", "text": "The night I won", "impact": 30 } ] },
+        "failure": { "text": "Someone else's name. You clap with a face you practised in the mirror. The after party is excellent.", "effects": [ { "type": "fame", "amount": 2 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Don't go", "effects": [ { "type": "fame", "amount": -2 } ], "result": "You win anyway. A colleague accepts it for you and makes a joke about where you are. You watch it at home in your socks." }
+    ]
+  },
+  {
+    "id": "fame_child_of", "title": "Your parent's name",
+    "text": "At school, everyone knows who your parent is. Teachers mention it. Other parents ask for things. Some kids are nice to you for the wrong reasons.",
+    "conditions": { "minAge": 8, "maxAge": 17 }, "cooldown": 8,
+    "target": { "role": "parent", "conditions": { "minFame": 35 } },
+    "choices": [
+      { "text": "Use it", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "vain", "chance": 0.05 } ], "result": "Free tickets, a little power, a lot of friends. You are not sure, later, which ones were real." },
+      { "text": "Hide it", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "trait_add", "trait": "introvert", "chance": 0.04 } ], "result": "You use your other grandmother's surname on forms. It works for about a term." }
+    ]
+  },
+  {
+    "id": "fame_fading", "title": "Do I know you?",
+    "text": "A young cashier looks at your card, then at you, and has no idea who you are. Not so long ago, people stopped you in the street.",
+    "conditions": { "minAge": 35, "maxFame": 20, "minPeakFame": 40 }, "cooldown": 15,
+    "choices": [
+      { "text": "Laugh", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "It is a relief, in a way. You can buy toilet paper in peace now." }
+    ]
+  },
+  {
+    "id": "fame_charity", "title": "A good cause",
+    "text": "A charity asks you to be the face of their campaign. Posters, a gala, a trip to see the work. Your name helps them more than any money.",
+    "conditions": { "minAge": 20, "minFame": 35 }, "cooldown": 8,
+    "choices": [
+      { "text": "Do it properly", "effects": [ { "type": "fame", "amount": 3 }, { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "generous", "chance": 0.05 } ], "result": "You go, you see it, you come back changed and give more than they asked. The posters stay up for years." },
+      { "text": "Lend your name, nothing more", "effects": [ { "type": "fame", "amount": 1 } ], "result": "Your face on a poster at the train station, smiling about something you have never seen." }
+    ]
+  },
+  {
+    "id": "fame_injury", "title": "The knee",
+    "text": "A bad landing, a sound like a branch breaking. The doctor looks at the scan for a long time before he says anything.",
+    "conditions": { "minAge": 18, "jobs": [ "sport" ] }, "cooldown": 8, "weight": 0.8,
+    "choices": [
+      { "text": "The long rehab", "chance": 0.55, "chanceTraits": { "resilient": 0.15 }, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "Nine months of pain, a pool at six in the morning, and then your first game back. The crowd stands up for you.", "effects": [ { "type": "health", "amount": -4 }, { "type": "fame", "amount": 4 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "It never comes back properly. You play a season at half speed, and then you stop.", "effects": [ { "type": "health", "amount": -8 }, { "type": "job_quit" }, { "type": "happiness", "amount": -10 } ] } },
+      { "text": "Retire now, on your own terms", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": -4 } ], "result": "A press conference, a lump in your throat, and a knee that will still work when you are seventy." }
+    ]
+  },
+  {
+    "id": "self_try_music", "trigger": "self", "category": "career", "title": "Try to make it in music",
+    "conditions": { "minAge": 16, "maxAge": 45, "minSkills": { "music": 5 }, "notJobs": [ "music" ] },
+    "choices": [ { "text": "Record a demo", "hint": "Most never hear back. A few get a contract.", "effects": [ { "type": "queue_event", "event": "fame_demo_tape" } ], "result": "You book a weekend in a friend's basement." } ]
+  },
+  {
+    "id": "self_try_writing", "trigger": "self", "category": "career", "title": "Try to get published",
+    "conditions": { "minAge": 18, "minSkills": { "writing": 5 }, "notJobs": [ "writing" ] },
+    "choices": [ { "text": "Finish the manuscript", "hint": "Publishers say no far more often than yes.", "effects": [ { "type": "queue_event", "event": "fame_manuscript" } ], "result": "You write the last chapter at three in the morning." } ]
+  },
+  {
+    "id": "self_try_arts", "trigger": "self", "category": "career", "title": "Try to live from your art",
+    "conditions": { "minAge": 18, "minSkills": { "painting": 5 }, "notJobs": [ "arts" ] },
+    "choices": [ { "text": "Show your paintings", "hint": "Galleries are hard to impress.", "effects": [ { "type": "queue_event", "event": "fame_exhibition" } ], "result": "You carry your best canvases round to every gallery in town." } ]
+  },
+  {
+    "id": "self_try_sport", "trigger": "self", "category": "career", "title": "Try to turn professional",
+    "conditions": { "minAge": 16, "maxAge": 24, "minSkills": { "sport": 5 }, "notJobs": [ "sport" ] },
+    "choices": [ { "text": "Ask for a trial", "hint": "Clubs take very few. The body has to be ready young.", "effects": [ { "type": "queue_event", "event": "fame_scout" } ], "result": "Your coach makes a phone call." } ]
+  }
+]
