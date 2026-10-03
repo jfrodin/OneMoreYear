@@ -2,6 +2,13 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.56.0 – 2026-10-03 · One story per person
+
+- **The newspaper tells one story per person.** Everything that happened to the same person is told
+  together, in order, with "she" or "he" after the first sentence: "Elisabeth broke up with Allan.
+  She was struck by anxiety." The biggest story is the front page, with the rest of that person's
+  year under the headline; everyone else gets one item each under "Also in the family".
+
 ## 0.55.0 – 2026-10-03 · Playtest 5
 
 - The title screen scrolls when the window is too small to show all of it.

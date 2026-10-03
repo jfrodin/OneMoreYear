@@ -223,6 +223,42 @@ public sealed class GameSession
             .ToList();
     }
 
+    /// <summary>
+    /// The family news as stories, one per person, the biggest first: what happened to the same
+    /// person is told together and in order, with "she" or "he" after the first sentence.
+    /// </summary>
+    public IReadOnlyList<NewsStory> Stories(IReadOnlyList<ChronicleLine> news)
+    {
+        var family = news.Where(l => l.Category != "world").ToList();
+        var groups = new List<(int Person, List<ChronicleLine> Lines)>();
+        foreach (var line in family)
+        {
+            int person = line.PersonIds.FirstOrDefault();
+            var group = person > 0 ? groups.FirstOrDefault(g => g.Person == person) : default;
+            if (group.Lines == null) groups.Add((person, new List<ChronicleLine> { line }));
+            else group.Lines.Add(line);
+        }
+        static int Rank(ChronicleLine l) => (YearReport.IsFrontPage(l) ? 100 : 0) + l.Importance;
+        return groups.Select(g =>
+        {
+            var top = g.Lines.OrderByDescending(Rank).First();
+            var sentences = g.Lines.Select((l, i) => i == 0 ? l.Text : Pronoun(g.Person, l.Text)).ToList();
+            var rest = g.Lines.Where(l => l != top).Select(l => Pronoun(g.Person, l.Text));
+            return new NewsStory(g.Person, top.Text, string.Join(" ", rest), string.Join(" ", sentences),
+                g.Lines.Max(Rank), g.Lines.Any(YearReport.IsFrontPage));
+        }).OrderByDescending(s => s.Importance).ToList();
+    }
+
+    /// <summary>"Anna (your sister) got a job." told again about Anna: "She got a job."</summary>
+    private string Pronoun(int personId, string text)
+    {
+        if (World.TryGet(personId) is not { } p || p.Id == Player.Id) return text;
+        var match = System.Text.RegularExpressions.Regex.Match(text,
+            $@"^(?:{System.Text.RegularExpressions.Regex.Escape(p.FullName)}|{System.Text.RegularExpressions.Regex.Escape(p.FirstName)})(?: \([^)]*\))?(?=[ ,])");
+        if (!match.Success || text[match.Length..].StartsWith("'")) return text;
+        return (p.Sex == Sex.Male ? "He" : "She") + text[match.Length..];
+    }
+
     private ChronicleLine ToLine(LogEntry e) => new(e.Year, Annotate(e.Text, e.PersonIds), e.Importance, e.Category, e.PersonIds);
 
     /// <summary>

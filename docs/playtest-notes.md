@@ -404,3 +404,15 @@ Mina föräldrar har skiljt sig, men jag bor med båda?
 _playtest-saves/2026-10-03_121716.png · playtest-saves/2026-10-03_121716.json_
 
 _Notes above were processed on 2026-10-03 (playtest 5): the title screen scrolls when the window is small, the starts are called easy, medium and hard, the media track's first step is "Editorial Assistant" instead of "Intern", and a child of separated parents lives with one of them (and a new partner) – see CHANGELOG 0.55.0._
+
+### 2026-10-03 15:27 · v0.52.0  ·  1974  ·  Marcus Holm, 4  ·  This Year  ·  seed VDCX73TB
+
+Heart attack på en 4 åring? Måste vara väldigt ovanligt? Fick jag någr komplikationer? Känns som ett för sto händlse att abr anäman sådär Typ som att jag var förkyld
+
+_playtest-saves/2026-10-03_152706.png · playtest-saves/2026-10-03_152706.json_
+
+### 2026-10-03 15:28 · v0.52.0  ·  1974  ·  Marcus Holm, 4  ·  This Year  ·  seed VDCX73TB
+
+Också.. "was struck by" användes heela tiden för allt möäjligt. Vi måste byta språket ordentligt så att det blri variation och korrekt.
+
+_playtest-saves/2026-10-03_152804.png · playtest-saves/2026-10-03_152804.json_

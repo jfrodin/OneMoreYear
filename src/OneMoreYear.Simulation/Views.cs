@@ -264,3 +264,9 @@ public sealed record HomeProjectView(string Id, string Name, string Text, string
 
 /// <summary>One photograph in a life's album: the year, the age, a caption and the face at that age.</summary>
 public sealed record AlbumPhoto(int Year, int Age, string Caption, PortraitView Portrait);
+
+/// <summary>
+/// One person's year in the family paper: the biggest line as the headline, and everything that
+/// happened to them in order as one short story ("Anna moved in with Erik. In the autumn she ...").
+/// </summary>
+public sealed record NewsStory(int PersonId, string Headline, string Body, string Text, int Importance, bool FrontPage);

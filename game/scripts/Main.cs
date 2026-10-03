@@ -793,9 +793,9 @@ public partial class Main : Control
     /// <summary>A new year begins: the family's newspaper, on top of the (already updated) game screen.</summary>
     public void ShowNewspaper(YearReport report)
     {
-        if (Session == null || Settings.Newspaper == NewspaperMode.Never) return;
+        if (Session == null || (Settings.Newspaper == NewspaperMode.Never && _shotDir == null)) return;
         // By default only years with front-page news: big family events or history.
-        if (Settings.Newspaper == NewspaperMode.BigYears && !report.IsBigYear) return;
+        if (Settings.Newspaper == NewspaperMode.BigYears && !report.IsBigYear && _shotDir == null) return;
 
         var dim = new ColorRect { Color = new Color(0, 0, 0, 0.55f), MouseFilter = MouseFilterEnum.Stop };
         dim.SetAnchorsPreset(LayoutPreset.FullRect);

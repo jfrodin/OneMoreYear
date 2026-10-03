@@ -5,7 +5,7 @@ Big decisions live in [design-decisions.md](design-decisions.md).
 
 ## Next, in this order (from playtest 4, 2026-10-01)
 
-1. [ ] **Rethink the newspaper.** Several lines about the same person in one paper (moved in, split up,
+1. [x] **Rethink the newspaper.** Done in 0.56.0: a front page, one story per person in order. Several lines about the same person in one paper (moved in, split up,
    an affair) read oddly, and the order is unclear. Options: one story per person, told in order;
    a front page with one headline and a few short items; or something else than a newspaper
    (a Christmas letter, a page in the album). The producer has not decided yet – wait for them.

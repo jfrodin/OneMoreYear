@@ -17,9 +17,10 @@ public static class Newspaper
 
     public static Control Build(GameSession s, YearReport report, System.Action onClose)
     {
-        var family = report.News.Where(l => l.Category != "world").OrderByDescending(YearReport.IsFrontPage).ThenByDescending(l => l.Importance).ToList();
+        // One story per person, told in order; the biggest is the headline.
+        var stories = s.Stories(report.News);
         var world = report.News.Where(l => l.Category == "world").ToList();
-        var lead = family.FirstOrDefault();
+        var lead = stories.FirstOrDefault();
 
         var page = Ui.VBox(8);
         page.CustomMinimumSize = new Vector2(1120, 0);
@@ -40,23 +41,23 @@ public static class Newspaper
 
         var headline = Ui.HBox(18);
         var photo = Ui.VBox(4);
-        var picture = Portrait.Create(s.Portrait(lead?.PersonIds.FirstOrDefault(id => s.World.TryGet(id)?.IsAlive == true) is { } id and > 0 ? id : s.Player.Id) with { Alive = false }, false, 130);
+        var picture = Portrait.Create(s.Portrait(lead is { PersonId: > 0 } && s.World.TryGet(lead.PersonId) is { } who ? who.Id : s.Player.Id) with { Alive = false }, false, 130);
         picture.Modulate = Colors.White;
         photo.AddChild(picture);
         headline.AddChild(photo);
         var story = Ui.VBox(6);
         story.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-        story.AddChild(Label(lead?.Text ?? "A quiet year", UiTheme.Masthead, 34, Ink, wrap: true));
+        story.AddChild(Label(lead?.Headline ?? "A quiet year", UiTheme.Masthead, 34, Ink, wrap: true));
         story.AddChild(Label(lead == null ? "Nothing much happened in the family. Some years are like that, and some people would give anything for one."
-            : "The family's biggest news this year.", UiTheme.Body, 15, Grey, wrap: true));
+            : lead.Body.Length > 0 ? lead.Body : "The family's biggest news this year.", UiTheme.Body, 16, lead?.Body.Length > 0 ? Ink : Grey, wrap: true));
         headline.AddChild(story);
         main.AddChild(headline);
         main.AddChild(Rule(1));
-        if (family.Count > 1)
+        if (stories.Count > 1)
         {
             main.AddChild(Label("ALSO IN THE FAMILY", UiTheme.Masthead, 18, Ink));
-            foreach (var line in family.Skip(1).Take(7))
-                main.AddChild(Label("·  " + line.Text, UiTheme.Body, 16, Ink, wrap: true));
+            foreach (var item in stories.Skip(1).Take(7))
+                main.AddChild(Label("·  " + item.Text, UiTheme.Body, 16, Ink, wrap: true));
         }
         columns.AddChild(main);
 
