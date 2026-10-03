@@ -416,3 +416,9 @@ _playtest-saves/2026-10-03_152706.png · playtest-saves/2026-10-03_152706.json_
 Också.. "was struck by" användes heela tiden för allt möäjligt. Vi måste byta språket ordentligt så att det blri variation och korrekt.
 
 _playtest-saves/2026-10-03_152804.png · playtest-saves/2026-10-03_152804.json_
+
+### 2026-10-03 15:28 · v0.52.0  ·  1975  ·  Marcus Holm, 5  ·  This Year  ·  seed VDCX73TB
+
+Om min mamma came trough something borde vi säga de ti smam mening om det gälelr smam person. Inte ha det som två helt separata saker. Det tar bot inlevelsen i story tellingen tycke rjag.
+
+_playtest-saves/2026-10-03_152850.png · playtest-saves/2026-10-03_152850.json_
