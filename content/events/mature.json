@@ -98,7 +98,7 @@
     "id": "mt_new_mother_low", "content": [ "mental_health" ], "title": "Not what they said",
     "text": "Everyone said it would be the happiest time of your life. You have a beautiful baby, and you feel nothing at all, except tired and afraid.",
     "conditions": { "minAge": 18, "sex": "female" }, "cooldown": 30, "weight": 2,
-    "target": { "role": "child", "conditions": { "maxAge": 0 } },
+    "target": { "role": "child", "conditions": { "maxAge": 1 } },
     "choices": [
       { "text": "Tell the nurse at the check up", "chance": 0.75,
         "success": { "text": "The nurse has heard it many times. It has a name. There is help. Months later, one morning, you look at {t.name} and feel everything at once.", "effects": [ { "type": "ailment_add", "kind": "depression", "chance": 0.4 }, { "type": "ailment_treat" }, { "type": "happiness", "amount": 2 } ] },

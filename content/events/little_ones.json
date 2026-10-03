@@ -83,10 +83,10 @@
     ]
   },
   {
-    "id": "lo_new_sibling_jealous", "title": "The baby",
+    "id": "lo_new_sibling_jealous", "group": "new_sibling", "title": "The baby",
     "text": "There is a new baby in the house, and everyone looks at it all the time. It cannot even do anything.",
-    "conditions": { "minAge": 2, "maxAge": 7, "livesWithParents": true }, "cooldown": 6,
-    "target": { "role": "sibling", "conditions": { "maxAge": 0 } },
+    "conditions": { "minAge": 2, "maxAge": 7, "livesWithParents": true }, "cooldown": 6, "weight": 3,
+    "target": { "role": "sibling", "conditions": { "maxAge": 1 } },
     "choices": [
       { "text": "Help with {t.name}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "You fetch nappies and sing songs nobody asked for. {t.name} stops crying when you sing. You are very important now." },
       { "text": "Ask when it is going back", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "jealous", "chance": 0.03 } ], "result": "Everyone laughs, which is not an answer. You draw a picture of the family and leave the baby out. It is kept anyway." }

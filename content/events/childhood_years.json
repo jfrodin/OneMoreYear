@@ -159,10 +159,10 @@
     ]
   },
   {
-    "id": "child_jealous_new_baby", "title": "The new baby",
+    "id": "child_jealous_new_baby", "group": "new_sibling", "title": "The new baby",
     "text": "Everyone who visits looks at the new baby. Nobody looks at the drawing you made for it.",
     "conditions": { "minAge": 3, "maxAge": 9, "livesWithParents": true },
-    "target": { "role": "sibling", "conditions": { "maxAge": 0 } }, "cooldown": 30,
+    "target": { "role": "sibling", "conditions": { "maxAge": 1 } }, "cooldown": 30, "weight": 3,
     "choices": [
       { "text": "Help with the baby", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 10 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
         "result": "You are allowed to hold {t.him} on the sofa with a cushion. {t.He} grabs your finger and does not let go." },

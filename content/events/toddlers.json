@@ -138,10 +138,10 @@
     ]
   },
   {
-    "id": "tod_hospital_born", "title": "The new one",
+    "id": "tod_hospital_born", "group": "new_sibling", "title": "The new one",
     "text": "In the hospital, a tiny red person is asleep in your mother's arms. Everyone says this is {t.role}, {t.name}. You are not sure you ordered one.",
-    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 0,
-    "target": { "role": "sibling", "conditions": { "maxAge": 0 } },
+    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 0, "weight": 3,
+    "target": { "role": "sibling", "conditions": { "maxAge": 1 } },
     "choices": [
       { "text": "Give {t.him} your toy", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "You put your second best car in the cot. Everyone says aww. You did not give the best one. You are not stupid." },
       { "text": "Ask when it is going back", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Everybody laughs. You were not joking." }

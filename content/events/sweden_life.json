@@ -129,7 +129,7 @@
   {
     "id": "se_parental_leave_dad", "countries": [ "sweden" ], "title": "Daddy leave",
     "text": "Your partner is going back to work, and the parental leave is yours now: six months at home with the baby, on most of your salary.",
-    "conditions": { "minAge": 20, "sex": "male", "minYear": 1974, "hasPartner": true, "activity": "working" }, "cooldown": 30,
+    "conditions": { "minAge": 20, "sex": "male", "minYear": 1974, "hasPartner": true, "activity": "working" }, "cooldown": 30, "weight": 3,
     "target": { "role": "child", "conditions": { "maxAge": 1 } },
     "choices": [
       { "text": "Take all of it", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 12 }, { "type": "happiness", "amount": 5 }, { "type": "performance", "amount": -2 }, { "type": "memory", "kind": "dad_leave", "text": "Six months at home with {t.name}", "impact": 20 } ], "result": "Pushchairs, cafés full of other fathers, and a small person who now reaches for you first when they fall. You would not trade it for anything." },

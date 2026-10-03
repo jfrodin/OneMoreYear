@@ -194,10 +194,10 @@
     ]
   },
   {
-    "id": "mid_child_new_baby_help", "title": "The new baby",
+    "id": "mid_child_new_baby_help", "group": "new_sibling", "title": "The new baby",
     "text": "There is a new baby in the house, and it is very loud and very small. Everyone is tired. Nobody has asked you how you are.",
-    "conditions": { "minAge": 5, "maxAge": 11 }, "cooldown": 0,
-    "target": { "role": "sibling", "conditions": { "maxAge": 0 } },
+    "conditions": { "minAge": 5, "maxAge": 11 }, "cooldown": 0, "weight": 3,
+    "target": { "role": "sibling", "conditions": { "maxAge": 1 } },
     "choices": [
       { "text": "Help with {t.name}", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "You learn to hold {t.him} properly. {T.He} stops crying for you when {t.he} will not for anyone else. You are very proud of this." },
       { "text": "Act up to be noticed", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You get noticed. Not in the way you wanted. Later, your mother takes you out alone for ice cream, just the two of you." }

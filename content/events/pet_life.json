@@ -75,8 +75,8 @@
   {
     "id": "pet_new_baby", "title": "The new arrival",
     "text": "There is a new baby in the house, and {pet} is very interested, and very worried, about the small loud thing that gets all the attention.",
-    "conditions": { "minAge": 20, "pet": "any" }, "cooldown": 15,
-    "target": { "role": "child", "conditions": { "maxAge": 0 } },
+    "conditions": { "minAge": 20, "pet": "any" }, "cooldown": 15, "weight": 3,
+    "target": { "role": "child", "conditions": { "maxAge": 1 } },
     "choices": [
       { "text": "Introduce them slowly", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A sniff, a long look, and from that day {pet} sleeps under the cot. Every night. For years." },
       { "text": "Keep them apart", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "{pet} sulks for months. Then {t.name} learns to crawl, straight to {pet}, and that is that." }
