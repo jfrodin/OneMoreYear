@@ -1104,6 +1104,24 @@ public class CountryTests
     }
 
     [Fact]
+    public void A_child_picks_a_subject_and_a_crowd_at_school()
+    {
+        int both = 0;
+        for (ulong seed = 41; seed < 47; seed++)
+        {
+            var s = GameSession.NewGame(new NewGameOptions { Seed = seed, StartYear = 1980 });
+            var bot = new AutoPlayer(seed, useActions: false);
+            int playerId = s.Player.Id;
+            for (int i = 0; i < 15 && bot.PlayYear(s); i++) { }
+            if (s.Player.Id != playerId || !s.Player.IsAlive) continue;
+            Assert.NotNull(s.Player.Subject);
+            if (s.Player.Clique != null) both++;
+            if (s.Player.Activity == OneMoreYear.Simulation.Model.Activity.School) Assert.NotNull(s.Career().SchoolNote);
+        }
+        Assert.True(both >= 3, $"{both} children with both");
+    }
+
+    [Fact]
     public void Creative_careers_need_skill_and_bring_fame()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 37, StartYear = 1970 });

@@ -98,6 +98,7 @@ public static class CareerSystem
         if (Math.Abs(smarts) >= 1) list.Add(("Smarts", smarts));
         if (p.Happiness < 30) list.Add(("Unhappy", -8));
         if (p.Flags.Contains(PartTimeFlag)) list.Add(("Part-time job", -6));
+        list.AddRange(SchoolSystem.GradeFactors(p));
         list.AddRange(ReputationSystem.GradeFactors(ctx, p));
         return list;
     }

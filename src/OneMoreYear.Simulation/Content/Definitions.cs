@@ -339,6 +339,8 @@ public sealed class ConditionDef
     public double? MinFame { get; set; }
     public double? MaxFame { get; set; }
     public double? MinPeakFame { get; set; }
+    public string? Subject { get; set; }
+    public string? Clique { get; set; }
     public double? MinGrades { get; set; }
     public double? MaxGrades { get; set; }
     /// <summary>Calendar year limits (for events of their time: a mobile phone, the fall of the Wall).</summary>

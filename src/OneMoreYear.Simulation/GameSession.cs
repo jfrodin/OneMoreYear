@@ -163,6 +163,7 @@ public sealed class GameSession
             if (LifeSystem.CheckDeath(ctx, p)) continue;
             UpbringingSystem.Update(ctx, p);
             SkillSystem.Update(ctx, p);
+            SchoolSystem.Update(ctx, p);
             if (p.Age(ctx.Year) == ctx.Country.AdultAge)
             {
                 PersonFactory.RollAdultTraits(ctx, p);
@@ -685,6 +686,7 @@ public sealed class GameSession
             CanChooseEffort = p.Activity is Activity.Working or Activity.Studying || p.Activity == Activity.School && p.Age(Year) >= 10,
             PerformanceNote = p.Activity == Activity.Working ? FactorNote(CareerSystem.PerformanceFactors(Ctx, p), "Over 50 helps a promotion; under 30 you risk losing the job.") : null,
             GradesNote = p.Activity is Activity.School or Activity.Studying ? FactorNote(CareerSystem.GradeFactors(Ctx, p), null) : null,
+            SchoolNote = p.Activity == Activity.School ? SchoolSystem.Describe(p) : null,
         };
     }
 

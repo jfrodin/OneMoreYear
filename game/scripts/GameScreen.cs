@@ -405,6 +405,7 @@ public partial class GameScreen : Control
                 ? $"No grades yet. They come at {c.GradesFromAge}, and how you do now is where they will start."
                 : "Grades decide which programmes you can get into. Medicine needs about 85, Law 75.", 15, UiTheme.Faint, wrap: true));
             if (c.GradesNote != null) edu.AddChild(Ui.Label(c.GradesNote, 15, UiTheme.Muted, wrap: true));
+            if (c.SchoolNote != null) edu.AddChild(Ui.Label(c.SchoolNote, 16, UiTheme.Text, wrap: true));
         }
         if (c.PartTimeJob) edu.AddChild(Ui.Label("You have a part-time job next to your studies.", 15, UiTheme.Muted));
         _workContent.AddChild(Ui.Card(edu));

@@ -2,6 +2,21 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.60.0 – 2026-10-03 · School
+
+- **A favourite subject.** Around nine you pick the best lesson of the week: maths, science,
+  reading and writing, music, art, sport, woodwork or (from 1984) computers. Maths and science make
+  grades a little easier; the others train a skill every year at school (up to 4), so a child who
+  loves music can leave school already playing. It shows on the School tab.
+- **Where you sit at lunch.** Around thirteen: the sporty crowd, the ones who like school, the
+  rebels, the quiet ones, or the popular crowd (if they let you sit down). The crowd pulls grades up
+  or down, and brings its own stories.
+- 20 school events built on both: the school band, the painting competition, the youth team trials,
+  a story in the paper, the maths olympiad, the science fair, the box from woodwork, the computer
+  club, behind the gym, skipping the afternoon, the quiz team, the party, the joke that goes too
+  far, the librarian, the tackle, the new teacher, the answers going round, parents' evening.
+- A school success can turn into a hobby, which is the first step towards a creative career.
+
 ## 0.59.0 – 2026-10-03 · Working lives
 
 - 29 new events from particular jobs, so every track has stories of its own: the night shift and

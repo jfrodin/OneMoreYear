@@ -15,7 +15,7 @@ public static class EffectApplier
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
         "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
-        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth", "heirloom", "pet_add", "pet_rehome", "hobby", "skill", "start_business", "business", "rental", "fame", "career"
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth", "heirloom", "pet_add", "pet_rehome", "hobby", "skill", "start_business", "business", "rental", "fame", "career", "subject", "clique"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -186,6 +186,12 @@ public static class EffectApplier
                     if (BusinessSystem.Start(ctx, who, e.Kind, out var startText) is { } started) BusinessSystem.Fill(ctx, pending, started);
                     if (startText.Length > 0) pending.ExtraText.Add(startText);
                 }
+                break;
+            case "subject":
+                if (e.Kind != null && SchoolSystem.Subjects.Any(s => s.Id == e.Kind)) who.Subject = e.Kind;
+                break;
+            case "clique":
+                if (e.Kind != null && SchoolSystem.Cliques.Any(s => s.Id == e.Kind)) who.Clique = e.Kind;
                 break;
             case "fame":
                 FameSystem.Change(who, amount);

@@ -1,0 +1,222 @@
+// School as a place with its own life (SchoolSystem): a favourite subject from nine, a crowd at
+// lunch from thirteen, and the stories that follow from both. No dashes.
+[
+  {
+    "id": "school_favourite_subject", "trigger": "milestone", "title": "The best lesson of the week",
+    "text": "Some lessons drag. One makes the week worth it. Which one is it?",
+    "conditions": { "minAge": 9, "maxAge": 11, "activity": "school", "notFlags": [ "chose_subject" ] }, "cooldown": 50,
+    "choices": [
+      { "text": "Maths", "hint": "Grades come a little easier.", "effects": [ { "type": "subject", "kind": "maths" }, { "type": "flag", "flag": "chose_subject" }, { "type": "attribute", "kind": "smarts", "amount": 2 } ], "result": "Numbers behave. People do not, but numbers do. You finish the exercises before anyone else and start on next week's." },
+      { "text": "Science", "hint": "Grades come a little easier.", "effects": [ { "type": "subject", "kind": "science" }, { "type": "flag", "flag": "chose_subject" }, { "type": "attribute", "kind": "smarts", "amount": 2 } ], "result": "A frog in a jar, a magnet, a flame that turns green. Everything has a reason, and you want to know all of them." },
+      { "text": "Reading and writing", "hint": "Practises writing.", "effects": [ { "type": "subject", "kind": "languages" }, { "type": "flag", "flag": "chose_subject" } ], "result": "The teacher reads your story aloud to the class. You pretend to be embarrassed. You are not." },
+      { "text": "Music", "hint": "Practises music.", "effects": [ { "type": "subject", "kind": "music" }, { "type": "flag", "flag": "chose_subject" } ], "result": "A recorder at first, then the old piano in the corner. You stay behind every week to play it." },
+      { "text": "Art", "hint": "Practises painting.", "effects": [ { "type": "subject", "kind": "art" }, { "type": "flag", "flag": "chose_subject" } ], "result": "Paint on your sleeves, paint in your hair. The teacher pins your picture up in the corridor where everybody walks past." },
+      { "text": "Sport", "hint": "Practises sport. Grades suffer a little.", "effects": [ { "type": "subject", "kind": "sport" }, { "type": "flag", "flag": "chose_subject" }, { "type": "attribute", "kind": "fitness", "amount": 3 } ], "result": "You are first out of the changing room and last back in. The rest of the timetable is waiting time." },
+      { "text": "Woodwork", "hint": "Practises being handy.", "effects": [ { "type": "subject", "kind": "crafts" }, { "type": "flag", "flag": "chose_subject" } ], "result": "A wobbly stool, a bird box, a butter knife. Everything you make goes home, and is kept for decades." },
+      { "text": "Computers", "hint": "Practises programming.", "requires": { "minYear": 1984 }, "effects": [ { "type": "subject", "kind": "computers" }, { "type": "flag", "flag": "chose_subject" } ], "result": "Two machines in a cold room, a queue to use them, and a blinking cursor waiting for you to tell it what to do." }
+    ]
+  },
+  {
+    "id": "school_lunch_table", "trigger": "milestone", "title": "Where you sit",
+    "text": "The canteen. Every table has its own people, and everyone knows which table is whose. You are standing with a tray.",
+    "conditions": { "minAge": 12, "maxAge": 14, "activity": "school", "notFlags": [ "chose_clique" ] }, "cooldown": 50,
+    "choices": [
+      { "text": "The sporty crowd", "effects": [ { "type": "clique", "kind": "sporty" }, { "type": "flag", "flag": "chose_clique" }, { "type": "attribute", "kind": "fitness", "amount": 2 } ], "result": "Loud, hungry, talking about last night's game. Somebody throws you a roll before you have sat down." },
+      { "text": "The ones who like school", "effects": [ { "type": "clique", "kind": "nerds" }, { "type": "flag", "flag": "chose_clique" } ], "result": "A table arguing about a book, a film and whether time travel is possible. Nobody laughs at you for knowing things." },
+      { "text": "The rebels", "effects": [ { "type": "clique", "kind": "rebels" }, { "type": "flag", "flag": "chose_clique" }, { "type": "trait_add", "trait": "impulsive", "chance": 0.05 } ], "result": "Black clothes, scratched desks, a plan for after school that is definitely not allowed. They make room for you." },
+      { "text": "The quiet ones", "effects": [ { "type": "clique", "kind": "quiet" }, { "type": "flag", "flag": "chose_clique" } ], "result": "Two others at the end of a long table, eating without needing to talk. It is the best kind of company." },
+      { "text": "The popular crowd", "chance": 0.45, "chanceAttributes": { "looks": 0.006 }, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "They look you up and down, and then shift along the bench. You are in. Staying in is a full time job.", "effects": [ { "type": "clique", "kind": "popular" }, { "type": "flag", "flag": "chose_clique" }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "\"That seat is taken.\" It is not. You walk the whole canteen with your tray and sit with the quiet ones, where nobody asks anything.", "effects": [ { "type": "clique", "kind": "quiet" }, { "type": "flag", "flag": "chose_clique" }, { "type": "happiness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "school_band", "title": "The school band",
+    "text": "The music teacher is starting a band. They need a bass player, which nobody wants to be.",
+    "conditions": { "minAge": 11, "maxAge": 18, "activity": "school", "subject": "music" }, "cooldown": 0,
+    "choices": [
+      { "text": "Be the bass player", "effects": [ { "type": "hobby", "kind": "music" }, { "type": "skill", "kind": "music", "amount": 1 }, { "type": "happiness", "amount": 5 } ], "result": "Tuesday afternoons in the music room. The spring concert is terrible and wonderful. You keep playing for the rest of your life." },
+      { "text": "Just listen", "effects": [], "result": "They find a bass player. You go to the concert and clap louder than anybody's parents." }
+    ]
+  },
+  {
+    "id": "school_art_prize", "title": "The competition",
+    "text": "The town is holding a painting competition for schools. Your art teacher has put your name down without asking.",
+    "conditions": { "minAge": 10, "maxAge": 18, "activity": "school", "subject": "art" }, "cooldown": 0,
+    "choices": [
+      { "text": "Paint the best thing you can", "chance": 0.35, "chanceSkills": { "painting": 0.08 },
+        "success": { "text": "First prize. Your painting hangs in the library for a year, with a little card that has your name on it.", "effects": [ { "type": "hobby", "kind": "painting" }, { "type": "skill", "kind": "painting", "amount": 1 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "art_prize", "text": "First prize in the painting competition", "impact": 18 } ] },
+        "failure": { "text": "A shared third place, with a boy who painted a horse. You think your painting was better. So does your grandmother.", "effects": [ { "type": "skill", "kind": "painting", "amount": 1 }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Ask to be taken off the list", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "The teacher is disappointed. You paint at home instead, where nobody judges anything." }
+    ]
+  },
+  {
+    "id": "school_team_trials", "title": "The team",
+    "text": "The town club is holding trials for the youth team. Half your class is going. You are better than most of them, and you know it.",
+    "conditions": { "minAge": 10, "maxAge": 16, "activity": "school", "subject": "sport" }, "cooldown": 0,
+    "choices": [
+      { "text": "Go to the trials", "chance": 0.55, "chanceAttributes": { "fitness": 0.005 },
+        "success": { "text": "On the team. Training three evenings a week, matches on Saturdays, a parent in the stands shouting things they will regret.", "effects": [ { "type": "hobby", "kind": "sport" }, { "type": "skill", "kind": "sport", "amount": 1 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Not this year. The coach says come back next season. You train in the park all summer, alone, angry.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ] } },
+      { "text": "Play for fun instead", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Football in the yard until it gets dark. Nobody keeps score, except everybody." }
+    ]
+  },
+  {
+    "id": "school_story_published", "title": "In the paper",
+    "text": "The local paper runs a short story competition for young writers. Your teacher has read your stories and thinks you should enter.",
+    "conditions": { "minAge": 11, "maxAge": 18, "activity": "school", "subject": "languages" }, "cooldown": 0,
+    "choices": [
+      { "text": "Write something new", "chance": 0.35, "chanceSkills": { "writing": 0.08 },
+        "success": { "text": "Your story in the Saturday paper, with your name and your school photo. Your parents buy six copies. One of them is still in a drawer fifty years later.", "effects": [ { "type": "hobby", "kind": "writing" }, { "type": "skill", "kind": "writing", "amount": 1 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "story_in_paper", "text": "My story in the paper", "impact": 18 } ] },
+        "failure": { "text": "It does not win. The judge writes one line on it: \"Keep going.\" You do.", "effects": [ { "type": "skill", "kind": "writing", "amount": 1 } ] } },
+      { "text": "Keep your stories private", "effects": [], "result": "The notebooks stay under your mattress. They are better than anything that wins." }
+    ]
+  },
+  {
+    "id": "school_maths_olympiad", "title": "The olympiad",
+    "text": "A maths competition for the whole country. Three hours, six problems, and a teacher who believes you can solve at least four.",
+    "conditions": { "minAge": 12, "maxAge": 18, "activity": "school", "subject": "maths" }, "cooldown": 0,
+    "choices": [
+      { "text": "Enter", "chance": 0.3, "chanceAttributes": { "smarts": 0.008 },
+        "success": { "text": "Fifth in the country. A certificate, a trip to the capital, and the first time you meet people who think the way you do.", "effects": [ { "type": "grades", "amount": 6 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "olympiad", "text": "Fifth in the country at maths", "impact": 18 } ] },
+        "failure": { "text": "Two problems out of six. You think about problem four for a week afterwards, and then you solve it on the bus.", "effects": [ { "type": "grades", "amount": 2 } ] } },
+      { "text": "Maths is not a sport", "effects": [], "result": "You do the problems at home, for fun, without anyone timing you. You solve five." }
+    ]
+  },
+  {
+    "id": "school_science_fair", "title": "The science fair",
+    "text": "The science fair is in a month. Everyone else is building a volcano.",
+    "conditions": { "minAge": 10, "maxAge": 17, "activity": "school", "subject": "science" }, "cooldown": 0,
+    "choices": [
+      { "text": "Do a real experiment", "chance": 0.5, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "Which plants grow best with music. Six weeks, careful notes, a graph. The judges are visibly relieved it is not a volcano. You win.", "effects": [ { "type": "grades", "amount": 5 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "The plants all die in week three. You present the dead plants with great seriousness. You get a prize for honesty.", "effects": [ { "type": "grades", "amount": 2 }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Build a volcano", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "It erupts on the head teacher. It is the most memorable science fair in the school's history." }
+    ]
+  },
+  {
+    "id": "school_woodwork_gift", "title": "Something you made",
+    "text": "In woodwork you have made something properly good: a small box with a lid that fits, polished until it shines.",
+    "conditions": { "minAge": 9, "maxAge": 16, "activity": "school", "subject": "crafts" }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Give it to {t.name}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "skill", "kind": "handiness", "amount": 1 } ], "result": "{t.name} keeps it on the bedside table, for keys and rings and a lock of your baby hair. It outlives {t.him}." },
+      { "text": "Keep it", "effects": [ { "type": "skill", "kind": "handiness", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "It holds your treasures for years: a shell, a key to nothing, a note from someone." }
+    ]
+  },
+  {
+    "id": "school_computer_club", "title": "The computer club",
+    "text": "After school, in the room with the computers, a few of you have started writing a game. It is mostly bugs. It is the best thing in the world.",
+    "conditions": { "minAge": 11, "maxAge": 18, "activity": "school", "subject": "computers" }, "cooldown": 0,
+    "choices": [
+      { "text": "Stay late every day", "effects": [ { "type": "hobby", "kind": "programming" }, { "type": "skill", "kind": "programming", "amount": 1 }, { "type": "happiness", "amount": 4 }, { "type": "grades", "amount": -1 } ], "result": "The caretaker throws you out at six. The game has a title screen now. Nothing else works, but the title screen is beautiful." },
+      { "text": "Keep it to Fridays", "effects": [ { "type": "skill", "kind": "programming", "amount": 1 } ], "result": "Fridays at the keyboard, the rest of the week at your homework. A sensible balance that nobody admires." }
+    ]
+  },
+  {
+    "id": "school_rebels_smoking", "title": "Behind the gym",
+    "text": "Your friends are smoking behind the gym at lunch, and passing one to you.",
+    "conditions": { "minAge": 13, "maxAge": 17, "activity": "school", "clique": "rebels" }, "cooldown": 4,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "happiness", "amount": 1 }, { "type": "health", "amount": -2 }, { "type": "trait_add", "trait": "addictive", "chance": 0.04 } ], "result": "You cough until your eyes water. Everybody laughs, kindly. By spring you do not cough any more, which is worse." },
+      { "text": "Pass it on", "chance": 0.7,
+        "success": { "text": "Nobody cares as much as you feared. You hold the lookout instead, which is an honoured position.", "effects": [ { "type": "happiness", "amount": 1 } ] },
+        "failure": { "text": "Comments, for a week. You start eating lunch somewhere else for a while.", "effects": [ { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "school_rebels_skip", "title": "The whole afternoon",
+    "text": "The plan: skip the afternoon, take the bus into town, and be back before anyone notices. Everyone is going.",
+    "conditions": { "minAge": 13, "maxAge": 18, "activity": "school", "clique": "rebels" }, "cooldown": 3,
+    "choices": [
+      { "text": "Go", "chance": 0.6,
+        "success": { "text": "The best afternoon of the year: the arcade, chips on a bench, the bus back with a minute to spare.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "grades", "amount": -2 } ] },
+        "failure": { "text": "A neighbour sees you outside the cinema. By dinner, everyone knows. Grounded for a month.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "grades", "amount": -2 }, { "type": "relation", "who": "parent", "to": "player", "dim": "trust", "amount": -6 } ] } },
+      { "text": "Stay for chemistry", "effects": [ { "type": "grades", "amount": 2 } ], "result": "They call you boring for a week. You do well on the test. Both things are true." }
+    ]
+  },
+  {
+    "id": "school_nerds_quiz", "title": "The quiz team",
+    "text": "Your table has entered the regional school quiz. You are the one who knows about history, sport and, for some reason, birds.",
+    "conditions": { "minAge": 12, "maxAge": 18, "activity": "school", "clique": "nerds" }, "cooldown": 3,
+    "choices": [
+      { "text": "Train every lunch", "chance": 0.45, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "Regional champions. A trophy too big for the cabinet, and a photo in the local paper of four people trying not to look pleased.", "effects": [ { "type": "grades", "amount": 3 }, { "type": "happiness", "amount": 7 } ] },
+        "failure": { "text": "Second, on the last question. It was about a bird. You knew it. You said the wrong one.", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "grades", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "school_popular_party", "title": "The party",
+    "text": "The biggest party of the year, at a house whose parents are away. You are invited. Your best friend from before is not.",
+    "conditions": { "minAge": 14, "maxAge": 18, "clique": "popular" }, "cooldown": 3,
+    "choices": [
+      { "text": "Go without them", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "vain", "chance": 0.03 } ], "result": "Music, drama, someone crying in the bathroom, someone falling into the pool. The next Monday your old friend sits somewhere else." },
+      { "text": "Bring them anyway", "chance": 0.5, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "Nobody minds, in the end. Your friend has the night of their life and never forgets who brought them.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "loyal", "chance": 0.05 } ] },
+        "failure": { "text": "Looks, whispers, an early exit for both of you. You walk home together and it is, honestly, better.", "effects": [ { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Stay home", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You hear all about it on Monday, twice, in versions that cannot both be true." }
+    ]
+  },
+  {
+    "id": "school_popular_cruel", "title": "The joke",
+    "text": "Your table has started making fun of a girl in your class. Every day. Today they want you to say something too.",
+    "conditions": { "minAge": 12, "maxAge": 17, "activity": "school", "clique": "popular" }, "cooldown": 6,
+    "choices": [
+      { "text": "Join in", "effects": [ { "type": "trait_add", "trait": "cruel", "chance": 0.05 }, { "type": "happiness", "amount": -1 } ], "result": "They laugh. She does not look at you. Twenty years later you see her in a shop and leave without your shopping." },
+      { "text": "Tell them to stop", "chance": 0.4, "chanceTraits": { "brave": 0.2, "charming": 0.1 },
+        "success": { "text": "A silence, then a shrug, then they stop. Mostly. She sits with you in the spring.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.06 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "Now it is you. For a term. You find out who your real friends are, which is fewer than you thought.", "effects": [ { "type": "happiness", "amount": -8 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ] } }
+    ]
+  },
+  {
+    "id": "school_quiet_friend", "title": "The library",
+    "text": "The school librarian has noticed you come in every lunch. Today there is a book on the counter, put aside, with your name on a note.",
+    "conditions": { "minAge": 10, "maxAge": 17, "activity": "school", "clique": "quiet" }, "cooldown": 6,
+    "choices": [
+      { "text": "Read it", "effects": [ { "type": "grades", "amount": 2 }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "librarian", "text": "The book the librarian put aside for me", "impact": 12 } ], "result": "It is exactly the book you needed, though you could not have said so. The next week there is another one." }
+    ]
+  },
+  {
+    "id": "school_sporty_injury", "title": "The tackle",
+    "text": "A bad tackle in the school match. Your ankle is the wrong shape and the season starts next week.",
+    "conditions": { "minAge": 12, "maxAge": 18, "activity": "school", "clique": "sporty" }, "cooldown": 6,
+    "choices": [
+      { "text": "Rest it properly", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "grades", "amount": 2 } ], "result": "Six weeks on crutches. You do more homework than ever before in your life. Your grades have never been better, which annoys you." },
+      { "text": "Play through it", "chance": 0.5,
+        "success": { "text": "Strapped up and stubborn, you play the whole season. You are a legend in the changing room.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "It never quite heals. On cold days, at sixty, you will still feel that tackle.", "effects": [ { "type": "health", "amount": -6 }, { "type": "attribute", "kind": "fitness", "amount": -4 } ] } }
+    ]
+  },
+  {
+    "id": "school_new_teacher", "title": "The new teacher",
+    "text": "A new teacher, young, fresh from college, who has decided to make your class love her subject. The class has decided otherwise.",
+    "conditions": { "minAge": 11, "maxAge": 17, "activity": "school" }, "cooldown": 8,
+    "choices": [
+      { "text": "Give her a chance", "effects": [ { "type": "grades", "amount": 3 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "You answer when nobody else will. By spring half the class is listening. She signs your yearbook: \"You made the difference.\"" },
+      { "text": "Side with the class", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "grades", "amount": -2 } ], "result": "She lasts until Easter. The replacement is old, strict and boring, and everybody misses her." }
+    ]
+  },
+  {
+    "id": "school_exam_cheat", "title": "The answers",
+    "text": "Someone has the answers to tomorrow's exam. They are being passed round on a folded sheet. It reaches you.",
+    "conditions": { "minAge": 13, "maxAge": 18, "activity": "school" }, "cooldown": 8,
+    "choices": [
+      { "text": "Look", "chance": 0.75,
+        "success": { "text": "The best mark you have ever had. It does not feel like yours, because it is not.", "effects": [ { "type": "grades", "amount": 4 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.05 } ] },
+        "failure": { "text": "The teacher changed the questions. Half the class fails, very confidently.", "effects": [ { "type": "grades", "amount": -5 } ] } },
+      { "text": "Pass it on without looking", "effects": [ { "type": "grades", "amount": 1 } ], "result": "You study instead. You get a normal mark, and you sleep well." }
+    ]
+  },
+  {
+    "id": "school_parents_evening", "title": "Parents' evening",
+    "text": "Parents' evening. Your parent is in there with your teacher right now, and you are on a chair in the corridor.",
+    "conditions": { "minAge": 9, "maxAge": 15, "activity": "school", "livesWithParents": true }, "cooldown": 5,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Listen at the door", "chance": 0.5,
+        "success": { "text": "\"A bright child, if a bit of a daydreamer.\" {t.name} comes out and buys you an ice cream on the way home, without explaining.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "The door opens while you are leaning on it. Everybody pretends that did not happen.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Wait, and worry", "effects": [], "result": "Twenty minutes that feel like a term. {t.name} comes out and says \"fine\", and nothing else, all the way home." }
+    ]
+  }
+]

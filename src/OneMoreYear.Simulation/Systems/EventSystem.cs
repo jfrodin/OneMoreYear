@@ -198,6 +198,8 @@ public static class EventSystem
         if (c.MinFame is { } minFame && p.Fame < minFame) return false;
         if (c.MaxFame is { } maxFame && p.Fame > maxFame) return false;
         if (c.MinPeakFame is { } peak && p.PeakFame < peak) return false;
+        if (c.Subject is { } subject && p.Subject != subject) return false;
+        if (c.Clique is { } clique && p.Clique != clique) return false;
         if (c.Pet is { } petKind && (petKind == "none" ? PetSystem.InHome(w, p).Any() : PetSystem.Matching(ctx, p, petKind) == null)) return false;
         int kids = p.ChildIds.Count(id => w.Get(id).IsAlive);
         if (c.MinChildren is { } minK && kids < minK) return false;

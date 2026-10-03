@@ -274,6 +274,8 @@ public sealed class ContentDb
                     if (!Systems.EffectApplier.KnownTypes.Contains(eff.Type)) errors.Add($"Event {e.Id}: unknown effect type '{eff.Type}'");
                     if (eff.Type == "start_business" && (eff.Kind == null || !BusinessKinds.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown business {eff.Kind}");
                     if (eff.Type == "career" && Occupation(eff.Kind) == null) errors.Add($"Event {e.Id}: unknown occupation {eff.Kind}");
+                    if (eff.Type == "subject" && !Systems.SchoolSystem.Subjects.Any(s => s.Id == eff.Kind)) errors.Add($"Event {e.Id}: unknown subject {eff.Kind}");
+                    if (eff.Type == "clique" && !Systems.SchoolSystem.Cliques.Any(s => s.Id == eff.Kind)) errors.Add($"Event {e.Id}: unknown clique {eff.Kind}");
                     if (eff.Type is "hobby" or "skill" && (eff.Kind == null || !Hobbies.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown hobby {eff.Kind}");
                     if (eff.Type == "pet_add" && (eff.Kind == null || !PetKinds.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown pet {eff.Kind}");
                     if (eff.Type == "emigrate" && (eff.Country == null || !Countries.ContainsKey(eff.Country))) errors.Add($"Event {e.Id}: emigrate to unknown country {eff.Country}");
@@ -346,6 +348,8 @@ public sealed class ContentDb
             if (!Traits.ContainsKey(t)) errors.Add($"Event {eventId}: unknown trait {t}");
         foreach (var sk in (c.MinSkills?.Keys ?? Enumerable.Empty<string>()).Concat(c.Hobby != null ? new[] { c.Hobby } : Array.Empty<string>()))
             if (!Hobbies.ContainsKey(sk)) errors.Add($"Event {eventId}: unknown skill {sk}");
+        if (c.Subject != null && !Systems.SchoolSystem.Subjects.Any(s => s.Id == c.Subject)) errors.Add($"Event {eventId}: unknown subject {c.Subject}");
+        if (c.Clique != null && !Systems.SchoolSystem.Cliques.Any(s => s.Id == c.Clique)) errors.Add($"Event {eventId}: unknown clique {c.Clique}");
         foreach (var job in (c.Jobs ?? new()).Concat(c.NotJobs ?? new()))
             if (Occupation(job) == null) errors.Add($"Event {eventId}: unknown occupation {job}");
         foreach (var tag in c.JobTags ?? new())

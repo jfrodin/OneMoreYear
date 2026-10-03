@@ -116,6 +116,9 @@ public sealed class Person
     public SortedDictionary<string, int> HomeProjects { get; set; } = new(StringComparer.Ordinal);
     /// <summary>Yearly wishes that came true (WishSystem).</summary>
     public int WishesKept { get; set; }
+    /// <summary>The favourite subject at school, and the crowd at lunch (SchoolSystem).</summary>
+    public string? Subject { get; set; }
+    public string? Clique { get; set; }
     /// <summary>How well known the person is, 0 to 100 (FameSystem), and the most they ever were.</summary>
     public double Fame { get; set; }
     public double PeakFame { get; set; }

@@ -148,6 +148,7 @@ public sealed record CareerView
     /// <summary>"Heading towards about 68: working hard +12, ambition +15 …" – what moves performance and grades.</summary>
     public string? PerformanceNote { get; init; }
     public string? GradesNote { get; init; }
+    public string? SchoolNote { get; init; }
     /// <summary>The age school starts giving grades in this country.</summary>
     public int GradesFromAge { get; init; } = 14;
 }
