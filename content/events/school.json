@@ -114,7 +114,7 @@
     ]
   },
   {
-    "id": "school_rebels_smoking", "title": "Behind the gym",
+    "id": "school_rebels_smoking", "group": "first_cigarette", "title": "Behind the gym",
     "text": "Your friends are smoking behind the gym at lunch, and passing one to you.",
     "conditions": { "minAge": 13, "maxAge": 17, "activity": "school", "clique": "rebels" }, "cooldown": 4,
     "choices": [
@@ -197,7 +197,7 @@
     ]
   },
   {
-    "id": "school_exam_cheat", "title": "The answers",
+    "id": "school_exam_cheat", "group": "exam_answers", "title": "The answers",
     "text": "Someone has the answers to tomorrow's exam. They are being passed round on a folded sheet. It reaches you.",
     "conditions": { "minAge": 13, "maxAge": 18, "activity": "school" }, "cooldown": 8,
     "choices": [

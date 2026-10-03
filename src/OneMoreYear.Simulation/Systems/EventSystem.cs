@@ -25,7 +25,7 @@ public static class EventSystem
         if (def.DynamicChoices == "cities")
             pending.Options = ctx.Country.Cities.Where(c => c.Id != w.Player.CityId).Select(c => c.Id).ToList();
         w.PendingEvents.Add(pending);
-        w.EventHistory[eventId] = w.Year;
+        Remember(w, def);
         return pending;
     }
 
@@ -52,7 +52,7 @@ public static class EventSystem
             var pending = CreatePending(ctx, def, player, distances);
             if (pending == null) continue;
             w.PendingEvents.Add(pending);
-            w.EventHistory[def.Id] = w.Year;
+            Remember(w, def);
         }
 
         // History and milestones do not compete with everyday life: Dagen H comes in 1967, a first word at one.
@@ -62,9 +62,16 @@ public static class EventSystem
             if (history >= 3 || !IsEligible(ctx, def, player, distances)) continue;
             if (CreatePending(ctx, def, player, distances) is not { } pending) continue;
             w.PendingEvents.Add(pending);
-            w.EventHistory[def.Id] = w.Year;
+            Remember(w, def);
             history++;
         }
+    }
+
+    /// <summary>The event has come this year (and so has its group).</summary>
+    private static void Remember(World w, EventDef def)
+    {
+        w.EventHistory[def.Id] = w.Year;
+        if (def.Group != null) w.EventHistory["group:" + def.Group] = w.Year;
     }
 
     private static bool IsEligible(SimContext ctx, EventDef e, Person player, Dictionary<int, int> distances)
@@ -77,6 +84,9 @@ public static class EventSystem
             if (e.Cooldown == 0) return false;
             if (w.Year - last < e.Cooldown) return false;
         }
+        // Another telling of the same moment has already come: wait as if it had been this one.
+        if (e.Group != null && !w.EventHistory.ContainsKey(e.Id) && w.EventHistory.TryGetValue("group:" + e.Group, out var told)
+            && (e.Cooldown == 0 || w.Year - told < e.Cooldown)) return false;
         if (!Matches(ctx, e.Conditions, player, player)) return false;
         if (e.Target != null && e.Target.Role != "new_person" && !Candidates(ctx, e.Target, player, distances, e).Any()) return false;
         return true;

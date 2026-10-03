@@ -2,6 +2,23 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.61.0 – 2026-10-03 · Small people, big feelings
+
+- 20 events for the years between three and seven, the thinnest part of a life: the best friend
+  with the same boots, the bad dream, green things on the plate, the birthday party, the bike
+  without stabilisers, the deep end, the shop in the hall, the new baby, the den, the first snow,
+  the lost bear, being a tree in the play, grandparent stories, the drawing on the fridge, "why",
+  getting married under the climbing frame, fireworks.
+- 18 more teenage events: the paper round, confirmation, braces, hair dye, the end of the world,
+  the window at midnight, the first bottle, a photo shared with the whole year, running away, a
+  parent's plan for your life, not eating, a sibling's party, volunteering, games all night, the
+  mirror, eleven days of silence, the first summer job, the history teacher.
+- **No more twice told moments.** Events that tell the same moment (a first cigarette, the exam
+  answers going round, a wobbly tooth, the school play, the first concert, the first school day,
+  the library card) now form a group: once one has come, the others do not.
+- Two new holiday events replace ones that repeated older ones: All Saints' candles, and cinnamon
+  bun day.
+
 ## 0.60.0 – 2026-10-03 · School
 
 - **A favourite subject.** Around nine you pick the best lesson of the week: maths, science,

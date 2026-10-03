@@ -108,7 +108,7 @@
     ]
   },
   {
-    "id": "teen_smoking", "title": "Behind the gym",
+    "id": "teen_smoking", "group": "first_cigarette", "title": "Behind the gym",
     "text": "Your friends are smoking behind the gym. Someone holds out the pack.",
     "conditions": { "minAge": 13, "maxAge": 18, "notFlags": [ "smoker" ] }, "cooldown": 0,
     "choices": [

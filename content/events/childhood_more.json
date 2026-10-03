@@ -34,7 +34,7 @@
     ]
   },
   {
-    "id": "child_tooth", "title": "Wobbly",
+    "id": "child_tooth", "group": "lost_tooth", "title": "Wobbly",
     "text": "Your first tooth is wobbling. You can move it with your tongue, and you can't stop doing it.",
     "conditions": { "minAge": 5, "maxAge": 7 }, "cooldown": 0,
     "choices": [
@@ -45,7 +45,7 @@
     ]
   },
   {
-    "id": "child_first_school_day", "title": "The first day",
+    "id": "child_first_school_day", "group": "first_school_day", "title": "The first day",
     "text": "First day of school. Your backpack is almost as big as you are, and {t.name} is holding your hand at the gate.",
     "conditions": { "minAge": 7, "maxAge": 7 }, "cooldown": 0, "weight": 4,
     "target": { "role": "parent" },
@@ -143,7 +143,7 @@
     ]
   },
   {
-    "id": "child_school_play", "title": "The school play",
+    "id": "child_school_play", "group": "school_play", "title": "The school play",
     "text": "The class is putting on a play and the teacher asks who wants the lead role.",
     "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
     "choices": [
@@ -195,7 +195,7 @@
     ]
   },
   {
-    "id": "child_library", "title": "The library",
+    "id": "child_library", "group": "library_card", "title": "The library",
     "text": "The librarian says you can borrow ten books at a time. Ten!",
     "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
     "choices": [

@@ -25,7 +25,7 @@
     ]
   },
   {
-    "id": "teen2_cheat_test", "title": "The answers",
+    "id": "teen2_cheat_test", "group": "exam_answers", "title": "The answers",
     "text": "Somebody has the answers to tomorrow's maths test, photographed off the teacher's desk. They are going round the class.",
     "conditions": { "minAge": 13, "maxAge": 18, "activity": "school" }, "cooldown": 0,
     "choices": [

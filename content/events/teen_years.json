@@ -22,7 +22,7 @@
     ]
   },
   {
-    "id": "teen_concert", "title": "The concert",
+    "id": "teen_concert", "group": "first_concert", "title": "The concert",
     "text": "Your favourite band is playing in the city. The ticket costs a month of pocket money and your parents say the answer is no.",
     "conditions": { "minAge": 14, "maxAge": 18, "livesWithParents": true }, "cooldown": 3,
     "choices": [
@@ -93,7 +93,7 @@
     ]
   },
   {
-    "id": "teen_smoke_behind_school", "title": "Behind the gym",
+    "id": "teen_smoke_behind_school", "group": "first_cigarette", "title": "Behind the gym",
     "text": "The cool kids smoke behind the gym at lunch. One of them holds out the packet to you.",
     "conditions": { "minAge": 13, "maxAge": 17, "maxYear": 2010 }, "cooldown": 10,
     "choices": [
@@ -114,7 +114,7 @@
     ]
   },
   {
-    "id": "teen_exam_cheat", "title": "The answers",
+    "id": "teen_exam_cheat", "group": "exam_answers", "title": "The answers",
     "text": "Someone has got hold of the answers to the maths test. They are going round the class on a folded piece of paper.",
     "conditions": { "minAge": 13, "maxAge": 19, "activity": "School" }, "cooldown": 6,
     "choices": [

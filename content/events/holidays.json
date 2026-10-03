@@ -13,12 +13,21 @@
     ]
   },
   {
-    "id": "hol_valborg", "countries": [ "sweden" ], "title": "Walpurgis Night",
-    "text": "The last night of April. A bonfire on the hill, a choir singing spring in, and the first evening of the year that is almost warm.",
-    "conditions": { "minAge": 6 }, "cooldown": 6,
+    "id": "hol_valborg", "countries": [ "sweden" ], "title": "All Saints",
+    "text": "All Saints' weekend. At dusk the churchyard is full of small lights, a candle on every grave, and people standing quietly in the cold.",
+    "conditions": { "minAge": 8 }, "cooldown": 6,
     "choices": [
-      { "text": "Go to the bonfire", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Smoke in your hair, cold feet, a choir slightly out of tune. Winter is officially over, whatever the weather says tomorrow." },
-      { "text": "Go to the student party", "requires": { "minAge": 18, "maxAge": 30 }, "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -2 } ], "result": "Champagne breakfast in a park at nine in the morning, and the rest of the day is a rumour." }
+      { "text": "Light a candle for someone", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "kind", "chance": 0.02 } ], "result": "You stand by a stone with a name you love on it. The flame flickers and holds. Walking out, the whole churchyard glows behind you like a town seen from far away." },
+      { "text": "Walk through and look", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Hundreds of lights, hundreds of names. You read the dates and do the sums without meaning to." }
+    ]
+  },
+  {
+    "id": "hol_semla", "countries": [ "sweden" ], "title": "Cinnamon bun day",
+    "text": "The fourth of October, and the whole country smells of cardamom. Somebody at [[1999: home || work]] has baked a tray of cinnamon buns, still warm.",
+    "conditions": { "minAge": 5, "minYear": 1999 }, "cooldown": 5,
+    "choices": [
+      { "text": "Take two", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Pearl sugar on your sleeve, a coffee or a glass of milk, and ten minutes in which nothing is wrong with the world." },
+      { "text": "Bake your own", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "skill", "kind": "cooking", "amount": 1 } ], "result": "The dough rises badly, then well. The kitchen smells like childhood. You give half of them away and wish you had not." }
     ]
   },
   {
@@ -37,15 +46,6 @@
     "choices": [
       { "text": "Dance round the pole anyway", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -1 } ], "result": "Soaked to the skin, singing about little frogs, laughing too hard to finish the verse. The best midsummer in years." },
       { "text": "Move everything indoors", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Twenty people in a small kitchen, schnapps songs at a volume the neighbours enjoy less than you do." }
-    ]
-  },
-  {
-    "id": "hol_semla", "countries": [ "sweden" ], "title": "Shrove Tuesday",
-    "text": "The bakery window is full of cream buns. Fat Tuesday, one bun a year, the rule says. The rule has never been followed by anyone.",
-    "conditions": { "minAge": 5 }, "cooldown": 5,
-    "choices": [
-      { "text": "Eat one in a bowl of hot milk", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "The old way, the way your grandparents did it. Soggy, sweet, perfect." },
-      { "text": "Eat three", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": -1 } ], "result": "The cream was in your nose by the second one. You regret nothing." }
     ]
   },
   {

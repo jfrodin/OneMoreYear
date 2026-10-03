@@ -1,7 +1,7 @@
 // Childhood, 3 to 12: small things that feel enormous. No dashes.
 [
   {
-    "id": "child_lost_tooth", "title": "Wobbly",
+    "id": "child_lost_tooth", "group": "lost_tooth", "title": "Wobbly",
     "text": "Your front tooth has been wobbling for a week. Today it is hanging by a thread.",
     "conditions": { "minAge": 5, "maxAge": 8 }, "cooldown": 3,
     "choices": [
@@ -47,7 +47,7 @@
     ]
   },
   {
-    "id": "child_school_play_star", "title": "The school play",
+    "id": "child_school_play_star", "group": "school_play", "title": "The school play",
     "text": "The class is putting on a play for the parents. Your teacher asks who wants the big part.",
     "conditions": { "minAge": 7, "maxAge": 12, "activity": "School" }, "cooldown": 3,
     "choices": [
@@ -137,7 +137,7 @@
     ]
   },
   {
-    "id": "child_library_card", "title": "The library",
+    "id": "child_library_card", "group": "library_card", "title": "The library",
     "text": "You get your own library card. The children's section has a corner with cushions and every book you could want.",
     "conditions": { "minAge": 6, "maxAge": 10, "notFlags": [ "library_card" ] }, "cooldown": 50,
     "choices": [

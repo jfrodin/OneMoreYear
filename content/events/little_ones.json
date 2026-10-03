@@ -41,7 +41,7 @@
     ]
   },
   {
-    "id": "lo_lost_tooth", "title": "The tooth",
+    "id": "lo_lost_tooth", "group": "lost_tooth", "title": "The tooth",
     "text": "Your first wobbly tooth has finally come out, in an apple. There is a gap you can put your tongue through.",
     "conditions": { "minAge": 5, "maxAge": 7 }, "cooldown": 0,
     "choices": [
