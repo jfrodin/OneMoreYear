@@ -6,7 +6,7 @@
     "conditions": { "minAge": 13, "maxAge": 16 }, "cooldown": 0,
     "choices": [
       { "text": "Take it", "effects": [ { "type": "money", "amount": 4000 }, { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.03 } ], "result": "Dark winter mornings, a dog at number forty who hates you, and a savings book that grows. You know every letterbox in the area." },
-      { "text": "Sleep", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Somebody else takes it. You sleep until somebody pulls the covers off." }
+      { "text": "Sleep", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Another kid takes it. You sleep until somebody pulls the covers off." }
     ]
   },
   {
