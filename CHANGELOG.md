@@ -2,6 +2,13 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.65.0 – 2026-10-03 · Odds and ends
+
+- Eight more moments of history: Star Wars, Brown v. Board of Education, Stonewall, the Miracle on
+  Ice, Stenmark's two golds, the Los Angeles Olympics, Columbine, the Iraq war.
+- The job tab says which skill the next step needs in a creative career, and how far you have to go.
+- Fixed: a double full stop after employers whose names end in one ("Harris Cleaning Co..").
+
 ## 0.64.0 – 2026-10-03 · More ways to earn a living
 
 - Four new everyday tracks: hair and beauty (junior stylist to senior stylist), cleaning (cleaner to
