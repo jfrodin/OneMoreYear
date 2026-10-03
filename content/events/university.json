@@ -1,7 +1,7 @@
 // University and college life: the years between home and everything else. No dashes.
 [
   {
-    "id": "uni_first_week", "title": "Freshers' week",
+    "id": "uni_first_week", "trigger": "milestone", "title": "Freshers' week",
     "text": "The first week at university. A new city, a room in a corridor of strangers, and a hundred people handing you leaflets for clubs.",
     "conditions": { "minAge": 18, "maxAge": 26, "activity": "studying", "minEducation": "secondary", "notFlags": [ "uni_first_week" ] }, "cooldown": 0, "weight": 5,
     "choices": [
@@ -113,9 +113,9 @@
     ]
   },
   {
-    "id": "uni_graduation_day", "title": "Graduation",
+    "id": "uni_graduation_day", "trigger": "milestone", "title": "Graduation",
     "text": "Graduation day. A gown, a hat that does not fit, and your family in the third row, trying to work the camera.",
-    "conditions": { "minAge": 20, "minEducation": "university", "notFlags": [ "uni_graduated_event" ] }, "cooldown": 0,
+    "conditions": { "minAge": 20, "maxAge": 32, "minEducation": "university", "notFlags": [ "uni_graduated_event" ] }, "cooldown": 0,
     "choices": [
       { "text": "Walk across the stage", "effects": [ { "type": "flag", "flag": "uni_graduated_event" }, { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "uni_graduation", "text": "My graduation day", "impact": 20 } ], "result": "Your name, read out slightly wrong. A handshake. Your mother crying in the third row. Done." },
       { "text": "Skip the ceremony", "effects": [ { "type": "flag", "flag": "uni_graduated_event" }, { "type": "happiness", "amount": 1 } ], "result": "The diploma comes in the post. Your mother is still annoyed about it twenty years later." }
