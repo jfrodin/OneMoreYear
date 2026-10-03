@@ -2,6 +2,14 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.54.0 – 2026-10-03 · The album
+
+- **A life in photographs** (from The Sims' memories): every person's page has a photo album. Born,
+  the happiest memories, the years the children were born and a last photograph, each with the face
+  of that age and tinted like a print of its year: warm in the fifties, faded in the seventies.
+- The end screen has an album for every life you played.
+- Fixed: "1 affairs exposed" and "1 divorces" on the end screen.
+
 ## 0.53.0 – 2026-10-03 · Doing up the house
 
 - **Do up your home** (from The Sims' build mode): when you own your home, the home card on the money

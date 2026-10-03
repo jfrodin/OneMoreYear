@@ -35,7 +35,14 @@ public partial class GameOverScreen : Control
         lives.AddChild(Ui.Label("The lives you played", 22, UiTheme.Text));
         foreach (var life in epilogue.Lives)
         {
-            lives.AddChild(Ui.Label($"{life.Name}, {life.Years}", 18, UiTheme.Accent));
+            var head = Ui.HBox(10);
+            var title = Ui.Label($"{life.Name}, {life.Years}", 18, UiTheme.Accent);
+            title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            head.AddChild(title);
+            int id = life.Id;
+            string first = life.Name.Split(' ')[0];
+            if (id > 0) head.AddChild(Ui.Button("Album", () => AlbumDialog.Show(_main, s, id, first), 36));
+            lives.AddChild(head);
             if (life.Summary.Length > 0) lives.AddChild(Ui.Label(life.Summary, 15, UiTheme.Muted, wrap: true));
         }
         col.AddChild(Ui.Card(lives));
@@ -47,8 +54,8 @@ public partial class GameOverScreen : Control
         chips.AddChild(Ui.Chip(stats.Generations == 1 ? "1 generation" : $"{stats.Generations} generations"));
         chips.AddChild(Ui.Chip(stats.Characters == 1 ? "1 life played" : $"{stats.Characters} lives played"));
         chips.AddChild(Ui.Chip($"{stats.FamilyMembers} family members"));
-        chips.AddChild(Ui.Chip($"{stats.Divorces} divorces"));
-        chips.AddChild(Ui.Chip($"{stats.Affairs} affairs exposed"));
+        chips.AddChild(Ui.Chip(stats.Divorces == 1 ? "1 divorce" : $"{stats.Divorces} divorces"));
+        chips.AddChild(Ui.Chip(stats.Affairs == 1 ? "1 affair exposed" : $"{stats.Affairs} affairs exposed"));
         chips.AddChild(Ui.Chip($"Greatest fortune: {stats.LargestFortuneOwner}, {stats.LargestFortune}"));
         col.AddChild(chips);
 

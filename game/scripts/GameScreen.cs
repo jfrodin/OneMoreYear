@@ -748,6 +748,9 @@ public partial class GameScreen : Control
         return Ui.Card(box);
     }
 
+    /// <summary>A life in photographs: a grid of portraits at each age, with a handwritten caption.</summary>
+    public void ShowAlbum(int personId, string name) => AlbumDialog.Show(_main, S, personId, name);
+
     private void ShowHomeProjectsDialog()
     {
         var box = Ui.VBox(10);
@@ -1286,7 +1289,16 @@ public partial class GameScreen : Control
         if (p.Memories.Count > 0)
         {
             var memBox = Ui.VBox(4);
-            memBox.AddChild(Ui.Label(isPlayer ? "Your memories" : $"{p.FirstName} remembers", 19, UiTheme.Text));
+            var memHead = Ui.HBox(10);
+            var memTitle = Ui.Label(isPlayer ? "Your memories" : $"{p.FirstName} remembers", 19, UiTheme.Text);
+            memTitle.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            memHead.AddChild(memTitle);
+            string albumName = p.FirstName;
+            var album = Ui.Button("Photo album…", () => ShowAlbum(id, albumName), 38);
+            album.SetMeta("action", true);
+            RegisterHint(album, "A life in photographs.");
+            memHead.AddChild(album);
+            memBox.AddChild(memHead);
             foreach (var m in p.Memories)
             {
                 var color = m.Impact < -3 ? UiTheme.Bad : m.Impact > 3 ? UiTheme.Good : UiTheme.Muted;

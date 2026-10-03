@@ -396,3 +396,9 @@ _playtest-saves/2026-10-03_121241.png_
 En morfar som jobbar som intern? Altlså praktikant? Det känns märkligt?
 
 _playtest-saves/2026-10-03_121523.png · playtest-saves/2026-10-03_121523.json_
+
+### 2026-10-03 12:17 · v0.52.0  ·  1973  ·  Marcus Holm, 3  ·  This Year  ·  seed VDCX73TB
+
+Mina föräldrar har skiljt sig, men jag bor med båda?
+
+_playtest-saves/2026-10-03_121716.png · playtest-saves/2026-10-03_121716.json_

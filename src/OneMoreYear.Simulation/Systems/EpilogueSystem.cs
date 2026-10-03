@@ -47,7 +47,7 @@ public static class EpilogueSystem
 
         var lives = played.Select(p => new PlayedLifeView(p.FullName,
             p.IsAlive ? $"born {p.BirthYear}" : $"{p.BirthYear} to {p.DeathYear}",
-            Summary(ctx, p))).ToList();
+            Summary(ctx, p), p.Id)).ToList();
 
         int generations = LegacySystem.GenerationsPlayed(w);
         int score = generations * 100 + (w.Year - w.StartYear) * 2 + dreams * 40 + w.FamilyTraits.Count * 30

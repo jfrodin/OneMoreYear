@@ -127,6 +127,14 @@ public static class UiTheme
         return old != Background;
     }
 
+    /// <summary>How a photograph taken in a year looks (sepia in the fifties, faded in the seventies).</summary>
+    public static Color PhotoTintFor(int year)
+    {
+        int i = 0;
+        while (i < Eras.Length - 1 && year >= Eras[i + 1].Year) i++;
+        return Eras[i].PhotoTint;
+    }
+
     public static int Year => _year;
 
     public static StyleBoxFlat Box(Color bg, int radius = 4, Color? border = null, int borderWidth = 0, float margin = 12)

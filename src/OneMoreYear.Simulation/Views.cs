@@ -245,7 +245,7 @@ public sealed record HeirloomView(int Id, string Name, string Text, string Histo
 public sealed record EpilogueView(string FamilyName, int FromYear, int ToYear, string Words, IReadOnlyList<PlayedLifeView> Lives, int Score);
 
 /// <summary>"Anna Berglund, 1950 to 2034. A nurse. Lived the dream: a big family."</summary>
-public sealed record PlayedLifeView(string Name, string Years, string Summary);
+public sealed record PlayedLifeView(string Name, string Years, string Summary, int Id = 0);
 
 /// <summary>One of the player's children at home and how they are being raised.</summary>
 public sealed record UpbringingView(int ChildId, string Name, int Age, string Style, bool Chosen, string? Shaping);
@@ -261,3 +261,6 @@ public sealed record RentalOptionView(string TypeId, string Name, string Price, 
 
 /// <summary>Something to do to the home: what it costs, and whether it is done (DoneYear) or affordable.</summary>
 public sealed record HomeProjectView(string Id, string Name, string Text, string Cost, bool CanAfford, int? DoneYear);
+
+/// <summary>One photograph in a life's album: the year, the age, a caption and the face at that age.</summary>
+public sealed record AlbumPhoto(int Year, int Age, string Caption, PortraitView Portrait);

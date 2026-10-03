@@ -433,11 +433,37 @@ public sealed class GameSession
     }
 
     /// <summary>What someone looks like right now (or when they died).</summary>
-    public PortraitView Portrait(int id)
+    public PortraitView Portrait(int id) => PortraitAt(World.Get(id), World.Get(id).Age(Year), World.Get(id).IsAlive, (World.Get(id).Happiness - 50) / 35);
+
+    /// <summary>
+    /// A life in photographs (The Sims' memories, docs/sims-inspiration.md): the birth, the happiest
+    /// memories, the children's births and a last photograph, each with the face of that age.
+    /// </summary>
+    public IReadOnlyList<AlbumPhoto> Album(int id)
     {
         var p = World.Get(id);
+        int last = p.DeathYear ?? Year;
+        var photos = new List<(int Year, string Caption, double Weight)> { (p.BirthYear, "Born", 1000) };
+        foreach (var m in p.Memories.Where(m => m.Impact >= 12 && m.Year > p.BirthYear && m.Year <= last))
+            photos.Add((m.Year, TextFormatter.Capitalize(m.Text), m.Impact));
+        foreach (var child in Kinship.Children(World, p).Where(c => c.BirthYear <= last))
+            if (!photos.Any(x => x.Year == child.BirthYear && x.Caption.Contains(child.FirstName)))
+                photos.Add((child.BirthYear, $"The year {child.FirstName} was born", 40));
+        if (p.DeathYear is { } died && died - p.BirthYear >= 2) photos.Add((died - 1, "The last photograph", 999));
+        var chosen = photos.GroupBy(x => (x.Year, x.Caption)).Select(g => g.First())
+            .OrderByDescending(x => x.Weight).Take(30).OrderBy(x => x.Year).ThenByDescending(x => x.Weight).ToList();
+        return chosen.Select(x =>
+        {
+            int age = Math.Max(0, x.Year - p.BirthYear);
+            // Most people smile for the camera.
+            return new AlbumPhoto(x.Year, age, x.Caption, PortraitAt(p, age, true, x.Caption == "The last photograph" ? 0.2 : 0.6));
+        }).ToList();
+    }
+
+    /// <summary>What someone looked like at an age (for the album: alive in the photo, mood as given).</summary>
+    private PortraitView PortraitAt(Person p, int age, bool alive, double mood)
+    {
         var face = Faces.Of(World, p, Content);
-        int age = p.Age(Year);
         double bmi = Appearance.WeightAt(p, age) / Math.Pow(Math.Max(0.5, Appearance.HeightAt(p, age) / 100.0), 2);
         double normal = age < 12 ? 16 : age < 18 ? 19 : 22.5;
         return new PortraitView
@@ -445,13 +471,13 @@ public sealed class GameSession
             Id = p.Id,
             Male = p.Sex == Sex.Male,
             Age = age,
-            Alive = p.IsAlive,
+            Alive = alive,
             HairColor = p.HairColor,
             EyeColor = p.EyeColor,
             Grey = Faces.GreyAt(face, age),
             Bald = Faces.BaldAt(face, p.Sex, age),
             Heaviness = Math.Clamp(0.5 + (bmi - normal) / 16, 0, 1),
-            Mood = Math.Clamp((p.Happiness - 50) / 35, -1, 1),
+            Mood = Math.Clamp(mood, -1, 1),
             Glasses = age >= face.GlassesFromAge,
             HeightCm = Appearance.HeightAt(p, age),
             Fitness = p.Fitness,
