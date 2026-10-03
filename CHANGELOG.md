@@ -2,6 +2,17 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.59.0 – 2026-10-03 · Working lives
+
+- 29 new events from particular jobs, so every track has stories of its own: the night shift and
+  the wrong dose in medicine, room six in care, a guilty client and a case for free in law, the
+  outage and the start up in IT, the scoop in the newspaper, reviewer two in academia, the boy at
+  the back in a classroom, scaffolding without anchors, machines on the factory line, the critic at
+  table nine, the night road, a colleague on patrol who takes money, orders abroad, an insider tip,
+  the home visit in social work, the wrong calculation on a bridge, a result too good to be true,
+  the fifth form at the counter, a girl stealing a coat, the tour, the advert, the blank page, a
+  family in the novel, the final, the commission and six weeks of rain on the farm.
+
 ## 0.58.0 – 2026-10-03 · Playtest 5, afternoon
 
 - Serious illness fits the age: children get pneumonia, meningitis or a burst appendix, not heart

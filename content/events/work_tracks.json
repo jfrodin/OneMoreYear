@@ -1,0 +1,325 @@
+// Stories from particular jobs, one or two for each track. No dashes.
+[
+  {
+    "id": "wt_med_night_shift", "title": "The night shift",
+    "text": "Three in the morning in the emergency room. A child with a fever, a drunk with a cut head, and a man who is not saying how much his chest hurts.",
+    "conditions": { "minAge": 24, "jobs": [ "medicine" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Trust the feeling about the quiet man", "chance": 0.7, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "An ECG, a phone call, the cath lab at four. He lives. His wife finds out your name and sends flowers to the ward every year.", "effects": [ { "type": "performance", "amount": 10 }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "saved_patient", "text": "The quiet man with the chest pain", "impact": 20 } ] },
+        "failure": { "text": "You were right to look, but it was nothing. The child's fever, meanwhile, waited too long. A complaint follows.", "effects": [ { "type": "performance", "amount": -5 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Take them in order", "effects": [ { "type": "performance", "amount": 2 } ], "result": "By the book. It works, this time. You drive home at dawn and cannot remember the drive." }
+    ]
+  },
+  {
+    "id": "wt_med_mistake", "title": "The wrong dose",
+    "text": "You notice it too late: the dose you wrote yesterday was ten times what it should have been. The patient is fine, so far. Nobody else has noticed.",
+    "conditions": { "minAge": 24, "jobs": [ "medicine", "healthcare" ] }, "cooldown": 15, "weight": 0.6,
+    "choices": [
+      { "text": "Report it yourself", "effects": [ { "type": "performance", "amount": -4 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 }, { "type": "happiness", "amount": -3 } ], "result": "A meeting, a form, a new routine on the ward because of you. Your boss says it is the kind of thing that makes a good doctor. It does not feel like it." },
+      { "text": "Fix it quietly", "chance": 0.75,
+        "success": { "text": "Nobody ever finds out. You check every dose three times for the rest of your career.", "effects": [ { "type": "trait_add", "trait": "paranoid", "chance": 0.05 } ] },
+        "failure": { "text": "A nurse noticed, and reported it. Now it is about the hiding, not the mistake.", "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -10 } ] } }
+    ]
+  },
+  {
+    "id": "wt_care_last_patient", "title": "Room six",
+    "text": "The old man in room six has nobody. No visitors, no calls. Tonight the doctor says it will not be long.",
+    "conditions": { "minAge": 20, "jobs": [ "healthcare" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Stay with him after your shift", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "memory", "kind": "room_six", "text": "Holding the hand of the man in room six", "impact": 15 } ], "result": "You hold his hand and talk about nothing. Near the end he squeezes once. You go home and sleep for twelve hours." },
+      { "text": "Go home, you are exhausted", "effects": [ { "type": "health", "amount": 1 } ], "result": "He dies at four, with a night nurse who did not know his name. You think about it on your next shift, and the one after." }
+    ]
+  },
+  {
+    "id": "wt_law_client", "title": "Guilty",
+    "text": "Your client tells you, quietly, in the meeting room, that he did it. The trial starts on Monday.",
+    "conditions": { "minAge": 25, "jobs": [ "law" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Defend him anyway, properly", "chance": 0.4, "chanceAttributes": { "smarts": 0.005 },
+        "success": { "text": "Acquitted. The prosecution made mistakes and you found every one. You do not go to the celebration.", "effects": [ { "type": "performance", "amount": 10 }, { "type": "happiness", "amount": -3 } ] },
+        "failure": { "text": "Convicted. You did your job. He spits at you on the way out.", "effects": [ { "type": "performance", "amount": 2 } ] } },
+      { "text": "Ask to be taken off the case", "effects": [ { "type": "performance", "amount": -5 }, { "type": "happiness", "amount": 2 } ], "result": "The senior partner looks at you for a long time. \"You are in the wrong job,\" he says. Maybe." }
+    ]
+  },
+  {
+    "id": "wt_law_pro_bono", "title": "For nothing",
+    "text": "A woman is being evicted with three children, by a landlord with a lot of money and a lot of lawyers. She cannot pay anyone. She has asked you.",
+    "conditions": { "minAge": 25, "jobs": [ "law" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Take the case for free", "chance": 0.55, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "You win. She stays. Her youngest draws you a picture of a house with a lawyer in it, and you keep it on your desk for thirty years.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "performance", "amount": -3 }, { "type": "trait_add", "trait": "generous", "chance": 0.05 } ] },
+        "failure": { "text": "You lose. You find her a flat through a friend of a friend. It is not what she asked for, but it is something.", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "performance", "amount": -3 } ] } },
+      { "text": "Refer her on", "effects": [], "result": "A name and a number at legal aid. You do not hear what happened. You do not ask." }
+    ]
+  },
+  {
+    "id": "wt_it_outage", "title": "Everything is down",
+    "text": "Friday afternoon, the whole system is down, and it is your code from Wednesday. The phone will not stop ringing.",
+    "conditions": { "minAge": 20, "jobs": [ "it" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Stay all weekend and fix it", "chance": 0.7, "chanceSkills": { "programming": 0.04 },
+        "success": { "text": "Three in the morning on Sunday, the last test goes green. On Monday your boss thanks the whole team. You know.", "effects": [ { "type": "performance", "amount": 8 }, { "type": "health", "amount": -2 } ] },
+        "failure": { "text": "You make it worse before it gets better. It is fixed on Tuesday, by someone else.", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Roll it back and own up", "effects": [ { "type": "performance", "amount": 2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.03 } ], "result": "\"My change, my mistake, rolled back.\" Ten minutes. People respect it more than you expected." }
+    ]
+  },
+  {
+    "id": "wt_it_startup_offer", "title": "The start up",
+    "text": "A former colleague is starting a company and wants you with them. Half the salary, a pile of shares, and an office above a pizza place.",
+    "conditions": { "minAge": 23, "maxAge": 50, "jobs": [ "it", "engineering" ], "minYear": 1995 }, "cooldown": 15,
+    "choices": [
+      { "text": "Jump", "chance": 0.15, "chanceTraits": { "ambitious": 0.1, "brave": 0.05 },
+        "success": { "text": "Four years of pizza and panic, and then a much bigger company buys yours. The shares are worth more than you will earn in the rest of your life.", "effects": [ { "type": "money", "amount": 4000000 }, { "type": "happiness", "amount": 12 }, { "type": "memory", "kind": "startup_exit", "text": "The day they bought our company", "impact": 30 } ] },
+        "failure": { "text": "Two years, then the money runs out. The shares are worth nothing. You learned more than in ten years anywhere else, which is what people say.", "effects": [ { "type": "money", "amount": -150000 }, { "type": "happiness", "amount": -5 }, { "type": "skill", "kind": "programming", "amount": 1 } ] } },
+      { "text": "Stay where you are", "effects": [], "result": "You wish them luck and mean it. Every few years you look up the company. Sometimes you are relieved." }
+    ]
+  },
+  {
+    "id": "wt_media_scoop", "title": "The story",
+    "text": "A source has given you documents showing that a local politician has been taking money. It is the biggest story you have ever had. The editor is nervous.",
+    "conditions": { "minAge": 22, "jobs": [ "media" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Push to publish", "chance": 0.6, "chanceTraits": { "brave": 0.15 },
+        "success": { "text": "Front page. The politician resigns within a week. You get a prize, and a lot of letters, not all of them nice.", "effects": [ { "type": "performance", "amount": 12 }, { "type": "fame", "amount": 4 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "One of the documents is fake. The paper prints a correction, and so does your career.", "effects": [ { "type": "performance", "amount": -15 }, { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Check everything twice more", "effects": [ { "type": "performance", "amount": 3 } ], "result": "It takes three months. Another paper runs it first, with half the facts. Yours is the better story, read by fewer people." }
+    ]
+  },
+  {
+    "id": "wt_academia_tenure", "title": "The paper",
+    "text": "Your big paper has come back from review. One reviewer loves it. The other has written four pages explaining why you are wrong.",
+    "conditions": { "minAge": 26, "jobs": [ "academia", "science" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Rewrite it, all of it", "chance": 0.6, "chanceAttributes": { "smarts": 0.005 },
+        "success": { "text": "Accepted, in the journal everyone reads. Cited three hundred times. Reviewer two writes to you years later to say it changed his mind.", "effects": [ { "type": "performance", "amount": 10 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Rejected anyway. You send it somewhere smaller. It does fine there. You know what it could have been.", "effects": [ { "type": "performance", "amount": -3 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Argue with reviewer two", "effects": [ { "type": "performance", "amount": -2 }, { "type": "trait_add", "trait": "hot_tempered", "chance": 0.03 } ], "result": "A long, polite, furious letter. It feels wonderful to write. It changes nothing." }
+    ]
+  },
+  {
+    "id": "wt_teacher_difficult_pupil", "title": "The boy at the back",
+    "text": "There is a boy at the back of the class who disrupts every lesson. Other teachers have given up on him. Today he stayed behind, as if he wanted to say something.",
+    "conditions": { "minAge": 23, "jobs": [ "education" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Ask him how things are at home", "chance": 0.6, "chanceTraits": { "kind": 0.15 },
+        "success": { "text": "It comes out slowly, over weeks. You make some calls. He still disrupts lessons, but less, and he comes to all of them. Fifteen years later he finds you online to say thank you.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "performance", "amount": 4 }, { "type": "memory", "kind": "pupil", "text": "The boy at the back who came to thank me", "impact": 20 } ] },
+        "failure": { "text": "He shrugs and leaves. The next day he is worse. You tried. You keep trying, for a while.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Remind him about homework", "effects": [], "result": "He nods and goes. Whatever it was, he does not try again." }
+    ]
+  },
+  {
+    "id": "wt_construction_corner", "title": "Cutting corners",
+    "text": "The foreman wants the scaffolding up today, without the second set of anchors. The inspector is not due until Thursday.",
+    "conditions": { "minAge": 18, "jobs": [ "construction" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Refuse to climb it", "chance": 0.7,
+        "success": { "text": "He swears for a while, then sends for the anchors. Two weeks later the wind comes. Everything holds.", "effects": [ { "type": "performance", "amount": 2 }, { "type": "trait_add", "trait": "brave", "chance": 0.03 } ] },
+        "failure": { "text": "He finds someone who will. You are on the next job list, last.", "effects": [ { "type": "performance", "amount": -6 } ] } },
+      { "text": "Do as you are told", "chance": 0.9,
+        "success": { "text": "It holds. It usually does. That is the problem with usually.", "effects": [ { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "A gust, a lurch, a fall of four metres. Your back is never quite the same.", "effects": [ { "type": "health", "amount": -15 }, { "type": "happiness", "amount": -8 } ] } }
+    ]
+  },
+  {
+    "id": "wt_industry_line", "title": "The line",
+    "text": "The factory is bringing in machines that do in an hour what your shift does in a day. There is a meeting about \"the future of the workforce\".",
+    "conditions": { "minAge": 20, "jobs": [ "industry" ], "minYear": 1975 }, "cooldown": 15,
+    "choices": [
+      { "text": "Learn to run the new machines", "chance": 0.6, "chanceAttributes": { "smarts": 0.005 },
+        "success": { "text": "Evening courses, a certificate, a new title. Half your old shift is gone by Christmas. You are still there, and it does not feel like winning.", "effects": [ { "type": "promote" }, { "type": "happiness", "amount": -2 } ] },
+        "failure": { "text": "You try. The manuals are in a language made of abbreviations. You are on the list in spring.", "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Stand with the union", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.05 }, { "type": "performance", "amount": -3 } ], "result": "A strike, a deal, a slower change. Some jobs are saved. Yours, for now." }
+    ]
+  },
+  {
+    "id": "wt_restaurant_critic", "title": "The critic",
+    "text": "A waiter comes into the kitchen white in the face: the critic from the big paper is at table nine, alone, ordering the fish.",
+    "conditions": { "minAge": 18, "jobs": [ "hospitality" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Cook the fish yourself", "chance": 0.5, "chanceSkills": { "cooking": 0.05 },
+        "success": { "text": "Four stars. The phone does not stop for a month. The owner frames the review and puts it in the window, next to your name.", "effects": [ { "type": "performance", "amount": 12 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "Two stars. \"The fish was confident. It was also overcooked.\" The owner reads it aloud in the kitchen.", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Treat table nine like any other", "effects": [ { "type": "performance", "amount": 2 } ], "result": "Three stars. A good, honest review. Nobody frames it." }
+    ]
+  },
+  {
+    "id": "wt_driver_lonely_road", "title": "The night road",
+    "text": "The last stretch of a long run, two in the morning, the road empty and straight. Your eyes keep closing.",
+    "conditions": { "minAge": 21, "jobs": [ "transport" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Pull over and sleep in the cab", "effects": [ { "type": "performance", "amount": -3 }, { "type": "health", "amount": 1 } ], "result": "Late by three hours. The depot complains. You are alive to hear it." },
+      { "text": "Window down, radio up, push on", "chance": 0.85,
+        "success": { "text": "You make it. You do not remember the last forty kilometres, which frightens you more than anything.", "effects": [ { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "A jolt, gravel, the ditch. The truck is a write off. You walk away with a broken arm and a lot of paperwork.", "effects": [ { "type": "health", "amount": -12 }, { "type": "fire" }, { "type": "happiness", "amount": -8 } ] } }
+    ]
+  },
+  {
+    "id": "wt_police_colleague", "title": "The colleague",
+    "text": "You saw {t.name}, your partner on patrol, take money from a driver {t.he} had just stopped. {t.He} knows you saw.",
+    "conditions": { "minAge": 21, "jobs": [ "police" ] }, "cooldown": 15,
+    "target": { "role": "colleague" },
+    "choices": [
+      { "text": "Report him", "chance": 0.6,
+        "success": { "text": "An investigation, a dismissal for {t.name}, and a station that is very quiet when you walk in for a year. Then people start to trust you.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.08 }, { "type": "performance", "amount": 4 }, { "type": "happiness", "amount": -4 } ] },
+        "failure": { "text": "Nothing happens to {t.him}. Things start happening to you: the worst shifts, a backup that comes slowly.", "effects": [ { "type": "performance", "amount": -10 }, { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Say nothing", "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.05 }, { "type": "happiness", "amount": -4 } ], "result": "{t.He} buys you lunch the next day. You eat it. It tastes of nothing." }
+    ]
+  },
+  {
+    "id": "wt_military_deployment", "title": "Orders",
+    "text": "Your unit is being sent abroad on a peacekeeping mission. Six months. It is what you trained for.",
+    "conditions": { "minAge": 20, "maxAge": 50, "jobs": [ "military" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Go", "chance": 0.9,
+        "success": { "text": "Six months of heat, dust, checkpoints and children who wave at the trucks. You come home with a medal and a silence you cannot explain to anyone.", "effects": [ { "type": "performance", "amount": 8 }, { "type": "money", "amount": 80000 }, { "type": "memory", "kind": "deployment", "text": "Six months abroad with the unit", "impact": 15 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.1 } ] },
+        "failure": { "text": "A roadside bomb, a convoy, a friend who does not come home. You do.", "effects": [ { "type": "health", "amount": -10 }, { "type": "happiness", "amount": -15 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.6 } ] } },
+      { "text": "Ask to stay for family reasons", "requires": { "minChildren": 1 }, "effects": [ { "type": "performance", "amount": -6 } ], "result": "Granted, this time. A colleague goes in your place. You read every report from the mission twice." }
+    ]
+  },
+  {
+    "id": "wt_finance_tip", "title": "A tip",
+    "text": "At a dinner, a client mentions, a little too casually, that a company is about to be bought. Nobody knows yet. The shares are cheap.",
+    "conditions": { "minAge": 23, "jobs": [ "finance", "business" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Buy, quietly", "chance": 0.7,
+        "success": { "text": "The deal is announced on a Tuesday. You make a year's salary in an afternoon. You do not sleep well for months, waiting for a letter that never comes.", "effects": [ { "type": "money", "amount": 400000 }, { "type": "trait_add", "trait": "greedy", "chance": 0.08 } ] },
+        "failure": { "text": "The regulator notices the trades. A hearing, a fine, a job gone.", "effects": [ { "type": "money", "amount": -300000 }, { "type": "fire" }, { "type": "happiness", "amount": -12 } ] } },
+      { "text": "Forget you heard it", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.03 } ], "result": "The deal is announced on a Tuesday. You watch the price jump and feel, mostly, clean." }
+    ]
+  },
+  {
+    "id": "wt_social_worker_child", "title": "The visit",
+    "text": "A home visit. The flat is clean, the mother is polite, the child says everything is fine. Something is not fine.",
+    "conditions": { "minAge": 23, "jobs": [ "social_work" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Come back unannounced", "chance": 0.6,
+        "success": { "text": "The second time, the truth is in the fridge and the bruises. The child is safe by evening. The mother screams at you on the stairs. You will hear it for years.", "effects": [ { "type": "performance", "amount": 6 }, { "type": "happiness", "amount": -2 }, { "type": "memory", "kind": "the_visit", "text": "The child I got out", "impact": 20 } ] },
+        "failure": { "text": "Everything is fine again. Maybe it is. You close the file and do not stop thinking about it.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Write it up as you saw it", "effects": [], "result": "Clean flat, polite mother, child says fine. All true. You write it, and sign it." }
+    ]
+  },
+  {
+    "id": "wt_engineer_bridge", "title": "The calculation",
+    "text": "Checking the drawings for a new bridge, you find an error in someone else's calculation. A senior engineer's. The concrete is booked for Monday.",
+    "conditions": { "minAge": 24, "jobs": [ "engineering" ] }, "cooldown": 12,
+    "choices": [
+      { "text": "Stop the pour", "chance": 0.75, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "You were right. The senior engineer goes very red and then shakes your hand. The bridge opens a year later, and it will stand for a hundred.", "effects": [ { "type": "performance", "amount": 12 }, { "type": "promote", "chance": 0.4 } ] },
+        "failure": { "text": "You misread it. His sums were fine. Monday is lost, and so is a little of everyone's patience with you.", "effects": [ { "type": "performance", "amount": -8 } ] } },
+      { "text": "Mention it in an email", "effects": [ { "type": "performance", "amount": 2 } ], "result": "He checks it on Friday evening and quietly fixes it. Nobody mentions your email again, but he asks for you on the next project." }
+    ]
+  },
+  {
+    "id": "wt_science_result", "title": "The result",
+    "text": "After two years, the experiment has produced a result nobody expected. If it is true, it is important. If it is a mistake, it is embarrassing.",
+    "conditions": { "minAge": 25, "jobs": [ "science" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Repeat it, three more times", "chance": 0.5, "chanceAttributes": { "smarts": 0.005 },
+        "success": { "text": "It holds. Every time. The paper goes to the big journal, and your name is first on it.", "effects": [ { "type": "performance", "amount": 15 }, { "type": "fame", "amount": 3 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "The third run shows it: a contaminated sample. Two years, back to the start. At least you were the one to find it.", "effects": [ { "type": "performance", "amount": -3 }, { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Publish quickly before someone else does", "chance": 0.3,
+        "success": { "text": "You were first, and you were right. Lucky, and you know it.", "effects": [ { "type": "performance", "amount": 12 }, { "type": "fame", "amount": 3 } ] },
+        "failure": { "text": "Another lab cannot repeat it. A retraction, with your name on it.", "effects": [ { "type": "performance", "amount": -15 }, { "type": "happiness", "amount": -10 } ] } }
+    ]
+  },
+  {
+    "id": "wt_public_complaint", "title": "The form",
+    "text": "A man at the counter has been sent between four offices for his pension papers. He is eighty three, he is shaking, and the rules say he needs a fifth form.",
+    "conditions": { "minAge": 20, "jobs": [ "public" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Bend the rules and sort it", "chance": 0.75,
+        "success": { "text": "Twenty minutes and three phone calls. His money comes next month. He writes to your boss, by hand, to say you are a credit to the country.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "performance", "amount": 3 } ] },
+        "failure": { "text": "Your boss finds out about the rules you bent. A written warning. The man got his money, though.", "effects": [ { "type": "performance", "amount": -6 }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Give him the fifth form", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "He takes it and goes. You watch him cross the square, very slowly, towards the next office." }
+    ]
+  },
+  {
+    "id": "wt_shop_shoplifter", "title": "The coat",
+    "text": "A teenage girl puts a coat in her bag and heads for the door. She looks about fourteen. She looks hungry.",
+    "conditions": { "minAge": 16, "jobs": [ "trade" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Stop her and call security", "effects": [ { "type": "performance", "amount": 3 } ], "result": "The coat goes back on the rack. She goes with the guard without a word. You think about her when it gets cold." },
+      { "text": "Stop her, quietly, outside", "chance": 0.6,
+        "success": { "text": "She cries. You let her keep the coat, and pay for it from your own wages. Nobody knows. You hope she is warm.", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ] },
+        "failure": { "text": "The manager saw it all on the camera. A very long conversation about whose money a coat is.", "effects": [ { "type": "performance", "amount": -8 } ] } },
+      { "text": "Look the other way", "effects": [], "result": "The alarm does not go off. She is gone. Stock count is down one coat on Friday." }
+    ]
+  },
+  {
+    "id": "wt_music_tour", "title": "On the road",
+    "text": "A tour: thirty cities in forty days, a bus with bunks, and a different stage every night.",
+    "conditions": { "minAge": 18, "jobs": [ "music" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Give everything every night", "chance": 0.6, "chanceSkills": { "music": 0.03 },
+        "success": { "text": "Sold out in half the cities by the end. Somewhere around city nineteen, it stops being a job and becomes the best weeks of your life.", "effects": [ { "type": "fame", "amount": 4 }, { "type": "money", "amount": 30000 }, { "type": "health", "amount": -3 } ] },
+        "failure": { "text": "Half empty clubs, a van that breaks down twice, a drummer who quits halfway through. You come home broke and with stories.", "effects": [ { "type": "money", "amount": -20000 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Pace yourself", "effects": [ { "type": "fame", "amount": 1 } ], "result": "Good shows, early nights, home in one piece. The reviews say \"professional\", which is not quite a compliment." }
+    ]
+  },
+  {
+    "id": "wt_music_sell_out", "title": "The advert",
+    "text": "A car company wants your best song for an advert. The money is enormous. The song was about your father.",
+    "conditions": { "minAge": 20, "jobs": [ "music" ], "minFame": 20 }, "cooldown": 15,
+    "choices": [
+      { "text": "Take the money", "effects": [ { "type": "money", "amount": 600000 }, { "type": "fame", "amount": 5 }, { "type": "happiness", "amount": -2 } ], "result": "Everyone knows the song now, as the one with the car. Some old fans write angry letters. The house is paid off." },
+      { "text": "Say no", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "loyal", "chance": 0.05 } ], "result": "They use a song that sounds a bit like yours instead. Yours stays yours." }
+    ]
+  },
+  {
+    "id": "wt_writing_block", "title": "The blank page",
+    "text": "The publisher wants the next book by spring. You have written one sentence since summer, and deleted it.",
+    "conditions": { "minAge": 20, "jobs": [ "writing" ] }, "cooldown": 5,
+    "choices": [
+      { "text": "Go away somewhere and write", "chance": 0.55, "chanceSkills": { "writing": 0.04 },
+        "success": { "text": "A rented cabin, no internet, long walks. On the ninth day it comes, all at once. You write until your hand hurts.", "effects": [ { "type": "performance", "amount": 10 }, { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "A rented cabin, a lot of staring at the lake. You come home with a tan and nine pages.", "effects": [ { "type": "performance", "amount": -6 }, { "type": "money", "amount": -15000 } ] } },
+      { "text": "Ask for more time", "effects": [ { "type": "performance", "amount": -3 } ], "result": "A sigh down the phone, and six months. It comes eventually. They usually do." }
+    ]
+  },
+  {
+    "id": "wt_writing_family_book", "title": "The family in the book",
+    "text": "Your new novel is about a family very much like yours. {t.name} has read the manuscript. {t.He} is not speaking to you.",
+    "conditions": { "minAge": 25, "jobs": [ "writing" ] }, "cooldown": 15,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Publish it as it is", "effects": [ { "type": "fame", "amount": 4 }, { "type": "performance", "amount": 6 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -15 } ], "result": "The best reviews of your life. {t.name} does not come to the launch. A year later, {t.he} says one sentence about it, and it is not unkind." },
+      { "text": "Change the parts that hurt", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "performance", "amount": -2 } ], "result": "A softer book. A good one. Not the true one. {t.name} reads it twice and calls you after." }
+    ]
+  },
+  {
+    "id": "wt_sport_big_match", "title": "The final",
+    "text": "The final. Forty thousand people, a camera on your face, and the ball at your feet with a minute to go.",
+    "conditions": { "minAge": 17, "jobs": [ "sport" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Shoot", "chance": 0.35, "chanceSkills": { "sport": 0.04 }, "chanceTraits": { "brave": 0.05 },
+        "success": { "text": "It goes in off the post. You do not remember the next ten minutes. Everyone else will remember them for the rest of their lives.", "effects": [ { "type": "fame", "amount": 8 }, { "type": "happiness", "amount": 12 }, { "type": "memory", "kind": "the_goal", "text": "The goal in the final", "impact": 35 } ] },
+        "failure": { "text": "Over the bar. The other team scores on the break. You sit on the grass for a long time.", "effects": [ { "type": "fame", "amount": 1 }, { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Pass to the teammate in space", "chance": 0.5,
+        "success": { "text": "A perfect pass, a goal, a team that lifts you on their shoulders anyway. The papers call it the pass of the year.", "effects": [ { "type": "fame", "amount": 4 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "Intercepted. The commentators have opinions. So does everyone in your street.", "effects": [ { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "wt_arts_commission", "title": "The commission",
+    "text": "A rich man wants a portrait of his wife for their anniversary. He has very clear ideas about how she should look, and they are not how she looks.",
+    "conditions": { "minAge": 20, "jobs": [ "arts" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Paint her as she is", "chance": 0.4, "chanceSkills": { "painting": 0.05 },
+        "success": { "text": "He hates it. She loves it, and makes him pay double. It hangs in their hall for forty years, and people ask who painted it.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "fame", "amount": 2 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "He refuses to pay. She buys it secretly, for half, and keeps it in a cupboard.", "effects": [ { "type": "money", "amount": 15000 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Paint what he wants", "effects": [ { "type": "money", "amount": 50000 }, { "type": "happiness", "amount": -3 } ], "result": "Ten years younger, smaller nose, a necklace she never owned. He is delighted. You sign it very small." }
+    ]
+  },
+  {
+    "id": "wt_farm_bad_harvest", "title": "The rain",
+    "text": "It has rained for six weeks straight. The grain is lying flat in the fields and starting to rot.",
+    "conditions": { "minAge": 18, "jobs": [ "agriculture" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Borrow to get through the year", "chance": 0.7,
+        "success": { "text": "The next summer is perfect. You pay the bank back by Christmas and buy a bottle you cannot really afford.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "The next summer is dry. The loan sits on the kitchen table like a stone for five years.", "effects": [ { "type": "money", "amount": -120000 }, { "type": "happiness", "amount": -8 } ] } },
+      { "text": "Take work in town for the winter", "effects": [ { "type": "money", "amount": 20000 }, { "type": "health", "amount": -2 } ], "result": "A warehouse job at night and the animals in the morning. You sleep in the tractor cab once, by accident." }
+    ]
+  }
+]
