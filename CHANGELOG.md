@@ -2,6 +2,21 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.66.0 – 2026-10-03 · New faces
+
+- **The portraits are redrawn.** Light from the upper left with a soft shade on the far side, a
+  little colour in the cheeks, almond shaped eyes with lids and lashes, tapered brows that move
+  with the mood, a nose with shadow and nostrils, shaped lips with a cupid's bow, and teeth when
+  someone is really smiling.
+- **Haircuts follow the decade**: side partings and slicked hair in the fifties, quiffs around
+  1960, long hair and mop tops in the seventies, perms and mullets in the eighties, spiky hair in
+  the nineties, undercuts and buns later. Curly and afro hair, bobs, ponytails, pigtails, buns and
+  pixie cuts. A real hairline that recedes at the temples first.
+- **Clothes follow the job**: a suit and tie in an office, scrubs in a hospital, a uniform with
+  shoulder boards for police, soldiers and cabin crew, work overalls, a shirt collar, a cardigan
+  in old age.
+- Beards have the shape of a beard, with sideburns and a moustache line.
+
 ## 0.65.0 – 2026-10-03 · Odds and ends
 
 - Eight more moments of history: Star Wars, Brown v. Board of Education, Stonewall, the Miracle on
