@@ -70,6 +70,8 @@ public sealed class HomeTypeDef
     public double RentFactor { get; set; }
     /// <summary>How many people it suits, for the hint ("fits a family").</summary>
     public int Sleeps { get; set; } = 2;
+    /// <summary>A house with its own garden (garden projects are possible).</summary>
+    public bool Garden { get; set; }
     public int MinYear { get; set; } = 1900;
 }
 
@@ -601,6 +603,39 @@ public sealed class AchievementDef
 /// A life dream (docs/endgame.md): something a played person wants from life. The goal kinds are
 /// code (DreamSystem); everything else is data.
 /// </summary>
+/// <summary>
+/// Something to do to the home one owns (HomeProjects, from The Sims' build mode): a new kitchen, a
+/// garden, a sauna. It costs money, adds part of it to the home's value and makes life there better.
+/// Kitchens and bathrooms wear out and can be done again.
+/// </summary>
+public sealed class HomeProjectDef
+{
+    public string Id { get; set; } = "";
+    /// <summary>"A new kitchen": the button.</summary>
+    public string Name { get; set; } = "";
+    /// <summary>One line on what it is.</summary>
+    public string Text { get; set; } = "";
+    /// <summary>What it is like when it is done.</summary>
+    public string Done { get; set; } = "";
+    /// <summary>When it goes over budget.</summary>
+    public string Overrun { get; set; } = "";
+    /// <summary>Cost in Swedish kronor of 2020.</summary>
+    public double Cost { get; set; }
+    /// <summary>Share of the cost added to the home's value.</summary>
+    public double Value { get; set; } = 0.6;
+    public double Happiness { get; set; } = 4;
+    /// <summary>Only for a house with a garden.</summary>
+    public bool Garden { get; set; }
+    /// <summary>Only with children living at home.</summary>
+    public bool Children { get; set; }
+    /// <summary>Years until it is worn and can be done again (0: lasts).</summary>
+    public int Lasts { get; set; }
+    public int MinYear { get; set; } = 1900;
+    public List<string> Countries { get; set; } = new();
+    /// <summary>A skill that helps (doing it yourself costs less).</summary>
+    public string? Skill { get; set; }
+}
+
 /// <summary>
 /// A small wish for one year (The Sims' wants, WishSystem): something the player can do this year,
 /// by an action or by getting somewhere. Kept, it gives a little happiness.

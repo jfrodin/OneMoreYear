@@ -170,6 +170,7 @@ public sealed class GameSession
             }
             CareerSystem.Update(ctx, p, jobLoss);
             HousingSystem.Update(ctx, p);
+            HomeProjectSystem.Update(ctx, p);
             EconomySystem.Update(ctx, p, market);
             p.PeakNetWorth = Math.Max(p.PeakNetWorth, EconomySystem.NetWorth(ctx, p));
             double refWorth = ctx.Real(EconomySystem.NetWorth(ctx, p)) / ctx.Country.ContentMoneyScale;
@@ -952,6 +953,20 @@ public sealed class GameSession
 
     /// <summary>Sells one of the player's businesses. Returns what happened.</summary>
     public string SellBusiness(int id) => World.Businesses.FirstOrDefault(b => b.Id == id && b.IsOpen && b.OwnerId == Player.Id) is { } b ? BusinessSystem.Sell(Ctx, b, Player) : "";
+
+    /// <summary>What the player could do to their own home (HomeProjectSystem); empty when they do not own it.</summary>
+    public IReadOnlyList<HomeProjectView> HomeProjects()
+    {
+        if (!Player.IsAlive || HomeProjectSystem.Holder(World, Player) is not { } holder) return Array.Empty<HomeProjectView>();
+        return HomeProjectSystem.Fitting(Ctx, Player).Select(d =>
+        {
+            double cost = HomeProjectSystem.Cost(Ctx, Player, d);
+            bool done = HomeProjectSystem.IsDone(Ctx, holder, d);
+            return new HomeProjectView(d.Id, d.Name, d.Text, EconomySystem.Format(Ctx, cost), Player.Money >= cost, done ? holder.HomeProjects[d.Id] : null);
+        }).ToList();
+    }
+
+    public string DoHomeProject(string id) => HomeProjectSystem.Do(Ctx, Player, id);
 
     /// <summary>Homes the player lets out (RentalSystem).</summary>
     public IReadOnlyList<RentalView> Rentals() => RentalSystem.OwnedBy(World, Player).Select(r => new RentalView(r.Id,

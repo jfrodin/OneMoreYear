@@ -253,6 +253,7 @@ public static class EffectApplier
             case "start_dating":
                 if (to == null || !EventSystem.Compatible(ctx, who, to)) return;
                 // Already with someone? Then this is an affair, not a new relationship.
+                if (who.PartnerId is { } taken && taken != to.Id && who.Id == w.PlayerId && !ctx.Happens(ContentCategories.Infidelity)) return;
                 if (who.PartnerId is { } current && current != to.Id && who.Id == w.PlayerId)
                 {
                     FamilySystem.StartAffair(ctx, who, to);
@@ -338,7 +339,7 @@ public static class EffectApplier
                 if (who.IsAlive) LifeSystem.Die(ctx, who, e.Cause ?? "an accident");
                 break;
             case "start_affair":
-                if (to != null) FamilySystem.StartAffair(ctx, who, to);
+                if (to != null && ctx.Happens(ContentCategories.Infidelity)) FamilySystem.StartAffair(ctx, who, to);
                 break;
             case "reveal_secret":
             {

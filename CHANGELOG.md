@@ -2,6 +2,19 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.53.0 – 2026-10-03 · Doing up the house
+
+- **Do up your home** (from The Sims' build mode): when you own your home, the home card on the money
+  tab has a list of things to do to it. Paint every room, shelves for the books, a room for the
+  children, a garden, a deck, a sauna, a workshop, new windows, a new bathroom, a new kitchen, solar
+  panels, a pool (in America) or an extension. Garden projects need a house with a garden.
+- Each costs money (a handy person or a gardener does some of it themselves, for less), puts part of
+  it back in the home's value, and makes the people living there a little happier every year.
+  Sometimes it goes over budget. Kitchens, bathrooms and paint wear out and can be done again.
+- A partner who keeps the home after a death keeps what was done to it.
+- Fixed: with infidelity turned off, an event could still start an affair for a player who already
+  had a partner.
+
 ## 0.52.0 – 2026-10-03 · Small wishes, and a flat to let
 
 - **The year's wish** (from The Sims' wants): every year you want one small thing that fits your life

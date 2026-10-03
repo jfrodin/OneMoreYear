@@ -748,6 +748,49 @@ public partial class GameScreen : Control
         return Ui.Card(box);
     }
 
+    private void ShowHomeProjectsDialog()
+    {
+        var box = Ui.VBox(10);
+        box.CustomMinimumSize = new Vector2(860, 0);
+        box.AddChild(Ui.Label("Do up your home", 28, UiTheme.Accent));
+        box.AddChild(Ui.Label("Part of what you spend comes back in the home's value, and a home that has been looked after makes everyone in it a little happier, every year. Kitchens and bathrooms wear out in time.",
+            15, UiTheme.Muted, wrap: true));
+        System.Action close = () => { };
+        Control? first = null;
+        var list = Ui.VBox(10);
+        foreach (var h in S.HomeProjects())
+        {
+            var row = Ui.HBox(12);
+            var col = Ui.VBox(2);
+            col.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            col.AddChild(Ui.Label(h.Name, 18, h.DoneYear != null ? UiTheme.Muted : UiTheme.Text));
+            col.AddChild(Ui.Label(h.DoneYear is { } year ? $"Done in {year}." : h.Text, 14, UiTheme.Faint, wrap: true));
+            row.AddChild(col);
+            string id = h.Id, name = h.Name;
+            var b = Ui.Button(h.DoneYear != null ? "Done" : h.Cost, () =>
+            {
+                string result = S.DoHomeProject(id);
+                close();
+                _main.AutoSave();
+                RefreshAll();
+                _main.ShowMessage(name, result);
+            }, 42);
+            b.CustomMinimumSize = new Vector2(170, 42);
+            b.Disabled = h.DoneYear != null || !h.CanAfford;
+            RegisterHint(b, h.DoneYear != null ? "Already done." : h.CanAfford ? $"Costs about {h.Cost}." : $"You need about {h.Cost}.");
+            row.AddChild(b);
+            list.AddChild(row);
+            first ??= b.Disabled ? null : b;
+        }
+        var scroll = Ui.Scroll(list);
+        scroll.CustomMinimumSize = new Vector2(0, Mathf.Min(520, GetViewportRect().Size.Y - 260));
+        box.AddChild(scroll);
+        var cancel = Ui.Button("Not now", () => close(), 46);
+        cancel.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+        box.AddChild(cancel);
+        close = _main.ShowDialog(box, first ?? cancel);
+    }
+
     private void ShowRentalDialog()
     {
         var box = Ui.VBox(10);
@@ -826,6 +869,13 @@ public partial class GameScreen : Control
         find.SetMeta("action", true);
         RegisterHint(find, m.CanMove ? "See what homes in your city cost to rent or buy." : "You cannot move right now.");
         buttons.AddChild(find);
+        if (S.HomeProjects().Count > 0)
+        {
+            var improve = Ui.Button("Do up your home…", ShowHomeProjectsDialog, 46);
+            improve.SetMeta("action", true);
+            RegisterHint(improve, "A new kitchen, a garden, new windows. It costs money, adds to the home's value, and makes it nicer to live in.");
+            buttons.AddChild(improve);
+        }
         if (m.HasMortgage)
         {
             var repay = Ui.Button("Pay extra on the loan", ShowRepayDialog, 46);

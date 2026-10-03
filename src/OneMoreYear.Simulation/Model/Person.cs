@@ -112,6 +112,8 @@ public sealed class Person
     public int? DreamFromId { get; set; }
     /// <summary>The year the dream was last offered (so it is offered once per person).</summary>
     public int? DreamOffered { get; set; }
+    /// <summary>Improvements made to the home this person holds, by id, with the year (HomeProjects).</summary>
+    public SortedDictionary<string, int> HomeProjects { get; set; } = new(StringComparer.Ordinal);
     /// <summary>Yearly wishes that came true (WishSystem).</summary>
     public int WishesKept { get; set; }
     public bool OwnsHome { get; set; }

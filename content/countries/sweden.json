@@ -123,8 +123,8 @@
     { "id": "one_room", "name": "A one-room flat", "priceFactor": 0.5, "rentFactor": 0.75, "sleeps": 1 },
     { "id": "two_room", "name": "A two-room flat", "priceFactor": 0.75, "rentFactor": 1.0, "sleeps": 2 },
     { "id": "three_room", "name": "A three-room flat", "priceFactor": 1.0, "rentFactor": 1.3, "sleeps": 4 },
-    { "id": "terraced", "name": "A terraced house", "priceFactor": 1.25, "rentFactor": 1.55, "sleeps": 5, "minYear": 1960 },
-    { "id": "house", "name": "A detached house", "priceFactor": 1.6, "rentFactor": 0, "sleeps": 6 }
+    { "id": "terraced", "name": "A terraced house", "priceFactor": 1.25, "rentFactor": 1.55, "sleeps": 5, "minYear": 1960, "garden": true },
+    { "id": "house", "name": "A detached house", "priceFactor": 1.6, "rentFactor": 0, "sleeps": 6, "garden": true }
   ],
   "cities": [
     { "id": "stockholm", "name": "Stockholm", "size": "city", "weight": 3.0, "priceFactor": 1.6 },

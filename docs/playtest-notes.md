@@ -378,3 +378,21 @@ Händer inget när jag klicka rpå net year? Något har blivit fel
 _playtest-saves/2026-10-01_215718.png · playtest-saves/2026-10-01_215718.json_
 
 _Notes above were processed on 2026-10-01 (playtest 4): the stuck "Next Year" and the screen not updating after actions, "You" in the year report, why a trait came, devoted parent and unfaithful only from adulthood, pronouns, anachronisms, "How school goes" before grades, the newspaper closing on scroll, the focus ring, the title screen, why a home cannot be bought, the job offers text – see CHANGELOG 0.25.0. The larger wishes are in docs/todo.md._
+
+### 2026-10-03 12:10 · Screen: TitleScreen
+
+En del av texten nedtill syns inte om fönstet blir för litet.
+
+_playtest-saves/2026-10-03_121053.png_
+
+### 2026-10-03 12:12 · Screen: TitleScreen
+
+Ska nog itne så normal som svårhetsgrad, det uppfattas som så man ska spela? Borde stp medium elelr något sådant kanske?
+
+_playtest-saves/2026-10-03_121241.png_
+
+### 2026-10-03 12:15 · v0.52.0  ·  1972  ·  Marcus Holm, 2  ·  This Year  ·  seed VDCX73TB
+
+En morfar som jobbar som intern? Altlså praktikant? Det känns märkligt?
+
+_playtest-saves/2026-10-03_121523.png · playtest-saves/2026-10-03_121523.json_

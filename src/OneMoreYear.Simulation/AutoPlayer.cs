@@ -62,6 +62,9 @@ public sealed class AutoPlayer
         }
         else if (_useActions && !session.NeedsSuccession && session.Player.Holdings.Count > 0 && _rng.Chance(0.05))
             session.SellInvestment(session.Player.Holdings[0].AssetId, 0.5);
+        // Now and then, something done to the home.
+        if (_useActions && !session.NeedsSuccession && _rng.Chance(0.08) && session.HomeProjects().FirstOrDefault(h => h.DoneYear == null && h.CanAfford) is { } project)
+            session.DoHomeProject(project.Id);
         // Rarely, a flat to let, when there is money for it.
         if (_useActions && !session.NeedsSuccession && _rng.Chance(0.04) && session.RentalOptions().FirstOrDefault(o => o.CanAfford) is { } let)
             session.BuyRental(let.TypeId);

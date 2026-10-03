@@ -310,6 +310,7 @@ public static class EconomySystem
         p.OwnsHome = true;
         p.HomeValue = value;
         p.Mortgage = p.MortgageStart = Math.Max(0, mortgage);
+        p.HomeProjects.Clear();
     }
 
     /// <summary>Sells the home this person holds; the partner living there moves out with them.</summary>
@@ -322,6 +323,7 @@ public static class EconomySystem
         if (log && p.InFamily)
             ctx.World.Log($"{p.FirstName} sold {(p.Sex == Sex.Male ? "his" : "her")} home for {Format(ctx, p.HomeValue)}.", ctx.Importance(false, p), "economy", p.Id);
         p.HomeValue = p.Mortgage = p.MortgageStart = 0;
+        p.HomeProjects.Clear();
         p.OwnsHome = false;
         if (ctx.World.TryGet(p.PartnerId) is { HomeValue: <= 0 } partner) partner.OwnsHome = false;
         return equity;

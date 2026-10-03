@@ -1104,6 +1104,31 @@ public class CountryTests
     }
 
     [Fact]
+    public void Home_projects_add_value_and_wear_out()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 31, StartYear = 1970 });
+        var bot = new AutoPlayer(31, useActions: false);
+        for (int i = 0; i < 25 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        if (p.HomeValue <= 0)
+        {
+            if (s.World.TryGet(p.PartnerId) is { } partner) { partner.HomeValue = 0; partner.OwnsHome = false; }
+            p.LivesWithParents = false;
+            EconomySystem.GiveHome(p, HousingSystem.HomePrice(s.Ctx, p), 0);
+        }
+        p.Money += s.Ctx.NominalRef(2_000_000);
+        var kitchen = s.HomeProjects().Single(h => h.Id == "kitchen");
+        Assert.Null(kitchen.DoneYear);
+        double value = p.HomeValue;
+        Assert.NotEmpty(s.DoHomeProject("kitchen"));
+        Assert.True(p.HomeValue > value);
+        Assert.Equal(s.Year, s.HomeProjects().Single(h => h.Id == "kitchen").DoneYear);
+        Assert.Equal("", s.DoHomeProject("kitchen"));
+        s.World.Year += 26;
+        Assert.Null(s.HomeProjects().Single(h => h.Id == "kitchen").DoneYear);
+    }
+
+    [Fact]
     public void A_home_to_let_pays_rent_and_is_inherited()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 29, StartYear = 1970 });

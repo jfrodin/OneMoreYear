@@ -258,3 +258,6 @@ public sealed record RentalView(int Id, string Name, int Since, int Owners, stri
 
 /// <summary>A kind of home the player could buy to let: its price and the cash it takes.</summary>
 public sealed record RentalOptionView(string TypeId, string Name, string Price, string CashNeeded, bool CanAfford);
+
+/// <summary>Something to do to the home: what it costs, and whether it is done (DoneYear) or affordable.</summary>
+public sealed record HomeProjectView(string Id, string Name, string Text, string Cost, bool CanAfford, int? DoneYear);

@@ -128,8 +128,8 @@
     { "id": "studio", "name": "A studio apartment", "priceFactor": 0, "rentFactor": 0.8, "sleeps": 1 },
     { "id": "apartment", "name": "A two-bedroom apartment", "priceFactor": 0.6, "rentFactor": 1.0, "sleeps": 3 },
     { "id": "condo", "name": "A condo", "priceFactor": 0.8, "rentFactor": 1.2, "sleeps": 3, "minYear": 1965 },
-    { "id": "townhouse", "name": "A townhouse", "priceFactor": 1.0, "rentFactor": 1.4, "sleeps": 4 },
-    { "id": "house", "name": "A house with a yard", "priceFactor": 1.3, "rentFactor": 1.7, "sleeps": 6 }
+    { "id": "townhouse", "name": "A townhouse", "priceFactor": 1.0, "rentFactor": 1.4, "sleeps": 4, "garden": true },
+    { "id": "house", "name": "A house with a yard", "priceFactor": 1.3, "rentFactor": 1.7, "sleeps": 6, "garden": true }
   ],
   "cities": [
     { "id": "new_york", "name": "New York", "size": "city", "weight": 3.0, "priceFactor": 2.0 },

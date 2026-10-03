@@ -21,6 +21,7 @@ public sealed class ContentDb
     public List<AchievementDef> Achievements { get; } = new();
     public Dictionary<string, DreamDef> Dreams { get; } = new();
     public Dictionary<string, WishDef> Wishes { get; } = new();
+    public Dictionary<string, HomeProjectDef> HomeProjects { get; } = new();
     public Dictionary<string, FamilyTraitDef> FamilyTraits { get; } = new();
     public Dictionary<string, HeirloomDef> Heirlooms { get; } = new();
     public Dictionary<string, PetKindDef> PetKinds { get; } = new();
@@ -134,6 +135,10 @@ public sealed class ContentDb
                 else if (path.EndsWith("reputation.json"))
                 {
                     foreach (var t in Deserialize<List<FamilyTraitDef>>(json)) db.FamilyTraits[t.Id] = t;
+                }
+                else if (path.EndsWith("home_projects.json"))
+                {
+                    foreach (var x in Deserialize<List<HomeProjectDef>>(json)) db.HomeProjects[x.Id] = x;
                 }
                 else if (path.EndsWith("wishes.json"))
                 {
@@ -293,6 +298,13 @@ public sealed class ContentDb
             if (d.Goal == "job" && Occupation(d.Param) == null) errors.Add($"Dream {d.Id}: unknown occupation {d.Param}");
             foreach (var t in d.Traits.Keys) if (!Traits.ContainsKey(t)) errors.Add($"Dream {d.Id}: unknown trait {t}");
             if (new[] { d.Name, d.Text, d.Fulfilled, d.Failed }.Any(t => string.IsNullOrWhiteSpace(t) || t.Contains("–") || t.Contains("—"))) errors.Add($"Dream {d.Id}: missing text or a dash");
+        }
+        // Home projects: a cost, known skills, and no dashes.
+        foreach (var x in HomeProjects.Values)
+        {
+            if (x.Cost <= 0) errors.Add($"Home project {x.Id}: needs a cost");
+            if (x.Skill != null && !Hobbies.ContainsKey(x.Skill)) errors.Add($"Home project {x.Id}: unknown skill {x.Skill}");
+            if (new[] { x.Name, x.Text, x.Done, x.Overrun }.Any(t => string.IsNullOrWhiteSpace(t) || t.Contains("–") || t.Contains("—"))) errors.Add($"Home project {x.Id}: missing text or a dash");
         }
         // Wishes: one way to keep them, actions that exist and fit the target, and no dashes.
         foreach (var x in Wishes.Values)

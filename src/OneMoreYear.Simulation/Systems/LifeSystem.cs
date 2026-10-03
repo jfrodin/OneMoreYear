@@ -190,6 +190,7 @@ public static class LifeSystem
             EconomySystem.GiveHome(widow, dead.HomeValue, dead.Mortgage);
             widow.MortgageStart = dead.MortgageStart;
             widow.HomeType = dead.HomeType;
+            foreach (var (id, year) in dead.HomeProjects) widow.HomeProjects[id] = year;
             dead.HomeValue = dead.Mortgage = dead.MortgageStart = 0;
         }
         double estate = EconomySystem.NetWorth(ctx, dead);
