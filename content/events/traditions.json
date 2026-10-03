@@ -99,10 +99,11 @@
   },
   {
     "id": "trad_name_day", "countries": [ "sweden" ], "title": "Name day",
-    "text": "Today is your name day. Only your grandmother remembers.",
+    "text": "Today is your name day. Only {t.name} remembers.",
     "conditions": { "minAge": 5 }, "cooldown": 6,
+    "target": { "role": "grandparent", "conditions": { "sex": "female" } },
     "choices": [
-      { "text": "Call to thank her", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "She has baked a cake. You go round for coffee. It is the nicest small thing that happens all year." },
+      { "text": "Call to thank her", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "She has baked a cake. You go round and eat far too much of it. It is the nicest small thing that happens all year." },
       { "text": "Celebrate it yourself", "effects": [ { "type": "money", "amount": -100 }, { "type": "happiness", "amount": 2 } ], "result": "You buy a pastry and eat it standing at the counter. Nobody needs to know." }
     ]
   }

@@ -30,11 +30,13 @@ public static class LifeSystem
         double illness = IllnessChance(age);
         if (rng.Chance(illness))
         {
-            double hit = rng.Range(15, 40);
+            // Children recover better, and get what children get.
+            double hit = rng.Range(15, 40) * (age < 16 ? 0.6 : 1);
             p.Health = Math.Max(1, p.Health - hit);
-            string what = rng.Pick(new[] { "cancer", "a heart attack", "a stroke", "severe pneumonia", "diabetes" });
+            var options = Illnesses.Where(x => age >= x.MinAge && age <= x.MaxAge).ToList();
+            string what = rng.PickWeighted(options, x => x.Weight).Text;
             if (p.InFamily || p.Id == ctx.World.PlayerId)
-                ctx.World.Log($"{p.FirstName} was struck by {what}.", ctx.Importance(false, p), "health", p.Id);
+                ctx.World.Log($"{p.FirstName} {what}.", ctx.Importance(false, p), "health", p.Id);
             p.Happiness -= 10;
             // Where healthcare is not free, illness costs money: less with insurance through your own or your spouse's job, or after 65.
             if (ctx.Country.MedicalBill > 0)
@@ -52,6 +54,21 @@ public static class LifeSystem
             }
         }
     }
+
+    /// <summary>Serious illnesses, as the chronicle tells them, and the ages they come at.</summary>
+    private static readonly (string Text, int MinAge, int MaxAge, double Weight)[] Illnesses =
+    {
+        ("fell seriously ill with pneumonia", 0, 130, 1),
+        ("was rushed to hospital with meningitis", 0, 30, 0.6),
+        ("had a burst appendix and an emergency operation", 4, 45, 0.6),
+        ("was diagnosed with leukaemia", 2, 25, 0.3),
+        ("was badly hurt in a car accident", 16, 85, 0.5),
+        ("was diagnosed with diabetes", 18, 130, 0.6),
+        ("was diagnosed with cancer", 28, 130, 1.2),
+        ("had a heart attack", 35, 130, 1.2),
+        ("had a stroke", 45, 130, 1),
+        ("was taken ill with a serious heart condition", 55, 130, 0.6),
+    };
 
     public static double MortalityChance(SimContext ctx, Person p)
     {
@@ -93,6 +110,8 @@ public static class LifeSystem
         int age = p.Age(ctx.Year);
         string cause = age < 15
             ? ctx.Rng.Pick(new[] { "a sudden illness", "an accident", "a drowning accident", "leukaemia" })
+            : age < 30
+            ? ctx.Rng.Pick(new[] { "a car accident", "a drowning accident", "a motorcycle accident", "cancer", "a sudden illness" })
             : age < 45
             ? ctx.Rng.Pick(new[] { "a car accident", "a drowning accident", "cancer", "a heart attack", "a sudden illness" })
             : age < 85
@@ -117,6 +136,7 @@ public static class LifeSystem
                 {
                     "murder" => $"{p.FullName} was murdered, aged {age}.",
                     "suicide" => $"{p.FullName} took {(p.Sex == Sex.Male ? "his" : "her")} own life, aged {age}.",
+                    _ when cause.Contains("accident") => $"{p.FullName} died in {cause}, aged {age}.",
                     _ => $"{p.FullName} died of {cause}, aged {age}.",
                 },
                 ctx.Importance(true, p), "death", p.Id);

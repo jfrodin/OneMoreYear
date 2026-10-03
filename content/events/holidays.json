@@ -70,7 +70,7 @@
     ]
   },
   {
-    "id": "hol_name_day", "countries": [ "sweden" ], "title": "Name day",
+    "id": "hol_name_day", "countries": [ "sweden" ], "title": "A flag on the cake",
     "text": "It is your name day. Somebody at home has remembered, and there is a cake on the table and a flag on the cake.",
     "conditions": { "minAge": 5, "maxAge": 80 }, "cooldown": 8, "weight": 0.5,
     "choices": [

@@ -22,6 +22,7 @@ public partial class GameScreen : Control
     private VBoxContainer _yearContent = null!;
     private VBoxContainer _peopleList = null!;
     private VBoxContainer _personDetail = null!;
+    private ScrollContainer _detailScroll = null!;
     private VBoxContainer _treeTab = null!;
     private FamilyTreeView? _treeView;
     private int? _treeFocusId;
@@ -74,7 +75,8 @@ public partial class GameScreen : Control
         listScroll.SizeFlagsHorizontal = SizeFlags.Fill;
         split.AddChild(listScroll);
         _personDetail = Ui.VBox(14);
-        split.AddChild(Ui.Scroll(Ui.Margin(_personDetail, 8)));
+        _detailScroll = Ui.Scroll(Ui.Margin(_personDetail, 8));
+        split.AddChild(_detailScroll);
         _tabs.AddChild(split);
         _tabs.SetTabTitle(TabFamily, "People");
 
@@ -302,16 +304,18 @@ public partial class GameScreen : Control
         {
             var newsBox = Ui.VBox(6);
             newsBox.AddChild(Ui.Label("What happened", 20, UiTheme.Text));
-            foreach (var line in news.OrderByDescending(l => l.Importance))
+            // The world first, then one line per person: what happened to them, told together and in order.
+            foreach (var line in news.Where(l => l.Category == "world"))
+                newsBox.AddChild(Ui.Label("•  " + line.Text, 18, UiTheme.Info, wrap: true));
+            foreach (var story in S.Stories(news))
             {
-                var (size, color) = line.Importance switch
+                var (size, color) = (story.Importance % 100) switch
                 {
                     3 => (19, UiTheme.Text),
                     2 => (18, UiTheme.Text.Lerp(UiTheme.Muted, 0.35f)),
                     _ => (16, UiTheme.Muted)
                 };
-                if (line.Category == "world") color = UiTheme.Info;
-                newsBox.AddChild(Ui.Label("•  " + line.Text, size, color, wrap: true));
+                newsBox.AddChild(Ui.Label("•  " + story.Text, story.FrontPage ? 19 : size, story.FrontPage ? UiTheme.Text : color, wrap: true));
             }
             _yearContent.AddChild(Ui.Card(newsBox));
         }
@@ -1211,6 +1215,8 @@ public partial class GameScreen : Control
             nb.AddThemeStyleboxOverride("normal", UiTheme.Box(UiTheme.PanelHover, 8, UiTheme.AccentDark, 1));
         RefreshDetail();
         if (!keepFocus && FirstEnabledButton(_personDetail, "action") is { } first) Ui.FocusLater(first);
+        // A new person always opens at the top of their page (focus moving to a button would scroll it).
+        if (previous != id) GetTree().CreateTimer(0.05).Timeout += () => { if (IsInstanceValid(_detailScroll)) _detailScroll.ScrollVertical = 0; };
     }
 
     private void RefreshDetail()

@@ -59,7 +59,7 @@
   },
   {
     "id": "child_pocket_money", "trigger": "milestone", "title": "Pocket money",
-    "text": "You get pocket money for the first time. Every Saturday, a few coins of your own.",
+    "text": "Your parents start giving you pocket money: a few coins every Saturday, yours to do what you like with.",
     "conditions": { "minAge": 6, "maxAge": 9, "notFlags": [ "pocket_money" ] }, "cooldown": 50, "weight": 2,
     "choices": [
       { "text": "Spend it on Saturday sweets", "effects": [ { "type": "flag", "flag": "pocket_money" }, { "type": "happiness", "amount": 4 } ],

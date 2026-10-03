@@ -440,3 +440,5 @@ _playtest-saves/2026-10-03_153306.png · playtest-saves/2026-10-03_153306.json_
 När man klicka rpå olika persopner så visas sidorna olika om du fattar? Ibladn nedscrollat, ibladn i toppen etc etc
 
 _playtest-saves/2026-10-03_153410.png · playtest-saves/2026-10-03_153410.json_
+
+_Notes above were processed on 2026-10-03 (playtest 5, afternoon): illnesses fit the age (no heart attacks at four, milder for children), illness and mental health are told in varied words instead of "was struck by", the year's "What happened" tells one line per person like the newspaper, the pocket money text, cake instead of coffee at grandmother's, and a person's page always opens at the top – see CHANGELOG 0.58.0._

@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.58.0 – 2026-10-03 · Playtest 5, afternoon
+
+- Serious illness fits the age: children get pneumonia, meningitis or a burst appendix, not heart
+  attacks, and recover better. Heart attacks from 35, strokes from 45. Young people no longer die
+  of heart attacks, and accidents are "died in a car accident", not "died of".
+- No more "was struck by" for everything. Each illness and each mental health state is told in its
+  own words, with a few ways for each: "fell into a depression", "burned out", "started having
+  panic attacks", "came out of the depression", "got the anxiety under control".
+- The year's "What happened" tells one line per person, like the newspaper: "Elisabeth broke up
+  with Allan. She started having panic attacks."
+- Pocket money is clearly from the parents, not from the juice stand.
+- The name day at grandmother's is cake, not coffee, and only happens while she is alive.
+- A person's page always opens at the top.
+
 ## 0.57.0 – 2026-10-03 · Fame
 
 - **Creative careers, and they are hard.** Three new tracks: music (bar musician, session

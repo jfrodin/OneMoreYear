@@ -562,6 +562,9 @@ public sealed class AilmentDef
     public double Performance { get; set; }
     public double Recovery { get; set; }
     public double TreatedRecovery { get; set; }
+    /// <summary>How the chronicle tells that it started, and that it ended: "fell into a depression". {his} for the pronoun.</summary>
+    public List<string> Began { get; set; } = new();
+    public List<string> Ended { get; set; } = new();
 }
 
 public sealed class ScenarioRequirements

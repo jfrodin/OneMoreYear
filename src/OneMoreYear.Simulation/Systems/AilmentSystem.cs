@@ -49,7 +49,7 @@ public static class AilmentSystem
         var def = ctx.Content.Ailments[id];
         p.Happiness = Math.Min(100, p.Happiness + 10);
         if (p.InFamily || p.Id == ctx.World.PlayerId)
-            ctx.World.Log($"{p.FirstName} came through {def.Name.ToLowerInvariant()}.", ctx.Importance(false, p), "health", p.Id);
+            ctx.World.Log($"{p.FirstName} {Phrase(ctx, p, def.Ended, $"recovered from {def.Name.ToLowerInvariant()}")}.", ctx.Importance(false, p), "health", p.Id);
     }
 
     /// <summary>Starts an ailment. For the player a situation follows, so they can choose what to do.</summary>
@@ -58,11 +58,16 @@ public static class AilmentSystem
         if (p.Ailments.ContainsKey(id) || !ctx.Content.Ailments.TryGetValue(id, out var def) || !Allowed(ctx, p, def)) return false;
         p.Ailments[id] = ctx.Year;
         if (p.InFamily || p.Id == ctx.World.PlayerId)
-            ctx.World.Log(id == "dementia" ? $"{p.FirstName} started to forget things." : $"{p.FirstName} was struck by {def.Name.ToLowerInvariant()}.",
+            ctx.World.Log($"{p.FirstName} {Phrase(ctx, p, def.Began, $"fell ill with {def.Name.ToLowerInvariant()}")}.",
                 ctx.Importance(false, p), "health", p.Id);
         if (p.Id == ctx.World.PlayerId) EventSystem.QueueSituation(ctx, $"ailment_{id}");
         return true;
     }
+
+    /// <summary>One of the ways to tell it, with {his} and {him} for the person.</summary>
+    private static string Phrase(SimContext ctx, Person p, List<string> options, string fallback) =>
+        (options.Count > 0 ? options[ctx.Rng.Next(options.Count)] : fallback)
+            .Replace("{his}", p.Sex == Sex.Male ? "his" : "her").Replace("{him}", p.Sex == Sex.Male ? "him" : "her");
 
     private static void Onset(SimContext ctx, Person p)
     {
