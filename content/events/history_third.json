@@ -1,0 +1,74 @@
+// A few more moments of history, mostly American. Each only in its year. No dashes.
+[
+  {
+    "id": "hist_star_wars", "trigger": "history", "title": "A long time ago",
+    "text": "There is a film everyone is talking about, with spaceships and a farm boy and a sound when the swords light up. The queue goes round the cinema twice.",
+    "conditions": { "minAge": 7, "maxAge": 40, "minYear": 1977, "maxYear": 1978 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Stand in the queue", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "star_wars", "text": "The first time I saw Star Wars", "impact": 8 } ], "result": "Two hours in the dark with your mouth open. On the way home you make the sound of the swords, and you do not stop for a year." },
+      { "text": "Science fiction is for children", "effects": [], "result": "You do not go. Everyone else quotes it for the rest of your life, and you never quite know what they mean." }
+    ]
+  },
+  {
+    "id": "hist_brown_v_board", "countries": [ "usa" ], "trigger": "history", "title": "The court",
+    "text": "The Supreme Court has said that separate schools for Black and white children are against the Constitution. Some grown ups are celebrating. Some are very angry.",
+    "conditions": { "minAge": 8, "minYear": 1954, "maxYear": 1954 }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Ask what it means", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 } ], "result": "You get three different answers from three different adults. It takes you years to work out which one was true." },
+      { "text": "Listen to the radio", "effects": [], "result": "A man reads the decision in a slow voice. Nothing changes at your school for a long time. Then it does." }
+    ]
+  },
+  {
+    "id": "hist_stonewall", "countries": [ "usa" ], "trigger": "history", "title": "Christopher Street",
+    "text": "The police raided a bar in New York, and this time the people inside fought back. It is on the news for days.",
+    "conditions": { "minAge": 16, "minYear": 1969, "maxYear": 1969 }, "weight": 2, "cooldown": 0,
+    "choices": [
+      { "text": "Follow every story", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.02 } ], "result": "Most of the papers are cruel about it. One is not. You cut that one out and keep it, and do not say why." },
+      { "text": "Change the channel", "effects": [], "result": "It does not seem to have anything to do with you. Years later, you find out it had something to do with someone you love." }
+    ]
+  },
+  {
+    "id": "hist_miracle_on_ice", "countries": [ "usa" ], "trigger": "history", "title": "Do you believe in miracles?",
+    "text": "The Winter Olympics. A team of American college boys is playing the Soviet Union at ice hockey. Nobody gives them a chance.",
+    "conditions": { "minAge": 8, "minYear": 1980, "maxYear": 1980 }, "weight": 4, "cooldown": 0,
+    "choices": [
+      { "text": "Watch the last minutes", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "miracle_on_ice", "text": "The Miracle on Ice", "impact": 10 } ], "result": "Four to three. The commentator shouts the line everyone will quote. Your whole street is outside, honking, in February." }
+    ]
+  },
+  {
+    "id": "hist_stenmark", "countries": [ "sweden" ], "trigger": "history", "title": "Two golds",
+    "text": "The Olympics in Lake Placid. Ingemar Stenmark, the quiet man from Tärnaby, has a second run to make in the slalom.",
+    "conditions": { "minAge": 6, "minYear": 1980, "maxYear": 1980 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Watch at the kitchen table", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Gold in the giant slalom, gold in the slalom. He says almost nothing in the interview afterwards. The whole country loves him for it." }
+    ]
+  },
+  {
+    "id": "hist_la_olympics", "countries": [ "usa" ], "trigger": "history", "title": "The games at home",
+    "text": "The Olympics are in Los Angeles. A man flies into the opening ceremony with a jet pack. The whole summer is red, white and blue.",
+    "conditions": { "minAge": 6, "minYear": 1984, "maxYear": 1984 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Watch every evening", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "You spend the rest of the summer sprinting in the yard and standing on an upturned bucket to receive your medals." },
+      { "text": "Get tickets", "requires": { "minAge": 16, "minMoney": 3000 }, "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "olympics", "text": "Being there at the Olympics in 1984", "impact": 15 } ], "result": "A heat in the hundred metres, a crowd of ninety thousand, and a sunburn you are proud of." }
+    ]
+  },
+  {
+    "id": "hist_columbine", "countries": [ "usa" ], "content": [ "violence" ], "trigger": "history", "title": "A school in Colorado",
+    "text": "Two students have opened fire at their high school in Colorado. The pictures of children running out with their hands up are on every channel.",
+    "conditions": { "minAge": 10, "minYear": 1999, "maxYear": 1999 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "Hold your family close", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "You hug your people for longer than usual that night. The school sends a letter about new safety drills. You read it twice." },
+      { "text": "Turn it off", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "You turn it off. It does not stay off. It keeps coming back, in other schools, for the rest of your life." }
+    ]
+  },
+  {
+    "id": "hist_iraq_2003", "countries": [ "usa" ], "trigger": "history", "title": "Shock and awe",
+    "text": "The war in Iraq has started. On television, explosions over Baghdad at night, and reporters riding along with the troops.",
+    "conditions": { "minAge": 14, "minYear": 2003, "maxYear": 2003 }, "weight": 3, "cooldown": 0,
+    "choices": [
+      { "text": "March against it", "requires": { "minAge": 16 }, "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.03 } ], "result": "A Saturday in the cold with a cardboard sign. A neighbour does not speak to you for a year." },
+      { "text": "Fly the flag", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.03 } ], "result": "A flag on the porch and a yellow ribbon round the tree. Someone on your street has a son over there." },
+      { "text": "Just watch", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You watch, and wait, and say little. That is what most people do." }
+    ]
+  }
+]
