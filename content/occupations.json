@@ -274,5 +274,42 @@
       { "title": "Cabinet Minister", "salary": 1300000, "minEducation": "secondary", "promotionChance": 0.012, "fame": 8 },
       { "title": "Head of Government", "salary": 1900000, "minEducation": "secondary", "promotionChance": 0, "fame": 15 }
     ]
+  },
+  {
+    "id": "beauty", "name": "Hair and Beauty", "tags": [ "shop" ], "weight": 0.35,
+    "traitAffinity": { "social": 1.6, "creative": 1.5, "vain": 1.4, "charming": 1.3 },
+    "levels": [
+      { "title": "Junior Stylist", "salary": 230000, "minEducation": "primary", "entry": true, "promotionChance": 0.15 },
+      { "title": "Hairdresser", "salary": 300000, "minEducation": "primary", "entry": true, "promotionChance": 0.07 },
+      { "title": "Senior Stylist", "salary": 380000, "minEducation": "primary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "cleaning", "name": "Cleaning", "tags": [ "manual" ], "weight": 0.45,
+    "traitAffinity": { "introvert": 1.3, "loyal": 1.2, "conflict_averse": 1.2 },
+    "levels": [
+      { "title": "Cleaner", "salary": 240000, "minEducation": "none", "entry": true, "promotionChance": 0.06 },
+      { "title": "Cleaning Supervisor", "salary": 310000, "minEducation": "none", "promotionChance": 0.04 },
+      { "title": "Facilities Manager", "salary": 450000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "real_estate", "name": "Real Estate", "tags": [ "office" ], "weight": 0.25,
+    "traitAffinity": { "charming": 1.8, "greedy": 1.6, "ambitious": 1.5, "manipulative": 1.3 },
+    "levels": [
+      { "title": "Trainee Estate Agent", "salary": 280000, "minEducation": "secondary", "entry": true, "promotionChance": 0.15 },
+      { "title": "Estate Agent", "salary": 450000, "minEducation": "secondary", "promotionChance": 0.06 },
+      { "title": "Senior Agent", "salary": 650000, "minEducation": "secondary", "promotionChance": 0.03 },
+      { "title": "Agency Director", "salary": 950000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
+  },
+  {
+    "id": "aviation", "name": "Flying", "tags": [ "uniform" ], "weight": 0.15, "minYear": 1955,
+    "traitAffinity": { "social": 1.5, "brave": 1.3, "charming": 1.3 },
+    "levels": [
+      { "title": "Cabin Crew", "salary": 290000, "minEducation": "secondary", "entry": true, "promotionChance": 0.08 },
+      { "title": "Purser", "salary": 380000, "minEducation": "secondary", "promotionChance": 0.05 },
+      { "title": "Cabin Manager", "salary": 460000, "minEducation": "secondary", "promotionChance": 0 }
+    ]
   }
 ]

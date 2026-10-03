@@ -47,6 +47,10 @@
     "sport:3": [ "Team USA" ],
     "acting": [ "The {city} Playhouse", "{brand} Pictures", "{place} Repertory Theater" ],
     "politics": [ "{city} City Council", "{place} County Board" ],
+    "beauty": [ "{surname}'s Salon", "{brand} Hair Studio", "{city} Cuts" ],
+    "cleaning": [ "{brand} Janitorial", "{city} Building Services", "{surname} Cleaning Co." ],
+    "real_estate": [ "{surname} Realty", "{brand} Real Estate", "{city} Homes" ],
+    "aviation": [ "{brand} Airlines", "Pan {brand}", "{city} Air" ],
     "politics:1": [ "The United States Congress" ],
     "politics:2": [ "The Cabinet" ],
     "politics:3": [ "The White House" ]

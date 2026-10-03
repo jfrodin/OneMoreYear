@@ -1,0 +1,94 @@
+// Stories for hair and beauty, cleaning, real estate and flying. No dashes.
+[
+  {
+    "id": "wt2_salon_regular", "title": "The regular",
+    "text": "An old woman has had her hair done in your chair every Friday for six years. Today she says it will be the last time. She does not say why, and you know.",
+    "conditions": { "minAge": 18, "jobs": [ "beauty" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Make it the best one", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "memory", "kind": "last_appointment", "text": "The last Friday appointment", "impact": 12 } ], "result": "An hour and a half, no charge, her favourite magazine, and a hand on her shoulder at the door. Her daughter comes in a month later, just to tell you." }
+    ]
+  },
+  {
+    "id": "wt2_salon_disaster", "title": "Too short",
+    "text": "The customer said \"just a trim\". You were talking. You have cut off much more than a trim.",
+    "conditions": { "minAge": 16, "jobs": [ "beauty" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Turn the chair round slowly", "chance": 0.5, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "A long silence. Then: \"I actually love it.\" You do not breathe properly until the door closes.", "effects": [ { "type": "performance", "amount": 4 } ] },
+        "failure": { "text": "Tears, a manager, a refund, and a review that mentions you by name.", "effects": [ { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Own up before the mirror", "effects": [ { "type": "performance", "amount": -2 }, { "type": "trait_add", "trait": "brave", "chance": 0.03 } ], "result": "Free colour, free product and a very sincere apology. She comes back, to you, which you do not deserve." }
+    ]
+  },
+  {
+    "id": "wt2_salon_own", "title": "A chair of your own",
+    "text": "The salon owner is retiring and offers you the business: the chairs, the customers, the lease and the leaking sink.",
+    "conditions": { "minAge": 25, "jobs": [ "beauty" ], "minMoney": 100000 }, "cooldown": 20,
+    "choices": [
+      { "text": "Take it over", "effects": [ { "type": "start_business", "kind": "salon" }, { "type": "happiness", "amount": 6 } ], "result": "Your name painted on the window. The first month you cut, book, clean and do the accounts, and love every minute of it except the accounts." },
+      { "text": "Stay behind the chair", "effects": [], "result": "Someone else buys it and changes the music. You stay. The customers stay with you." }
+    ]
+  },
+  {
+    "id": "wt2_cleaner_found", "title": "Found",
+    "text": "Cleaning an office at night, you find an envelope behind a desk. It is full of cash. Nobody else is in the building.",
+    "conditions": { "minAge": 16, "jobs": [ "cleaning" ] }, "cooldown": 15,
+    "choices": [
+      { "text": "Hand it in", "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.05 }, { "type": "performance", "amount": 6 } ], "result": "The office manager counts it twice and looks at you differently ever after. A box of chocolates arrives the next week. It is not nothing." },
+      { "text": "Keep it", "chance": 0.7,
+        "success": { "text": "Nobody ever asks. You pay off a debt and never quite feel clean about it.", "effects": [ { "type": "money", "amount": 25000 }, { "type": "trait_add", "trait": "dishonest", "chance": 0.08 } ] },
+        "failure": { "text": "There was a camera. You are the only one on it.", "effects": [ { "type": "fire" }, { "type": "happiness", "amount": -10 } ] } }
+    ]
+  },
+  {
+    "id": "wt2_cleaner_invisible", "title": "Invisible",
+    "text": "A man in a suit talks loudly on the phone about firing half his department while you empty his bin. He does not see you. Nobody here ever does.",
+    "conditions": { "minAge": 18, "jobs": [ "cleaning" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Tell a woman in that department, quietly", "chance": 0.6,
+        "success": { "text": "She has three weeks' warning instead of none. At Christmas she leaves a card on your trolley.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ] },
+        "failure": { "text": "It gets back to him. Your contract is moved to another building, across town, at night.", "effects": [ { "type": "performance", "amount": -6 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Empty the bin and go", "effects": [], "result": "Invisible has its uses. You know more about this company than its board does." }
+    ]
+  },
+  {
+    "id": "wt2_estate_bidding", "title": "The bidding war",
+    "text": "Two families want the same house. One is your client's dream. The other has more money. The seller is watching you.",
+    "conditions": { "minAge": 20, "jobs": [ "real_estate" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Push the price as high as it goes", "effects": [ { "type": "money", "amount": 40000 }, { "type": "performance", "amount": 8 }, { "type": "trait_add", "trait": "greedy", "chance": 0.04 } ], "result": "A record for the street. A big commission. The family with the dream drives past it every week for a year." },
+      { "text": "Tip off the family with the dream", "chance": 0.5,
+        "success": { "text": "They find the extra money somewhere. They invite you to the housewarming.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "performance", "amount": 2 } ] },
+        "failure": { "text": "The seller finds out. A complaint, and a warning from your boss.", "effects": [ { "type": "performance", "amount": -8 } ] } }
+    ]
+  },
+  {
+    "id": "wt2_estate_crash", "title": "No buyers",
+    "text": "Interest rates are up and nobody is buying. You have shown the same flat eleven times. Your commission was supposed to pay your own mortgage.",
+    "conditions": { "minAge": 20, "jobs": [ "real_estate" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Work every weekend", "chance": 0.5, "chanceTraits": { "charming": 0.1, "ambitious": 0.1 },
+        "success": { "text": "Three sales in a dead month. You are the only agent in the office smiling on Monday.", "effects": [ { "type": "money", "amount": 30000 }, { "type": "performance", "amount": 8 }, { "type": "health", "amount": -2 } ] },
+        "failure": { "text": "Nothing moves. A thin year, and a lot of instant noodles.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Ride it out", "effects": [ { "type": "money", "amount": -20000 } ], "result": "You spend the slow months learning every street in the city. When the market turns, you are ready." }
+    ]
+  },
+  {
+    "id": "wt2_cabin_turbulence", "title": "Turbulence",
+    "text": "Forty minutes out over the sea, the plane drops like a stone. Trays fly. Somebody is screaming in row eighteen.",
+    "conditions": { "minAge": 20, "jobs": [ "aviation" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Stay calm and talk to row eighteen", "chance": 0.85, "chanceTraits": { "brave": 0.1 },
+        "success": { "text": "You crouch in the aisle and hold a stranger's hand until the air smooths out. She writes to the airline. You get a pin.", "effects": [ { "type": "performance", "amount": 8 }, { "type": "trait_add", "trait": "brave", "chance": 0.05 } ] },
+        "failure": { "text": "A trolley catches your shoulder on the second drop. Six weeks on the ground.", "effects": [ { "type": "health", "amount": -8 }, { "type": "performance", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "wt2_cabin_layover", "title": "The layover",
+    "text": "Two days in a city on the other side of the world, a hotel paid for, and a crew who want to go out.",
+    "conditions": { "minAge": 20, "jobs": [ "aviation" ] }, "cooldown": 3,
+    "choices": [
+      { "text": "Go out with the crew", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -1 } ], "result": "A rooftop bar, a night market, a sunrise from a taxi. You fly home with a story you cannot tell your family." },
+      { "text": "Sleep, and call home", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 3 } ], "result": "Room service and a long call to a kitchen nine time zones away, where someone is still awake for you." }
+    ]
+  }
+]

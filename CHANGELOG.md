@@ -2,6 +2,16 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.64.0 – 2026-10-03 · More ways to earn a living
+
+- Four new everyday tracks: hair and beauty (junior stylist to senior stylist), cleaning (cleaner to
+  facilities manager), real estate (trainee to agency director) and flying (cabin crew to cabin
+  manager, from 1955).
+- Nine events for them: the last Friday appointment, the cut that went too short, taking over the
+  salon, an envelope of cash behind a desk, the man who never sees the cleaner, a bidding war, a
+  market with no buyers, turbulence over the sea, a layover on the other side of the world.
+- A hair salon is now a business you can start or take over.
+
 ## 0.63.0 – 2026-10-03 · On stage, and in parliament
 
 - **Acting**: a new hobby (amateur theatre), a new school subject (drama) and a new hard track:
