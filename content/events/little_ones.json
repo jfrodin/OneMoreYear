@@ -1,0 +1,200 @@
+// The years between three and seven, seen from very close to the floor. No dashes.
+[
+  {
+    "id": "lo_first_friend", "title": "The best friend",
+    "text": "At nursery there is a child who has the same boots as you. That is enough. You are best friends now, forever, starting today.",
+    "conditions": { "minAge": 3, "maxAge": 5 }, "cooldown": 0,
+    "choices": [
+      { "text": "Share your snack", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "generous", "chance": 0.04 } ], "result": "Half a banana, solemnly handed over. The friendship is sealed. It lasts until you move, and in a way much longer." },
+      { "text": "Show off your boots", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "They are the same boots. That is the point. You stomp in puddles together until somebody's parent says enough." }
+    ]
+  },
+  {
+    "id": "lo_nightmare", "title": "The bad dream",
+    "text": "You wake up in the dark and the dream is still in the room. You can hear it breathing in the wardrobe.",
+    "conditions": { "minAge": 3, "maxAge": 7, "livesWithParents": true }, "cooldown": 3,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Run to {t.name}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4, "mutual": true }, { "type": "happiness", "amount": 2 } ], "result": "A warm bed, a sleepy arm, a heartbeat to listen to. The wardrobe is just a wardrobe in the morning." },
+      { "text": "Pull the covers over your head", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.03 } ], "result": "You stay very still until you fall asleep. In the morning you tell nobody. You were brave, and nobody knows." }
+    ]
+  },
+  {
+    "id": "lo_vegetables", "title": "Green things",
+    "text": "There is something green on your plate. It was not there yesterday. Nobody asked you.",
+    "conditions": { "minAge": 2, "maxAge": 6, "livesWithParents": true }, "cooldown": 3,
+    "choices": [
+      { "text": "Eat it, bravely", "effects": [ { "type": "health", "amount": 1 } ], "result": "It is not as bad as it looks. You will never admit that to anyone." },
+      { "text": "Hide it under the table", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "It is found later, behind the radiator, in a terrible state." },
+      { "text": "Refuse, at length", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "An hour at the table. The green thing goes cold. In the end everybody gives up, and you feel you have won something." }
+    ]
+  },
+  {
+    "id": "lo_birthday_party", "title": "The party",
+    "text": "Your birthday party. Eight children, one cake shaped like an animal nobody can identify, and a game where someone always cries.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 3,
+    "choices": [
+      { "text": "Blow out the candles in one go", "chance": 0.6,
+        "success": { "text": "All of them. Everyone claps. You make a wish and do not tell anyone, and it comes true, sort of.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Three tries, and some spit. Nobody minds except you.", "effects": [ { "type": "happiness", "amount": 3 } ] } },
+      { "text": "Open the presents first", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.02 } ], "result": "Paper everywhere. The best present is the box one of them came in." }
+    ]
+  },
+  {
+    "id": "lo_lost_tooth", "title": "The tooth",
+    "text": "Your first wobbly tooth has finally come out, in an apple. There is a gap you can put your tongue through.",
+    "conditions": { "minAge": 5, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Put it under the pillow", "effects": [ { "type": "money", "amount": 20 }, { "type": "happiness", "amount": 4 } ], "result": "In the morning there is a coin where the tooth was. You stay awake the next time to catch who does it, and fall asleep at eight." },
+      { "text": "Keep it in a box", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "A matchbox with a tooth in it. You show it to everyone. Your parents keep it for forty years without quite knowing why." }
+    ]
+  },
+  {
+    "id": "lo_first_bike", "title": "Two wheels",
+    "text": "The stabilisers are coming off today. Someone is holding the back of the saddle. They promise not to let go.",
+    "conditions": { "minAge": 4, "maxAge": 7 }, "cooldown": 0,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Pedal as hard as you can", "chance": 0.6, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "Halfway down the street you look back and {t.name} is standing far away, waving. {t.He} let go ages ago. You are flying.", "effects": [ { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "first_bike", "text": "The day {t.name} let go of the bike", "impact": 15 } ] },
+        "failure": { "text": "A wobble, a hedge, a scraped knee. A plaster with dinosaurs on it. Tomorrow you try again.", "effects": [ { "type": "health", "amount": -1 }, { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Ask for the stabilisers back", "effects": [], "result": "One more summer with them on. Nobody is in a hurry. Except your little cousin, who learns first." }
+    ]
+  },
+  {
+    "id": "lo_swimming_lessons", "title": "The deep end",
+    "text": "Swimming lessons. The teacher wants you to let go of the side. The water looks very deep and very green.",
+    "conditions": { "minAge": 4, "maxAge": 7 }, "cooldown": 0,
+    "choices": [
+      { "text": "Let go", "chance": 0.65,
+        "success": { "text": "Three strokes, a mouthful of water, and the side again. Three strokes! You get a badge sewn on your swimsuit.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "attribute", "kind": "fitness", "amount": 2 } ] },
+        "failure": { "text": "You sink, briefly, and are fished out by the teacher. You do not go back for two years.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Hold on", "effects": [], "result": "You hold on for the whole lesson. Next week you let go of one hand. It counts." }
+    ]
+  },
+  {
+    "id": "lo_imaginary_shop", "title": "The shop",
+    "text": "You have opened a shop in the hall. You sell stones, buttons and a spoon. Prices are high.",
+    "conditions": { "minAge": 3, "maxAge": 7, "livesWithParents": true }, "cooldown": 4,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Make {t.name} buy something", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 3, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "{t.name} buys the spoon, {t.his} own spoon, for a kiss and two pretend coins. Business is good." },
+      { "text": "Close early, there are no customers", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You put a sign on the door that says CLOSD. It stays up until somebody needs the hall." }
+    ]
+  },
+  {
+    "id": "lo_new_sibling_jealous", "title": "The baby",
+    "text": "There is a new baby in the house, and everyone looks at it all the time. It cannot even do anything.",
+    "conditions": { "minAge": 2, "maxAge": 7, "livesWithParents": true }, "cooldown": 6,
+    "target": { "role": "sibling", "conditions": { "maxAge": 0 } },
+    "choices": [
+      { "text": "Help with {t.name}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "You fetch nappies and sing songs nobody asked for. {t.name} stops crying when you sing. You are very important now." },
+      { "text": "Ask when it is going back", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "jealous", "chance": 0.03 } ], "result": "Everyone laughs, which is not an answer. You draw a picture of the family and leave the baby out. It is kept anyway." }
+    ]
+  },
+  {
+    "id": "lo_church_or_assembly", "title": "Be quiet",
+    "text": "A long ceremony in a big echoing room. Everyone has to be quiet. Something about being told to be quiet makes everything very funny.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 4,
+    "choices": [
+      { "text": "Giggle", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "It spreads along the row like a fire, through two cousins and an uncle. Somebody's grandmother hisses. It is the best day." },
+      { "text": "Sit very still", "effects": [ { "type": "trait_add", "trait": "conflict_averse", "chance": 0.02 } ], "result": "You count the lamps, the windows and the bald heads. Forty one bald heads. Afterwards somebody says you were very good." }
+    ]
+  },
+  {
+    "id": "lo_scraped_knee", "title": "Blood",
+    "text": "You fell on the gravel. There is blood, actual blood, coming out of your knee.",
+    "conditions": { "minAge": 3, "maxAge": 7 }, "cooldown": 3,
+    "choices": [
+      { "text": "Scream", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Someone comes running. A cold cloth, a plaster, a biscuit. The biscuit was the medicine, really." },
+      { "text": "Show everyone", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Everyone has to look at it. The scab is the most interesting thing at nursery for a week." }
+    ]
+  },
+  {
+    "id": "lo_den", "title": "The den",
+    "text": "With all the sofa cushions, two chairs and a blanket, you have built a den in the living room. It is the best house ever built.",
+    "conditions": { "minAge": 3, "maxAge": 8, "livesWithParents": true }, "cooldown": 4,
+    "choices": [
+      { "text": "Sleep in it tonight", "chance": 0.5,
+        "success": { "text": "Allowed. A torch, a book, a biscuit. You fall asleep in the den and wake up in your bed, which is a mystery.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "Not allowed. The cushions go back. The den lives on in your heart.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Invite everyone in", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A grown up crawls in, which is very funny, and gets stuck, which is funnier." }
+    ]
+  },
+  {
+    "id": "lo_snow", "title": "First snow",
+    "text": "You wake up and everything outside is white. The whole world has been changed in the night.",
+    "conditions": { "minAge": 2, "maxAge": 7 }, "countries": [ "sweden" ], "cooldown": 3,
+    "choices": [
+      { "text": "Run out in your pyjamas", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "health", "amount": -1 } ], "result": "Three steps, cold feet, a snowball to the face from nowhere. You are carried back inside, laughing." },
+      { "text": "Make a snow angel", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "A perfect angel on the lawn. It is still there a week later, a little sadder, and you check on it every morning." }
+    ]
+  },
+  {
+    "id": "lo_lost_toy", "title": "Teddy",
+    "text": "The bear is gone. Left somewhere: the bus, the park, the shop. It is bedtime and the bear is not here.",
+    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 6,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Cry until it is found", "chance": 0.6,
+        "success": { "text": "{t.name} drives back to the park in the dark with a torch, and comes home with a wet, happy bear.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ] },
+        "failure": { "text": "It is never found. A new bear comes, which is not the bear. You remember the old one at eighty.", "effects": [ { "type": "happiness", "amount": -5 }, { "type": "memory", "kind": "lost_teddy", "text": "The bear I lost in the park", "impact": -6 } ] } },
+      { "text": "Sleep without it, just once", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.03 } ], "result": "It is very hard. You do it. In the morning the bear is found in the washing basket." }
+    ]
+  },
+  {
+    "id": "lo_kindergarten_play", "title": "The play",
+    "text": "The nursery is putting on a play for the parents. You have been cast as a tree.",
+    "conditions": { "minAge": 3, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Be the best tree", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "You do not move once. Not even when the goat walks into you. Afterwards a grown up says you were the best tree they had ever seen, and you believe it." },
+      { "text": "Improvise", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "creative", "chance": 0.03 } ], "result": "The tree dances. The tree sings. The tree is the only thing anyone talks about afterwards." }
+    ]
+  },
+  {
+    "id": "lo_grandparent_story", "title": "Once upon a time",
+    "text": "{t.name} is putting you to bed and has run out of books. \"Shall I tell you about when I was little?\"",
+    "conditions": { "minAge": 3, "maxAge": 8 }, "cooldown": 4,
+    "target": { "role": "grandparent" },
+    "choices": [
+      { "text": "Yes", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "A farm, a war, a dog called Prince, a very strict teacher. It takes years to understand that every word was true." },
+      { "text": "Read the bear book again", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The bear book, for the ninth time. {t.name} knows it by heart and does the voices." }
+    ]
+  },
+  {
+    "id": "lo_drawing_fridge", "title": "The fridge",
+    "text": "You have drawn the whole family. Everyone has very long arms, and the cat is the same size as the house.",
+    "conditions": { "minAge": 3, "maxAge": 7, "livesWithParents": true }, "cooldown": 3,
+    "choices": [
+      { "text": "Put it on the fridge", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "It stays there for two years, getting yellower. When the fridge is replaced, somebody quietly keeps the drawing." },
+      { "text": "Draw another, better one", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "skill", "kind": "painting", "amount": 1 } ], "result": "Seven more drawings. The arms get shorter. The cat stays the size of the house, on purpose." }
+    ]
+  },
+  {
+    "id": "lo_why_sky", "title": "But why",
+    "text": "Why is the sky blue? Why do people die? Why can't the cat talk? Why is that man's nose so big? Why?",
+    "conditions": { "minAge": 3, "maxAge": 6, "livesWithParents": true }, "cooldown": 5,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Keep asking until there is an answer", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 } ], "result": "{t.name} gives real answers, then strange answers, then says \"because\". You learn that grown ups do not know everything. This is important." }
+    ]
+  },
+  {
+    "id": "lo_kiss_at_nursery", "title": "Married",
+    "text": "At nursery today you married another child under the climbing frame. There was a ring made of grass.",
+    "conditions": { "minAge": 4, "maxAge": 6 }, "cooldown": 0,
+    "choices": [
+      { "text": "Tell everyone at dinner", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Everyone at the table laughs so much someone has to leave the room. You do not see what is funny. You are married." },
+      { "text": "Keep it a secret", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "The marriage lasts until Thursday, when there is a disagreement about a spade." }
+    ]
+  },
+  {
+    "id": "lo_fireworks_scared", "title": "Bangs",
+    "text": "New Year's Eve, and the sky is exploding. Everyone says it is pretty. It is very, very loud.",
+    "conditions": { "minAge": 2, "maxAge": 6 }, "cooldown": 4,
+    "choices": [
+      { "text": "Watch from a lap, ears covered", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "Someone's warm hands over your ears. Colours in the sky. It is pretty, after all, if somebody holds you." },
+      { "text": "Hide under the table", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "A cousin is already there. You hide together until midnight is over." }
+    ]
+  }
+]
