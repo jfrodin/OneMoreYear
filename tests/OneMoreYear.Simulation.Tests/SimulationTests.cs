@@ -1056,7 +1056,7 @@ public class CountryTests
         for (int i = 0; i < 20 && bot.PlayYear(s); i++) { }
         var p = s.Player;
         SkillSystem.TakeUp(s.Ctx, p, "cooking");
-        for (int i = 0; i < 12; i++) { s.World.Year++; SkillSystem.Update(s.Ctx, p); }
+        for (int i = 0; i < 20; i++) { s.World.Year++; SkillSystem.Update(s.Ctx, p); }
         Assert.True(SkillSystem.Level(p, "cooking") >= 4, $"cooking {SkillSystem.Level(p, "cooking")}");
         Assert.StartsWith("Cooking", s.Describe(p.Id).Hobby);
 

@@ -1,0 +1,191 @@
+// More of thirteen to seventeen. Nothing sexual involving minors, ever. No dashes.
+[
+  {
+    "id": "tt_paper_round", "title": "The round",
+    "text": "A [[2005: paper round || leaflet round]]: six in the morning, seventy houses, a bag heavier than you, and money of your own on Fridays.",
+    "conditions": { "minAge": 13, "maxAge": 16 }, "cooldown": 0,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "money", "amount": 4000 }, { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.03 } ], "result": "Dark winter mornings, a dog at number forty who hates you, and a savings book that grows. You know every letterbox in the area." },
+      { "text": "Sleep", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Somebody else takes it. You sleep until somebody pulls the covers off." }
+    ]
+  },
+  {
+    "id": "tt_confirmation", "countries": [ "sweden" ], "title": "Confirmation",
+    "text": "Most of your class is being confirmed this spring. A camp in summer, a white robe, a party, and money in envelopes. You are not sure you believe any of it.",
+    "conditions": { "minAge": 14, "maxAge": 15, "maxYear": 2020 }, "cooldown": 0,
+    "choices": [
+      { "text": "Do it, for the camp and the envelopes", "effects": [ { "type": "money", "amount": 5000 }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "confirmation", "text": "The confirmation camp", "impact": 10 } ], "result": "Two weeks of camp, a first love that lasts nine days, a priest with a guitar. You still do not know what you believe. The envelopes were real." },
+      { "text": "Say no", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.02 } ], "result": "Some of the family are disappointed. You spend the summer working instead, and save more than the envelopes would have given." }
+    ]
+  },
+  {
+    "id": "tt_braces", "title": "Metal mouth",
+    "text": "The dentist says braces. Two years. Wire, rubber bands, and a photo for the school catalogue in the middle of it.",
+    "conditions": { "minAge": 11, "maxAge": 15, "minYear": 1965 }, "cooldown": 0,
+    "choices": [
+      { "text": "Smile anyway", "effects": [ { "type": "attribute", "kind": "looks", "amount": 4 }, { "type": "trait_add", "trait": "resilient", "chance": 0.02 } ], "result": "Two years of grinning with your mouth closed in photos, and then one day a perfectly straight smile you do not recognise." },
+      { "text": "Refuse", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "No braces. Your teeth stay a bit crooked, and someone you love later says that is their favourite thing about your face." }
+    ]
+  },
+  {
+    "id": "tt_dye_hair", "title": "Colour",
+    "text": "You have bought hair dye. The box says it washes out in six weeks. The colour is very, very bright.",
+    "conditions": { "minAge": 13, "maxAge": 17, "livesWithParents": true, "minYear": 1975 }, "cooldown": 0,
+    "choices": [
+      { "text": "Do it in the bathroom, tonight", "chance": 0.6,
+        "success": { "text": "It works. You look like someone from a record cover. Your parents look at you over dinner for a long, long time.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "eccentric", "chance": 0.04 } ] },
+        "failure": { "text": "It does not wash out in six weeks. It does not wash out of the towels, either, or the bath.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "money", "amount": -500 } ] } },
+      { "text": "Give the box to a braver friend", "effects": [], "result": "Your friend goes green. You laugh for a year. You also wish it had been you." }
+    ]
+  },
+  {
+    "id": "tt_heartbreak", "title": "The end of the world",
+    "text": "The person you have been in love with for three weeks has started holding hands with someone else, in the corridor, in front of everyone.",
+    "conditions": { "minAge": 13, "maxAge": 17 }, "cooldown": 4,
+    "choices": [
+      { "text": "Sad songs, in your room, for a week", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "trait_add", "trait": "gloomy", "chance": 0.02 } ], "result": "The same song, forty times, very loud. On the eighth day you are hungry and the world, surprisingly, has not ended." },
+      { "text": "Pretend you never cared", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "A very cool face in the corridor. A very uncool face into the pillow. Nobody is fooled except you." },
+      { "text": "Tell your best friend everything", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "Four hours on the phone. Your friend says terrible things about both of them. It helps enormously." }
+    ]
+  },
+  {
+    "id": "tt_sneak_out", "title": "The window",
+    "text": "Everyone is meeting at the lake at midnight. Your bedroom window is on the ground floor. Your parents go to bed at eleven.",
+    "conditions": { "minAge": 14, "maxAge": 17, "livesWithParents": true }, "cooldown": 3,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Climb out", "chance": 0.6, "chanceTraits": { "impulsive": -0.05 },
+        "success": { "text": "Stars, a fire, someone's guitar, cold water at two in the morning. You climb back in at four and nobody ever knows.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "memory", "kind": "night_at_the_lake", "text": "The night at the lake", "impact": 14 } ] },
+        "failure": { "text": "{t.name} is sitting on your bed when you climb back in. Neither of you says anything for a very long time.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -10 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Stay in bed", "effects": [], "result": "You lie awake imagining it. On Monday everyone talks about it. It sounds better than it was, probably." }
+    ]
+  },
+  {
+    "id": "tt_first_drunk", "content": [ "addiction" ], "title": "The bottle",
+    "text": "A party in someone's basement, and a bottle going round that tastes like cough medicine and fire.",
+    "conditions": { "minAge": 14, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "Drink", "chance": 0.5,
+        "success": { "text": "Warm, loud, hilarious. You dance. You tell someone you love them. The next day you remember most of it and wish you did not.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": -2 } ] },
+        "failure": { "text": "Very sick, in a stranger's garden. A friend holds your hair and gets you home. You will owe them for the rest of your life.", "effects": [ { "type": "health", "amount": -4 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Hold it, don't drink it", "effects": [ { "type": "trait_add", "trait": "resilient", "chance": 0.02 } ], "result": "Nobody notices, as it turns out. You are the one who remembers the party, and who gets everyone home." }
+    ]
+  },
+  {
+    "id": "tt_online_drama", "title": "Shared",
+    "text": "A photo of you, not a good one, has been shared in a group chat with the whole year. The comments are underneath it.",
+    "conditions": { "minAge": 13, "maxAge": 17, "minYear": 2008 }, "cooldown": 6,
+    "choices": [
+      { "text": "Tell an adult", "chance": 0.6,
+        "success": { "text": "A teacher who takes it seriously. The photo comes down, and someone has a very bad week at school. You are not sure it was worth it, and then you are.", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "brave", "chance": 0.04 } ] },
+        "failure": { "text": "\"Just do not look at it.\" You look at it every night for a month.", "effects": [ { "type": "happiness", "amount": -8 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.1 } ] } },
+      { "text": "Post a funnier one of yourself", "chance": 0.5, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "Everyone laughs with you instead of at you. It is the cleverest thing you have ever done.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "Now there are two photos.", "effects": [ { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "tt_run_away", "title": "Gone",
+    "text": "After the worst fight you have ever had at home, you pack a bag. Some clothes, some biscuits, forty in coins. You are never coming back.",
+    "conditions": { "minAge": 13, "maxAge": 16, "livesWithParents": true }, "cooldown": 10, "weight": 0.5,
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Go to a friend's house", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 3, "mutual": true } ], "result": "The friend's mother phones your house within ten minutes. {t.name} picks you up. In the car, {t.he} cries, which you have never seen before." },
+      { "text": "Take the train somewhere", "chance": 0.5,
+        "success": { "text": "A town you have never seen, a bench, a long night. In the morning you call home. Nobody shouts. Something changes after that, for the better.", "effects": [ { "type": "trait_add", "trait": "brave", "chance": 0.04 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 5 } ] },
+        "failure": { "text": "The police find you at the station at midnight. The drive home is the longest of your life.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": -8 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Sit at the end of the street until you are cold", "effects": [], "result": "An hour. You walk back in. Nobody noticed you were gone. That is worse, somehow." }
+    ]
+  },
+  {
+    "id": "tt_parent_pressure", "title": "The plan",
+    "text": "{t.name} has a plan for your life. It involves a lot of studying and a career you have never once wanted.",
+    "conditions": { "minAge": 14, "maxAge": 18, "livesWithParents": true }, "cooldown": 6,
+    "target": { "role": "parent", "conditions": { "traitsAny": [ "ambitious", "greedy", "vain" ] } },
+    "choices": [
+      { "text": "Say what you actually want", "chance": 0.5, "chanceTraits": { "brave": 0.15, "charming": 0.1 },
+        "success": { "text": "A long silence, then a question, then a real conversation. {t.He} does not understand it. {t.He} says {t.he} will try.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 8 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "\"We will talk about it when you are older.\" You are older every day. You do not talk about it.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Go along with it, for now", "effects": [ { "type": "grades", "amount": 3 }, { "type": "happiness", "amount": -3 } ], "result": "You study what you are told. Late at night you do what you love, quietly, with the light off." }
+    ]
+  },
+  {
+    "id": "tt_eating", "content": [ "mental_health" ], "title": "Not hungry",
+    "text": "You have started skipping lunch. Then breakfast. It feels like the only thing you are in control of.",
+    "conditions": { "minAge": 13, "maxAge": 18 }, "cooldown": 15, "weight": 0.3,
+    "choices": [
+      { "text": "Tell someone", "chance": 0.7,
+        "success": { "text": "A school nurse, a doctor, a long careful year. Food stops being the enemy, slowly. You will always know where that place is, and you do not go back.", "effects": [ { "type": "health", "amount": -3 }, { "type": "trait_add", "trait": "resilient", "chance": 0.05 } ] },
+        "failure": { "text": "You try to say it and cannot find the words. It gets worse before anyone notices.", "effects": [ { "type": "health", "amount": -10 }, { "type": "ailment_add", "kind": "depression", "chance": 0.3 } ] } },
+      { "text": "Keep it to yourself", "effects": [ { "type": "health", "amount": -8 }, { "type": "happiness", "amount": -6 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.3 } ], "result": "Baggy clothes, excuses, a secret that takes up all the room inside you. A teacher notices in the spring, and that is the start of getting better." }
+    ]
+  },
+  {
+    "id": "tt_older_sibling_party", "title": "Your sibling's party",
+    "text": "{t.name} is having a party while your parents are away, and has paid you to stay in your room and say nothing.",
+    "conditions": { "minAge": 12, "maxAge": 16, "livesWithParents": true }, "cooldown": 6,
+    "target": { "role": "sibling", "conditions": { "minAge": 16, "maxAge": 22 } },
+    "choices": [
+      { "text": "Take the money and keep the deal", "effects": [ { "type": "money", "amount": 300 }, { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 8 } ], "result": "You hear everything through the wall. You tell nobody. {t.name} owes you forever, and knows it." },
+      { "text": "Join the party", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -3 } ], "result": "The oldest people you have ever partied with. You are sent upstairs at eleven, but they were the best two hours of the year." }
+    ]
+  },
+  {
+    "id": "tt_volunteer", "title": "Saturdays",
+    "text": "A poster at school: help wanted at the [[1990: old people's home || animal shelter]] on Saturdays. No pay, just a free lunch.",
+    "conditions": { "minAge": 13, "maxAge": 18 }, "cooldown": 0,
+    "choices": [
+      { "text": "Go", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "happiness", "amount": 4 } ], "result": "Every Saturday for two years. You learn patience, card games and the names of everyone there. It goes on your applications, and it was never why you did it." },
+      { "text": "Saturdays are for sleeping", "effects": [], "result": "You sleep. The poster stays on the board until it curls." }
+    ]
+  },
+  {
+    "id": "tt_games_all_night", "title": "One more level",
+    "text": "A new game, and the whole weekend ahead. Your parents think you went to bed at ten.",
+    "conditions": { "minAge": 12, "maxAge": 18, "minYear": 1985 }, "cooldown": 3,
+    "choices": [
+      { "text": "Play until dawn", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "grades", "amount": -2 }, { "type": "health", "amount": -1 } ], "result": "The birds start singing outside and you have finished the whole game. The victory is total and nobody will ever understand it." },
+      { "text": "Stop at midnight", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You stop at midnight. You lie awake thinking about level nine until two anyway." }
+    ]
+  },
+  {
+    "id": "tt_mirror_body", "title": "The mirror",
+    "text": "Your body is changing faster than you can keep up with. Some days you do not recognise the person in the mirror.",
+    "conditions": { "minAge": 12, "maxAge": 15 }, "cooldown": 0,
+    "choices": [
+      { "text": "Hide in big jumpers", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "A year of big jumpers. Then one day it is just you in the mirror again, older, and you take the jumper off." },
+      { "text": "Ask someone older about it", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "An aunt, an older cousin, a nurse. Everybody went through it. Nobody told you. Now somebody has." }
+    ]
+  },
+  {
+    "id": "tt_best_friend_fight", "title": "The silence",
+    "text": "You and your best friend have not spoken for eleven days. You cannot quite remember how it started. Neither will be first.",
+    "conditions": { "minAge": 12, "maxAge": 17 }, "cooldown": 5,
+    "target": { "role": "friend", "conditions": { "maxAge": 19 } },
+    "choices": [
+      { "text": "Be first", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "trait_add", "trait": "kind", "chance": 0.03 } ], "result": "\"Sorry.\" \"Me too.\" Ten minutes later you are laughing about something stupid. It was always going to be you, and you are glad." },
+      { "text": "Wait", "chance": 0.4,
+        "success": { "text": "On day twelve, {t.name} comes over with your favourite sweets and says nothing about anything. It is perfect.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true } ] },
+        "failure": { "text": "Day twelve, thirty, a hundred. You both find other friends. Twenty years later you meet at a funeral and say you should get coffee.", "effects": [ { "type": "friend_remove", "to": "target" }, { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "tt_summer_job_first", "title": "The first summer job",
+    "text": "A summer job: picking strawberries, cleaning offices or washing up in a restaurant kitchen. The money is real, and so are the hours.",
+    "conditions": { "minAge": 15, "maxAge": 17 }, "cooldown": 0,
+    "choices": [
+      { "text": "The kitchen", "effects": [ { "type": "money", "amount": 12000 }, { "type": "skill", "kind": "cooking", "amount": 1 }, { "type": "happiness", "amount": 2 } ], "result": "Steam, shouting, a chef who throws a pan once a week and teaches you to make a perfect omelette on the last day." },
+      { "text": "The fields", "effects": [ { "type": "money", "amount": 9000 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ], "result": "Brown arms, a sore back, and strawberries you cannot look at again until you are thirty." },
+      { "text": "The offices", "effects": [ { "type": "money", "amount": 11000 }, { "type": "trait_add", "trait": "introvert", "chance": 0.02 } ], "result": "Empty buildings at six in the morning. You read everybody's desk notes and learn more about adults than you wanted to." }
+    ]
+  },
+  {
+    "id": "tt_crush_teacher", "title": "The teacher",
+    "text": "Half the class has a crush on the new history teacher. You pretend you do not. You have learned every date in the textbook.",
+    "conditions": { "minAge": 13, "maxAge": 17, "activity": "school" }, "cooldown": 0,
+    "choices": [
+      { "text": "Channel it into history", "effects": [ { "type": "grades", "amount": 4 } ], "result": "The best mark in your year. The teacher writes \"excellent\" on your essay. You keep it in a drawer for an embarrassing number of years." },
+      { "text": "Get over it", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "It passes by the spring, as these things do. You still know when the Thirty Years' War ended." }
+    ]
+  }
+]
