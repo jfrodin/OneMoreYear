@@ -442,3 +442,17 @@ När man klicka rpå olika persopner så visas sidorna olika om du fattar? Iblad
 _playtest-saves/2026-10-03_153410.png · playtest-saves/2026-10-03_153410.json_
 
 _Notes above were processed on 2026-10-03 (playtest 5, afternoon): illnesses fit the age (no heart attacks at four, milder for children), illness and mental health are told in varied words instead of "was struck by", the year's "What happened" tells one line per person like the newspaper, the pocket money text, cake instead of coffee at grandmother's, and a person's page always opens at the top – see CHANGELOG 0.58.0._
+
+### 2026-10-03 23:19 · v0.52.0  ·  1988  ·  Marcus Holm, 18  ·  This Year  ·  seed VDCX73TB
+
+Arbetar för millitären, ska göra lumpen? Konstig dubbelgrej som måste hanteras
+
+_playtest-saves/2026-10-03_231932.png · playtest-saves/2026-10-03_231932.json_
+
+### 2026-10-03 23:22 · v0.52.0  ·  1991  ·  Marcus Holm, 21  ·  This Year  ·  seed VDCX73TB
+
+Flickvän har problem med droger, kanske borde kunna göra något mer än bara få info?
+
+_playtest-saves/2026-10-03_232210.png · playtest-saves/2026-10-03_232210.json_
+
+_Notes above were processed on 2026-10-03 (playtest 5, evening): no call up for military service while already in the military, and someone close with an addiction can now be helped (a situation when you find out, and a "Help ... stop" action every year) – see CHANGELOG 0.67.0._

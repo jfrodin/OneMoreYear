@@ -24,7 +24,7 @@
   {
     "id": "us_draft", "countries": [ "usa" ], "trigger": "history", "title": "The letter",
     "text": "A letter from the Selective Service System. You have been drafted. The army wants you, and the army is in Vietnam.",
-    "conditions": { "minAge": 18, "maxAge": 25, "sex": "male", "minYear": 1965, "maxYear": 1972, "notFlags": [ "draft_settled" ] },
+    "conditions": { "minAge": 18, "maxAge": 25, "sex": "male", "minYear": 1965, "maxYear": 1972, "notFlags": [ "draft_settled" ], "notJobs": [ "military" ] },
     "choices": [
       { "text": "Report for duty", "chance": 0.9,
         "success": { "text": "Two years. One of them in the jungle. You come home thinner, older, and you do not talk about it at dinner.", "effects": [ { "type": "flag", "flag": "draft_settled" }, { "type": "flag", "flag": "veteran" }, { "type": "attribute", "kind": "fitness", "amount": 6 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.35 }, { "type": "trait_add", "trait": "resilient", "chance": 0.15 }, { "type": "memory", "kind": "vietnam", "text": "Vietnam", "impact": -25 } ] },

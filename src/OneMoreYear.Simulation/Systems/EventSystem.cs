@@ -114,6 +114,7 @@ public static class EventSystem
             var target = fixedTarget is { } ft ? w.Get(ft) : ResolveRole(ctx, def.Target, player, distances, null, def);
             if (target == null) return null;
             pending.Roles["target"] = target.Id;
+            if (target.Addiction != null) pending.Words["habit"] = DarkSystem.What(target.Addiction);
             if (def.OncePerTarget) w.EventHistory[OnceKey(def.Id, target.Id)] = w.Year;
         }
         if (def.Other != null)

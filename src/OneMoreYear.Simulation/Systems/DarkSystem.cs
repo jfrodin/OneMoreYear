@@ -54,6 +54,10 @@ public static class DarkSystem
             p.Flags.Add("addicted");
             w.Log($"{p.FirstName} started struggling with {What(p.Addiction)}.", ctx.Importance(false, p), "dark", p.Id);
             if (isPlayer) EventSystem.QueueSituation(ctx, "addiction_begins");
+            // Someone close: the player finds out, and can do something about it.
+            else if (w.Player.IsAlive && ctx.Shown(ContentCategories.Addiction) && p.Age(ctx.Year) >= 14
+                     && (w.Player.PartnerId == p.Id || w.Player.ChildIds.Contains(p.Id) || w.Player.ParentIds.Contains(p.Id) || Kinship.Siblings(w, w.Player).Any(s => s.Id == p.Id)))
+                if (EventSystem.QueueSituation(ctx, "close_addiction_found", new() { ["target"] = p.Id }) is { } found) found.Words["habit"] = What(p.Addiction);
             return;
         }
 

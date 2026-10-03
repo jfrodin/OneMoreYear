@@ -1,0 +1,31 @@
+// Doing something about someone else's addiction: the moment you find out, and what you can try
+// every year after. Tagged addiction, so the content settings can hide it. No dashes.
+[
+  {
+    "id": "close_addiction_found", "content": [ "addiction" ], "trigger": "situation", "title": "What you found",
+    "text": "It is not a secret any more. {t.name} has a problem with {habit}, and it is getting worse. You are the one who has noticed.",
+    "choices": [
+      { "text": "Sit down with {t.him} tonight", "chance": 0.3, "chanceTraits": { "kind": 0.12, "charming": 0.08, "hot_tempered": -0.12 },
+        "success": { "text": "A long night, a lot of tears, and a promise. In the morning {t.he} calls a clinic while you sit beside {t.him}. It is the start.", "effects": [ { "type": "recover", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 10, "mutual": true } ] },
+        "failure": { "text": "{T.he} says you are overreacting. {T.he} says it is under control. Neither of you believes it.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 4 }, { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Pay for treatment", "hint": "Expensive, and it only works if they want it.", "requires": { "minMoney": 40000 }, "chance": 0.45, "chanceTraits": { "devoted_parent": 0.05 },
+        "success": { "text": "Eight weeks somewhere quiet. {t.name} comes back thinner, clearer and ashamed, and better.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "recover", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true } ] },
+        "failure": { "text": "{T.he} walks out after a week. The money is gone. You would pay it again.", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Give an ultimatum", "hint": "It works, or it ends something.", "chance": 0.4, "chanceTraits": { "brave": 0.1 },
+        "success": { "text": "\"Me or that.\" A terrible week. Then {t.he} chooses you, and gets help, and means it.", "effects": [ { "type": "recover", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 8 } ] },
+        "failure": { "text": "{T.he} does not choose you. Not yet, anyway.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -10, "mutual": true }, { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Stay out of it", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "You say nothing, and watch. You can try later. It is harder later." }
+    ]
+  },
+  {
+    "id": "act_help_addiction", "content": [ "addiction" ], "trigger": "action", "title": "Help {t.name} stop",
+    "target": { "role": "known", "conditions": { "addicted": true, "minAge": 14 } },
+    "conditions": { "minAge": 14 },
+    "choices": [ {
+      "text": "Try to help", "hint": "Hard, and it often fails. Kindness helps; a temper does not.",
+      "chance": 0.22, "chanceTraits": { "kind": 0.1, "charming": 0.06, "hot_tempered": -0.1 },
+      "success": { "text": "This time something gets through. {t.name} agrees to get help, and goes, and stays.", "effects": [ { "type": "recover", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 10, "mutual": true } ] },
+      "failure": { "text": "Promises, again. You know the sound of them by now.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 }, { "type": "happiness", "amount": -2 } ] }
+    } ]
+  }
+]

@@ -63,7 +63,7 @@
   {
     "id": "young_military_service", "countries": [ "sweden" ], "trigger": "milestone", "title": "The letter from the army",
     "text": "A brown envelope: you are called for military service. Eleven months, starting in January.",
-    "conditions": { "minAge": 18, "maxAge": 20, "sex": "male", "maxYear": 2009, "notFlags": [ "military_service" ] }, "cooldown": 50, "weight": 3,
+    "conditions": { "minAge": 18, "maxAge": 20, "sex": "male", "maxYear": 2009, "notFlags": [ "military_service" ], "notJobs": [ "military" ] }, "cooldown": 50, "weight": 3,
     "choices": [
       { "text": "Do your service", "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.1 } ],
         "result": "You learn to make a bed so tight a coin bounces off it, and to sleep in a ditch in November. Some of the men in your platoon you never see again. Two you see every year for the rest of your life." },

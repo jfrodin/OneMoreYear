@@ -392,6 +392,7 @@ public sealed class GameSession
             var choice = def.Choices[0];
             var probe = new PendingEvent { EventId = def.Id };
             if (target != null) probe.Roles["target"] = target.Id;
+            if (target?.Addiction != null) probe.Words["habit"] = DarkSystem.What(target.Addiction);
             int? chance = choice.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, choice, probe) * 100) : null;
             bool used = World.ActionsThisYear.Contains(ActionKey(def.Id, targetId));
             string? hint = choice.Hint == null ? null : TextFormatter.Format(Ctx, choice.Hint, probe);

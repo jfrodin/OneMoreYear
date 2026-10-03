@@ -1122,6 +1122,23 @@ public class CountryTests
     }
 
     [Fact]
+    public void Someone_close_with_an_addiction_can_be_helped()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 43, StartYear = 1970 });
+        var bot = new AutoPlayer(43, useActions: false);
+        for (int i = 0; i < 20 && bot.PlayYear(s); i++) { }
+        var parent = s.World.Get(s.Player.ParentIds.First());
+        if (!parent.IsAlive) return;
+        parent.Addiction = "alcohol";
+        parent.Flags.Add("addicted");
+        var help = Assert.Single(s.Actions(parent.Id), a => a.Id == "act_help_addiction");
+        Assert.Equal($"Help {parent.FirstName} stop", help.Title);
+        var pending = EventSystem.QueueSituation(s.Ctx, "close_addiction_found", new() { ["target"] = parent.Id })!;
+        pending.Words["habit"] = DarkSystem.What(parent.Addiction);
+        Assert.Contains("alcohol", s.DescribeEvent(pending).Text);
+    }
+
+    [Fact]
     public void Creative_careers_need_skill_and_bring_fame()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 37, StartYear = 1970 });

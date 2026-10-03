@@ -2,6 +2,15 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.67.0 – 2026-10-03 · Playtest 5, evening
+
+- **Helping someone with an addiction.** When your partner, a child, a parent or a sibling starts
+  struggling with alcohol, drugs or gambling, you find out, and choose: sit down with them, pay for
+  treatment, give an ultimatum, or stay out of it. After that, "Help ... stop" is an action on
+  their page every year. It is hard and often fails; kindness helps and a temper does not.
+- No call up for military service (or the American draft) for someone who already works in the
+  military.
+
 ## 0.66.0 – 2026-10-03 · New faces
 
 - **The portraits are redrawn.** Light from the upper left with a soft shade on the far side, a
