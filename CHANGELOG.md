@@ -2,6 +2,16 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.55.0 – 2026-10-03 · Playtest 5
+
+- The title screen scrolls when the window is too small to show all of it.
+- The starts are now "Comfortable (easy)", "Ordinary (medium)" and "A hard start (hard)", so the
+  middle one no longer reads as the way the game is meant to be played.
+- The first step on the media track is "Editorial Assistant" instead of "Intern", which made
+  grandfathers in their sixties interns.
+- A child whose parents have split up lives with one of them: "Lives with mother and Ragnar in
+  Malmö", not "with parents".
+
 ## 0.54.0 – 2026-10-03 · The album
 
 - **A life in photographs** (from The Sims' memories): every person's page has a photo album. Born,

@@ -126,7 +126,7 @@ public static class HousingSystem
             return city == home.Name ? $"Lives in {home.Name}" : $"Lives in {city}, {home.Name}";
         if (p.Flags.Contains(CareHomeFlag)) return $"Lives in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"Homeless in {city}";
-        if (p.LivesWithParents) return $"Lives with parents in {city}";
+        if (p.LivesWithParents) return $"Lives with {Parents(ctx, p, false)} in {city}";
         // "Owns a terraced house in Umeå", "Rents a one-room flat in Malmö".
         string? kind = HomeTypeOf(ctx, p) is { } t && t.Id != "room" ? t.Name.ToLowerInvariant() : null;
         if (p.OwnsHome) return $"Owns {kind ?? "a home"} in {city}";
@@ -135,13 +135,31 @@ public static class HousingSystem
         return $"Rents {kind ?? TextFormatter.A(ctx.Country.Flat)} in {city}";
     }
 
+    /// <summary>
+    /// Who a child at home lives with: "parents" while they are together; after a split or a death, the
+    /// mother (or the father), and a new partner who lives there too.
+    /// </summary>
+    private static string Parents(SimContext ctx, Person p, bool forPlayer)
+    {
+        var w = ctx.World;
+        var parents = Kinship.Parents(w, p).Where(x => x.IsAlive && x.Abroad == p.Abroad && x.Activity != Activity.Prison).ToList();
+        string your = forPlayer ? "your " : "";
+        if (parents.Count == 2 && parents[0].PartnerId == parents[1].Id) return $"{your}parents";
+        var with = parents.OrderBy(x => x.Sex == Sex.Female ? 0 : 1).FirstOrDefault();
+        if (with == null) return forPlayer ? "your family" : "family";
+        string who = with.Sex == Sex.Female ? $"{your}mother" : $"{your}father";
+        if (w.TryGet(with.PartnerId) is { IsAlive: true } partner && with.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married)
+            who += $" and {partner.FirstName}";
+        return who;
+    }
+
     /// <summary>The same as <see cref="Describe"/>, told to the player: "You rent a three-room flat with Anna in Umeå."</summary>
     public static string DescribeForPlayer(SimContext ctx, Person p)
     {
         string city = City(ctx, p).Name;
         if (p.Flags.Contains(CareHomeFlag)) return $"You live in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"You have no home, in {city}";
-        if (p.LivesWithParents) return $"You live with your parents in {city}";
+        if (p.LivesWithParents) return $"You live with {Parents(ctx, p, true)} in {city}";
         string? kind = HomeTypeOf(ctx, p) is { } t && t.Id != "room" ? t.Name.ToLowerInvariant() : null;
         string with = ctx.World.TryGet(p.PartnerId) is { } partner && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married
             ? $" with {partner.FirstName}" : "";

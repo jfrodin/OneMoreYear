@@ -402,3 +402,5 @@ _playtest-saves/2026-10-03_121523.png · playtest-saves/2026-10-03_121523.json_
 Mina föräldrar har skiljt sig, men jag bor med båda?
 
 _playtest-saves/2026-10-03_121716.png · playtest-saves/2026-10-03_121716.json_
+
+_Notes above were processed on 2026-10-03 (playtest 5): the title screen scrolls when the window is small, the starts are called easy, medium and hard, the media track's first step is "Editorial Assistant" instead of "Intern", and a child of separated parents lives with one of them (and a new partner) – see CHANGELOG 0.55.0._

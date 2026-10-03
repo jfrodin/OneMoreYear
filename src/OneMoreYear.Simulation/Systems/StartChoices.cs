@@ -16,9 +16,9 @@ public static class StartChoices
     /// <summary>The choices offered, in order, with how they change the difficulty.</summary>
     public static readonly IReadOnlyList<(string Id, string Name, string Description)> Conditions = new[]
     {
-        (Comfortable, "Comfortable (easier)", "Parents with money, steady jobs and a home of their own."),
-        (Ordinary, "Ordinary (normal)", "An everyday family: work, a modest home, no big troubles to begin with."),
-        (Hard, "A hard start (harder)", "Debt, a rented flat, a parent out of work, and maybe a bottle in the cupboard."),
+        (Comfortable, "Comfortable (easy)", "Parents with money, steady jobs and a home of their own."),
+        (Ordinary, "Ordinary (medium)", "An everyday family: work, a modest home, no big troubles to begin with."),
+        (Hard, "A hard start (hard)", "Debt, a rented flat, a parent out of work, and maybe a bottle in the cupboard."),
     };
 
     // Traits that make a childhood harder; a comfortable start leaves them out of the parents.

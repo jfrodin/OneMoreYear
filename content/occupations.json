@@ -84,7 +84,7 @@
     "id": "media", "name": "Media", "tags": [ "office" ], "weight": 0.3,
     "traitAffinity": { "social": 1.5, "brave": 1.3, "creative": 2.5, "charming": 1.4 },
     "levels": [
-      { "title": "Intern", "salary": 250000, "minEducation": "secondary", "entry": true, "promotionChance": 0.2 },
+      { "title": "Editorial Assistant", "salary": 250000, "minEducation": "secondary", "entry": true, "promotionChance": 0.2 },
       { "title": "Journalist", "salary": 420000, "minEducation": "university", "entry": true, "promotionChance": 0.08, "requiresDegree": [ "uni_journalism", "uni_social" ] },
       { "title": "Editor", "salary": 540000, "minEducation": "university", "promotionChance": 0.05 },
       { "title": "Editor-in-Chief", "salary": 900000, "minEducation": "university", "promotionChance": 0 }

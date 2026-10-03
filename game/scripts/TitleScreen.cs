@@ -31,9 +31,12 @@ public partial class TitleScreen : Control
 
     public override void _Ready()
     {
-        var center = new CenterContainer();
-        center.SetAnchorsPreset(LayoutPreset.FullRect);
-        AddChild(center);
+        // Centred when the window is big enough, scrollable when it is not.
+        var scroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
+        scroll.SetAnchorsPreset(LayoutPreset.FullRect);
+        AddChild(scroll);
+        var center = new CenterContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
+        scroll.AddChild(center);
 
         var col = Ui.VBox(10);
         col.CustomMinimumSize = new Vector2(520, 0);
