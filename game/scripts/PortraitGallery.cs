@@ -14,7 +14,9 @@ public partial class PortraitGallery : Control
     private readonly string _path;
     private int _frames;
 
-    public PortraitGallery(string path) => _path = path;
+    private readonly bool _big;
+
+    public PortraitGallery(string path) { _path = path; _big = path.Contains("big"); }
 
     public override void _Ready()
     {
@@ -28,14 +30,14 @@ public partial class PortraitGallery : Control
         AddChild(col);
 
         // Blood relatives first, so resemblance is easy to see.
-        var family = session.Family(includeDead: true).Take(32).ToList();
-        var grid = new GridContainer { Columns = 8 };
+        var family = session.Family(includeDead: false).Take(_big ? 4 : 16).ToList();
+        var grid = new GridContainer { Columns = _big ? 4 : 8 };
         grid.AddThemeConstantOverride("h_separation", 10);
         grid.AddThemeConstantOverride("v_separation", 6);
         foreach (var p in family)
         {
             var cell = Ui.VBox(2);
-            cell.AddChild(Portrait.Create(session.Portrait(p.Id), p.Id == session.Player.Id, 110));
+            cell.AddChild(Portrait.Create(session.Portrait(p.Id), p.Id == session.Player.Id, _big ? 380 : 170));
             cell.AddChild(Ui.Label($"{p.FirstName}, {p.Age}", 13, UiTheme.Muted));
             cell.AddChild(Ui.Label(p.RoleLabel, 12, UiTheme.Faint));
             grid.AddChild(cell);
@@ -46,7 +48,7 @@ public partial class PortraitGallery : Control
         var ages = Ui.HBox(10);
         var me = session.Portrait(session.Player.Id);
         var person = session.World.Get(session.Player.Id);
-        foreach (int age in new[] { 0, 3, 8, 14, 20, 35, 50, 65, 80, 92 })
+        foreach (int age in _big ? new[] { 5, 22, 45, 80 } : new[] { 0, 5, 14, 22, 40, 60, 80, 92 })
         {
             var at = me with
             {
@@ -54,7 +56,7 @@ public partial class PortraitGallery : Control
                 Glasses = age >= me.Face.GlassesFromAge,
             };
             var cell = Ui.VBox(2);
-            cell.AddChild(Portrait.Create(at, false, 110));
+            cell.AddChild(Portrait.Create(at with { Year = person.BirthYear + age }, false, _big ? 380 : 170));
             cell.AddChild(Ui.Label($"age {age}", 13, UiTheme.Muted));
             ages.AddChild(cell);
         }

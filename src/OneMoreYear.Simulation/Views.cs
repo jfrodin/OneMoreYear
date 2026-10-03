@@ -220,6 +220,10 @@ public sealed record PortraitView
     public int HeightCm { get; init; }
     public double Fitness { get; init; }
     public Model.Face Face { get; init; } = new();
+    /// <summary>The year the picture shows (hair follows the fashion of its decade).</summary>
+    public int Year { get; init; }
+    /// <summary>What they wear: "suit", "scrubs", "uniform", "work", "casual", "cardigan", "baby".</summary>
+    public string Outfit { get; init; } = "casual";
 }
 
 /// <summary>One card in the graphical family tree.</summary>

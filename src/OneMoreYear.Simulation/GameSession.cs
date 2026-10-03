@@ -498,6 +498,25 @@ public sealed class GameSession
         }).ToList();
     }
 
+    /// <summary>What a person wears in a picture at this age: work clothes while working, else everyday clothes.</summary>
+    private string Outfit(Person p, int age)
+    {
+        if (age < 2) return "baby";
+        bool now = p.Age(p.DeathYear ?? Year) == age;
+        if (!now) return age >= 66 ? "cardigan" : "casual";
+        if (p.Activity == Activity.Retired || age >= 70) return "cardigan";
+        if (p.Activity != Activity.Working) return "casual";
+        return p.OccupationId switch
+        {
+            "medicine" or "healthcare" => "scrubs",
+            "police" or "military" or "aviation" => "uniform",
+            "law" or "finance" or "politics" or "business" or "real_estate" => "suit",
+            "construction" or "industry" or "agriculture" or "transport" or "cleaning" => "work",
+            "public" or "academia" or "engineering" or "science" or "media" or "it" or "education" => "smart",
+            _ => "casual",
+        };
+    }
+
     /// <summary>What someone looked like at an age (for the album: alive in the photo, mood as given).</summary>
     private PortraitView PortraitAt(Person p, int age, bool alive, double mood)
     {
@@ -520,6 +539,8 @@ public sealed class GameSession
             HeightCm = Appearance.HeightAt(p, age),
             Fitness = p.Fitness,
             Face = face,
+            Year = p.BirthYear + age,
+            Outfit = Outfit(p, age),
         };
     }
 
