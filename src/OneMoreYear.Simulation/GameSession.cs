@@ -649,7 +649,10 @@ public sealed class GameSession
         if (occ != null && p.OccupationLevel + 1 < occ.Levels.Count)
         {
             var next = occ.Levels[p.OccupationLevel + 1];
-            promotionNote = !CareerSystem.QualifiesFor(p, next) ? $"To become {CareerSystem.Article(next.Title)} you need more education."
+            string? skillName = next.Skill != null ? Content.Hobbies.GetValueOrDefault(next.Skill)?.Name.ToLowerInvariant() : null;
+            promotionNote = next.Skill != null && SkillSystem.Level(p, next.Skill) < next.MinSkill
+                    ? $"To become {CareerSystem.Article(next.Title)} you need {skillName} {next.MinSkill}. Yours is {SkillSystem.Level(p, next.Skill)}; every year at work is practice."
+                : !CareerSystem.QualifiesFor(p, next) ? $"To become {CareerSystem.Article(next.Title)} you need more education."
                 : p.YearsInJob < 2 ? "Promotions come after at least two years in the role."
                 : "Your chance depends on your performance.";
         }
