@@ -336,7 +336,7 @@
     ]
   },
   {
-    "id": "life_car_breaks", "title": "Smoke",
+    "id": "life_car_breaks", "group": "car_breakdown", "title": "Smoke",
     "text": "The car dies on the motorway in the rain. Smoke from the bonnet, lorries roaring past.",
     "conditions": { "minAge": 20, "minYear": 1955, "notFlags": [ "stopped_driving" ] }, "cooldown": 7,
     "choices": [

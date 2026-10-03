@@ -103,6 +103,7 @@ public static class EmigrationSystem
             p.Funds *= nominal;
             p.Stocks *= nominal;
             p.CottageValue *= nominal;
+            p.StudentLoan *= nominal;
             p.Income *= real;
             foreach (var h in p.Holdings)
             {

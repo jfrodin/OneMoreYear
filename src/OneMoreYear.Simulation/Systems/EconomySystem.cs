@@ -76,6 +76,7 @@ public static class EconomySystem
         {
             p.Money -= ctx.Nominal(ctx.Country.UniversityFee);
             Record(ctx, p, "Tuition", -ctx.Nominal(ctx.Country.UniversityFee));
+            p.StudentLoan += ctx.Nominal(ctx.Country.UniversityFee);
         }
         double tax = gross * c.TaxRate;
         double net = gross - tax;

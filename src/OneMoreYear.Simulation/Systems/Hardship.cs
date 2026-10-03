@@ -176,7 +176,10 @@ public static class Hardship
         }
         // Deep debt and no income: the bailiffs come for renters.
         if (p.OwnsHome || p.LivesWithParents || p.Flags.Contains(HousingSystem.CareHomeFlag) || p.Age(ctx.Year) < 18) return;
-        if (p.Activity is Activity.Working or Activity.Prison || p.Money > -ctx.NominalRef(120000) || !ctx.Rng.Chance(0.3)) return;
+        // Student loans are a debt of their own: what is left of them does not count.
+        p.StudentLoan = Math.Min(p.StudentLoan, Math.Max(0, -p.Money));
+        if (p.Activity is Activity.Working or Activity.Prison or Activity.Studying or Activity.Retired) return;
+        if (p.Money + p.StudentLoan > -ctx.NominalRef(120000) || !ctx.Rng.Chance(0.3)) return;
         if (p.PartnerId != null && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married) return;
         if (p.Id == w.PlayerId) { EventSystem.QueueSituation(ctx, "eviction"); return; }
         if (Kinship.Parents(w, p).Any(x => x.IsAlive) && ctx.Rng.Chance(0.6)) HousingSystem.MoveBackHome(ctx, p);

@@ -2,6 +2,19 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.62.0 – 2026-10-03 · Fewer repeats
+
+- **Fifty more twice told moments grouped**, found with a new duplicates report: the late night
+  call, the wedding speech, the forgotten anniversary, the first snow, Black Friday, braces,
+  heartbreak, the dinner party, the car that dies on the road and many more. Each life gets one
+  telling of each moment.
+- Events about a new baby (a jealous older sibling, the pet meeting the baby, a new mother's low)
+  now have two years to happen instead of one, so they actually come.
+- Freshers' week and graduation day always come, the year they happen.
+- **Fixed: American students were evicted for their student loans**, year after year. Student loans
+  are now a debt of their own that never brings the bailiffs, and nobody is evicted while studying
+  or retired.
+
 ## 0.61.0 – 2026-10-03 · Small people, big feelings
 
 - 20 events for the years between three and seven, the thinnest part of a life: the best friend

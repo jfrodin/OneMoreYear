@@ -137,6 +137,8 @@ public sealed class Person
     public string? HomeType { get; set; }
     /// <summary>Market value of a summer cottage, nominal (0 = none).</summary>
     public double CottageValue { get; set; }
+    /// <summary>The part of a debt that is student loans (nominal): paid back slowly, never a reason for the bailiffs.</summary>
+    public double StudentLoan { get; set; }
     /// <summary>Which city the person lives in (country content).</summary>
     public string? CityId { get; set; }
     /// <summary>Lives in another country than the one the story is in (set when the player emigrates and they stay); null = here.</summary>

@@ -20,7 +20,7 @@
     ]
   },
   {
-    "id": "ev_car_breakdown", "title": "On the hard shoulder",
+    "id": "ev_car_breakdown", "group": "car_breakdown", "title": "On the hard shoulder",
     "text": "Smoke from the bonnet, a cough from the engine, and then silence. You are on the hard shoulder, forty kilometres from anywhere.",
     "conditions": { "minAge": 18, "minYear": 1955 }, "cooldown": 8,
     "choices": [
