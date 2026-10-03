@@ -254,5 +254,25 @@
       { "title": "National Team Player", "salary": 900000, "minEducation": "none", "promotionChance": 0.04, "skill": "sport", "minSkill": 9, "fame": 9 },
       { "title": "Sporting Legend", "salary": 2500000, "minEducation": "none", "promotionChance": 0, "skill": "sport", "minSkill": 10, "fame": 14 }
     ]
+  },
+  {
+    "id": "acting", "name": "Acting", "tags": [ "creative" ], "weight": 0.08,
+    "traitAffinity": { "charming": 2.0, "vain": 1.8, "social": 1.5, "creative": 1.5 },
+    "levels": [
+      { "title": "Extra", "salary": 150000, "minEducation": "none", "entry": true, "promotionChance": 0.12, "skill": "acting", "minSkill": 4 },
+      { "title": "Stage Actor", "salary": 320000, "minEducation": "none", "promotionChance": 0.06, "skill": "acting", "minSkill": 6, "fame": 1.5 },
+      { "title": "Screen Actor", "salary": 650000, "minEducation": "none", "promotionChance": 0.035, "skill": "acting", "minSkill": 8, "fame": 7 },
+      { "title": "Film Star", "salary": 2000000, "minEducation": "none", "promotionChance": 0, "skill": "acting", "minSkill": 10, "fame": 14 }
+    ]
+  },
+  {
+    "id": "politics", "name": "Politics", "tags": [ "office" ], "weight": 0.05, "byInvitation": true,
+    "traitAffinity": { "ambitious": 2.0, "charming": 1.8, "manipulative": 1.5 },
+    "levels": [
+      { "title": "Local Councillor", "salary": 280000, "minEducation": "secondary", "entry": true, "promotionChance": 0.07 },
+      { "title": "Member of Parliament", "salary": 780000, "minEducation": "secondary", "promotionChance": 0.03, "fame": 3 },
+      { "title": "Cabinet Minister", "salary": 1300000, "minEducation": "secondary", "promotionChance": 0.012, "fame": 8 },
+      { "title": "Head of Government", "salary": 1900000, "minEducation": "secondary", "promotionChance": 0, "fame": 15 }
+    ]
   }
 ]

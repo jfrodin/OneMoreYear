@@ -267,6 +267,8 @@ public sealed class OccupationDef
     public List<OccupationLevelDef> Levels { get; set; } = new();
     /// <summary>Kind of workplace, used by events: "office", "manual", "care", "school" ...</summary>
     public List<string> Tags { get; set; } = new();
+    /// <summary>Only reached through events and own choices (politics), never a job offer or a random hire.</summary>
+    public bool ByInvitation { get; set; }
     /// <summary>The age when the body says stop (sport): the career ends, whatever the level.</summary>
     public int? MaxAge { get; set; }
     /// <summary>The first year anyone does this job (IT work did not exist in 1950).</summary>

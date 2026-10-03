@@ -22,6 +22,7 @@ public static class SchoolSystem
         ("sport", "Sport", "sport", -1),
         ("crafts", "Woodwork", "handiness", 0),
         ("computers", "Computers", "programming", 2),
+        ("drama", "Drama", "acting", 0),
     };
 
     /// <summary>Crowds at lunch, and their pull on grades.</summary>

@@ -50,6 +50,7 @@ public static class AchievementSystem
         ["golden_wedding"] = ctx => Played(ctx).Any(p => p.IsAlive && p.PartnerStatus == PartnerStatus.Married && ctx.Year - p.PartnerSinceYear >= 50),
         ["full_circle"] = ctx => ctx.World.Feats.Contains("full_circle"),
         ["inherited_dream"] = ctx => ctx.World.Feats.Contains("inherited_dream"),
+        ["head_of_government"] = ctx => Played(ctx).Any(p => p.Flags.Contains("top:politics")),
         ["household_name"] = ctx => Played(ctx).Any(p => p.PeakFame >= FameSystem.Household),
         ["famous_family"] = ctx => Played(ctx).Count(p => p.PeakFame >= FameSystem.National) >= 3,
         ["wish_a_year"] = ctx => Played(ctx).Any(p => p.WishesKept >= 40),

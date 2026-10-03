@@ -46,6 +46,11 @@
     "writing": [ "{brand} Publishing", "{surname} & Co Publishers", "{city} Literary Agency" ],
     "sport": [ "{city} FF", "{place} IF", "{city} Athletics Club", "{place} BK" ],
     "sport:2": [ "The National Team" ],
-    "sport:3": [ "The National Team" ]
+    "sport:3": [ "The National Team" ],
+    "acting": [ "{city} City Theatre", "{brand} Film", "{place} Players", "The National Theatre" ],
+    "politics": [ "{city} Municipality", "The {place} Party" ],
+    "politics:1": [ "The Parliament" ],
+    "politics:2": [ "The Government" ],
+    "politics:3": [ "The Government" ]
   }
 }

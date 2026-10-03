@@ -1,0 +1,146 @@
+// Two hard ways up: politics (only by standing for election) and acting (a hobby first). No dashes.
+[
+  {
+    "id": "self_try_politics", "trigger": "self", "category": "career", "title": "Stand for the local council",
+    "conditions": { "minAge": 21, "maxAge": 65, "minEducation": "secondary", "notJobs": [ "politics" ] },
+    "choices": [ { "text": "Put your name on the list", "hint": "Most people who stand are not elected.", "effects": [ { "type": "queue_event", "event": "pol_council_run" } ], "result": "You go to a meeting in a draughty hall and say yes before you can change your mind." } ]
+  },
+  {
+    "id": "pol_council_run", "trigger": "situation", "title": "The campaign",
+    "text": "Six weeks of leaflets, coffee mornings and a debate in the library with three other candidates and eleven voters.",
+    "choices": [
+      { "text": "Knock on every door", "chance": 0.25, "chanceTraits": { "charming": 0.15, "ambitious": 0.1, "social": 0.05 }, "chanceAttributes": { "smarts": 0.002 },
+        "success": { "text": "Elected, by forty one votes. A seat on the council, a lot of reading, and a phone that never stops ringing.", "effects": [ { "type": "career", "kind": "politics" }, { "type": "fame", "amount": 3 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "elected", "text": "The night I was elected", "impact": 25 } ] },
+        "failure": { "text": "Not elected. Fifth out of six. Half your family says they voted for you twice, which is not allowed.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "fame", "amount": 1 } ] } },
+      { "text": "Mostly debates and leaflets", "chance": 0.15, "chanceTraits": { "charming": 0.1 },
+        "success": { "text": "Elected, to everyone's surprise including yours.", "effects": [ { "type": "career", "kind": "politics" }, { "type": "fame", "amount": 2 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Not elected. You learned how a campaign works, which is something.", "effects": [ { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "pol_election_night", "title": "Election night",
+    "text": "Election night. The early numbers come in. Your party is down, and your seat is one of the close ones.",
+    "conditions": { "minAge": 21, "jobs": [ "politics" ] }, "cooldown": 4, "weight": 2,
+    "choices": [
+      { "text": "Wait it out with the team", "chance": 0.6, "chanceTraits": { "charming": 0.1 },
+        "success": { "text": "Held, by a whisker, at two in the morning. Cheap sparkling wine in plastic cups. Four more years.", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "fame", "amount": 2 }, { "type": "performance", "amount": 6 } ] },
+        "failure": { "text": "Lost. A concession speech to a half empty room, and on Monday you have to find a job.", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": -10 } ] } }
+    ]
+  },
+  {
+    "id": "pol_expenses", "title": "The receipts",
+    "text": "A journalist has been through your expense claims and found a hotel, a dinner and a taxi that look bad. They will look worse on the front page.",
+    "conditions": { "minAge": 21, "jobs": [ "politics" ], "minFame": 10 }, "cooldown": 8,
+    "choices": [
+      { "text": "Apologise and pay it back", "chance": 0.7,
+        "success": { "text": "A bad week, a humble interview, a cheque. It blows over. People have short memories, mostly.", "effects": [ { "type": "money", "amount": -30000 }, { "type": "fame", "amount": -3 }, { "type": "performance", "amount": -4 } ] },
+        "failure": { "text": "It does not blow over. The party asks you to step down.", "effects": [ { "type": "money", "amount": -30000 }, { "type": "job_quit" }, { "type": "happiness", "amount": -10 } ] } },
+      { "text": "Deny everything", "chance": 0.35, "chanceTraits": { "manipulative": 0.2, "charming": 0.1 },
+        "success": { "text": "A better story comes along by Thursday. You were lucky, and you know it, and you do it again.", "effects": [ { "type": "trait_add", "trait": "dishonest", "chance": 0.08 } ] },
+        "failure": { "text": "More receipts appear. Then a police investigation. Then it is over.", "effects": [ { "type": "job_quit" }, { "type": "fame", "amount": -10 }, { "type": "happiness", "amount": -15 } ] } }
+    ]
+  },
+  {
+    "id": "pol_conscience_vote", "title": "The vote",
+    "text": "The party wants you to vote for something you believe is wrong. The whip has made it clear what happens to people who do not.",
+    "conditions": { "minAge": 21, "jobs": [ "politics" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Vote with your conscience", "effects": [ { "type": "performance", "amount": -10 }, { "type": "fame", "amount": 3 }, { "type": "trait_add", "trait": "brave", "chance": 0.06 }, { "type": "happiness", "amount": 3 } ], "result": "You lose the vote, a committee seat and some friends. You keep a letter from a stranger that says thank you." },
+      { "text": "Vote with the party", "effects": [ { "type": "performance", "amount": 6 }, { "type": "happiness", "amount": -4 } ], "result": "Loyal, reliable, promotable. You do not sleep well that week, and you do not talk about it at home." }
+    ]
+  },
+  {
+    "id": "pol_tv_debate", "title": "The debate",
+    "text": "A televised debate. Ninety minutes, four leaders' worth of cameras, and an opponent known for destroying people.",
+    "conditions": { "minAge": 25, "jobs": [ "politics" ], "minFame": 15 }, "cooldown": 4,
+    "choices": [
+      { "text": "Prepare for a week", "chance": 0.55, "chanceTraits": { "charming": 0.15 }, "chanceAttributes": { "smarts": 0.004 },
+        "success": { "text": "One line, near the end, that lands. It is on every news programme the next morning.", "effects": [ { "type": "fame", "amount": 7 }, { "type": "performance", "amount": 10 } ] },
+        "failure": { "text": "You freeze on a number. The clip goes round for a month.", "effects": [ { "type": "fame", "amount": 2 }, { "type": "performance", "amount": -8 }, { "type": "happiness", "amount": -5 } ] } },
+      { "text": "Wing it", "chance": 0.3, "chanceTraits": { "charming": 0.2 },
+        "success": { "text": "Charm, a joke, a moment of real feeling. The experts hate it. The viewers love it.", "effects": [ { "type": "fame", "amount": 6 } ] },
+        "failure": { "text": "Charm runs out at about minute twenty.", "effects": [ { "type": "performance", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "pol_threats", "content": [ "violence" ], "title": "The letters",
+    "text": "The letters have changed. They used to disagree with you. Now they say where you live, and who you live with.",
+    "conditions": { "minAge": 25, "jobs": [ "politics" ], "minFame": 25 }, "cooldown": 10,
+    "choices": [
+      { "text": "Take the police protection", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "ailment_add", "kind": "anxiety", "chance": 0.15 } ], "result": "A panic button in the hall, a police car on the corner, a family that cannot walk anywhere alone. You keep going. It costs more than anyone sees." },
+      { "text": "Step back from politics", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 2 } ], "result": "You tell no one the real reason. A local paper writes that you were \"never quite tough enough\". You let them." }
+    ]
+  },
+  {
+    "id": "pol_reshuffle", "title": "The phone call",
+    "text": "The leader's office is on the phone. There is going to be a reshuffle, and your name has come up.",
+    "conditions": { "minAge": 30, "jobs": [ "politics" ], "minFame": 20 }, "cooldown": 6,
+    "choices": [
+      { "text": "Say yes to anything", "chance": 0.4, "chanceTraits": { "ambitious": 0.15, "loyal": 0.1 },
+        "success": { "text": "A department, a driver, a red folder every evening. You stop seeing your family. You start seeing your face on the news every night.", "effects": [ { "type": "promote" }, { "type": "fame", "amount": 5 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "Someone else gets it. The leader rings personally to say next time. There is always a next time.", "effects": [ { "type": "happiness", "amount": -3 } ] } },
+      { "text": "Ask for a particular job", "chance": 0.25, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "You get exactly what you asked for. Now you have to be good at it.", "effects": [ { "type": "promote" }, { "type": "fame", "amount": 4 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Asking was a mistake. You are left out entirely, and noted as difficult.", "effects": [ { "type": "performance", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "self_try_acting", "trigger": "self", "category": "career", "title": "Try to make it as an actor",
+    "conditions": { "minAge": 16, "maxAge": 40, "minSkills": { "acting": 5 }, "notJobs": [ "acting" ] },
+    "choices": [ { "text": "Go to an open audition", "hint": "Hundreds turn up. A handful get called back.", "effects": [ { "type": "queue_event", "event": "act_audition" } ], "result": "You learn a monologue and stand in a queue round the block." } ]
+  },
+  {
+    "id": "act_audition", "trigger": "situation", "title": "The audition",
+    "text": "A bare room, three tired people behind a table, and two minutes to make them look up.",
+    "choices": [
+      { "text": "Do the monologue you know best", "chance": 0.06, "chanceSkills": { "acting": 0.025 }, "chanceTraits": { "charming": 0.05 },
+        "success": { "text": "They look up. Then they ask you to do it again, differently. A week later, a small part and a contract.", "effects": [ { "type": "career", "kind": "acting" }, { "type": "fame", "amount": 2 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "breakthrough", "text": "The audition where they looked up", "impact": 28 } ] },
+        "failure": { "text": "\"Thank you, that's lovely.\" Which means no. You buy a coffee and practise on the way home.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "skill", "kind": "acting", "amount": 1 } ] } },
+      { "text": "Do something they will not expect", "chance": 0.05, "chanceSkills": { "acting": 0.03 },
+        "success": { "text": "They laugh, then go quiet, then ask your name. It is the start.", "effects": [ { "type": "career", "kind": "acting" }, { "type": "fame", "amount": 3 }, { "type": "happiness", "amount": 10 } ] },
+        "failure": { "text": "They do not expect it, and they do not want it either.", "effects": [ { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "act_stage_fright", "title": "Opening night",
+    "text": "Opening night. Five minutes to curtain. You have forgotten every line you have ever known.",
+    "conditions": { "minAge": 16, "jobs": [ "acting" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Walk on anyway", "chance": 0.8, "chanceSkills": { "acting": 0.02 },
+        "success": { "text": "The lights come up and the lines come back, every one, like they were waiting. Three curtain calls.", "effects": [ { "type": "fame", "amount": 3 }, { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "A long, terrible silence in act two. A colleague covers for you. The review mentions it.", "effects": [ { "type": "fame", "amount": -2 }, { "type": "happiness", "amount": -6 } ] } }
+    ]
+  },
+  {
+    "id": "act_typecast", "title": "The same part",
+    "text": "Your agent has another offer: the same kind of part you played last time, and the time before. It pays very well.",
+    "conditions": { "minAge": 20, "jobs": [ "acting" ], "minFame": 10 }, "cooldown": 6,
+    "choices": [
+      { "text": "Take the money", "effects": [ { "type": "money", "amount": 150000 }, { "type": "fame", "amount": 2 }, { "type": "happiness", "amount": -2 } ], "result": "You could do it in your sleep, and some days you nearly do. The house gets a new roof." },
+      { "text": "Hold out for something different", "chance": 0.35,
+        "success": { "text": "A small, strange film nobody expects anything from. It changes what people think you can do.", "effects": [ { "type": "fame", "amount": 6 }, { "type": "skill", "kind": "acting", "amount": 1 } ] },
+        "failure": { "text": "Nothing different comes. A year without work, and then the same part again, for less.", "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "act_co_star", "content": [ "infidelity" ], "title": "The co star",
+    "text": "Three months on location with a co star who understands you better than anyone at home. Everyone on set can see it.",
+    "conditions": { "minAge": 20, "jobs": [ "acting" ], "hasPartner": true }, "cooldown": 10,
+    "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -8, "ageOffsetMax": 8 },
+    "choices": [
+      { "text": "Let it happen", "effects": [ { "type": "start_affair", "to": "target" }, { "type": "happiness", "amount": 5 } ], "result": "It feels like the film, only it is not. Back home, the lies start at the airport." },
+      { "text": "Call home every night", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 4 } ], "result": "Long calls across time zones. {p.name} meets the co star at the premiere and is very gracious. You are very relieved." }
+    ]
+  },
+  {
+    "id": "act_abroad_offer", "title": "The big offer",
+    "text": "A film offer from abroad. A real one, with a budget bigger than your country's whole film industry. You would have to move.",
+    "conditions": { "minAge": 20, "jobs": [ "acting" ], "minFame": 45 }, "cooldown": 15,
+    "choices": [
+      { "text": "Take it", "chance": 0.4, "chanceSkills": { "acting": 0.03 },
+        "success": { "text": "A trailer with your name on the door, an accent coach, and a film that opens in four thousand cinemas.", "effects": [ { "type": "money", "amount": 1500000 }, { "type": "fame", "amount": 12 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "The film is a disaster, and they cut most of your scenes. You come home to a profession that says it always knew.", "effects": [ { "type": "money", "amount": 400000 }, { "type": "fame", "amount": -6 }, { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Stay where your life is", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You turn it down. Someone else becomes very famous in that part. You watch it on a Tuesday and are, mostly, fine." }
+    ]
+  }
+]

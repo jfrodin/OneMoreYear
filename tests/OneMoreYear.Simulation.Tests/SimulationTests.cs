@@ -1149,6 +1149,11 @@ public class CountryTests
         p.BirthYear = s.Year - 40;
         FameSystem.Update(s.Ctx, p);
         Assert.NotEqual("sport", p.OccupationId);
+
+        // Politics is never offered: it takes standing for election.
+        p.Education = OneMoreYear.Simulation.Model.EducationLevel.University;
+        for (int i = 0; i < 50; i++)
+            Assert.DoesNotContain(CareerSystem.GenerateOffers(s.Ctx, p), o => o.StartsWith("politics:"));
     }
 
     [Fact]

@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.63.0 – 2026-10-03 · On stage, and in parliament
+
+- **Acting**: a new hobby (amateur theatre), a new school subject (drama) and a new hard track:
+  extra, stage actor, screen actor, film star. With acting skill 5 you can go to open auditions;
+  most say "thank you, that's lovely".
+- **Politics**: never a job offer. You stand for the local council, campaign, and maybe get
+  elected. Then: election nights every few years that can end it all, expense scandals, votes
+  against your conscience, televised debates, threats, and the reshuffle call. Local councillor,
+  member of parliament, cabinet minister, head of government.
+- Acting events: opening night, the same part again, a co star on location, the big offer abroad.
+- A legendary achievement for reaching the top job.
+
 ## 0.62.0 – 2026-10-03 · Fewer repeats
 
 - **Fifty more twice told moments grouped**, found with a new duplicates report: the late night

@@ -14,6 +14,7 @@
       { "text": "Sport", "hint": "Running, football, swimming, whatever keeps you moving.", "effects": [ { "type": "hobby", "kind": "sport" }, { "type": "attribute", "kind": "fitness", "amount": 2 } ], "result": "New shoes and a route around the lake. The first week hurts. The third does not." },
       { "text": "Chess", "hint": "Sixty four squares and a lifetime of learning.", "effects": [ { "type": "hobby", "kind": "chess" } ], "result": "A board, a book of openings, and a club that meets in the library on Wednesdays." },
       { "text": "Programming", "requires": { "minYear": 1978 }, "hint": "Making the machine do what you want, one line at a time.", "effects": [ { "type": "hobby", "kind": "programming" } ], "result": "A blinking cursor at midnight, and a program that finally does what you meant." },
+      { "text": "Acting", "hint": "Amateur theatre, and maybe one day a real stage.", "effects": [ { "type": "hobby", "kind": "acting" } ], "result": "An amateur theatre group in a church hall. Your first part has one line. You practise it two hundred times."  },
       { "text": "Not now", "result": "There is never enough time. Maybe next year." }
     ]
   },

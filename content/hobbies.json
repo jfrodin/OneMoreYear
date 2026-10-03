@@ -17,5 +17,7 @@
   { "id": "chess", "name": "Chess", "traits": [ "introvert", "ambitious" ],
     "text": "Sixty four squares and a lifetime of learning how little you know." },
   { "id": "programming", "name": "Programming", "minYear": 1978, "traits": [ "introvert", "eccentric" ],
-    "text": "Making the machine do what you want, late at night, one line at a time." }
+    "text": "Making the machine do what you want, late at night, one line at a time." },
+  { "id": "acting", "name": "Acting", "traits": [ "charming", "vain", "social" ],
+    "text": "An amateur theatre on Tuesday evenings, and a stage that is yours for two hours."}
 ]

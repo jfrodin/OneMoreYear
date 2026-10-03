@@ -44,6 +44,11 @@
     "writing": [ "{brand} House", "{surname} Books", "The {city} Literary Agency" ],
     "sport": [ "The {city} {brand}s", "{place} Athletic Club", "{city} FC" ],
     "sport:2": [ "Team USA" ],
-    "sport:3": [ "Team USA" ]
+    "sport:3": [ "Team USA" ],
+    "acting": [ "The {city} Playhouse", "{brand} Pictures", "{place} Repertory Theater" ],
+    "politics": [ "{city} City Council", "{place} County Board" ],
+    "politics:1": [ "The United States Congress" ],
+    "politics:2": [ "The Cabinet" ],
+    "politics:3": [ "The White House" ]
   }
 }

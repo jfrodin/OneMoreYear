@@ -265,6 +265,7 @@ public static class CareerSystem
         var options = ctx.Content.Occupations
             .Where(o => occupationId == null || o.Id == occupationId)
             .Where(o => o.MinYear <= ctx.Year || occupationId != null)
+            .Where(o => !o.ByInvitation || occupationId != null)
             .Where(o => EntryLevel(p, o) >= 0 || level != null)
             .ToList();
         if (options.Count == 0) return false;
@@ -297,7 +298,7 @@ public static class CareerSystem
         for (int i = 0; i < max; i++) if (rng.Chance(quality)) count++;
         if (count == 0 && rng.Chance(0.5)) count = 1; // something simple usually turns up
 
-        var pool = ctx.Content.Occupations.Where(o => EntryLevel(p, o) >= 0 && o.Id != p.OccupationId && o.MinYear <= ctx.Year).ToList();
+        var pool = ctx.Content.Occupations.Where(o => EntryLevel(p, o) >= 0 && o.Id != p.OccupationId && o.MinYear <= ctx.Year && !o.ByInvitation).ToList();
         var offers = new List<string>();
         for (int i = 0; i < count && pool.Count > 0; i++)
         {
@@ -386,6 +387,7 @@ public static class CareerSystem
         if (occ == null || p.OccupationLevel + 1 >= occ.Levels.Count) return;
         if (!QualifiesFor(p, occ.Levels[p.OccupationLevel + 1])) return;
         p.OccupationLevel++;
+        if (p.OccupationLevel == occ.Levels.Count - 1) p.Flags.Add("top:" + occ.Id);
         p.YearsInJob = 0;
         p.Income = Salary(ctx, occ.Levels[p.OccupationLevel]);
         p.Happiness += 8;
