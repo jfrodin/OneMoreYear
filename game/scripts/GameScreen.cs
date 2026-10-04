@@ -1234,7 +1234,8 @@ public partial class GameScreen : Control
             return;
         }
         var report = S.AdvanceYear();
-        Sound.Play("year");
+        // A year with a birth, a death, a wedding or a graduation sounds like it.
+        Sound.Play(report.Moment ?? "year");
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
         // The whole screen is rebuilt so the look follows the new year, then the paper arrives.

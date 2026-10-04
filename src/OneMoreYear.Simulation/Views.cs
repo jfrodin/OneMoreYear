@@ -107,6 +107,9 @@ public sealed record YearReport(int Year, int PlayerAge, IReadOnlyList<Chronicle
 
     /// <summary>A year with at least one front-page story.</summary>
     public bool IsBigYear => News.Any(IsFrontPage);
+
+    /// <summary>"death", "birth", "wedding" or "graduation": the moment of the year that gets a sound.</summary>
+    public string? Moment { get; init; }
 }
 
 public sealed record HeirCandidate(int Id, string Name, string Relation, int Age, string Money, string Occupation);

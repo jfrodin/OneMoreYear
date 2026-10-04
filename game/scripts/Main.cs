@@ -29,6 +29,7 @@ public partial class Main : Control
         RegisterInput();
         Ui.FollowFocus(GetViewport());
         Sound.Init(this);
+        Music.Init(this);
         Settings.Apply();
 
         _paper = new AlbumPaper();
@@ -59,6 +60,15 @@ public partial class Main : Control
         {
             AddChild(new BrandSheet(brand["--brand=".Length..]));
             SetProcess(false);
+            return;
+        }
+        // --audio=DIR saves every decade's music and the sounds as WAV files (development aid).
+        var audio = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--audio="));
+        if (audio != null && OS.IsDebugBuild())
+        {
+            Music.Export(audio["--audio=".Length..]);
+            Sound.Export(audio["--audio=".Length..]);
+            GetTree().Quit();
             return;
         }
         var gallery = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--portraits="));
@@ -244,6 +254,7 @@ public partial class Main : Control
     {
         int year = Settings.FixedLook ?? _eraOverride ?? Session?.Year ?? 1970;
         UiTheme.SetYear(year);
+        Music.SetYear(Session?.Year ?? year);
         Theme = UiTheme.Build();
         _paper.QueueRedraw();
     }
@@ -566,6 +577,7 @@ public partial class Main : Control
             i => { Settings.SetFixedLook(i == 0 ? null : lookYears[i - 1]); ApplyEra(); })));
         box.AddChild(Row("Volume", Slider(Settings.MasterVolume, Settings.SetMasterVolume)));
         box.AddChild(Row("Sound effects", Slider(Settings.EffectsVolume, Settings.SetEffectsVolume)));
+        box.AddChild(Row("Music", Slider(Settings.MusicVolume, Settings.SetMusicVolume)));
         box.AddChild(Row("Tips for new players", Options(new[] { "Off", "On" }, Settings.TipsOn ? 1 : 0, i => Settings.SetTips(i == 1))));
         box.AddChild(Row("The family newspaper", Options(new[] { "Every year", "Only in big years", "Never" }, (int)Settings.Newspaper,
             i => Settings.SetNewspaper((NewspaperMode)i))));
