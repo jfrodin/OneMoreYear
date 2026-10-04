@@ -1,0 +1,168 @@
+// The long middle and the later years: children leaving and coming back, parents who need you,
+// bodies that start to complain, and the first Monday with nowhere to be. No dashes.
+[
+  {
+    "id": "ll_empty_room", "title": "The empty room",
+    "text": "{t.name}'s room is empty now. The bed is made, the posters are gone, and nobody sleeps there.",
+    "conditions": { "minAge": 40, "maxAge": 70 }, "cooldown": 15,
+    "target": { "role": "child", "conditions": { "minAge": 19, "maxAge": 25 } },
+    "choices": [
+      { "text": "Leave it as it is, for now", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 } ], "result": "You open the door sometimes and just stand there. When {t.name} comes home for Christmas, everything is where {t.he} left it." },
+      { "text": "Make it into something of your own", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "A sewing room, a study, a place for the exercise bike nobody uses. It is strange how quickly it becomes yours." }
+    ]
+  },
+  {
+    "id": "ll_boomerang", "title": "Coming home",
+    "text": "{t.name} calls. The flat has fallen through, the money has run out, and could {t.he} move back home for a while? Just until things sort themselves out.",
+    "conditions": { "minAge": 42, "livesWithParents": false }, "cooldown": 12,
+    "target": { "role": "child", "conditions": { "minAge": 21, "maxAge": 32 } },
+    "choices": [
+      { "text": "Of course", "effects": [ { "type": "money", "amount": -15000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true } ], "result": "A year of shoes in the hall and a full fridge that empties overnight. When {t.he} moves out again you miss the noise." },
+      { "text": "Help with the deposit instead", "requires": { "minMoney": 30000 }, "effects": [ { "type": "money", "amount": -30000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ], "result": "A transfer, and a new flat across town by the end of the month. Your house stays quiet. You are not sure whether you are relieved." },
+      { "text": "It is time to stand on your own feet", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -6 }, { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 3 } ], "result": "A long silence on the phone. {t.He} manages, in the end. Years later {t.he} says it was the best thing you ever did, and also the worst." }
+    ]
+  },
+  {
+    "id": "ll_first_computer", "title": "The computer",
+    "text": "There is a computer in the house now, in the corner of the living room with a cover over it at night. Everyone says you should learn.",
+    "conditions": { "minAge": 40, "maxAge": 80, "minYear": 1985, "maxYear": 2002 }, "cooldown": 0,
+    "choices": [
+      { "text": "Sit down and learn it properly", "chance": 0.6, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "A book with a yellow cover and a lot of evenings. Soon you are the one the neighbours call when their printer will not work.", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "happiness", "amount": 3 } ] },
+        "failure": { "text": "It says it has performed an illegal operation. You did not do anything. You put the cover back on.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Let the children handle it", "effects": [], "result": "They show you how to play patience. That is enough computer for one life." }
+    ]
+  },
+  {
+    "id": "ll_smartphone", "title": "The phone",
+    "text": "{t.name} has set up a new phone for you and is explaining, very patiently, how to swipe. Your finger is not doing what {t.he} says.",
+    "conditions": { "minAge": 62, "minYear": 2010, "maxYear": 2030 }, "cooldown": 0,
+    "target": { "role": "grandchild", "conditions": { "minAge": 9, "maxAge": 25 } },
+    "choices": [
+      { "text": "Keep practising", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 5, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "By summer you send photographs of your tomatoes to the whole family, several times a day. {t.name} regrets nothing." },
+      { "text": "Ask for a phone with buttons", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 } ], "result": "{t.He} laughs and finds you one. It does one thing well. So do you." }
+    ]
+  },
+  {
+    "id": "ll_first_monday", "title": "Monday",
+    "text": "The first Monday of being retired. The alarm did not ring. There is nowhere you have to be, for the rest of your life.",
+    "conditions": { "minAge": 58, "activity": "retired" }, "cooldown": 0,
+    "choices": [
+      { "text": "Make a plan for every day", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "health", "amount": 2 } ], "result": "Swimming on Mondays, the library on Wednesdays, a long walk every day. The diary fills up faster than it did when you worked." },
+      { "text": "Do nothing at all, for once", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Coffee in the garden until eleven. On Thursday you start to feel a little lost. On Friday you call an old colleague." }
+    ]
+  },
+  {
+    "id": "ll_grey_hair", "title": "Grey",
+    "text": "In the bathroom mirror, in a good light: grey hairs. Not one or two. Quite a lot of them.",
+    "conditions": { "minAge": 36, "maxAge": 50 }, "cooldown": 0,
+    "choices": [
+      { "text": "Colour it", "effects": [ { "type": "money", "amount": -1500 }, { "type": "attribute", "kind": "looks", "amount": 1 } ], "result": "Back to how it was, more or less. Every six weeks, for the next twenty years." },
+      { "text": "Let it come", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "Someone at work says it suits you. You decide to believe them." }
+    ]
+  },
+  {
+    "id": "ll_marathon", "title": "Before fifty",
+    "text": "You have said for years that you would run a marathon before you turn fifty. You are forty eight.",
+    "conditions": { "minAge": 46, "maxAge": 49 }, "cooldown": 0,
+    "choices": [
+      { "text": "Sign up and train", "chance": 0.5, "chanceAttributes": { "fitness": 0.008 }, "chanceTraits": { "lazy": -0.2, "ambitious": 0.1 },
+        "success": { "text": "Four hours and fifty one minutes. The last ten kilometres are the longest of your life. The medal hangs in the hall for years.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "marathon", "text": "The marathon I ran at forty nine", "impact": 18 } ] },
+        "failure": { "text": "A knee goes at thirty kilometres. You walk the rest, slowly, past people cheering for someone else.", "effects": [ { "type": "health", "amount": -4 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Change the plan to before sixty", "effects": [], "result": "There is plenty of time. There is always plenty of time." }
+    ]
+  },
+  {
+    "id": "ll_midlife", "title": "Is this it?",
+    "text": "Somewhere between the dishwasher and the car park at work, a thought you cannot shake: is this it? Is this the whole thing?",
+    "conditions": { "minAge": 42, "maxAge": 54 }, "cooldown": 20,
+    "choices": [
+      { "text": "Buy a motorbike", "requires": { "minMoney": 60000 }, "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "impulsive", "chance": 0.05 } ], "result": "Red, loud, entirely unnecessary. On a summer evening on an empty road it is the best thing you have ever bought." },
+      { "text": "Take up something new", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Pottery, Spanish, the cello. You are terrible at it and you love being terrible at something again." },
+      { "text": "Talk to someone about it", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "resilient", "chance": 0.04 } ], "result": "It turns out almost everyone feels this way at some point. That helps more than you expected." },
+      { "text": "Push it away", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "You are busy. You have responsibilities. The thought comes back on Sunday evenings." }
+    ]
+  },
+  {
+    "id": "ll_parent_alone", "title": "Alone in the house",
+    "text": "{t.name} cannot really manage on {t.his} own any more. The stairs, the shopping, the pills in the wrong order. Something has to change.",
+    "conditions": { "minAge": 40, "maxAge": 75 }, "cooldown": 10,
+    "target": { "role": "parent", "conditions": { "minAge": 78, "hasPartner": false } },
+    "choices": [
+      { "text": "Visit every day", "effects": [ { "type": "health", "amount": -2 }, { "type": "happiness", "amount": -2 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "memory", "who": "target", "to": "player", "kind": "cared_for", "text": "{name} came every day when I was old", "impact": 25 } ], "result": "Every day after work, for two years. You are exhausted. {t.He} tells everyone at the doctor's that you are the best child in the world." },
+      { "text": "Find a good care home", "effects": [ { "type": "care_home", "who": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "A bright room with a view of a birch. {t.He} hates it for a month, then makes a friend who cheats at cards." },
+      { "text": "Leave it to the others", "requires": { "hasRole": [ "sibling" ] }, "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -8 } ], "result": "Your {siblings} {siblings_have} it in hand. You call on Sundays. It is not the same, and everyone knows it." }
+    ]
+  },
+  {
+    "id": "ll_obituaries", "title": "The obituary page",
+    "text": "You have started reading the obituaries. This morning there is a name you know: someone you went to school with, the same age as you.",
+    "conditions": { "minAge": 58 }, "cooldown": 8,
+    "choices": [
+      { "text": "Go to the funeral", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "Half the class is there, grey and heavy and somehow the same. Afterwards you go for coffee and laugh more than is decent." },
+      { "text": "Call an old friend you have not spoken to in years", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "It rings for a long time. Then a voice you would know anywhere. You talk for two hours." }
+    ]
+  },
+  {
+    "id": "ll_swimming_lesson", "title": "In the water",
+    "text": "{t.name} is scared of the water, and {t.his} parents have run out of patience. Could you try?",
+    "conditions": { "minAge": 55, "maxAge": 80 }, "cooldown": 15,
+    "target": { "role": "grandchild", "conditions": { "minAge": 4, "maxAge": 8 } },
+    "choices": [
+      { "text": "Every Saturday at the lake", "chance": 0.7,
+        "success": { "text": "Three Saturdays of holding, two of letting go a little, and then {t.he} swims four strokes to you on {t.his} own. Nobody ever forgets who taught them to swim.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "memory", "who": "target", "to": "player", "kind": "taught_to_swim", "text": "{name} taught me to swim", "impact": 18 } ] },
+        "failure": { "text": "Not this summer. {t.He} likes the sandwiches and the sand. The swimming can wait a year.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ] } },
+      { "text": "Your knees are not up to it", "effects": [], "result": "You watch from a deckchair while {t.his} father tries. You shout encouragement. It does not help." }
+    ]
+  },
+  {
+    "id": "ll_back", "title": "Your back",
+    "text": "You bent down to pick up a sock and something in your back said no. Two days later, it is still saying no.",
+    "conditions": { "minAge": 45 }, "cooldown": 15,
+    "choices": [
+      { "text": "See a physiotherapist", "effects": [ { "type": "money", "amount": -3000 }, { "type": "health", "amount": 2 } ], "result": "Exercises on the bedroom floor every morning. It gets better. You keep doing them, mostly." },
+      { "text": "Wait for it to pass", "chance": 0.6,
+        "success": { "text": "It passes. You treat socks with respect from now on.", "effects": [] },
+        "failure": { "text": "It does not pass. It settles in, a little ache that knows when the weather will change.", "effects": [ { "type": "health", "amount": -4 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "ll_far_away", "title": "Somewhere far",
+    "text": "There is a place you have wanted to see your whole life. A travel brochure has been on the kitchen table for a month.",
+    "conditions": { "minAge": 62, "minMoney": 60000 }, "cooldown": 15,
+    "choices": [
+      { "text": "Book it", "chance": 0.85, "chanceAttributes": { "fitness": 0.003 },
+        "success": { "text": "Three weeks, and every day of it as good as you hoped. You come home with a thousand photographs and a sunburn.", "effects": [ { "type": "money", "amount": -50000 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "great_journey", "text": "The journey I waited my whole life for", "impact": 22 } ] },
+        "failure": { "text": "Your hip gives out on the second day. You see it from a hotel balcony, which is something, but not what you meant.", "effects": [ { "type": "money", "amount": -50000 }, { "type": "health", "amount": -6 }, { "type": "happiness", "amount": 2 } ] } },
+      { "text": "Next year, maybe", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "The brochure goes back in the drawer with the others." }
+    ]
+  },
+  {
+    "id": "ll_own_funeral", "title": "The music",
+    "text": "{t.name} finds you at the kitchen table writing down what you want played at your funeral. {t.He} does not think it is funny.",
+    "conditions": { "minAge": 72 }, "cooldown": 0,
+    "target": { "role": "child", "conditions": { "minAge": 30 } },
+    "choices": [
+      { "text": "Explain that you would rather choose yourself", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 }, { "type": "flag", "flag": "planned_funeral" } ], "result": "You talk for an hour about the songs and why. By the end you are both laughing, and {t.he} has added one of {t.his} own." },
+      { "text": "Put it away and talk about something else", "effects": [], "result": "The list stays in the drawer, half written. {t.name} finds it, one day, and does the best {t.he} can." }
+    ]
+  },
+  {
+    "id": "ll_company_late", "title": "Coffee?",
+    "text": "A man at the library, about your age, with a good coat and a nervous smile, asks if you would like a coffee some time.",
+    "conditions": { "minAge": 60, "sex": "female", "hasPartner": false }, "cooldown": 10,
+    "choices": [
+      { "text": "Say yes", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "Coffee becomes lunch, lunch becomes Sundays. Nobody calls it anything. It does not need a name." },
+      { "text": "Say you are not looking for that", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "He nods and says he understands. You see him at the library every week after that, and you always say hello." }
+    ]
+  },
+  {
+    "id": "ll_company_late_m", "title": "Coffee?",
+    "text": "A woman in the choir, about your age, asks if you would like to walk home the same way after practice. It is not quite the same way.",
+    "conditions": { "minAge": 60, "sex": "male", "hasPartner": false }, "cooldown": 10,
+    "choices": [
+      { "text": "Walk her home", "effects": [ { "type": "happiness", "amount": 6 } ], "result": "Every Thursday after that. You take the long way. Neither of you mentions it." },
+      { "text": "Say you are too old for that", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "She laughs and says nobody is too old to walk. You walk home alone, and think about that." }
+    ]
+  }
+]
