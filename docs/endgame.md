@@ -114,3 +114,21 @@ kan också förloras. Det ger en anledning att bry sig om vem som tar över.
   Förslag: synliga namn, dolda villkor för de legendariska.
 - Slutbetyg: ett tal (jämförbart, tävlingsinriktat) eller bara ord (mer i spelets ton)?
 - Ska livsdrömmen vara frivillig att välja, eller alltid finnas?
+
+## När man är rik (2026-10-04)
+
+Producentens fråga: vad strävar man efter när man redan är rik? Svaret: pengar är ett verktyg, aldrig
+ett mål. Rikedom ska ge nya val och nya problem, inte vara slutet.
+
+- **Rikedomens baksida** (0.68): barn som växer upp rika utan sträng uppfostran blir lättare
+  bortskämda (lata, fåfänga, giriga). Arvsgräl mellan syskon när en rik förälder dör. Händelser för
+  rika: kusinen med affärsidén, rådgivaren med pyramidspelet, äktenskapsförordet, gamla vänner och
+  notan, hot mot barnen, och natten då man undrar vad allt är till för.
+- **Gåvor i släktens namn** (0.68): stipendium, sommarläger, forskningsstiftelse, park, bibliotek,
+  sjukhusflygel, konserthus. De löpande hjälper folk varje år i krönikan; decennier senare kommer
+  brev och man går förbi namnet på väggen. Värmer släktens rykte och syns på slutsidan.
+- **Släktgodset** (0.69): ett hus på landet som ska stanna i släkten. Dyrt att hålla, förfaller utan
+  underhåll, samlar barn och barnbarn på somrarna, går till en arvinge som måste vilja ha det.
+
+Kvar att fundera på: att förmögenheter naturligt krymper över generationer om ingen förvaltar dem,
+och fler saker som bara dyker upp efter mycket långt spelande.
