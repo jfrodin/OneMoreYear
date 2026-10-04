@@ -156,12 +156,22 @@
     ]
   },
   {
+    "id": "gp_grandparent_dementia_child", "title": "Who are you?",
+    "text": "{t.name} looks at you for a long time and asks whose little one you are. The grown ups go quiet.",
+    "conditions": { "minAge": 6, "maxAge": 17 }, "cooldown": 8, "weight": 0.5, "group": "gp_not_recognised",
+    "target": { "role": "grandparent", "conditions": { "minAge": 70, "ailmentsAny": [ "dementia" ] } },
+    "choices": [
+      { "text": "Say your name and hold {t.his} hand", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "{t.He} says it is a lovely name and does not let go of your hand for the whole visit. In the car nobody says anything." },
+      { "text": "Go and wait in the hall", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "You sit on a chair in the hall and count the tiles. Through the door you can hear {t.him} asking where the children are." }
+    ]
+  },
+  {
     "id": "gp_grandparent_dementia_visit", "title": "Who are you?",
     "text": "{t.name} does not recognise you today. {t.He} is polite, and asks if you are the new nurse.",
-    "conditions": { "minAge": 10, "maxAge": 50 }, "cooldown": 8, "weight": 0.5,
-    "target": { "role": "grandparent", "conditions": { "minAge": 78 } },
+    "conditions": { "minAge": 18, "maxAge": 50 }, "cooldown": 8, "weight": 0.5, "group": "gp_not_recognised",
+    "target": { "role": "grandparent", "conditions": { "minAge": 70, "ailmentsAny": [ "dementia" ] } },
     "choices": [
-      { "text": "Play along, and talk", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "You talk about the weather, about {t.his} grandchildren, about you, as a stranger. {t.He} says you would like them. You hold it together until the car." },
+      { "text": "Play along, and talk", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "You talk about the weather, about {t.his} grandchildren, about you, as a stranger. {t.He} says you would like them. You hold it together until you are outside." },
       { "text": "Keep telling {t.him} who you are", "effects": [ { "type": "happiness", "amount": -5 } ], "result": "{t.He} gets confused, then upset. A nurse asks you, gently, to try a different way next time." }
     ]
   },

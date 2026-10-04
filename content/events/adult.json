@@ -85,7 +85,7 @@
         "result": "Professionals take over. {t.name} is grateful, if a little lonely."
       },
       {
-        "text": "Let your siblings handle it",
+        "text": "Let your {siblings} handle it",
         "requires": { "hasRole": [ "sibling" ] },
         "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "abandoned_sick", "text": "{name} never came when I was ill", "impact": -30 } ],
         "result": "You have enough on your plate. Or so you tell yourself."

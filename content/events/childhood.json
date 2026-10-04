@@ -58,7 +58,7 @@
         "result": "You fall asleep eventually. You always do."
       },
       {
-        "text": "Comfort your siblings",
+        "text": "Comfort your {siblings}",
         "requires": { "hasRole": [ "sibling" ] },
         "effects": [ { "type": "trait_add", "trait": "loyal", "chance": 0.3 }, { "type": "happiness", "amount": -3 } ],
         "result": "You huddle together and whisper about other things."

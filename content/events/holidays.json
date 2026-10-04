@@ -185,7 +185,7 @@
     "text": "The first Sunday of Advent. One candle lit out of four, a star in the window, and the long dark of the year turning towards Christmas.",
     "conditions": { "minAge": 5 }, "cooldown": 6,
     "choices": [
-      { "text": "Mulled wine and gingerbread", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "The flat smells of cloves for a week. You eat too many biscuits standing by the window." },
+      { "text": "Something hot and spiced, and gingerbread", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "The flat smells of cloves for a week. You eat too many biscuits standing by the window." },
       { "text": "Start on the presents early", "effects": [ { "type": "money", "amount": -1000 }, { "type": "happiness", "amount": 2 } ], "result": "You are finished by the tenth of December. You will tell people this many times." }
     ]
   }

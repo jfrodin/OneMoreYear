@@ -49,7 +49,11 @@ public static class CareerSystem
                 if (isPlayer)
                 {
                     BecomeJobSeeker(p, ctx);
-                    EventSystem.QueueSituation(ctx, "after_secondary");
+                    // Finishing school at 19 and at 39 are different days.
+                    if (EventSystem.QueueSituation(ctx, "after_secondary") is { } grad)
+                        grad.Words["graduation"] = p.Age(ctx.Year) <= 21
+                            ? "You run out of school to banners with your baby photos and screaming relatives. Adult life is waiting."
+                            : "A diploma, years later than everyone you started with, handed out in a classroom after the evening lesson. You frame it anyway. A few more doors are open now.";
                     return;
                 }
                 double uni = 0.1 + Math.Clamp((ctx.Year - 1950) * 0.006, 0, 0.3) + ctx.Mod(p, "career") * 0.25

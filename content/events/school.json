@@ -14,7 +14,7 @@
       { "text": "Sport", "hint": "Practises sport. Grades suffer a little.", "effects": [ { "type": "subject", "kind": "sport" }, { "type": "flag", "flag": "chose_subject" }, { "type": "attribute", "kind": "fitness", "amount": 3 } ], "result": "You are first out of the changing room and last back in. The rest of the timetable is waiting time." },
       { "text": "Woodwork", "hint": "Practises being handy.", "effects": [ { "type": "subject", "kind": "crafts" }, { "type": "flag", "flag": "chose_subject" } ], "result": "A wobbly stool, a bird box, a butter knife. Everything you make goes home, and is kept for decades." },
       { "text": "Drama", "hint": "Practises acting.", "effects": [ { "type": "subject", "kind": "drama" }, { "type": "flag", "flag": "chose_subject" } ], "result": "The school play, every year, and you in the middle of it. You have never felt more like yourself than when pretending to be someone else." },
-      { "text": "Computers", "hint": "Practises programming.", "requires": { "minYear": 1984 }, "effects": [ { "type": "subject", "kind": "computers" }, { "type": "flag", "flag": "chose_subject" } ], "result": "Two machines in a cold room, a queue to use them, and a blinking cursor waiting for you to tell it what to do." }
+      { "text": "Computers", "hint": "Practises programming.", "requires": { "minYear": 1984 }, "effects": [ { "type": "subject", "kind": "computers" }, { "type": "flag", "flag": "chose_subject" } ], "result": "[[1998: Two machines in a cold room, a queue to use them, || A room full of screens, a teacher who knows less than half the class,]] and a blinking cursor waiting for you to tell it what to do." }
     ]
   },
   {

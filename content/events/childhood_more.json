@@ -96,7 +96,7 @@
     "target": { "role": "sibling", "conditions": { "minAge": 3, "maxAge": 16 } },
     "choices": [
       { "text": "Own up", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "trust", "amount": 8 } ],
-        "result": "{t.name} looks at you with something like respect." },
+        "result": "{t.name} stares at you as if you had grown a second head. Later {t.he} shares {t.his} sweets with you, without a word." },
       { "text": "Let {t.name} take the blame", "effects": [
           { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 15 },
           { "type": "memory", "who": "target", "to": "player", "kind": "blamed", "text": "Got punished for something {name} did", "impact": -20 } ],

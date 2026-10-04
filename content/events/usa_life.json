@@ -323,7 +323,7 @@
   },
   {
     "id": "us_pledge", "countries": [ "usa" ], "trigger": "milestone", "title": "The first day",
-    "text": "First day of kindergarten. A lunchbox with a cartoon on it, a cubby with your name, and every morning the whole class stands with a hand on its heart for the pledge.",
+    "text": "First day of kindergarten. A lunchbox with a cartoon on it, a cubby with your name, and every morning twenty children stand up, hands on their hearts, for the pledge.",
     "conditions": { "minAge": 5, "maxAge": 6, "notFlags": [ "first_school_day" ] },
     "choices": [
       { "text": "Hold your mother's hand to the door", "effects": [ { "type": "flag", "flag": "first_school_day" }, { "type": "happiness", "amount": 3 } ], "result": "You let go at the door. Your mother does not let go of the doorframe for some time." },

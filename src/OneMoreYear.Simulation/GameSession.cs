@@ -940,6 +940,8 @@ public sealed class GameSession
             var rest = text[(name.Length + 1)..];
             foreach (var (from, to) in new[] { ("was ", "were "), ("has ", "have "), ("is ", "are "), ("doesn't ", "don't ") })
                 if (rest.StartsWith(from)) { rest = to + rest[from.Length..]; break; }
+            // A reflexive in the same line is always about the subject: "felt like herself" → "yourself".
+            rest = rest.Replace(" himself", " yourself").Replace(" herself", " yourself");
             return "You " + rest;
         }
         return text;

@@ -27,7 +27,7 @@
     "choices": [
       { "text": "Buy the big one", "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "vain", "chance": 0.03 } ], "result": "It smells wonderful for six months. The finance lasts six years." },
       { "text": "Buy the sensible one", "effects": [ { "type": "money", "amount": -30000 }, { "type": "happiness", "amount": 2 } ], "result": "It is grey and reliable and the salesman is visibly disappointed. It lasts eighteen years." },
-      { "text": "Keep the old car another year", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "It makes a new noise every month. You turn the radio up." }
+      { "text": "Walk out without buying anything", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "The smile follows you all the way to the door. Whatever gets you around now will have to do for a while longer." }
     ]
   },
   {

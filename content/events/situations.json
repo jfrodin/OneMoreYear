@@ -30,7 +30,7 @@
   {
     "id": "after_secondary", "trigger": "situation",
     "title": "Graduation!",
-    "text": "You run out of school to banners with your baby photos and screaming relatives. Adult life is waiting.",
+    "text": "{graduation}",
     "choices": [
       {
         "text": "Apply to university",

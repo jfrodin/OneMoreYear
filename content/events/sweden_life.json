@@ -34,7 +34,7 @@
     "choices": [
       { "text": "Pick until your fingers are blue", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "Two buckets, a hundred mosquito bites and a pie that evening that is better than anything in a shop." },
       { "text": "Look for chanterelles instead", "chance": 0.4,
-        "success": { "text": "A golden carpet under a spruce, in a spot you will never tell anyone about. Not even your children. Maybe in your will.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "success": { "text": "A golden carpet under a spruce, in a spot you will never tell anyone about. Not ever. Maybe in your will.", "effects": [ { "type": "happiness", "amount": 6 } ] },
         "failure": { "text": "Three hours, one chanterelle and a fly agaric you photograph for no reason.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
     ]
   },
@@ -121,7 +121,7 @@
     "conditions": { "minAge": 12 }, "cooldown": 15,
     "choices": [
       { "text": "Try it, properly", "chance": 0.5,
-        "success": { "text": "Thin bread, potatoes, onion, and a cold beer. It is, against all reason, delicious. You become a person who invites people to this.", "effects": [ { "type": "happiness", "amount": 4 } ] },
+        "success": { "text": "Thin bread, potatoes, onion, and something cold to drink. It is, against all reason, delicious. You become a person who invites people to this.", "effects": [ { "type": "happiness", "amount": 4 } ] },
         "failure": { "text": "One bite. You smile politely. You smell it in your hair until Wednesday.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
       { "text": "Close the windows", "effects": [], "result": "The smell gets in anyway. It always gets in." }
     ]

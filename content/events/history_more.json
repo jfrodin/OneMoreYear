@@ -131,7 +131,7 @@
     "text": "The bridge to Denmark is open. For the first time since the Ice Age you can drive from Sweden to the continent.",
     "conditions": { "minAge": 6, "minYear": 2000, "maxYear": 2000 }, "weight": 3, "cooldown": 0,
     "choices": [
-      { "text": "Drive over and back", "effects": [ { "type": "money", "amount": -600 }, { "type": "happiness", "amount": 4 } ], "result": "Copenhagen for lunch, a hot dog, and home before dinner. The bridge seems to float on the water. You do it twice that summer." },
+      { "text": "Go over and back", "effects": [ { "type": "money", "amount": -600 }, { "type": "happiness", "amount": 4 } ], "result": "Copenhagen for lunch, a hot dog, and home before dinner. The bridge seems to float on the water. You do it twice that summer." },
       { "text": "The ferry was fine", "effects": [], "result": "You liked the ferry. Nobody on the bridge is singing or buying cheap drink." }
     ]
   },

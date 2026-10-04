@@ -62,8 +62,8 @@
         "result": "You sleep in the chair by the bed. {t.He} tells you stories you have never heard, mostly about people who are dead." },
       { "text": "Arrange home help and call every day", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 } ],
         "result": "The home help comes twice a day. {t.name} says they are kind but talk too much." },
-      { "text": "Leave it to your siblings", "requires": { "hasRole": [ "sibling" ] }, "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "absent_child", "text": "{name} did not come when I was in hospital", "impact": -20 } ],
-        "result": "One of your siblings calls you something you will both remember." }
+      { "text": "Leave it to your {siblings}", "requires": { "hasRole": [ "sibling" ] }, "effects": [ { "type": "memory", "who": "target", "to": "player", "kind": "absent_child", "text": "{name} did not come when I was in hospital", "impact": -20 } ],
+        "result": "{a_sibling} calls you something you will both remember." }
     ]
   },
   {
@@ -132,7 +132,7 @@
   },
   {
     "id": "mid_inheritance_furniture", "trigger": "situation", "title": "The sideboard",
-    "text": "After {t.name}'s funeral comes the house. Your siblings have started putting little notes with their names on the furniture.",
+    "text": "After {t.name}'s funeral comes the house. Your {siblings} {siblings_have} started putting little notes with names on the furniture.",
     "cooldown": 0,
     "choices": [
       { "text": "Take only the photo albums", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "generous", "chance": 0.1 } ],

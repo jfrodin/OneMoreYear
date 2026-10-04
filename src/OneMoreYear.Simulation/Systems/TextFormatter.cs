@@ -66,6 +66,10 @@ public static partial class TextFormatter
                     "dream" => DreamSystem.Of(ctx, player)?.Name.ToLowerInvariant() ?? "",
                     "dream_fulfilled" => DreamSystem.Of(ctx, player)?.Fulfilled ?? "",
                     "dream_failed" => DreamSystem.Of(ctx, player)?.Failed ?? "",
+                    // "your {siblings}": brother, sister or siblings, for how many the player actually has.
+                    "siblings" => Siblings(w, player) is [var only] ? (only.Sex == Sex.Male ? "brother" : "sister") : "siblings",
+                    "siblings_have" => Siblings(w, player).Count == 1 ? "has" : "have",
+                    "a_sibling" => Siblings(w, player) is [var one] ? (one.Sex == Sex.Male ? "your brother" : "your sister") : "one of your siblings",
                     _ when pending != null && pending.Words.TryGetValue(head, out var word) => word,
                     _ when pending != null && pending.Vars.TryGetValue(head, out var v) => EconomySystem.Format(ctx, ctx.Nominal(v)),
                     _ => m.Value
@@ -139,6 +143,8 @@ public static partial class TextFormatter
     public static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
 
     private static Content.CountryDef? Homeland(SimContext ctx, Person p) => p.Homeland is { } h ? ctx.Content.Countries.GetValueOrDefault(h) : null;
+
+    private static List<Person> Siblings(World w, Person p) => Kinship.Siblings(w, p).Where(s => s.IsAlive).ToList();
 
     /// <summary>"a flat", "an apartment".</summary>
     public static string A(string noun) => ("aeiou".Contains(char.ToLowerInvariant(noun.FirstOrDefault())) ? "an " : "a ") + noun;
