@@ -2,6 +2,31 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.71.0 – 2026-10-04 · Sound and first steps
+
+- **Music.** Quiet music for each decade, with long silences in between: a soft piano in the
+  fifties, a guitar in the sixties, an electric piano in the seventies, synths in the eighties, and
+  something stranger in the future. Three pieces per decade. It has its own volume in the settings.
+- **The big moments sound like it.** A music box for a birth, a far bell for a death, bells for a
+  wedding and a few rising notes for a graduation, in the family close to you.
+- **Tips for new players,** one at a time, where they are useful and only once: how a year works,
+  what a choice did, what the values mean, the time you have for your own things, and a first tip
+  on each tab. "No more tips" on the card, or turn them off and on again in the settings.
+- **Icons** on the tabs and next to health, happiness, smarts, looks and fitness.
+- **Twelve more prison events** for the longer sentences: the television, the weights, the
+  chaplain, something for sale, a course by post, the old timer, lockdown, the kitchen, a child
+  through the glass, the dogs, the world outside, and someone who knows your name.
+- **Sixteen events for the middle and later years:** the empty room, a child who wants to come home,
+  the first computer, a phone with no buttons, the first Monday retired, grey hair, a marathon
+  before fifty, "is this it?", a parent who cannot manage alone, the obituary page, teaching a
+  grandchild to swim, your back, the journey you always wanted, the music for your own funeral,
+  and company late in life.
+- **New words for old moments.** The nineteen moments that come back most (the snowstorm, the lost
+  dog, Midsummer, the Christmas table, the hockey final and more) have other tellings, and a family
+  meets them in turn, so a grandchild does not read the same lines as the grandparent.
+- F1 notes now exist only in development and playtest builds, and there are export settings for a
+  release build and a playtest build (with F1 and the character creator).
+
 ## 0.70.0 – 2026-10-04 · Your own choices
 
 - **Create a character.** The scenario list on the title screen is replaced by a character creator:

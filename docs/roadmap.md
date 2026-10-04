@@ -75,9 +75,9 @@ Varje del har ett nuläge, ett mål och en bedömning av hur viktig den är för
 
 Först det som avgör om någon fortsätter spela efter tio minuter, sedan djup.
 
-1. **Introduktion.** Tips en i taget när de blir användbara (påbörjad i 0.71).
+1. **Introduktion.** Tips en i taget när de blir användbara (klart i 0.71, justeras efter test).
 2. **Steams butikssida**, parallellt och tidigt: önskelistor samlas över tid.
-3. **Ljud, musik och ikoner.** Se nedan.
+3. **Ljud, musik och ikoner.** Första versionen i 0.71 (musik och ljud skrivna i koden, kan bytas mot inspelningar).
 4. **Stängt test** med utomstående (itch.io, Discord). Fråga producenten innan bygget.
 5. **Balans och innehåll** där testarna faktiskt spelar; tre generationer utan upprepningar.
 6. **Steam-krav och städning:** prestationer, molnsparning, handkontroll; F1, testverktyg och
