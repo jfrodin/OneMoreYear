@@ -31,7 +31,8 @@ public sealed record ChoiceView(int Index, string Text, string? Hint, int? Chanc
 public sealed record InsightView(string Label, string Text, string Tone);
 
 public sealed record EventView(int Uid, string Title, string Text, IReadOnlyList<ChoiceView> Choices,
-    bool Resolved, string? OutcomeText, int? TargetId, IReadOnlyList<InsightView>? Insights = null);
+    bool Resolved, string? OutcomeText, int? TargetId, IReadOnlyList<InsightView>? Insights = null,
+    string? ChosenText = null, IReadOnlyList<(string Text, string Tone)>? Consequences = null, bool? Succeeded = null);
 
 /// <summary>An action button. <paramref name="Locked"/> says why it cannot be done yet (shown greyed out).</summary>
 public sealed record ActionView(string Id, string Title, string? Hint, int? ChancePercent, bool Enabled, string Category = "life", string? Locked = null);

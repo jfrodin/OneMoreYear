@@ -20,6 +20,7 @@ public partial class GameScreen : Control
     private Button _nextYear = null!;
     private TabContainer _tabs = null!;
     private VBoxContainer _yearContent = null!;
+    private ScrollContainer _yearScroll = null!;
     private VBoxContainer _peopleList = null!;
     private VBoxContainer _personDetail = null!;
     private ScrollContainer _detailScroll = null!;
@@ -64,7 +65,8 @@ public partial class GameScreen : Control
 
         // This year
         _yearContent = Ui.VBox(16);
-        _tabs.AddChild(Ui.Scroll(Ui.Margin(_yearContent, 4)));
+        _yearScroll = Ui.Scroll(Ui.Margin(_yearContent, 4));
+        _tabs.AddChild(_yearScroll);
         _tabs.SetTabTitle(TabYear, "This Year");
 
         // Family & friends
@@ -1117,9 +1119,30 @@ public partial class GameScreen : Control
                 if (!c.Available && c.Hint != null) box.AddChild(Ui.Label("      " + c.Hint, 13, UiTheme.Faint, wrap: true));
             }
         }
-        else if (!string.IsNullOrWhiteSpace(ev.OutcomeText))
+        else
         {
-            box.AddChild(Ui.Label(ev.OutcomeText, 18, UiTheme.Info, wrap: true));
+            // What you chose, how it went, and what it did: the card keeps its place and tells the story.
+            if (ev.ChosenText != null)
+            {
+                var chose = Ui.HBox(10);
+                chose.AddChild(Ui.Label("You chose", 14, UiTheme.Faint));
+                var picked = Ui.Label(ev.ChosenText, 16, UiTheme.Muted, wrap: true);
+                picked.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                chose.AddChild(picked);
+                if (ev.Succeeded is { } worked) chose.AddChild(Ui.Chip(worked ? "It worked" : "It did not work", worked ? UiTheme.Good : UiTheme.Bad));
+                box.AddChild(chose);
+            }
+            if (!string.IsNullOrWhiteSpace(ev.OutcomeText))
+                box.AddChild(Ui.Label(ev.OutcomeText, 18, UiTheme.Text, wrap: true));
+            if (ev.Consequences is { Count: > 0 } results)
+            {
+                var chips = new HFlowContainer();
+                chips.AddThemeConstantOverride("h_separation", 6);
+                chips.AddThemeConstantOverride("v_separation", 6);
+                foreach (var (text, tone) in results)
+                    chips.AddChild(Ui.Chip(text, tone switch { "good" => UiTheme.Good, "bad" => UiTheme.Bad, _ => UiTheme.Muted }));
+                box.AddChild(chips);
+            }
         }
 
         return Ui.Card(box, ev.Resolved ? UiTheme.Panel : UiTheme.PanelAlt, ev.Resolved ? UiTheme.Border : UiTheme.AccentDark);
@@ -1130,8 +1153,11 @@ public partial class GameScreen : Control
         S.Choose(uid, index);
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
+        // The page stays where it was: the answered card shows what happened, in place.
+        int scroll = _yearScroll.ScrollVertical;
         RefreshAll();
         FocusDefault();
+        GetTree().CreateTimer(0.01).Timeout += () => { if (IsInstanceValid(_yearScroll)) _yearScroll.ScrollVertical = scroll; };
     }
 
     private void OnNextYear()
@@ -1271,8 +1297,8 @@ public partial class GameScreen : Control
             nb.AddThemeStyleboxOverride("normal", UiTheme.Box(UiTheme.PanelHover, 8, UiTheme.AccentDark, 1));
         RefreshDetail();
         if (!keepFocus && FirstEnabledButton(_personDetail, "action") is { } first) Ui.FocusLater(first);
-        // A new person always opens at the top of their page (focus moving to a button would scroll it).
-        if (previous != id) GetTree().CreateTimer(0.05).Timeout += () => { if (IsInstanceValid(_detailScroll)) _detailScroll.ScrollVertical = 0; };
+        // A new person opens at the top of their page.
+        if (previous != id) GetTree().CreateTimer(0.01).Timeout += () => { if (IsInstanceValid(_detailScroll)) _detailScroll.ScrollVertical = 0; };
     }
 
     private void RefreshDetail()
@@ -1431,7 +1457,7 @@ public partial class GameScreen : Control
         _treeTab.AddChild(Ui.Label("Choose someone to see the family from their place in it. Choose the person in the middle to open their page.",
             15, UiTheme.Muted, wrap: true));
 
-        var scroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, SizeFlagsHorizontal = SizeFlags.ExpandFill, FollowFocus = true };
+        var scroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, SizeFlagsHorizontal = SizeFlags.ExpandFill, FollowFocus = false };
         _treeView = new FamilyTreeView(S, focus,
             refocus: newFocus => { _treeFocusId = newFocus; RefreshTree(); FocusDefault(); },
             open: OpenPerson,

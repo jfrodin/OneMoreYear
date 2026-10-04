@@ -135,6 +135,10 @@ public sealed class PendingEvent
     public string? OutcomeText { get; set; }
     /// <summary>Extra outcome text from effects that decide things themselves (e.g. a crime).</summary>
     public List<string> ExtraText { get; set; } = new();
+    /// <summary>What the choice did, as short labels ("+$2,000", "Happiness +3", "Anna: closer"), and their tone.</summary>
+    public List<Consequence> Consequences { get; set; } = new();
+    /// <summary>For a choice with a chance: whether it worked.</summary>
+    public bool? Succeeded { get; set; }
     /// <summary>Generated options for events with dynamic choices (e.g. "healthcare:2" job offers).</summary>
     public List<string> Options { get; set; } = new();
 }
@@ -265,4 +269,11 @@ public sealed class FamilyEstate
     public List<int> Owners { get; set; } = new();
     public int? SoldYear { get; set; }
     public bool IsHeld => SoldYear == null;
+}
+
+/// <summary>One visible result of a choice. Tone: "good", "bad" or "neutral".</summary>
+public sealed class Consequence
+{
+    public string Text { get; set; } = "";
+    public string Tone { get; set; } = "neutral";
 }

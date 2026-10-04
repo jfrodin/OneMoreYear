@@ -67,7 +67,8 @@ public static class Ui
         var s = new ScrollContainer
         {
             HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
-            FollowFocus = true,
+            // Scrolling to the focus is done by FollowFocus() below, only when the player moves it.
+            FollowFocus = false,
             SizeFlagsVertical = Control.SizeFlags.ExpandFill,
             SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
         };
@@ -122,12 +123,31 @@ public static class Ui
     }
 
     /// <summary>Grabs focus at the end of the frame, if the control still exists and is visible by then.</summary>
+    private static bool _quietFocus;
+
+    /// <summary>
+    /// Keeps the focused control in view when the player moves the focus (keyboard, gamepad), but not
+    /// when the game sets it: a page must not jump to a button the game picked for convenience.
+    /// </summary>
+    public static void FollowFocus(Viewport viewport)
+    {
+        viewport.GuiFocusChanged += control =>
+        {
+            if (_quietFocus) return;
+            for (var n = control.GetParent(); n != null; n = n.GetParent())
+                if (n is ScrollContainer scroll) { scroll.EnsureControlVisible(control); break; }
+        };
+    }
+
     public static void FocusLater(Control? control)
     {
         if (control == null) return;
         Callable.From(() =>
         {
-            if (GodotObject.IsInstanceValid(control) && control.IsInsideTree() && control.IsVisibleInTree()) control.GrabFocus();
+            if (!GodotObject.IsInstanceValid(control) || !control.IsInsideTree() || !control.IsVisibleInTree()) return;
+            _quietFocus = true;
+            control.GrabFocus();
+            _quietFocus = false;
         }).CallDeferred();
     }
 

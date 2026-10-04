@@ -27,6 +27,7 @@ public partial class Main : Control
         Theme = UiTheme.Build();
         SetAnchorsPreset(LayoutPreset.FullRect);
         RegisterInput();
+        Ui.FollowFocus(GetViewport());
         Sound.Init(this);
         Settings.Apply();
 
@@ -968,7 +969,15 @@ public partial class Main : Control
                 ShowGame();
                 break;
             case 30: Shot("02_year"); break;
-            case 32: if (_screen is GameScreen g1) g1.ShowTab(1); break;
+            case 31:
+                // Answer one event, to show an answered card.
+                if (Session!.CurrentEvents().FirstOrDefault(e => !e.Resolved) is { } open && open.Choices.FirstOrDefault(c => c.Available) is { } pick)
+                {
+                    Session.Choose(open.Uid, pick.Index);
+                    if (_screen is GameScreen ga2) ga2.Refresh();
+                }
+                break;
+            case 33: Shot("02b_answered"); if (_screen is GameScreen g1) g1.ShowTab(1); break;
             case 40: Shot("03_family"); break;
             case 42: if (_screen is GameScreen g2) g2.ShowTab(2); break;
             case 50: Shot("04_work"); break;

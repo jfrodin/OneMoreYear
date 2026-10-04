@@ -362,7 +362,9 @@ public sealed class GameSession
             Annotate(TextFormatter.Format(Ctx, def.Text, pending), involved),
             choices, pending.Resolved, pending.OutcomeText == null ? null : Annotate(pending.OutcomeText, involved),
             pending.Roles.TryGetValue("target", out var t) ? t : null,
-            EventSystem.Insights(Ctx, def, pending));
+            EventSystem.Insights(Ctx, def, pending),
+            pending.ChosenIndex is { } chosen && choices.FirstOrDefault(c => c.Index == chosen) is { } picked ? picked.Text : null,
+            pending.Consequences.Select(c => (c.Text, c.Tone)).ToList(), pending.Succeeded);
     }
 
     public string Choose(int eventUid, int choiceIndex)

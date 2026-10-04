@@ -437,6 +437,7 @@ public static class EventSystem
             return pending.OutcomeText;
         }
         var choice = def.Choices[choiceIndex - pending.Options.Count];
+        var before = Consequences.Before(ctx, pending);
 
         foreach (var eff in choice.Effects) EffectApplier.Apply(ctx, eff, pending);
         if (!string.IsNullOrWhiteSpace(choice.Result)) texts.Add(TextFormatter.Format(ctx, choice.Result, pending));
@@ -444,6 +445,7 @@ public static class EventSystem
         if (choice.Chance != null)
         {
             bool success = ctx.Rng.Chance(SuccessChance(ctx, choice, pending));
+            pending.Succeeded = success;
             var outcome = success ? choice.Success : choice.Failure;
             if (outcome != null)
             {
@@ -457,6 +459,7 @@ public static class EventSystem
         if (pending.Vars.TryGetValue("became_affair", out var partnerId) && ctx.World.TryGet((int)partnerId) is { } partner)
             texts.Add($"But you're still with {partner.FirstName}, so this is an affair now. Nobody can find out.");
 
+        pending.Consequences = before.After(pending);
         pending.Resolved = true;
         pending.ChosenIndex = choiceIndex;
         pending.OutcomeText = TextFormatter.DoubleStop(string.Join(" ", texts));
