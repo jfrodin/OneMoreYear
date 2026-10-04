@@ -812,3 +812,17 @@ Mamma dör, papap lever. MEn vis ka sälja huset?
 _playtest-saves/2026-10-04_200247.png · playtest-saves/2026-10-04_200247.json_
 
 _Notes above were processed on 2026-10-04 (playtest 7): the creator gives exactly the traits chosen; no sound effects, only music; the Next Year button stays put; no lifestyle choice for children or people living at home; Palme told for a child; children cannot spend money they do not have, and old debts are covered; moving out at eighteen reads differently; military service is a real year after school; graduation only on the day it happens; university without "a new city"; the old teacher apology fits the age; student aid untaxed, shortfalls as a cheap student loan shown on its own; the parents' house only when both are gone; a Your Time tab with seventeen new things to do, and somewhat fewer events. See CHANGELOG 0.73.0._
+
+### 2026-10-04 20:58 · v0.74.0  ·  1970  ·  Andreas Lind, 0  ·  This Year  ·  seed PF8BNZSR
+
+OJ! Här är det saker som overflowar. Ser sjukt billigt ut
+
+_playtest-saves/2026-10-04_205833.png · playtest-saves/2026-10-04_205833.json_
+
+### 2026-10-04 20:59 · v0.74.0  ·  1970  ·  Andreas Lind, 0  ·  This Year  ·  seed PF8BNZSR
+
+Iden är god, genomförandet är väl sådär :D
+
+_playtest-saves/2026-10-04_205922.png · playtest-saves/2026-10-04_205922.json_
+
+_Notes above were processed on 2026-10-04 (playtest 8): the left page is wide enough for its content and can never run over the spine, the buttons at the bottom wrap instead, and the bookmarks are one family of colours (paper, and the decade's accent for the open one). See CHANGELOG 0.74.1._

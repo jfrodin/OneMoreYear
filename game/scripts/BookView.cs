@@ -9,8 +9,8 @@ namespace OneMoreYear.Game;
 /// </summary>
 public partial class BookView : Control
 {
-    /// <summary>How much of the book the left page takes.</summary>
-    public const float Split = 0.29f;
+    /// <summary>Where the spine is: wide enough for the left page's content at any window size.</summary>
+    public float Spine => Mathf.Max(490, Size.X * 0.31f);
 
     public MarginContainer Left { get; } = new();
     public MarginContainer Right { get; } = new();
@@ -19,14 +19,26 @@ public partial class BookView : Control
     {
         MouseFilter = MouseFilterEnum.Ignore;
         Left.SetAnchorsPreset(LayoutPreset.FullRect);
-        Left.AnchorRight = Split;
+        Left.AnchorRight = 0;
+        Left.ClipContents = true;
         Pad(Left, 34, 34, 30, 26);
         AddChild(Left);
         Right.SetAnchorsPreset(LayoutPreset.FullRect);
-        Right.AnchorLeft = Split;
+        Right.AnchorLeft = 0;
+        Right.ClipContents = true;
         Pad(Right, 44, 34, 26, 18);
         AddChild(Right);
-        Resized += QueueRedraw;
+        Resized += Layout;
+        Layout();
+    }
+
+    private void Layout()
+    {
+        Left.OffsetLeft = 0;
+        Left.OffsetRight = Spine;
+        Right.OffsetLeft = Spine;
+        Right.OffsetRight = 0;
+        QueueRedraw();
     }
 
     private static void Pad(MarginContainer m, int left, int right, int top, int bottom)
@@ -40,7 +52,7 @@ public partial class BookView : Control
     public override void _Draw()
     {
         var size = Size;
-        float spine = size.X * Split;
+        float spine = Spine;
         var page = UiTheme.Panel;
         var ink = new Color(0.18f, 0.1f, 0.04f);
 
@@ -74,7 +86,7 @@ public partial class BookView : Control
     public void TurnPage()
     {
         var sheet = new TurningSheet { MouseFilter = MouseFilterEnum.Ignore };
-        float spine = Size.X * Split;
+        float spine = Spine;
         sheet.Position = new Vector2(spine, 0);
         sheet.Size = new Vector2(Size.X - spine, Size.Y);
         sheet.PivotOffset = new Vector2(0, Size.Y / 2);

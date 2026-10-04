@@ -2,6 +2,14 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.74.1 – 2026-10-04 · Inside the lines
+
+- The left page is wide enough for everything on it, at any window size, and nothing can run over
+  the spine any more. The buttons at the bottom wrap to a second row when they must.
+- The bookmarks are one family: darker paper with ink for the closed ones, the decade's colour for
+  the open one. No more rainbow.
+- "A quiet year" now points to Your Time instead of "something below".
+
 ## 0.74.0 – 2026-10-04 · The open album
 
 - **The play screen is an open family album.** You are on the left page, the year on the right,

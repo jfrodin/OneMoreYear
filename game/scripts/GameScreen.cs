@@ -160,8 +160,11 @@ public partial class GameScreen : Control
         {
             int tab = i;
             bool open = _tabs.CurrentTab == tab;
-            var colour = Color.FromHsv((accent.H + i * 0.09f) % 1f, Math.Clamp(accent.S * 0.75f, 0.25f, 0.6f), Math.Clamp(accent.V * 0.9f, 0.5f, 0.75f));
-            var ribbon = new StyleBoxFlat { BgColor = open ? colour : colour.Lerp(UiTheme.Background, 0.35f) };
+            // One family of colours: closed ribbons in a darker paper, the open one in the decade's accent.
+            var closed = UiTheme.Background.Darkened(0.1f).Lerp(accent, 0.12f);
+            var colour = open ? accent : closed;
+            var ribbon = new StyleBoxFlat { BgColor = colour, BorderColor = colour.Darkened(0.18f) };
+            ribbon.BorderWidthBottom = 2;
             ribbon.CornerRadiusTopRight = ribbon.CornerRadiusBottomRight = 6;
             ribbon.ContentMarginLeft = 42;
             ribbon.ContentMarginRight = 12;
@@ -172,19 +175,19 @@ public partial class GameScreen : Control
             var b = new Button
             {
                 Text = marks[i].Name, Alignment = HorizontalAlignment.Left, FocusMode = FocusModeEnum.None,
-                Icon = Icons.Get(marks[i].Icon, new Color(1, 1, 1, 0.92f), 18),
+                Icon = Icons.Get(marks[i].Icon, open ? new Color(1, 1, 1, 0.95f) : UiTheme.Text, 18),
                 CustomMinimumSize = new Vector2(open ? 168 : 150, 46), MouseDefaultCursorShape = CursorShape.PointingHand,
             };
             foreach (var state in new[] { "normal", "hover", "pressed", "hover_pressed", "focus" })
             {
                 var box = (StyleBoxFlat)ribbon.Duplicate();
-                if (state == "hover" && !open) box.BgColor = colour.Lerp(UiTheme.Background, 0.15f);
+                if (state == "hover" && !open) box.BgColor = closed.Lerp(accent, 0.25f);
                 b.AddThemeStyleboxOverride(state, box);
             }
             b.AddThemeFontOverride("font", UiTheme.Heading);
             b.AddThemeFontSizeOverride("font_size", 16);
             foreach (var c in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color" })
-                b.AddThemeColorOverride(c, new Color(1, 1, 1, open ? 1f : 0.88f));
+                b.AddThemeColorOverride(c, open ? new Color(1, 1, 1) : UiTheme.Text);
             b.AddThemeConstantOverride("h_separation", 8);
             b.Pressed += () => _tabs.CurrentTab = tab;
             // The ribbon tucks under the page: only the part beyond the edge shows, more when open.
@@ -360,7 +363,10 @@ public partial class GameScreen : Control
         var seedLine = Ui.Label($"Seed {S.SeedCode}  ·  started {S.World.StartYear}", 13, UiTheme.Faint);
         seedLine.ClipText = true;
         _sidebar.AddChild(seedLine);
-        var bottom = Ui.HBox(8);
+        // Wraps to two rows rather than running over the spine.
+        var bottom = new HFlowContainer();
+        bottom.AddThemeConstantOverride("h_separation", 8);
+        bottom.AddThemeConstantOverride("v_separation", 8);
         var feedback = Ui.Button("Feedback  (F1)", () => _main.ShowFeedback(), 42);
         feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
@@ -426,7 +432,7 @@ public partial class GameScreen : Control
         var events = S.CurrentEvents();
         foreach (var ev in events) _yearContent.AddChild(BuildEventCard(ev));
         if (events.Count == 0)
-            _yearContent.AddChild(Ui.Label("A quiet year. Spend your time on something below, visit your family, or let the year pass.", 18, UiTheme.Muted, wrap: true));
+            _yearContent.AddChild(Ui.Label("A quiet year. Spend your time under Your Time, visit your family, or let the year pass.", 18, UiTheme.Muted, wrap: true));
 
         // Your own time has its own tab; here, only a pointer to it.
         int left = S.World.ActionPoints;
