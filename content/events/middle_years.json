@@ -158,7 +158,7 @@
   },
   {
     "id": "mid_prostate", "title": "Twice a night",
-    "text": "You get up twice every night now. Your partner has noticed. So has your doctor's receptionist, who wants you to come in.",
+    "text": "You get up twice every night now. Your doctor's receptionist has noticed, who wants you to come in.",
     "conditions": { "minAge": 52, "maxAge": 70, "sex": "male" }, "cooldown": 30,
     "choices": [
       { "text": "Go for the check", "chance": 0.85,
@@ -247,7 +247,7 @@
           { "type": "memory", "kind": "silver_wedding", "to": "partner", "text": "Our silver wedding, at the pizzeria", "impact": 20 } ],
         "result": "You remember the same evening completely differently, and argue about it happily until they close." },
       { "text": "Give a speech in front of the family", "chance": 0.6, "chanceTraits": { "charming": 0.2, "introvert": -0.2 },
-        "success": { "text": "Halfway through your voice breaks. Your children have never seen you like that. Nobody minds.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 10 } ] },
+        "success": { "text": "Halfway through your voice breaks. Nobody at the table has seen you like that before. Nobody minds.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 10 } ] },
         "failure": { "text": "You tell the story about the camping trip. It was funnier in your head.", "effects": [ { "type": "happiness", "amount": 2 } ] } }
     ]
   },

@@ -60,7 +60,7 @@
   },
   {
     "id": "mid2_learn_swim", "group": "learn_to_swim", "title": "The secret",
-    "text": "You never learned to swim. Nobody knows, not even your children. Now there is a class for adults at the pool, Thursday nights.",
+    "text": "You never learned to swim. Nobody knows, not even the people closest to you. Now there is a class for adults at the pool, Thursday nights.",
     "conditions": { "minAge": 35, "maxAge": 70, "notFlags": [ "can_swim" ] }, "cooldown": 30, "weight": 0.3,
     "choices": [
       { "text": "Go", "effects": [ { "type": "flag", "flag": "can_swim" }, { "type": "happiness", "amount": 6 }, { "type": "attribute", "kind": "fitness", "amount": 3 } ], "result": "Ten weeks, a float, a patient teacher. Then, one Thursday, a whole length on your own. You cry a bit, and it does not show in the water." },
@@ -92,7 +92,7 @@
     "text": "{P.name} has an idea: to renew your vows. Twenty years on, in front of the people who were there the first time, and the ones who were not born yet.",
     "conditions": { "minAge": 40, "married": true, "minPartnerYears": 20 }, "cooldown": 30,
     "choices": [
-      { "text": "Say yes, again", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "vows", "text": "Saying yes again", "impact": 18 } ], "result": "Shorter speeches, better food, and your children rolling their eyes in the front row. It means more this time." },
+      { "text": "Say yes, again", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": 10, "mutual": true }, { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "vows", "text": "Saying yes again", "impact": 18 } ], "result": "Shorter speeches, better food, and the family rolling their eyes in the front row. It means more this time." },
       { "text": "Say you do not need to", "effects": [ { "type": "relation", "who": "player", "to": "partner", "dim": "closeness", "amount": -4 } ], "result": "\"We know what we have,\" you say. {P.name} says nothing. You wonder, later, whether that was the right answer." }
     ]
   },
@@ -205,7 +205,7 @@
     "conditions": { "minAge": 40, "maxAge": 70, "minYear": 2008 }, "cooldown": 15,
     "choices": [
       { "text": "Laugh and share it", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "cheerful", "chance": 0.03 } ], "result": "Old friends you had lost touch with comment. Two of them meet you for lunch. The haircut becomes legend." },
-      { "text": "Ask them to take it down", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "They do. By then your children have seen it. There is no taking that down." }
+      { "text": "Ask them to take it down", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "They do. By then half the family has seen it. There is no taking that down." }
     ]
   },
   {

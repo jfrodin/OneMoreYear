@@ -14,7 +14,7 @@
     "text": "The roof of {estate} is leaking in three places, and the man from the village says the whole thing needs doing before winter.",
     "conditions": { "minAge": 25, "ownsEstate": true }, "cooldown": 10,
     "choices": [
-      { "text": "Do it properly", "effects": [ { "type": "money", "amount": -400000 }, { "type": "estate", "kind": "repair", "amount": 35 } ], "result": "A summer of scaffolding and a roof that will see out your grandchildren." },
+      { "text": "Do it properly", "effects": [ { "type": "money", "amount": -400000 }, { "type": "estate", "kind": "repair", "amount": 35 } ], "result": "A summer of scaffolding and a roof that will see out the next three generations." },
       { "text": "Patch it", "effects": [ { "type": "money", "amount": -60000 }, { "type": "estate", "kind": "repair", "amount": 8 } ], "result": "Tarpaulin and hope. It holds for now. Everyone knows what now means." }
     ]
   },

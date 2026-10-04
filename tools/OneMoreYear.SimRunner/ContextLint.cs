@@ -29,4 +29,29 @@ static class ContextLint
                     Console.WriteLine($"{e.Id,-34} {min,3}  [{m.Value}] {t[..Math.Min(t.Length, 110)]}");
         }
     }
+
+    private static readonly Regex Family = new(@"\byour (son|daughter|children|kids|grandchildren|grandchild|wife|husband|partner)\b", RegexOptions.IgnoreCase);
+
+    /// <summary>Events that talk about your children or partner without making sure you have them.</summary>
+    public static void Family_()
+    {
+        Console.WriteLine("\nTexts about family the player may not have:");
+        foreach (var e in ContentDb.Embedded.Events.Values.Where(e => e.Trigger is "random" or "milestone").OrderBy(e => e.Id))
+        {
+            var c = e.Conditions;
+            var roles = new[] { e.Target?.Role, e.Other?.Role };
+            foreach (var t in new[] { e.Text }.Concat(e.Texts).Concat(e.Choices.SelectMany(ch => new[] { ch.Text, ch.Result, ch.Success?.Text, ch.Failure?.Text })).OfType<string>())
+            {
+                if (Family.Match(t) is not { Success: true } m) continue;
+                string who = m.Groups[1].Value.ToLowerInvariant();
+                bool sure = who switch
+                {
+                    "son" or "daughter" or "children" or "kids" => c?.MinChildren > 0 || roles.Contains("child"),
+                    "grandchildren" or "grandchild" => roles.Contains("grandchild"),
+                    _ => c?.HasPartner == true || roles.Contains("partner"),
+                };
+                if (!sure) Console.WriteLine($"  {e.Id,-34} [{m.Value}] {t[..Math.Min(t.Length, 110)]}");
+            }
+        }
+    }
 }

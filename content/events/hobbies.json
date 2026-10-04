@@ -81,7 +81,7 @@
       { "text": "Send it", "chance": 0.15, "chanceSkills": { "writing": 0.04 },
         "success": { "text": "A phone call on a Tuesday. They want it. A year later your name is on a cover in a shop window, and you walk past four times in one afternoon.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "published", "text": "My book in the shop window", "impact": 30 }, { "type": "feat", "kind": "published_book" } ] },
         "failure": { "text": "A polite rejection, then another, then eleven more. You put it back in the drawer and start the next one.", "effects": [ { "type": "happiness", "amount": -4 }, { "type": "skill", "kind": "writing", "amount": 1 } ] } },
-      { "text": "Keep it for the family", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You print three copies and give them away at Christmas. Your grandchild will find one in an attic, and read it twice." }
+      { "text": "Keep it for the family", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "You print three copies and give them away at Christmas. Someone in the family will find one in an attic, and read it twice." }
     ]
   },
   {

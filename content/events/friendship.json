@@ -80,7 +80,7 @@
       { "text": "Ask for it back", "chance": 0.55, "chanceTraits": { "brave": 0.1, "charming": 0.1, "conflict_averse": -0.2 },
         "success": { "text": "{t.He} is embarrassed and pays it all back the same day, with an apology and a bottle of wine.", "effects": [ { "type": "money", "amount": 5000 } ] },
         "failure": { "text": "{t.He} gets defensive and pays half. The friendship never quite recovers.", "effects": [ { "type": "money", "amount": 2500 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -10, "mutual": true } ] } },
-      { "text": "Write it off", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 6 } ], "result": "You tell yourself it is the price of the friendship. You mention it to your partner more often than you would like." }
+      { "text": "Write it off", "effects": [ { "type": "relation", "who": "player", "to": "target", "dim": "bitterness", "amount": 6 } ], "result": "You tell yourself it is the price of the friendship. You mention it to people more often than you would like." }
     ]
   },
   {

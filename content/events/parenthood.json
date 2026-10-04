@@ -227,7 +227,7 @@
     "conditions": { "minAge": 28 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 13, "maxAge": 16 } },
     "choices": [
-      { "text": "Tease {t.him} mercilessly", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 4 } ], "result": "{t.He} storms off. Your partner gives you a look." },
+      { "text": "Tease {t.him} mercilessly", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 4 } ], "result": "{t.He} storms off. Somewhere upstairs a door closes, pointedly." },
       { "text": "Invite the sweetheart for dinner", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 } ],
         "result": "The most awkward dinner in family history. {t.name} secretly loves you for it." }
     ]

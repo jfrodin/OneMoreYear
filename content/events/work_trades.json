@@ -48,7 +48,7 @@
     "choices": [
       { "text": "Laugh it off", "chance": 0.6, "chanceTraits": { "cheerful": 0.15, "paranoid": -0.2 },
         "success": { "text": "It dies in a week, replaced by a better rumour about someone in accounts.", "effects": [] } ,
-        "failure": { "text": "It follows you for a year. Even your partner asks, once, in a careful voice.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
+        "failure": { "text": "It follows you for a year. Even people at home ask, once, in a careful voice.", "effects": [ { "type": "happiness", "amount": -4 } ] } },
       { "text": "Find out who started it", "effects": [ { "type": "happiness", "amount": -1 }, { "type": "trait_add", "trait": "paranoid", "chance": 0.04 } ], "result": "You find out. It was someone you trusted. That is worse than the rumour." }
     ]
   },
@@ -78,7 +78,7 @@
     "conditions": { "minAge": 30, "activity": "working", "jobTags": [ "manual" ] }, "cooldown": 10,
     "choices": [
       { "text": "Stop and look", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "memory", "kind": "built_to_last", "text": "The house I built, still standing", "impact": 10 } ], "result": "You notice a crooked gutter you always meant to fix. Nobody else ever will. It makes you smile." },
-      { "text": "Point it out to your children", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "\"I built that.\" They are not impressed. In thirty years, one of them will say the same thing to their own child." }
+      { "text": "Point it out to your children", "requires": { "minChildren": 1 }, "effects": [ { "type": "happiness", "amount": 3 } ], "result": "\"I built that.\" They are not impressed. In thirty years, one of them will say the same thing to their own child." }
     ]
   },
   {

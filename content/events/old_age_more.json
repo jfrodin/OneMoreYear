@@ -40,7 +40,7 @@
     "choices": [
       { "text": "Sign up", "chance": 0.6, "chanceTraits": { "brave": 0.15, "lazy": -0.15 },
         "success": { "text": "By May you can do a full length of breaststroke with your head up. The class goes for coffee afterwards and you become regulars.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "happiness", "amount": 7 }, { "type": "health", "amount": 3 } ] },
-        "failure": { "text": "You go twice. The water is cold and your swimsuit is older than your grandchildren.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+        "failure": { "text": "You go twice. The water is cold and your swimsuit is older than the lifeguard.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
       { "text": "Too old for that", "effects": [], "result": "You say so to yourself, out loud. It does not sound right." }
     ]
   },
@@ -107,8 +107,8 @@
       { "text": "Write it all down", "effects": [ { "type": "happiness", "amount": 3 } ],
         "result": "Two hymns, one pop song from 1965, no lilies, coffee and cake after with the good cups. You put it in an envelope marked AFTER." },
       { "text": "Talk to the children about it", "chance": 0.5, "chanceTraits": { "charming": 0.1 },
-        "success": { "text": "It turns into a long, funny evening about everyone's worst funerals. Your son writes everything down.", "effects": [ { "type": "happiness", "amount": 5 } ] },
-        "failure": { "text": "\"Don't talk like that,\" says your son, and the subject is changed. You write it down anyway.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+        "success": { "text": "It turns into a long, funny evening about everyone's worst funerals. Somebody writes everything down.", "effects": [ { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "\"Don't talk like that,\" says someone, and the subject is changed. You write it down anyway.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
     ]
   },
   {

@@ -156,7 +156,7 @@
     "text": "After a concert, your ears ring for two days. A friend who works with sound says you should get earplugs, or one day the ringing will not stop.",
     "conditions": { "minAge": 16, "maxAge": 40 }, "cooldown": 15, "weight": 0.5,
     "choices": [
-      { "text": "Buy earplugs", "effects": [ { "type": "money", "amount": -200 } ], "result": "You look ridiculous at the next concert. At seventy, you will hear your grandchildren perfectly." },
+      { "text": "Buy earplugs", "effects": [ { "type": "money", "amount": -200 } ], "result": "You look ridiculous at the next concert. At seventy, you will hear every whisper at the dinner table." },
       { "text": "It will pass", "effects": [ { "type": "health", "amount": -1 } ], "result": "It passes. Mostly. On quiet nights, years later, there is a faint whistle that you cannot place." }
     ]
   },

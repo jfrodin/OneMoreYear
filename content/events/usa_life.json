@@ -317,7 +317,7 @@
     "text": "The Social Security check is late, and the rent is due on Friday. You look at the number in your checkbook for a long time.",
     "conditions": { "minAge": 66, "activity": "retired", "maxMoney": 10000 }, "cooldown": 10,
     "choices": [
-      { "text": "Call your children", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "money", "amount": 5000 } ], "result": "Your son sends money without asking a single question. That almost makes it worse." },
+      { "text": "Call your children", "requires": { "minChildren": 1 }, "effects": [ { "type": "happiness", "amount": -3 }, { "type": "money", "amount": 5000 } ], "result": "One of your children sends money without asking a single question. That almost makes it worse." },
       { "text": "Take a job bagging groceries", "requires": { "minHealth": 50 }, "effects": [ { "type": "money", "amount": 8000 }, { "type": "health", "amount": -2 }, { "type": "happiness", "amount": 1 } ], "result": "The young manager calls you sir. You are good at it, and the regulars ask for your lane." }
     ]
   },

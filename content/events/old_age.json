@@ -182,7 +182,7 @@
     "conditions": { "minAge": 70, "minYear": 1995, "minMoney": 20000 }, "cooldown": 8,
     "choices": [
       { "text": "Give him the code", "effects": [ { "type": "money", "amount": -60000 }, { "type": "happiness", "amount": -10 }, { "type": "memory", "kind": "scammed", "text": "The man who took my savings", "impact": -25 } ],
-        "result": "By the time your daughter calls, the money is gone. You feel more ashamed than anything else." },
+        "result": "By the time you understand what has happened, the money is gone. You feel more ashamed than anything else, and tell nobody for a week." },
       { "text": "Hang up and call the bank yourself", "effects": [ { "type": "trait_add", "trait": "paranoid", "chance": 0.1 } ],
         "result": "The real bank has never heard of him. You feel very, very sharp for the rest of the day." }
     ]

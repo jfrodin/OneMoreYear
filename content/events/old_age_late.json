@@ -17,7 +17,7 @@
     "conditions": { "minAge": 72, "hasPartner": false }, "cooldown": 15,
     "choices": [
       { "text": "Ask them to dinner", "chance": 0.6, "chanceTraits": { "charming": 0.15, "introvert": -0.15 },
-        "success": { "text": "Dinner, then a film, then coffee every morning. Your children are scandalised and delighted in equal parts.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "late_love", "text": "Falling in love at the day centre", "impact": 22 } ] },
+        "success": { "text": "Dinner, then a film, then coffee every morning. The family is scandalised and delighted in equal parts.", "effects": [ { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "late_love", "text": "Falling in love at the day centre", "impact": 22 } ] },
         "failure": { "text": "\"I like you very much,\" they say, \"as a friend.\" You still sit together on Thursdays.", "effects": [ { "type": "happiness", "amount": 1 } ] } },
       { "text": "You are too old for this", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You tell yourself so all the way home. You are not sure you believe it." }
     ]
