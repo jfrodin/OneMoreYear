@@ -111,7 +111,7 @@ public partial class Main : Control
     public override void _UnhandledInput(InputEvent e)
     {
         // F1 works on top of everything (the newspaper, a message) – only not twice.
-        if (e.IsActionPressed("omy_feedback") && !_feedbackOpen)
+        if (Features.Feedback && e.IsActionPressed("omy_feedback") && !_feedbackOpen)
         {
             GetViewport().SetInputAsHandled();
             ShowFeedback();

@@ -17,3 +17,4 @@ Thumbs.db
 
 # Playtest snapshots (screenshots and saves written by the in-game feedback button)
 docs/playtest-saves/
+build/

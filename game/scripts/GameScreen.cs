@@ -284,7 +284,7 @@ public partial class GameScreen : Control
         var feedback = Ui.Button("Feedback  (F1)", () => _main.ShowFeedback(), 42);
         feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
-        bottom.AddChild(feedback);
+        if (Features.Feedback) bottom.AddChild(feedback);
         var content = Ui.Button("Settings", () => _main.ShowSettings(S), 42);
         RegisterHint(content, "Screen, text size, sound, the newspaper, and how dark themes are handled.");
         bottom.AddChild(content);

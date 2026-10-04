@@ -13,4 +13,7 @@ public static class Features
     /// in builds exported with the "creator" feature tag. Later this is where an add-on check goes.
     /// </summary>
     public static bool CharacterCreator => OS.IsDebugBuild() || OS.HasFeature("creator");
+
+    /// <summary>F1 playtest notes with a screenshot and a save: development builds and the playtest build.</summary>
+    public static bool Feedback => OS.IsDebugBuild() || OS.HasFeature("playtest");
 }
