@@ -49,6 +49,9 @@ public partial class GameScreen : Control
     {
         // The family album, open on the desk: you on the left page, the year on the right, and
         // bookmarks sticking out of the right edge for everything else.
+        var desk = new Desk();
+        desk.SetAnchorsPreset(LayoutPreset.FullRect);
+        AddChild(desk);
         _bookmarks = Ui.VBox(6);
         _bookmarks.SetAnchorsPreset(LayoutPreset.TopRight);
         _bookmarks.OffsetLeft = -168;
@@ -280,13 +283,16 @@ public partial class GameScreen : Control
 
         var info = Ui.VBox(8);
         info.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        var top = Ui.HBox(14);
-        top.AddChild(Portrait.Create(S.Portrait(p.Id), true, 84));
-        var nameCol = Ui.VBox(2);
+        // You, glued into the album: a print with tape, and your name written beside it.
+        var top = Ui.HBox(16);
+        top.AddChild(AlbumBits.Print(Portrait.Create(S.Portrait(p.Id), false, 116, square: true), new Vector2(116, 116), -3f));
+        var nameCol = Ui.VBox(0);
         nameCol.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        nameCol.AddChild(Ui.Label(p.Name, 24, UiTheme.Text, wrap: true));
-        nameCol.AddChild(Ui.Label($"Age {p.Age}  ·  {S.Year}", 18, UiTheme.Accent));
-        nameCol.AddChild(Ui.Label(p.Occupation, 16, UiTheme.Muted, wrap: true));
+        nameCol.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        nameCol.AddChild(UiTheme.HeadingLabel(p.Name, 26, UiTheme.Text));
+        nameCol.GetChild<Label>(0).AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        nameCol.AddChild(UiTheme.HandLabel($"Age {p.Age}, {S.Year}", 26, UiTheme.Accent));
+        nameCol.AddChild(Ui.Label(p.Occupation, 15, UiTheme.Muted, wrap: true));
         if (p.Fame != null) nameCol.AddChild(Ui.Label(p.Fame, 15, UiTheme.Accent));
         top.AddChild(nameCol);
         info.AddChild(top);
@@ -336,47 +342,58 @@ public partial class GameScreen : Control
         Stat("Fitness", p.Fitness, new Color("3f998b"), $"{p.Fitness:0}",
             "Fitness: keeps your health up as the years go, and helps in anything physical, from fights to sport.");
 
-        info.AddChild(StatRow("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text));
-        info.AddChild(StatRow("Income", p.Income, UiTheme.Text));
-        info.AddChild(StatRow("Home", p.Home, UiTheme.Text));
+        // Money and home, written in by hand.
+        void Note(string label, string value, Color color)
+        {
+            var row = Ui.HBox(12);
+            var l = Ui.Label(label, 15, UiTheme.Muted);
+            l.CustomMinimumSize = new Vector2(110, 0);
+            l.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            row.AddChild(l);
+            var v = UiTheme.HandLabel(value, 23, color, wrap: true);
+            v.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            row.AddChild(v);
+            info.AddChild(row);
+        }
+        info.AddChild(Ui.Spacer(4));
+        Note("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text);
+        Note("Income", p.Income, UiTheme.Text);
+        Note("Home", p.Home, UiTheme.Text);
 
         // Everything above scrolls if it must; everything below stays where it is, year after year.
-        var infoScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, FollowFocus = false };
+        var infoScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, VerticalScrollMode = ScrollContainer.ScrollMode.ShowNever, FollowFocus = false };
         infoScroll.AddChild(info);
         _sidebar.AddChild(infoScroll);
 
         int ap = S.World.ActionPoints;
-        _sidebar.AddChild(Ui.Label(ap > 0 ? $"You have time for {ap} more thing{(ap == 1 ? "" : "s")} this year." : "No time left for more this year.",
-            16, UiTheme.Muted, wrap: true));
 
         _nextYear = Ui.Button($"Next Year  ({S.Year + 1})", OnNextYear, 66);
         UiTheme.MakePrimary(_nextYear);
         _nextYear.Disabled = !S.CanAdvance;
         RegisterHint(_nextYear, "Let a year pass. Shortcut: N.");
         _sidebar.AddChild(_nextYear);
-        // Always there, empty or not, so nothing below the button moves.
-        var waiting = Ui.Label(S.HasUnresolvedEvents ? "Answer this year's events first." : " ", 15, UiTheme.Accent);
+        // Always one line under the button, so nothing below it moves: what is waiting, or the time left.
+        var waiting = Ui.Label(S.HasUnresolvedEvents ? "Answer this year's moments first." : ap > 0 ? $"Time for {ap} more thing{(ap == 1 ? "" : "s")} of your own this year." : "No time left this year.", 15, S.HasUnresolvedEvents ? UiTheme.Accent : UiTheme.Muted);
         waiting.CustomMinimumSize = new Vector2(0, 22);
         _sidebar.AddChild(waiting);
 
-        _sidebar.AddChild(Ui.Label("N next year  ·  Q and E turn the bookmarks", 13, UiTheme.Faint, wrap: true));
-        var seedLine = Ui.Label($"Seed {S.SeedCode}  ·  started {S.World.StartYear}", 13, UiTheme.Faint);
-        seedLine.ClipText = true;
-        _sidebar.AddChild(seedLine);
         // Wraps to two rows rather than running over the spine.
         var bottom = new HFlowContainer();
-        bottom.AddThemeConstantOverride("h_separation", 8);
+        bottom.AddThemeConstantOverride("h_separation", 18);
         bottom.AddThemeConstantOverride("v_separation", 8);
-        var feedback = Ui.Button("Feedback  (F1)", () => _main.ShowFeedback(), 42);
-        feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        var feedback = AlbumBits.Link("Feedback (F1)", () => _main.ShowFeedback());
         RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
         if (Features.Feedback) bottom.AddChild(feedback);
-        var content = Ui.Button("Settings", () => _main.ShowSettings(S), 42);
+        var content = AlbumBits.Link("Settings", () => _main.ShowSettings(S));
         RegisterHint(content, "Screen, text size, sound, the newspaper, and how dark themes are handled.");
         bottom.AddChild(content);
-        var menu = Ui.Button("Save & exit", () => { _main.AutoSave(); _main.ShowTitle(); }, 42);
-        menu.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        var menu = AlbumBits.Link("Save and close the album", () => { _main.AutoSave(); _main.ShowTitle(); });
         bottom.AddChild(menu);
+        var seedLine = Ui.Label($"Seed {S.SeedCode}", 13, UiTheme.Faint);
+        seedLine.TooltipText = $"Started in {S.World.StartYear}. Give the seed to a friend to start the same family.";
+        seedLine.MouseFilter = MouseFilterEnum.Pass;
+        seedLine.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        bottom.AddChild(seedLine);
         _sidebar.AddChild(bottom);
     }
 

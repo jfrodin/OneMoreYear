@@ -180,18 +180,30 @@ public static class UiTheme
 
         t.SetColor("font_color", "Label", Text);
 
-        // Buttons: paper tabs with ink edges.
-        var normal = Box(PanelAlt, 4, Border, 1);
+        // Buttons: slips of card with a little depth, a darker edge underneath, lifted when pointed at.
+        var normal = Box(Panel.Lerp(Background, 0.4f), 7, null, 0);
+        normal.BorderColor = Background.Darkened(0.16f);
+        normal.BorderWidthBottom = 3;
+        normal.ShadowColor = new Color(0.2f, 0.12f, 0.05f, 0.12f);
+        normal.ShadowSize = 2;
+        normal.ShadowOffset = new Vector2(0, 1);
         normal.ContentMarginLeft = normal.ContentMarginRight = 18;
         normal.ContentMarginTop = normal.ContentMarginBottom = 10;
         var hover = (StyleBoxFlat)normal.Duplicate();
-        hover.BgColor = PanelHover;
-        hover.BorderColor = Accent;
+        hover.BgColor = Panel.Lerp(Accent, 0.1f);
+        hover.BorderColor = Accent.Lerp(Background, 0.2f);
+        hover.ShadowSize = 5;
+        hover.ShadowOffset = new Vector2(0, 2);
         var pressed = (StyleBoxFlat)normal.Duplicate();
         pressed.BgColor = Background.Lerp(Accent, 0.22f);
+        pressed.BorderWidthBottom = 1;
+        pressed.ContentMarginTop = 12;
+        pressed.ContentMarginBottom = 8;
+        pressed.ShadowSize = 0;
         var disabled = (StyleBoxFlat)normal.Duplicate();
         disabled.BgColor = Background.Lerp(Panel, 0.3f);
-        disabled.BorderColor = Border.Lerp(Background, 0.5f);
+        disabled.BorderColor = Background.Darkened(0.06f);
+        disabled.ShadowSize = 0;
         foreach (var type in new[] { "Button", "OptionButton" })
         {
             t.SetStylebox("normal", type, normal);
@@ -275,9 +287,19 @@ public static class UiTheme
         t.SetColor("font_hover_color", "PopupMenu", AccentDark);
 
         // Scroll bars
-        t.SetStylebox("grabber", "VScrollBar", Box(Border, 4, null, 0, 4));
-        t.SetStylebox("grabber_highlight", "VScrollBar", Box(Accent, 4, null, 0, 4));
-        t.SetStylebox("scroll", "VScrollBar", Box(new Color(0, 0, 0, 0), 4, null, 0, 4));
+        // Scroll bars: a thin pencil line that only darkens when used.
+        var grab = Box(new Color(Text, 0.16f), 3, null, 0, 0);
+        grab.ContentMarginLeft = grab.ContentMarginRight = 3;
+        var grabHot = Box(new Color(Accent, 0.6f), 3, null, 0, 0);
+        grabHot.ContentMarginLeft = grabHot.ContentMarginRight = 3;
+        var track = new StyleBoxEmpty { ContentMarginLeft = 3, ContentMarginRight = 3 };
+        foreach (var bar in new[] { "VScrollBar", "HScrollBar" })
+        {
+            t.SetStylebox("grabber", bar, grab);
+            t.SetStylebox("grabber_highlight", bar, grabHot);
+            t.SetStylebox("grabber_pressed", bar, grabHot);
+            t.SetStylebox("scroll", bar, track);
+        }
 
         // Tooltips (never the only way to see information – see UI rules in the spec)
         t.SetStylebox("panel", "TooltipPanel", Box(Panel, 4, Border, 1, 10));

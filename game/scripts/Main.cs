@@ -195,7 +195,7 @@ public partial class Main : Control
             }
         };
 
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
         _overlayLayer.AddChild(dim);
         text.GrabFocus();
     }
@@ -377,7 +377,7 @@ public partial class Main : Control
         var cancel = Ui.Button("Back", Close, 44);
         cancel.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
         box.AddChild(cancel);
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
         _overlayLayer.AddChild(dim);
         Ui.FocusLater(first ?? cancel);
     }
@@ -401,7 +401,7 @@ public partial class Main : Control
         buttons.AddChild(no);
         buttons.AddChild(Ui.Button("Yes", () => { Close(); onYes(); }, 46));
         box.AddChild(buttons);
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
         _overlayLayer.AddChild(dim);
         Ui.FocusLater(no);
     }
@@ -516,7 +516,7 @@ public partial class Main : Control
         done.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
         done.CustomMinimumSize = new Vector2(180, 48);
         box.AddChild(done);
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
         _overlayLayer.AddChild(dim);
         Ui.FocusLater(first ?? done);
     }
@@ -592,7 +592,7 @@ public partial class Main : Control
         buttons.AddChild(done);
         box.AddChild(buttons);
 
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
         _overlayLayer.AddChild(dim);
         Ui.FocusLater(screen);
     }
@@ -647,7 +647,7 @@ public partial class Main : Control
         buttons.AddChild(next);
         box.AddChild(buttons);
         Show();
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
         _overlayLayer.AddChild(dim);
         Ui.FocusLater(next);
     }
@@ -746,7 +746,7 @@ public partial class Main : Control
         buttons.AddChild(begin);
         box.AddChild(buttons);
 
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
         _overlayLayer.AddChild(dim);
         Ui.FocusLater(begin);
     }
@@ -761,12 +761,10 @@ public partial class Main : Control
     {
         var page = new Control { MouseFilter = MouseFilterEnum.Stop };
         page.SetAnchorsPreset(LayoutPreset.FullRect);
-        var paper = new AlbumPaper();
-        paper.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        page.AddChild(paper);
+        // A title page of its own, on the desk.
+        var sheet = BookView.OpenOn(page, 1f, single: true);
         var center = new CenterContainer();
-        center.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        page.AddChild(center);
+        sheet.Left.AddChild(center);
 
         var box = Ui.VBox(14);
         box.CustomMinimumSize = new Vector2(860, 0);
@@ -890,7 +888,7 @@ public partial class Main : Control
         ok.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
         ok.CustomMinimumSize = new Vector2(140, 48);
         box.AddChild(ok);
-        center.AddChild(Ui.Card(box, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = box });
 
         _overlayLayer.AddChild(dim);
         ok.GrabFocus();
@@ -922,7 +920,7 @@ public partial class Main : Control
             onClose?.Invoke();
         }
         dim.AddChild(new CancelCatcher(Close));
-        center.AddChild(Ui.Card(content, UiTheme.Panel, UiTheme.AccentDark));
+        center.AddChild(new PaperSheet { Content = content });
         _overlayLayer.AddChild(dim);
         if (focus != null) Ui.FocusLater(focus);
         return Close;

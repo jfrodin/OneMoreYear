@@ -10,7 +10,28 @@ namespace OneMoreYear.Game;
 public partial class BookView : Control
 {
     /// <summary>Where the spine is: wide enough for the left page's content at any window size.</summary>
-    public float Spine => Mathf.Max(490, Size.X * 0.31f);
+    public float Spine => Single ? Size.X : Mathf.Max(MinLeft, Size.X * Share);
+    /// <summary>The left page's share of the book, and its smallest width in pixels.</summary>
+    public float Share { get; set; } = 0.31f;
+    public float MinLeft { get; set; } = 490;
+    /// <summary>One wide page (a last page, a certificate) instead of two.</summary>
+    public bool Single { get; set; }
+
+    /// <summary>The desk and an open album filling a screen, with room on the right for bookmarks if wanted.</summary>
+    public static BookView OpenOn(Control screen, float share, float right = 26, bool single = false)
+    {
+        var desk = new Desk();
+        desk.SetAnchorsPreset(LayoutPreset.FullRect);
+        screen.AddChild(desk);
+        var book = new BookView { Share = share, MinLeft = 360, Single = single };
+        book.SetAnchorsPreset(LayoutPreset.FullRect);
+        book.OffsetLeft = 26;
+        book.OffsetTop = 22;
+        book.OffsetBottom = -26;
+        book.OffsetRight = -right;
+        screen.AddChild(book);
+        return book;
+    }
 
     public MarginContainer Left { get; } = new();
     public MarginContainer Right { get; } = new();
@@ -73,6 +94,7 @@ public partial class BookView : Control
         DrawRect(new Rect2(spine, 0, size.X - spine, size.Y), page.Lightened(0.02f));
 
         // The spine: a fold that falls into shadow on both sides.
+        if (Single) return;
         for (int i = 0; i < 26; i++)
         {
             float a = 0.13f * (1 - i / 26f) * (1 - i / 26f);
@@ -111,5 +133,45 @@ public partial class BookView : Control
             for (int i = 0; i < 40; i++)
                 DrawRect(new Rect2(Size.X - i - 1, 0, 1, Size.Y), new Color(0.1f, 0.06f, 0.02f, 0.12f * (1 - i / 40f)));
         }
+    }
+}
+
+/// <summary>The desk the album lies on: dark wood with a grain, darker towards the edges of the light.</summary>
+public partial class Desk : Control
+{
+    public override void _Ready()
+    {
+        MouseFilter = MouseFilterEnum.Ignore;
+        Resized += QueueRedraw;
+    }
+
+    public override void _Draw()
+    {
+        var size = Size;
+        // Wood that takes a little of the decade's colour, so it belongs to the same room.
+        var wood = new Color("5a3d28").Lerp(UiTheme.Accent.Darkened(0.55f), 0.18f);
+        DrawRect(new Rect2(Vector2.Zero, size), wood);
+        var rng = new System.Random(7);
+        for (int i = 0; i < 90; i++)
+        {
+            float y = (float)rng.NextDouble() * size.Y;
+            float amp = 2 + (float)rng.NextDouble() * 6;
+            float freq = 0.002f + (float)rng.NextDouble() * 0.004f;
+            float phase = (float)rng.NextDouble() * 10;
+            var pts = new Vector2[48];
+            for (int k = 0; k < pts.Length; k++)
+            {
+                float x = size.X * k / (pts.Length - 1);
+                pts[k] = new Vector2(x, y + Mathf.Sin(x * freq + phase) * amp);
+            }
+            bool light = rng.NextDouble() < 0.4;
+            DrawPolyline(pts, light ? new Color(1, 0.9f, 0.75f, 0.035f) : new Color(0.1f, 0.05f, 0.02f, 0.09f), 1 + (float)rng.NextDouble() * 2.5f, true);
+        }
+        // A lamp somewhere above: lighter in the middle, dark in the corners.
+        var g = new Gradient();
+        g.Offsets = new[] { 0f, 0.55f, 1f };
+        g.Colors = new[] { new Color(1, 0.95f, 0.85f, 0.08f), new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.45f) };
+        var tex = new GradientTexture2D { Gradient = g, Width = 128, Height = 128, Fill = GradientTexture2D.FillEnum.Radial, FillFrom = new Vector2(0.5f, 0.45f), FillTo = new Vector2(1.15f, 0.45f) };
+        DrawTextureRect(tex, new Rect2(Vector2.Zero, size), false);
     }
 }

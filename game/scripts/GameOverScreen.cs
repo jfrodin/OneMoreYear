@@ -17,11 +17,14 @@ public partial class GameOverScreen : Control
 
         var col = Ui.VBox(14);
         col.CustomMinimumSize = new Vector2(900, 0);
-        var scroll = Ui.Scroll(Ui.Margin(col, 40));
-        scroll.SetAnchorsPreset(LayoutPreset.FullRect);
-        AddChild(scroll);
+        // The family's last page: one wide sheet of the album on the desk.
+        var book = BookView.OpenOn(this, 1f, single: true);
+        var center = new CenterContainer();
+        center.AddChild(col);
+        var scroll = Ui.Scroll(Ui.Margin(center, 20));
+        book.Left.AddChild(scroll);
 
-        col.AddChild(Ui.Label("THE END OF A FAMILY", 16, UiTheme.Muted));
+        col.AddChild(UiTheme.HandLabel("The end of a family", 30, UiTheme.Muted));
         col.AddChild(Ui.Label($"The {s.World.FamilyName} family", 48, UiTheme.Accent));
         col.AddChild(Ui.Label($"{s.World.StartYear}–{s.Year}", 24, UiTheme.Text));
         col.AddChild(Ui.Label($"Seed {s.SeedCode}, starting {s.World.StartYear}. Give it to a friend and see how their family turns out.", 16, UiTheme.Faint, wrap: true));

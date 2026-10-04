@@ -20,24 +20,21 @@ public partial class SuccessionScreen : Control
         var dead = s.Player;
         var life = s.SummarizeLife(dead.Id);
 
-        var columns = Ui.HBox(30);
-        var margin = Ui.Margin(columns, 40);
-        margin.SetAnchorsPreset(LayoutPreset.FullRect);
-        AddChild(margin);
+        // The album open on the desk: the life that ended on the left page, who comes next on the right.
+        var book = BookView.OpenOn(this, 0.46f);
 
         // Left: the life that ended.
         var left = Ui.VBox(14);
         var leftScroll = Ui.Scroll(left);
-        leftScroll.SizeFlagsStretchRatio = 1.1f;
-        columns.AddChild(leftScroll);
+        book.Left.AddChild(leftScroll);
 
-        left.AddChild(Ui.Label("IN MEMORIAM", 16, UiTheme.Muted));
+        left.AddChild(UiTheme.HandLabel("In memoriam", 30, UiTheme.Muted));
         var header = Ui.HBox(20);
-        header.AddChild(Portrait.Create(s.Portrait(dead.Id), true, 110));
+        header.AddChild(AlbumBits.Print(Portrait.Create(s.Portrait(dead.Id), false, 120, square: true), new Vector2(120, 120), 2.5f));
         var names = Ui.VBox(4);
         names.AddChild(Ui.Label(life.Name, 40, UiTheme.Accent));
         names.AddChild(Ui.Label($"{life.BirthYear}–{life.DeathYear}", 24, UiTheme.Text));
-        names.AddChild(Ui.Label($"Died of {life.Cause}, aged {life.Age}.", 19, UiTheme.Muted, wrap: true));
+        names.AddChild(Ui.Label(string.IsNullOrWhiteSpace(life.Cause) ? $"Died aged {life.Age}." : $"Died of {life.Cause}, aged {life.Age}.", 19, UiTheme.Muted, wrap: true));
         header.AddChild(names);
         left.AddChild(header);
 
@@ -64,7 +61,7 @@ public partial class SuccessionScreen : Control
         // Right: who continues.
         var right = Ui.VBox(10);
         var rightScroll = Ui.Scroll(right);
-        columns.AddChild(rightScroll);
+        book.Right.AddChild(rightScroll);
 
         var heirs = s.HeirCandidates();
         Button? first = null;
