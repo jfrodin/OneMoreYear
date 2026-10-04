@@ -406,12 +406,13 @@ public partial class Main : Control
         Ui.FocusLater(no);
     }
 
-    public void ShowGame()
+    public GameScreen ShowGame()
     {
         var game = new GameScreen();
         game.Init(this);
         SetScreen(game);
         CheckAchievements();
+        return game;
     }
 
     public void ShowSuccession()
@@ -604,7 +605,7 @@ public partial class Main : Control
             new[] { "Welcome to the family", "You live one life at a time, from birth to death, and then the story continues with someone you leave behind: a child, a sibling, a niece. The family is the real hero. See how far it goes." },
             new[] { "One year at a time", "Each year, things happen. Answer them on the This Year tab. There is no right answer, only a life. You also have time for a few things of your own: see people, work, study, love, fight, make money, or break the law." },
             new[] { "Who you are matters", "Your traits and gifts change the odds and what you notice. A charming person has other ways out than a hot-tempered one. People remember what you do to them, and they tell others." },
-            new[] { "When you're ready", "Press Next Year (N, or Y on a controller). Some years bring the family newspaper. When your life ends, choose who carries the story on. Everything is saved as you go." },
+            new[] { "When you're ready", "Press Next Year (or N). Some years bring the family newspaper. When your life ends, choose who carries the story on. Everything is saved as you go." },
         };
         int page = 0;
         var dim = new ColorRect { Color = new Color(0, 0, 0, 0.55f), MouseFilter = MouseFilterEnum.Stop };

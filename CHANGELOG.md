@@ -2,6 +2,18 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.74.0 – 2026-10-04 · The open album
+
+- **The play screen is an open family album.** You are on the left page, the year on the right,
+  with a spine and its shadow in the middle and the edges of the pages beneath. The tab bar is gone:
+  coloured bookmarks stick out of the album's right edge instead, and the open one sticks out the
+  furthest.
+- **A new year turns the page.** The old page lifts over the spine, and the year's moments are laid
+  out one by one. Another year waits until the page has turned.
+- Cards are slips of paper on the page, with a shadow instead of an ink edge.
+- No more controller instructions on screen. The game is played with mouse and keyboard; a console
+  version comes separately later.
+
 ## 0.73.1 – 2026-10-04 · Already fit
 
 - "Get in shape" and "Practise a sport" are not offered when your fitness is already near the top.

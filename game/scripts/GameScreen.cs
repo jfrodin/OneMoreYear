@@ -19,6 +19,10 @@ public partial class GameScreen : Control
     private VBoxContainer _sidebar = null!;
     private Button _nextYear = null!;
     private TabContainer _tabs = null!;
+    private BookView _book = null!;
+    private VBoxContainer _bookmarks = null!;
+    /// <summary>True while the page turns; another year waits until it has.</summary>
+    private bool _turning;
     private VBoxContainer _yearContent = null!;
     private ScrollContainer _yearScroll = null!;
     private VBoxContainer _peopleList = null!;
@@ -43,21 +47,30 @@ public partial class GameScreen : Control
 
     public override void _Ready()
     {
-        var root = Ui.HBox(18);
-        var margin = Ui.Margin(root, 20);
-        margin.SetAnchorsPreset(LayoutPreset.FullRect);
-        AddChild(margin);
+        // The family album, open on the desk: you on the left page, the year on the right, and
+        // bookmarks sticking out of the right edge for everything else.
+        _bookmarks = Ui.VBox(6);
+        _bookmarks.SetAnchorsPreset(LayoutPreset.TopRight);
+        _bookmarks.OffsetLeft = -168;
+        _bookmarks.OffsetTop = 64;
+        AddChild(_bookmarks);
+        _book = new BookView();
+        _book.SetAnchorsPreset(LayoutPreset.FullRect);
+        _book.OffsetLeft = 26;
+        _book.OffsetTop = 22;
+        _book.OffsetBottom = -26;
+        _book.OffsetRight = -150;
+        AddChild(_book);
 
-        var sideCard = new PanelContainer { CustomMinimumSize = new Vector2(370, 0) };
         _sidebar = Ui.VBox(12);
-        sideCard.AddChild(_sidebar);
-        root.AddChild(sideCard);
+        _book.Left.AddChild(_sidebar);
 
         var center = Ui.VBox(8);
-        center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        root.AddChild(center);
+        _book.Right.AddChild(center);
 
-        _tabs = new TabContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
+        // The bookmarks choose the page; the tab bar itself is hidden.
+        _tabs = new TabContainer { SizeFlagsVertical = SizeFlags.ExpandFill, TabsVisible = false };
+        _tabs.AddThemeStyleboxOverride("panel", new StyleBoxEmpty());
         center.AddChild(_tabs);
 
         _hint = Ui.Label(" ", 16, UiTheme.Muted, wrap: true);
@@ -121,16 +134,66 @@ public partial class GameScreen : Control
         _tabs.AddChild(chronicle);
         _tabs.SetTabTitle(TabChronicle, "Chronicle");
 
-        // A small line icon on each tab.
-        string[] tabIcons = { "year", "time", "people", "work", "money", "tree", "chronicle" };
-        for (int i = 0; i < tabIcons.Length && i < _tabs.GetTabCount(); i++) _tabs.SetTabIcon(i, Icons.Get(tabIcons[i], UiTheme.Muted, 18));
-        _tabs.AddThemeConstantOverride("icon_separation", 8);
+        BuildBookmarks();
+        _tabs.TabChanged += _ => BuildBookmarks();
         _tabs.TabChanged += OnTabChanged;
 
         RefreshAll();
         FocusDefault();
     }
 
+
+    /// <summary>
+    /// Ribbons sticking out of the album's edge, one for each page. The open one sticks out the
+    /// furthest. Each has its own colour, all from the decade's palette.
+    /// </summary>
+    private void BuildBookmarks()
+    {
+        Ui.Clear(_bookmarks);
+        (string Icon, string Name)[] marks =
+        {
+            ("year", "This Year"), ("time", "Your Time"), ("people", "People"), ("work", "Work"),
+            ("money", "Money"), ("tree", "Family"), ("chronicle", "Chronicle"),
+        };
+        var accent = UiTheme.Accent;
+        for (int i = 0; i < marks.Length && i < _tabs.GetTabCount(); i++)
+        {
+            int tab = i;
+            bool open = _tabs.CurrentTab == tab;
+            var colour = Color.FromHsv((accent.H + i * 0.09f) % 1f, Math.Clamp(accent.S * 0.75f, 0.25f, 0.6f), Math.Clamp(accent.V * 0.9f, 0.5f, 0.75f));
+            var ribbon = new StyleBoxFlat { BgColor = open ? colour : colour.Lerp(UiTheme.Background, 0.35f) };
+            ribbon.CornerRadiusTopRight = ribbon.CornerRadiusBottomRight = 6;
+            ribbon.ContentMarginLeft = 42;
+            ribbon.ContentMarginRight = 12;
+            ribbon.ContentMarginTop = ribbon.ContentMarginBottom = 8;
+            ribbon.ShadowColor = new Color(0.15f, 0.08f, 0.02f, 0.22f);
+            ribbon.ShadowSize = 3;
+            ribbon.ShadowOffset = new Vector2(2, 2);
+            var b = new Button
+            {
+                Text = marks[i].Name, Alignment = HorizontalAlignment.Left, FocusMode = FocusModeEnum.None,
+                Icon = Icons.Get(marks[i].Icon, new Color(1, 1, 1, 0.92f), 18),
+                CustomMinimumSize = new Vector2(open ? 168 : 150, 46), MouseDefaultCursorShape = CursorShape.PointingHand,
+            };
+            foreach (var state in new[] { "normal", "hover", "pressed", "hover_pressed", "focus" })
+            {
+                var box = (StyleBoxFlat)ribbon.Duplicate();
+                if (state == "hover" && !open) box.BgColor = colour.Lerp(UiTheme.Background, 0.15f);
+                b.AddThemeStyleboxOverride(state, box);
+            }
+            b.AddThemeFontOverride("font", UiTheme.Heading);
+            b.AddThemeFontSizeOverride("font_size", 16);
+            foreach (var c in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color" })
+                b.AddThemeColorOverride(c, new Color(1, 1, 1, open ? 1f : 0.88f));
+            b.AddThemeConstantOverride("h_separation", 8);
+            b.Pressed += () => _tabs.CurrentTab = tab;
+            // The ribbon tucks under the page: only the part beyond the edge shows, more when open.
+            var holder = new Control { CustomMinimumSize = new Vector2(168, 46) };
+            b.Position = new Vector2(open ? 0 : -12, 0);
+            holder.AddChild(b);
+            _bookmarks.AddChild(holder);
+        }
+    }
     public override void _UnhandledInput(InputEvent e)
     {
         if (_main.HasModal) return;
@@ -286,14 +349,14 @@ public partial class GameScreen : Control
         _nextYear = Ui.Button($"Next Year  ({S.Year + 1})", OnNextYear, 66);
         UiTheme.MakePrimary(_nextYear);
         _nextYear.Disabled = !S.CanAdvance;
-        RegisterHint(_nextYear, "Let a year pass. [N] / (Y)");
+        RegisterHint(_nextYear, "Let a year pass. Shortcut: N.");
         _sidebar.AddChild(_nextYear);
         // Always there, empty or not, so nothing below the button moves.
         var waiting = Ui.Label(S.HasUnresolvedEvents ? "Answer this year's events first." : " ", 15, UiTheme.Accent);
         waiting.CustomMinimumSize = new Vector2(0, 22);
         _sidebar.AddChild(waiting);
 
-        _sidebar.AddChild(Ui.Label("N / (Y) next year  ·  Q E / LB RB switch tabs", 13, UiTheme.Faint, wrap: true));
+        _sidebar.AddChild(Ui.Label("N next year  ·  Q and E turn the bookmarks", 13, UiTheme.Faint, wrap: true));
         var seedLine = Ui.Label($"Seed {S.SeedCode}  ·  started {S.World.StartYear}", 13, UiTheme.Faint);
         seedLine.ClipText = true;
         _sidebar.AddChild(seedLine);
@@ -1279,6 +1342,7 @@ public partial class GameScreen : Control
 
     private void OnNextYear()
     {
+        if (_turning) return;
         if (!S.CanAdvance)
         {
             // Never leave the player stuck on a stale screen: show what is waiting.
@@ -1294,11 +1358,38 @@ public partial class GameScreen : Control
 
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
-        // The whole screen is rebuilt so the look follows the new year, then the paper arrives.
-        _main.ShowGame();
-        // A new decade opens with a chapter page, then the paper.
-        if (S.IsNewDecade) _main.ShowChapter(S.Chapter(), () => _main.ShowNewspaper(report));
-        else _main.ShowNewspaper(report);
+        // The whole screen is rebuilt so the look follows the new year: the page turns, then the paper arrives.
+        var next = _main.ShowGame();
+        next.PlayPageTurn();
+        var main = _main;
+        bool newDecade = S.IsNewDecade;
+        var chapter = newDecade ? S.Chapter() : null;
+        main.GetTree().CreateTimer(0.75).Timeout += () =>
+        {
+            // A new decade opens with a chapter page, then the paper.
+            if (chapter != null) main.ShowChapter(chapter, () => main.ShowNewspaper(report));
+            else main.ShowNewspaper(report);
+        };
+    }
+
+    /// <summary>A new year: the old page turns over, and the year's moments are laid out one by one.</summary>
+    public void PlayPageTurn()
+    {
+        _tabs.CurrentTab = TabYear;
+        _turning = true;
+        GetTree().CreateTimer(0.85).Timeout += () => _turning = false;
+        var cards = _yearContent.GetChildren().OfType<Control>().ToList();
+        foreach (var card in cards) card.Modulate = new Color(1, 1, 1, 0);
+        Callable.From(() =>
+        {
+            _book.TurnPage();
+            for (int i = 0; i < cards.Count; i++)
+            {
+                if (!IsInstanceValid(cards[i])) continue;
+                var tween = cards[i].CreateTween();
+                tween.TweenProperty(cards[i], "modulate:a", 1f, 0.35).SetDelay(0.45 + i * 0.12);
+            }
+        }).CallDeferred();
     }
 
     public void FocusAfterNewspaper()

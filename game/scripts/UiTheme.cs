@@ -156,10 +156,11 @@ public static class UiTheme
     /// <summary>A card on the page: paper with a soft shadow, like something glued into an album.</summary>
     public static StyleBoxFlat PaperCard(float margin = 16)
     {
-        var sb = Box(Panel, 3, Border.Lerp(Panel, 0.4f), 1, margin);
-        sb.ShadowColor = new Color(0.2f, 0.12f, 0.05f, 0.18f);
-        sb.ShadowSize = 6;
-        sb.ShadowOffset = new Vector2(2, 3);
+        // A slip of slightly different paper laid on the album page: no ink edge, only its shadow.
+        var sb = Box(Panel.Lerp(Background, 0.18f), 2, Border.Lerp(Panel, 0.75f), 1, margin);
+        sb.ShadowColor = new Color(0.2f, 0.12f, 0.05f, 0.2f);
+        sb.ShadowSize = 7;
+        sb.ShadowOffset = new Vector2(1, 4);
         return sb;
     }
 
