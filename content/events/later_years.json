@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "ll_boomerang", "title": "Coming home",
+    "id": "ll_boomerang", "group": "child_moves_back", "title": "Coming home",
     "text": "{t.name} calls. The flat has fallen through, the money has run out, and could {t.he} move back home for a while? Just until things sort themselves out.",
     "conditions": { "minAge": 42, "livesWithParents": false }, "cooldown": 12,
     "target": { "role": "child", "conditions": { "minAge": 21, "maxAge": 32 } },
@@ -34,7 +34,7 @@
     ]
   },
   {
-    "id": "ll_smartphone", "title": "The phone",
+    "id": "ll_smartphone", "group": "smartphone_late", "title": "The phone",
     "text": "{t.name} has set up a new phone for you and is explaining, very patiently, how to swipe. Your finger is not doing what {t.he} says.",
     "conditions": { "minAge": 62, "minYear": 2010, "maxYear": 2030 }, "cooldown": 0,
     "target": { "role": "grandchild", "conditions": { "minAge": 9, "maxAge": 25 } },
@@ -44,7 +44,7 @@
     ]
   },
   {
-    "id": "ll_first_monday", "title": "Monday",
+    "id": "ll_first_monday", "group": "retired_monday", "title": "Monday",
     "text": "The first Monday of being retired. The alarm did not ring. There is nowhere you have to be, for the rest of your life.",
     "conditions": { "minAge": 58, "activity": "retired" }, "cooldown": 0,
     "choices": [
@@ -53,7 +53,7 @@
     ]
   },
   {
-    "id": "ll_grey_hair", "title": "Grey",
+    "id": "ll_grey_hair", "group": "first_grey", "title": "Grey",
     "text": "In the bathroom mirror, in a good light: grey hairs. Not one or two. Quite a lot of them.",
     "conditions": { "minAge": 36, "maxAge": 50 }, "cooldown": 0,
     "choices": [
@@ -84,7 +84,7 @@
     ]
   },
   {
-    "id": "ll_parent_alone", "title": "Alone in the house",
+    "id": "ll_parent_alone", "group": "parent_moves_in", "title": "Alone in the house",
     "text": "{t.name} cannot really manage on {t.his} own any more. The stairs, the shopping, the pills in the wrong order. Something has to change.",
     "conditions": { "minAge": 40, "maxAge": 75 }, "cooldown": 10,
     "target": { "role": "parent", "conditions": { "minAge": 78, "hasPartner": false } },
@@ -116,7 +116,7 @@
     ]
   },
   {
-    "id": "ll_back", "title": "Your back",
+    "id": "ll_back", "group": "bad_back", "title": "Your back",
     "text": "You bent down to pick up a sock and something in your back said no. Two days later, it is still saying no.",
     "conditions": { "minAge": 45 }, "cooldown": 15,
     "choices": [
@@ -138,7 +138,7 @@
     ]
   },
   {
-    "id": "ll_own_funeral", "title": "The music",
+    "id": "ll_own_funeral", "group": "funeral_plan", "title": "The music",
     "text": "{t.name} finds you at the kitchen table writing down what you want played at your funeral. {t.He} does not think it is funny.",
     "conditions": { "minAge": 72 }, "cooldown": 0,
     "target": { "role": "child", "conditions": { "minAge": 30 } },
@@ -148,7 +148,7 @@
     ]
   },
   {
-    "id": "ll_company_late", "title": "Coffee?",
+    "id": "ll_company_late", "group": "late_love", "title": "Coffee?",
     "text": "A man at the library, about your age, with a good coat and a nervous smile, asks if you would like a coffee some time.",
     "conditions": { "minAge": 60, "sex": "female", "hasPartner": false }, "cooldown": 10,
     "choices": [
@@ -157,7 +157,7 @@
     ]
   },
   {
-    "id": "ll_company_late_m", "title": "Coffee?",
+    "id": "ll_company_late_m", "group": "late_love", "title": "Coffee?",
     "text": "A woman in the choir, about your age, asks if you would like to walk home the same way after practice. It is not quite the same way.",
     "conditions": { "minAge": 60, "sex": "male", "hasPartner": false }, "cooldown": 10,
     "choices": [

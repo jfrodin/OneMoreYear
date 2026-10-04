@@ -100,7 +100,7 @@
     ]
   },
   {
-    "id": "old_funeral_plan", "title": "The arrangements",
+    "id": "old_funeral_plan", "group": "funeral_plan", "title": "The arrangements",
     "text": "You have started thinking about your own funeral. Not in a sad way. You just do not want anyone choosing the wrong hymns.",
     "conditions": { "minAge": 75 }, "cooldown": 40,
     "choices": [

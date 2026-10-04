@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "old_empty_days", "title": "Monday, again",
+    "id": "old_empty_days", "group": "retired_monday", "title": "Monday, again",
     "text": "The first months of retirement were a holiday. Now it's Monday again, and there is nothing you have to do. Nothing at all.",
     "conditions": { "minAge": 62, "activity": "retired" }, "cooldown": 0,
     "choices": [
@@ -66,7 +66,7 @@
     ]
   },
   {
-    "id": "old_new_love", "title": "At the dance",
+    "id": "old_new_love", "group": "late_love", "title": "At the dance",
     "text": "Thursday dance at the community hall. {t.name} asks you to dance three times in a row, and on the third, you say yes.",
     "conditions": { "minAge": 60, "hasPartner": false },
     "target": { "role": "new_person", "sex": "attracted", "ageOffsetMin": -6, "ageOffsetMax": 6 }, "cooldown": 4,
@@ -188,7 +188,7 @@
     ]
   },
   {
-    "id": "old_smartphone", "title": "Swipe",
+    "id": "old_smartphone", "group": "smartphone_late", "title": "Swipe",
     "text": "{t.name} has given you a smartphone and is showing you how to swipe. \"It's easy!\" It is not easy.",
     "conditions": { "minAge": 65, "minYear": 2010 }, "cooldown": 0,
     "target": { "role": "grandchild", "conditions": { "minAge": 10 } },

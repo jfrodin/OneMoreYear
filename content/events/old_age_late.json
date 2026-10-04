@@ -12,7 +12,7 @@
     ]
   },
   {
-    "id": "late_new_love", "title": "At the day centre",
+    "id": "late_new_love", "group": "late_love", "title": "At the day centre",
     "text": "There is someone at the day centre who saves you a seat, laughs at your jokes and has started wearing a nice shirt on Thursdays.",
     "conditions": { "minAge": 72, "hasPartner": false }, "cooldown": 15,
     "choices": [

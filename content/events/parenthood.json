@@ -176,7 +176,7 @@
     ]
   },
   {
-    "id": "parent_child_moves_back", "title": "Back again",
+    "id": "parent_child_moves_back", "group": "child_moves_back", "title": "Back again",
     "text": "{t.name}, twenty-nine, is standing at the door with three bags. \"Just for a few months. Until I find something.\"",
     "conditions": { "minAge": 45, "livesWithParents": false }, "cooldown": 8,
     "target": { "role": "child", "conditions": { "minAge": 23, "maxAge": 35, "livesWithParents": false } },

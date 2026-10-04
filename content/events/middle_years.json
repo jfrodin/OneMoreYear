@@ -14,7 +14,7 @@
     ]
   },
   {
-    "id": "mid_back", "title": "Bending down",
+    "id": "mid_back", "group": "bad_back", "title": "Bending down",
     "text": "You bend down to pick up a sock and something in your lower back goes click. You stay down there for a while.",
     "conditions": { "minAge": 38, "maxAge": 62 }, "cooldown": 12,
     "choices": [
@@ -219,7 +219,7 @@
     ]
   },
   {
-    "id": "mid_first_grey", "title": "The mirror",
+    "id": "mid_first_grey", "group": "first_grey", "title": "The mirror",
     "text": "Under the bathroom light you count them. Eleven grey hairs. Twelve, if you count the one in your eyebrow.",
     "conditions": { "minAge": 33, "maxAge": 45 }, "cooldown": 50,
     "choices": [
