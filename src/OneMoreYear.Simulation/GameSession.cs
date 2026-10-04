@@ -380,7 +380,7 @@ public sealed class GameSession
         }
         var involved = pending.Roles.Values.ToList();
         return new EventView(pending.Uid, TextFormatter.Format(Ctx, def.Title, pending),
-            Annotate(TextFormatter.Format(Ctx, def.Text, pending), involved),
+            Annotate(TextFormatter.Format(Ctx, def.TextFor(pending), pending), involved),
             choices, pending.Resolved, pending.OutcomeText == null ? null : Annotate(pending.OutcomeText, involved),
             pending.Roles.TryGetValue("target", out var t) ? t : null,
             EventSystem.Insights(Ctx, def, pending),
@@ -473,7 +473,7 @@ public sealed class GameSession
             World.PendingEvents.Add(pending);
             return "";
         }
-        string intro = string.IsNullOrWhiteSpace(def.Text) ? "" : TextFormatter.Format(Ctx, def.Text, pending) + " ";
+        string intro = string.IsNullOrWhiteSpace(def.Text) ? "" : TextFormatter.Format(Ctx, def.TextFor(pending), pending) + " ";
         return (intro + EventSystem.Resolve(Ctx, pending, 0)).Trim();
     }
 

@@ -460,6 +460,12 @@ public sealed class EventDef
     public string Id { get; set; } = "";
     public string Title { get; set; } = "";
     public string Text { get; set; } = "";
+    /// <summary>Other tellings of the same moment. A family meets them in turn, so a grandchild does not read the same words as the grandparent did.</summary>
+    public List<string> Texts { get; set; } = new();
+
+    /// <summary>The telling chosen for this occurrence (see EventSystem.CreatePending).</summary>
+    public string TextFor(Model.PendingEvent pending) =>
+        Texts.Count > 0 && pending.Words.TryGetValue("telling", out var s) && int.TryParse(s, out var i) && i > 0 && i <= Texts.Count ? Texts[i - 1] : Text;
     /// <summary>"random" (drawn yearly) or "situation" (only created by simulation code).</summary>
     public string Trigger { get; set; } = "random";
     public double Weight { get; set; } = 1;
@@ -615,6 +621,7 @@ public sealed class EventPatchDef
     public string Event { get; set; } = "";
     public List<InsightDef> Insights { get; set; } = new();
     public List<ChoiceDef> Choices { get; set; } = new();
+    public List<string> Texts { get; set; } = new();
 }
 
 /// <summary>

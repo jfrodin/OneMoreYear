@@ -1,0 +1,80 @@
+// Other tellings of moments that come back in many lives. A family meets them in turn, so the
+// grandchild reads new words for the same snowstorm. Each must fit the event's own choices. No dashes.
+[
+  { "event": "ev_snowed_in", "texts": [
+    "It snowed all night and is still snowing. The cars on the street are white humps, and nothing is moving. School and work can wait.",
+    "A snowstorm, the kind people will talk about for years. The front door opens a hand's width and stops against a wall of white."
+  ] },
+  { "event": "ev_lost_dog_found", "texts": [
+    "A dog with a red collar is sitting outside the supermarket, waiting for someone who is not coming out. It has been there an hour.",
+    "A wet, muddy dog follows you all the way from the bus stop and sits down on your doorstep as if it lived there."
+  ] },
+  { "event": "life_dog", "texts": [
+    "A friend's dog has had puppies, and there is one left: the smallest, with a white patch over one eye. Nobody wants the small one.",
+    "An old dog at the shelter, grey around the mouth, who the staff say is the gentlest one they have ever had. Nobody takes the old ones."
+  ] },
+  { "event": "hol_valborg", "texts": [
+    "The first weekend of November. Candles in glass jars all over the churchyard, and the smell of cold earth and wax.",
+    "All Saints' Day, grey and still. People you have not seen in years are standing at the graves of people you knew."
+  ] },
+  { "event": "trad_christmas_ham", "texts": [
+    "Christmas Eve, and the kitchen has been busy since six. Ham with mustard and breadcrumbs, the herring jars, and the rice pudding with an almond somewhere in it.",
+    "Christmas Eve at the big table. Too much food, the same arguments as last year, and somewhere in the rice pudding, one almond."
+  ] },
+  { "event": "life_midsummer", "texts": [
+    "Midsummer, the longest day. Birch leaves on the door, flowers in everyone's hair, and a table in the garden that goes on and on.",
+    "Midsummer's Eve. It rains, as it does every year, and everyone sits under the awning pretending it is fine. The herring is good anyway."
+  ] },
+  { "event": "se_hockey_final", "texts": [
+    "The ice hockey final, Sweden against Finland, again. Your Finnish neighbour knocks on the door with a bag of beer and the wrong shirt on.",
+    "Sweden and Finland in the final, and the whole street has its windows open so you can hear the cheering move from house to house."
+  ] },
+  { "event": "ties_family_photo", "texts": [
+    "{t.Role} wants a family photo, a proper one, with everyone. Getting three generations to look at the camera at the same time takes forty minutes.",
+    "{t.Role} has booked a photographer. Everyone must wear something blue. Nobody owns anything blue."
+  ] },
+  { "event": "life_house_party_neighbours", "texts": [
+    "A handwritten sign on the lamp post: the street is having a party on Saturday. Long tables in the road, everyone brings something.",
+    "The neighbours have decided it is time everyone got to know each other. Saturday, in the courtyard, bring a dish."
+  ] },
+  { "event": "ev_power_cut", "texts": [
+    "The lights flicker twice and go out, and so does everything else. Outside, the whole street is dark. It will be hours, the radio says.",
+    "A storm has brought down the lines. The house is dark and getting colder, and there is nothing to do but wait it out."
+  ] },
+  { "event": "ev_kind_stranger", "texts": [
+    "Your card is declined at the till, twice. Your face goes hot. Before you can say anything, the woman behind you holds out her own card.",
+    "You are a little short for the bus fare and the driver is not in a mood to wait. A man in a work jacket drops the coins in for you without a word."
+  ] },
+  { "event": "se_berry_picking", "texts": [
+    "Lingonberry time. The forest floor is red with them, and the right of public access says they are as much yours as anyone's.",
+    "A secret spot in the forest that the family has picked berries in for years. This year the bushes are heavier than anyone remembers."
+  ] },
+  { "event": "life_speeding", "texts": [
+    "A police car pulls out behind you with its lights on. You look at the speedometer and your heart sinks.",
+    "A speed trap on the long straight road outside town. An officer steps out and waves you in."
+  ] },
+  { "event": "friend_birthday_forgot", "texts": [
+    "You see a photo of {t.name}'s birthday dinner. It was last night. You were not there, because you forgot.",
+    "{t.name} mentions, very lightly, that it was {t.his} birthday on Sunday. You had no idea. Or rather, you had, and forgot."
+  ] },
+  { "event": "hol_advent", "texts": [
+    "Advent, and the first candle is lit. Paper stars in every window on the street, glowing orange against the early dark.",
+    "The first of four candles, a smell of saffron from the kitchen, and the slow, cosy countdown to Christmas has begun."
+  ] },
+  { "event": "job_any_office_party", "texts": [
+    "The day after the Christmas party at work. Somebody has photos. Several people have photos.",
+    "The morning after the summer party. Your head hurts, your phone has messages you do not want to read, and you have to go in."
+  ] },
+  { "event": "se_semla", "texts": [
+    "Fat Tuesday. The queue at the bakery is out of the door, all for the same cream bun with almond paste and a little lid of pastry.",
+    "Shrove Tuesday, and a cream bun on every desk at work and every kitchen table at home. The whole country eats the same thing on the same day."
+  ] },
+  { "event": "se_spring_light", "texts": [
+    "The snow is gone from the pavements, the light comes back, and everyone walks a little slower to stay in it.",
+    "The first day it is warm enough to sit outside. Coats open, faces turned up, people smiling at strangers for no reason at all."
+  ] },
+  { "event": "mt_dark_winter", "texts": [
+    "November. The sun rises late, hangs low for a few hours and gives up. Getting out of bed is the hardest thing you do all day.",
+    "Week after week of grey. The light never quite arrives. You notice you have stopped wanting to see anyone."
+  ] }
+]

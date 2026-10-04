@@ -72,6 +72,7 @@ public static class EventSystem
     {
         w.EventHistory[def.Id] = w.Year;
         if (def.Group != null) w.EventHistory["group:" + def.Group] = w.Year;
+        if (def.Texts.Count > 0) w.Tellings[def.Id] = w.Tellings.GetValueOrDefault(def.Id) + 1;
     }
 
     private static bool IsEligible(SimContext ctx, EventDef e, Person player, Dictionary<int, int> distances)
@@ -109,6 +110,7 @@ public static class EventSystem
     {
         var w = ctx.World;
         var pending = new PendingEvent { Uid = w.NextEventUid++, EventId = def.Id };
+        if (def.Texts.Count > 0) pending.Words["telling"] = (w.Tellings.GetValueOrDefault(def.Id) % (def.Texts.Count + 1)).ToString();
         if (def.Target != null)
         {
             var target = fixedTarget is { } ft ? w.Get(ft) : ResolveRole(ctx, def.Target, player, distances, null, def);

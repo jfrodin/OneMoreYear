@@ -168,6 +168,7 @@ public sealed class ContentDb
             if (!db.Events.TryGetValue(patch.Event, out var target)) throw new InvalidDataException($"insights.json: unknown event {patch.Event}");
             target.Insights.AddRange(patch.Insights);
             target.Choices.AddRange(patch.Choices);
+            target.Texts.AddRange(patch.Texts);
         }
         db.RandomEvents.AddRange(db.Events.Values.Where(e => e.Trigger == "random").OrderBy(e => e.Id, StringComparer.Ordinal));
         db.HistoryEvents.AddRange(db.Events.Values.Where(e => e.Trigger is "history" or "milestone").OrderBy(e => e.Id, StringComparer.Ordinal));
@@ -235,6 +236,7 @@ public sealed class ContentDb
         foreach (var e in Events.Values)
         {
             var texts = new List<string?> { e.Title, e.Text };
+            texts.AddRange(e.Texts);
             foreach (var c in e.Choices) texts.AddRange(new[] { c.Text, c.Hint, c.Result, c.Success?.Text, c.Failure?.Text });
             foreach (var t in texts.OfType<string>())
                 if (Systems.TextFormatter.ByEra(2000, t) is var resolved && (resolved.Contains("[[") || resolved.Contains("]]") || resolved.Contains("||")))

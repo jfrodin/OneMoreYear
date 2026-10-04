@@ -1433,3 +1433,23 @@ public class SentenceTests
         Assert.True(Years("usa", 2, 1980) < 25);
     }
 }
+
+public class TellingTests
+{
+    [Fact]
+    public void AFamilyMeetsTheOtherTellingsInTurn()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 41, StartYear = 1980 });
+        var def = s.Content.Events["ev_snowed_in"];
+        Assert.True(def.Texts.Count >= 2);
+        var seen = new List<string>();
+        for (int i = 0; i <= def.Texts.Count; i++)
+        {
+            var pending = EventSystem.CreatePending(s.Ctx, def, s.Player, new Dictionary<int, int>())!;
+            seen.Add(def.TextFor(pending));
+            s.World.Tellings[def.Id] = s.World.Tellings.GetValueOrDefault(def.Id) + 1;
+        }
+        Assert.Equal(seen.Count, seen.Distinct().Count());
+        Assert.Equal(def.Text, seen[0]);
+    }
+}

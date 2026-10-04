@@ -38,6 +38,8 @@ public sealed class World
     public List<PendingEvent> PendingEvents { get; set; } = new();
     /// <summary>"eventId" → last year it fired for the current player.</summary>
     public Dictionary<string, int> EventHistory { get; set; } = new();
+    /// <summary>How many times the family has met each event that has several tellings (never cleared).</summary>
+    public Dictionary<string, int> Tellings { get; set; } = new();
 
     /// <summary>Where the player's money came from and went, this year and last year.</summary>
     public List<LedgerLine> Ledger { get; set; } = new();
