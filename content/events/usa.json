@@ -296,7 +296,7 @@
   {
     "id": "us_graduation", "countries": [ "usa" ], "trigger": "milestone", "title": "Cap and gown",
     "text": "High school graduation on the football field. Folding chairs, a valedictorian who talks too long, and your name read out wrong.",
-    "conditions": { "minAge": 17, "maxAge": 20, "minEducation": "secondary", "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
+    "conditions": { "graduatedThisYear": "secondary", "maxAge": 21, "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
     "choices": [
       { "text": "Throw your cap in the air", "effects": [ { "type": "flag", "flag": "graduated_upper" }, { "type": "happiness", "amount": 8 }, { "type": "memory", "kind": "graduation", "text": "Throwing my cap on the football field", "impact": 18 } ],
         "result": "Four hundred caps in the air at once. You never find yours. Your mother takes forty photographs of you holding someone else's." },

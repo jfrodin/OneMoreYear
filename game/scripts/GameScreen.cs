@@ -518,7 +518,10 @@ public partial class GameScreen : Control
             $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs and the home are paid first. Of what is left, you save about " +
             $"{m.SaveRatePercent}%, depending on how you live and your personality. Money in the bank roughly keeps its value. Funds and shares " +
             $"grow more over time but can crash. If your income does not cover the basics, savings pay first, then welfare pays {m.WelfareShare} of the gap " +
-            "and the rest becomes debt. Investments are only sold by themselves to pay off debt.", 15, UiTheme.Faint, wrap: true));
+            "and the rest becomes debt. Investments are only sold by themselves to pay off debt." +
+            (S.Player.Activity == OneMoreYear.Simulation.Model.Activity.Studying
+                ? " Student aid is not taxed. What it does not cover is borrowed as a student loan, at a low rate, and paid back from what you save once you earn."
+                : ""), 15, UiTheme.Faint, wrap: true));
         _moneyContent.AddChild(Ui.Card(summary));
 
         // How you live: the player's own choice, not the personality's.
@@ -540,7 +543,9 @@ public partial class GameScreen : Control
         style.AddChild(styles);
         var current = m.Lifestyles.FirstOrDefault(s => s.Id == m.Lifestyle);
         style.AddChild(Ui.Label(current.Description ?? "", 15, UiTheme.Muted, wrap: true));
-        _moneyContent.AddChild(Ui.Card(style));
+        // Only someone who keeps their own house chooses how it is kept.
+        var me = S.Player;
+        if (!me.LivesWithParents && me.Age(S.Year) >= 18 && me.Activity != OneMoreYear.Simulation.Model.Activity.Prison) _moneyContent.AddChild(Ui.Card(style));
 
         _moneyContent.AddChild(InvestmentsCard(m));
         _moneyContent.AddChild(HomeCard(m));

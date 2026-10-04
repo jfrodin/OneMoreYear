@@ -52,7 +52,7 @@ public static class CareerSystem
                     // Finishing school at 19 and at 39 are different days.
                     if (EventSystem.QueueSituation(ctx, "after_secondary") is { } grad)
                         grad.Words["graduation"] = p.Age(ctx.Year) <= 21
-                            ? "You run out of school to banners with your baby photos and screaming relatives. Adult life is waiting."
+                            ? "School is over. Twelve years, and suddenly nobody tells you where to be on Monday morning. What now?"
                             : "A diploma, years later than everyone you started with, handed out in a classroom after the evening lesson. You frame it anyway. A few more doors are open now.";
                     return;
                 }
@@ -205,6 +205,8 @@ public static class CareerSystem
     private static void Graduate(SimContext ctx, Person p)
     {
         // A course never lowers what you already have (a vocational course after university).
+        p.GraduatedYear = ctx.Year;
+        p.GraduatedLevel = p.StudyingFor;
         if (p.StudyingFor is { } level && level > p.Education) p.Education = level;
         p.StudyingFor = null;
         var prog = ctx.Content.Programme(p.ProgrammeId);

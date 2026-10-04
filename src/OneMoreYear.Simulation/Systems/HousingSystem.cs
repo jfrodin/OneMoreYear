@@ -197,7 +197,11 @@ public static class HousingSystem
             if (busy && !p.Flags.Contains($"asked_move_out_{ctx.Year - 1}") && !p.Flags.Contains($"asked_move_out_{ctx.Year - 2}"))
             {
                 p.Flags.Add($"asked_move_out_{ctx.Year}");
-                EventSystem.QueueSituation(ctx, "moving_out");
+                // At eighteen living at home is the normal thing; at twenty six it starts to be a question.
+                if (EventSystem.QueueSituation(ctx, "moving_out") is { } ask)
+                    ask.Words["moving_out"] = age <= 21
+                        ? "The room you grew up in is starting to feel small. A few friends have found places of their own already."
+                        : $"You are {age} and still living with your parents in {City(ctx, p).Name}. Your friends are moving out one by one.";
             }
             return;
         }

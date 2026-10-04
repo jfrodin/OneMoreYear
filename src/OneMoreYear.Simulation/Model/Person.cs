@@ -72,6 +72,9 @@ public sealed class Person
     public string? ProgrammeId { get; set; }
     /// <summary>Completed programmes (ids from education content).</summary>
     public List<string> Degrees { get; set; } = new();
+    /// <summary>The last year the person finished a school or programme, and at which level (for the graduation day itself).</summary>
+    public int? GraduatedYear { get; set; }
+    public EducationLevel? GraduatedLevel { get; set; }
     /// <summary>School results 0–100.</summary>
     public double Grades { get; set; } = 50;
     public string? OccupationId { get; set; }

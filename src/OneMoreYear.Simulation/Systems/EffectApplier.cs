@@ -72,8 +72,10 @@ public static class EffectApplier
                 if (who.CottageValue > 0) pending.ExtraText.Add($"It sells for {EconomySystem.Format(ctx, EconomySystem.SellCottage(ctx, who))}.");
                 break;
             case "money":
-                who.Money += ctx.Nominal(money);
-                EconomySystem.Record(ctx, who, EventTitle(ctx, pending), ctx.Nominal(money));
+                // A child cannot spend what it does not have: the parents pay the rest.
+                double change = who.Age(ctx.Year) < 18 && money < 0 ? -Math.Min(-ctx.Nominal(money), Math.Max(0, who.Money)) : ctx.Nominal(money);
+                who.Money += change;
+                EconomySystem.Record(ctx, who, EventTitle(ctx, pending), change);
                 break;
             case "transfer":
                 if (to == null) return;

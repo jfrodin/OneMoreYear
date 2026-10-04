@@ -100,7 +100,7 @@
   {
     "id": "moving_out", "trigger": "situation",
     "title": "A place of your own?",
-    "text": "You're {age} and still living with your parents in {city}. Your friends are moving out one by one.",
+    "text": "{moving_out}",
     "choices": [
       {
         "text": "Rent {a.flat} of your own",

@@ -771,6 +771,13 @@ public sealed class GameSession
     private List<(string, string)> Assets(Person p)
     {
         var rows = new List<(string, string)>();
+        // Debt told in two parts: the cheap student loan, and the rest.
+        if (p.Money < 0 && Math.Min(p.StudentLoan, -p.Money) >= 1)
+        {
+            double study = Math.Min(p.StudentLoan, -p.Money);
+            rows.Add(("Of it, student loan", "-" + EconomySystem.Format(Ctx, study)));
+            if (-p.Money - study >= 1) rows.Add(("Of it, other debt", "-" + EconomySystem.Format(Ctx, -p.Money - study)));
+        }
         if (EconomySystem.Investments(p) >= 1) rows.Add(("Investments", EconomySystem.Format(Ctx, EconomySystem.Investments(p))));
         if (p.HomeValue > 0) rows.Add(("Home", EconomySystem.Format(Ctx, p.HomeValue)));
         if (p.Mortgage >= 1) rows.Add(("Mortgage", "-" + EconomySystem.Format(Ctx, p.Mortgage)));

@@ -212,6 +212,7 @@ public static class EventSystem
         if (c.OwnsEstate is { } seat && EstateSystem.Owns(w, p) != seat) return false;
         if (c.MinFame is { } minFame && p.Fame < minFame) return false;
         if (c.MinStreetRep is { } minRep && p.StreetRep < minRep) return false;
+        if (c.GraduatedThisYear is { } graduated && (p.GraduatedYear != ctx.Year || p.GraduatedLevel != graduated)) return false;
         if (c.ParentAlive is { } parentAlive && Kinship.Parents(ctx.World, p).Any(x => x.IsAlive) != parentAlive) return false;
         if (c.MaxFame is { } maxFame && p.Fame > maxFame) return false;
         if (c.MinPeakFame is { } peak && p.PeakFame < peak) return false;

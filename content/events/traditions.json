@@ -48,7 +48,7 @@
   {
     "id": "trad_graduation", "countries": [ "sweden" ], "trigger": "milestone", "title": "The white cap",
     "text": "Graduation day. You run out of the school building in a white cap while your family hold up a sign with your baby photo on it.",
-    "conditions": { "minAge": 18, "maxAge": 20, "minEducation": "secondary", "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
+    "conditions": { "graduatedThisYear": "secondary", "maxAge": 21, "notFlags": [ "graduated_upper" ] }, "weight": 6, "cooldown": 0,
     "choices": [
       { "text": "Ride on the back of a truck through town", "requires": { "minYear": 1975 }, "effects": [ { "type": "flag", "flag": "graduated_upper" }, { "type": "happiness", "amount": 9 }, { "type": "memory", "kind": "graduation", "text": "Running out of school in the white cap", "impact": 20 } ],
         "result": "Music, shouting, confetti, and your whole year on a flatbed truck. You lose your voice. You lose your cap. You find the cap." },

@@ -40,9 +40,30 @@ public static class EconomySystem
         var c = ctx.Country;
 
         // Returns first: the bank, debt interest, funds, shares and the home's value.
-        double before = p.Money;
-        p.Money *= 1 + (p.Money > 0 ? market.Bank : market.Debt);
-        Record(ctx, p, before > 0 ? "Interest on your savings" : "Interest on debt", p.Money - before);
+        // A child's debts are the parents' business: whatever a child spent that it did not have is covered.
+        if (age < 18 && p.Money < 0)
+        {
+            Record(ctx, p, "Your parents covered what you owed", -p.Money);
+            p.Money = 0;
+            p.StudentLoan = 0;
+        }
+        if (p.Money >= 0)
+        {
+            double before = p.Money;
+            p.Money *= 1 + market.Bank;
+            Record(ctx, p, "Interest on your savings", p.Money - before);
+        }
+        else
+        {
+            // Student loans are cheap state loans; everything else costs what debt costs.
+            double study = Math.Min(p.StudentLoan, -p.Money);
+            double studyInterest = study * Math.Max(0.005, market.Bank);
+            double otherInterest = (-p.Money - study) * market.Debt;
+            p.Money -= studyInterest + otherInterest;
+            p.StudentLoan = study + studyInterest;
+            Record(ctx, p, "Interest on your student loan", -studyInterest);
+            Record(ctx, p, "Interest on debt", -otherInterest);
+        }
         // The player has real holdings; an heir or an old save may still have the simple kind.
         if (p.Id == ctx.World.PlayerId) InvestmentSystem.ConvertSimple(ctx, p);
         if (p.Holdings.Count > 0) InvestmentSystem.Update(ctx, p);
@@ -79,7 +100,8 @@ public static class EconomySystem
             Record(ctx, p, "Tuition", -ctx.Nominal(ctx.Country.UniversityFee));
             p.StudentLoan += ctx.Nominal(ctx.Country.UniversityFee);
         }
-        double tax = gross * c.TaxRate;
+        // Student aid is not taxed; a part-time job next to it is.
+        double tax = (gross - (p.Activity == Activity.Studying ? Math.Max(0, p.Income) : 0)) * c.TaxRate;
         double net = gross - tax;
         if (gross > 0)
         {
@@ -128,6 +150,12 @@ public static class EconomySystem
             {
                 saved = surplus * saveRate;
                 Record(ctx, p, "Everything else you spent", -ctx.Nominal(surplus - saved));
+            }
+            else if (p.Activity == Activity.Studying)
+            {
+                // What student aid does not cover is borrowed as a student loan, not taken from welfare.
+                saved = surplus;
+                p.StudentLoan += ctx.Nominal(-surplus);
             }
             else if (p.Money + Investments(p) > 0)
             {

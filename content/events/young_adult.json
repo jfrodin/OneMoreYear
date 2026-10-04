@@ -4,7 +4,7 @@
   {
     "id": "young_first_flat", "trigger": "milestone", "title": "Your own key",
     "text": "A one-room {flat} on the fourth floor without a lift. The kitchen is a cupboard with a hotplate. It is yours.",
-    "conditions": { "minAge": 18, "maxAge": 26, "livesWithParents": false, "notFlags": [ "first_flat" ] }, "cooldown": 50, "weight": 2,
+    "conditions": { "minAge": 18, "maxAge": 26, "livesWithParents": false, "hasPartner": false, "notFlags": [ "first_flat" ] }, "cooldown": 50, "weight": 2,
     "choices": [
       { "text": "Throw a party", "effects": [ { "type": "flag", "flag": "first_flat" }, { "type": "happiness", "amount": 6 }, { "type": "money", "amount": -800 } ],
         "result": "Twenty-two people in eighteen square metres. The neighbour complains. You do not care at all." },
@@ -62,16 +62,28 @@
   },
   {
     "id": "young_military_service", "countries": [ "sweden" ], "trigger": "milestone", "title": "The letter from the army",
-    "text": "A brown envelope: you are called for military service. Eleven months, starting in January.",
+    "text": "A brown envelope: you are called for military service. Eleven months in uniform, starting when you have finished school.",
     "conditions": { "minAge": 18, "maxAge": 20, "sex": "male", "maxYear": 2009, "notFlags": [ "military_service" ], "notJobs": [ "military" ] }, "cooldown": 50, "weight": 3,
     "choices": [
-      { "text": "Do your service", "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "happiness", "amount": -2 }, { "type": "trait_add", "trait": "resilient", "chance": 0.1 } ],
-        "result": "You learn to make a bed so tight a coin bounces off it, and to sleep in a ditch in November. Some of the men in your platoon you never see again. Two you see every year for the rest of your life." },
+      { "text": "Do your service", "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "flag", "flag": "service_waiting" } ],
+        "result": "You put the letter on the fridge. A medical, a few tests, and then a date when school is over." },
       { "text": "Apply for civilian service", "requires": { "traitsAny": [ "kind", "creative", "conflict_averse", "introvert" ] }, "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ],
         "result": "You spend a year at a hospital instead, pushing beds and talking to old men. It was the right choice." },
       { "text": "Try to get out of it", "chance": 0.3, "chanceTraits": { "manipulative": 0.2, "dishonest": 0.15 },
         "success": { "text": "A doctor finds something wrong with your knees. Your knees are fine.", "effects": [ { "type": "flag", "flag": "military_service" } ] },
-        "failure": { "text": "You report in January like everyone else, with a reputation.", "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "attribute", "kind": "fitness", "amount": 6 }, { "type": "happiness", "amount": -4 } ] } }
+        "failure": { "text": "The doctor has seen it all before. You will report like everyone else, with a reputation.", "effects": [ { "type": "flag", "flag": "military_service" }, { "type": "flag", "flag": "service_waiting" }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "young_service_year", "countries": [ "sweden" ], "trigger": "milestone", "title": "In uniform",
+    "text": "School is over, and the train north is full of young men with the same haircut. Eleven months of mud, marching and very early mornings. Everything else will have to wait.",
+    "conditions": { "minAge": 18, "maxAge": 23, "minEducation": "secondary", "flags": [ "service_waiting" ] }, "cooldown": 0,
+    "choices": [
+      { "text": "Throw yourself into it", "chance": 0.6, "chanceAttributes": { "fitness": 0.004 }, "chanceTraits": { "brave": 0.15, "lazy": -0.2 },
+        "success": { "text": "They make you a squad leader by spring. You learn to sleep in a ditch in November and to keep nine people going when they want to stop. Two of them you see every year for the rest of your life.", "effects": [ { "type": "flag_remove", "flag": "service_waiting" }, { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "trait_add", "trait": "resilient", "chance": 0.12 }, { "type": "memory", "kind": "service", "text": "The year in uniform", "impact": 14 } ] },
+        "failure": { "text": "A twisted ankle on the first long march, and weeks in the barracks with a book. You finish, just. Nobody makes you a leader of anything.", "effects": [ { "type": "flag_remove", "flag": "service_waiting" }, { "type": "attribute", "kind": "fitness", "amount": 3 }, { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Count the days", "effects": [ { "type": "flag_remove", "flag": "service_waiting" }, { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "happiness", "amount": -2 } ], "result": "A calendar inside your locker door with every day crossed out. You come out fitter, a little harder, and with a lot of very bad jokes." },
+      { "text": "Make friends for life", "effects": [ { "type": "flag_remove", "flag": "service_waiting" }, { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.08 }, { "type": "happiness", "amount": 3 } ], "result": "A boy from the far north, a boy from the city, and you. You meet every summer for forty years, and the stories get better each time." }
     ]
   },
   {
@@ -175,7 +187,7 @@
     "text": "You meet your old primary school teacher by the bananas. She remembers your name. She remembers the thing with the fire alarm.",
     "conditions": { "minAge": 20, "maxAge": 35 }, "cooldown": 30,
     "choices": [
-      { "text": "Apologise, twenty years late", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "She laughs and says you were her favourite. You do not believe her, but you take it." },
+      { "text": "Apologise, years too late", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "She laughs and says you were her favourite. You do not believe her, but you take it." },
       { "text": "Pretend not to know what she means", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "\"Of course,\" she says, in exactly the voice she used then." }
     ]
   }

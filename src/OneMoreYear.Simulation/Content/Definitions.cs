@@ -293,6 +293,8 @@ public sealed class ConditionDef
     public bool? HasPartner { get; set; }
     /// <summary>A mother or father still alive (for "your mother serves pie very loudly").</summary>
     public bool? ParentAlive { get; set; }
+    /// <summary>Finished this level this very year ("secondary", "university"): the graduation day belongs to that year.</summary>
+    public EducationLevel? GraduatedThisYear { get; set; }
     public bool? Married { get; set; }
     public PartnerStatus? PartnerStatus { get; set; }
     /// <summary>For other people: whether they and the player could be a couple (orientation, age 16+).</summary>
