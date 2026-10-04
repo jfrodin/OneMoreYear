@@ -398,7 +398,8 @@ public sealed class GameSession
             var probe = new PendingEvent { EventId = def.Id };
             if (target != null) probe.Roles["target"] = target.Id;
             if (target?.Addiction != null) probe.Words["habit"] = DarkSystem.What(target.Addiction);
-            int? chance = choice.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, choice, probe) * 100) : null;
+            // A chance on the button only when there is one way to do it; with several, each choice shows its own.
+            int? chance = def.Choices.Count == 1 && choice.Chance != null ? (int)Math.Round(EventSystem.SuccessChance(Ctx, choice, probe) * 100) : null;
             bool used = World.ActionsThisYear.Contains(ActionKey(def.Id, targetId));
             string? hint = choice.Hint == null ? null : TextFormatter.Format(Ctx, choice.Hint, probe);
             result.Add(new ActionView(def.Id, TextFormatter.Format(Ctx, def.Title, probe), hint, chance,
@@ -421,7 +422,8 @@ public sealed class GameSession
             if (def.Target == null || !Kinship.MatchesRole(World, player, target, def.Target.Role, distances)) return false;
             if (!EventSystem.Matches(Ctx, def.Target.Conditions, target, player)) return false;
         }
-        return EventSystem.Matches(Ctx, def.Choices[0].Requires, player, player);
+        // Possible when at least one of its choices is (camping when the sea is too dear).
+        return def.Choices.Any(c => EventSystem.Matches(Ctx, c.Requires, player, player));
     }
 
     private bool CanAdvanceOrActionsAllowed() => !NeedsSuccession && !GameOver;

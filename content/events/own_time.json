@@ -62,7 +62,7 @@
   },
   {
     "id": "own_get_fit", "trigger": "self", "category": "life", "title": "Get in shape",
-    "conditions": { "minAge": 16, "maxAge": 85 },
+    "conditions": { "minAge": 16, "maxAge": 85, "maxAttributes": { "fitness": 92 } },
     "choices": [
       { "text": "Run three times a week", "hint": "Free, and hard to keep up.", "chance": 0.6, "chanceTraits": { "lazy": -0.25, "ambitious": 0.1 },
         "success": { "text": "By autumn you run without thinking about it. Your knees have opinions; you ignore them.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "health", "amount": 3 } ] },

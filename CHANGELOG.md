@@ -2,6 +2,14 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.73.1 – 2026-10-04 · Already fit
+
+- "Get in shape" and "Practise a sport" are not offered when your fitness is already near the top.
+- A thing to do with several ways of doing it no longer shows one chance on its button (it was
+  the first way's chance). Each way shows its own when you choose.
+- A thing to do is offered as long as one of its ways is possible: a holiday when you can only
+  afford camping, not just the week by the sea.
+
 ## 0.73.0 – 2026-10-04 · Your time
 
 - **A Your Time tab.** Everything you can choose to do with the year now has a tab of its own,

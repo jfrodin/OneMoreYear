@@ -311,6 +311,8 @@ public sealed class ConditionDef
     public double? MaxMoney { get; set; }
     public double? MinHealth { get; set; }
     public double? MaxHealth { get; set; }
+    /// <summary>Only while an attribute is below this ("fitness": 90): no getting in shape when you are already there.</summary>
+    public Dictionary<string, double>? MaxAttributes { get; set; }
     public bool? OwnsHome { get; set; }
     public bool? HasInvestments { get; set; }
     /// <summary>Has the down payment and an income the bank accepts.</summary>
