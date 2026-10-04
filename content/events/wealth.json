@@ -1,0 +1,119 @@
+// What money does to a family, and what it can do for others (GiftSystem). Amounts in kronor of 2020.
+// No dashes.
+[
+  {
+    "id": "self_give_away", "trigger": "self", "category": "money", "title": "Give something to the world",
+    "conditions": { "minAge": 30, "minMoney": 2000000 },
+    "choices": [
+      { "text": "A scholarship in the family name", "hint": "About 2 million. Pays for young people's studies, every year, for ever.", "requires": { "minMoney": 2000000 }, "effects": [ { "type": "gift", "kind": "scholarship" } ], "result": "Lawyers, a board, a name on a letterhead." },
+      { "text": "A summer camp for children", "hint": "About 2.5 million. A week by a lake for children who never go anywhere.", "requires": { "minMoney": 2500000 }, "effects": [ { "type": "gift", "kind": "summer_camp" } ], "result": "Cabins, canoes and a cook who has done this for thirty years." },
+      { "text": "A foundation for research", "hint": "About 3 million. Pays for research into the illnesses that take people too early.", "requires": { "minMoney": 3000000 }, "effects": [ { "type": "gift", "kind": "foundation" } ], "result": "A board of doctors and a first round of applications, all of them urgent." },
+      { "text": "A park for the town", "hint": "About 6 million. Grass, oaks and benches with your name on a stone.", "requires": { "minMoney": 6000000 }, "effects": [ { "type": "gift", "kind": "park" } ], "result": "A field becomes a park. Children who are not born yet will learn to ride bikes there." },
+      { "text": "A library", "hint": "About 12 million. Your name over the door of the town's library.", "requires": { "minMoney": 12000000 }, "effects": [ { "type": "gift", "kind": "library" } ], "result": "Architects, a foundation stone, a pair of scissors and a ribbon." },
+      { "text": "A hospital wing", "hint": "About 25 million. A new children's wing, with your name on it.", "requires": { "minMoney": 25000000 }, "effects": [ { "type": "gift", "kind": "hospital_wing" } ], "result": "Two years of building. Then the first child is born in a room that did not exist." },
+      { "text": "A concert hall", "hint": "About 40 million. The grandest thing a family can give a town.", "requires": { "minMoney": 40000000 }, "effects": [ { "type": "gift", "kind": "concert_hall" } ], "result": "Acoustics engineers, arguments about seats, and an opening night in evening dress." },
+      { "text": "Not yet", "result": "The money stays in the bank, doing what money does." }
+    ]
+  },
+  {
+    "id": "gift_letter", "trigger": "situation", "title": "A letter",
+    "text": "A letter in careful handwriting. \"I would never have managed without {gift}. I wanted somebody in the family to know.\" It has helped {gift_helped} people in {gift_years} years.",
+    "choices": [
+      { "text": "Write back", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "memory", "kind": "gift_letter", "text": "The letter about {gift}", "impact": 15 } ], "result": "You write two pages. You tell them about {t.name}, who started it, and what kind of person {t.he} was." },
+      { "text": "Pin it on the fridge", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "It stays there for years. Visitors read it and go quiet." }
+    ]
+  },
+  {
+    "id": "gift_name_on_the_wall", "trigger": "situation", "title": "The name on the wall",
+    "text": "Somewhere in {gift_city} there is {gift}, and today you walk past it. The family name, in letters a foot high, {gift_years} years old.",
+    "choices": [
+      { "text": "Go in", "effects": [ { "type": "happiness", "amount": 5 } ], "result": "Nobody inside knows who you are. A child is reading on the floor in the corner. You stand there for a while and then leave, lighter." },
+      { "text": "Tell a stranger it was your family", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "vain", "chance": 0.03 } ], "result": "They are polite about it. You feel slightly foolish, and very proud." }
+    ]
+  },
+  {
+    "id": "estate_quarrel", "trigger": "situation", "title": "The estate",
+    "text": "{o.name} left a great deal of money, and {t.name} does not think the will is fair. Neither, if you are honest, do you, but for the opposite reason.",
+    "choices": [
+      { "text": "Split everything equally, whatever the will says", "effects": [ { "type": "money", "amount": -400000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 12, "mutual": true }, { "type": "trait_add", "trait": "generous", "chance": 0.05 } ], "result": "Less money than you expected, and a sibling who hugs you at the lawyer's office. You will be glad of that hug for thirty years." },
+      { "text": "Let the lawyers decide", "chance": 0.5,
+        "success": { "text": "Two years in court. You win. You do not speak to {t.name} again until a funeral.", "effects": [ { "type": "money", "amount": 300000 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 25, "mutual": true }, { "type": "memory", "kind": "estate_court", "text": "The court case with {t.name}", "impact": -20 } ] },
+        "failure": { "text": "Two years in court. You lose, and the lawyers win. The family splits into two sides that last a generation.", "effects": [ { "type": "money", "amount": -500000 }, { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 25, "mutual": true }, { "type": "memory", "kind": "estate_court", "text": "The court case with {t.name}", "impact": -25 } ] } },
+      { "text": "Take what the will says and stop talking about it", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "bitterness", "amount": 10 } ], "result": "It is what {o.name} wanted. {t.name} sends a card at Christmas, unsigned." }
+    ]
+  },
+  {
+    "id": "rich_hangers_on", "title": "A cousin with a plan",
+    "text": "A cousin you have not seen in fifteen years has heard you are doing well. They have a business plan, a nice suit and a lot of enthusiasm.",
+    "conditions": { "minAge": 30, "minMoney": 3000000 }, "cooldown": 8,
+    "choices": [
+      { "text": "Invest", "chance": 0.25,
+        "success": { "text": "To everyone's astonishment, it works. A small, solid company, and a cousin who calls you every birthday.", "effects": [ { "type": "money", "amount": 400000 }, { "type": "happiness", "amount": 4 } ] },
+        "failure": { "text": "The suit was the most solid part of it. The money is gone, and so is the cousin.", "effects": [ { "type": "money", "amount": -500000 }, { "type": "happiness", "amount": -4 } ] } },
+      { "text": "Say no, kindly", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "They take it well, to your face. The family hears a different version." }
+    ]
+  },
+  {
+    "id": "rich_spoiled_child", "title": "Everything",
+    "text": "{t.name} wants a car for {t.his} birthday. Not a used one. Everyone at {t.his} school has one, {t.he} says, which is not true.",
+    "conditions": { "minAge": 35, "minMoney": 3000000 }, "cooldown": 6,
+    "target": { "role": "child", "conditions": { "minAge": 16, "maxAge": 22 } },
+    "choices": [
+      { "text": "Buy it", "effects": [ { "type": "money", "amount": -350000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 }, { "type": "trait_add", "who": "target", "trait": "vain", "chance": 0.1 } ], "result": "{T.he} drives it into a lamp post in March. You buy another one. You are not sure what you are teaching {t.him}." },
+      { "text": "Make {t.him} work for half of it", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "respect", "amount": 6 }, { "type": "trait_add", "who": "target", "trait": "ambitious", "chance": 0.06 } ], "result": "A summer job, a lot of sulking, and in September a second hand car {t.he} washes every Sunday." }
+    ]
+  },
+  {
+    "id": "rich_advisor", "title": "The advisor",
+    "text": "A financial advisor with a soft voice and a beautiful office has a scheme that cannot lose. Several famous people are in it already, he says.",
+    "conditions": { "minAge": 30, "minMoney": 5000000 }, "cooldown": 12,
+    "choices": [
+      { "text": "Put in a third of everything", "chance": 0.3,
+        "success": { "text": "It does not lose. For once. You take your money out early, which saves you when it collapses two years later.", "effects": [ { "type": "money", "amount": 800000 } ] },
+        "failure": { "text": "It was a pyramid, and you were near the bottom. It is in the newspapers. So, briefly, is your name.", "effects": [ { "type": "money", "amount": -2000000 }, { "type": "happiness", "amount": -10 } ] } },
+      { "text": "Ask for the papers and a second opinion", "effects": [ { "type": "trait_add", "trait": "paranoid", "chance": 0.03 } ], "result": "The second opinion is short and contains a lot of question marks. You keep your money." }
+    ]
+  },
+  {
+    "id": "rich_prenup", "title": "The paper",
+    "text": "You are getting married, and your lawyer has drawn up a prenuptial agreement. Now someone has to show it to {p.name}.",
+    "conditions": { "minAge": 22, "minMoney": 5000000, "hasPartner": true, "married": false }, "cooldown": 30,
+    "choices": [
+      { "text": "Show it", "chance": 0.55, "chanceTraits": { "charming": 0.15 },
+        "success": { "text": "{p.name} reads it, signs it, and says \"I was going to suggest one.\" You are not sure whether that is love or wisdom. Possibly both.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "respect", "amount": 4 } ] },
+        "failure": { "text": "A silence that lasts all evening. {p.name} signs it in the end. It sits between you for years.", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "trust", "amount": -10 } ] } },
+      { "text": "Tear it up", "effects": [ { "type": "relation", "who": "partner", "to": "player", "dim": "closeness", "amount": 4 }, { "type": "trait_add", "trait": "loyal", "chance": 0.04 } ], "result": "Your lawyer sighs down the phone. You feel, for one evening, extremely romantic." }
+    ]
+  },
+  {
+    "id": "rich_old_friends", "title": "Different now",
+    "text": "Dinner with your oldest friends. When the bill comes, everyone looks at you. They are not wrong to, but it hurts a little.",
+    "conditions": { "minAge": 28, "minMoney": 3000000 }, "cooldown": 6,
+    "target": { "role": "friend" },
+    "choices": [
+      { "text": "Pay, and joke about it", "effects": [ { "type": "money", "amount": -6000 }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 2 } ], "result": "You pay. Everyone laughs. On the way home you wonder if they would still call you if you were poor." },
+      { "text": "Ask to split it, like before", "chance": 0.6,
+        "success": { "text": "{t.name} laughs and says \"thank God\". For one evening, nothing has changed.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true } ] },
+        "failure": { "text": "An awkward pause. Someone mutters something. Fewer invitations come after that.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "rich_threat", "content": [ "violence" ], "title": "Watched",
+    "text": "A car has been parked outside the children's school three days in a row. The police say there have been kidnappings of rich families' children abroad.",
+    "conditions": { "minAge": 30, "minMoney": 10000000, "minChildren": 1 }, "cooldown": 20, "weight": 0.4,
+    "choices": [
+      { "text": "Hire security", "effects": [ { "type": "money", "amount": -200000 }, { "type": "happiness", "amount": -3 } ], "result": "A quiet man drives the children to school now. Nothing ever happens. You never find out whether that was because of him." },
+      { "text": "Move somewhere smaller and quieter", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "A plainer house, an older car, no name on the gate. The children are furious. You sleep again." }
+    ]
+  },
+  {
+    "id": "rich_what_for", "title": "What for?",
+    "text": "You have more money than you will ever spend. One night you cannot sleep, and the question will not go away: what is it all for?",
+    "conditions": { "minAge": 45, "minMoney": 8000000 }, "cooldown": 15,
+    "choices": [
+      { "text": "For the children", "effects": [ { "type": "happiness", "amount": 2 } ], "result": "For the children, then. You hope it does them more good than harm. You are not sure." },
+      { "text": "For something bigger than us", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "generous", "chance": 0.08 } ], "result": "In the morning you call a lawyer and ask how one gives something away properly. It takes a long call." },
+      { "text": "For nothing. It is just a number", "effects": [ { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "gloomy", "chance": 0.04 } ], "result": "You lie awake until it is light. The number does not care either way." }
+    ]
+  }
+]

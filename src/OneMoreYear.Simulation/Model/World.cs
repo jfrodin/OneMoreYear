@@ -52,6 +52,7 @@ public sealed class World
     public List<Pet> Pets { get; set; } = new();
     public List<Business> Businesses { get; set; } = new();
     public List<Rental> Rentals { get; set; } = new();
+    public List<Gift> Gifts { get; set; } = new();
     /// <summary>The player's small wish for this year (WishSystem); null when there is none.</summary>
     public Wish? Wish { get; set; }
 
@@ -229,4 +230,21 @@ public sealed class Rental
     public List<int> Owners { get; set; } = new();
     public bool IsHeld => SoldYear == null;
     public string Name => $"the {Kind} in {City}";
+}
+
+/// <summary>Something the family gave away for good (GiftSystem): a foundation, a scholarship, a building.</summary>
+public sealed class Gift
+{
+    public int Id { get; set; }
+    /// <summary>foundation, scholarship, library, hospital_wing, concert_hall, park.</summary>
+    public string Kind { get; set; } = "";
+    /// <summary>"The Berglund Scholarship", "The Berglund Library".</summary>
+    public string Name { get; set; } = "";
+    public string City { get; set; } = "";
+    public int Year { get; set; }
+    public int DonorId { get; set; }
+    /// <summary>What it cost, reference kronor of 2020.</summary>
+    public double Amount { get; set; }
+    /// <summary>Foundations and scholarships: how many people it has helped so far.</summary>
+    public int Helped { get; set; }
 }

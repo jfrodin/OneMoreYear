@@ -39,6 +39,8 @@ public static class ReputationSystem
         var opinions = recent.Where(p => p.IsAlive)
             .SelectMany(c => Kinship.Parents(w, c).Where(pa => pa.IsAlive).Select(pa => w.Opinion(c.Id, pa.Id))).ToList();
         meters[Warmth] = opinions.Count >= 2 ? opinions.Average() : 0;
+        // Giving to others warms how people see the family, for a lifetime or two.
+        meters[Warmth] += ctx.World.Gifts.Count(g => ctx.Year - g.Year < 60) * 6;
         // Notoriety: convictions and secrets that came out, per ten adults.
         int scandals = recent.Sum(p => p.CriminalRecord.Count)
                        + w.Secrets.Count(s => s.Revealed && s.Kind is "affair" or "murder" && recent.Any(p => p.Id == s.SubjectId));

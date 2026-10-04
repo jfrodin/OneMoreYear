@@ -2,6 +2,27 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.68.0 – 2026-10-04 · What money is for
+
+- **Giving it away.** With money in the bank, the money tab offers "Give something to the world": a
+  scholarship, a summer camp for children, a foundation for research, a park, a library, a
+  hospital wing or a concert hall, in the family name. Scholarships, camps and foundations help
+  people every year in the chronicle, long after the donor is gone. Decades later a letter arrives
+  from someone it helped, or you walk past the family name on a wall. Gifts warm the family's
+  reputation and are on the last page.
+- **What money does to a family.** Children who grow up rich, unless they are raised strictly, lose
+  some sense of duty and self control, and some grow up vain or greedy ("growing up spoiled").
+- When a rich parent dies and you have siblings, the estate can end in a quarrel: share it,
+  fight it in court, or take what the will says.
+- Ten events for the rich: a cousin with a business plan, a car for a sixteen year old, an advisor
+  with a scheme that cannot lose, the prenuptial agreement, old friends and the bill, a car outside
+  the school, and a night asking what it is all for.
+- Two achievements: a name over the door (rare) and a gift still helping people after a hundred
+  years (legendary).
+- **Fixed: actions with several choices always took the first one.** Taking up a hobby always gave
+  cooking, a pet was always a dog, a business always a bakery. They are now decisions in the
+  year's list, where you choose.
+
 ## 0.67.0 – 2026-10-03 · Playtest 5, evening
 
 - **Helping someone with an addiction.** When your partner, a child, a parent or a sibling starts

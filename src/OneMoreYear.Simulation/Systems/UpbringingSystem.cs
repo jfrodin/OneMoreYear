@@ -14,10 +14,14 @@ public static class UpbringingSystem
     public const string Warm = "warm", Strict = "strict", Free = "free", Distant = "distant";
     public static readonly string[] Styles = { Warm, Strict, Free, Distant };
 
+    /// <summary>A childhood in a family worth this much (reference kronor) is a rich one.</summary>
+    public const double RichChildhood = 8_000_000;
+    public const string GrewUpRich = "grew_up_rich";
+
     public static string Describe(string style) => style switch
     {
         Warm => "Warm: time, hugs and patience. Children grow kind and close to you.",
-        Strict => "Strict: rules, chores and consequences. Children grow responsible, and a little afraid.",
+        Strict => "Strict: rules, chores and consequences. Children grow responsible, and a little afraid. In a rich home, it is what keeps them from being spoiled.",
         Free => "Free: few rules, a lot of trust. Children grow independent, and sometimes wild.",
         _ => "Distant: busy, tired or elsewhere. Children grow up anyway, mostly on their own.",
     };
@@ -56,6 +60,17 @@ public static class UpbringingSystem
             Free => (0.8, -0.5, -1.2, 1.0),
             _ => (-1.5, -1.0, -1.2, -1.5),
         };
+        // Growing up with everything: unless someone is strict about it, duty and self control slip.
+        double familyWorth = Kinship.Parents(ctx.World, child).Where(p => p.IsAlive).Sum(p => ctx.Real(EconomySystem.NetWorth(ctx, p))) / ctx.Country.ContentMoneyScale;
+        if (familyWorth >= RichChildhood)
+        {
+            child.Flags.Add(GrewUpRich);
+            if (style != Strict)
+            {
+                responsibility -= 1.1;
+                control -= 0.6;
+            }
+        }
         child.Empathy = Math.Clamp(child.Empathy + empathy + rng.Gaussian(0, 1), -50, 50);
         child.Responsibility = Math.Clamp(child.Responsibility + responsibility + rng.Gaussian(0, 1), -50, 50);
         child.SelfControl = Math.Clamp(child.SelfControl + control + rng.Gaussian(0, 1), -50, 50);
@@ -84,6 +99,12 @@ public static class UpbringingSystem
         if (p.SelfControl > 0) Maybe("resilient", p.SelfControl, 18); else Maybe("impulsive", p.SelfControl, 15);
         if (p.SelfControl < -25) Maybe("addictive", p.SelfControl * 0.5, 15);
         if (p.Responsibility > 25) Maybe("ambitious", p.Responsibility, 25);
+        // A rich childhood without limits leaves its own marks.
+        if (p.Flags.Contains(GrewUpRich) && p.Responsibility < 5)
+        {
+            if (rng.Chance(0.3)) PersonFactory.TryAddTrait(ctx, p, "vain");
+            if (rng.Chance(0.2)) PersonFactory.TryAddTrait(ctx, p, "greedy");
+        }
     }
 
     /// <summary>A short line for the child's page: what the upbringing is doing to them so far.</summary>
@@ -94,6 +115,7 @@ public static class UpbringingSystem
         else if (child.Empathy <= -10) parts.Add("cold");
         if (child.Responsibility >= 10) parts.Add("dutiful");
         else if (child.Responsibility <= -10) parts.Add("careless");
+        if (child.Flags.Contains(GrewUpRich) && child.Responsibility < 0) parts.Add("spoiled");
         if (child.SelfControl >= 10) parts.Add("steady");
         else if (child.SelfControl <= -10) parts.Add("wild");
         return parts.Count == 0 ? null : "Growing up " + string.Join(", ", parts);

@@ -1146,6 +1146,15 @@ public partial class GameScreen : Control
         var title = S.Actions(targetId).FirstOrDefault(a => a.Id == actionId)?.Title ?? "";
         bool wishKept = S.Wish() is { Kept: true };
         var result = S.PerformAction(actionId, targetId);
+        if (result.Length == 0)
+        {
+            // A choice to make: it waits in the year's list.
+            _main.AutoSave();
+            _tabs.CurrentTab = TabYear;
+            RefreshAll();
+            FocusDefault();
+            return;
+        }
         if (!wishKept && S.Wish() is { Kept: true }) result += "\n\nIt was what you wished for this year.";
         _main.AutoSave();
         _main.ShowMessage(title, result, () =>

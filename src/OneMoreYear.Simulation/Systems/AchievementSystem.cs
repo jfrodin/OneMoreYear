@@ -51,6 +51,8 @@ public static class AchievementSystem
         ["full_circle"] = ctx => ctx.World.Feats.Contains("full_circle"),
         ["inherited_dream"] = ctx => ctx.World.Feats.Contains("inherited_dream"),
         ["head_of_government"] = ctx => Played(ctx).Any(p => p.Flags.Contains("top:politics")),
+        ["name_on_a_building"] = ctx => ctx.World.Gifts.Any(g => g.Kind is "library" or "hospital_wing" or "concert_hall" && ctx.World.PlayedIds.Contains(g.DonorId)),
+        ["hundred_year_gift"] = ctx => !ctx.World.GameOver && ctx.World.Gifts.Any(g => GiftSystem.Find(g.Kind)?.Ongoing == true && ctx.World.PlayedIds.Contains(g.DonorId) && ctx.Year - g.Year >= 100),
         ["household_name"] = ctx => Played(ctx).Any(p => p.PeakFame >= FameSystem.Household),
         ["famous_family"] = ctx => Played(ctx).Count(p => p.PeakFame >= FameSystem.National) >= 3,
         ["wish_a_year"] = ctx => Played(ctx).Any(p => p.WishesKept >= 40),

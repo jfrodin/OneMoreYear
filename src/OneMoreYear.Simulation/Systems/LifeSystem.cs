@@ -225,6 +225,14 @@ public static class LifeSystem
             return;
         }
 
+        // A large estate and more than one child: the player's siblings may not agree on what is fair.
+        var heirPlayer = w.Player;
+        if (heirPlayer.IsAlive && heirPlayer.ParentIds.Contains(dead.Id) && heirPlayer.Age(ctx.Year) >= 20
+            && ctx.Real(estate) / ctx.Country.ContentMoneyScale >= 3_000_000
+            && Kinship.Children(w, dead).FirstOrDefault(c => c.IsAlive && c.Id != heirPlayer.Id && c.Age(ctx.Year) >= 18) is { } rival
+            && ctx.Rng.Chance(0.6))
+            EventSystem.QueueSituation(ctx, "estate_quarrel", new() { ["target"] = rival.Id, ["other"] = dead.Id });
+
         var shares = new Dictionary<int, double>();
         var spouse = w.TryGet(spouseId) is { IsAlive: true } s ? s : null;
         var kids = Kinship.Children(w, dead).Where(k => k.IsAlive && !dead.Disinherited.Contains(k.Id)).ToList();

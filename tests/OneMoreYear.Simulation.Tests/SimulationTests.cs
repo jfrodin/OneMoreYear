@@ -1122,6 +1122,32 @@ public class CountryTests
     }
 
     [Fact]
+    public void Actions_with_several_choices_become_decisions_and_gifts_last()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 47, StartYear = 1970 });
+        var bot = new AutoPlayer(47, useActions: false);
+        for (int i = 0; i < 35 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        foreach (var e in s.World.PendingEvents) e.Resolved = true;
+        p.Money += s.Ctx.NominalRef(20_000_000);
+
+        // Taking up a hobby is a choice, not always the first one on the list.
+        Assert.Equal("", s.PerformAction("self_take_up_hobby", null));
+        var choice = s.CurrentEvents().Single(e => !e.Resolved);
+        var music = choice.Choices.Single(c => c.Text == "Music");
+        s.Choose(choice.Uid, music.Index);
+        Assert.Equal("music", p.Hobby);
+
+        // A library in the family name, and a scholarship that helps people every year after.
+        Assert.Contains("Library", GiftSystem.Give(s.Ctx, p, "library"));
+        GiftSystem.Give(s.Ctx, p, "scholarship");
+        Assert.Equal(2, s.World.Gifts.Count);
+        for (int i = 0; i < 5; i++) { s.World.Year++; GiftSystem.Update(s.Ctx); }
+        Assert.True(s.World.Gifts.Single(g => g.Kind == "scholarship").Helped > 0);
+        Assert.NotNull(GiftSystem.Epilogue(s.Ctx));
+    }
+
+    [Fact]
     public void Someone_close_with_an_addiction_can_be_helped()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 43, StartYear = 1970 });

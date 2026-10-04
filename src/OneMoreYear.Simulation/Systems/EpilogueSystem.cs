@@ -42,6 +42,7 @@ public static class EpilogueSystem
         int dreams = played.Count(p => p.DreamState == DreamState.Fulfilled);
         if (dreams > 0)
             sentences.Add(dreams == 1 ? "One of them got exactly what they dreamed of." : $"{dreams} of them got what they dreamed of.");
+        if (GiftSystem.Epilogue(ctx) is { } given) sentences.Add(given);
         if (w.Heirlooms.FirstOrDefault(h => h.OwnerId != null && !h.Interrupted) is { } kept)
             sentences.Add($"{kept.Name} is still in the family.");
 

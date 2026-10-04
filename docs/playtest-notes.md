@@ -456,3 +456,33 @@ Flickvän har problem med droger, kanske borde kunna göra något mer än bara f
 _playtest-saves/2026-10-03_232210.png · playtest-saves/2026-10-03_232210.json_
 
 _Notes above were processed on 2026-10-03 (playtest 5, evening): no call up for military service while already in the military, and someone close with an addiction can now be helped (a situation when you find out, and a "Help ... stop" action every year) – see CHANGELOG 0.67.0._
+
+### 2026-10-04 10:09 · Screen: TitleScreen
+
+Menyn ä'ndrar storlek beroende på om sverige elerl usa väljs.
+
+_playtest-saves/2026-10-04_100913.png_
+
+### 2026-10-04 10:10 · Screen: TitleScreen
+
+The records years? Vad betyder det?
+
+_playtest-saves/2026-10-04_101002.png_
+
+### 2026-10-04 10:11 · Screen: TitleScreen  ·  a dialog
+
+Vi kan itne bara ha 3 slots att spela på? Varför har fi ens en begränsning?
+
+_playtest-saves/2026-10-04_101123.png_
+
+### 2026-10-04 10:12 · v0.67.0  ·  2020  ·  Amelia Jones, 0  ·  This Year  ·  seed 57WAHNV7
+
+Hur påverkar health, happiness etc spelets gång. Har det någon betydelse?
+
+_playtest-saves/2026-10-04_101212.png · playtest-saves/2026-10-04_101212.json_
+
+### 2026-10-04 10:12 · v0.67.0  ·  2020  ·  Amelia Jones, 0  ·  This Year  ·  seed 57WAHNV7
+
+Jag är itne helt säker påa tt spelets utseende ska skifta med åren? Jag fatatr grejen, men det kanske ska gå att välja? Typ skiftande, elelr så välje rman en specifik stil man gillar. Vissa kan uppleva vissa teman som jobbiga tänker jag.
+
+_playtest-saves/2026-10-04_101259.png · playtest-saves/2026-10-04_101259.json_

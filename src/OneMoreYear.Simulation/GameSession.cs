@@ -190,6 +190,7 @@ public sealed class GameSession
         EmigrationSystem.Update(ctx);
         BusinessSystem.Update(ctx);
         RentalSystem.Update(ctx);
+        GiftSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);
 
@@ -441,6 +442,13 @@ public sealed class GameSession
                       ?? throw new InvalidOperationException("The action could not be performed.");
         World.ActionPoints--;
         World.ActionsThisYear.Add(ActionKey(actionId, targetId));
+        // More than one way to do it (which hobby, which pet, which business): it becomes a decision
+        // in the year's list, and the player chooses there. Returns "" for that.
+        if (def.Choices.Count > 1)
+        {
+            World.PendingEvents.Add(pending);
+            return "";
+        }
         string intro = string.IsNullOrWhiteSpace(def.Text) ? "" : TextFormatter.Format(Ctx, def.Text, pending) + " ";
         return (intro + EventSystem.Resolve(Ctx, pending, 0)).Trim();
     }
