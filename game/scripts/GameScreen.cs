@@ -1542,7 +1542,7 @@ public partial class GameScreen : Control
         bool isPlayer = id == S.Player.Id;
 
         var header = Ui.HBox(16);
-        header.AddChild(Portrait.Create(S.Portrait(p.Id), isPlayer, 96));
+        header.AddChild(AlbumBits.Print(Portrait.Create(S.Portrait(p.Id), false, 104, square: true), new Vector2(104, 104), p.Id % 2 == 0 ? -2.5f : 2f));
         var col = Ui.VBox(3);
         col.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         col.AddChild(Ui.Label(p.Name, 28, UiTheme.Text, wrap: true));

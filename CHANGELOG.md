@@ -2,6 +2,25 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.75.0 – 2026-10-04 · On the desk
+
+- **Everything lies on a desk.** Dark wood with a grain under a lamp, under the album, the title
+  page, the chapter pages, the choice of heir and the family's last page.
+- **The title screen** is a sheet of the album with the title and menu, and the family's photographs
+  scattered on the desk beside it.
+- **Your page in the album:** your photograph glued in with tape, your name with your age written in
+  by hand, money and home as handwritten notes, and quiet ink links instead of buttons at the bottom.
+- **The year's moments are slips of paper** taped onto the page; an open question has a coloured
+  edge. What happened this year is written straight onto the page.
+- **Buttons are cards with a little depth** that lift when you point at them. Scroll bars are a thin
+  pencil line. Dialogs are sheets of paper taped down over the album.
+- **Achievements** arrive as a note with a medal on its ribbon.
+- **Portraits:** kinder at rest (a slight smile instead of a frown), a fine ink line round face and
+  hair, strands in the hair instead of a helmet, softer locks, a smooth shadow towards the edge,
+  a thin frame instead of the thick ring, square prints in the album, and children in everyday
+  clothes on the photographs.
+- Small fixes: "born in , 1970" when the city is unknown, "Died of , aged 40" when the cause is.
+
 ## 0.74.1 – 2026-10-04 · Inside the lines
 
 - The left page is wide enough for everything on it, at any window size, and nothing can run over

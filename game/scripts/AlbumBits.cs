@@ -141,3 +141,32 @@ public partial class PaperSlip : PanelContainer
         DrawSetTransform(Vector2.Zero, 0, Vector2.One);
     }
 }
+
+/// <summary>A small medal on a ribbon, in the colour of how rare the achievement is.</summary>
+public partial class Medal : Control
+{
+    public Color Colour { get; set; } = UiTheme.Accent;
+
+    public Medal() { CustomMinimumSize = new Vector2(54, 64); MouseFilter = MouseFilterEnum.Ignore; }
+
+    public override void _Draw()
+    {
+        var c = new Vector2(Size.X / 2, Size.Y - 24);
+        // The ribbon, two tails behind the medal.
+        DrawColoredPolygon(new[] { new Vector2(c.X - 14, 0), new Vector2(c.X - 2, 0), new Vector2(c.X + 4, c.Y - 6), new Vector2(c.X - 8, c.Y - 2) }, Colour.Darkened(0.25f));
+        DrawColoredPolygon(new[] { new Vector2(c.X + 2, 0), new Vector2(c.X + 14, 0), new Vector2(c.X + 8, c.Y - 2), new Vector2(c.X - 4, c.Y - 6) }, Colour.Darkened(0.1f));
+        DrawCircle(c + new Vector2(1, 2), 21, new Color(0, 0, 0, 0.18f));
+        DrawCircle(c, 21, new Color("c9a24a"));
+        DrawCircle(c, 16, new Color("e2c36e"));
+        DrawArc(c, 16, 0, Mathf.Tau, 32, new Color("a8822a"), 1.5f, true);
+        // A star.
+        var star = new Vector2[10];
+        for (int i = 0; i < 10; i++)
+        {
+            float r = i % 2 == 0 ? 9 : 4;
+            float a = -Mathf.Pi / 2 + i * Mathf.Pi / 5;
+            star[i] = c + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * r;
+        }
+        DrawColoredPolygon(star, new Color("a8822a"));
+    }
+}

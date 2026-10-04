@@ -63,8 +63,13 @@ public partial class Main
         var text = Ui.Label(a.Text, 15, UiTheme.Muted, wrap: true);
         text.CustomMinimumSize = new Vector2(400, 0);
         box.AddChild(text);
-        var card = Ui.Card(box, UiTheme.Panel, TierColor(a.Tier));
+        // A note slipped onto the desk, with a medal on its ribbon.
+        var row = Ui.HBox(14);
+        row.AddChild(new Medal { Colour = TierColor(a.Tier) });
+        row.AddChild(box);
+        var card = new PaperSlip(false, a.Name.GetHashCode()) { Content = row };
         card.MouseFilter = MouseFilterEnum.Ignore;
+        Ui.PassMouse(card);
         _toastLayer.AddChild(card);
         card.SetAnchorsPreset(LayoutPreset.TopRight);
         card.ResetSize();
