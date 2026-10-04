@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.69.0 – 2026-10-04 · The family seat
+
+- **A house in the country, for the family.** With a fortune in the bank, the money tab offers an old
+  country house ("Berglundsgården", "The Holm Place"). It costs a great deal, all at once, and every
+  year to keep up; without upkeep it falls apart. The summers there bring children and
+  grandchildren closer. When the owner dies it goes whole to one heir, who decides whether to keep
+  it. Selling it makes the family bitter. A rich relative may buy one for the family too.
+- Seven events: the inheritance, the roof, the summer weekend with twenty people and one kitchen,
+  who will take it one day, a developer's offer, the old oak that falls in a storm (and the table
+  made from it, a new heirloom), and cold rooms when the money runs out.
+- A legendary achievement for keeping the seat seventy five years through three played lives, and
+  the last page remembers how long it stayed.
+- The hundred year gift now also needs giving to become a family habit: three of the lives you play.
+
 ## 0.68.0 – 2026-10-04 · What money is for
 
 - **Giving it away.** With money in the bank, the money tab offers "Give something to the world": a

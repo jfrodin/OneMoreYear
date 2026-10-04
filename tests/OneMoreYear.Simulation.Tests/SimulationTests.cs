@@ -1148,6 +1148,30 @@ public class CountryTests
     }
 
     [Fact]
+    public void The_family_seat_costs_upkeep_and_passes_down()
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 53, StartYear = 1960 });
+        var bot = new AutoPlayer(53, useActions: false);
+        for (int i = 0; i < 40 && bot.PlayYear(s); i++) { }
+        var p = s.Player;
+        p.Money += s.Ctx.NominalRef(EstateSystem.Price(s.Ctx) * 2);
+        Assert.Null(EstateSystem.CannotBuy(s.Ctx, p));
+        s.BuyEstate();
+        var seat = s.World.Estate!;
+        Assert.Equal(p.Id, seat.OwnerId);
+        Assert.True(s.Estate()!.Yours);
+        double money = p.Money;
+        s.World.Year++;
+        EstateSystem.Update(s.Ctx);
+        Assert.True(p.Money < money, "upkeep is paid every year");
+
+        var heir = EstateSystem.Heir(s.Ctx, p);
+        LifeSystem.Die(s.Ctx, p, "an accident");
+        if (heir != null) Assert.Equal(heir.Id, seat.OwnerId);
+        else Assert.False(seat.IsHeld);
+    }
+
+    [Fact]
     public void Someone_close_with_an_addiction_can_be_helped()
     {
         var s = GameSession.NewGame(new NewGameOptions { Seed = 43, StartYear = 1970 });

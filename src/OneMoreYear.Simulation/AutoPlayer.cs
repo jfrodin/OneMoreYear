@@ -65,6 +65,9 @@ public sealed class AutoPlayer
         // Now and then, something done to the home.
         if (_useActions && !session.NeedsSuccession && _rng.Chance(0.08) && session.HomeProjects().FirstOrDefault(h => h.DoneYear == null && h.CanAfford) is { } project)
             session.DoHomeProject(project.Id);
+        // A family seat, if there is a fortune for it.
+        if (_useActions && !session.NeedsSuccession && _rng.Chance(0.1) && session.Estate() is { Since: 0, CannotBuy: null })
+            session.BuyEstate();
         // Rarely, a flat to let, when there is money for it.
         if (_useActions && !session.NeedsSuccession && _rng.Chance(0.04) && session.RentalOptions().FirstOrDefault(o => o.CanAfford) is { } let)
             session.BuyRental(let.TypeId);

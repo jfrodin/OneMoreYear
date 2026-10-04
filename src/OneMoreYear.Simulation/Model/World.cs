@@ -53,6 +53,8 @@ public sealed class World
     public List<Business> Businesses { get; set; } = new();
     public List<Rental> Rentals { get; set; } = new();
     public List<Gift> Gifts { get; set; } = new();
+    /// <summary>The family seat, if there is one (EstateSystem).</summary>
+    public FamilyEstate? Estate { get; set; }
     /// <summary>The player's small wish for this year (WishSystem); null when there is none.</summary>
     public Wish? Wish { get; set; }
 
@@ -247,4 +249,20 @@ public sealed class Gift
     public double Amount { get; set; }
     /// <summary>Foundations and scholarships: how many people it has helped so far.</summary>
     public int Helped { get; set; }
+}
+
+/// <summary>The family's country house (EstateSystem). Money in reference kronor of 2020.</summary>
+public sealed class FamilyEstate
+{
+    /// <summary>"Berglundsgården", "Holm Hall".</summary>
+    public string Name { get; set; } = "";
+    public string City { get; set; } = "";
+    public int BoughtYear { get; set; }
+    public int OwnerId { get; set; }
+    public double Value { get; set; }
+    /// <summary>0 to 100: how well kept it is. Upkeep holds it; neglect lets it go.</summary>
+    public int Condition { get; set; } = 80;
+    public List<int> Owners { get; set; } = new();
+    public int? SoldYear { get; set; }
+    public bool IsHeld => SoldYear == null;
 }

@@ -191,6 +191,7 @@ public sealed class GameSession
         BusinessSystem.Update(ctx);
         RentalSystem.Update(ctx);
         GiftSystem.Update(ctx);
+        EstateSystem.Update(ctx);
         RelationshipSystem.UpdateYear(ctx);
         SocialSystem.Update(ctx);
 
@@ -1066,6 +1067,26 @@ public sealed class GameSession
     }
 
     public string DoHomeProject(string id) => HomeProjectSystem.Do(Ctx, Player, id);
+
+    /// <summary>The family seat as the money tab shows it, or the offer to buy one (null when neither applies).</summary>
+    public EstateView? Estate()
+    {
+        var w = World;
+        if (EstateSystem.Held(w) is { } e)
+        {
+            var owner = w.Get(e.OwnerId);
+            return new EstateView(e.Name, e.BoughtYear, e.Owners.Count, EconomySystem.Format(Ctx, Ctx.NominalRef(e.Value)), e.Condition,
+                e.OwnerId == Player.Id, owner.FirstName, null);
+        }
+        if (!Player.IsAlive || Player.Age(Year) < 30) return null;
+        double price = EstateSystem.Price(Ctx);
+        // Offered once there is real money; until then it would only be a reminder of what is out of reach.
+        if (Player.Money < Ctx.NominalRef(price * 0.5)) return null;
+        return new EstateView(EstateSystem.Name(Ctx, Player), 0, 0, EconomySystem.Format(Ctx, Ctx.NominalRef(price * 1.03)), 0, false, "", EstateSystem.CannotBuy(Ctx, Player));
+    }
+
+    public string BuyEstate() => EstateSystem.Buy(Ctx, Player);
+    public string SellEstate() => EstateSystem.Sell(Ctx, Player);
 
     /// <summary>Homes the player lets out (RentalSystem).</summary>
     public IReadOnlyList<RentalView> Rentals() => RentalSystem.OwnedBy(World, Player).Select(r => new RentalView(r.Id,

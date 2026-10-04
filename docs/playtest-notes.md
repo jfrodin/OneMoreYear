@@ -486,3 +486,57 @@ _playtest-saves/2026-10-04_101212.png · playtest-saves/2026-10-04_101212.json_
 Jag är itne helt säker påa tt spelets utseende ska skifta med åren? Jag fatatr grejen, men det kanske ska gå att välja? Typ skiftande, elelr så välje rman en specifik stil man gillar. Vissa kan uppleva vissa teman som jobbiga tänker jag.
 
 _playtest-saves/2026-10-04_101259.png · playtest-saves/2026-10-04_101259.json_
+
+### 2026-10-04 10:15 · v0.67.0  ·  2025  ·  Amelia Jones, 5  ·  People  ·  seed 57WAHNV7  ·  a dialog
+
+Photo album, vem är de tpå bilderna? För det är inegn av barnen elelr pappan?
+
+_playtest-saves/2026-10-04_101526.png · playtest-saves/2026-10-04_101526.json_
+
+### 2026-10-04 10:15 · v0.67.0  ·  2025  ·  Amelia Jones, 5  ·  People  ·  seed 57WAHNV7
+
+När man klicka rpå pappan sidan så hamnar man en bit ner. Precis osm jag nämnde tidigare?
+
+_playtest-saves/2026-10-04_101553.png · playtest-saves/2026-10-04_101553.json_
+
+### 2026-10-04 10:16 · v0.67.0  ·  2025  ·  Amelia Jones, 5  ·  People  ·  seed 57WAHNV7
+
+Samma sak med Samantha Perez. Kolla inenhållet och avgör varför man inte hamnar lkängst upp på deras sida
+
+_playtest-saves/2026-10-04_101651.png · playtest-saves/2026-10-04_101651.json_
+
+### 2026-10-04 10:20 · v0.67.0  ·  2025  ·  Amelia Jones, 5  ·  This Year  ·  seed 57WAHNV7
+
+whole class stands with a hadn on it's heart? Är hela klassen en enhet ller vadÅ?
+
+_playtest-saves/2026-10-04_102009.png · playtest-saves/2026-10-04_102009.json_
+
+### 2026-10-04 10:21 · v0.67.0  ·  2027  ·  Amelia Jones, 7  ·  This Year  ·  seed 57WAHNV7
+
+Rätt säker påa tt jag valde "keep it" och så köpte jag godis för det automatiskt?
+
+_playtest-saves/2026-10-04_102121.png · playtest-saves/2026-10-04_102121.json_
+
+### 2026-10-04 10:22 · v0.67.0  ·  2027  ·  Amelia Jones, 7  ·  This Year  ·  seed 57WAHNV7
+
+Känns som att varje gång man gör val så liksom ändras storleken på fönstret. Det gör att altl känns som en jävla websid aoch iten ett spel. Också jättesvårt att liksom följa med vad som händer i och emd valen när allt bara försvinern till en blå mening som egentligen itne gör något. Behöver göras om fundementalt tror jag
+
+_playtest-saves/2026-10-04_102215.png · playtest-saves/2026-10-04_102215.json_
+
+### 2026-10-04 10:22 · v0.67.0  ·  2028  ·  Amelia Jones, 8  ·  This Year  ·  seed 57WAHNV7
+
+Bara ett val, som jag måste välja? Märkligt.
+
+_playtest-saves/2026-10-04_102255.png · playtest-saves/2026-10-04_102255.json_
+
+### 2026-10-04 10:23 · v0.67.0  ·  2029  ·  Amelia Jones, 9  ·  This Year  ·  seed 57WAHNV7
+
+Samma här. hamnar längre ned på sidan när det finn smycke tinnehåll. Så får det itne vara tycker jag?
+
+_playtest-saves/2026-10-04_102348.png · playtest-saves/2026-10-04_102348.json_
+
+### 2026-10-04 10:25 · v0.67.0  ·  2029  ·  Amelia Jones, 9  ·  This Year  ·  seed 57WAHNV7
+
+Igen efter ett val hamnar jag längst ner på sdian. Detta behöver verkligen prioriteras snart så vi blri av med sånt här beteende
+
+_playtest-saves/2026-10-04_102503.png · playtest-saves/2026-10-04_102503.json_

@@ -275,7 +275,7 @@ public static class EconomySystem
     public static double SaveRate(SimContext ctx, Person p) => Math.Clamp(0.3 - ctx.Mod(p, "spending"), 0.05, 0.6);
 
     /// <summary>Net worth in nominal kronor, including home equity.</summary>
-    public static double NetWorth(SimContext ctx, Person p) => p.Money + Investments(p) + HomeEquity(p) + p.CottageValue + RentalSystem.Equity(ctx, p);
+    public static double NetWorth(SimContext ctx, Person p) => p.Money + Investments(p) + HomeEquity(p) + p.CottageValue + RentalSystem.Equity(ctx, p) + EstateSystem.Equity(ctx, p);
 
     /// <summary>Everything invested: the simple funds and shares, and the player'"'"'s own holdings.</summary>
     public static double Investments(Person p) => p.Funds + p.Stocks + InvestmentSystem.Value(p);

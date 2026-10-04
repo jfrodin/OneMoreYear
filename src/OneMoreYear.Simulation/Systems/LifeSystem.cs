@@ -204,6 +204,7 @@ public static class LifeSystem
         var w = ctx.World;
         // Homes let out go to one heir whole, before the rest is shared.
         RentalSystem.OnDeath(ctx, dead);
+        EstateSystem.OnDeath(ctx, dead);
         // A partner who lived there keeps the home (and the loan); otherwise it is sold with the rest.
         if (dead.HomeValue > 0 && w.TryGet(spouseId) is { IsAlive: true, HomeValue: <= 0 } widow && widow.CityId == dead.CityId)
         {

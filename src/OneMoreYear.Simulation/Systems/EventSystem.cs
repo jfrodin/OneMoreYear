@@ -127,6 +127,7 @@ public static class EventSystem
         // An event about the family pet names it.
         if (def.Conditions?.RunsBusiness == true && BusinessSystem.OwnedBy(w, player).FirstOrDefault() is { } business) BusinessSystem.Fill(ctx, pending, business);
         if (def.Conditions?.OwnsRental == true && RentalSystem.OwnedBy(w, player).ToList() is { Count: > 0 } rentals) RentalSystem.Fill(ctx, pending, rentals[ctx.Rng.Next(rentals.Count)]);
+        if (def.Conditions?.OwnsEstate == true && EstateSystem.Held(w) is { } seat) EstateSystem.Fill(ctx, pending, seat);
         if (def.Conditions?.Pet is { } petKind && petKind != "none" && PetSystem.Matching(ctx, player, petKind) is { } pet) PetSystem.Fill(ctx, pending, pet);
         return pending;
     }
@@ -206,6 +207,7 @@ public static class EventSystem
         if (c.Hobby is { } wantHobby && p.Hobby != wantHobby) return false;
         if (c.RunsBusiness is { } runs && BusinessSystem.RunsBusiness(w, p) != runs) return false;
         if (c.OwnsRental is { } letting && RentalSystem.OwnsRental(w, p) != letting) return false;
+        if (c.OwnsEstate is { } seat && EstateSystem.Owns(w, p) != seat) return false;
         if (c.MinFame is { } minFame && p.Fame < minFame) return false;
         if (c.MaxFame is { } maxFame && p.Fame > maxFame) return false;
         if (c.MinPeakFame is { } peak && p.PeakFame < peak) return false;

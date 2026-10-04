@@ -52,7 +52,9 @@ public static class AchievementSystem
         ["inherited_dream"] = ctx => ctx.World.Feats.Contains("inherited_dream"),
         ["head_of_government"] = ctx => Played(ctx).Any(p => p.Flags.Contains("top:politics")),
         ["name_on_a_building"] = ctx => ctx.World.Gifts.Any(g => g.Kind is "library" or "hospital_wing" or "concert_hall" && ctx.World.PlayedIds.Contains(g.DonorId)),
-        ["hundred_year_gift"] = ctx => !ctx.World.GameOver && ctx.World.Gifts.Any(g => GiftSystem.Find(g.Kind)?.Ongoing == true && ctx.World.PlayedIds.Contains(g.DonorId) && ctx.Year - g.Year >= 100),
+        ["hundred_year_gift"] = ctx => !ctx.World.GameOver && ctx.World.Gifts.Any(g => GiftSystem.Find(g.Kind)?.Ongoing == true && ctx.World.PlayedIds.Contains(g.DonorId) && ctx.Year - g.Year >= 100)
+                                      && ctx.World.Gifts.Where(g => ctx.World.PlayedIds.Contains(g.DonorId)).Select(g => g.DonorId).Distinct().Count() >= 3,
+        ["family_seat"] = ctx => EstateSystem.Held(ctx.World) is { } seat && ctx.Year - seat.BoughtYear >= 75 && seat.Owners.Count(ctx.World.PlayedIds.Contains) >= 3,
         ["household_name"] = ctx => Played(ctx).Any(p => p.PeakFame >= FameSystem.Household),
         ["famous_family"] = ctx => Played(ctx).Count(p => p.PeakFame >= FameSystem.National) >= 3,
         ["wish_a_year"] = ctx => Played(ctx).Any(p => p.WishesKept >= 40),

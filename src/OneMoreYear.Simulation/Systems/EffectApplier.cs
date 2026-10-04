@@ -15,7 +15,7 @@ public static class EffectApplier
         "buy_home", "death", "start_affair", "reveal_secret", "end_affair", "grades", "attribute", "queue_event",
         "meet_through_friend", "performance", "recover", "violence", "reveal_abuse", "move_out", "move_city", "move_back_home",
         "crime", "parole", "convicted", "reveal_origin", "invest", "sell_investments", "repay_mortgage", "sell_home",
-        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth", "heirloom", "pet_add", "pet_rehome", "hobby", "skill", "start_business", "business", "rental", "fame", "career", "subject", "clique", "gift"
+        "ailment_add", "ailment_treat", "ailment_recover", "care_home", "assaulted", "homeless", "buy_cottage", "sell_cottage", "emigrate", "feat", "reveal_myth", "heirloom", "pet_add", "pet_rehome", "hobby", "skill", "start_business", "business", "rental", "fame", "career", "subject", "clique", "gift", "estate"
     };
 
     public static Person? Resolve(SimContext ctx, string? who, PendingEvent pending)
@@ -192,6 +192,9 @@ public static class EffectApplier
                 break;
             case "clique":
                 if (e.Kind != null && SchoolSystem.Cliques.Any(s => s.Id == e.Kind)) who.Clique = e.Kind;
+                break;
+            case "estate":
+                if (EstateSystem.Apply(ctx, pending, e.Kind, amount) is { Length: > 0 } estateText) pending.ExtraText.Add(estateText);
                 break;
             case "gift":
                 if (GiftSystem.Give(ctx, who, e.Kind ?? "") is { Length: > 0 } giftText) pending.ExtraText.Add(giftText);

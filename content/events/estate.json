@@ -1,0 +1,67 @@
+// The family seat (EstateSystem). {estate} names it, {estate_years} how long it has been in the family.
+// No dashes.
+[
+  {
+    "id": "estate_inherited", "trigger": "situation", "title": "{estate}",
+    "text": "{t.name} has left you {estate}, {estate_years} years in the family. The keys are heavy, and so is everything that comes with them.",
+    "choices": [
+      { "text": "Keep it", "hint": "Costs a lot every year. It is what {t.name} wanted.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "estate", "text": "The year {estate} became mine", "impact": 20 } ], "result": "You walk through every room with the keys in your hand. Somewhere a door frame still has pencil marks with names and heights on it." },
+      { "text": "Sell it", "hint": "Money now, and a family that will talk about it for years.", "effects": [ { "type": "estate", "kind": "sell" } ], "result": "An estate agent who calls it \"a project\". Strangers on the lawn." }
+    ]
+  },
+  {
+    "id": "estate_roof", "title": "The roof",
+    "text": "The roof of {estate} is leaking in three places, and the man from the village says the whole thing needs doing before winter.",
+    "conditions": { "minAge": 25, "ownsEstate": true }, "cooldown": 10,
+    "choices": [
+      { "text": "Do it properly", "effects": [ { "type": "money", "amount": -400000 }, { "type": "estate", "kind": "repair", "amount": 35 } ], "result": "A summer of scaffolding and a roof that will see out your grandchildren." },
+      { "text": "Patch it", "effects": [ { "type": "money", "amount": -60000 }, { "type": "estate", "kind": "repair", "amount": 8 } ], "result": "Tarpaulin and hope. It holds for now. Everyone knows what now means." }
+    ]
+  },
+  {
+    "id": "estate_summer", "title": "Summer at {estate}",
+    "text": "The whole family at {estate} for the long summer weekend. Twenty people, three generations, one kitchen and a lot of opinions about how to do the potatoes.",
+    "conditions": { "minAge": 30, "ownsEstate": true }, "cooldown": 3,
+    "choices": [
+      { "text": "Run it all yourself", "effects": [ { "type": "happiness", "amount": 6 }, { "type": "health", "amount": -2 }, { "type": "memory", "kind": "estate_summer", "text": "The summers at {estate}", "impact": 15 } ], "result": "You do not sit down for three days. On the last night everyone sings on the lawn, and it was worth it." },
+      { "text": "Let everyone bring something", "effects": [ { "type": "happiness", "amount": 4 } ], "result": "Four potato salads and no dessert. Nobody minds. The children run wild until midnight." }
+    ]
+  },
+  {
+    "id": "estate_who_gets_it", "title": "Who will take it?",
+    "text": "At dinner someone asks the question everyone has been avoiding: which of the children will take {estate} one day?",
+    "conditions": { "minAge": 55, "ownsEstate": true, "minChildren": 2 }, "cooldown": 15,
+    "target": { "role": "child", "conditions": { "minAge": 20 } },
+    "choices": [
+      { "text": "Name {t.name}", "effects": [ { "type": "will_favorite", "to": "target" }, { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8 } ], "result": "{t.name} goes very quiet, then very happy. Across the table, someone else goes very quiet indeed." },
+      { "text": "Say they will share it", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Everyone nods. Nobody believes it will work. Shared houses rarely do." }
+    ]
+  },
+  {
+    "id": "estate_offer", "title": "An offer",
+    "text": "A developer wants to buy {estate} and the land around it. Holiday homes, a marina. The offer is far above what it is worth.",
+    "conditions": { "minAge": 35, "ownsEstate": true, "minYear": 1975 }, "cooldown": 15,
+    "choices": [
+      { "text": "Sell", "effects": [ { "type": "estate", "kind": "sell" }, { "type": "money", "amount": 2000000 } ], "result": "A lot of money, and a family that does not quite forgive you. The old house is pulled down the next spring." },
+      { "text": "Not for any money", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "loyal", "chance": 0.04 } ], "result": "The developer laughs, then sees you mean it. The marina is built across the bay instead. You can hear it in the evenings." }
+    ]
+  },
+  {
+    "id": "estate_storm", "title": "The old oak",
+    "text": "A storm in the night, and the great oak at {estate}, the one in every family photograph, is lying across the lawn.",
+    "conditions": { "minAge": 20, "ownsEstate": true }, "cooldown": 30, "weight": 0.4,
+    "choices": [
+      { "text": "Plant a new one, with the grandchildren", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "money", "amount": -10000 } ], "result": "A sapling, eight small hands with a watering can, and a promise that it will be a big tree for their grandchildren." },
+      { "text": "Have the wood made into something", "effects": [ { "type": "money", "amount": -30000 }, { "type": "heirloom", "kind": "make:oak_table" } ], "result": "A long table from the old oak. Every family dinner from now on happens at it." }
+    ]
+  },
+  {
+    "id": "estate_neglect", "title": "Cold rooms",
+    "text": "Half the rooms at {estate} are closed now, to save on heating. The wallpaper is peeling and the garden has gone wild.",
+    "conditions": { "minAge": 30, "ownsEstate": true, "maxMoney": 300000 }, "cooldown": 6,
+    "choices": [
+      { "text": "Sell before it falls down", "effects": [ { "type": "estate", "kind": "sell" } ], "result": "It hurts. It would hurt more to watch it collapse." },
+      { "text": "Hold on, somehow", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "You live in three rooms and the kitchen. It is still yours, and still the family's." }
+    ]
+  }
+]

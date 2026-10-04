@@ -16,6 +16,8 @@
     "text": "A medal in a small box, for something brave that nobody in the family talks about." },
   { "id": "quilt", "name": "quilt", "value": 3000,
     "text": "A patchwork quilt made from the clothes of people long dead. You can point to each square and say whose it was." },
+  { "id": "oak_table", "name": "oak table", "value": 40000,
+    "text": "A long table made from the old oak that stood on the lawn at the family seat. Every family dinner happens at it." },
   { "id": "writing_desk", "name": "writing desk", "value": 25000,
     "text": "A writing desk with a drawer that sticks and a secret compartment that everyone in the family knows about." },
   { "id": "silver_spoons", "name": "silver spoons", "value": 9000,

@@ -274,6 +274,7 @@ public sealed class ContentDb
                     if (!Systems.EffectApplier.KnownTypes.Contains(eff.Type)) errors.Add($"Event {e.Id}: unknown effect type '{eff.Type}'");
                     if (eff.Type == "start_business" && (eff.Kind == null || !BusinessKinds.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown business {eff.Kind}");
                     if (eff.Type == "career" && Occupation(eff.Kind) == null) errors.Add($"Event {e.Id}: unknown occupation {eff.Kind}");
+                    if (eff.Type == "heirloom" && eff.Kind is { } made && made.StartsWith("make:") && !Heirlooms.ContainsKey(made[5..])) errors.Add($"Event {e.Id}: unknown heirloom {made}");
                     if (eff.Type == "subject" && !Systems.SchoolSystem.Subjects.Any(s => s.Id == eff.Kind)) errors.Add($"Event {e.Id}: unknown subject {eff.Kind}");
                     if (eff.Type == "clique" && !Systems.SchoolSystem.Cliques.Any(s => s.Id == eff.Kind)) errors.Add($"Event {e.Id}: unknown clique {eff.Kind}");
                     if (eff.Type is "hobby" or "skill" && (eff.Kind == null || !Hobbies.ContainsKey(eff.Kind))) errors.Add($"Event {e.Id}: unknown hobby {eff.Kind}");

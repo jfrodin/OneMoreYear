@@ -499,6 +499,7 @@ public partial class GameScreen : Control
         _moneyContent.AddChild(HomeCard(m));
         if (S.Businesses() is { Count: > 0 } businesses) _moneyContent.AddChild(BusinessCard(businesses));
         if (S.Rentals().Count > 0 || S.RentalOptions().Count > 0) _moneyContent.AddChild(RentalCard(S.Rentals()));
+        if (S.Estate() is { } estate) _moneyContent.AddChild(EstateCard(estate));
         _heirloomCard = S.Heirlooms() is { Count: > 0 } heirlooms ? HeirloomsCard(heirlooms) : null;
         if (_heirloomCard != null) _moneyContent.AddChild(_heirloomCard);
 
@@ -708,6 +709,51 @@ public partial class GameScreen : Control
             RegisterHint(sell, "Money now, and the end of a family business.");
             item.AddChild(sell);
             box.AddChild(item);
+        }
+        return Ui.Card(box);
+    }
+
+    /// <summary>The family seat: what it is, how it is kept, or the offer of one.</summary>
+    private Control EstateCard(EstateView e)
+    {
+        var box = Ui.VBox(8);
+        box.AddChild(Ui.Label("The family seat", 20, UiTheme.Text));
+        if (e.Since == 0)
+        {
+            box.AddChild(Ui.Label("An old house in the country, meant to stay in the family: summers that bring everyone together, a roof that always needs doing, and one heir who has to want it.",
+                15, UiTheme.Muted, wrap: true));
+            var buy = Ui.Button($"Buy a house in the country  ·  {e.Value}", () => _main.ShowConfirm("Buy a family seat?",
+                $"It costs about {e.Value}, all at once, and a good deal every year to keep up.", () =>
+                {
+                    string result = S.BuyEstate();
+                    _main.AutoSave();
+                    RefreshAll();
+                    _main.ShowMessage(e.Name, result);
+                }), 44);
+            buy.Disabled = e.CannotBuy != null;
+            buy.SetMeta("action", true);
+            buy.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            RegisterHint(buy, e.CannotBuy ?? "Once bought, it passes down the family.");
+            box.AddChild(buy);
+            if (e.CannotBuy != null) box.AddChild(Ui.Label(e.CannotBuy, 13, UiTheme.Faint, wrap: true));
+            return Ui.Card(box);
+        }
+        box.AddChild(UiTheme.HandLabel(e.Name, 26, UiTheme.Accent));
+        string state = e.Condition switch { >= 75 => "in fine condition", >= 50 => "in decent shape", >= 25 => "getting shabby", _ => "falling apart" };
+        box.AddChild(Ui.Label($"In the family since {e.Since}" + (e.Owners > 1 ? $", kept by {e.Owners} of the family so far" : "") +
+            $". Worth about {e.Value}, and {state}." + (e.Yours ? "" : $" {e.OwnerName} has it now."), 15, e.Condition < 25 ? UiTheme.Bad : UiTheme.Muted, wrap: true));
+        if (e.Yours)
+        {
+            var sell = Ui.Button("Sell it", () => _main.ShowConfirm($"Sell {e.Name}?", "The family will have opinions about this.", () =>
+            {
+                string result = S.SellEstate();
+                _main.AutoSave();
+                RefreshAll();
+                _main.ShowMessage("Sold", result);
+            }), 42);
+            sell.SetMeta("action", true);
+            sell.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            box.AddChild(sell);
         }
         return Ui.Card(box);
     }

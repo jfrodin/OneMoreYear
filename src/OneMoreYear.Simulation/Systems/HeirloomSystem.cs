@@ -115,11 +115,17 @@ public static class HeirloomSystem
     private static Heirloom? From(World w, PendingEvent pending) =>
         pending.Words.TryGetValue("heirloom_id", out var raw) && int.TryParse(raw, out var id) ? w.Heirlooms.FirstOrDefault(h => h.Id == id) : null;
 
-    /// <summary>The "heirloom" effect: sell, promise (to the target), keep, stolen or buy_back.</summary>
+    /// <summary>The "heirloom" effect: sell, promise (to the target), keep, stolen, buy_back, or make:id for a new one.</summary>
     public static string Apply(SimContext ctx, PendingEvent pending, string? kind)
     {
         var w = ctx.World;
         var player = w.Player;
+        // "make:oak_table": a new heirloom, made now.
+        if (kind != null && kind.StartsWith("make:") && ctx.Content.Heirlooms.ContainsKey(kind[5..]))
+        {
+            Create(ctx, player, kind[5..], "had it made");
+            return "";
+        }
         if (From(w, pending) is not { } h) return "";
         switch (kind)
         {

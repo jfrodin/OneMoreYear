@@ -277,3 +277,9 @@ public sealed record AlbumPhoto(int Year, int Age, string Caption, PortraitView 
 /// happened to them in order as one short story ("Anna moved in with Erik. In the autumn she ...").
 /// </summary>
 public sealed record NewsStory(int PersonId, string Headline, string Body, string Text, int Importance, bool FrontPage);
+
+/// <summary>
+/// The family seat. Since 0 means it is only on offer: then Value is the price and CannotBuy says
+/// why it cannot be bought yet (null if it can).
+/// </summary>
+public sealed record EstateView(string Name, int Since, int Owners, string Value, int Condition, bool Yours, string OwnerName, string? CannotBuy);

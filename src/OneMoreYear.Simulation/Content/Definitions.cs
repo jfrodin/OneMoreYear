@@ -338,6 +338,7 @@ public sealed class ConditionDef
     /// <summary>Runs a family business (true) or does not (false).</summary>
     public bool? RunsBusiness { get; set; }
     public bool? OwnsRental { get; set; }
+    public bool? OwnsEstate { get; set; }
     public double? MinFame { get; set; }
     public double? MaxFame { get; set; }
     public double? MinPeakFame { get; set; }
