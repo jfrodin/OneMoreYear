@@ -493,20 +493,24 @@ public sealed class GameSession
     {
         var p = World.Get(id);
         int last = p.DeathYear ?? Year;
-        var photos = new List<(int Year, string Caption, double Weight)> { (p.BirthYear, "Born", 1000) };
+        // Each photo can have someone else in it: the newborn, or the person the memory is about.
+        var photos = new List<(int Year, string Caption, double Weight, int? With)> { (p.BirthYear, "Born", 1000, null) };
         foreach (var m in p.Memories.Where(m => m.Impact >= 12 && m.Year > p.BirthYear && m.Year <= last))
-            photos.Add((m.Year, TextFormatter.Capitalize(m.Text), m.Impact));
+            photos.Add((m.Year, TextFormatter.Capitalize(m.Text), m.Impact, m.AboutId is { } about && about != p.Id && World.TryGet(about) is { } o && o.BirthYear <= m.Year ? about : null));
         foreach (var child in Kinship.Children(World, p).Where(c => c.BirthYear <= last))
             if (!photos.Any(x => x.Year == child.BirthYear && x.Caption.Contains(child.FirstName)))
-                photos.Add((child.BirthYear, $"The year {child.FirstName} was born", 40));
-        if (p.DeathYear is { } died && died - p.BirthYear >= 2) photos.Add((died - 1, "The last photograph", 999));
+                photos.Add((child.BirthYear, $"With {child.FirstName}, just born", 40, child.Id));
+        if (p.DeathYear is { } died && died - p.BirthYear >= 2) photos.Add((died - 1, "The last photograph", 999, null));
         var chosen = photos.GroupBy(x => (x.Year, x.Caption)).Select(g => g.First())
             .OrderByDescending(x => x.Weight).Take(30).OrderBy(x => x.Year).ThenByDescending(x => x.Weight).ToList();
         return chosen.Select(x =>
         {
             int age = Math.Max(0, x.Year - p.BirthYear);
+            var other = World.TryGet(x.With);
+            int otherAge = other == null ? 0 : Math.Max(0, x.Year - other.BirthYear);
             // Most people smile for the camera.
-            return new AlbumPhoto(x.Year, age, x.Caption, PortraitAt(p, age, true, x.Caption == "The last photograph" ? 0.2 : 0.6));
+            return new AlbumPhoto(x.Year, age, x.Caption, PortraitAt(p, age, true, x.Caption == "The last photograph" ? 0.2 : 0.6), p.FirstName,
+                other == null ? null : PortraitAt(other, otherAge, true, 0.6), other?.FirstName);
         }).ToList();
     }
 
@@ -911,11 +915,11 @@ public sealed class GameSession
     // --- Decades ---------------------------------------------------------------------------------
 
     /// <summary>The decades a life can begin in, for the title screen: (1970, "The 1970s: the welfare state").</summary>
-    public static IReadOnlyList<(int Year, string Title)> StartDecades(string countryId = "sweden", ContentDb? content = null)
+    public static IReadOnlyList<(int Year, string Title, string Text)> StartDecades(string countryId = "sweden", ContentDb? content = null)
     {
         var country = (content ?? ContentDb.Embedded).Countries[countryId];
         return country.Decades.Where(d => d.Year >= country.MinStartYear && d.Year <= country.MaxStartYear)
-            .Select(d => (d.Year, $"The {d.Year}s: {d.Name}")).ToList();
+            .Select(d => (d.Year, $"The {d.Year}s: {d.Name}", d.Text)).ToList();
     }
 
     /// <summary>True in the first year of a decade, when the chapter page is shown.</summary>

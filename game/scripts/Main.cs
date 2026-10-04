@@ -242,7 +242,7 @@ public partial class Main : Control
     /// <summary>The look follows the year being played (UiTheme eras); 1970 before any game has started.</summary>
     private void ApplyEra()
     {
-        int year = _eraOverride ?? Session?.Year ?? 1970;
+        int year = Settings.FixedLook ?? _eraOverride ?? Session?.Year ?? 1970;
         UiTheme.SetYear(year);
         Theme = UiTheme.Build();
         _paper.QueueRedraw();
@@ -321,7 +321,12 @@ public partial class Main : Control
         if (pickForNewGame != null)
             box.AddChild(Ui.Label("Choose which family to replace with the new life. That family's story will be gone.", 16, UiTheme.Muted, wrap: true));
         Control? first = null;
-        for (int slot = 1; slot <= SaveSystem.Slots; slot++)
+        // Families in use, the latest played first, in a list that scrolls when there are many.
+        var list = Ui.VBox(10);
+        var slots = System.Linq.Enumerable.Range(1, SaveSystem.Slots)
+            .Select(n => (Slot: n, Info: SaveSystem.Info(n))).Where(x => x.Info != null)
+            .OrderByDescending(x => x.Info!.SavedAt).Select(x => x.Slot).ToList();
+        foreach (int slot in slots)
         {
             var info = SaveSystem.Info(slot);
             var row = Ui.HBox(10);
@@ -351,8 +356,15 @@ public partial class Main : Control
                 row.AddChild(replace);
                 first ??= replace;
             }
-            box.AddChild(Ui.Card(row, UiTheme.Panel, UiTheme.Border));
+            list.AddChild(Ui.Card(row, UiTheme.Panel, UiTheme.Border));
         }
+        var scroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, FollowFocus = true };
+        scroll.CustomMinimumSize = new Vector2(0, System.Math.Min(560, System.Math.Max(1, slots.Count) * 86));
+        list.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        scroll.AddChild(list);
+        box.AddChild(scroll);
+        int free = SaveSystem.Slots - slots.Count;
+        if (pickForNewGame == null) box.AddChild(Ui.Label($"{free} of {SaveSystem.Slots} places free.", 15, UiTheme.Faint));
         var cancel = Ui.Button("Back", Close, 44);
         cancel.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
         box.AddChild(cancel);
@@ -547,6 +559,11 @@ public partial class Main : Control
         var screen = Options(new[] { "Window", "Fullscreen" }, Settings.Fullscreen ? 1 : 0, i => Settings.SetFullscreen(i == 1));
         box.AddChild(Row("Screen", screen));
         box.AddChild(Row("Text size", Options(new[] { "Small", "Normal", "Large", "Extra large" }, Settings.TextSize, Settings.SetTextSize)));
+        // The look: changing with the decades (as intended), or one you like and keep.
+        var lookYears = UiTheme.LookYears;
+        box.AddChild(Row("Look", Options(new[] { "Changes with the years" }.Concat(lookYears.Select(y => $"Always the {y}s")).ToArray(),
+            Settings.FixedLook is { } fixedLook ? lookYears.ToList().IndexOf(fixedLook) + 1 : 0,
+            i => { Settings.SetFixedLook(i == 0 ? null : lookYears[i - 1]); ApplyEra(); })));
         box.AddChild(Row("Volume", Slider(Settings.MasterVolume, Settings.SetMasterVolume)));
         box.AddChild(Row("Sound effects", Slider(Settings.EffectsVolume, Settings.SetEffectsVolume)));
         box.AddChild(Row("The family newspaper", Options(new[] { "Every year", "Only in big years", "Never" }, (int)Settings.Newspaper,

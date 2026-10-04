@@ -97,6 +97,9 @@ public static class UiTheme
         return font;
     }
 
+    /// <summary>The decades that have a look of their own (for choosing one in the settings).</summary>
+    public static IReadOnlyList<int> LookYears => Array.ConvertAll(Eras, e => e.Year);
+
     /// <summary>Sets the look for a year. Returns true if anything changed (then rebuild the theme).</summary>
     public static bool SetYear(int year)
     {

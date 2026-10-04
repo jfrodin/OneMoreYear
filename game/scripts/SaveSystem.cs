@@ -15,7 +15,7 @@ public sealed record SlotInfo(int Slot, string Family, string Player, int Age, i
 /// </summary>
 public static class SaveSystem
 {
-    public const int Slots = 3;
+    public const int Slots = 30;
 
     // Automated runs (smoke test, screenshot tour) get their own slot so they never touch the player's saves.
     private static readonly bool Automated =

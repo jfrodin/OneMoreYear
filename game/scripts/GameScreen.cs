@@ -235,11 +235,25 @@ public partial class GameScreen : Control
         _sidebar.AddChild(traits);
         _sidebar.AddChild(Ui.Separator());
 
-        _sidebar.AddChild(Ui.Bar("Health", p.Health, p.Health >= 50 ? UiTheme.Good : UiTheme.Bad, p.HealthLabel));
-        _sidebar.AddChild(Ui.Bar("Happiness", p.Happiness, UiTheme.Info, $"{p.Happiness:0}"));
-        _sidebar.AddChild(Ui.Bar("Smarts", p.Smarts, new Color("7b68c4"), $"{p.Smarts:0}"));
-        _sidebar.AddChild(Ui.Bar("Looks", p.Looks, new Color("c46b98"), $"{p.Looks:0}"));
-        _sidebar.AddChild(Ui.Bar("Fitness", p.Fitness, new Color("3f998b"), $"{p.Fitness:0}"));
+        // What each value does, on hover and focus.
+        void Stat(string name, double value, Color color, string text, string hint)
+        {
+            var bar = Ui.Bar(name, value, color, text);
+            bar.MouseFilter = MouseFilterEnum.Pass;
+            foreach (var part in bar.GetChildren().OfType<Control>()) { part.MouseFilter = MouseFilterEnum.Pass; part.TooltipText = hint; }
+            RegisterHint(bar, hint);
+            _sidebar.AddChild(bar);
+        }
+        Stat("Health", p.Health, p.Health >= 50 ? UiTheme.Good : UiTheme.Bad, p.HealthLabel,
+            "Health: how long you live and how well. Low health brings illness and an early death. Fitness, age, habits and luck move it.");
+        Stat("Happiness", p.Happiness, UiTheme.Info, $"{p.Happiness:0}",
+            "Happiness: how life feels. Low for long, it opens the door to depression and addiction, and work suffers. Family, love and how you live lift it.");
+        Stat("Smarts", p.Smarts, new Color("7b68c4"), $"{p.Smarts:0}",
+            "Smarts: grades at school, which educations and jobs are open to you, and the chance of choices that take a clear head.");
+        Stat("Looks", p.Looks, new Color("c46b98"), $"{p.Looks:0}",
+            "Looks: how easily you find love, and how people react to you at first. Fades a little with age.");
+        Stat("Fitness", p.Fitness, new Color("3f998b"), $"{p.Fitness:0}",
+            "Fitness: keeps your health up as the years go, and helps in anything physical, from fights to sport.");
 
         _sidebar.AddChild(StatRow("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text));
         _sidebar.AddChild(StatRow("Income", p.Income, UiTheme.Text));
@@ -837,17 +851,24 @@ public partial class GameScreen : Control
             15, UiTheme.Muted, wrap: true));
         System.Action close = () => { };
         Control? first = null;
-        var list = Ui.VBox(10);
-        foreach (var h in S.HomeProjects())
+        var list = Ui.VBox(8);
+        var projects = S.HomeProjects();
+        foreach (var h in projects)
         {
-            var row = Ui.HBox(12);
+            var row = Ui.HBox(14);
             var col = Ui.VBox(2);
             col.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             col.AddChild(Ui.Label(h.Name, 18, h.DoneYear != null ? UiTheme.Muted : UiTheme.Text));
             col.AddChild(Ui.Label(h.DoneYear is { } year ? $"Done in {year}." : h.Text, 14, UiTheme.Faint, wrap: true));
             row.AddChild(col);
+            // The price as text, the button as an action: a price alone on a button reads like a label.
+            var cost = Ui.Label(h.DoneYear != null ? "" : h.Cost, 17, h.CanAfford ? UiTheme.Text : UiTheme.Bad);
+            cost.CustomMinimumSize = new Vector2(120, 0);
+            cost.HorizontalAlignment = HorizontalAlignment.Right;
+            cost.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            row.AddChild(cost);
             string id = h.Id, name = h.Name;
-            var b = Ui.Button(h.DoneYear != null ? "Done" : h.Cost, () =>
+            var b = Ui.Button(h.DoneYear != null ? "Done" : "Do it", () =>
             {
                 string result = S.DoHomeProject(id);
                 close();
@@ -855,15 +876,17 @@ public partial class GameScreen : Control
                 RefreshAll();
                 _main.ShowMessage(name, result);
             }, 42);
-            b.CustomMinimumSize = new Vector2(170, 42);
+            b.CustomMinimumSize = new Vector2(110, 42);
+            b.SizeFlagsVertical = SizeFlags.ShrinkCenter;
             b.Disabled = h.DoneYear != null || !h.CanAfford;
             RegisterHint(b, h.DoneYear != null ? "Already done." : h.CanAfford ? $"Costs about {h.Cost}." : $"You need about {h.Cost}.");
             row.AddChild(b);
-            list.AddChild(row);
+            list.AddChild(Ui.Card(row, UiTheme.PanelAlt, UiTheme.Border));
             first ??= b.Disabled ? null : b;
         }
         var scroll = Ui.Scroll(list);
-        scroll.CustomMinimumSize = new Vector2(0, Mathf.Min(520, GetViewportRect().Size.Y - 260));
+        // Only as tall as the list, so there is no empty space under a short one.
+        scroll.CustomMinimumSize = new Vector2(0, Mathf.Min(projects.Count * 84, GetViewportRect().Size.Y - 260));
         box.AddChild(scroll);
         var cancel = Ui.Button("Not now", () => close(), 46);
         cancel.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
@@ -960,7 +983,7 @@ public partial class GameScreen : Control
                 : "You do not have enough in the bank yet.");
             buttons.AddChild(buyIn);
         }
-        if (S.HomeProjects().Count > 0)
+        if (S.HomeProjects().Count > 0 && S.Player.Activity != OneMoreYear.Simulation.Model.Activity.Prison)
         {
             var improve = Ui.Button("Do up your home…", ShowHomeProjectsDialog, 46);
             improve.SetMeta("action", true);

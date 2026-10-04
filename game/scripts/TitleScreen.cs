@@ -18,7 +18,8 @@ public partial class TitleScreen : Control
     private IReadOnlyList<CityDef> _cities = null!;
 
     /// <summary>Where a life can begin: a decade and what the country felt like then (country content).</summary>
-    private IReadOnlyList<(int Year, string Title)> _decades = Array.Empty<(int, string)>();
+    private IReadOnlyList<(int Year, string Title, string Text)> _decades = Array.Empty<(int, string, string)>();
+    private Label _decadeInfo = null!;
     /// <summary>Every country in the content; a choice appears as soon as there is more than one.</summary>
     private readonly List<CountryDef> _countries = ContentDb.Embedded.Countries.Values.OrderBy(c => c.Name).ToList();
     private OptionButton? _country;
@@ -36,7 +37,8 @@ public partial class TitleScreen : Control
         scroll.AddChild(center);
 
         var col = Ui.VBox(10);
-        col.CustomMinimumSize = new Vector2(520, 0);
+        // A fixed width: long decade or city names in one country must not make the menu jump.
+        col.CustomMinimumSize = new Vector2(600, 0);
         center.AddChild(col);
 
         var title = Ui.Label("ONE MORE YEAR", 56, UiTheme.Accent);
@@ -74,7 +76,7 @@ public partial class TitleScreen : Control
             var countryLabel = Ui.Label("Country", 18, UiTheme.Muted);
             countryLabel.CustomMinimumSize = new Vector2(140, 0);
             countryRow.AddChild(countryLabel);
-            _country = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+            _country = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44), ClipText = true };
             foreach (var c in _countries) _country.AddItem(c.Name);
             // --country=ID picks another country for automated runs.
             _country.Selected = Math.Max(0, _countries.FindIndex(c => c.Id == Main.ArgCountry));
@@ -86,9 +88,13 @@ public partial class TitleScreen : Control
         var yearLabel = Ui.Label("Begin in", 18, UiTheme.Muted);
         yearLabel.CustomMinimumSize = new Vector2(140, 0);
         yearRow.AddChild(yearLabel);
-        _year = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+        _year = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44), ClipText = true };
         yearRow.AddChild(_year);
         options.AddChild(yearRow);
+        // What the decade was like, so "the record years" means something before you pick it.
+        _decadeInfo = Ui.Label("", 15, UiTheme.Faint, wrap: true);
+        options.AddChild(_decadeInfo);
+        _year.ItemSelected += _ => UpdateDecadeInfo();
 
         var seedRow = Ui.HBox(12);
         var seedLabel = Ui.Label("Seed", 18, UiTheme.Muted);
@@ -105,7 +111,7 @@ public partial class TitleScreen : Control
             var l = Ui.Label(label, 18, UiTheme.Muted);
             l.CustomMinimumSize = new Vector2(140, 0);
             row.AddChild(l);
-            var o = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+            var o = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44), ClipText = true };
             foreach (var item in items) o.AddItem(item);
             row.AddChild(o);
             options.AddChild(row);
@@ -115,7 +121,7 @@ public partial class TitleScreen : Control
         _sex = Choice("You are", new[] { "Surprise me", "A boy", "A girl" });
         var whoRow = (HBoxContainer)_sex.GetParent();
         whoRow.AddChild(Ui.Label("in", 18, UiTheme.Muted));
-        _city = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
+        _city = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44), ClipText = true };
         whoRow.AddChild(_city);
         FillForCountry();
         _conditions = Choice("Your start", new[] { "Leave it to chance (as intended)" }.Concat(StartChoices.Conditions.Select(c => c.Name)));
@@ -176,15 +182,19 @@ public partial class TitleScreen : Control
         int previousYear = _decades.Count > 0 && _year.Selected >= 0 ? _decades[_year.Selected].Year : 1970;
         _decades = GameSession.StartDecades(Country.Id);
         _year.Clear();
-        foreach (var (_, decade) in _decades) _year.AddItem(decade);
+        foreach (var (_, decade, _) in _decades) _year.AddItem(decade);
         int index = _decades.ToList().FindIndex(d => d.Year == previousYear);
         _year.Selected = index >= 0 ? index : 0;
+        UpdateDecadeInfo();
         _cities = Country.Cities;
         _city.Clear();
         _city.AddItem("Surprise me");
         foreach (var c in _cities) _city.AddItem(c.Name);
         _city.Selected = 0;
     }
+
+    private void UpdateDecadeInfo() =>
+        _decadeInfo.Text = _year.Selected >= 0 && _year.Selected < _decades.Count ? _decades[_year.Selected].Text : "";
 
     private void AskAboutContent() => _main.ShowContentSettings(null, firstTime: true);
 

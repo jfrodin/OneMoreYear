@@ -19,11 +19,22 @@ public static class AlbumDialog
             var frame = Ui.VBox(4);
             frame.CustomMinimumSize = new Vector2(220, 0);
             var picture = new CenterContainer();
-            var face = Portrait.Create(photo.Portrait, false, 150);
+            var faces = Ui.HBox(4);
+            var face = Portrait.Create(photo.Portrait, false, photo.With == null ? 150 : 104);
             face.Modulate = UiTheme.PhotoTintFor(photo.Year);
-            picture.AddChild(face);
+            faces.AddChild(face);
+            if (photo.With != null)
+            {
+                var other = Portrait.Create(photo.With, false, 104);
+                other.Modulate = UiTheme.PhotoTintFor(photo.Year);
+                faces.AddChild(other);
+            }
+            picture.AddChild(faces);
             frame.AddChild(picture);
-            frame.AddChild(Ui.Label(photo.Age == 0 ? $"{photo.Year}" : $"{photo.Year}  ·  age {photo.Age}", 13, UiTheme.Faint));
+            // Who is in the picture, so a caption about a child is not read as a photo of the child alone.
+            string who = photo.WithName != null ? $"{photo.Name} and {photo.WithName}" : photo.Name;
+            string when = photo.Age == 0 ? $"{photo.Year}" : $"{photo.Year}  ·  {photo.Name} {photo.Age}";
+            frame.AddChild(Ui.Label(photo.WithName != null ? $"{when}  ·  {who}" : when, 13, UiTheme.Faint, wrap: true));
             frame.AddChild(UiTheme.HandLabel(photo.Caption, 20, UiTheme.Text, wrap: true));
             grid.AddChild(Ui.Card(frame));
         }

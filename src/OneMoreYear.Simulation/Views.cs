@@ -282,7 +282,8 @@ public sealed record RentalOptionView(string TypeId, string Name, string Price, 
 public sealed record HomeProjectView(string Id, string Name, string Text, string Cost, bool CanAfford, int? DoneYear);
 
 /// <summary>One photograph in a life's album: the year, the age, a caption and the face at that age.</summary>
-public sealed record AlbumPhoto(int Year, int Age, string Caption, PortraitView Portrait);
+/// <summary>A photo in the album: the person, and perhaps someone with them (a newborn, the one the memory is about).</summary>
+public sealed record AlbumPhoto(int Year, int Age, string Caption, PortraitView Portrait, string Name = "", PortraitView? With = null, string? WithName = null);
 
 /// <summary>
 /// One person's year in the family paper: the biggest line as the headline, and everything that

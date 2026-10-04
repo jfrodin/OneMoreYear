@@ -27,6 +27,8 @@ public static class Settings
         public bool Fullscreen { get; set; }
         /// <summary>0 small, 1 normal, 2 large, 3 extra large.</summary>
         public int TextSize { get; set; } = 1;
+        /// <summary>A decade whose look is always used; null = the look follows the years.</summary>
+        public int? FixedLook { get; set; }
         public double MasterVolume { get; set; } = 0.8;
         public double EffectsVolume { get; set; } = 0.8;
     }
@@ -79,6 +81,8 @@ public static class Settings
 
     public static bool Fullscreen => Current.Fullscreen;
     public static int TextSize => Current.TextSize;
+    public static int? FixedLook => Current.FixedLook;
+    public static void SetFixedLook(int? year) { Current.FixedLook = year; Save(); }
     public static double MasterVolume => Current.MasterVolume;
     public static double EffectsVolume => Current.EffectsVolume;
 
