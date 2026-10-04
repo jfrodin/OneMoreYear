@@ -1,0 +1,124 @@
+// More of life inside, for long sentences: the days, the people, and the world going on without
+// you. Only while in prison (category prison). No dashes.
+[
+  {
+    "id": "prison_tv_room", "category": "prison", "title": "The television",
+    "text": "One television for the whole wing, and tonight two men want different channels. The room has gone very quiet.",
+    "conditions": { "minAge": 18 }, "cooldown": 6,
+    "choices": [
+      { "text": "Go back to your cell", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "You read the same paperback for the third time. Through the wall you hear who won." },
+      { "text": "Suggest they take turns", "chance": 0.5, "chanceTraits": { "charming": 0.2, "hot_tempered": -0.2 },
+        "success": { "text": "Somehow it works. After that you are the one people ask when something needs sorting out.", "effects": [ { "type": "street_rep", "amount": 3 }, { "type": "happiness", "amount": 2 } ] },
+        "failure": { "text": "Both of them turn on you instead. You spend the evening with ice on your eye.", "effects": [ { "type": "health", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "prison_gym", "category": "prison", "title": "The weights",
+    "text": "The gym is a concrete room with rusty weights and a queue. Some men inside get bigger every year. It is something to do.",
+    "conditions": { "minAge": 18, "maxAge": 65 }, "cooldown": 6,
+    "choices": [
+      { "text": "Train every day", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 6 }, { "type": "health", "amount": 3 }, { "type": "happiness", "amount": 2 } ], "result": "An hour a day, every day. Your body is the one thing in here that you can change." },
+      { "text": "Leave it to the others", "effects": [], "result": "You walk the yard instead. Forty laps, the same forty, every day." }
+    ]
+  },
+  {
+    "id": "prison_chaplain", "category": "prison", "title": "The chaplain",
+    "text": "The prison chaplain is a tired woman with a thermos of coffee. She does not ask what you did. She asks how you sleep.",
+    "conditions": { "minAge": 18 }, "cooldown": 8,
+    "choices": [
+      { "text": "Talk to her", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "An hour, then another the week after. You say things out loud that you have never said. It does not change what you did. It changes something." },
+      { "text": "Say you are fine", "effects": [], "result": "She nods as if she has heard that before, and leaves the thermos." }
+    ]
+  },
+  {
+    "id": "prison_contraband", "category": "prison", "content": [ "addiction" ], "title": "Something for sale",
+    "text": "A man on the wing can get anything, he says. A phone, cigarettes, something to make the nights shorter. For a price, paid by someone outside.",
+    "conditions": { "minAge": 18 }, "cooldown": 6,
+    "choices": [
+      { "text": "Buy a phone", "chance": 0.6,
+        "success": { "text": "A cheap phone wrapped in plastic. For a few months you can hear the voices you miss, at night, under the blanket.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "A cell search, a week in isolation, and a note in your file that will follow you.", "effects": [ { "type": "money", "amount": -8000 }, { "type": "happiness", "amount": -6 }, { "type": "flag", "flag": "prison_bad_record" } ] } },
+      { "text": "Something for the nights", "chance": 0.5,
+        "success": { "text": "The nights are shorter. The days are worse. You know exactly how this goes.", "effects": [ { "type": "money", "amount": -5000 }, { "type": "happiness", "amount": 2 }, { "type": "health", "amount": -4 } ] },
+        "failure": { "text": "It was cut with something. You wake up in the infirmary with a nurse who has stopped being surprised.", "effects": [ { "type": "health", "amount": -14 } ] } },
+      { "text": "Not interested", "effects": [], "result": "He shrugs. Everyone says that at first, he says." }
+    ]
+  },
+  {
+    "id": "prison_course", "category": "prison", "title": "A course by post",
+    "text": "The education officer has a folder of courses you can take from your cell. Bookkeeping, history, English, a diploma at the end.",
+    "conditions": { "minAge": 18, "notFlags": [ "prison_diploma" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Sign up for one", "chance": 0.6, "chanceAttributes": { "smarts": 0.006 },
+        "success": { "text": "Two years of evenings with a pencil. The certificate comes in a brown envelope. You read it more times than you will admit.", "effects": [ { "type": "flag", "flag": "prison_diploma" }, { "type": "attribute", "kind": "smarts", "amount": 3 }, { "type": "happiness", "amount": 5 } ] },
+        "failure": { "text": "You give up halfway through the second module. The folder stays under the bed.", "effects": [ { "type": "happiness", "amount": -2 } ] } },
+      { "text": "Maybe next year", "effects": [], "result": "Next year is a long way off in here. It comes anyway." }
+    ]
+  },
+  {
+    "id": "prison_old_timer", "category": "prison", "title": "The old timer",
+    "text": "The old man in the next cell has been inside since before you were born, or so he says. He knows every guard's first name and every crack in the yard.",
+    "conditions": { "minAge": 18 }, "cooldown": 12,
+    "choices": [
+      { "text": "Listen to his stories", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "memory", "kind": "prison_old_timer", "text": "The old man in the cell next to mine", "impact": 10 } ], "result": "Hours of them, true and less true. When he dies in his sleep that winter, you are the only one who goes to the little service." },
+      { "text": "Keep your distance", "effects": [], "result": "You do not want to become him. You see him every day anyway, and you count." }
+    ]
+  },
+  {
+    "id": "prison_lockdown", "category": "prison", "content": [ "violence" ], "title": "Lockdown",
+    "text": "Something happened on another wing. Alarms, boots running, and then the doors stay locked. Nobody tells you anything for days.",
+    "conditions": { "minAge": 18 }, "cooldown": 8,
+    "choices": [
+      { "text": "Sleep through as much as you can", "effects": [ { "type": "happiness", "amount": -3 } ], "result": "Twenty three hours a day in the cell for two weeks. You sleep, you wake, you sleep. The food comes cold." },
+      { "text": "Shout through the door with the others", "effects": [ { "type": "street_rep", "amount": 2 }, { "type": "happiness", "amount": -1 } ], "result": "The whole corridor shouting at once. It does not open any doors. It feels better than silence." }
+    ]
+  },
+  {
+    "id": "prison_kitchen", "category": "prison", "title": "The kitchen",
+    "text": "A place has come up in the kitchen. Early mornings, steam, enormous pans, and a cook who used to run a restaurant before what happened happened.",
+    "conditions": { "minAge": 18, "notFlags": [ "prison_kitchen" ] }, "cooldown": 8,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "flag", "flag": "prison_kitchen" }, { "type": "skill", "kind": "cooking", "amount": 2 }, { "type": "happiness", "amount": 3 } ], "result": "He teaches you to make a sauce from nothing and to never waste an onion. It is the most useful thing anyone has taught you." },
+      { "text": "Stay where you are", "effects": [], "result": "Someone else gets it. You smell the bread in the mornings and wish you had said yes." }
+    ]
+  },
+  {
+    "id": "prison_child_visit", "category": "prison", "title": "Through the glass",
+    "text": "{t.name} has come to visit. {t.He} has grown since last time, and does not quite know where to look.",
+    "conditions": { "minAge": 18 }, "cooldown": 3,
+    "target": { "role": "child", "conditions": { "minAge": 4, "maxAge": 17 } },
+    "choices": [
+      { "text": "Ask about school, about everything", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 8, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "Forty minutes of friends, teachers, a football match. At the end {t.he} puts a hand on the glass, and so do you." },
+      { "text": "Tell {t.him} not to come here again", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -10 }, { "type": "happiness", "amount": -4 } ], "result": "You do not want {t.him} to remember you like this. {t.He} will remember this instead." }
+    ]
+  },
+  {
+    "id": "prison_dog", "category": "prison", "title": "The dogs",
+    "text": "A new scheme: shelter dogs that nobody wanted are trained by prisoners, then given to families. There is a waiting list to take part.",
+    "conditions": { "minAge": 18 }, "cooldown": 10,
+    "choices": [
+      { "text": "Put your name down", "chance": 0.6,
+        "success": { "text": "A nervous grey mongrel called Sixten, who sleeps by your bed for eight months. When he leaves for his new family, you are not ashamed to cry.", "effects": [ { "type": "happiness", "amount": 7 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ] },
+        "failure": { "text": "Your name never comes up. You watch the others walk their dogs round the yard.", "effects": [ { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Not for you", "effects": [], "result": "You were never a dog person. In here, you think, maybe you should have been." }
+    ]
+  },
+  {
+    "id": "prison_outside_news", "category": "prison", "title": "The world outside",
+    "text": "A new prisoner talks about the outside as if it were another country. [[1995: Prices, music, the way people dress. || Phones, apps, a word you have never heard that everyone uses.]] You have been gone a long time.",
+    "conditions": { "minAge": 20 }, "cooldown": 8,
+    "choices": [
+      { "text": "Ask him to tell you everything", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "You make a list in the back of a notebook. Things to learn when you get out. It gets long." },
+      { "text": "You do not want to know", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "If you do not hear about it, it is not happening without you. That is how it feels, for a while." }
+    ]
+  },
+  {
+    "id": "prison_recognised", "category": "prison", "title": "Your name",
+    "text": "A young man on the wing looks at you a long time, then says your name. He has heard of you, from people outside.",
+    "conditions": { "minAge": 25, "minStreetRep": 20 }, "cooldown": 10,
+    "choices": [
+      { "text": "Take him under your wing", "effects": [ { "type": "street_rep", "amount": 4 }, { "type": "happiness", "amount": 2 } ], "result": "He brings you coffee and listens to everything you say. You are not sure whether that is a good thing." },
+      { "text": "Tell him that name is the reason you are in here", "effects": [ { "type": "street_rep", "amount": -3 }, { "type": "trait_add", "trait": "kind", "chance": 0.04 } ], "result": "He looks disappointed. Maybe he remembers it one day." }
+    ]
+  }
+]

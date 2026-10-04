@@ -100,7 +100,7 @@
     ]
   },
   {
-    "id": "mh_noisy_upstairs", "title": "Above",
+    "id": "mh_noisy_upstairs", "group": "noisy_neighbours", "title": "Above",
     "text": "The new people upstairs walk like elephants, play music until two and seem to rearrange their furniture every night at midnight.",
     "conditions": { "minAge": 20, "livesWithParents": false, "ownsHome": false }, "cooldown": 15,
     "choices": [

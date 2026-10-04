@@ -1,7 +1,7 @@
 // Everyday adult life: neighbours, holidays, friends, the house, and moments of their time. Ages 18–65.
 [
   {
-    "id": "life_neighbour_noise", "title": "Through the wall",
+    "id": "life_neighbour_noise", "group": "noisy_neighbours", "title": "Through the wall",
     "text": "The new neighbours play music until two every night. Tonight the bass is making your glasses rattle.",
     "conditions": { "minAge": 18, "livesWithParents": false }, "cooldown": 8,
     "choices": [
