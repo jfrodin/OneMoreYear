@@ -76,6 +76,7 @@ public static class CharacterCreator
             {
                 FirstName = spec.FirstName,
                 Traits = spec.Traits.Count > 0 ? spec.Traits.ToList() : null,
+                ExactTraits = spec.Traits.Count > 0,
                 Smarts = spec.Smarts, Looks = spec.Looks, Fitness = spec.Fitness,
                 Health = spec.Health, Happiness = spec.Happiness,
                 Money = spec.Money, OwnsHome = spec.OwnsHome,

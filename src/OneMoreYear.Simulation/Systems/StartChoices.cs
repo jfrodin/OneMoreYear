@@ -67,9 +67,16 @@ public static class StartChoices
     }
 
     /// <summary>Changes a person's traits, attributes, money, home, job or addiction.</summary>
+    public const string ChosenTraitsFlag = "chosen_traits";
+
     public static void Tweak(SimContext ctx, Person? p, ScenarioTweak? t)
     {
         if (p == null || t == null) return;
+        if (t.ExactTraits && t.Traits is { Count: > 0 })
+        {
+            p.Traits.Clear();
+            p.Flags.Add(ChosenTraitsFlag);
+        }
         foreach (var trait in t.Traits ?? new())
         {
             if (ctx.Content.Traits.TryGetValue(trait, out var def) && def.Opposite != null) p.Traits.Remove(def.Opposite);

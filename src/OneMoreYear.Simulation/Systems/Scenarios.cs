@@ -28,7 +28,7 @@ public static class Scenarios
                           ?? Kinship.Grandparents(w, player).FirstOrDefault(p => p.Sex == Sex.Male && p.IsAlive);
 
         // The player's own money and home are set when the scenario hands over (see FastForward).
-        StartChoices.Tweak(ctx, player, s.Player is { } pt ? new ScenarioTweak { Traits = pt.Traits, Smarts = pt.Smarts, Looks = pt.Looks, Fitness = pt.Fitness, FirstName = pt.FirstName } : null);
+        StartChoices.Tweak(ctx, player, s.Player is { } pt ? new ScenarioTweak { Traits = pt.Traits, ExactTraits = pt.ExactTraits, Smarts = pt.Smarts, Looks = pt.Looks, Fitness = pt.Fitness, FirstName = pt.FirstName } : null);
         foreach (var p in parents) StartChoices.Tweak(ctx, p, s.Parents);
         StartChoices.Tweak(ctx, father, s.Father);
         StartChoices.Tweak(ctx, mother, s.Mother);

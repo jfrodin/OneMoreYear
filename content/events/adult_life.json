@@ -193,9 +193,19 @@
     ]
   },
   {
-    "id": "life_palme", "countries": [ "sweden" ], "trigger": "history", "title": "The morning after",
+    "id": "life_palme_child", "group": "palme", "countries": [ "sweden" ], "trigger": "history", "title": "The quiet breakfast",
+    "text": "The grown ups are very quiet at breakfast. The radio says the prime minister has been shot. Your mother is crying into her coffee, and you do not really understand why.",
+    "conditions": { "minAge": 6, "maxAge": 15, "minYear": 1986, "maxYear": 1986 }, "weight": 20, "cooldown": 0,
+    "choices": [
+      { "text": "Ask what it means", "effects": [ { "type": "memory", "kind": "palme", "text": "The breakfast when they said Palme had been shot", "impact": -5 } ],
+        "result": "Your father tries to explain, and stops halfway. You understand that something very big has happened, even if it is far away." },
+      { "text": "Go to school as usual", "effects": [], "result": "The teacher lights a candle on her desk and talks for a while. Then you do maths. Years later you remember exactly where you sat." }
+    ]
+  },
+  {
+    "id": "life_palme", "group": "palme", "countries": [ "sweden" ], "trigger": "history", "title": "The morning after",
     "text": "The radio says the prime minister was shot dead on a Stockholm street last night, walking home from the cinema.",
-    "conditions": { "minAge": 8, "minYear": 1986, "maxYear": 1986 }, "weight": 20, "cooldown": 0,
+    "conditions": { "minAge": 16, "minYear": 1986, "maxYear": 1986 }, "weight": 20, "cooldown": 0,
     "choices": [
       { "text": "Lay a rose at the place", "effects": [ { "type": "memory", "kind": "palme", "text": "The morning they said Palme had been shot", "impact": -12 } ],
         "result": "A sea of red roses on Sveavägen. People you've never met hold each other." },

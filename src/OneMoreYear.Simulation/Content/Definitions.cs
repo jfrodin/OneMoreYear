@@ -531,6 +531,8 @@ public sealed class ScenarioTweak
     public bool? Unemployed { get; set; }
     public string? Addiction { get; set; }
     // Used by the character creator (Systems/CharacterCreator.cs).
+    /// <summary>The traits listed are the only ones (the character creator), instead of being added to what chance gave.</summary>
+    public bool ExactTraits { get; set; }
     public string? FirstName { get; set; }
     public double? Health { get; set; }
     public double? Happiness { get; set; }

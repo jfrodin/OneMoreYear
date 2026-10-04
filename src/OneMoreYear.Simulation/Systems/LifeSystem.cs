@@ -151,9 +151,10 @@ public static class LifeSystem
             other.Happiness -= rel.Closeness * 0.2;
         }
 
-        // A parent's house has to be emptied, and siblings rarely agree on how.
+        // A parent's house has to be emptied when the last of them is gone, and siblings rarely agree on how.
         var player = w.Player;
         if (player.IsAlive && player.ParentIds.Contains(p.Id) && player.Age(ctx.Year) >= 25
+            && !Kinship.Parents(w, player).Any(x => x.IsAlive && x.Id != p.Id)
             && Kinship.Siblings(w, player).Any(s => s.IsAlive) && ctx.Rng.Chance(0.5))
             EventSystem.QueueSituation(ctx, "mid_inheritance_furniture", new() { ["target"] = p.Id });
         // An old friend's family may ask the player to speak at the funeral.

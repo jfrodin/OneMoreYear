@@ -134,6 +134,8 @@ public static class PersonFactory
     /// <summary>Traits that only show in adulthood, like partner preferences. Rolled once, at 18.</summary>
     public static void RollAdultTraits(SimContext ctx, Person p)
     {
+        // Traits chosen by hand in the character creator are the whole personality: nothing is added at eighteen.
+        if (p.Flags.Contains(StartChoices.ChosenTraitsFlag)) return;
         foreach (var def in ctx.Content.Traits.Values.Where(t => t.AdultOnly).OrderBy(t => t.Id, StringComparer.Ordinal))
         {
             double sexWeight = p.Sex == Sex.Male ? def.MaleWeight : def.FemaleWeight;
