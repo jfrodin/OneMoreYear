@@ -62,7 +62,7 @@ public partial class PhotoWall : Control
             Age = age, Alive = true, Year = year, Mood = 0.5,
             Grey = Faces.GreyAt(face.Face, age), Bald = Faces.BaldAt(face.Face, person.Sex, age),
             Glasses = age >= face.Face.GlassesFromAge,
-            Outfit = age < 2 ? "baby" : age >= 66 ? "cardigan" : new[] { "casual", "smart", "work", "suit" }[_rng.Next(4)],
+            Outfit = age < 2 ? "baby" : age < 18 ? "casual" : age >= 66 ? "cardigan" : new[] { "casual", "smart", "work", "suit" }[_rng.Next(4)],
         };
 
         // A print: white border, a soft shadow, a name and a year in pencil.

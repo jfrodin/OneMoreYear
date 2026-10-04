@@ -15,12 +15,15 @@ public partial class Portrait : Control
 {
     private PortraitView _v = null!;
     private bool _highlight;
+    /// <summary>A square photograph (for prints with a paper border) instead of a round cameo.</summary>
+    private bool _square;
 
-    public static Portrait Create(PortraitView view, bool highlight, float size)
+    public static Portrait Create(PortraitView view, bool highlight, float size, bool square = false)
     {
         var p = new Portrait { CustomMinimumSize = new Vector2(size, size), MouseFilter = MouseFilterEnum.Ignore };
         p._v = view;
         p._highlight = highlight;
+        p._square = square;
         // Photos look like prints of their time (sepia in the fifties, faded in the seventies).
         if (view.Alive) p.Modulate = UiTheme.PhotoTint;
         return p;
@@ -80,6 +83,23 @@ public partial class Portrait : Control
         if (_v.Alive) return c;
         float l = c.R * 0.3f + c.G * 0.59f + c.B * 0.11f;
         return new Color(l, l, l, c.A).Darkened(0.1f);
+    }
+
+    // A soft darkening towards the edge of the photograph: smooth, with no bands.
+    private static readonly Texture2D RoundVignette = Vignette(0.74f, 0.985f, 1f);
+    private static readonly Texture2D SquareVignette = Vignette(0.8f, 1.38f, 1.42f);
+
+    private static Texture2D Vignette(float clearTo, float darkAt, float end)
+    {
+        var g = new Gradient();
+        g.Offsets = new[] { 0f, clearTo / end, darkAt / end, 1f };
+        var dark = new Color(0.12f, 0.08f, 0.04f, 0.32f);
+        g.Colors = new[] { new Color(dark, 0), new Color(dark, 0), dark, new Color(dark, end > 1.05f ? 0.4f : 0) };
+        return new GradientTexture2D
+        {
+            Gradient = g, Width = 256, Height = 256, Fill = GradientTexture2D.FillEnum.Radial,
+            FillFrom = new Vector2(0.5f, 0.5f), FillTo = new Vector2(0.5f + 0.5f * end, 0.5f),
+        };
     }
 
     // --- Geometry helpers --------------------------------------------------------------------
@@ -157,11 +177,12 @@ public partial class Portrait : Control
         bool baby = age < 2, child = age < 13;
         float heavy = (float)_v.Heaviness;
 
-        _clip = Ellipse(P(0.5f, 0.5f), _s / 2, _s / 2, 64);
-        // A soft studio backdrop, lighter behind the head.
+        _clip = _square ? new[] { P(0, 0), P(1, 0), P(1, 1), P(0, 1) } : Ellipse(P(0.5f, 0.5f), _s / 2, _s / 2, 64);
+        // A soft studio backdrop, lighter behind the head and falling into shadow at the edges.
         Poly(_clip, UiTheme.PhotoBackdrop);
         for (int i = 0; i < 6; i++)
             Poly(Ellipse(P(0.5f, 0.38f), _s * (0.42f - i * 0.06f), _s * (0.36f - i * 0.05f), 40), UiTheme.PhotoBackdrop.Lightened(0.035f) with { A = 0.35f });
+        DrawTextureRect(_square ? SquareVignette : RoundVignette, new Rect2(_o, new Vector2(_s, _s)), false, T(Colors.White));
 
         var skin = SkinColor(f.Skin);
         var skinShade = skin.Darkened(0.16f);
@@ -197,6 +218,9 @@ public partial class Portrait : Control
         // which leaves a soft dark rim on the right and under the jaw.
         Poly(_head, skin.Darkened(0.12f));
         ClippedTo(Head(cx - rx * 0.07f, cy - ry * 0.04f, rx, ry, jaw, chin, 0.97f), _head, skin);
+        // A fine ink line round the face, like an illustration.
+        var faceLine = new List<Vector2>(_head) { _head[0] };
+        Curve(faceLine, skin.Darkened(0.42f) with { A = 0.55f }, 0.0045f);
         float blush = baby || child ? 0.3f : !_v.Male ? 0.2f : 0.08f;
         blush += (float)Math.Max(0, _v.Mood) * 0.08f;
         foreach (float side in new[] { -1f, 1f })
@@ -255,10 +279,9 @@ public partial class Portrait : Control
         DrawMouth(skin, hair, child, beardAge);
         if (_v.Bald < 0.85 || baby) DrawHairFront(cut, hair, baby);
 
-        // A print's white border; the player gets the era's accent colour instead.
-        float ring = Mathf.Max(2, _s * 0.035f);
-        DrawArc(P(0.5f, 0.5f), _s / 2 - ring / 2, 0, Mathf.Tau, 64, T(UiTheme.Panel.Lightened(0.35f)), ring, true);
-        if (_highlight) DrawArc(P(0.5f, 0.5f), _s / 2 - 1.5f, 0, Mathf.Tau, 64, _v.Alive ? UiTheme.Accent : new Color("777777"), 3, true);
+        // A thin ink line round the cameo; the player gets the era's accent colour. Square prints get their border from the paper.
+        if (!_square) DrawArc(P(0.5f, 0.5f), _s / 2 - 1f, 0, Mathf.Tau, 64, T(UiTheme.Text with { A = 0.45f }), Mathf.Max(1.5f, _s * 0.012f), true);
+        if (_highlight && !_square) DrawArc(P(0.5f, 0.5f), _s / 2 - 1.5f, 0, Mathf.Tau, 64, _v.Alive ? UiTheme.Accent : new Color("777777"), 3, true);
     }
 
     /// <summary>Head outline: an ellipse whose lower half narrows into the jaw and chin.</summary>
@@ -464,8 +487,8 @@ public partial class Portrait : Control
         if (beardAge && f.Beard is 2 or 3)
             Poly(new[] { P(cx - mw * 1.1f, my - 0.003f), P(cx - mw * 0.3f, my - 0.036f), P(cx, my - 0.03f), P(cx + mw * 0.3f, my - 0.036f), P(cx + mw * 1.1f, my - 0.003f), P(cx, my - 0.014f) }, hair);
 
-        // The line between the lips smiles or frowns with the mood.
-        float bend = mood * 0.03f;
+        // The line between the lips smiles or frowns with the mood; at rest, people look kindly into a camera.
+        float bend = (mood + 0.35f) * 0.026f;
         var line = Bezier(P(cx - mw, my - bend * 0.3f), P(cx, my + bend), P(cx + mw, my - bend * 0.3f), 12);
         var lipColor = skin.Lerp(new Color("b5524f"), _v.Male ? 0.3f : 0.48f).Darkened(0.08f);
         // Lower lip: a fuller curve under the line.
@@ -626,8 +649,23 @@ public partial class Portrait : Control
         shape.Add(P(cx - earX, cy + ry * 0.02f));
 
         float alpha = cut == "buzz" ? 0.75f : 1f;
-        if (bald < 0.8f) Poly(shape.ToArray(), hair with { A = alpha * (1 - Mathf.Max(0, bald - 0.45f) * 1.6f) });
-        else
+        if (bald < 0.8f)
+        {
+            Poly(shape.ToArray(), hair with { A = alpha * (1 - Mathf.Max(0, bald - 0.45f) * 1.6f) });
+            if (bald < 0.45f && cut is not "buzz")
+            {
+                // An ink outline and a few strands, so it reads as hair and not as a helmet.
+                Curve(new List<Vector2>(shape) { shape[0] }, hair.Darkened(0.4f) with { A = 0.6f }, 0.0045f);
+                if (cut is not "afro" and not "short_curls" and not "curly_top")
+                    for (int k = 0; k < 6; k++)
+                    {
+                        float a = -1.25f + k * 0.5f;
+                        Curve(Bezier(P(cx + Mathf.Sin(a) * rx * 0.25f, cy - ry * thick * 0.97f), P(cx + Mathf.Sin(a) * rx * 0.75f, cy - ry * thick * 0.86f),
+                            P(cx + Mathf.Sin(a) * rx * 0.86f, cy - ry * (fringe + 0.1f)), 10), hair.Darkened(0.22f) with { A = 0.45f }, 0.0035f);
+                    }
+            }
+        }
+        if (bald >= 0.8f)
             // What is left: a band round the sides.
             foreach (float s in new[] { -1f, 1f })
                 Poly(new[] { P(cx + s * rx * 1.04f, cy - ry * 0.3f), P(cx + s * rx * 0.86f, cy - ry * 0.3f), P(cx + s * rx * 0.88f, cy + ry * 0.05f), P(cx + s * rx * 1.02f, cy + ry * 0.08f) }, hair);
@@ -638,12 +676,14 @@ public partial class Portrait : Control
             float low = cut switch { "long" or "curly_long" => 0.95f, "perm" => 0.8f, "flick" => 0.6f, "waves" => 0.35f, "mullet" or "feathered" => 0.3f, "pigtails" => 0.4f, _ => 0.6f };
             foreach (float s in new[] { -1f, 1f })
             {
-                var lockPts = new List<Vector2> { P(cx + s * rx * 1.1f, cy - ry * 0.55f) };
-                lockPts.AddRange(Bezier(P(cx + s * rx * 0.86f, cy - ry * 0.35f), P(cx + s * rx * 0.84f, cy + ry * low * 0.5f), P(cx + s * rx * 0.95f, cy + ry * low), 8));
-                lockPts.Add(P(cx + s * rx * (cut == "flick" ? 1.35f : 1.16f), cy + ry * (low + (cut == "flick" ? -0.06f : 0.03f))));
-                lockPts.AddRange(Bezier(P(cx + s * rx * 1.18f, cy + ry * low * 0.5f), P(cx + s * rx * 1.16f, cy), P(cx + s * rx * 1.12f, cy - ry * 0.4f), 6));
+                // A lock that hangs from the temple, fuller in the middle and tapering to a soft point.
+                var lockPts = new List<Vector2> { P(cx + s * rx * 1.08f, cy - ry * 0.6f) };
+                lockPts.AddRange(Bezier(P(cx + s * rx * 0.86f, cy - ry * 0.35f), P(cx + s * rx * 0.79f, cy + ry * low * 0.55f), P(cx + s * rx * 0.9f, cy + ry * low), 10));
+                lockPts.Add(P(cx + s * rx * (cut == "flick" ? 1.35f : 1.03f), cy + ry * (low + (cut == "flick" ? -0.04f : 0.09f))));
+                lockPts.AddRange(Bezier(P(cx + s * rx * 1.15f, cy + ry * low * 0.8f), P(cx + s * rx * 1.26f, cy + ry * low * 0.2f), P(cx + s * rx * 1.13f, cy - ry * 0.45f), 10));
                 if (s > 0) lockPts.Reverse();
                 Poly(lockPts.ToArray(), hair);
+                Curve(new List<Vector2>(lockPts) { lockPts[0] }, hair.Darkened(0.4f) with { A = 0.55f }, 0.004f);
             }
         }
         if (cut is "curly_bob" or "curly_long" or "perm" or "short_curls" or "curly_top" or "afro")

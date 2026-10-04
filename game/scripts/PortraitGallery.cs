@@ -53,7 +53,7 @@ public partial class PortraitGallery : Control
             var at = me with
             {
                 Age = age, Alive = true, Grey = Faces.GreyAt(me.Face, age), Bald = Faces.BaldAt(me.Face, person.Sex, age),
-                Glasses = age >= me.Face.GlassesFromAge,
+                Glasses = age >= me.Face.GlassesFromAge, Outfit = age < 2 ? "baby" : age < 18 ? "casual" : me.Outfit, Mood = 0.2,
             };
             var cell = Ui.VBox(2);
             cell.AddChild(Portrait.Create(at with { Year = person.BirthYear + age }, false, _big ? 380 : 170));
