@@ -115,6 +115,10 @@ public partial class GameScreen : Control
         _tabs.AddChild(chronicle);
         _tabs.SetTabTitle(TabChronicle, "Chronicle");
 
+        // A small line icon on each tab.
+        string[] tabIcons = { "year", "people", "work", "money", "tree", "chronicle" };
+        for (int i = 0; i < tabIcons.Length && i < _tabs.GetTabCount(); i++) _tabs.SetTabIcon(i, Icons.Get(tabIcons[i], UiTheme.Muted, 18));
+        _tabs.AddThemeConstantOverride("icon_separation", 8);
         _tabs.TabChanged += OnTabChanged;
 
         RefreshAll();
@@ -239,6 +243,7 @@ public partial class GameScreen : Control
         void Stat(string name, double value, Color color, string text, string hint)
         {
             var bar = Ui.Bar(name, value, color, text);
+            if (Icons.Rect(name.ToLowerInvariant(), color, 18) is { } icon) { bar.AddChild(icon); bar.MoveChild(icon, 0); }
             bar.MouseFilter = MouseFilterEnum.Pass;
             foreach (var part in bar.GetChildren().OfType<Control>()) { part.MouseFilter = MouseFilterEnum.Pass; part.TooltipText = hint; }
             RegisterHint(bar, hint);
