@@ -2,6 +2,33 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.73.0 – 2026-10-04 · Your time
+
+- **A Your Time tab.** Everything you can choose to do with the year now has a tab of its own,
+  next to This Year, instead of the bottom of the page. This Year points to it when there is time
+  left.
+- **Seventeen new things to do,** for every age: play outside, read, help at home, the television,
+  hang out, a summer job, go on holiday, get in shape, a night out, help out somewhere, see a doctor,
+  treat yourself, learn something new, have people over, try your luck, get out into nature, and
+  your looks. The more expensive ones need the money first.
+- **Somewhat fewer events** from everyday life, so the year has room for your own choices.
+- **No sound effects.** Music only.
+- **The Next Year button stays where it is.** Everything above it scrolls if it has to.
+- **Money that makes sense for the young.** Children cannot spend money they do not have, and any
+  old debt is covered by the parents. Student aid is not taxed. What it does not cover is borrowed
+  as a cheap student loan, shown on its own line, not as ordinary debt. Students no longer get
+  welfare. How you live can only be chosen once you keep your own home.
+- **Graduation on the right day.** The white cap and the cap and gown come the year you finish
+  school, never a year later in the middle of medical school, and the university graduation the
+  year you get your degree.
+- **Military service is a real year:** the letter comes at eighteen, and the eleven months in
+  uniform come after school, with choices of their own.
+- **Texts that fit:** a child's morning after Palme; "still living with your parents" only when it
+  is a question; no "new city" for a student still at home; no first flat of your own when you
+  moved in with a partner; the old teacher apology fits your age; selling the parents' house only
+  when both are gone.
+- The character creator gives exactly the traits you chose, and nothing more at eighteen.
+
 ## 0.72.0 – 2026-10-04 · First sight
 
 - **A new title screen.** The title and a short menu on the left, in large type without boxes, and
