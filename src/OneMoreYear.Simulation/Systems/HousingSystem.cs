@@ -124,6 +124,7 @@ public static class HousingSystem
         string city = City(ctx, p).Name;
         if (p.Abroad != null && ctx.Content.Countries.TryGetValue(p.Abroad, out var home) && !p.Flags.Contains(CareHomeFlag))
             return city == home.Name ? $"Lives in {home.Name}" : $"Lives in {city}, {home.Name}";
+        if (p.Activity == Activity.Prison) return p.OwnsHome ? $"In prison, with a home waiting in {city}" : "In prison";
         if (p.Flags.Contains(CareHomeFlag)) return $"Lives in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"Homeless in {city}";
         if (p.LivesWithParents) return $"Lives with {Parents(ctx, p, false)} in {city}";
@@ -157,6 +158,7 @@ public static class HousingSystem
     public static string DescribeForPlayer(SimContext ctx, Person p)
     {
         string city = City(ctx, p).Name;
+        if (p.Activity == Activity.Prison) return p.OwnsHome ? $"You are in prison. Your home in {city} is waiting" : "You are in prison";
         if (p.Flags.Contains(CareHomeFlag)) return $"You live in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"You have no home, in {city}";
         if (p.LivesWithParents) return $"You live with {Parents(ctx, p, true)} in {city}";

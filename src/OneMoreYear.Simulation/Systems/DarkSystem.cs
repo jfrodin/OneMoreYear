@@ -55,7 +55,7 @@ public static class DarkSystem
             w.Log($"{p.FirstName} started struggling with {What(p.Addiction)}.", ctx.Importance(false, p), "dark", p.Id);
             if (isPlayer) EventSystem.QueueSituation(ctx, "addiction_begins");
             // Someone close: the player finds out, and can do something about it.
-            else if (w.Player.IsAlive && ctx.Shown(ContentCategories.Addiction) && p.Age(ctx.Year) >= 14
+            else if (w.Player.IsAlive && w.Player.Activity != Activity.Prison && ctx.Shown(ContentCategories.Addiction) && p.Age(ctx.Year) >= 14
                      && (w.Player.PartnerId == p.Id || w.Player.ChildIds.Contains(p.Id) || w.Player.ParentIds.Contains(p.Id) || Kinship.Siblings(w, w.Player).Any(s => s.Id == p.Id)))
                 if (EventSystem.QueueSituation(ctx, "close_addiction_found", new() { ["target"] = p.Id }) is { } found) found.Words["habit"] = What(p.Addiction);
             return;
@@ -63,9 +63,10 @@ public static class DarkSystem
 
         // Living with it.
         p.Health = Math.Max(1, p.Health - (p.Addiction == "drugs" ? 5 : p.Addiction == "alcohol" ? 3 : 0.5));
-        double cost = ctx.Ref(p.Addiction switch { "drugs" => 50000, "gambling" => 60000, _ => 20000 });
-        p.Money -= ctx.Nominal(cost);
-        EconomySystem.Record(ctx, p, $"Your {What(p.Addiction)} habit", -ctx.Nominal(cost));
+        // What the habit costs: nothing behind bars, and a share of the money there is (a gambler loses what there is to lose).
+        double cost = p.Activity == Activity.Prison ? 0 : ctx.Ref(p.Addiction switch { "drugs" => 40000, "gambling" => 45000, _ => 12000 });
+        if (cost > 0) p.Money -= ctx.Nominal(cost);
+        if (cost > 0) EconomySystem.Record(ctx, p, $"Your {What(p.Addiction)} habit", -ctx.Nominal(cost));
         p.Performance = Math.Max(0, p.Performance - 8);
         if (p.PartnerId is { } pid) RelationshipSystem.Change(ctx, pid, p.Id, RelDim.Bitterness, 6);
         foreach (var kid in Kinship.Children(w, p).Where(k => k.IsAlive && k.Age(ctx.Year) is >= 5 and < 18))

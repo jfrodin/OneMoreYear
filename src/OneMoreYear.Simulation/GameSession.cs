@@ -714,7 +714,7 @@ public sealed class GameSession
             PromotionChancePercent = (int)Math.Round(CareerSystem.PromotionChance(Ctx, p) * 100),
             PromotionNote = promotionNote,
             Ladder = ladder,
-            CriminalRecord = p.CriminalRecord.Select(r => $"{r.Year}: {Content.Crimes.GetValueOrDefault(r.CrimeId)?.Name ?? r.CrimeId}, {r.Sentence}").ToList(),
+            CriminalRecord = p.CriminalRecord.OrderByDescending(r => r.Year).Select(r => $"{r.Year}: {Content.Crimes.GetValueOrDefault(r.CrimeId)?.Name ?? r.CrimeId}, {r.Sentence}").ToList(),
             Effort = p.Effort,
             GradesFromAge = Country.GradesFromAge,
             CanChooseEffort = p.Activity is Activity.Working or Activity.Studying || p.Activity == Activity.School && p.Age(Year) >= 10,

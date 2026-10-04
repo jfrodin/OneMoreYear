@@ -54,7 +54,7 @@ public static class CrimeSystem
                     Id = w.Secrets.Count + 1, Kind = "murder", Year = ctx.Year,
                     SubjectId = p.Id, VictimId = victim.Id, KnownBy = new List<int> { p.Id },
                 });
-                texts.Add($"{victimName} is dead. Nobody saw you. You hope.");
+                texts.Add($"{victimName} is dead. You do not think anyone saw you.");
                 break;
         }
 
@@ -71,6 +71,8 @@ public static class CrimeSystem
         if (rng.Chance(CatchChance(ctx, p, crime, victim)))
         {
             texts.Add(Arrest(ctx, p, crime, victim, isPlayer));
+            // Caught for it now: the murder is no longer a secret that can come out again later.
+            foreach (var known in w.Secrets.Where(s => s.Kind == "murder" && s.SubjectId == p.Id && s.Year == ctx.Year)) known.Revealed = true;
             return string.Join(" ", texts);
         }
         if (isPlayer)
@@ -162,6 +164,8 @@ public static class CrimeSystem
         foreach (var s in w.Secrets.Where(s => s.Kind == "murder" && !s.Revealed).ToList())
         {
             var killer = w.Get(s.SubjectId);
+            // Already convicted of it (older saves could still have the secret): nothing left to find.
+            if (killer.CriminalRecord.Any(r => r.CrimeId == "murder" && r.Year >= s.Year)) { s.Revealed = true; continue; }
             if (!killer.IsAlive || killer.Activity == Activity.Prison || !ctx.Rng.Chance(0.06)) continue;
             s.Revealed = true;
             var victim = w.TryGet(s.VictimId);

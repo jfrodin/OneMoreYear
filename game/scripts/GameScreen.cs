@@ -922,7 +922,7 @@ public partial class GameScreen : Control
         var find = Ui.Button("Find a new home…", ShowHomeDialog, 46);
         find.Disabled = !m.CanMove;
         find.SetMeta("action", true);
-        RegisterHint(find, m.CanMove ? "See what homes in your city cost to rent or buy." : "You cannot move right now.");
+        RegisterHint(find, m.CanMove ? "See what homes in your city cost to rent or buy." : S.Player.Activity == OneMoreYear.Simulation.Model.Activity.Prison ? "Not from a prison cell. The home waits for you." : "You cannot move right now.");
         buttons.AddChild(find);
         if (S.HomeProjects().Count > 0)
         {
