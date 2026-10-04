@@ -9,6 +9,9 @@ namespace OneMoreYear.Game;
 /// </summary>
 public static partial class AlbumBits
 {
+    /// <summary>Old tape: yellowed and a little see-through, visible on light paper too.</summary>
+    public static readonly Color TapeColor = new(0.9f, 0.82f, 0.56f, 0.72f);
+
     /// <summary>
     /// A print with a paper border and a shadow, a little crooked, held by a strip of tape. The
     /// content (usually a square portrait) keeps its own size.
@@ -45,7 +48,7 @@ public static partial class AlbumBits
     {
         public override void _Draw()
         {
-            var c = new Color(0.96f, 0.91f, 0.74f, 0.62f);
+            var c = TapeColor;
             var pts = new[]
             {
                 new Vector2(3, 0), new Vector2(Size.X - 2, 1), new Vector2(Size.X, Size.Y * 0.35f), new Vector2(Size.X - 3, Size.Y * 0.6f),
@@ -95,9 +98,46 @@ public partial class PaperSheet : PanelContainer
         foreach (var (x, angle) in new[] { (34f, -0.5f), (Size.X - 34f, 0.5f) })
         {
             DrawSetTransform(new Vector2(x, 2), angle, Vector2.One);
-            var c = new Color(0.96f, 0.91f, 0.74f, 0.6f);
+            var c = AlbumBits.TapeColor;
             DrawColoredPolygon(new[] { new Vector2(-38, -11), new Vector2(38, -12), new Vector2(40, 0), new Vector2(37, 11), new Vector2(-37, 12), new Vector2(-40, 1) }, c);
         }
+        DrawSetTransform(Vector2.Zero, 0, Vector2.One);
+    }
+}
+
+/// <summary>
+/// A slip of paper glued onto an album page, held by one strip of tape that sits a little
+/// differently on each slip. An open question is marked by a coloured edge on the left.
+/// </summary>
+public partial class PaperSlip : PanelContainer
+{
+    private readonly float _tapeAt, _tapeAngle;
+
+    public PaperSlip(bool open = false, int seed = 0)
+    {
+        var rng = new System.Random(seed * 7919 + 13);
+        _tapeAt = 0.12f + (float)rng.NextDouble() * 0.7f;
+        _tapeAngle = ((float)rng.NextDouble() - 0.5f) * 0.18f;
+        var paper = UiTheme.Box(UiTheme.Panel.Lerp(UiTheme.Background, 0.12f), 2, null, 0, 18);
+        paper.ContentMarginTop = 20;
+        paper.ShadowColor = new Color(0.2f, 0.12f, 0.05f, 0.18f);
+        paper.ShadowSize = 7;
+        paper.ShadowOffset = new Vector2(1, 4);
+        if (open)
+        {
+            paper.BorderColor = UiTheme.Accent;
+            paper.BorderWidthLeft = 4;
+        }
+        AddThemeStyleboxOverride("panel", paper);
+    }
+
+    public Control Content { set => AddChild(value); }
+
+    public override void _Draw()
+    {
+        DrawSetTransform(new Vector2(Size.X * _tapeAt, 1), _tapeAngle, Vector2.One);
+        DrawColoredPolygon(new[] { new Vector2(-34, -9), new Vector2(34, -10), new Vector2(36, 0), new Vector2(33, 9), new Vector2(-33, 10), new Vector2(-36, 1) },
+            AlbumBits.TapeColor);
         DrawSetTransform(Vector2.Zero, 0, Vector2.One);
     }
 }

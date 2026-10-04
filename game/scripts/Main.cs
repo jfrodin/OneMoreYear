@@ -680,12 +680,12 @@ public partial class Main : Control
         box.AddChild(heading);
 
         var top = Ui.HBox(18);
-        top.AddChild(Portrait.Create(s.Portrait(me.Id), true, 110));
+        top.AddChild(AlbumBits.Print(Portrait.Create(s.Portrait(me.Id), false, 112, square: true), new Vector2(112, 112), -2.5f));
         var who = Ui.VBox(4);
         who.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         who.AddChild(Ui.Label(me.Name, 28, UiTheme.Text));
         string city = s.Player.CityId is { } cid ? s.Country.Cities.FirstOrDefault(c => c.Id == cid)?.Name ?? "" : "";
-        who.AddChild(UiTheme.HandLabel($"A {(me.IsMale ? "boy" : "girl")}, born in {city}, {me.BirthYear}.", 24, UiTheme.Muted));
+        who.AddChild(UiTheme.HandLabel(string.IsNullOrWhiteSpace(city) ? $"A {(me.IsMale ? "boy" : "girl")}, born in {me.BirthYear}." : $"A {(me.IsMale ? "boy" : "girl")}, born in {city}, {me.BirthYear}.", 24, UiTheme.Muted));
         string start = s.World.StartConditions switch
         {
             "comfortable" => "You chose a comfortable start.",

@@ -38,9 +38,9 @@ public partial class CharacterCreatorScreen : Control
 
     public override void _Ready()
     {
+        var book = BookView.OpenOn(this, 1f, single: true);
         var scroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
-        scroll.SetAnchorsPreset(LayoutPreset.FullRect);
-        AddChild(scroll);
+        book.Left.AddChild(scroll);
         var center = new CenterContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
         scroll.AddChild(center);
         var col = Ui.VBox(12);

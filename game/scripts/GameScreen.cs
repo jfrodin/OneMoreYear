@@ -428,7 +428,7 @@ public partial class GameScreen : Control
         if (news.Count > 0)
         {
             var newsBox = Ui.VBox(6);
-            newsBox.AddChild(Ui.Label("What happened", 20, UiTheme.Text));
+            newsBox.AddChild(UiTheme.HandLabel("What happened", 28, UiTheme.Accent));
             // The world first, then one line per person: what happened to them, told together and in order.
             foreach (var line in news.Where(l => l.Category == "world"))
                 newsBox.AddChild(Ui.Label("•  " + line.Text, 18, UiTheme.Info, wrap: true));
@@ -442,7 +442,8 @@ public partial class GameScreen : Control
                 };
                 newsBox.AddChild(Ui.Label("•  " + story.Text, story.FrontPage ? 19 : size, story.FrontPage ? UiTheme.Text : color, wrap: true));
             }
-            _yearContent.AddChild(Ui.Card(newsBox));
+            // Written straight onto the page, like a diary entry, not a box.
+            _yearContent.AddChild(newsBox);
         }
 
         // Decisions
@@ -1348,7 +1349,7 @@ public partial class GameScreen : Control
             }
         }
 
-        return Ui.Card(box, ev.Resolved ? UiTheme.Panel : UiTheme.PanelAlt, ev.Resolved ? UiTheme.Border : UiTheme.AccentDark);
+        return new PaperSlip(!ev.Resolved, ev.Uid) { Content = box };
     }
 
     private void OnChoose(int uid, int index)

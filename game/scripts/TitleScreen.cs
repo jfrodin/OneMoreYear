@@ -36,19 +36,27 @@ public partial class TitleScreen : Control
 
     public override void _Ready()
     {
-        // The wall of photographs, on the right.
+        // The desk, a sheet of the album on the left with the title and menu, and photographs on the right.
+        var desk = new Desk();
+        desk.SetAnchorsPreset(LayoutPreset.FullRect);
+        AddChild(desk);
+        var sheet = new BookView { Single = true };
+        sheet.SetAnchorsPreset(LayoutPreset.FullRect);
+        sheet.AnchorRight = 0.45f;
+        sheet.OffsetLeft = 34;
+        sheet.OffsetTop = 28;
+        sheet.OffsetBottom = -28;
+        AddChild(sheet);
         var wall = new PhotoWall();
         wall.SetAnchorsPreset(LayoutPreset.FullRect);
-        wall.AnchorLeft = 0.44f;
+        wall.AnchorLeft = 0.47f;
         AddChild(wall);
 
         // The menu, on the left, scrolling only if the window is very small.
-        var scroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
-        scroll.SetAnchorsPreset(LayoutPreset.FullRect);
-        scroll.AnchorRight = 0.46f;
-        AddChild(scroll);
+        var scroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, VerticalScrollMode = ScrollContainer.ScrollMode.ShowNever };
+        sheet.Left.AddChild(scroll);
         var margin = new MarginContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill };
-        margin.AddThemeConstantOverride("margin_left", 90);
+        margin.AddThemeConstantOverride("margin_left", 50);
         margin.AddThemeConstantOverride("margin_right", 30);
         margin.AddThemeConstantOverride("margin_top", 40);
         margin.AddThemeConstantOverride("margin_bottom", 30);
