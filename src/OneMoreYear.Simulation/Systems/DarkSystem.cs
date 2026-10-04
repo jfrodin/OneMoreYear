@@ -69,6 +69,7 @@ public static class DarkSystem
         if (cost > 0) EconomySystem.Record(ctx, p, $"Your {What(p.Addiction)} habit", -ctx.Nominal(cost));
         p.Performance = Math.Max(0, p.Performance - 8);
         if (p.PartnerId is { } pid) RelationshipSystem.Change(ctx, pid, p.Id, RelDim.Bitterness, 6);
+        PartnerReacts(ctx, p);
         foreach (var kid in Kinship.Children(w, p).Where(k => k.IsAlive && k.Age(ctx.Year) is >= 5 and < 18))
         {
             if (kid.Memories.Any(m => m.Kind == "addicted_parent" && m.AboutId == p.Id)) continue;
@@ -99,6 +100,47 @@ public static class DarkSystem
         p.Addiction = null;
         p.Flags.Remove("addicted");
         p.Happiness += 10;
+    }
+
+    /// <summary>
+    /// The person living with an addict does something about it: joins in, leaves, or stays and
+    /// carries it. The player decides for themselves; this is for everyone else.
+    /// </summary>
+    private static void PartnerReacts(SimContext ctx, Person p)
+    {
+        var w = ctx.World;
+        if (w.TryGet(p.PartnerId) is not { IsAlive: true } partner || partner.Id == w.PlayerId) return;
+        if (partner.PartnerStatus is not (PartnerStatus.Cohabiting or PartnerStatus.Married)) return;
+        var rng = ctx.Rng;
+        int years = ctx.Year - p.AddictionSince;
+        string habit = What(p.Addiction);
+        bool family = p.InFamily || partner.InFamily;
+
+        // Drinking together: the weak-willed join in rather than fight it.
+        if (partner.Addiction == null && p.Addiction == "alcohol" && ctx.Mod(partner, "addiction") > 0.3 && rng.Chance(0.12))
+        {
+            partner.Addiction = "alcohol";
+            partner.AddictionSince = ctx.Year;
+            partner.Flags.Add("addicted");
+            if (family) w.Log($"{partner.FirstName} started drinking with {p.FirstName} instead of fighting it.", ctx.Importance(false, partner), "dark", partner.Id, p.Id);
+            return;
+        }
+        if (partner.Addiction != null) return;
+
+        // Leaving: more likely the longer it goes on, less likely for the loyal.
+        double leave = 0.04 + Math.Min(years, 8) * 0.03 - ctx.Mod(partner, "loyalty") * 0.06;
+        if (rng.Chance(Math.Clamp(leave, 0.01, 0.35)))
+        {
+            if (family) w.Log($"{partner.FirstName} left {p.FirstName}. Years of {habit} had been enough.", ctx.Importance(false, partner), "family", partner.Id, p.Id);
+            FamilySystem.BreakUp(ctx, partner, p);
+            return;
+        }
+        // Staying, and carrying it.
+        if (!partner.Memories.Any(m => m.Kind == "covered_for_addict" && m.AboutId == p.Id))
+        {
+            RelationshipSystem.AddMemory(ctx, partner, "covered_for_addict", $"Covering for {p.FirstName}'s {habit}", -15, p.Id);
+            partner.Happiness = Math.Max(0, partner.Happiness - 5);
+        }
     }
 
     public static string What(string? addiction) => addiction switch

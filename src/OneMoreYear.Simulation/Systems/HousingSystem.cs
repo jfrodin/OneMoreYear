@@ -119,6 +119,11 @@ public static class HousingSystem
     }
 
     /// <summary>"Rents a flat in Malmö", "Lives with parents in Umeå" ...</summary>
+    /// <summary>A private without a home or a partner to live with sleeps in the barracks.</summary>
+    public static bool OnBase(Person p) =>
+        p.Activity == Activity.Working && p.OccupationId == "military" && p.OccupationLevel == 0 && !p.OwnsHome && !p.LivesWithParents
+        && p.PartnerStatus is not (PartnerStatus.Cohabiting or PartnerStatus.Married);
+
     public static string Describe(SimContext ctx, Person p)
     {
         string city = City(ctx, p).Name;
@@ -128,6 +133,7 @@ public static class HousingSystem
         if (p.Flags.Contains(CareHomeFlag)) return $"Lives in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"Homeless in {city}";
         if (p.LivesWithParents) return $"Lives with {Parents(ctx, p, false)} in {city}";
+        if (OnBase(p)) return $"Lives in the barracks outside {city}";
         // "Owns a terraced house in Umeå", "Rents a one-room flat in Malmö".
         string? kind = HomeTypeOf(ctx, p) is { } t && t.Id != "room" ? t.Name.ToLowerInvariant() : null;
         if (p.OwnsHome) return $"Owns {kind ?? "a home"} in {city}";
@@ -162,6 +168,7 @@ public static class HousingSystem
         if (p.Flags.Contains(CareHomeFlag)) return $"You live in a care home in {city}";
         if (p.Flags.Contains(Hardship.HomelessFlag)) return $"You have no home, in {city}";
         if (p.LivesWithParents) return $"You live with {Parents(ctx, p, true)} in {city}";
+        if (OnBase(p)) return $"You live in the barracks at the base outside {city}";
         string? kind = HomeTypeOf(ctx, p) is { } t && t.Id != "room" ? t.Name.ToLowerInvariant() : null;
         string with = ctx.World.TryGet(p.PartnerId) is { } partner && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married
             ? $" with {partner.FirstName}" : "";

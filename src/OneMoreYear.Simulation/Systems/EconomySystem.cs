@@ -104,7 +104,8 @@ public static class EconomySystem
             // Food and the rest (60 %) cost the same everywhere; housing (40 %) depends on the city and how you live.
             // Owners pay running costs here and the mortgage separately.
             var homeType = HousingSystem.HomeTypeOf(ctx, p);
-            double homeFactor = p.OwnsHome ? 0.45 * (homeType?.PriceFactor > 0 ? homeType.PriceFactor : 1)
+            double homeFactor = HousingSystem.OnBase(p) ? 0.2
+                : p.OwnsHome ? 0.45 * (homeType?.PriceFactor > 0 ? homeType.PriceFactor : 1)
                 : p.SharesFlat && !sharesHome ? 0.55
                 : homeType?.RentFactor > 0 ? homeType.RentFactor : 1.0;
             double living = c.LivingCostAdult * (0.6 + 0.4 * HousingSystem.City(ctx, p).PriceFactor * homeFactor) * (sharesHome ? 0.8 : 1)

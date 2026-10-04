@@ -284,6 +284,7 @@ public static class CareerSystem
         p.YearsInJob = 0;
         p.Performance = Math.Clamp(ctx.Rng.Gaussian(50, 10), 20, 80);
         p.Income = Salary(ctx, occ.Levels[lvl]);
+        if (occ.Id == "military" && lvl == 0 && p.LivesWithParents && p.Age(ctx.Year) >= 18) p.LivesWithParents = false;
         if (p.Id == ctx.World.PlayerId) SocialSystem.OnNewJob(p, ctx.Year);
         if (p.InFamily && p.Age(ctx.Year) >= 16)
             ctx.World.Log($"{p.FirstName} got a job as {Article(Title(ctx, p))}{(p.Employer != null ? $" at {p.Employer}" : "")}.", ctx.Importance(false, p), "career", p.Id);
