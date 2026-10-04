@@ -566,6 +566,7 @@ public partial class Main : Control
             i => { Settings.SetFixedLook(i == 0 ? null : lookYears[i - 1]); ApplyEra(); })));
         box.AddChild(Row("Volume", Slider(Settings.MasterVolume, Settings.SetMasterVolume)));
         box.AddChild(Row("Sound effects", Slider(Settings.EffectsVolume, Settings.SetEffectsVolume)));
+        box.AddChild(Row("Tips for new players", Options(new[] { "Off", "On" }, Settings.TipsOn ? 1 : 0, i => Settings.SetTips(i == 1))));
         box.AddChild(Row("The family newspaper", Options(new[] { "Every year", "Only in big years", "Never" }, (int)Settings.Newspaper,
             i => Settings.SetNewspaper((NewspaperMode)i))));
 

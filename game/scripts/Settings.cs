@@ -24,6 +24,9 @@ public static class Settings
         public Dictionary<string, ContentLevel> Content { get; set; } = new();
         public NewspaperMode Newspaper { get; set; } = NewspaperMode.BigYears;
         public bool IntroSeen { get; set; }
+        /// <summary>Tips for new players, and the ones already read.</summary>
+        public bool TipsOn { get; set; } = true;
+        public List<string> TipsSeen { get; set; } = new();
         public bool Fullscreen { get; set; }
         /// <summary>0 small, 1 normal, 2 large, 3 extra large.</summary>
         public int TextSize { get; set; } = 1;
@@ -78,6 +81,11 @@ public static class Settings
 
     public static bool IntroSeen => Current.IntroSeen;
     public static void MarkIntroSeen() { Current.IntroSeen = true; Save(); }
+    public static bool TipsOn => Current.TipsOn;
+    public static bool TipSeen(string id) => Current.TipsSeen.Contains(id);
+    public static void MarkTip(string id) { if (!Current.TipsSeen.Contains(id)) Current.TipsSeen.Add(id); Save(); }
+    /// <summary>Turning tips back on shows them all again from the start.</summary>
+    public static void SetTips(bool on) { Current.TipsOn = on; if (on) Current.TipsSeen.Clear(); Save(); }
 
     public static bool Fullscreen => Current.Fullscreen;
     public static int TextSize => Current.TextSize;

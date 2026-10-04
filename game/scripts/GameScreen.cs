@@ -313,6 +313,7 @@ public partial class GameScreen : Control
         sub.SizeFlagsVertical = SizeFlags.ShrinkCenter;
         header.AddChild(sub);
         _yearContent.AddChild(header);
+        if (Guide.CardFor(Guide.Year, S) is { } yearTip) _yearContent.AddChild(yearTip);
 
         // What happened
         var news = S.NewsThisYear();
@@ -366,6 +367,7 @@ public partial class GameScreen : Control
     private void RefreshWork()
     {
         Ui.Clear(_workContent);
+        if (Guide.CardFor(Guide.Work, S) is { } workTip) _workContent.AddChild(workTip);
         var c = S.Career();
 
         var header = Ui.HBox(16);
@@ -497,6 +499,7 @@ public partial class GameScreen : Control
         var m = S.Money();
 
         _moneyContent.AddChild(Ui.Label("Money", 32, UiTheme.Accent));
+        if (Guide.CardFor(Guide.Money, S) is { } moneyTip) _moneyContent.AddChild(moneyTip);
 
         var summary = Ui.VBox(8);
         summary.AddChild(StatRow(m.InDebt ? "Debt" : "In the bank", m.Money, m.InDebt ? UiTheme.Bad : UiTheme.Text));
@@ -1307,6 +1310,7 @@ public partial class GameScreen : Control
         _selectedId ??= S.Player.Id;
         if (!S.World.TryGet(_selectedId)?.IsAlive ?? true) _selectedId = S.Player.Id;
 
+        if (Guide.CardFor(Guide.People, S) is { } peopleTip) _peopleList.AddChild(peopleTip);
         foreach (var p in people) _peopleList.AddChild(PersonRow(p));
         RefreshDetail();
     }
@@ -1493,6 +1497,7 @@ public partial class GameScreen : Control
     private void RefreshTree()
     {
         Ui.Clear(_treeTab);
+        if (Guide.CardFor(Guide.Tree, S) is { } treeTip) _treeTab.AddChild(treeTip);
         int focus = _treeFocusId is { } id && S.World.TryGet(id) != null ? id : S.Player.Id;
         var person = S.World.Get(focus);
 
@@ -1564,6 +1569,7 @@ public partial class GameScreen : Control
     private void RefreshChronicle()
     {
         Ui.Clear(_chronicleList);
+        if (Guide.CardFor(Guide.Chronicle, S) is { } chronicleTip) _chronicleList.AddChild(chronicleTip);
         int minImportance = 3 - _chronicleFilter.Selected;
         var lines = S.Chronicle(minImportance).Reverse().Take(1500).ToList();
         int? year = null;

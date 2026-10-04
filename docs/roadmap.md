@@ -71,6 +71,31 @@ Varje del har ett nuläge, ett mål och en bedömning av hur viktig den är för
 
 **M3. Release** (när kvalitetskraven nedan är uppfyllda, inte på ett datum)
 
+## 3b. Ordning för mest värde (beslutad 2026-10-04)
+
+Först det som avgör om någon fortsätter spela efter tio minuter, sedan djup.
+
+1. **Introduktion.** Tips en i taget när de blir användbara (påbörjad i 0.71).
+2. **Steams butikssida**, parallellt och tidigt: önskelistor samlas över tid.
+3. **Ljud, musik och ikoner.** Se nedan.
+4. **Stängt test** med utomstående (itch.io, Discord). Fråga producenten innan bygget.
+5. **Balans och innehåll** där testarna faktiskt spelar; tre generationer utan upprepningar.
+6. **Steam-krav och städning:** prestationer, molnsparning, handkontroll; F1, testverktyg och
+   karaktärsskaparens spärr ur releasebygget.
+7. **Early Access.**
+8. **Efter:** svensk översättning, tredje land, karaktärsskaparen som liten DLC.
+
+**Ljud och musik: sparsamt.** Spelet läses, som Football Manager eller Crusader Kings, och ljudet
+ska bära stämningen, inte ta plats.
+- Gränssnittsljud bara där något *händer*: val, nytt år, sidvändning, tidningen. Inga ljud på
+  hovring eller vanliga knappar utöver ett mycket svagt klick.
+- Några få känslomässiga ögonblick får ett eget kort ljud: en födsel, en död, ett bröllop, en
+  examen. Mer än så blir tröttsamt efter tio år i spelet.
+- Musik: lugn, instrumental och lågt mixad, ett eller två spår per epok (piano, gitarr, stråkar,
+  sedan syntar på 80-talet och så vidare), med långa tystnader mellan spåren. Egen volym i
+  inställningarna, och lätt att stänga av.
+- Musiken köps som licensierade paket eller beställs av en kompositör. Ingen AI-genererad musik.
+
 ## 4. När vågar vi släppa?
 
 Spelet släpps när alla de här är sanna, inte tidigare:
