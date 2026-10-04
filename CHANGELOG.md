@@ -2,6 +2,17 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.71.1 – 2026-10-04 · Who is really there
+
+- Texts no longer assume people you may not have. About thirty lines spoke of "your son", "your
+  grandchildren" or "your partner" to players without them, or had a mother serve pie after her
+  funeral. Fifteen events now need a living parent, two choices need children, and the rest were
+  rewritten. A new check finds these automatically.
+- Similar moments are told once: grey hair, a bad back, a child moving home, a parent who cannot
+  manage alone, late love, the music for your funeral, the first Monday retired and the new phone
+  each have two or more versions, and you get one of them.
+- The bank scam no longer mentions a daughter you may not have.
+
 ## 0.71.0 – 2026-10-04 · Sound and first steps
 
 - **Music.** Quiet music for each decade, with long silences in between: a soft piano in the
