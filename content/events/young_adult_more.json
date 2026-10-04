@@ -160,7 +160,8 @@
     "conditions": { "minAge": 19, "maxAge": 30, "minYear": 1960 }, "cooldown": 30, "weight": 0.5,
     "choices": [
       { "text": "Sign up", "effects": [ { "type": "money", "amount": -6000 }, { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "kind", "chance": 0.07 }, { "type": "memory", "kind": "volunteer_abroad", "text": "The summer we built the school", "impact": 18 } ], "result": "You learn to mix cement, to wash in a bucket and how little you actually need. The children write to you for years." },
-      { "text": "Send money instead", "effects": [ { "type": "money", "amount": -2000 } ], "result": "A photo arrives at Christmas: a finished school, a lot of smiling children, and your name on a list on the wall." }
+      { "text": "Send money instead", "effects": [ { "type": "money", "amount": -2000 } ], "result": "A photo arrives at Christmas: a finished school, a lot of smiling children, and your name on a list on the wall." },
+      { "text": "Not this time", "effects": [], "result": "You put the leaflet on the fridge. It stays there all summer, slowly fading in the sun." }
     ]
   },
   {

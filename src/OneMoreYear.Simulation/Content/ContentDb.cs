@@ -104,7 +104,7 @@ public sealed class ContentDb
                 {
                     foreach (var p in Deserialize<List<ProgrammeDef>>(json)) db.Programmes[p.Id] = p;
                 }
-                else if (path.EndsWith("insights.json"))
+                else if (path.EndsWith("insights.json") || path.EndsWith("patches.json"))
                 {
                     patches.AddRange(Deserialize<List<EventPatchDef>>(json));
                 }
