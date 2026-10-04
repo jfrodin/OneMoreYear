@@ -2,6 +2,15 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.72.0 – 2026-10-04 · First sight
+
+- **A new title screen.** The title and a short menu on the left, in large type without boxes, and
+  on the right a wall of family photographs: prints from different decades, a little crooked, tinted
+  like photos of their year. Every few seconds one comes down and another goes up: the same family,
+  at another age, in another time. A new family every time the game starts.
+- Starting a new life opens a page of its own with the choices (country, decade, who you are, your
+  start, a seed). Escape or B goes back.
+
 ## 0.71.1 – 2026-10-04 · Who is really there
 
 - Texts no longer assume people you may not have. About thirty lines spoke of "your son", "your

@@ -994,6 +994,7 @@ public partial class Main : Control
         {
             case 3: ShowCharacterCreator(); break;
             case 6: Shot("00_creator"); ShowTitle(); break;
+            case 9: Shot("01a_title"); if (_screen is TitleScreen title) title.ShowNewLife(); break;
             case 10: Shot("01_title"); StartNewGame(1970, "777", choices: new NewGameOptions { CountryId = ArgCountry }); break;
             case 20:
                 for (int i = 0; i < 40 && Session is { } s; i++)
