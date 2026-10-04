@@ -95,6 +95,7 @@ ska bära stämningen, inte ta plats.
   sedan syntar på 80-talet och så vidare), med långa tystnader mellan spåren. Egen volym i
   inställningarna, och lätt att stänga av.
 - Musiken köps som licensierade paket eller beställs av en kompositör. Ingen AI-genererad musik.
+- Producentens omdöme om 0.71 (2026-10-04): den kodskrivna musiken låter likadan i alla decennier och som MIDI. Duger tills vidare; ska ersättas av inspelad musik före release.
 
 ## 4. När vågar vi släppa?
 
