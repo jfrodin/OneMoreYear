@@ -22,7 +22,8 @@ public static class CrimeSystem
         var texts = new List<string>();
 
         // The deed.
-        double gain = crime.GainMax > 0 ? rng.Range(ctx.Ref(crime.GainMin), ctx.Ref(crime.GainMax)) : 0;
+        // A name in the right circles means bigger jobs and better fences.
+        double gain = crime.GainMax > 0 ? rng.Range(ctx.Ref(crime.GainMin), ctx.Ref(crime.GainMax)) * (1 + p.StreetRep / 100) : 0;
         if (crime.Id == "blackmail" && victim != null)
             gain = Math.Clamp(ctx.Real(Math.Max(0, victim.Money)) * 0.15, ctx.Ref(crime.GainMin), ctx.Ref(crime.GainMax));
         if (gain > 0)
@@ -66,6 +67,7 @@ public static class CrimeSystem
             if (guilt >= 10) RelationshipSystem.AddMemory(ctx, p, "guilt", $"What I did to {(victim != null ? victimName : "get that money")}", -guilt);
         }
         p.Flags.Add($"crime_{ctx.Year}");
+        p.StreetRep = Math.Min(100, p.StreetRep + (crime.Violent ? 8 : 4));
 
         // Getting caught.
         if (rng.Chance(CatchChance(ctx, p, crime, victim)))
@@ -90,6 +92,8 @@ public static class CrimeSystem
                         * (1 + ctx.Mod(p, "risk") * 0.1);
         // Doing it again and again draws attention.
         chance += p.Flags.Count(f => f.StartsWith("crime_") && int.TryParse(f[6..], out var y) && ctx.Year - y <= 3) * 0.05;
+        // A known name is a name the police know too.
+        chance += p.StreetRep / 400;
         // A brave or manipulative victim goes to the police when blackmailed.
         if (crime.Id == "blackmail" && victim != null && (victim.HasTrait("brave") || victim.HasTrait("manipulative"))) chance += 0.3;
         return Math.Clamp(chance, 0.05, 0.9);
@@ -109,7 +113,7 @@ public static class CrimeSystem
             sentence = "a talk with social services";
             p.Happiness -= 8;
         }
-        else if (crime.PrisonMax == 0 || (priors == 0 && crime.PrisonMin == 0 && ctx.Rng.Chance(0.6)))
+        else if (crime.PrisonMax == 0 ? !(priors >= 4 && ctx.Rng.Chance(0.5)) : priors == 0 && crime.PrisonMin == 0 && ctx.Rng.Chance(0.6))
         {
             double fine = ctx.NominalRef(crime.Fine * (1 + priors * 0.5));
             p.Money -= fine;
@@ -118,9 +122,16 @@ public static class CrimeSystem
         }
         else
         {
-            int years = Math.Max(1, ctx.Rng.Range(Math.Max(1, crime.PrisonMin), Math.Max(1, crime.PrisonMax)) + Math.Min(priors, 3));
-            Imprison(ctx, p, years);
-            sentence = $"{years} year{(years == 1 ? "" : "s")} in prison";
+            // Every earlier prison sentence makes the next one longer; some countries are harsher than others.
+            int prisonPriors = p.CriminalRecord.Count(r => r.Sentence.Contains("prison"));
+            double years = ctx.Rng.Range(Math.Max(1, crime.PrisonMin), Math.Max(1, crime.PrisonMax))
+                           * (1 + 0.5 * Math.Min(prisonPriors, 4)) + Math.Min(priors, 3) * 0.5;
+            years *= ctx.Country.SentenceFactor;
+            bool strikes = ctx.Country.ThreeStrikesFrom is { } from && ctx.Year >= from && prisonPriors >= 2;
+            if (strikes) years = Math.Max(years, crime.Violent ? 25 : 10);
+            int y = Math.Max(1, (int)Math.Round(years));
+            Imprison(ctx, p, y);
+            sentence = $"{y} year{(y == 1 ? "" : "s")} in prison" + (strikes ? " under the three strikes law" : "");
         }
         p.CriminalRecord.Add(new CrimeRecord { Year = ctx.Year, CrimeId = crime.Id, Sentence = sentence });
         w.Log(victim != null
@@ -157,6 +168,9 @@ public static class CrimeSystem
         {
             var p = w.People[i];
             if (!p.IsAlive) continue;
+            // A name fades when you stop. Inside, the people who matter remember who stood their ground.
+            if (p.StreetRep > 0 && !p.Flags.Contains($"crime_{ctx.Year}"))
+                p.StreetRep = Math.Max(0, p.StreetRep + (p.Activity == Activity.Prison && p.Flags.Contains("respected_inside") ? 1 : -3));
             if (p.Activity == Activity.Prison) { PrisonYear(ctx, p); continue; }
             if (p.Id != w.PlayerId && (p.InFamily || p.OccupationId == "crime") && p.Age(ctx.Year) >= 14) NpcCrime(ctx, p);
         }

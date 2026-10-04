@@ -1,0 +1,63 @@
+// A name among criminals (Person.StreetRep): what it brings, and what it costs. No dashes.
+[
+  {
+    "id": "cw_big_job", "title": "A bigger job",
+    "text": "A man you only know by a nickname buys you a beer and talks about a warehouse, a night guard who takes long breaks, and a driver they need. Your name came up, he says.",
+    "conditions": { "minAge": 18, "minStreetRep": 25 }, "cooldown": 5,
+    "choices": [
+      { "text": "Drive the car", "chance": 0.6, "chanceTraits": { "brave": 0.1, "impulsive": -0.1 },
+        "success": { "text": "Forty minutes, no lights, no sirens. Your share comes in an envelope a week later, thicker than you expected.", "effects": [ { "type": "money", "amount": 120000 }, { "type": "street_rep", "amount": 6 }, { "type": "flag", "flag": "big_job_done" } ] },
+        "failure": { "text": "The guard did not take his break that night. Blue lights at the gate, and someone in the back seat who talks within an hour.", "effects": [ { "type": "convicted", "kind": "burglary" }, { "type": "street_rep", "amount": 3 } ] } },
+      { "text": "Say you are not interested", "effects": [ { "type": "street_rep", "amount": -3 } ], "result": "He shrugs and finishes his beer. Word gets around that you said no. Some people think less of you for it. You sleep fine." }
+    ]
+  },
+  {
+    "id": "cw_kid_wants_in", "title": "He wants in",
+    "text": "A boy from the neighbourhood, fourteen at most, stops you outside the shop. He has seen your car and heard your name. He asks if there is any work for him.",
+    "conditions": { "minAge": 25, "minStreetRep": 30 }, "cooldown": 8,
+    "choices": [
+      { "text": "Send him home, and mean it", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.05 }, { "type": "happiness", "amount": 2 } ], "result": "You tell him what it actually looks like: the years inside, the friends who are dead. He looks at you as if you were his father. Maybe he listens." },
+      { "text": "Give him an errand", "effects": [ { "type": "money", "amount": 5000 }, { "type": "street_rep", "amount": 2 }, { "type": "happiness", "amount": -3 }, { "type": "trait_add", "trait": "cruel", "chance": 0.03 } ], "result": "A bag to carry across town. He does it well. He comes back the next week, and the week after that." }
+    ]
+  },
+  {
+    "id": "cw_old_score", "content": [ "violence" ], "title": "An old score",
+    "text": "Someone you crossed years ago is out, and has been asking around for your address.",
+    "conditions": { "minAge": 20, "minStreetRep": 40 }, "cooldown": 10,
+    "choices": [
+      { "text": "Move, quietly", "effects": [ { "type": "money", "amount": -30000 }, { "type": "happiness", "amount": -4 } ], "result": "A new flat across town, a new number, curtains you keep closed. Nobody comes. You still check the street every night." },
+      { "text": "Let him come", "chance": 0.5, "chanceTraits": { "brave": 0.1 }, "chanceAttributes": { "fitness": 0.004 },
+        "success": { "text": "He comes, and he leaves again, faster. After that night your name means a little more.", "effects": [ { "type": "street_rep", "amount": 6 }, { "type": "health", "amount": -4 } ] },
+        "failure": { "text": "He was not alone. You wake up in hospital with a face you do not recognise in the mirror.", "effects": [ { "type": "health", "amount": -22 }, { "type": "street_rep", "amount": -6 }, { "type": "ailment_add", "kind": "trauma", "chance": 0.3 } ] } }
+    ]
+  },
+  {
+    "id": "cw_going_straight", "title": "A real job",
+    "text": "An old fence of yours runs a café now, honest books and all. He says there is a job behind the counter if you want it. Early mornings, bad pay, nobody looking over their shoulder.",
+    "conditions": { "minAge": 20, "minStreetRep": 15, "notFlags": [ "went_straight" ] }, "cooldown": 10,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "flag", "flag": "went_straight" }, { "type": "street_rep", "amount": -20 }, { "type": "happiness", "amount": 4 }, { "type": "job_find" } ], "result": "The first month you are bored out of your mind. The second month you notice that you sleep through the night." },
+      { "text": "Not yet", "effects": [], "result": "He nods. The offer stands, he says. It does not, of course. Offers like that never do." }
+    ]
+  },
+  {
+    "id": "cw_detectives", "title": "Just to talk",
+    "text": "Two detectives at your door, polite, coffee in paper cups. They only want to talk. They know a lot more than you would like.",
+    "conditions": { "minAge": 18, "minStreetRep": 35 }, "cooldown": 8,
+    "choices": [
+      { "text": "Say nothing at all", "effects": [ { "type": "street_rep", "amount": 3 } ], "result": "Forty minutes of silence. They leave a card on the table. You burn it, and people hear that you did." },
+      { "text": "Give them a name", "effects": [ { "type": "street_rep", "amount": -15 }, { "type": "flag", "flag": "informer" }, { "type": "happiness", "amount": -5 } ], "result": "One name, and they leave you alone for a long time. You are never quite sure who else knows." }
+    ]
+  },
+  {
+    "id": "cw_informer_found", "content": [ "violence" ], "title": "Someone knows",
+    "text": "A note under your door, no name, just one word. Somebody has worked out who talked to the police.",
+    "conditions": { "minAge": 18, "flags": [ "informer" ] }, "cooldown": 0, "weight": 0.4,
+    "choices": [
+      { "text": "Leave town for a while", "effects": [ { "type": "money", "amount": -40000 }, { "type": "happiness", "amount": -6 }, { "type": "flag_remove", "flag": "informer" } ], "result": "Six months somewhere else, working for cash. When you come back it has blown over, mostly." },
+      { "text": "Stay and deny everything", "chance": 0.5,
+        "success": { "text": "Nothing happens. Then more nothing. Maybe it was a bluff.", "effects": [ { "type": "flag_remove", "flag": "informer" } ] },
+        "failure": { "text": "They find you in the car park. Three broken ribs, and a message for anyone else who might be thinking about it.", "effects": [ { "type": "health", "amount": -18 }, { "type": "flag_remove", "flag": "informer" } ] } }
+    ]
+  }
+]

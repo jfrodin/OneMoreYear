@@ -130,6 +130,10 @@ public sealed class CountryDef
     /// <summary>Year → multiplier for how many children couples have.</summary>
     public Dictionary<int, double> FertilityIndex { get; set; } = new();
     public double TaxRate { get; set; } = 0.3;
+    /// <summary>How long prison sentences are here compared with the crimes file (1 = as written).</summary>
+    public double SentenceFactor { get; set; } = 1;
+    /// <summary>A third prison sentence brings a very long one (the USA in the 1990s and later).</summary>
+    public int? ThreeStrikesFrom { get; set; }
     /// <summary>Basic yearly cost of living per adult including housing, 2020-kronor.</summary>
     public double LivingCostAdult { get; set; }
     public double LivingCostChild { get; set; }
@@ -282,6 +286,8 @@ public sealed class OccupationDef
 public sealed class ConditionDef
 {
     public int? MinAge { get; set; }
+    /// <summary>Lowest reputation among criminals (Person.StreetRep).</summary>
+    public double? MinStreetRep { get; set; }
     public int? MaxAge { get; set; }
     public Sex? Sex { get; set; }
     public bool? HasPartner { get; set; }

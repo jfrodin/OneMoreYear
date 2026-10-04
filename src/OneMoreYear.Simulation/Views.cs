@@ -145,6 +145,8 @@ public sealed record CareerView
     public string? PromotionNote { get; init; }
     public IReadOnlyList<LadderStep> Ladder { get; init; } = Array.Empty<LadderStep>();
     public IReadOnlyList<string> CriminalRecord { get; init; } = Array.Empty<string>();
+    /// <summary>What your name is worth among criminals, in words; null when nobody there knows you.</summary>
+    public string? StreetName { get; init; }
     /// <summary>-1 takes it easy, 0 does the job, 1 gives it everything.</summary>
     public int Effort { get; init; }
     public bool CanChooseEffort { get; init; }

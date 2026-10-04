@@ -454,12 +454,14 @@ public partial class GameScreen : Control
         }
         _workContent.AddChild(Ui.Card(work));
 
-        if (c.CriminalRecord.Count > 0)
+        if (c.CriminalRecord.Count > 0 || c.StreetName != null)
         {
             var rec = Ui.VBox(6);
-            rec.AddChild(Ui.Label("Criminal record", 21, UiTheme.Bad));
+            rec.AddChild(Ui.Label(c.CriminalRecord.Count > 0 ? "Criminal record" : "Your name", 21, UiTheme.Bad));
             foreach (var line in c.CriminalRecord) rec.AddChild(Ui.Label(line, 16, UiTheme.Muted, wrap: true));
-            rec.AddChild(Ui.Label("Employers check. A record makes job offers rarer.", 15, UiTheme.Faint));
+            if (c.StreetName != null) rec.AddChild(Ui.Label(c.StreetName, 16, UiTheme.Text, wrap: true));
+            if (c.CriminalRecord.Count > 0)
+                rec.AddChild(Ui.Label("Employers check. A record makes job offers rarer, and every sentence makes the next one longer.", 15, UiTheme.Faint, wrap: true));
             _workContent.AddChild(Ui.Card(rec));
         }
 

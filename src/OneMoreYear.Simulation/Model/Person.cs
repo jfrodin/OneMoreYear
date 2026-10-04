@@ -154,6 +154,8 @@ public sealed class Person
     /// <summary>The player's share (0.5 once bought in) of the partner's home, and what it was worth last year (nominal).</summary>
     public double PartnerHomeShare { get; set; }
     public double PartnerHomeStake { get; set; }
+    /// <summary>A name among criminals, 0 to 100: earned by crimes and respect inside, fades when you stop.</summary>
+    public double StreetRep { get; set; }
     /// <summary>A child who is favoured in this person's will (gets a larger share).</summary>
     public int? WillFavoriteId { get; set; }
     public List<int> Disinherited { get; set; } = new();

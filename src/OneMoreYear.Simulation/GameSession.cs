@@ -717,6 +717,13 @@ public sealed class GameSession
             PromotionNote = promotionNote,
             Ladder = ladder,
             CriminalRecord = p.CriminalRecord.OrderByDescending(r => r.Year).Select(r => $"{r.Year}: {Content.Crimes.GetValueOrDefault(r.CrimeId)?.Name ?? r.CrimeId}, {r.Sentence}").ToList(),
+            StreetName = p.StreetRep switch
+            {
+                >= 60 => "Everyone in that world knows your name. Bigger jobs come to you, and so do the police.",
+                >= 30 => "People in the wrong places know who you are. The work pays better, and you are watched.",
+                >= 10 => "A few people in the wrong places know your face.",
+                _ => null,
+            },
             Effort = p.Effort,
             GradesFromAge = Country.GradesFromAge,
             CanChooseEffort = p.Activity is Activity.Working or Activity.Studying || p.Activity == Activity.School && p.Age(Year) >= 10,

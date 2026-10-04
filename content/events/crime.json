@@ -69,7 +69,7 @@
       {
         "text": "Stand your ground",
         "chance": 0.5, "chanceTraits": { "brave": 0.2, "hot_tempered": 0.1 }, "chanceAttributes": { "fitness": 0.006 },
-        "success": { "text": "He backs off. After that, people leave you alone.", "effects": [ { "type": "flag", "flag": "respected_inside" }, { "type": "trait_add", "trait": "brave", "chance": 0.3 } ] },
+        "success": { "text": "He backs off. After that, people leave you alone.", "effects": [ { "type": "flag", "flag": "respected_inside" }, { "type": "street_rep", "amount": 10 }, { "type": "trait_add", "trait": "brave", "chance": 0.3 } ] },
         "failure": { "text": "You spend a week in the infirmary.", "effects": [ { "type": "health", "amount": -15 } ] }
       },
       { "text": "Look away", "effects": [ { "type": "happiness", "amount": -5 } ], "result": "You learn which corners of the yard to avoid." }

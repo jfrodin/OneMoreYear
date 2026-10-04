@@ -209,6 +209,7 @@ public static class EventSystem
         if (c.OwnsRental is { } letting && RentalSystem.OwnsRental(w, p) != letting) return false;
         if (c.OwnsEstate is { } seat && EstateSystem.Owns(w, p) != seat) return false;
         if (c.MinFame is { } minFame && p.Fame < minFame) return false;
+        if (c.MinStreetRep is { } minRep && p.StreetRep < minRep) return false;
         if (c.MaxFame is { } maxFame && p.Fame > maxFame) return false;
         if (c.MinPeakFame is { } peak && p.PeakFame < peak) return false;
         if (c.Subject is { } subject && p.Subject != subject) return false;

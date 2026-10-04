@@ -1413,3 +1413,23 @@ public class CharacterCreatorTests
         Assert.True(p.Money > 0);
     }
 }
+
+public class SentenceTests
+{
+    [Fact]
+    public void RepeatOffendersGetLongerSentencesAndTheUsaThreeStrikes()
+    {
+        int Years(string country, int priorPrison, int year)
+        {
+            var s = GameSession.NewGame(new NewGameOptions { Seed = 31, StartYear = year, CountryId = country });
+            var p = PersonFactory.CreateStranger(s.Ctx, OneMoreYear.Simulation.Model.Sex.Male, 30);
+            for (int i = 0; i < priorPrison; i++)
+                p.CriminalRecord.Add(new OneMoreYear.Simulation.Model.CrimeRecord { Year = year - 10 + i, CrimeId = "robbery", Sentence = "2 years in prison" });
+            CrimeSystem.Arrest(s.Ctx, p, s.Content.Crimes["robbery"], null, false);
+            return p.PrisonYearsLeft;
+        }
+        Assert.True(Years("sweden", 3, 2000) > Years("sweden", 0, 2000));
+        Assert.True(Years("usa", 2, 2000) >= 25);
+        Assert.True(Years("usa", 2, 1980) < 25);
+    }
+}
