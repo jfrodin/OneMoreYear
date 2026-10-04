@@ -1389,3 +1389,27 @@ public class LifestyleTests
         Assert.True(p.Money > before - s.Ctx.NominalRef(500000));
     }
 }
+
+public class CharacterCreatorTests
+{
+    [Fact]
+    public void CreatedLifeStartsAsDescribed()
+    {
+        var s = CharacterCreator.Start(new CharacterSpec
+        {
+            FirstName = "Testa", Sex = OneMoreYear.Simulation.Model.Sex.Female, CountryId = "usa", StartYear = 1975, Age = 35,
+            SeedCode = "CREATOR1", Traits = new() { "brave" }, Smarts = 90, Money = 250000, Occupation = "medicine",
+            Addiction = "gambling", Partner = true,
+        });
+        var p = s.Player;
+        Assert.Equal("Testa", p.FirstName);
+        Assert.Equal(OneMoreYear.Simulation.Model.Sex.Female, p.Sex);
+        Assert.Equal(35, p.Age(s.Year));
+        Assert.Equal(2010, s.Year);
+        Assert.Contains("brave", p.Traits);
+        Assert.Equal("medicine", p.OccupationId);
+        Assert.Equal("gambling", p.Addiction);
+        Assert.NotNull(p.PartnerId);
+        Assert.True(p.Money > 0);
+    }
+}

@@ -514,6 +514,12 @@ public sealed class ScenarioTweak
     public bool? OwnsHome { get; set; }
     public bool? Unemployed { get; set; }
     public string? Addiction { get; set; }
+    // Used by the character creator (Systems/CharacterCreator.cs).
+    public string? FirstName { get; set; }
+    public double? Health { get; set; }
+    public double? Happiness { get; set; }
+    public string? Occupation { get; set; }
+    public string? Ailment { get; set; }
 }
 
 /// <summary>Name parts for fictional employers in one country (content/employers).</summary>

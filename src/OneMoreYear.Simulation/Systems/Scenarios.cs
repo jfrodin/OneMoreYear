@@ -28,7 +28,7 @@ public static class Scenarios
                           ?? Kinship.Grandparents(w, player).FirstOrDefault(p => p.Sex == Sex.Male && p.IsAlive);
 
         // The player's own money and home are set when the scenario hands over (see FastForward).
-        StartChoices.Tweak(ctx, player, s.Player is { } pt ? new ScenarioTweak { Traits = pt.Traits, Smarts = pt.Smarts, Looks = pt.Looks, Fitness = pt.Fitness, Addiction = pt.Addiction } : null);
+        StartChoices.Tweak(ctx, player, s.Player is { } pt ? new ScenarioTweak { Traits = pt.Traits, Smarts = pt.Smarts, Looks = pt.Looks, Fitness = pt.Fitness, FirstName = pt.FirstName } : null);
         foreach (var p in parents) StartChoices.Tweak(ctx, p, s.Parents);
         StartChoices.Tweak(ctx, father, s.Father);
         StartChoices.Tweak(ctx, mother, s.Mother);
@@ -103,7 +103,11 @@ public static class Scenarios
         int guard = 0;
         while (session.Player.Age(session.Year) < s.Age && !session.GameOver && guard++ < 150)
             bot.PlayYear(session);
-        if (s.Player is { } pt) StartChoices.Tweak(session.Ctx, session.Player, new ScenarioTweak { Money = pt.Money, OwnsHome = pt.OwnsHome, Unemployed = pt.Unemployed });
+        if (s.Player is { } pt) StartChoices.Tweak(session.Ctx, session.Player, new ScenarioTweak
+            {
+                Money = pt.Money, OwnsHome = pt.OwnsHome, Unemployed = pt.Unemployed, Addiction = pt.Addiction,
+                Health = pt.Health, Happiness = pt.Happiness, Occupation = pt.Occupation, Ailment = pt.Ailment,
+            });
 
         var ctx = session.Ctx;
         var w = ctx.World;

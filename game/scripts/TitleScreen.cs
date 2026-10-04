@@ -23,9 +23,6 @@ public partial class TitleScreen : Control
     private readonly List<CountryDef> _countries = ContentDb.Embedded.Countries.Values.OrderBy(c => c.Name).ToList();
     private OptionButton? _country;
     private LineEdit _seed = null!;
-    private OptionButton _scenario = null!;
-    private Label _scenarioInfo = null!;
-    private IReadOnlyList<ScenarioDef> _scenarios = null!;
 
     public void Init(Main main) => _main = main;
 
@@ -127,22 +124,12 @@ public partial class TitleScreen : Control
         _conditions.ItemSelected += _ => UpdateConditionInfo();
         UpdateConditionInfo();
 
-        // Test scenarios (a playtesting tool, docs/test-scenarios.md): only in development builds, never in a release.
-        var scenarioRow = Ui.HBox(12);
-        var scenarioLabel = Ui.Label("Scenario", 18, UiTheme.Muted);
-        scenarioLabel.CustomMinimumSize = new Vector2(140, 0);
-        scenarioRow.AddChild(scenarioLabel);
-        _scenarios = GameSession.AvailableScenarios();
-        _scenario = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, 44) };
-        _scenario.AddItem("None (a random family)");
-        foreach (var s in _scenarios) _scenario.AddItem($"{s.Name}  (seed {s.Seed})");
-        _scenario.ItemSelected += _ => UpdateScenarioInfo();
-        scenarioRow.AddChild(_scenario);
-        scenarioRow.Visible = OS.IsDebugBuild();
-        options.AddChild(scenarioRow);
-        _scenarioInfo = Ui.Label("", 15, UiTheme.Faint, wrap: true);
-        options.AddChild(_scenarioInfo);
-        UpdateScenarioInfo();
+        // The character creator: a separate feature, switched on in Features.
+        if (Features.CharacterCreator)
+        {
+            var create = Ui.Button("Create a character…", () => _main.ShowCharacterCreator(), 48);
+            options.AddChild(create);
+        }
 
         var start = Ui.Button("New Life", StartNew, 56);
         // As visible as Continue: starting over is just as much a main path.
@@ -205,7 +192,7 @@ public partial class TitleScreen : Control
     {
         string? seed = string.IsNullOrWhiteSpace(_seed.Text) ? null : _seed.Text;
         int year = _decades[_year.Selected].Year;
-        string? scenario = SelectedScenario?.Id;
+        string? scenario = null;
         var choices = new NewGameOptions
         {
             PlayerSex = _sex.Selected switch { 1 => Sex.Male, 2 => Sex.Female, _ => null },
@@ -225,13 +212,4 @@ public partial class TitleScreen : Control
             ? StartChoices.Conditions[_conditions.Selected - 1].Description
             : "Whatever family fate gives you. This is how One More Year is meant to be played.";
 
-    private ScenarioDef? SelectedScenario => _scenario.Selected > 0 ? _scenarios[_scenario.Selected - 1] : null;
-
-    private void UpdateScenarioInfo()
-    {
-        var s = SelectedScenario;
-        _year.Disabled = s != null;
-        _scenarioInfo.Text = s == null ? "" : $"{s.Description}\nStarts in {s.StartYear}{(s.Age > 0 ? $", aged {s.Age}" : "")}. A seed above replaces the scenario's own.";
-        _scenarioInfo.Visible = s != null;
-    }
 }

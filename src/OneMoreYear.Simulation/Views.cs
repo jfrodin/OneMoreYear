@@ -22,6 +22,8 @@ public sealed record NewGameOptions
     public string? StartConditions { get; init; }
     /// <summary>The city the player is born in (an id from the country's cities).</summary>
     public string? CityId { get; init; }
+    /// <summary>A scenario built in the character creator (Systems/CharacterCreator.cs); used instead of ScenarioId.</summary>
+    public Content.ScenarioDef? Custom { get; init; }
 }
 
 /// <summary>A choice. <paramref name="Tag"/> names the trait that makes it possible ("Charming"); <paramref name="Factors"/> explains the chance.</summary>

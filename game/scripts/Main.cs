@@ -256,10 +256,26 @@ public partial class Main : Control
     }
 
     /// <summary>Starts a new life. <paramref name="choices"/> carries the optional start choices (sex, circumstances, city).</summary>
-    public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null, int? slot = null, NewGameOptions? choices = null)
+    public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null, int? slot = null, NewGameOptions? choices = null) =>
+        Begin((choices ?? new NewGameOptions()) with { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId, ContentSettings = Settings.Content }, slot);
+
+    /// <summary>The character creator (see Features.CharacterCreator).</summary>
+    public void ShowCharacterCreator()
+    {
+        if (!Features.CharacterCreator) return;
+        var screen = new CharacterCreatorScreen();
+        screen.Init(this);
+        SetScreen(screen);
+    }
+
+    /// <summary>Starts a life made in the character creator.</summary>
+    public void StartCreatedLife(OneMoreYear.Simulation.Systems.CharacterSpec spec, int? slot = null) =>
+        Begin(OneMoreYear.Simulation.Systems.CharacterCreator.Options(spec, Settings.Content), slot);
+
+    private void Begin(NewGameOptions options, int? slot)
     {
         SaveSystem.CurrentSlot = slot ?? SaveSystem.FirstEmptySlot() ?? 1;
-        Session = GameSession.NewGame((choices ?? new NewGameOptions()) with { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId, ContentSettings = Settings.Content });
+        Session = GameSession.NewGame(options);
         SaveSystem.Save(Session);
         ShowGame();
         bool automated = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
@@ -946,6 +962,8 @@ public partial class Main : Control
 
         switch (_shotFrame)
         {
+            case 3: ShowCharacterCreator(); break;
+            case 6: Shot("00_creator"); ShowTitle(); break;
             case 10: Shot("01_title"); StartNewGame(1970, "777", choices: new NewGameOptions { CountryId = ArgCountry }); break;
             case 20:
                 for (int i = 0; i < 40 && Session is { } s; i++)

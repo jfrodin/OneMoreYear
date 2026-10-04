@@ -79,6 +79,11 @@ public static class StartChoices
         if (t.Smarts is { } smarts) p.Smarts = smarts;
         if (t.Looks is { } looks) p.Looks = looks;
         if (t.Fitness is { } fitness) p.Fitness = fitness;
+        if (!string.IsNullOrWhiteSpace(t.FirstName)) p.FirstName = t.FirstName.Trim();
+        if (t.Health is { } health) p.Health = health;
+        if (t.Happiness is { } happiness) p.Happiness = happiness;
+        if (t.Occupation != null && p.Age(ctx.Year) >= 16) { p.ProgrammeId = null; p.StudyingFor = null; if (!CareerSystem.Hire(ctx, p, t.Occupation)) CareerSystem.Hire(ctx, p, t.Occupation, 0); }
+        if (t.Ailment != null) AilmentSystem.Begin(ctx, p, t.Ailment);
         if (t.Money is { } money) p.Money = ctx.NominalRef(money);
         if (t.OwnsHome == true && p.HomeValue <= 0) EconomySystem.GiveHome(p, HousingSystem.HomePrice(ctx, p), HousingSystem.HomePrice(ctx, p) * 0.3);
         if (t.OwnsHome == false && p.HomeValue > 0) EconomySystem.SellHome(ctx, p, log: false);

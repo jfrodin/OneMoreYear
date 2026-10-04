@@ -39,9 +39,9 @@ public sealed class GameSession
     public static GameSession NewGame(NewGameOptions options, ContentDb? content = null)
     {
         content ??= ContentDb.Embedded;
-        var scenario = options.ScenarioId == null ? null
+        var scenario = options.Custom ?? (options.ScenarioId == null ? null
             : content.Scenarios.FirstOrDefault(s => s.Id == options.ScenarioId)
-              ?? throw new ArgumentException($"Unknown scenario '{options.ScenarioId}'.");
+              ?? throw new ArgumentException($"Unknown scenario '{options.ScenarioId}'."));
         if (scenario != null && Withdrawn(scenario)) throw new ArgumentException($"Scenario '{scenario.Id}' is withdrawn.");
         if (scenario != null)
             options = options with
