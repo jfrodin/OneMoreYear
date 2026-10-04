@@ -291,6 +291,8 @@ public sealed class ConditionDef
     public int? MaxAge { get; set; }
     public Sex? Sex { get; set; }
     public bool? HasPartner { get; set; }
+    /// <summary>A mother or father still alive (for "your mother serves pie very loudly").</summary>
+    public bool? ParentAlive { get; set; }
     public bool? Married { get; set; }
     public PartnerStatus? PartnerStatus { get; set; }
     /// <summary>For other people: whether they and the player could be a couple (orientation, age 16+).</summary>

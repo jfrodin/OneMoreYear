@@ -38,7 +38,7 @@
   {
     "id": "fame_exhibition", "group": "first_exhibition", "title": "A gallery",
     "text": "A small gallery has seen your paintings and offers you the back room for two weeks in spring. You would need to frame thirty canvases.",
-    "conditions": { "minAge": 20, "minSkills": { "painting": 5 }, "notJobs": [ "arts" ] }, "cooldown": 8,
+    "conditions": { "parentAlive": true, "minAge": 20, "minSkills": { "painting": 5 }, "notJobs": [ "arts" ] }, "cooldown": 8,
     "choices": [
       { "text": "Do it", "chance": 0.06, "chanceSkills": { "painting": 0.025 },
         "success": { "text": "A critic comes. A good review. Eleven paintings sold. The gallery wants you back, and wants you to stop doing anything else.", "effects": [ { "type": "money", "amount": 40000 }, { "type": "career", "kind": "arts" }, { "type": "fame", "amount": 4 }, { "type": "happiness", "amount": 8 } ] },
@@ -69,7 +69,7 @@
   {
     "id": "fame_interview", "title": "The interview",
     "text": "A national [[1980: newspaper || TV programme]] wants an interview. A long one, about your work, your childhood and \"what drives you\".",
-    "conditions": { "minAge": 18, "minFame": 30 }, "cooldown": 4,
+    "conditions": { "parentAlive": true, "minAge": 18, "minFame": 30 }, "cooldown": 4,
     "choices": [
       { "text": "Be honest", "chance": 0.6, "chanceTraits": { "charming": 0.15 },
         "success": { "text": "People write to you afterwards. Strangers, saying they felt the same. It is the best thing you have ever done that was not work.", "effects": [ { "type": "fame", "amount": 6 }, { "type": "happiness", "amount": 4 } ] },

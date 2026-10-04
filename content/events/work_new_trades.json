@@ -135,7 +135,7 @@
   {
     "id": "nt_art_exhibition", "group": "first_exhibition", "title": "The exhibition",
     "text": "A small gallery has offered you a show. Two weeks, twenty works on the walls, and an opening night with cheap wine.",
-    "conditions": { "minAge": 20, "activity": "working", "jobs": [ "arts" ] }, "cooldown": 8,
+    "conditions": { "parentAlive": true, "minAge": 20, "activity": "working", "jobs": [ "arts" ] }, "cooldown": 8,
     "choices": [
       { "text": "Show your bravest work", "chance": 0.4, "chanceTraits": { "creative": 0.15, "eccentric": 0.1 },
         "success": { "text": "A critic comes, then a collector. Four works sell on the first night. You have to sit down on the floor of the toilet for a minute.", "effects": [ { "type": "money", "amount": 60000 }, { "type": "promote" }, { "type": "happiness", "amount": 8 } ] },

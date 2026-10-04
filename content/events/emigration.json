@@ -35,7 +35,7 @@
   {
     "id": "emig_homesick", "title": "Homesick",
     "text": "Something small sets it off: a smell from a bakery, a song on the radio, the light on a winter afternoon. For a moment you are back in {homeland}, and then you are not.",
-    "conditions": { "minAge": 12, "flags": [ "emigrant" ] }, "cooldown": 5,
+    "conditions": { "parentAlive": true, "minAge": 12, "flags": [ "emigrant" ] }, "cooldown": 5,
     "choices": [
       { "text": "Call home", "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 3 } ],
         "result": "[[1995: The call costs a fortune per minute. You talk fast and say nothing important. It helps anyway. || A video call that freezes every ten seconds. Your mother's face, stuck mid sentence. It helps anyway.]]" },
@@ -58,7 +58,7 @@
   {
     "id": "emig_child_language", "title": "In the other language",
     "text": "You ask {t.name} something in {language}, and {t.he} answers in the language of {country} without even noticing.",
-    "conditions": { "minAge": 25, "flags": [ "emigrant" ] }, "cooldown": 12,
+    "conditions": { "parentAlive": true, "minAge": 25, "flags": [ "emigrant" ] }, "cooldown": 12,
     "target": { "role": "child", "conditions": { "minAge": 5, "maxAge": 14, "abroad": false } },
     "choices": [
       { "text": "Insist on {language} at home", "chance": 0.5, "chanceTraits": { "devoted_parent": 0.2 },

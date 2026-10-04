@@ -152,7 +152,7 @@
   {
     "id": "hob_programming_app", "title": "The side project",
     "text": "Something you built in the evenings for fun has quietly become popular. A company has written to ask what you want for it.",
-    "conditions": { "minAge": 16, "minSkills": { "programming": 6 }, "minYear": 1985 }, "cooldown": 20,
+    "conditions": { "parentAlive": true, "minAge": 16, "minSkills": { "programming": 6 }, "minYear": 1985 }, "cooldown": 20,
     "choices": [
       { "text": "Sell it", "effects": [ { "type": "money", "amount": 150000 }, { "type": "happiness", "amount": 6 } ], "result": "More money than you have ever seen at once, for something you made at the kitchen table. Your mother asks what it does. You still cannot explain." },
       { "text": "Keep it and grow it", "chance": 0.25, "chanceSkills": { "programming": 0.04 },

@@ -108,7 +108,7 @@
         "result": "Two hymns, one pop song from 1965, no lilies, coffee and cake after with the good cups. You put it in an envelope marked AFTER." },
       { "text": "Talk to the children about it", "chance": 0.5, "chanceTraits": { "charming": 0.1 },
         "success": { "text": "It turns into a long, funny evening about everyone's worst funerals. Somebody writes everything down.", "effects": [ { "type": "happiness", "amount": 5 } ] },
-        "failure": { "text": "\"Don't talk like that,\" says someone, and the subject is changed. You write it down anyway.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
+        "failure": { "text": "\"Don't talk like that,\" somebody at the table says, and the subject is changed. You write it down anyway.", "effects": [ { "type": "happiness", "amount": 1 } ] } }
     ]
   },
   {

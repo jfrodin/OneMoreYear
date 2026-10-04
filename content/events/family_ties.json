@@ -33,7 +33,7 @@
   {
     "id": "ties_sibling_wedding_speech", "group": "wedding_speech", "title": "The speech",
     "text": "{t.name} is getting married and has asked you to give a speech. You have known {t.him} longer than anyone in that room.",
-    "conditions": { "minAge": 20 },
+    "conditions": { "parentAlive": true, "minAge": 20 },
     "target": { "role": "sibling", "conditions": { "minAge": 20, "hasPartner": true } }, "cooldown": 30, "weight": 0.6,
     "choices": [
       { "text": "Tell the embarrassing childhood stories", "chance": 0.6, "chanceTraits": { "charming": 0.2, "social": 0.1, "introvert": -0.15 },
@@ -49,7 +49,7 @@
   {
     "id": "ties_sibling_favourite", "title": "The favourite",
     "text": "At Christmas dinner your mother praises {t.name} for the third time in an hour. Your new job has not come up once.",
-    "conditions": { "minAge": 18 },
+    "conditions": { "parentAlive": true, "minAge": 18 },
     "target": { "role": "sibling", "conditions": { "minAge": 18 } }, "cooldown": 10,
     "choices": [
       { "text": "Say it out loud", "chance": 0.4, "chanceTraits": { "brave": 0.15, "hot_tempered": 0.1, "charming": 0.1 },
@@ -203,7 +203,7 @@
   {
     "id": "ties_sibling_rivalry_adult", "title": "Who did better",
     "text": "{t.name} has bought a house with a sea view. At the housewarming {t.he} shows you the wine cellar twice.",
-    "conditions": { "minAge": 28 },
+    "conditions": { "parentAlive": true, "minAge": 28 },
     "target": { "role": "sibling", "conditions": { "minAge": 28, "ownsHome": true } }, "cooldown": 15,
     "choices": [
       { "text": "Be happy for {t.him}", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6 }, { "type": "happiness", "amount": 1 } ],

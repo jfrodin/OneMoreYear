@@ -126,7 +126,7 @@
   {
     "id": "young_coming_out_family", "title": "Sunday dinner",
     "text": "You have decided to tell your family today. You have rehearsed it in the shower forty times.",
-    "conditions": { "minAge": 16, "maxAge": 35, "sameSexAttraction": true, "notFlags": [ "out_to_family" ] }, "cooldown": 5, "weight": 1.5,
+    "conditions": { "parentAlive": true, "minAge": 16, "maxAge": 35, "sameSexAttraction": true, "notFlags": [ "out_to_family" ] }, "cooldown": 5, "weight": 1.5,
     "choices": [
       { "text": "Say it over dessert", "chance": 0.65, "chanceTraits": { "brave": 0.1, "charming": 0.1 },
         "success": { "text": "Your mother says she has known since you were six. Your father asks if you want more cake. It is the best and strangest dinner of your life.", "effects": [ { "type": "flag", "flag": "out_to_family" }, { "type": "happiness", "amount": 10 } ] },

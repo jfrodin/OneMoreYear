@@ -96,7 +96,7 @@
   {
     "id": "us_church_potluck", "countries": [ "usa" ], "title": "The potluck",
     "text": "The church potluck on Sunday. Every family brings a dish, and the casseroles are judged in silence by the older ladies.",
-    "conditions": { "minAge": 20 }, "cooldown": 6,
+    "conditions": { "parentAlive": true, "minAge": 20 }, "cooldown": 6,
     "choices": [
       { "text": "Bring your best casserole", "chance": 0.6, "chanceTraits": { "creative": 0.1 },
         "success": { "text": "Mrs. Henderson asks for the recipe. You are in.", "effects": [ { "type": "happiness", "amount": 5 } ] },

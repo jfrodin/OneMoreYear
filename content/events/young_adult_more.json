@@ -66,7 +66,7 @@
   {
     "id": "ya2_career_doubt", "title": "Is this it?",
     "text": "Monday morning, on the way to a job you trained years for, you realise you do not like it. You have not liked it for a while.",
-    "conditions": { "minAge": 25, "maxAge": 38, "activity": "working" }, "cooldown": 15,
+    "conditions": { "parentAlive": true, "minAge": 25, "maxAge": 38, "activity": "working" }, "cooldown": 15,
     "choices": [
       { "text": "Quit and start over", "effects": [ { "type": "job_quit" }, { "type": "happiness", "amount": 4 }, { "type": "memory", "kind": "start_over", "text": "The Monday I quit", "impact": 12 } ], "result": "Terrifying and right. Your parents are not thrilled. You have never slept so well." },
       { "text": "Give it one more year", "effects": [ { "type": "happiness", "amount": -2 }, { "type": "performance", "amount": 2 } ], "result": "One more year becomes three. Some days are good. You stop asking the question, mostly." }
@@ -146,7 +146,7 @@
   {
     "id": "ya2_cooking", "group": "dinner_party", "title": "Dinner for six",
     "text": "You have invited six people to dinner in a flat with four chairs and two pans. The recipe says it serves four and takes thirty minutes.",
-    "conditions": { "minAge": 20, "maxAge": 35 }, "cooldown": 8,
+    "conditions": { "parentAlive": true, "minAge": 20, "maxAge": 35 }, "cooldown": 8,
     "choices": [
       { "text": "Follow the recipe exactly", "chance": 0.55, "chanceTraits": { "creative": 0.1 }, "chanceSkills": { "cooking": 0.04 },
         "success": { "text": "It takes two hours and serves six if nobody has seconds. Everybody has seconds. Somebody goes out for pizza. It is a wonderful evening.", "effects": [ { "type": "happiness", "amount": 5 } ] },

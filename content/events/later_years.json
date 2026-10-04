@@ -73,7 +73,7 @@
     ]
   },
   {
-    "id": "ll_midlife", "title": "Is this it?",
+    "id": "ll_midlife", "title": "Halfway",
     "text": "Somewhere between the dishwasher and the car park at work, a thought you cannot shake: is this it? Is this the whole thing?",
     "conditions": { "minAge": 42, "maxAge": 54 }, "cooldown": 20,
     "choices": [

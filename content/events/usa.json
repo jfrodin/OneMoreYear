@@ -151,7 +151,7 @@
   {
     "id": "us_thanksgiving", "countries": [ "usa" ], "title": "Thanksgiving",
     "text": "Thanksgiving at your parents'. A turkey the size of a child, the game on TV, and an uncle with opinions.",
-    "conditions": { "minAge": 6, "hasRole": [ "parent" ] }, "cooldown": 3,
+    "conditions": { "parentAlive": true, "minAge": 6, "hasRole": [ "parent" ] }, "cooldown": 3,
     "choices": [
       { "text": "Argue with the uncle", "requires": { "traitsAny": [ "hot_tempered", "brave", "eccentric" ] }, "effects": [ { "type": "happiness", "amount": 2 } ],
         "result": "It starts with football and ends with the President. Your mother serves pie very loudly." },

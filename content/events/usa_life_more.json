@@ -161,7 +161,7 @@
   {
     "id": "us2_pickup", "countries": [ "usa" ], "title": "The truck",
     "text": "A pickup truck. Your father has had the same model for thirty years and says a family without a truck is helpless in an emergency.",
-    "conditions": { "minAge": 22, "minMoney": 30000 }, "cooldown": 20,
+    "conditions": { "parentAlive": true, "minAge": 22, "minMoney": 30000 }, "cooldown": 20,
     "choices": [
       { "text": "Buy one", "effects": [ { "type": "money", "amount": -35000 }, { "type": "happiness", "amount": 4 } ], "result": "Within a month everyone you know has asked you to help them move. Your father was right about emergencies." },
       { "text": "Borrow his when you need it", "effects": [ { "type": "happiness", "amount": 1 } ], "result": "He lends it every time, with a lecture about the clutch. You would not have it any other way." }

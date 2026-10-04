@@ -54,4 +54,32 @@ static class ContextLint
             }
         }
     }
+
+    private static readonly Regex Parent = new(@"\byour (mother|father|mum|mom|dad|parents)\b", RegexOptions.IgnoreCase);
+    private static readonly Regex Work = new(@"\byour (boss|colleagues|colleague|manager)\b", RegexOptions.IgnoreCase);
+    private static readonly Regex Garden = new(@"\byour garden\b", RegexOptions.IgnoreCase);
+
+    /// <summary>Parents who may be dead, a boss without a job, a garden without a house.</summary>
+    public static void Assumptions()
+    {
+        Console.WriteLine("\nOther things the player may not have:");
+        foreach (var e in ContentDb.Embedded.Events.Values.Where(e => e.Trigger is "random" or "milestone").OrderBy(e => e.Id))
+        {
+            var c = e.Conditions;
+            var roles = new[] { e.Target?.Role, e.Other?.Role };
+            bool working = c?.HasJob == true || c?.Activity == OneMoreYear.Simulation.Model.Activity.Working || c?.Jobs != null || roles.Contains("boss") || roles.Contains("colleague");
+            bool young = (c?.MaxAge ?? 200) <= 30;
+            foreach (var ch in e.Choices.Select(x => (Text: (string?)null, Choice: x)).Prepend((e.Text, null!)))
+            {
+                var texts = ch.Choice == null ? new[] { ch.Text }.Concat(e.Texts) : new[] { ch.Choice.Text, ch.Choice.Result, ch.Choice.Success?.Text, ch.Choice.Failure?.Text };
+                foreach (var t in texts.OfType<string>())
+                {
+                    string? why = Parent.Match(t) is { Success: true } p && !young && !roles.Contains("parent") ? p.Value
+                        : Work.Match(t) is { Success: true } w && !working && ch.Choice?.Requires?.HasJob != true ? w.Value
+                        : Garden.Match(t) is { Success: true } g && c?.OwnsHome != true ? g.Value : null;
+                    if (why != null) Console.WriteLine($"  {e.Id,-34} [{why}] {t[..Math.Min(t.Length, 100)]}");
+                }
+            }
+        }
+    }
 }
