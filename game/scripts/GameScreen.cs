@@ -1709,6 +1709,7 @@ public partial class GameScreen : Control
         _tabs.CurrentTab = step % _tabs.GetTabCount();
         if (FirstEnabledButton(_yearContent, "choice") is { } choice) { choice.EmitSignal(BaseButton.SignalName.Pressed); return; }
         if (step % 3 == 0 && FirstEnabledButton(_personDetail, "action") is { } action) { action.EmitSignal(BaseButton.SignalName.Pressed); return; }
+        _turning = false; // the test does not wait for pages to turn
         OnNextYear();
     }
 
