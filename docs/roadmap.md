@@ -1,6 +1,6 @@
 # Roadmap
 
-*Senast uppdaterad 2026-10-04 (version 0.69). Lever: uppdateras när en milstolpe nås eller planen ändras.*
+*Senast uppdaterad 2026-10-04 (version 0.71). Lever: uppdateras när en milstolpe nås eller planen ändras.*
 
 ## 1. Var vi är nu
 
@@ -9,25 +9,25 @@ Tekniskt och innehållsmässigt är grunden bred.
 
 **Det som finns och fungerar**
 - Två länder (Sverige och USA) från 1950 till långt in i framtiden, med emigration mellan dem.
-- Cirka 1 180 händelser, med grupper som hindrar upprepningar, historiska ögonblick, epoker och kapitel.
-- Liv från födsel till död: skola (ämne och kompisgäng), utbildning, 34 yrkesspår, kreativa och
+- Cirka 1 220 händelser, med grupper som hindrar upprepningar, historiska ögonblick, epoker och kapitel.
+- Liv från födsel till död: skola (ämne och kompisgäng), utbildning, 32 yrkesspår, kreativa och
   politiska karriärer med rykte, kärlek, äktenskap, barn, uppfostran, vänner, husdjur, sjukdom, åldrande.
 - Ekonomi: lön, skatt, levnadskostnader, bostad och lån, fonder och aktier, eget företag, hyreshem,
   renoveringar, sommarstuga, arvegods, gåvor i släktens namn, släktgods.
 - Mörkare teman bakom innehållsinställningar: missbruk, psykisk ohälsa, otrohet, våld, brott och fängelse.
-- Långsiktigt: livsdrömmar, årets önskan, släktens rykte och släktdrag, myter, prestationer (cirka 45),
+- Långsiktigt: livsdrömmar, årets önskan, släktens rykte och släktdrag, myter, prestationer (cirka 40),
   epilog och familjearkiv, fotoalbum.
 - Genererade porträtt som ärver drag, åldras och följer mode och yrke.
+- Karaktärsskapare (egen funktion, möjlig DLC), levnadsstandard, tips för nya spelare, musik och ljud, ikoner.
 - Verktyg: speltester med F1, simuleringsrapporter, sparfilskontroller, automatiska tester.
 
-**Det som håller tillbaka spelet just nu** (från speltesterna)
-- **Hur val känns.** Sidan hoppar, och ett val krymper till en blå mening utan synlig konsekvens. Det
-  känns som en hemsida, inte ett spel. Det är den största enskilda bristen.
-- **Text som inte passar sammanhanget.** Fel ålder, kön, antal syskon eller situation (bilen man inte
-  äger, sjuksköterskan som är tolv). Varje sådan rad bryter illusionen.
-- **Ekonomin är svår att förstå och styra.** Levnadsstandard väljs inte, pengar flyttas automatiskt.
-- **Ingen introduktion.** En ny spelare möter allt på en gång.
-- **Tyst och ikonlöst.** Nästan inga ljud, ingen musik, inga ikoner.
+**Det som håller tillbaka spelet just nu**
+- **Ingen extern testare har spelat än.** Introduktionen, tipsen och takten är gissningar tills
+  någon som inte känner spelet har provat det.
+- **Ljud och musik är en första version** skriven i koden. Fungerar, men inspelad musik lyfter mer.
+- **Steam saknas helt:** butikssida, prestationer, molnsparning, handkontroll.
+- **Upprepning mellan generationer** är cirka 20 procent av händelserna i liv 2 till 4 (mätt med
+  `--repeats`). Alternativa texter finns för de vanligaste; fler behövs efter test.
 
 ## 2. Del för del: vad som behöver byggas ut
 
@@ -35,21 +35,21 @@ Varje del har ett nuläge, ett mål och en bedömning av hur viktig den är för
 
 | Del | Nu | Mål | Före release? |
 |---|---|---|---|
-| **Val och händelser (kärnan)** | Kort text, valet försvinner | Valet syns kvar med vad som hände och vad det gav (+pengar, ±lycka, nya drag). Stabil layout, inga hopp. Lugn takt mellan händelser. | **Måste** |
-| **Språk och sammanhang** | Mycket bra text, men glapp | En genomgång av alla 1 180 händelser: ålder, kön, familj, ägodelar, epok. Automatiska kontroller där det går. | **Måste** |
-| **Introduktion** | Ingen | De tre första åren som en mjuk guide: en sak i taget, korta tips, valfritt att stänga av. | **Måste** |
-| **Förklaringar** | Lite | Vad hälsa, lycka, smarthet med mera gör, synligt där de visas. Ord som "the record years" förklaras. | **Måste** |
-| **Ekonomi** | Djup men styr sig själv | Välj levnadsstandard (snål, vanlig, bekväm, lyx), se varför pengar går upp och ner, köpa in sig i partnerns hem. | **Måste** |
-| **Brott och straff** | Platt | Återfall ger hårdare straff, olika per land, rykte i kriminella kretsar, livet efter fängelset. | Bör |
-| **Relationer** | Bra grund | Partners och familj reagerar på varandras kriser (missbruk, fängelse, otrohet), inte bara på spelaren. | Bör |
-| **Ljud och musik** | Nästan inget | Lugn musik som byter med årtiondet, ljud för val, nytt år, födsel, död. | **Måste** |
-| **Ikoner och utseende** | Text och färger | Ikoner för värden, flikar och handlingar. Val av tema: växlande med åren eller en fast stil. | **Måste** |
+| **Val och händelser (kärnan)** | Klart: valet syns kvar med konsekvenser, stabil layout | Valet syns kvar med vad som hände och vad det gav (+pengar, ±lycka, nya drag). Stabil layout, inga hopp. Lugn takt mellan händelser. | **Måste** |
+| **Språk och sammanhang** | Första genomgången klar, `--lint` kontrollerar | En genomgång av alla 1 180 händelser: ålder, kön, familj, ägodelar, epok. Automatiska kontroller där det går. | **Måste** |
+| **Introduktion** | Tips en i taget (0.71) | De tre första åren som en mjuk guide: en sak i taget, korta tips, valfritt att stänga av. | **Måste** |
+| **Förklaringar** | Värden och decennier förklarade | Vad hälsa, lycka, smarthet med mera gör, synligt där de visas. Ord som "the record years" förklaras. | **Måste** |
+| **Ekonomi** | Levnadsstandard och köp in i partnerns hem klart | Välj levnadsstandard (snål, vanlig, bekväm, lyx), se varför pengar går upp och ner, köpa in sig i partnerns hem. | **Måste** |
+| **Brott och straff** | Återfall, tre strikes, rykte, 20 fängelsehändelser | Återfall ger hårdare straff, olika per land, rykte i kriminella kretsar, livet efter fängelset. | Bör |
+| **Relationer** | Partner reagerar på missbruk | Partners och familj reagerar på varandras kriser (missbruk, fängelse, otrohet), inte bara på spelaren. | Bör |
+| **Ljud och musik** | Första version (0.71) | Lugn musik som byter med årtiondet, ljud för val, nytt år, födsel, död. | **Måste** |
+| **Ikoner och utseende** | Ikoner på flikar och värden, temaval klart | Ikoner för värden, flikar och handlingar. Val av tema: växlande med åren eller en fast stil. | **Måste** |
 | **Porträtt** | Nyligen omgjorda | Ansiktsuttryck i händelser, fler klädstilar per epok. | Kan vänta |
-| **Sparfiler** | Tre platser | Fler platser (eller obegränsat), tydlig lista. | **Måste** |
+| **Sparfiler** | 30 platser klart | Fler platser (eller obegränsat), tydlig lista. | **Måste** |
 | **Fler länder** | Sverige, USA | Storbritannien eller Tyskland som tredje. | Efter release |
 | **Översättning** | Engelska | Svenska först, sedan fler. | Efter release |
 | **Steam** | Inget | Prestationer kopplade till Steam, molnsparning, butikssida, handkontroll. | **Måste** för Steam |
-| **Städning** | Testverktyg kvar | Testscenarier, F1 och utvecklarflaggor bort ur releasebygget. | **Måste** |
+| **Städning** | Export: release och testbygge, F1 bara i testbygget | Testscenarier, F1 och utvecklarflaggor bort ur releasebygget. | **Måste** |
 
 ## 3. Milstolpar
 
