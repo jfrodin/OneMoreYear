@@ -149,6 +149,11 @@ public sealed class Person
     public bool LivesWithParents { get; set; }
     /// <summary>Shares a rented flat with others (cheaper than renting alone).</summary>
     public bool SharesFlat { get; set; }
+    /// <summary>How the player chooses to live: frugal, ordinary, comfortable or lavish (EconomySystem.Lifestyles).</summary>
+    public string Lifestyle { get; set; } = "ordinary";
+    /// <summary>The player's share (0.5 once bought in) of the partner's home, and what it was worth last year (nominal).</summary>
+    public double PartnerHomeShare { get; set; }
+    public double PartnerHomeStake { get; set; }
     /// <summary>A child who is favoured in this person's will (gets a larger share).</summary>
     public int? WillFavoriteId { get; set; }
     public List<int> Disinherited { get; set; } = new();

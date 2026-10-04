@@ -492,10 +492,31 @@ public partial class GameScreen : Control
         summary.AddChild(Ui.Label(m.MarketNote, 15, UiTheme.Muted, wrap: true));
         summary.AddChild(Ui.Label(
             $"How it works: {m.TaxPercent}% of your income goes to tax. Living costs and the home are paid first. Of what is left, you save about " +
-            $"{m.SaveRatePercent}%, depending on your personality. Money in the bank roughly keeps its value. Funds and shares " +
+            $"{m.SaveRatePercent}%, depending on how you live and your personality. Money in the bank roughly keeps its value. Funds and shares " +
             $"grow more over time but can crash. If your income does not cover the basics, savings pay first, then welfare pays {m.WelfareShare} of the gap " +
-            "and the rest becomes debt.", 15, UiTheme.Faint, wrap: true));
+            "and the rest becomes debt. Investments are only sold by themselves to pay off debt.", 15, UiTheme.Faint, wrap: true));
         _moneyContent.AddChild(Ui.Card(summary));
+
+        // How you live: the player's own choice, not the personality's.
+        var style = Ui.VBox(8);
+        style.AddChild(Ui.Label("How you live", 21, UiTheme.Text));
+        var styles = Ui.HBox(8);
+        var styleGroup = new ButtonGroup();
+        foreach (var (id, name, description) in m.Lifestyles)
+        {
+            var b = Ui.Button(name, () => { S.SetLifestyle(id); _main.AutoSave(); RefreshMoney(); }, 44);
+            b.ToggleMode = true;
+            b.ButtonGroup = styleGroup;
+            b.ButtonPressed = id == m.Lifestyle;
+            b.SetMeta("action", true);
+            RegisterHint(b, description);
+            b.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            styles.AddChild(b);
+        }
+        style.AddChild(styles);
+        var current = m.Lifestyles.FirstOrDefault(s => s.Id == m.Lifestyle);
+        style.AddChild(Ui.Label(current.Description ?? "", 15, UiTheme.Muted, wrap: true));
+        _moneyContent.AddChild(Ui.Card(style));
 
         _moneyContent.AddChild(InvestmentsCard(m));
         _moneyContent.AddChild(HomeCard(m));
@@ -926,6 +947,17 @@ public partial class GameScreen : Control
         find.SetMeta("action", true);
         RegisterHint(find, m.CanMove ? "See what homes in your city cost to rent or buy." : S.Player.Activity == OneMoreYear.Simulation.Model.Activity.Prison ? "Not from a prison cell. The home waits for you." : "You cannot move right now.");
         buttons.AddChild(find);
+        if (m.HomeShare != null) box.AddChild(Ui.Label(m.HomeShare + ".", 15, UiTheme.Muted, wrap: true));
+        if (m.BuyIn != null)
+        {
+            var buyIn = Ui.Button(m.BuyIn, () => { if (S.BuyIntoPartnersHome()) { _main.AutoSave(); RefreshMoney(); } }, 46);
+            buyIn.Disabled = !m.CanBuyIn;
+            buyIn.SetMeta("action", true);
+            RegisterHint(buyIn, m.CanBuyIn
+                ? "Pay for half of what the home is worth after the loan. Your half grows with the home, and if you ever split up it is paid back to you."
+                : "You do not have enough in the bank yet.");
+            buttons.AddChild(buyIn);
+        }
         if (S.HomeProjects().Count > 0)
         {
             var improve = Ui.Button("Do up your home…", ShowHomeProjectsDialog, 46);

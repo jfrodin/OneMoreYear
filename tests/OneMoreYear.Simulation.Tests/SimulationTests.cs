@@ -1330,3 +1330,62 @@ public class CountryTests
         Assert.False(sweden.Daycare);
     }
 }
+
+public class LifestyleTests
+{
+    private static (GameSession S, OneMoreYear.Simulation.Model.Person P) Adult(string style)
+    {
+        var s = GameSession.NewGame(new NewGameOptions { Seed = 21, StartYear = 1990 });
+        var p = s.World.Player;
+        p.BirthYear = s.World.Year - 35;
+        p.LivesWithParents = false;
+        p.Activity = OneMoreYear.Simulation.Model.Activity.Working;
+        p.Income = 400000;
+        p.Money = s.Ctx.NominalRef(500000);
+        p.Lifestyle = style;
+        return (s, p);
+    }
+
+    [Fact]
+    public void FrugalSavesMoreThanLavishAndNeverSellsInvestments()
+    {
+        var calm = new MarketYear(1990, 0, 0, 0, 0.05, 0, 0);
+        double After(string style)
+        {
+            var (s, p) = Adult(style);
+            p.Funds = 1000;
+            InvestmentSystem.ConvertSimple(s.Ctx, p);
+            double invested = EconomySystem.Investments(p);
+            for (int i = 0; i < 5; i++) EconomySystem.Update(s.Ctx, p, calm);
+            Assert.True(EconomySystem.Investments(p) >= invested * 0.5);
+            Assert.DoesNotContain(s.World.Ledger, l => l.Label.StartsWith("Sold"));
+            Assert.DoesNotContain(s.World.Ledger, l => l.Label.Contains("pay for your lifestyle"));
+            return p.Money;
+        }
+        Assert.True(After("frugal") > After("ordinary"));
+        Assert.True(After("ordinary") > After("lavish"));
+    }
+
+    [Fact]
+    public void BuyingIntoPartnersHomeIsPaidBackOnSplit()
+    {
+        var (s, p) = Adult("ordinary");
+        var partner = PersonFactory.CreateStranger(s.Ctx, OneMoreYear.Simulation.Model.Sex.Female, 35);
+        partner.HomeValue = s.Ctx.NominalRef(2000000);
+        partner.Mortgage = s.Ctx.NominalRef(1000000);
+        partner.OwnsHome = p.OwnsHome = true;
+        p.PartnerId = partner.Id; partner.PartnerId = p.Id;
+        p.PartnerStatus = partner.PartnerStatus = OneMoreYear.Simulation.Model.PartnerStatus.Cohabiting;
+        double before = p.Money;
+        Assert.True(EconomySystem.BuyIntoPartnersHome(s.Ctx, p));
+        Assert.Equal(before - s.Ctx.NominalRef(500000), p.Money, 0);
+        Assert.Equal(0, EconomySystem.BuyInPrice(s.Ctx, p));
+        // They split up: the share comes back.
+        p.PartnerId = partner.PartnerId = null;
+        p.PartnerStatus = partner.PartnerStatus = OneMoreYear.Simulation.Model.PartnerStatus.None;
+        p.LastSplitWithId = partner.Id;
+        EconomySystem.Update(s.Ctx, p, new MarketYear(1990, 0, 0, 0, 0.05, 0, 0));
+        Assert.Equal(0, p.PartnerHomeStake);
+        Assert.True(p.Money > before - s.Ctx.NominalRef(500000));
+    }
+}

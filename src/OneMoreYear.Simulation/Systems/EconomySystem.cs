@@ -60,6 +60,7 @@ public static class EconomySystem
             if (r <= -1 && p.InFamily) ctx.World.Log($"The company {p.FirstName} had shares in went bankrupt.", ctx.Importance(false, p), "economy", p.Id);
         }
         UpdateHome(ctx, p, market);
+        UpdateHomeShare(ctx, p);
 
         if (p.Activity == Activity.Prison) return; // the state pays for board and lodging
         if (age < 18 && p.Activity != Activity.Working) return;
@@ -106,7 +107,8 @@ public static class EconomySystem
             double homeFactor = p.OwnsHome ? 0.45 * (homeType?.PriceFactor > 0 ? homeType.PriceFactor : 1)
                 : p.SharesFlat && !sharesHome ? 0.55
                 : homeType?.RentFactor > 0 ? homeType.RentFactor : 1.0;
-            double living = c.LivingCostAdult * (0.6 + 0.4 * HousingSystem.City(ctx, p).PriceFactor * homeFactor) * (sharesHome ? 0.8 : 1);
+            double living = c.LivingCostAdult * (0.6 + 0.4 * HousingSystem.City(ctx, p).PriceFactor * homeFactor) * (sharesHome ? 0.8 : 1)
+                            * StyleOf(ctx, p).Living;
             double children = kids * c.LivingCostChild * (sharesHome ? 0.5 : 1);
             // Daycare, where it is not part of what a child costs anyway: only when nobody is home.
             var partnerAtHome = sharesHome ? ctx.World.TryGet(p.PartnerId) : null;
@@ -138,6 +140,9 @@ public static class EconomySystem
             }
         }
         p.Money += ctx.Nominal(saved);
+        // How you live shows in how you feel. A miser does not mind being frugal.
+        if (!livesAtHome && StyleOf(ctx, p) is { Happiness: not 0 } style && !(style.Id == "frugal" && p.Traits.Contains("stingy")))
+            p.Happiness = Math.Clamp(p.Happiness + style.Happiness, 0, 100);
 
         if (!livesAtHome) SpendFromWealth(ctx, p);
         CoverDebtWithInvestments(ctx, p);
@@ -193,6 +198,17 @@ public static class EconomySystem
     private static void SpendFromWealth(SimContext ctx, Person p)
     {
         double buffer = ctx.Nominal(ctx.Country.LivingCostAdult * 2);
+        if (p.Id == ctx.World.PlayerId)
+        {
+            // The player decides: the chosen way of living spends from the bank, never from investments.
+            var style = StyleOf(ctx, p);
+            double cash = Math.Max(0, p.Money - buffer);
+            if (style.Wealth <= 0 || cash <= 0) return;
+            double use = cash * style.Wealth;
+            p.Money -= use;
+            Record(ctx, p, style.Id == "ordinary" ? "Small luxuries from your savings" : "Living well on your savings", -use);
+            return;
+        }
         double wealth = p.Money + Investments(p);
         if (wealth <= buffer) return;
         double spend = (wealth - buffer) * Math.Clamp(0.04 + ctx.Mod(p, "spending") * 0.03, 0.02, 0.1);
@@ -272,10 +288,25 @@ public static class EconomySystem
     }
 
     /// <summary>Share of what is left after living costs that this person saves.</summary>
-    public static double SaveRate(SimContext ctx, Person p) => Math.Clamp(0.3 - ctx.Mod(p, "spending") + (p.Flags.Contains("saver") ? 0.08 : 0), 0.05, 0.6);
+    public static double SaveRate(SimContext ctx, Person p) =>
+        Math.Clamp(0.3 - ctx.Mod(p, "spending") + (p.Flags.Contains("saver") ? 0.08 : 0) + StyleOf(ctx, p).Save, 0.02, 0.85);
+
+    /// <summary>A way of living the player can choose. Others live as their personality makes them.</summary>
+    public sealed record Lifestyle(string Id, string Name, string Description, double Living, double Save, double Wealth, double Happiness);
+
+    public static readonly IReadOnlyList<Lifestyle> Lifestyles = new Lifestyle[]
+    {
+        new("frugal", "Frugal", "Cheap food, nothing new, holidays at home. Living costs are lower and most of what is left goes to the bank. It wears on you a little.", 0.8, 0.3, 0, -2),
+        new("ordinary", "Ordinary", "Like most people. A treat now and then from your savings.", 1.0, 0, 0.01, 0),
+        new("comfortable", "Comfortable", "Good food, a nice car, a trip every year. Costs more and you save less, but life feels easier.", 1.25, -0.1, 0.04, 2),
+        new("lavish", "Lavish", "The best of everything. Expensive, and a fortune can drain away, but it is a lot of fun while it lasts.", 1.7, -0.25, 0.08, 4),
+    };
+
+    public static Lifestyle StyleOf(SimContext ctx, Person p) =>
+        p.Id == ctx.World.PlayerId ? Lifestyles.FirstOrDefault(s => s.Id == p.Lifestyle) ?? Lifestyles[1] : Lifestyles[1] with { Wealth = 0 };
 
     /// <summary>Net worth in nominal kronor, including home equity.</summary>
-    public static double NetWorth(SimContext ctx, Person p) => p.Money + Investments(p) + HomeEquity(p) + p.CottageValue + RentalSystem.Equity(ctx, p) + EstateSystem.Equity(ctx, p);
+    public static double NetWorth(SimContext ctx, Person p) => p.Money + Investments(p) + p.PartnerHomeStake + HomeEquity(p) + p.CottageValue + RentalSystem.Equity(ctx, p) + EstateSystem.Equity(ctx, p);
 
     /// <summary>Everything invested: the simple funds and shares, and the player'"'"'s own holdings.</summary>
     public static double Investments(Person p) => p.Funds + p.Stocks + InvestmentSystem.Value(p);
@@ -357,6 +388,49 @@ public static class EconomySystem
     /// <summary>
     /// A couple living together keeps one home – the more valuable one – and sells the other.
     /// </summary>
+
+    // --- Buying into the partner's home ----------------------------------------------------------
+
+    /// <summary>The partner whose home the player lives in, if they live together in it.</summary>
+    public static Person? PartnersHome(SimContext ctx, Person p) =>
+        ctx.World.TryGet(p.PartnerId) is { IsAlive: true, HomeValue: > 0 } partner && p.HomeValue <= 0
+        && p.PartnerStatus is PartnerStatus.Cohabiting or PartnerStatus.Married ? partner : null;
+
+    /// <summary>What half the partner's home costs to buy into (half the equity, nominal); 0 when not possible.</summary>
+    public static double BuyInPrice(SimContext ctx, Person p) =>
+        p.PartnerHomeShare <= 0 && PartnersHome(ctx, p) is { } h ? Math.Max(0, h.HomeValue - h.Mortgage) * 0.5 : 0;
+
+    public static bool BuyIntoPartnersHome(SimContext ctx, Person p)
+    {
+        double price = BuyInPrice(ctx, p);
+        if (price <= 0 || p.Money < price || PartnersHome(ctx, p) is not { } partner) return false;
+        p.Money -= price;
+        partner.Money += price;
+        p.PartnerHomeShare = 0.5;
+        p.PartnerHomeStake = price;
+        Record(ctx, p, $"Bought half of {Kinship.Genitive(partner.FirstName)} home", -price);
+        return true;
+    }
+
+    /// <summary>The share follows the home's value. When the couple splits up, it is paid out.</summary>
+    private static void UpdateHomeShare(SimContext ctx, Person p)
+    {
+        if (p.PartnerHomeShare <= 0) return;
+        if (PartnersHome(ctx, p) is { } home)
+        {
+            p.PartnerHomeStake = p.PartnerHomeShare * Math.Max(0, home.HomeValue - home.Mortgage);
+            return;
+        }
+        // Widowed with the home inherited: it is all yours now. Otherwise the share is bought back.
+        var partner = ctx.World.TryGet(p.PartnerId) ?? ctx.World.TryGet(p.LastSplitWithId);
+        if (p.HomeValue <= 0 && p.PartnerHomeStake > 0)
+        {
+            if (partner is { IsAlive: true }) partner.Money -= p.PartnerHomeStake;
+            p.Money += p.PartnerHomeStake;
+            Record(ctx, p, "Your share of the home you lived in, paid out", p.PartnerHomeStake);
+        }
+        p.PartnerHomeShare = p.PartnerHomeStake = 0;
+    }
     public static void MergeHomes(SimContext ctx, Person a, Person b)
     {
         if (a.HomeValue > 0 && b.HomeValue > 0) SellHome(ctx, a.HomeValue < b.HomeValue ? a : b);

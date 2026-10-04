@@ -776,6 +776,12 @@ public sealed class GameSession
             MarketNote = MarketNote(),
             YearlyIncome = EconomySystem.FormatPay(Ctx, EconomySystem.GrossIncome(Ctx, p)) + " before tax",
             SaveRatePercent = (int)Math.Round(EconomySystem.SaveRate(Ctx, p) * 100),
+            Lifestyle = p.Lifestyle,
+            BuyIn = EconomySystem.BuyInPrice(Ctx, p) is > 0 and var price && EconomySystem.PartnersHome(Ctx, p) is { } owner
+                ? $"Buy half of {Kinship.Genitive(owner.FirstName)} home for {EconomySystem.Format(Ctx, price)}" : null,
+            CanBuyIn = EconomySystem.BuyInPrice(Ctx, p) is > 0 and var cost && p.Money >= cost,
+            HomeShare = p.PartnerHomeStake > 0 ? $"Your half of the home is worth {EconomySystem.Format(Ctx, p.PartnerHomeStake)}" : null,
+            Lifestyles = EconomySystem.Lifestyles.Select(s => (s.Id, s.Name, s.Description)).ToList(),
             TaxPercent = (int)Math.Round(Country.TaxRate * 100),
             WelfareShare = Country.WelfareShare switch { >= 0.45 and <= 0.55 => "half", >= 0.2 and <= 0.3 => "a quarter", var w => $"{w * 100:0}%" },
             Year = Year,
@@ -795,6 +801,14 @@ public sealed class GameSession
     }
 
     // --- Investments and homes (free: they do not use up the year's time) ----------------------
+
+    /// <summary>Chooses how the player lives from now on (free, can be changed any year).</summary>
+    public bool BuyIntoPartnersHome() => EconomySystem.BuyIntoPartnersHome(Ctx, Player);
+
+    public void SetLifestyle(string id)
+    {
+        if (EconomySystem.Lifestyles.Any(s => s.Id == id)) Player.Lifestyle = id;
+    }
 
     private static int Percent(double v) => (int)Math.Round(v * 100);
 

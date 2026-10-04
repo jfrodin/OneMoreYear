@@ -179,6 +179,13 @@ public sealed record MoneyView
     public string MarketNote { get; init; } = "";
     public string YearlyIncome { get; init; } = "";
     public int SaveRatePercent { get; init; }
+    /// <summary>The way of living the player has chosen, and the choices.</summary>
+    public string Lifestyle { get; init; } = "ordinary";
+    /// <summary>"Buy half of Chloe's home" with its price, when the player lives in a partner's home; null otherwise.</summary>
+    public string? BuyIn { get; init; }
+    public bool CanBuyIn { get; init; }
+    public string? HomeShare { get; init; }
+    public IReadOnlyList<(string Id, string Name, string Description)> Lifestyles { get; init; } = Array.Empty<(string, string, string)>();
     public int TaxPercent { get; init; }
     /// <summary>The share of a shortfall that welfare covers, in words ("half", "a quarter").</summary>
     public string WelfareShare { get; init; } = "half";
