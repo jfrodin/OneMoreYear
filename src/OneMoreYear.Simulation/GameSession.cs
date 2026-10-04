@@ -136,7 +136,6 @@ public sealed class GameSession
         var w = World;
         var ctx = Ctx;
         int logStart = w.Chronicle.Count;
-        var player = Player;
 
         WishSystem.EndOfYear(ctx);
         w.Year++;
@@ -213,28 +212,9 @@ public sealed class GameSession
         }
 
         var news = RelevantLines(w.Chronicle.Skip(logStart));
-        return new YearReport(w.Year, Player.Age(w.Year), news, !Player.IsAlive) { Moment = Moment(w.Chronicle.Skip(logStart), player) };
+        return new YearReport(w.Year, Player.Age(w.Year), news, !Player.IsAlive);
     }
 
-    /// <summary>
-    /// The one moment of the year that deserves a sound: a death close to you, a birth, a wedding
-    /// or your graduation (in that order). Null in an ordinary year.
-    /// </summary>
-    private string? Moment(IEnumerable<LogEntry> lines, Person player)
-    {
-        var w = World;
-        var close = new HashSet<int> { player.Id };
-        if (player.PartnerId is { } partner) close.Add(partner);
-        foreach (var x in Kinship.Parents(w, player).Concat(Kinship.Children(w, player)).Concat(Kinship.Siblings(w, player)).Concat(Kinship.Grandchildren(w, player)))
-            close.Add(x.Id);
-        var list = lines.ToList();
-        bool About(LogEntry l) => l.PersonIds.Any(close.Contains);
-        if (list.Any(l => l.Category == "death" && About(l))) return "death";
-        if (list.Any(l => l.Category == "family" && (l.Text.Contains(" had a son") || l.Text.Contains(" had a daughter") || l.Text.Contains(" adopted ")) && About(l))) return "birth";
-        if (list.Any(l => l.Category == "love" && l.Text.EndsWith("got married.") && About(l))) return "wedding";
-        if (list.Any(l => l.Text.Contains(" graduated ") && l.PersonIds.Contains(player.Id))) return "graduation";
-        return null;
-    }
 
     private int ActionPointsFor(Person p) => p.Age(World.Year) switch { < 4 => 0, < 13 => 2, _ => 3 };
 

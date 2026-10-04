@@ -125,7 +125,7 @@ public partial class TitleScreen : Control
         b.AddThemeColorOverride("font_focus_color", UiTheme.Accent);
         b.AddThemeColorOverride("font_pressed_color", UiTheme.AccentDark);
         b.AddThemeColorOverride("font_hover_pressed_color", UiTheme.AccentDark);
-        b.Pressed += () => { Sound.Play("click"); pressed(); };
+        b.Pressed += pressed;
         // Keyboard and controller: the mark follows the mouse too, so there is only ever one.
         b.MouseEntered += () => b.GrabFocus();
         _left.AddChild(b);

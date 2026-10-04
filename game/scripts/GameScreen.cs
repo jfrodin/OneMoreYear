@@ -156,7 +156,6 @@ public partial class GameScreen : Control
 
     private void OnTabChanged(long tab)
     {
-        Sound.Play("page");
         if (tab == TabTree) RefreshTree();
         if (tab == TabChronicle) RefreshChronicle();
         if (tab == TabFamily) RefreshPeople();
@@ -204,6 +203,8 @@ public partial class GameScreen : Control
         Ui.Clear(_sidebar);
         var p = S.Describe(S.Player.Id);
 
+        var info = Ui.VBox(12);
+        info.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         var top = Ui.HBox(14);
         top.AddChild(Portrait.Create(S.Portrait(p.Id), true, 84));
         var nameCol = Ui.VBox(2);
@@ -213,19 +214,19 @@ public partial class GameScreen : Control
         nameCol.AddChild(Ui.Label(p.Occupation, 16, UiTheme.Muted, wrap: true));
         if (p.Fame != null) nameCol.AddChild(Ui.Label(p.Fame, 15, UiTheme.Accent));
         top.AddChild(nameCol);
-        _sidebar.AddChild(top);
+        info.AddChild(top);
 
-        if (!string.IsNullOrEmpty(p.Partner)) _sidebar.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
-        if (p.Dream != null) _sidebar.AddChild(UiTheme.HandLabel(p.Dream, 21, UiTheme.Accent, wrap: true));
+        if (!string.IsNullOrEmpty(p.Partner)) info.AddChild(Ui.Label(p.Partner, 16, UiTheme.Muted, wrap: true));
+        if (p.Dream != null) info.AddChild(UiTheme.HandLabel(p.Dream, 21, UiTheme.Accent, wrap: true));
         if (S.Wish() is { } wish)
         {
             var wishLabel = Ui.Label(wish.Kept ? $"Wish kept: {wish.Text}" : $"This year's wish: {wish.Text}", 15, wish.Kept ? UiTheme.Good : UiTheme.Muted, wrap: true);
             wishLabel.TooltipText = "A small thing you want this year. Doing it makes you a little happier.";
-            _sidebar.AddChild(wishLabel);
+            info.AddChild(wishLabel);
         }
-        if (p.Hobby != null) _sidebar.AddChild(Ui.Label($"Hobby: {p.Hobby}", 14, UiTheme.Faint));
-        foreach (var pet in p.Pets) _sidebar.AddChild(Ui.Label(pet, 14, UiTheme.Faint, wrap: true));
-        if (p.Condition != null) _sidebar.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad, wrap: true));
+        if (p.Hobby != null) info.AddChild(Ui.Label($"Hobby: {p.Hobby}", 14, UiTheme.Faint));
+        foreach (var pet in p.Pets) info.AddChild(Ui.Label(pet, 14, UiTheme.Faint, wrap: true));
+        if (p.Condition != null) info.AddChild(Ui.Label(p.Condition, 16, UiTheme.Bad, wrap: true));
 
         var traits = new HFlowContainer();
         traits.AddThemeConstantOverride("h_separation", 6);
@@ -236,8 +237,8 @@ public partial class GameScreen : Control
             chip.TooltipText = description;
             traits.AddChild(chip);
         }
-        _sidebar.AddChild(traits);
-        _sidebar.AddChild(Ui.Separator());
+        info.AddChild(traits);
+        info.AddChild(Ui.Separator());
 
         // What each value does, on hover and focus.
         void Stat(string name, double value, Color color, string text, string hint)
@@ -247,7 +248,7 @@ public partial class GameScreen : Control
             bar.MouseFilter = MouseFilterEnum.Pass;
             foreach (var part in bar.GetChildren().OfType<Control>()) { part.MouseFilter = MouseFilterEnum.Pass; part.TooltipText = hint; }
             RegisterHint(bar, hint);
-            _sidebar.AddChild(bar);
+            info.AddChild(bar);
         }
         Stat("Health", p.Health, p.Health >= 50 ? UiTheme.Good : UiTheme.Bad, p.HealthLabel,
             "Health: how long you live and how well. Low health brings illness and an early death. Fitness, age, habits and luck move it.");
@@ -260,11 +261,14 @@ public partial class GameScreen : Control
         Stat("Fitness", p.Fitness, new Color("3f998b"), $"{p.Fitness:0}",
             "Fitness: keeps your health up as the years go, and helps in anything physical, from fights to sport.");
 
-        _sidebar.AddChild(StatRow("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text));
-        _sidebar.AddChild(StatRow("Income", p.Income, UiTheme.Text));
-        _sidebar.AddChild(StatRow("Home", p.Home, UiTheme.Text));
+        info.AddChild(StatRow("Money", p.Money, S.Player.Money < 0 ? UiTheme.Bad : UiTheme.Text));
+        info.AddChild(StatRow("Income", p.Income, UiTheme.Text));
+        info.AddChild(StatRow("Home", p.Home, UiTheme.Text));
 
-        _sidebar.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
+        // Everything above scrolls if it must; everything below stays where it is, year after year.
+        var infoScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, FollowFocus = false };
+        infoScroll.AddChild(info);
+        _sidebar.AddChild(infoScroll);
 
         int ap = S.World.ActionPoints;
         _sidebar.AddChild(Ui.Label(ap > 0 ? $"You have time for {ap} more thing{(ap == 1 ? "" : "s")} this year." : "No time left for more this year.",
@@ -275,11 +279,15 @@ public partial class GameScreen : Control
         _nextYear.Disabled = !S.CanAdvance;
         RegisterHint(_nextYear, "Let a year pass. [N] / (Y)");
         _sidebar.AddChild(_nextYear);
-        if (S.HasUnresolvedEvents)
-            _sidebar.AddChild(Ui.Label("Answer this year's events first.", 15, UiTheme.Accent));
+        // Always there, empty or not, so nothing below the button moves.
+        var waiting = Ui.Label(S.HasUnresolvedEvents ? "Answer this year's events first." : " ", 15, UiTheme.Accent);
+        waiting.CustomMinimumSize = new Vector2(0, 22);
+        _sidebar.AddChild(waiting);
 
         _sidebar.AddChild(Ui.Label("N / (Y) next year  ·  Q E / LB RB switch tabs", 13, UiTheme.Faint, wrap: true));
-        _sidebar.AddChild(Ui.Label($"Seed {S.SeedCode}  ·  started {S.World.StartYear}", 13, UiTheme.Faint));
+        var seedLine = Ui.Label($"Seed {S.SeedCode}  ·  started {S.World.StartYear}", 13, UiTheme.Faint);
+        seedLine.ClipText = true;
+        _sidebar.AddChild(seedLine);
         var bottom = Ui.HBox(8);
         var feedback = Ui.Button("Feedback  (F1)", () => _main.ShowFeedback(), 42);
         feedback.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -1244,8 +1252,7 @@ public partial class GameScreen : Control
             return;
         }
         var report = S.AdvanceYear();
-        // A year with a birth, a death, a wedding or a graduation sounds like it.
-        Sound.Play(report.Moment ?? "year");
+
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
         // The whole screen is rebuilt so the look follows the new year, then the paper arrives.

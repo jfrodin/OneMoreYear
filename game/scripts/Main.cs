@@ -28,7 +28,6 @@ public partial class Main : Control
         SetAnchorsPreset(LayoutPreset.FullRect);
         RegisterInput();
         Ui.FollowFocus(GetViewport());
-        Sound.Init(this);
         Music.Init(this);
         Settings.Apply();
 
@@ -67,7 +66,6 @@ public partial class Main : Control
         if (audio != null && OS.IsDebugBuild())
         {
             Music.Export(audio["--audio=".Length..]);
-            Sound.Export(audio["--audio=".Length..]);
             GetTree().Quit();
             return;
         }
@@ -563,7 +561,7 @@ public partial class Main : Control
         HSlider Slider(double value, System.Action<double> changed)
         {
             var s = new HSlider { MinValue = 0, MaxValue = 1, Step = 0.05, Value = value, CustomMinimumSize = new Vector2(0, 36), FocusMode = FocusModeEnum.All };
-            s.ValueChanged += v => { changed(v); Sound.Play("click"); };
+            s.ValueChanged += v => changed(v);
             return s;
         }
 
@@ -576,7 +574,6 @@ public partial class Main : Control
             Settings.FixedLook is { } fixedLook ? lookYears.ToList().IndexOf(fixedLook) + 1 : 0,
             i => { Settings.SetFixedLook(i == 0 ? null : lookYears[i - 1]); ApplyEra(); })));
         box.AddChild(Row("Volume", Slider(Settings.MasterVolume, Settings.SetMasterVolume)));
-        box.AddChild(Row("Sound effects", Slider(Settings.EffectsVolume, Settings.SetEffectsVolume)));
         box.AddChild(Row("Music", Slider(Settings.MusicVolume, Settings.SetMusicVolume)));
         box.AddChild(Row("Tips for new players", Options(new[] { "Off", "On" }, Settings.TipsOn ? 1 : 0, i => Settings.SetTips(i == 1))));
         box.AddChild(Row("The family newspaper", Options(new[] { "Every year", "Only in big years", "Never" }, (int)Settings.Newspaper,
@@ -642,7 +639,7 @@ public partial class Main : Control
             else if (_screen is GameScreen g) g.FocusAfterNewspaper();
         }
         buttons.AddChild(Ui.Button("Skip", Close, 46));
-        next = Ui.Button("Next", () => { if (page < pages.Length - 1) { page++; Sound.Play("page"); Show(); } else Close(); }, 46);
+        next = Ui.Button("Next", () => { if (page < pages.Length - 1) { page++; Show(); } else Close(); }, 46);
         UiTheme.MakePrimary(next);
         next.AddThemeFontSizeOverride("font_size", 18);
         next.CustomMinimumSize = new Vector2(160, 46);
@@ -829,7 +826,6 @@ public partial class Main : Control
         page.AddChild(new CancelCatcher(Close));
 
         _overlayName = "Chapter";
-        Sound.Play("page");
         // Fade in (not in the screenshot tour, which needs the page at once).
         page.Modulate = new Color(1, 1, 1, _shotDir == null ? 0 : 1);
         _overlayLayer.AddChild(page);
@@ -859,7 +855,6 @@ public partial class Main : Control
             dim.QueueFree();
             if (_screen is GameScreen game) game.FocusAfterNewspaper();
         }
-        Sound.Play("paper");
         _overlayName = "Newspaper";
         center.AddChild(Newspaper.Build(Session, report, Close));
         // A click anywhere outside the paper closes it too.

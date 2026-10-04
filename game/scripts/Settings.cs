@@ -33,7 +33,6 @@ public static class Settings
         /// <summary>A decade whose look is always used; null = the look follows the years.</summary>
         public int? FixedLook { get; set; }
         public double MasterVolume { get; set; } = 0.8;
-        public double EffectsVolume { get; set; } = 0.8;
         public double MusicVolume { get; set; } = 0.5;
     }
 
@@ -93,13 +92,11 @@ public static class Settings
     public static int? FixedLook => Current.FixedLook;
     public static void SetFixedLook(int? year) { Current.FixedLook = year; Save(); }
     public static double MasterVolume => Current.MasterVolume;
-    public static double EffectsVolume => Current.EffectsVolume;
     public static double MusicVolume => Current.MusicVolume;
 
     public static void SetFullscreen(bool on) { Current.Fullscreen = on; Save(); Apply(); }
     public static void SetTextSize(int size) { Current.TextSize = Math.Clamp(size, 0, 3); Save(); Apply(); }
     public static void SetMasterVolume(double v) { Current.MasterVolume = Math.Clamp(v, 0, 1); Save(); Apply(); }
-    public static void SetEffectsVolume(double v) { Current.EffectsVolume = Math.Clamp(v, 0, 1); Save(); Apply(); }
     public static void SetMusicVolume(double v) { Current.MusicVolume = Math.Clamp(v, 0, 1); Save(); Apply(); }
 
     /// <summary>Puts the display and sound settings into effect.</summary>
@@ -110,7 +107,6 @@ public static class Settings
         if (Engine.GetMainLoop() is SceneTree tree)
             tree.Root.ContentScaleFactor = Current.TextSize switch { 0 => 0.9f, 2 => 1.12f, 3 => 1.25f, _ => 1f };
         AudioServer.SetBusVolumeDb(0, (float)Mathf.LinearToDb(Current.MasterVolume));
-        Sound.SetEffectsVolume(Current.EffectsVolume);
         Music.SetVolume(Current.MusicVolume);
     }
 

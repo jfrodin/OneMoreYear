@@ -70,7 +70,6 @@ public partial class Main
         card.ResetSize();
         card.Position = new Vector2(GetViewportRect().Size.X - card.Size.X - 24, 24);
         card.Modulate = new Color(1, 1, 1, 0);
-        Sound.Play("year");
 
         bool instant = _shotDir != null;
         var tween = CreateTween();
