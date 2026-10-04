@@ -143,7 +143,7 @@ public static class EffectApplier
                     pending.ExtraText.Add(CrimeSystem.Arrest(ctx, who, convictedOf, to, who.Id == w.PlayerId).Replace("But the police find you. ", ""));
                 break;
             case "parole":
-                if (who.Activity == Activity.Prison && who.PrisonYearsLeft > 1) who.PrisonYearsLeft--;
+                if (who.Activity == Activity.Prison && who.PrisonYearsLeft > 1) who.PrisonYearsLeft = e.Kind == "release" ? 1 : who.PrisonYearsLeft - 1;
                 break;
             case "move_out":
                 HousingSystem.MoveOut(ctx, who, share: e.Kind == "share");

@@ -1,0 +1,73 @@
+// Life inside, for the years of a long sentence. Only while in prison (category prison). No dashes.
+[
+  {
+    "id": "prison_fight_women", "group": "prison_yard", "content": [ "violence" ], "category": "prison", "title": "The yard",
+    "text": "In the yard, a woman who runs the wing has decided you sat in her seat at breakfast. Everyone is watching to see what you do.",
+    "conditions": { "minAge": 15, "sex": "female", "notFlags": [ "respected_inside" ] }, "cooldown": 6,
+    "choices": [
+      { "text": "Stand your ground", "chance": 0.5, "chanceTraits": { "brave": 0.2, "hot_tempered": 0.1 }, "chanceAttributes": { "fitness": 0.006 },
+        "success": { "text": "She looks at you for a long time, then laughs. After that, people leave you alone.", "effects": [ { "type": "flag", "flag": "respected_inside" }, { "type": "trait_add", "trait": "brave", "chance": 0.3 } ] },
+        "failure": { "text": "A shove, a fall against a bench, a week in the infirmary.", "effects": [ { "type": "health", "amount": -12 } ] } },
+      { "text": "Apologise and move", "effects": [ { "type": "happiness", "amount": -4 } ], "result": "You eat breakfast standing up for a month. Then someone new arrives, and it is their problem." }
+    ]
+  },
+  {
+    "id": "prison_cellmate", "category": "prison", "title": "The new cellmate",
+    "text": "A new cellmate: younger than you, terrified, and crying quietly at night when they think you are asleep.",
+    "conditions": { "minAge": 18 }, "cooldown": 6,
+    "choices": [
+      { "text": "Show them how things work", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.06 }, { "type": "happiness", "amount": 3 } ], "result": "Which guards to avoid, when to queue, what not to say. When they are released, they write to you. Nobody else does." },
+      { "text": "Keep to yourself", "effects": [ { "type": "happiness", "amount": -1 } ], "result": "Everyone has to learn it on their own. That is what you tell yourself." }
+    ]
+  },
+  {
+    "id": "prison_work", "category": "prison", "title": "The laundry",
+    "text": "There is work in the prison laundry. The pay is almost nothing, but the days go faster.",
+    "conditions": { "minAge": 18, "notFlags": [ "prison_job" ] }, "cooldown": 4,
+    "choices": [
+      { "text": "Take it", "effects": [ { "type": "flag", "flag": "prison_job" }, { "type": "money", "amount": 3000 }, { "type": "happiness", "amount": 2 } ], "result": "Steam, folding, the smell of soap. Your hands are busy, and for eight hours a day your head is quiet." },
+      { "text": "Stay in your cell", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "The days are very long. You count the bricks. There are four hundred and twelve." }
+    ]
+  },
+  {
+    "id": "prison_letter", "category": "prison", "title": "A letter",
+    "text": "A letter, the envelope opened and read by someone else first, as all the letters are. It is from {t.name}.",
+    "conditions": { "minAge": 18 }, "cooldown": 4,
+    "target": { "role": "family", "conditions": { "minAge": 10 } },
+    "choices": [
+      { "text": "Write back, honestly", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 6, "mutual": true }, { "type": "happiness", "amount": 3 } ], "result": "Four pages. About what it is like, what you did, and what you think about at night. {t.name} keeps writing." },
+      { "text": "Do not answer", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": -4 } ], "result": "You read it until the paper goes soft. You do not know what to say, so you say nothing." }
+    ]
+  },
+  {
+    "id": "prison_parole_hearing", "category": "prison", "title": "The parole board",
+    "text": "Three people behind a table, a file with your name on it, and twenty minutes to show them who you are now.",
+    "conditions": { "minAge": 18 }, "cooldown": 5,
+    "choices": [
+      { "text": "Tell the truth about what you did", "chance": 0.35, "chanceTraits": { "kind": 0.1, "charming": 0.1, "hot_tempered": -0.15 },
+        "success": { "text": "They believe you. A date is set for next year. Soon you will walk out into a world that has moved on without you.", "effects": [ { "type": "parole", "kind": "release" }, { "type": "happiness", "amount": 10 } ] },
+        "failure": { "text": "Not yet, they say. Two more years, then try again.", "effects": [ { "type": "happiness", "amount": -6 } ] } },
+      { "text": "Say what they want to hear", "chance": 0.25, "chanceTraits": { "manipulative": 0.2 },
+        "success": { "text": "It works: out next year. You are not sure what that says about the board, or about you.", "effects": [ { "type": "parole", "kind": "release" } ] },
+        "failure": { "text": "They have heard it before. Many times.", "effects": [ { "type": "happiness", "amount": -5 } ] } }
+    ]
+  },
+  {
+    "id": "prison_birthday", "category": "prison", "title": "A birthday inside",
+    "text": "Your birthday. A card from the family, a cake someone smuggled from the kitchen, and the same four walls.",
+    "conditions": { "minAge": 18 }, "cooldown": 6,
+    "choices": [
+      { "text": "Share the cake with the wing", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "flag", "flag": "respected_inside" } ], "result": "Twelve people, one cake, plastic forks. Somebody sings, badly. It is the best day of the year inside." },
+      { "text": "Eat it alone and think", "effects": [ { "type": "happiness", "amount": -2 } ], "result": "Another year. You count them, the ones behind and the ones ahead." }
+    ]
+  },
+  {
+    "id": "prison_class", "category": "prison", "title": "The writing class",
+    "text": "A teacher comes in on Thursdays to run a writing class. Six people sign up. Most of them for the biscuits.",
+    "conditions": { "minAge": 18 }, "cooldown": 8,
+    "choices": [
+      { "text": "Join it", "effects": [ { "type": "skill", "kind": "writing", "amount": 1 }, { "type": "happiness", "amount": 3 } ], "result": "You write about the day you were arrested, and the teacher reads it twice. It is the first true thing you have written." },
+      { "text": "Not your thing", "effects": [], "result": "You hear them laughing in the classroom on Thursdays. It sounds like somewhere else." }
+    ]
+  }
+]

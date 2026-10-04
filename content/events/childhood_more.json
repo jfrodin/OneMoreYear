@@ -175,7 +175,7 @@
     "conditions": { "minAge": 7, "maxAge": 12 }, "cooldown": 0,
     "choices": [
       { "text": "Keep it", "effects": [ { "type": "money", "amount": 100 }, { "type": "happiness", "amount": 4 } ],
-        "result": "It buys more sweets than you can eat. You eat them anyway." },
+        "result": "Folded into your shoe, then into a jar under the bed. For a whole month you feel rich." },
       { "text": "Hand it in to the police", "effects": [ { "type": "trait_add", "trait": "kind", "chance": 0.15 } ],
         "result": "The officer looks surprised and writes your name in a book. Three months later nobody has claimed it, and it's yours." },
       { "text": "Buy sweets for the whole class", "effects": [ { "type": "trait_add", "trait": "generous", "chance": 0.25 }, { "type": "trait_add", "trait": "social", "chance": 0.1 } ],

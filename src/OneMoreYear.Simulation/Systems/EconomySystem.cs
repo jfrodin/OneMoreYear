@@ -272,7 +272,7 @@ public static class EconomySystem
     }
 
     /// <summary>Share of what is left after living costs that this person saves.</summary>
-    public static double SaveRate(SimContext ctx, Person p) => Math.Clamp(0.3 - ctx.Mod(p, "spending"), 0.05, 0.6);
+    public static double SaveRate(SimContext ctx, Person p) => Math.Clamp(0.3 - ctx.Mod(p, "spending") + (p.Flags.Contains("saver") ? 0.08 : 0), 0.05, 0.6);
 
     /// <summary>Net worth in nominal kronor, including home equity.</summary>
     public static double NetWorth(SimContext ctx, Person p) => p.Money + Investments(p) + HomeEquity(p) + p.CottageValue + RentalSystem.Equity(ctx, p) + EstateSystem.Equity(ctx, p);

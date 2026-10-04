@@ -119,8 +119,8 @@
         "result": "Your father tries to pay. You do not let him. He is quiet in a good way all evening." },
       { "text": "Buy something stupid", "effects": [ { "type": "flag", "flag": "first_salary" }, { "type": "money", "amount": -4000 }, { "type": "happiness", "amount": 5 } ],
         "result": "A leather jacket you wear twice. You keep it for thirty years anyway." },
-      { "text": "Put half of it in the bank", "effects": [ { "type": "flag", "flag": "first_salary" }, { "type": "money", "amount": 3000 }, { "type": "trait_add", "trait": "stingy", "chance": 0.03 } ],
-        "result": "The beginning of a habit." }
+      { "text": "Put half of it in the bank", "hint": "A habit: from now on you save a little more of every pay.", "effects": [ { "type": "flag", "flag": "first_salary" }, { "type": "flag", "flag": "saver" }, { "type": "money", "amount": 3000 }, { "type": "trait_add", "trait": "stingy", "chance": 0.03 } ],
+        "result": "The beginning of a habit. Next month you do it again, and the month after." }
     ]
   },
   {
