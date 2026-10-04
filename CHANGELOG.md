@@ -2,6 +2,38 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.70.0 – 2026-10-04 · Your own choices
+
+- **Create a character.** The scenario list on the title screen is replaced by a character creator:
+  name, sex, country, city, birth year, the age you take over at, traits, smarts, looks, fitness,
+  health, happiness, savings, a home, a job, a partner, children, an addiction or an illness, and
+  the family's circumstances. The years before are lived for you. The last creation is remembered.
+  It is a separate feature behind one switch (development builds for now).
+- **Every moment is a choice.** The 42 events that had only one answer now have two, and you can
+  say no to volunteering abroad.
+- **Choose how you live:** frugal, ordinary, comfortable or lavish. It changes living costs, how
+  much you save and how happy you are. A lifestyle never sells your investments any more; only
+  debt can do that.
+- **Buy half of your partner's home.** Your half follows the home's value, and if you split up it
+  is paid back to you.
+- **Crime with a memory.** Every prison sentence makes the next one longer. The USA is harsher, and
+  from 1994 a third sentence brings at least ten years (twenty five for violence). A name among
+  criminals now grows with what you do and fades when you stop. It brings bigger jobs, a boy who
+  wants in, an old score, detectives at the door, a chance to go straight, and the risk of being
+  known as the one who talked.
+- Partners of addicts react: some start drinking too, some leave after years of it, some stay and
+  carry it.
+- A private in the army lives in the barracks.
+- Hover over health, happiness, smarts, looks and fitness to see what they do. The title screen
+  explains each decade ("the record years"). Thirty save places instead of three, newest first.
+  Settings can keep one decade's look for good. The album says who is in each photo and shows the
+  newborn or the person the memory is about. The home projects dialog is cleaner, and closed while
+  you are in prison.
+- Language: "your brother" or "your sister" when there is only one; grandparents with dementia
+  visited by a child get their own scene, and only real dementia counts; school computers fit the
+  year; a late graduation at 39 reads like one; no "old car" you never had; "something like
+  respect" and a few more replaced. A new check lists adult words in events children can get.
+
 ## 0.69.0 – 2026-10-04 · The family seat
 
 - **A house in the country, for the family.** With a fortune in the bank, the money tab offers an old
