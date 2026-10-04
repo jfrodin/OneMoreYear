@@ -1255,6 +1255,7 @@ public class CountryTests
         var bot = new AutoPlayer(29, useActions: false);
         for (int i = 0; i < 20 && bot.PlayYear(s); i++) { }
         var p = s.Player;
+        p.Money = 0;
         var option = s.RentalOptions().First();
         Assert.Contains("need", s.BuyRental(option.TypeId).ToLowerInvariant());
         p.Money += s.Ctx.NominalRef(5_000_000);

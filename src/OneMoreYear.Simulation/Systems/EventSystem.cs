@@ -40,7 +40,8 @@ public static class EventSystem
         if (!player.IsAlive) return;
         int age = player.Age(ctx.Year);
         double roll = ctx.Rng.NextDouble();
-        int count = age < 4 ? (roll < 0.3 ? 1 : 0) : roll < 0.12 ? 0 : roll < 0.72 ? 1 : 2;
+        // About one moment a year from everyday life; the rest of the year is yours (Your Time).
+        int count = age < 4 ? (roll < 0.3 ? 1 : 0) : roll < 0.2 ? 0 : roll < 0.82 ? 1 : 2;
         count -= w.PendingEvents.Count(e => !e.Resolved);
         var distances = Kinship.Distances(w, player, 3);
 

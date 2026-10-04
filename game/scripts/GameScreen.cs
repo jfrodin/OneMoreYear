@@ -34,7 +34,8 @@ public partial class GameScreen : Control
     private int? _selectedId;
     private readonly Dictionary<int, Button> _personButtons = new();
 
-    private const int TabYear = 0, TabFamily = 1, TabWork = 2, TabMoney = 3, TabTree = 4, TabChronicle = 5;
+    private const int TabYear = 0, TabTime = 1, TabFamily = 2, TabWork = 3, TabMoney = 4, TabTree = 5, TabChronicle = 6;
+    private VBoxContainer _timeContent = null!;
     private VBoxContainer _workContent = null!;
     private VBoxContainer _moneyContent = null!;
 
@@ -68,6 +69,11 @@ public partial class GameScreen : Control
         _yearScroll = Ui.Scroll(Ui.Margin(_yearContent, 4));
         _tabs.AddChild(_yearScroll);
         _tabs.SetTabTitle(TabYear, "This Year");
+
+        // Your own time: everything you can choose to do this year.
+        _timeContent = Ui.VBox(14);
+        _tabs.AddChild(Ui.Scroll(Ui.Margin(_timeContent, 4)));
+        _tabs.SetTabTitle(TabTime, "Your Time");
 
         // Family & friends
         var split = new HSplitContainer();
@@ -116,7 +122,7 @@ public partial class GameScreen : Control
         _tabs.SetTabTitle(TabChronicle, "Chronicle");
 
         // A small line icon on each tab.
-        string[] tabIcons = { "year", "people", "work", "money", "tree", "chronicle" };
+        string[] tabIcons = { "year", "time", "people", "work", "money", "tree", "chronicle" };
         for (int i = 0; i < tabIcons.Length && i < _tabs.GetTabCount(); i++) _tabs.SetTabIcon(i, Icons.Get(tabIcons[i], UiTheme.Muted, 18));
         _tabs.AddThemeConstantOverride("icon_separation", 8);
         _tabs.TabChanged += OnTabChanged;
@@ -148,6 +154,7 @@ public partial class GameScreen : Control
         RefreshSidebar();
         RefreshYear();
         RefreshPeople();
+        if (_tabs.CurrentTab == TabTime) RefreshTime();
         if (_tabs.CurrentTab == TabWork) RefreshWork();
         if (_tabs.CurrentTab == TabMoney) RefreshMoney();
         if (_tabs.CurrentTab == TabTree) RefreshTree();
@@ -156,6 +163,7 @@ public partial class GameScreen : Control
 
     private void OnTabChanged(long tab)
     {
+        if (tab == TabTime) RefreshTime();
         if (tab == TabTree) RefreshTree();
         if (tab == TabChronicle) RefreshChronicle();
         if (tab == TabFamily) RefreshPeople();
@@ -170,6 +178,7 @@ public partial class GameScreen : Control
         {
             TabYear => FirstEnabledButton(_yearContent, "choice") ?? (_nextYear.Disabled ? null : _nextYear),
             TabFamily => _selectedId is { } id && _personButtons.TryGetValue(id, out var b) ? b : _personButtons.Values.FirstOrDefault(),
+            TabTime => FirstEnabledButton(_timeContent, "action") ?? (Control?)_nextYear,
             TabWork => FirstEnabledButton(_workContent, "action") ?? (Control?)_nextYear,
             TabMoney => FirstEnabledButton(_moneyContent, "action") ?? (Control?)_nextYear,
             TabTree => _treeView?.FocusCard,
@@ -203,7 +212,7 @@ public partial class GameScreen : Control
         Ui.Clear(_sidebar);
         var p = S.Describe(S.Player.Id);
 
-        var info = Ui.VBox(12);
+        var info = Ui.VBox(8);
         info.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         var top = Ui.HBox(14);
         top.AddChild(Portrait.Create(S.Portrait(p.Id), true, 84));
@@ -356,12 +365,42 @@ public partial class GameScreen : Control
         if (events.Count == 0)
             _yearContent.AddChild(Ui.Label("A quiet year. Spend your time on something below, visit your family, or let the year pass.", 18, UiTheme.Muted, wrap: true));
 
-        // Your own life
+        // Your own time has its own tab; here, only a pointer to it.
+        int left = S.World.ActionPoints;
+        if (left > 0 && S.Actions(null).Count > 0)
+        {
+            var row = Ui.HBox(12);
+            var note = Ui.Label($"You also have time for {left} thing{(left == 1 ? "" : "s")} of your own this year.", 17, UiTheme.Muted, wrap: true);
+            note.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            note.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            row.AddChild(note);
+            var go = Ui.Button("Your time", () => _tabs.CurrentTab = TabTime, 44);
+            go.SetMeta("action", true);
+            row.AddChild(go);
+            _yearContent.AddChild(Ui.Card(row));
+        }
+    }
+
+    // --- Your time --------------------------------------------------------------------------------
+
+    /// <summary>Everything the player can choose to do with the year's time, in one place.</summary>
+    private void RefreshTime()
+    {
+        Ui.Clear(_timeContent);
+        int ap = S.World.ActionPoints;
+        var header = Ui.HBox(16);
+        header.AddChild(Ui.Label("Your time", 32, UiTheme.Accent));
+        var sub = Ui.Label(ap > 0 ? $"Time for {ap} more thing{(ap == 1 ? "" : "s")} this year." : "No time left this year.", 18, UiTheme.Muted);
+        sub.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        header.AddChild(sub);
+        _timeContent.AddChild(header);
+        if (Guide.CardFor(Guide.Time, S) is { } timeTip) _timeContent.AddChild(timeTip);
+
         var all = S.Actions(null);
         foreach (var (category, title, note) in new[]
         {
             ("prison", "Life inside", "You can't do much from a cell. Things outside go on without you."),
-            ("life", "Your life", "School, work and money have their own tabs. People are in the People tab."),
+            ("life", "Your life", "Time with people is under People; work, school and money have their own tabs."),
             ("crime", "Outside the law", "Anyone can do these. Your personality decides how risky they are, and how you feel afterwards."),
         })
         {
@@ -371,7 +410,7 @@ public partial class GameScreen : Control
             box.AddChild(Ui.Label(title, 20, category == "crime" ? UiTheme.Bad : UiTheme.Text));
             box.AddChild(ActionButtons(actions, null));
             box.AddChild(Ui.Label(note, 15, UiTheme.Faint, wrap: true));
-            _yearContent.AddChild(Ui.Card(box));
+            _timeContent.AddChild(Ui.Card(box));
         }
     }
 

@@ -36,7 +36,7 @@
     "conditions": { "minAge": 18 }, "target": { "role": "boss" }, "actions": [ "act_impress_boss" ] },
 
   { "id": "w_fit", "text": "Get in shape", "weight": 2,
-    "conditions": { "minAge": 14 }, "actions": [ "self_train" ] },
+    "conditions": { "minAge": 14 }, "actions": [ "self_train", "own_get_fit" ] },
   { "id": "w_new_friend", "text": "Make a new friend", "weight": 1.5,
     "actions": [ "self_make_friend" ] },
   { "id": "w_go_out", "text": "Go out more", "weight": 1,

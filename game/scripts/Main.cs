@@ -1022,8 +1022,9 @@ public partial class Main : Control
                 }
                 break;
             case 33: Shot("02b_answered"); if (_screen is GameScreen g1) g1.ShowTab(1); break;
+            case 36: Shot("02c_time"); if (_screen is GameScreen g1b) g1b.ShowTab(2); break;
             case 40: Shot("03_family"); break;
-            case 42: if (_screen is GameScreen g2) g2.ShowTab(2); break;
+            case 42: if (_screen is GameScreen g2) g2.ShowTab(3); break;
             case 50: Shot("04_work"); break;
             case 52:
                 // A little money to show the investments and the home card.
@@ -1032,13 +1033,13 @@ public partial class Main : Control
                 Session.BuyInvestment("telelink", 60_000);
                 Session.ChooseHome("three_room", buy: false);
                 if (Session.Heirlooms().Count == 0) OneMoreYear.Simulation.Systems.HeirloomSystem.Create(Session.Ctx, Session.Player, "pocket_watch", "found it in a drawer at a parent's house");
-                if (_screen is GameScreen g3) { g3.Refresh(); g3.ShowTab(3); }
+                if (_screen is GameScreen g3) { g3.Refresh(); g3.ShowTab(4); }
                 break;
             case 60: Shot("05_money"); if (_screen is GameScreen gi) gi.TourInvestDialog(); break;
             case 63: Shot("05b_invest"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen gh) gh.TourHomeDialog(); break;
             case 66: Shot("05c_homes"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen gs) gs.ScrollMoneyToEnd(); break;
             case 68: Shot("05d_heirlooms"); if (_screen is GameScreen ga) ga.ShowAlbum(Session!.Player.Id, Session.Player.FirstName); break;
-            case 69: Shot("05e_album"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen g4) g4.ShowTab(4); break;
+            case 69: Shot("05e_album"); foreach (var c in _overlayLayer.GetChildren()) c.QueueFree(); if (_screen is GameScreen g4) g4.ShowTab(5); break;
             case 70: Shot("06_tree"); if (_screen is GameScreen gt) gt.FocusTreeOnGrandfather(); break;
             case 71: Shot("06b_tree_grandfather"); break;
             case 72: ShowContentSettings(Session); break;

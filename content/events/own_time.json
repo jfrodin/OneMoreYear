@@ -1,0 +1,156 @@
+// Things to do with your own time, at every age. Each takes some of the year's time. No dashes.
+[
+  {
+    "id": "own_play_outside", "trigger": "self", "category": "life", "title": "Play outside",
+    "conditions": { "minAge": 5, "maxAge": 12 },
+    "choices": [
+      { "text": "Build a hut in the woods", "hint": "Planks, a tarpaulin and a secret password.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "It leaks, it leans, and it is the best house you will ever have." },
+      { "text": "Football in the street", "hint": "Jumpers for goalposts until it gets dark.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "Somebody's mother calls everyone in for dinner, one by one, until there is nobody left to play." },
+      { "text": "Climb the big tree", "hint": "Higher than anyone has ever been.", "chance": 0.8, "chanceAttributes": { "fitness": 0.002 },
+        "success": { "text": "From the top you can see the whole street and the roof of the school. Nobody believes you got that high.", "effects": [ { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "brave", "chance": 0.04 } ] },
+        "failure": { "text": "A branch that was not as strong as it looked. Six weeks in a cast that everyone signs.", "effects": [ { "type": "health", "amount": -6 }, { "type": "happiness", "amount": 1 } ] } }
+    ]
+  },
+  {
+    "id": "own_read", "trigger": "self", "category": "life", "title": "Read",
+    "conditions": { "minAge": 6, "maxAge": 16 },
+    "choices": [
+      { "text": "Read under the covers with a torch", "hint": "One more chapter. Then one more.", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "happiness", "amount": 2 } ], "result": "You finish the whole series in a month. Then you start it again." }
+    ]
+  },
+  {
+    "id": "own_help_home", "trigger": "self", "category": "life", "title": "Help at home",
+    "conditions": { "minAge": 6, "maxAge": 17, "livesWithParents": true },
+    "target": { "role": "parent" },
+    "choices": [
+      { "text": "Do the washing up without being asked", "hint": "Small things are noticed.", "effects": [ { "type": "relation", "who": "target", "to": "player", "dim": "closeness", "amount": 4 }, { "type": "money", "amount": 200 } ], "result": "{t.name} stands in the kitchen doorway, says nothing, and later there is a little extra pocket money." }
+    ]
+  },
+  {
+    "id": "own_screen", "trigger": "self", "category": "life", "title": "[[1995: Television || Screens]]",
+    "conditions": { "minAge": 5, "maxAge": 17 },
+    "choices": [
+      { "text": "[[1995: Watch everything that is on || Watch everything, everywhere]]", "hint": "A whole afternoon gone, happily.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "grades", "amount": -1 } ], "result": "[[1995: You know every jingle by heart. || You know every video everyone talks about.]] Your homework does not." }
+    ]
+  },
+  {
+    "id": "own_hang_out", "trigger": "self", "category": "life", "title": "Hang out",
+    "conditions": { "minAge": 12, "maxAge": 19 },
+    "choices": [
+      { "text": "[[1980: At the youth club || At the shopping centre]]", "hint": "Nothing happens, for hours. That is the point.", "effects": [ { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "social", "chance": 0.04 } ], "result": "Hours of nothing, with the right people. You remember almost none of it, and all of it." },
+      { "text": "A party you were not really invited to", "hint": "Older kids, louder music.", "chance": 0.6, "chanceTraits": { "social": 0.15, "charming": 0.1 },
+        "success": { "text": "Nobody asks who you are. You dance badly, laugh a lot, and walk home at dawn feeling about twenty.", "effects": [ { "type": "happiness", "amount": 6 } ] },
+        "failure": { "text": "Someone's older brother asks who you are, loudly. You leave after ten minutes and walk home the long way.", "effects": [ { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "own_summer_job", "trigger": "self", "category": "life", "title": "A summer job",
+    "conditions": { "minAge": 14, "maxAge": 19, "notActivity": [ "working" ] },
+    "choices": [
+      { "text": "[[1990: Pick strawberries || Work in a café]]", "hint": "Your own money, earned.", "effects": [ { "type": "money", "amount": 8000 }, { "type": "happiness", "amount": 1 }, { "type": "trait_add", "trait": "ambitious", "chance": 0.03 } ], "result": "Sore back, early mornings, and at the end of the summer more money than you have ever held." }
+    ]
+  },
+  {
+    "id": "own_holiday", "trigger": "self", "category": "life", "title": "Go on holiday",
+    "conditions": { "minAge": 18, "livesWithParents": false },
+    "choices": [
+      { "text": "A week by the sea", "hint": "Sun, salt and nothing to do.", "requires": { "minMoney": 15000 }, "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 6 }, { "type": "health", "amount": 2 } ], "result": "You come home brown, rested, and with sand in every bag for a year." },
+      { "text": "A city you have never seen", "hint": "Museums, markets, sore feet.", "requires": { "minMoney": 10000 }, "effects": [ { "type": "money", "amount": -10000 }, { "type": "happiness", "amount": 5 } ], "result": "Twenty thousand steps a day, a meal you still talk about, and a church you cannot pronounce." },
+      { "text": "Somewhere very far away", "hint": "Expensive, and once in a lifetime.", "requires": { "minMoney": 60000 }, "effects": [ { "type": "money", "amount": -50000 }, { "type": "happiness", "amount": 10 }, { "type": "memory", "kind": "far_journey", "text": "The journey to the other side of the world", "impact": 18 } ], "result": "Three weeks on the other side of the world. Nothing at home looks quite the same afterwards." },
+      { "text": "Camping, cheaply", "hint": "A tent, a lake and a lot of mosquitoes.", "requires": { "minMoney": 2000 }, "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 3 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "It rains for four days out of seven. The other three are perfect." }
+    ]
+  },
+  {
+    "id": "own_get_fit", "trigger": "self", "category": "life", "title": "Get in shape",
+    "conditions": { "minAge": 16, "maxAge": 85 },
+    "choices": [
+      { "text": "Run three times a week", "hint": "Free, and hard to keep up.", "chance": 0.6, "chanceTraits": { "lazy": -0.25, "ambitious": 0.1 },
+        "success": { "text": "By autumn you run without thinking about it. Your knees have opinions; you ignore them.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "health", "amount": 3 } ] },
+        "failure": { "text": "Three weeks, then rain, then a cold, then it is Christmas.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 1 }, { "type": "happiness", "amount": -1 } ] } },
+      { "text": "Join a gym", "hint": "Costs money, works if you go.", "requires": { "minYear": 1980, "minAge": 18, "minMoney": 4000 }, "effects": [ { "type": "money", "amount": -4000 }, { "type": "attribute", "kind": "fitness", "amount": 5 }, { "type": "happiness", "amount": 1 } ], "result": "You learn what every machine is for, and which ones everyone avoids." },
+      { "text": "Long walks every day", "hint": "Gentle, and good for the head too.", "effects": [ { "type": "attribute", "kind": "fitness", "amount": 2 }, { "type": "happiness", "amount": 2 }, { "type": "health", "amount": 1 } ], "result": "The same route every day, and every day it looks a little different." }
+    ]
+  },
+  {
+    "id": "own_night_out", "trigger": "self", "category": "life", "title": "A night out",
+    "conditions": { "minAge": 18, "maxAge": 65 },
+    "choices": [
+      { "text": "Dinner, and maybe dancing", "hint": "A good evening, home by midnight.", "requires": { "minMoney": 1500 }, "effects": [ { "type": "money", "amount": -1500 }, { "type": "happiness", "amount": 4 } ], "result": "A long dinner, a short dance, and a taxi home with your shoes in your hand." },
+      { "text": "Out until they close", "hint": "Fun, and a risk of regret.", "requires": { "minMoney": 3000 }, "chance": 0.65, "chanceTraits": { "social": 0.1, "impulsive": -0.1 },
+        "success": { "text": "The best night of the year, with people you met at eleven and feel you have known forever.", "effects": [ { "type": "money", "amount": -2500 }, { "type": "happiness", "amount": 6 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ] },
+        "failure": { "text": "A headache that lasts until Monday, and a message you sent at three that you read many times.", "effects": [ { "type": "money", "amount": -3000 }, { "type": "health", "amount": -2 }, { "type": "happiness", "amount": -2 } ] } }
+    ]
+  },
+  {
+    "id": "own_volunteer", "trigger": "self", "category": "life", "title": "Help out somewhere",
+    "conditions": { "minAge": 14 },
+    "choices": [
+      { "text": "Serve meals to people who need them", "hint": "Two evenings a week.", "effects": [ { "type": "happiness", "amount": 3 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ], "result": "The same faces every Tuesday. You learn their names, and some of their stories." },
+      { "text": "Coach a children's team", "hint": "Muddy Saturdays and oranges at half time.", "requires": { "minAge": 18 }, "effects": [ { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 1 } ], "result": "You lose every game but one. The one you win, they carry you off the pitch." },
+      { "text": "Visit someone who is lonely", "hint": "An hour of company means more than you think.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "trait_add", "trait": "kind", "chance": 0.05 } ], "result": "An old man with a lot of photographs and nobody to show them to. Now there is somebody." }
+    ]
+  },
+  {
+    "id": "own_doctor", "trigger": "self", "category": "life", "title": "See a doctor",
+    "conditions": { "minAge": 18 },
+    "choices": [
+      { "text": "A full check up", "hint": "Better to know.", "requires": { "minMoney": 800 }, "effects": [ { "type": "money", "amount": -800 }, { "type": "health", "amount": 3 } ], "result": "Blood pressure, blood tests, a long look at your moles. A few good habits to take home, and nothing worse." }
+    ]
+  },
+  {
+    "id": "own_treat", "trigger": "self", "category": "life", "title": "Treat yourself",
+    "conditions": { "minAge": 18, "minMoney": 5000 },
+    "choices": [
+      { "text": "New clothes", "hint": "Out with the old.", "requires": { "minMoney": 6000 }, "effects": [ { "type": "money", "amount": -6000 }, { "type": "attribute", "kind": "looks", "amount": 2 }, { "type": "happiness", "amount": 3 } ], "result": "You catch yourself in shop windows all week." },
+      { "text": "A day at a spa", "hint": "Warm water and a dressing gown.", "requires": { "minMoney": 3000 }, "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 4 }, { "type": "health", "amount": 1 } ], "result": "A whole day where nobody needs anything from you." },
+      { "text": "Something you have wanted for years", "hint": "You know what it is.", "requires": { "minMoney": 15000 }, "effects": [ { "type": "money", "amount": -15000 }, { "type": "happiness", "amount": 6 } ], "result": "It is exactly as good as you hoped, which almost never happens." }
+    ]
+  },
+  {
+    "id": "own_learn", "trigger": "self", "category": "life", "title": "Learn something new",
+    "conditions": { "minAge": 16 },
+    "choices": [
+      { "text": "An evening course in a language", "hint": "Tuesday nights, a textbook and a patient teacher.", "requires": { "minMoney": 2000 }, "effects": [ { "type": "money", "amount": -2000 }, { "type": "attribute", "kind": "smarts", "amount": 2 }, { "type": "happiness", "amount": 2 } ], "result": "By spring you can order dinner and apologise. That covers most of life." },
+      { "text": "Read the books everyone says they have read", "hint": "Free, from the library.", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 2 } ], "result": "Some of them are wonderful. Some of them are wonderful for a hundred pages." },
+      { "text": "A first aid course", "hint": "One evening, and one day it might matter.", "effects": [ { "type": "attribute", "kind": "smarts", "amount": 1 }, { "type": "flag", "flag": "first_aid" } ], "result": "You practise on a plastic doll called Anne. You hope you never need it. You feel better knowing." }
+    ]
+  },
+  {
+    "id": "own_have_people_over", "trigger": "self", "category": "life", "title": "Have people over",
+    "conditions": { "minAge": 20, "livesWithParents": false },
+    "choices": [
+      { "text": "A long dinner with friends", "hint": "Cook too much, open too many bottles.", "requires": { "minMoney": 2000 }, "effects": [ { "type": "money", "amount": -2000 }, { "type": "happiness", "amount": 5 }, { "type": "trait_add", "trait": "social", "chance": 0.03 } ], "result": "The last guest leaves at two. The dishes wait until Sunday." }
+    ]
+  },
+  {
+    "id": "own_luck", "trigger": "self", "category": "life", "content": [ "addiction" ], "title": "Try your luck",
+    "conditions": { "minAge": 18 },
+    "choices": [
+      { "text": "Lottery tickets", "hint": "Almost always nothing.", "requires": { "minMoney": 500 }, "chance": 0.03,
+        "success": { "text": "Five numbers. Not the jackpot, but enough to sit down in the kitchen and laugh.", "effects": [ { "type": "money", "amount": -500 }, { "type": "money", "amount": 150000 }, { "type": "happiness", "amount": 8 } ] },
+        "failure": { "text": "Nothing, as usual. You will buy one next week too.", "effects": [ { "type": "money", "amount": -500 } ] } },
+      { "text": "A night at the casino", "hint": "Exciting, and the house always wins in the end.", "requires": { "minMoney": 12000 }, "chance": 0.4, "chanceTraits": { "impulsive": -0.1 },
+        "success": { "text": "Red, red, black, and you walk out with more than you came with. That feeling is the dangerous part.", "effects": [ { "type": "money", "amount": 10000 }, { "type": "happiness", "amount": 4 }, { "type": "trait_add", "trait": "addictive", "chance": 0.02 } ] },
+        "failure": { "text": "Gone by midnight. You take the night bus home and count what you lost, twice.", "effects": [ { "type": "money", "amount": -12000 }, { "type": "happiness", "amount": -3 } ] } }
+    ]
+  },
+  {
+    "id": "own_nature", "trigger": "self", "category": "life", "title": "Get out into nature",
+    "conditions": { "minAge": 8 },
+    "choices": [
+      { "text": "A weekend in the mountains", "hint": "Cold mornings and big views.", "requires": { "minMoney": 3000 }, "effects": [ { "type": "money", "amount": -3000 }, { "type": "happiness", "amount": 4 }, { "type": "attribute", "kind": "fitness", "amount": 2 } ], "result": "A hut, a stove, a sky with more stars than you knew there were." },
+      { "text": "Fishing at dawn", "hint": "Patience, coffee from a flask.", "effects": [ { "type": "happiness", "amount": 3 } ], "result": "You catch one fish, small, and put it back. The morning was the point." },
+      { "text": "A long walk in the forest", "hint": "Free, and always there.", "effects": [ { "type": "happiness", "amount": 2 }, { "type": "health", "amount": 1 } ], "result": "Moss, birdsong, nobody. You come home quieter inside." }
+    ]
+  },
+  {
+    "id": "own_looks", "trigger": "self", "category": "life", "title": "Your looks",
+    "conditions": { "minAge": 16 },
+    "choices": [
+      { "text": "A new haircut", "hint": "Something a little braver.", "requires": { "minMoney": 800 }, "effects": [ { "type": "money", "amount": -800 }, { "type": "attribute", "kind": "looks", "amount": 1 }, { "type": "happiness", "amount": 1 } ], "result": "Three people notice. One of them says something nice." },
+      { "text": "Cosmetic surgery", "hint": "Expensive, and not without risk.", "requires": { "minAge": 21, "minMoney": 60000, "minYear": 1975 }, "chance": 0.85,
+        "success": { "text": "Weeks of bruises, then a face that is yours, only more so.", "effects": [ { "type": "money", "amount": -60000 }, { "type": "attribute", "kind": "looks", "amount": 8 }, { "type": "trait_add", "trait": "vain", "chance": 0.08 } ] },
+        "failure": { "text": "Something went wrong. Not badly, but enough that you see it in every mirror.", "effects": [ { "type": "money", "amount": -60000 }, { "type": "attribute", "kind": "looks", "amount": -4 }, { "type": "health", "amount": -5 }, { "type": "happiness", "amount": -6 } ] } }
+    ]
+  }
+]

@@ -15,6 +15,7 @@ public static class Guide
 {
     private sealed record Tip(string Id, string Tab, Func<GameSession, bool> When, string Text);
 
+    public const string Time = "time";
     public const string Year = "year", People = "people", Work = "work", Money = "money", Tree = "tree", Chronicle = "chronicle";
 
     private static int Age(GameSession s) => s.Player.Age(s.Year);
@@ -29,9 +30,12 @@ public static class Guide
         new("values", Year, s => s.Year > s.World.StartYear,
             "Health, happiness, smarts, looks and fitness are on the left. Hover over one to see what it does."),
         new("time", Year, s => s.Actions(null).Count > 0 && Age(s) >= 4,
-            "You also have time for a few things of your own each year. They are here and under People, School & Work and Money. What you do not use is gone when the year ends."),
+            "You also have time for a few things of your own each year, on the Your Time tab and under People. What you do not use is gone when the year ends."),
         new("chapter", Year, s => Age(s) >= 8,
             "Chronicle is the family's story, for everyone in it. When your life ends, you go on as someone you leave behind."),
+
+        new("time_tab", Time, _ => true,
+            "Everything you can do with this year's time. Each thing takes some of it, and what is left over is gone when the year ends."),
 
         new("people", People, _ => true,
             "Your family and friends. Click someone to see who they are and how they feel about you. People remember what you do to them."),

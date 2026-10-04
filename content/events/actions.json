@@ -383,8 +383,8 @@
     } ]
   },
   {
-    "id": "self_train", "trigger": "self", "title": "Exercise",
-    "conditions": { "minAge": 8 },
+    "id": "self_train", "trigger": "self", "title": "Practise a sport",
+    "conditions": { "minAge": 8, "maxAge": 15 },
     "choices": [ {
       "text": "Train hard this year",
       "effects": [ { "type": "health", "amount": 3 }, { "type": "attribute", "kind": "fitness", "amount": 8 }, { "type": "happiness", "amount": 2 } ],
