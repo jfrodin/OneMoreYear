@@ -90,9 +90,18 @@ arrangemanget så skapas ett spår med det.
 **Mellanspelet (B)**, utan melodi eller med en fri improvisation över:
 Am, Em, F, C, Dm, G, Em, Gsus4
 
-**Form för alla låtar:** Intro (4 takter), Tema (8), Mellanspel (8), Tema igen, ofta en oktav upp
-eller på ett annat instrument (8), Avslut (4). Det blir drygt 1,5 minut; spela temat en gång till
-med en ny variation om låten ska bli längre.
+**Form för alla låtar (så är MIDI-filerna byggda):**
+1. Intro, 4 takter, hållna ackord
+2. Temat, enkelt och glest
+3. Temat med små utsmyckningar och en andrastämma under
+4. Mellanspelet, med en egen melodi
+5. Temat igen, högre och fylligare, med matta där det finns
+6. Ett lugnt mellanspel, där andrastämman tar mellanspelets melodi
+7. Temat avskalat (de långsammaste låtarna hoppar över den här och/eller del 6)
+8. Avslut som saktar in, och ett slutackord som klingar ut
+
+Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel "Melody: Clarinet
+(Presence XT)". Tempot saktar in av sig självt på slutet (tempospåret följer med i filen).
 
 ---
 
