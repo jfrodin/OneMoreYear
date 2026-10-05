@@ -14,7 +14,11 @@ public static class Faces
 
     public static Face Of(World w, Person p, Content.ContentDb? content = null)
     {
-        if (p.Face != null) return p.Face;
+        if (p.Face != null)
+        {
+            if (p.Face.Version < 2) Upgrade(w, p, p.Face);
+            return p.Face;
+        }
         content ??= Content.ContentDb.Embedded;
         var parents = Kinship.BiologicalParents(w, p).Select(x => Of(w, x, content)).ToList();
         var rng = new SimRandom(w.Seed * 0x9E3779B97F4A7C15UL ^ (ulong)p.Id * 0xBF58476D1CE4E5B9UL);
@@ -47,6 +51,8 @@ public static class Faces
             Ears = G(), Curl = skin > 0.6 ? G(0.75, 0.15) : G(0.25, 0.2),
             Freckles = p.HairColor == "red" ? G(0.7, 0.2) : p.HairColor is "blond" or "dark blond" ? G(0.2, 0.2) : G(0.05, 0.1),
             Baldness = G(p.Sex == Sex.Male ? 0.5 : 0.1, 0.25), Greying = G(),
+            Length = G(), NoseShape = G(0.5, 0.25), EyeShape = G(), EyeTilt = G(), BrowArch = G(p.Sex == Sex.Male ? 0.35 : 0.6),
+            Cheekbones = G(), Mole = G(0.4, 0.25), Cleft = G(0.35, 0.25), Version = 2,
         };
     }
 
@@ -69,11 +75,25 @@ public static class Faces
             Mouth = Mix(f => f.Mouth), Lips = Math.Clamp(Mix(f => f.Lips) - sexShift, 0, 1), Brows = Math.Clamp(Mix(f => f.Brows) + sexShift, 0, 1),
             Ears = Mix(f => f.Ears), Curl = Mix(f => f.Curl), Freckles = Mix(f => f.Freckles, 0.1),
             Baldness = Math.Clamp(Mix(f => f.Baldness, 0.15) + (p.Sex == Sex.Male ? 0.1 : -0.3), 0, 1), Greying = Mix(f => f.Greying, 0.12),
+            Length = Mix(f => f.Length), NoseShape = Mix(f => f.NoseShape, 0.1), EyeShape = Mix(f => f.EyeShape), EyeTilt = Mix(f => f.EyeTilt),
+            BrowArch = Math.Clamp(Mix(f => f.BrowArch) - sexShift, 0, 1), Cheekbones = Mix(f => f.Cheekbones), Mole = Mix(f => f.Mole, 0.2),
+            Cleft = Mix(f => f.Cleft, 0.1), Version = 2,
         };
+    }
+
+    /// <summary>A face from before version 2: the new features, chosen once and kept.</summary>
+    private static void Upgrade(World w, Person p, Face f)
+    {
+        var rng = new SimRandom(w.Seed * 0x632BE59BD9B4E019UL ^ (ulong)p.Id * 0x94D049BB133111EBUL);
+        double G(double mean = 0.5, double sd = 0.18) => Math.Clamp(rng.Gaussian(mean, sd), 0, 1);
+        f.Length = G(); f.NoseShape = G(0.5, 0.25); f.EyeShape = G(); f.EyeTilt = G(); f.BrowArch = G(p.Sex == Sex.Male ? 0.35 : 0.6);
+        f.Cheekbones = G(); f.Mole = G(0.4, 0.25); f.Cleft = G(0.35, 0.25); f.Style2 = rng.NextDouble();
+        f.Version = 2;
     }
 
     private static void Style(Person p, Face f, SimRandom rng)
     {
+        f.Style2 = rng.NextDouble();
         f.HairStyle = rng.Next(HairStyles);
         f.Beard = p.Sex == Sex.Male ? rng.PickWeighted(new[] { 0, 1, 2, 3 }, b => b switch { 0 => 5, 1 => 2, 2 => 1.5, _ => 0.6 }) : 0;
         // Near-sighted children, or reading glasses later in life.

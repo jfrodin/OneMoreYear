@@ -173,15 +173,21 @@ public partial class Portrait : Control
             Poly(Ellipse(P(0.5f, 0.38f), _s * (0.42f - i * 0.06f), _s * (0.36f - i * 0.05f), 40), UiTheme.PhotoBackdrop.Lightened(0.035f) with { A = 0.35f });
         DrawTextureRect(_square ? SquareVignette : RoundVignette, new Rect2(_o, new Vector2(_s, _s)), false, T(Colors.White));
 
+        // Everyone has their own undertone: a little pinker, more golden or more olive.
         var skin = SkinColor(f.Skin);
+        float under = Hash(31);
+        skin = under < 0.33f ? skin.Lerp(new Color("e8a59a"), 0.12f) : under < 0.66f ? skin.Lerp(new Color("e2b277"), 0.1f) : skin.Lerp(new Color("b9a27a"), 0.1f);
         var skinShade = skin.Darkened(0.16f);
+        // And their own shade of their hair colour.
         var hair = HairColor(_v.HairColor, _v.Grey, age);
+        hair = hair.Lerp(Hash(32) < 0.5f ? new Color("8a5a2a") : new Color("2a2622"), 0.08f + Hash(33) * 0.1f).Lightened((Hash(34) - 0.5f) * 0.12f);
 
         // Proportions: children have bigger heads and eyes, heavier people wider faces.
         _cx = 0.5f;
         _cy = baby ? 0.5f : child ? 0.47f : 0.44f;
         _rx = (baby ? 0.25f : child ? 0.225f : 0.195f) * (0.9f + (float)f.Width * 0.18f) * (0.9f + heavy * 0.22f);
-        _ry = baby ? 0.25f : child ? 0.255f : 0.26f;
+        _ry = (baby ? 0.25f : child ? 0.255f : 0.26f) * (0.93f + (float)f.Length * 0.14f);
+        _rx *= 1.04f - (float)f.Length * 0.08f;
         float jaw = baby ? 0.95f : child ? 0.82f : 0.58f + (float)f.Jaw * 0.3f + heavy * 0.1f;
         float chin = child ? 0 : (float)f.Chin;
         float cx = _cx, cy = _cy, rx = _rx, ry = _ry;
@@ -201,6 +207,8 @@ public partial class Portrait : Control
             var ear = P(cx + side * rx * 0.97f, cy + ry * 0.06f);
             Poly(Ellipse(ear, earR * _s, earR * 1.5f * _s, 16), skin.Darkened(0.06f));
             Poly(Ellipse(ear + new Vector2(side * -0.004f, 0) * _s, earR * 0.5f * _s, earR * 0.9f * _s, 12), skinShade with { A = 0.6f });
+            if (!_v.Male && age >= 15 && f.Style2 is > 0.15 and < 0.55)
+                DrawCircle(ear + new Vector2(0, earR * 1.45f) * _s, Mathf.Max(1.5f, _s * 0.009f), T(f.Style2 < 0.35 ? new Color("d4af37") : new Color("e8e4dc")));
         }
         _head = Head(cx, cy, rx, ry, jaw, chin, 1f);
         // Light from the upper left: the whole head in shade, then the lit part on top of it,
@@ -214,6 +222,17 @@ public partial class Portrait : Control
         blush += (float)Math.Max(0, _v.Mood) * 0.08f;
         foreach (float side in new[] { -1f, 1f })
             ClippedTo(Ellipse(P(cx + side * rx * 0.55f, cy + ry * 0.3f), rx * 0.24f * _s, ry * 0.12f * _s, 20), _head, new Color("e0605a") with { A = blush * 0.4f });
+
+        // Cheekbones that catch the light, with a soft hollow under them.
+        if (!child && f.Cheekbones > 0.55)
+            foreach (float side in new[] { -1f, 1f })
+                ClippedTo(Ellipse(P(cx + side * rx * 0.62f, cy + ry * 0.36f), rx * 0.2f * _s, ry * 0.07f * _s, 16), _head, skin.Darkened(0.14f) with { A = ((float)f.Cheekbones - 0.55f) * 1.2f });
+        // A mole, always in the same place for the same person.
+        if (!baby && f.Mole > 0.7)
+            DrawCircle(P(cx + (Hash(21) * 2 - 1) * rx * 0.55f, cy + ry * (0.12f + Hash(22) * 0.5f)), Mathf.Max(1.2f, _s * 0.0065f), T(skin.Darkened(0.5f)));
+        // A cleft chin.
+        if (!child && f.Cleft > 0.75)
+            Curve(Bezier(P(cx, cy + ry * 0.84f), P(cx + 0.002f, cy + ry * 0.9f), P(cx, cy + ry * 0.95f), 4), skin.Darkened(0.28f) with { A = 0.6f }, 0.005f);
 
         // Freckles.
         if (f.Freckles > 0.35 && !baby)
@@ -390,8 +409,10 @@ public partial class Portrait : Control
         float cx = _cx, cy = _cy, rx = _rx, ry = _ry;
         float ey = cy + ry * (child ? 0.05f : -0.02f);
         float spacing = rx * (0.36f + (float)f.EyeSpacing * 0.12f);
-        float ew = (0.034f + (float)f.Eyes * 0.014f) * (child ? 1.2f : 1f);
-        float eh = ew * (child ? 0.7f : 0.56f);
+        float ew = (0.031f + (float)f.Eyes * 0.02f) * (child ? 1.2f : 1f);
+        float eh = ew * (child ? 0.7f : 0.56f) * (1.15f - (float)f.EyeShape * 0.35f);
+        // Outer corners lifted or lowered, the same for both lids so the shape holds.
+        float tilt = 0.06f + (0.5f - (float)f.EyeTilt) * 0.36f;
         float mood = (float)_v.Mood;
         int age = _v.Age;
         // Happy eyes narrow a little from below; old eyes from above.
@@ -406,13 +427,13 @@ public partial class Portrait : Control
             {
                 float t = i / 14f, x = -1 + 2 * t;
                 float up = Mathf.Sqrt(Mathf.Max(0, 1 - x * x)) * (1 - squint * 0.4f);
-                almond.Add(c + new Vector2(x * ew, -up * eh + side * x * eh * 0.08f) * _s);
+                almond.Add(c + new Vector2(x * ew, -up * eh + side * x * eh * tilt) * _s);
             }
             for (int i = 14; i >= 0; i--)
             {
                 float t = i / 14f, x = -1 + 2 * t;
                 float down = Mathf.Sqrt(Mathf.Max(0, 1 - x * x)) * (0.75f - squint * 0.4f);
-                almond.Add(c + new Vector2(x * ew, down * eh) * _s);
+                almond.Add(c + new Vector2(x * ew, down * eh + side * x * eh * tilt) * _s);
             }
             var shape = almond.ToArray();
             Poly(shape, new Color("f6f2ea"));
@@ -435,7 +456,7 @@ public partial class Portrait : Control
             // Brows: tapered; sad people raise the inner end, angry ones lower it.
             float by = -eh * 2.3f;
             var inner = c + new Vector2(-side * ew * 0.95f, by - (mood < 0 ? -mood * eh * 1.2f : 0)) * _s;
-            var mid = c + new Vector2(side * ew * 0.1f, by - eh * 0.45f) * _s;
+            var mid = c + new Vector2(side * ew * 0.1f, by - eh * (0.15f + (float)f.BrowArch * 0.7f)) * _s;
             var outerB = c + new Vector2(side * ew * 1.15f, by + eh * 0.35f) * _s;
             float thick = (0.008f + (float)f.Brows * 0.012f) * _s * (_v.Male ? 1.1f : 0.8f);
             var brow = new List<Vector2>();
@@ -444,22 +465,83 @@ public partial class Portrait : Control
             brow.AddRange(lower);
             Poly(brow.ToArray(), hair.Darkened(0.22f));
 
-            if (_v.Glasses)
-                DrawArc(c, ew * 1.5f * _s, 0, Mathf.Tau, 28, T(new Color("2a2a2a")), Mathf.Max(1, _s * 0.009f), true);
+            if (_v.Glasses) DrawLens(c, ew, side);
         }
-        if (_v.Glasses) Line(P(cx - spacing + ew * 1.5f, ey - 0.004f), P(cx + spacing - ew * 1.5f, ey - 0.004f), new Color("2a2a2a"), 0.009f);
+        if (_v.Glasses) Line(P(cx - spacing + ew * LensHalfWidth(), ey - 0.004f), P(cx + spacing - ew * LensHalfWidth(), ey - 0.004f), FrameColour(), 0.009f);
     }
 
+
+    // --- Glasses -------------------------------------------------------------------------------
+
+    /// <summary>The frames of the time and the person: round, square, big in the eighties, cat eyes in the fifties.</summary>
+    private string LensStyle()
+    {
+        int year = _v.Year > 0 ? _v.Year : 2000;
+        float s = (float)_v.Face.Style2;
+        if (!_v.Male && year < 1972 && s < 0.5f) return "cat";
+        if (year is >= 1976 and < 1995 && s > 0.3f) return "big";
+        return s < 0.4f ? "round" : "square";
+    }
+
+    private float LensHalfWidth() => LensStyle() switch { "big" => 1.8f, "cat" => 1.65f, "square" => 1.6f, _ => 1.5f };
+
+    private Color FrameColour()
+    {
+        float s = (float)_v.Face.Style2;
+        int year = _v.Year > 0 ? _v.Year : 2000;
+        if (s > 0.72f) return new Color("6a4428");
+        if (year is >= 1970 and < 1990 && s is > 0.4f and < 0.55f) return new Color("b08d3a");
+        return new Color("2a2a2a");
+    }
+
+    private void DrawLens(Vector2 c, float ew, float side)
+    {
+        float width = Mathf.Max(1, _s * 0.009f);
+        var colour = T(FrameColour());
+        string style = LensStyle();
+        if (style == "round") { DrawArc(c, ew * 1.5f * _s, 0, Mathf.Tau, 28, colour, width, true); return; }
+        float hw = ew * LensHalfWidth() * _s, hh = ew * (style == "big" ? 1.55f : style == "cat" ? 1.1f : 1.15f) * _s;
+        float r = hh * 0.45f;
+        var pts = new List<Vector2>();
+        // A rounded rectangle; cat eyes lift at the outer top corner.
+        void Corner(Vector2 centre, float from)
+        {
+            for (int i = 0; i <= 5; i++)
+            {
+                float a = from + Mathf.Pi / 2 * i / 5;
+                pts.Add(centre + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * r);
+            }
+        }
+        Corner(c + new Vector2(hw - r, hh - r), 0);
+        Corner(c + new Vector2(-hw + r, hh - r), Mathf.Pi / 2);
+        Corner(c + new Vector2(-hw + r, -hh + r), Mathf.Pi);
+        Corner(c + new Vector2(hw - r, -hh + r), Mathf.Pi * 1.5f);
+        if (style == "cat")
+            for (int i = 0; i < pts.Count; i++)
+            {
+                float outer = (pts[i].X - c.X) * side / hw, upper = -(pts[i].Y - c.Y) / hh;
+                if (outer > 0.3f && upper > 0.2f) pts[i] += new Vector2(side * 0.25f, -0.45f) * hh * outer * upper;
+            }
+        pts.Add(pts[0]);
+        DrawPolyline(pts.ToArray(), colour, width, true);
+    }
     private void DrawNose(Color skin, bool child)
     {
         var f = _v.Face;
         float cx = _cx, cy = _cy, ry = _ry;
         float nw = (0.016f + (float)f.Nose * 0.02f) * (child ? 0.7f : 1f);
         float top = cy + ry * (child ? 0.18f : 0.14f);
-        float ny = cy + ry * (child ? 0.3f : 0.3f);
+        // Three kinds of nose: a short button, a straight one, and one with a bump on the bridge.
+        float shape = child ? 0.2f : (float)f.NoseShape;
+        float length = shape < 0.33f ? 0.82f : shape > 0.66f ? 1.14f : 1f;
+        float ny = top + (cy + ry * 0.3f - top) * length;
+        float bump = shape > 0.66f ? nw * (1.5f + (shape - 0.66f) * 3f) : nw * 0.9f;
+        float tip = shape < 0.33f ? 0.95f : shape > 0.66f ? 0.7f : 0.75f;
         // A soft shadow down the shaded side, the tip and the nostrils.
-        Curve(Bezier(P(cx + nw * 0.4f, top), P(cx + nw * 0.9f, (top + ny) / 2), P(cx + nw * 1.1f, ny - 0.004f), 8), skin.Darkened(0.22f) with { A = 0.7f }, 0.007f);
-        DrawCircle(P(cx, ny - 0.006f), nw * 0.75f * _s, T(skin.Lightened(0.06f)));
+        Curve(Bezier(P(cx + nw * 0.4f, top), P(cx + bump, (top + ny) / 2), P(cx + nw * 1.1f, ny - 0.004f), 8), skin.Darkened(0.22f) with { A = 0.7f }, 0.007f);
+        if (shape > 0.66f && !child)
+            Curve(Bezier(P(cx + nw * 0.2f, top + (ny - top) * 0.25f), P(cx + bump * 0.8f, top + (ny - top) * 0.45f), P(cx + nw * 0.5f, top + (ny - top) * 0.7f), 6), skin.Darkened(0.3f) with { A = 0.45f }, 0.005f);
+        DrawCircle(P(cx, ny - 0.006f), nw * tip * _s, T(skin.Lightened(0.06f)));
         foreach (float side in new[] { -1f, 1f })
             DrawCircle(P(cx + side * nw * 0.55f, ny + 0.004f), Mathf.Max(0.8f, nw * 0.28f * _s), T(skin.Darkened(0.4f) with { A = 0.8f }));
     }
@@ -480,6 +562,10 @@ public partial class Portrait : Control
         float bend = (mood + 0.35f) * 0.026f;
         var line = Bezier(P(cx - mw, my - bend * 0.3f), P(cx, my + bend), P(cx + mw, my - bend * 0.3f), 12);
         var lipColor = skin.Lerp(new Color("b5524f"), _v.Male ? 0.3f : 0.48f).Darkened(0.08f);
+        // Lipstick: most women in the fifties to the eighties, some always.
+        int year = _v.Year > 0 ? _v.Year : 2000;
+        if (!_v.Male && !child && _v.Age >= 18 && (f.Style2 > 0.85 || (year < 1990 && f.Style2 > 0.35)))
+            lipColor = lipColor.Lerp(year < 1965 ? new Color("a8262e") : year < 1980 ? new Color("b5506a") : new Color("9a2f4a"), 0.6f);
         // Lower lip: a fuller curve under the line.
         var lowerLip = new List<Vector2>(line);
         lowerLip.AddRange(Bezier(P(cx + mw * 0.8f, my - bend * 0.2f), P(cx, my + bend + lip * 2.6f), P(cx - mw * 0.8f, my - bend * 0.2f), 12));
@@ -700,6 +786,6 @@ public partial class Portrait : Control
 
         // A highlight where the light falls on the hair.
         if (bald < 0.6f && cut is not "buzz" and not "afro")
-            Curve(Bezier(P(cx - rx * 0.6f, cy - ry * 0.75f), P(cx - rx * 0.35f, cy - ry * 1.0f), P(cx + rx * 0.05f, cy - ry * 1.04f), 10), shine, 0.012f);
+            Curve(Bezier(P(cx - rx * 0.55f, cy - ry * 0.72f), P(cx - rx * 0.32f, cy - ry * 0.9f), P(cx + rx * 0.02f, cy - ry * 0.95f), 10), shine, 0.012f);
     }
 }

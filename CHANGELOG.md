@@ -2,6 +2,23 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.76.0 – 2026-10-05 · Faces of their own
+
+- **People look more like themselves.** New features that are inherited: the length of the face,
+  three kinds of nose (a button, a straight one, one with a bump), the shape and tilt of the eyes,
+  the arch of the brows, cheekbones, moles and cleft chins. And personal style: frames that follow
+  the decade (round, square, big in the eighties, cat eyes in the fifties, in black, tortoiseshell
+  or gold), lipstick when it was the fashion, earrings. Each person also has their own undertone in
+  the skin and their own shade of their hair colour. Older saves get the new features once, and
+  keep them.
+- **Tape only on photographs,** placed straight over the top edge. Dialogs and the year's moments
+  are plain paper with a shadow.
+- **An Escape menu** with settings, saving and closing the album; the links at the bottom of your
+  page are darker and easier to find.
+- **Bookmarks** are all the same width, away from the screen edge, each in a muted colour of its own.
+- The desk could turn white, and seemed to change between bookmarks: fixed. The album's corners
+  are square. Photographs on the title screen are never cut by the sheet beside them.
+
 ## 0.75.0 – 2026-10-04 · On the desk
 
 - **Everything lies on a desk.** Dark wood with a grain under a lamp, under the album, the title
