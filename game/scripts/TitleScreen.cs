@@ -69,7 +69,7 @@ public partial class TitleScreen : Control
         Music.SetPlace("title");
         ShowMenu();
         // The first time the game starts, ask about dark themes before anything else.
-        bool automated = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
+        bool automated = Features.Automated;
         if (Settings.ShouldAskAboutContent && !automated)
             CallDeferred(nameof(AskAboutContent));
     }

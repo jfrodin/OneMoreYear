@@ -26,57 +26,83 @@ public partial class CreditsScreen : Control
 
     public override void _Ready()
     {
+        // A single sheet of the album: the credits centred like the end of a film, the buttons always
+        // at the foot of the page.
         var book = BookView.OpenOn(this, 1f, single: true);
-        var col = Ui.VBox(10);
-        col.CustomMinimumSize = new Vector2(760, 0);
+        var page = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
+        book.Left.AddChild(page);
+        var scroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, SizeFlagsVertical = SizeFlags.ExpandFill };
+        page.AddChild(scroll);
+        var col = Ui.VBox(4);
+        col.CustomMinimumSize = new Vector2(640, 0);
         var center = new CenterContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
         center.AddChild(col);
-        var scroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, VerticalScrollMode = ScrollContainer.ScrollMode.ShowNever };
-        var margin = Ui.Margin(center, 30);
+        var margin = Ui.Margin(center, 40);
         margin.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         scroll.AddChild(margin);
-        book.Left.AddChild(scroll);
 
-        void Heading(string text) { col.AddChild(Ui.Spacer(16)); col.AddChild(UiTheme.HandLabel(text, 30, UiTheme.Accent)); }
-        void Line(string text, int size = 18, Color? colour = null) => col.AddChild(Ui.Label(text, size, colour ?? UiTheme.Text, wrap: true));
+        Label Centred(string text, Font font, int size, Color colour, int spacing = 0)
+        {
+            var l = Ui.Label(text, size, colour, wrap: true);
+            l.HorizontalAlignment = HorizontalAlignment.Center;
+            l.AddThemeFontOverride("font", font);
+            if (spacing != 0)
+            {
+                var spaced = new FontVariation { BaseFont = font, SpacingGlyph = spacing };
+                l.AddThemeFontOverride("font", spaced);
+            }
+            col.AddChild(l);
+            return l;
+        }
+        // A section: a small spaced label in capitals, a thin rule, and the names under it.
+        void Section(string title)
+        {
+            col.AddChild(Ui.Spacer(30));
+            Centred(title.ToUpperInvariant(), UiTheme.Body, 13, UiTheme.Muted, spacing: 3);
+            var rule = new ColorRect { Color = UiTheme.Muted with { A = 0.35f }, CustomMinimumSize = new Vector2(40, 1), SizeFlagsHorizontal = SizeFlags.ShrinkCenter };
+            col.AddChild(Ui.Spacer(4));
+            col.AddChild(rule);
+            col.AddChild(Ui.Spacer(8));
+        }
+        void Name(string text) => Centred(text, UiTheme.Heading, 24, UiTheme.Text);
+        void Small(string text) => Centred(text, UiTheme.Body, 15, UiTheme.Muted);
 
-        var title = Ui.Label("One More Year", 56, UiTheme.Accent);
-        title.AddThemeFontOverride("font", UiTheme.Masthead);
-        col.AddChild(title);
-        Line($"Version {Main.Version}", 15, UiTheme.Faint);
-        if (Studio.Developer != "") Line(Studio.Developer, 24);
+        Centred("One More Year", UiTheme.Masthead, 60, UiTheme.Accent);
+        Small($"Version {Main.Version}");
+        if (Studio.Developer != "") { col.AddChild(Ui.Spacer(6)); Name(Studio.Developer); }
 
         if (Studio.MadeBy != "")
         {
-            Heading("Made by");
-            Line(Studio.MadeBy, 22);
+            Section("Made by");
+            Name(Studio.MadeBy);
         }
 
-        Heading("Music");
-        if (Studio.Composer != "") Line(Studio.Composer, 22);
-        Line("Written for the game, one piece for every decade.", 17, UiTheme.Muted);
+        Section("Music");
+        if (Studio.Composer != "") Name(Studio.Composer);
+        Small("Written for the game, one piece for every decade.");
 
-        Heading("Thank you");
-        if (Studio.Thanks.Length > 0) Line(string.Join(", ", Studio.Thanks));
-        Line("To everyone who played the early versions and wrote down what they found.", 17, UiTheme.Muted);
+        Section("Thank you");
+        if (Studio.Thanks.Length > 0) Name(string.Join(", ", Studio.Thanks));
+        Small("To everyone who played the early versions and wrote down what they found.");
 
-        Heading("Typefaces");
-        foreach (var t in Typefaces)
-            Line($"{t.Name}, by {t.Who}. {t.Licence}.", 16, UiTheme.Muted);
+        Section("Typefaces");
+        foreach (var t in Typefaces) Small($"{t.Name} by {t.Who}");
 
-        Heading("Built with");
-        Line("Godot Engine, by Juan Linietsky, Ariel Manzur and the Godot community. MIT License.", 16, UiTheme.Muted);
-        Line(".NET, by the .NET Foundation and contributors. MIT License.", 16, UiTheme.Muted);
+        Section("Built with");
+        Small("Godot Engine, by Juan Linietsky, Ariel Manzur and the Godot community");
+        Small(".NET, by the .NET Foundation and contributors");
+        col.AddChild(Ui.Spacer(30));
 
-        col.AddChild(Ui.Spacer(20));
-        var buttons = Ui.HBox(10);
+        // The buttons, outside the scrolling part so they are always there.
+        var buttons = Ui.HBox(12);
+        buttons.Alignment = BoxContainer.AlignmentMode.Center;
         var back = Ui.Button("Back", () => _main.ShowTitle(), 50);
         back.CustomMinimumSize = new Vector2(160, 50);
         UiTheme.MakePrimary(back);
         buttons.AddChild(back);
-        buttons.AddChild(Ui.Button("The licences in full…", ShowLicences, 50));
-        col.AddChild(buttons);
-        col.AddChild(Ui.Spacer(30));
+        buttons.AddChild(AlbumBits.Link("The licences in full", ShowLicences));
+        var foot = Ui.Margin(buttons, 16);
+        page.AddChild(foot);
         Ui.FocusLater(back);
     }
 

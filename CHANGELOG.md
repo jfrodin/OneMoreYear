@@ -4,6 +4,14 @@ What changed in each version of One More Year. Newest first. Versions are tagged
 
 ## Unreleased
 
+- **Music moves with you:** the piece that is playing fades out when you leave the title screen or
+  the choice of heir, and the right one begins after a breath. The pause between pieces is now
+  under half a minute.
+- **No line across the throat** on the photographs.
+- **The credits** are a centred page like the end of a film, and the buttons are always in view.
+- **The bookmarks** stand well clear of the album, the open one a little further.
+- **A release build ignores the testing tools** on the command line and leaves the test scenarios
+  out. The playtest build keeps them, and the character creator stays a separate feature.
 - **In memoriam has its own recorded music:** a solo cello and a lone violin over low strings, a
   double bass, a far choir and a piano, in D minor, ending on a bare D.
 

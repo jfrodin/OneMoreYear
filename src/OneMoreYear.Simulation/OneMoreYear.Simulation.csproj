@@ -11,6 +11,8 @@
        and is embedded in the assembly so every frontend gets the same data. -->
   <ItemGroup>
     <EmbeddedResource Include="..\..\content\**\*.json" LogicalName="content/%(RecursiveDir)%(Filename)%(Extension)" />
+    <!-- Test scenarios are a development tool: a release export of the game leaves them out. -->
+    <EmbeddedResource Remove="..\..\content\scenarios.json" Condition="'$(Configuration)' == 'ExportRelease'" />
   </ItemGroup>
 
   <ItemGroup>

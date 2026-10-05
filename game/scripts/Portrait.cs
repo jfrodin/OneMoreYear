@@ -479,7 +479,8 @@ public partial class Portrait : Control
         Clipped(_body, cloth);
 
         var light = new Color("efeae0");
-        float collarY = shoulderTop - 0.005f;
+        // The neckline starts just above the top of the cloth, so no strip of it is left across the throat.
+        float collarY = shoulderTop - 0.014f;
         var neckSkin = skin.Darkened(0.04f);
 
         // Necklines, used by several garments.

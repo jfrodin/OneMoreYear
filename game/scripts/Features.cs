@@ -16,4 +16,16 @@ public static class Features
 
     /// <summary>F1 playtest notes with a screenshot and a save: development builds and the playtest build.</summary>
     public static bool Feedback => OS.IsDebugBuild() || OS.HasFeature("playtest");
+
+    /// <summary>
+    /// The tools on the command line (--load, --smoke, --screenshots, --country and the image makers):
+    /// development builds and the playtest build. A release build ignores its command line.
+    /// </summary>
+    public static bool DevTools => OS.IsDebugBuild() || OS.HasFeature("playtest");
+
+    /// <summary>The command line, empty in a release build.</summary>
+    public static string[] Args => DevTools ? OS.GetCmdlineUserArgs() : System.Array.Empty<string>();
+
+    /// <summary>An automated run (--smoke or --screenshots): silent, and saves nothing of the player's.</summary>
+    public static bool Automated => System.Array.Exists(Args, a => a == "--smoke" || a.StartsWith("--screenshots="));
 }

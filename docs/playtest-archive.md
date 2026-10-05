@@ -876,3 +876,29 @@ Ansikten är OK. Men ju bättre vi kan ha dom desto bättre är det ju. Tycker a
 _playtest-saves/2026-10-05_091241.png · playtest-saves/2026-10-05_091241.json_
 
 _Notes above were processed on 2026-10-05 (playtest 9): photographs on the title screen are never cut; tape only on photographs, placed straight over the top edge; an Escape menu and clearer links for settings and saving; the desk no longer turns white (and the background no longer changes between bookmarks); bookmarks of equal width, away from the screen edge, in muted colours of their own; square book corners; faces with more that is their own (face length, nose shapes, eye shape and tilt, brow arches, cheekbones, moles, cleft chins, frames by decade, lipstick, earrings, undertones in skin and hair). See CHANGELOG 0.76.0._
+
+### 2026-10-05 14:25 · Screen: TitleScreen
+
+En dle linjer på fotona som skär igenopm halsen
+
+_playtest-saves/2026-10-05_142555.png_
+
+### 2026-10-05 15:06 · Screen: CreditsScreen
+
+Ogillar verkligen utseende på den här sidan med typsnitt och allt. Ser itne proffisg it alls.
+
+_playtest-saves/2026-10-05_150654.png_
+
+### 2026-10-05 15:09 · v0.79.0  ·  1973  ·  Karolina Pettersson, 3  ·  Family Tree  ·  seed JSGRH8DM
+
+Flikarna ligger liite för nära boken, om du fattar. Lit emner luft. Ungeöf som när man har den markerad typ?
+
+_playtest-saves/2026-10-05_150951.png · playtest-saves/2026-10-05_150951.json_
+
+### 2026-10-05 15:10 · v0.79.0  ·  1973  ·  Karolina Pettersson, 3  ·  Family Tree  ·  seed JSGRH8DM
+
+Pausen i musiken känns ltie för lång just nu. Plsu att nu körde den igång midis..så main theme spelas trots att man startar ett nytt spel. Det behöver fixas.
+
+_playtest-saves/2026-10-05_151041.png · playtest-saves/2026-10-05_151041.json_
+
+_Notes above were processed on 2026-10-05 (playtest 10): no strip of cloth across the throat on the photographs; the credits as a centred page with the buttons always in view; every bookmark sticks out well clear of the album, the open one a little more; a short pause between pieces of music, and the title music fades out when a life begins. The typefaces are waiting for a choice (docs/design/typefaces.png)._

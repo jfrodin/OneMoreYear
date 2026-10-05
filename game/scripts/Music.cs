@@ -8,7 +8,7 @@ namespace OneMoreYear.Game;
 /// <summary>
 /// Quiet music that follows the decades: a short piece written in code for each era (a soft piano
 /// in the fifties, a guitar in the sixties, an electric piano in the seventies, synths in the
-/// eighties, and so on), played with long silences in between. Made here so the game needs no audio
+/// eighties, and so on), with a short pause between pieces. Made here so the game needs no audio
 /// files; real recordings can replace it later without changing anything else.
 /// </summary>
 public static class Music
@@ -33,10 +33,12 @@ public static class Music
         }
         _player = new AudioStreamPlayer { Bus = Bus };
         root.AddChild(_player);
-        _player.Finished += () => Later(40 + Pause.Next(60));
+        // A short breath between pieces, so the music returns before the silence is noticed.
+        _player.Finished += () => Later(8 + Pause.Next(12));
         SetVolume(Settings.MusicVolume);
         // Automated runs stay silent.
-        if (Array.Exists(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="))) return;
+        _silent = Features.Automated;
+        if (_silent) return;
         Later(3);
     }
 
@@ -60,14 +62,33 @@ public static class Music
     }
 
     private static string? _place;
+    private static bool _silent;
+    /// <summary>Counts the changes of place, so a timer set before a change does not start a second piece.</summary>
+    private static int _generation;
+    private static Tween? _fade;
 
-    /// <summary>A screen with music of its own ("title", "memoriam"); null plays the decade's.</summary>
+    /// <summary>
+    /// A screen with music of its own ("title", "memoriam"); null plays the decade's. The piece that is
+    /// playing fades out, and the new one begins after a breath.
+    /// </summary>
     public static void SetPlace(string? place)
     {
         if (_place == place) return;
         _place = place;
-        // Moving to a screen with its own piece: let it begin now rather than after the silence.
-        if (place != null && _player != null && !_player.Playing && Recorded(place) != null) PlayNext();
+        if (_player == null || _root == null || _silent) return;
+        int generation = ++_generation;
+        _fade?.Kill();
+        _player.VolumeDb = 0;
+        if (!_player.Playing) { Later(1.5, generation); return; }
+        _fade = _root.CreateTween();
+        _fade.TweenProperty(_player, "volume_db", -40f, 1.8);
+        _fade.TweenCallback(Callable.From(() =>
+        {
+            if (generation != _generation) return;
+            _player.Stop();
+            _player.VolumeDb = 0;
+            Later(1.5, generation);
+        }));
     }
 
     private static string DecadeName(int decade) => decade is >= 1950 and < 2030 ? $"{decade}s" : decade < 1950 ? "1950s" : "future";
@@ -83,14 +104,17 @@ public static class Music
         return stream;
     }
 
-    private static void Later(double seconds)
+    /// <summary>The next piece after a pause, unless the place has changed (or music started) since.</summary>
+    private static void Later(double seconds, int? generation = null)
     {
-        if (_root?.GetTree() is { } tree) tree.CreateTimer(seconds).Timeout += PlayNext;
+        int gen = generation ?? _generation;
+        if (_root?.GetTree() is { } tree)
+            tree.CreateTimer(seconds).Timeout += () => { if (gen == _generation && _player is { Playing: false }) PlayNext(); };
     }
 
     private static void PlayNext()
     {
-        if (_player == null) return;
+        if (_player == null || _player.Playing) return;
         if (Settings.MusicVolume <= 0.001) { Later(30); return; }
         // A recorded piece, when there is one (docs/music/brief.md): res://music/title.ogg, 1970s.ogg and so on.
         if (Recorded(_place ?? DecadeName(_decade)) is { } recorded)

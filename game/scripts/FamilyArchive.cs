@@ -28,7 +28,7 @@ public static class FamilyArchive
 
     private static List<Entry>? _data;
 
-    private static bool Automated => System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
+    private static bool Automated => Features.Automated;
 
     private static List<Entry> Data
     {

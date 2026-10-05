@@ -139,7 +139,7 @@ public static class Settings
     private static void Save()
     {
         // Automated runs must not change the player's preferences.
-        if (System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="))) return;
+        if (Features.Automated) return;
         using var file = FileAccess.Open(Path, FileAccess.ModeFlags.Write);
         file?.StoreString(JsonSerializer.Serialize(Current));
     }

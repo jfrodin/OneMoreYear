@@ -40,28 +40,28 @@ public partial class Main : Control
         AddChild(_overlayLayer);
 
         // Development aid: --load=path/to/save.json opens a saved situation (e.g. from a playtest note).
-        var load = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--load="));
+        var load = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--load="));
         if (load != null && System.IO.File.Exists(load["--load=".Length..]))
         {
             Session = GameSession.Load(System.IO.File.ReadAllText(load["--load=".Length..]));
             if (Session.NeedsSuccession) ShowSuccession(); else ShowGame();
             return;
         }
-        var probe = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--styleprobe="));
+        var probe = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--styleprobe="));
         if (probe != null && OS.IsDebugBuild())
         {
             AddChild(new StyleProbe(probe["--styleprobe=".Length..]));
             SetProcess(false);
             return;
         }
-        var splash = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--splash="));
+        var splash = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--splash="));
         if (splash != null && OS.IsDebugBuild())
         {
             AddChild(new SplashMaker(splash["--splash=".Length..]));
             SetProcess(false);
             return;
         }
-        var brand = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--brand="));
+        var brand = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--brand="));
         if (brand != null && OS.IsDebugBuild())
         {
             AddChild(new BrandSheet(brand["--brand=".Length..]));
@@ -69,14 +69,22 @@ public partial class Main : Control
             return;
         }
         // --audio=DIR saves every decade's music and the sounds as WAV files (development aid).
-        var audio = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--audio="));
+        var audio = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--audio="));
         if (audio != null && OS.IsDebugBuild())
         {
             Music.Export(audio["--audio=".Length..]);
             GetTree().Quit();
             return;
         }
-        var gallery = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--portraits="));
+        var fontSheet = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--fonts="));
+        if (fontSheet != null && OS.IsDebugBuild())
+        {
+            var dir = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--fontdir=")) ?? "--fontdir=.";
+            AddChild(new FontSheet(fontSheet["--fonts=".Length..], dir["--fontdir=".Length..]));
+            SetProcess(false);
+            return;
+        }
+        var gallery = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--portraits="));
         if (gallery != null && OS.IsDebugBuild())
         {
             AddChild(new PortraitGallery(gallery["--portraits=".Length..]));
@@ -84,7 +92,7 @@ public partial class Main : Control
             return;
         }
         // --scenario=id starts a test scenario directly (development builds only, see docs/test-scenarios.md).
-        var scenario = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--scenario="));
+        var scenario = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--scenario="));
         if (scenario != null && OS.IsDebugBuild())
         {
             StartNewGame(1970, null, scenario["--scenario=".Length..]);
@@ -93,7 +101,7 @@ public partial class Main : Control
 
         ShowTitle();
         // The tree rings grow while the album opens (not in automated runs).
-        if (!System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots=")))
+        if (!Features.Automated)
             AddChild(new StartupScreen());
     }
 
@@ -301,7 +309,7 @@ public partial class Main : Control
         Session = GameSession.NewGame(options);
         SaveSystem.Save(Session);
         ShowGame();
-        bool automated = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
+        bool automated = Features.Automated;
         if (automated) return;
         // The first time: how to play. Every new life: who you are.
         if (!Settings.IntroSeen) ShowIntroduction(ShowThisIsYou);
@@ -947,7 +955,7 @@ public partial class Main : Control
     // Plays through the real UI for a few hundred steps and quits; errors show up in the log.
 
     /// <summary>--country=ID: the country for automated runs.</summary>
-    public static string ArgCountry => System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--country="))?["--country=".Length..] ?? "sweden";
+    public static string ArgCountry => System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--country="))?["--country=".Length..] ?? "sweden";
 
     private int _smokeStep = -1;
     private int _shotFrame;
@@ -955,14 +963,14 @@ public partial class Main : Control
 
     public override void _Process(double delta)
     {
-        if (_shotDir != null || System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a.StartsWith("--screenshots=")))
+        if (_shotDir != null || System.Linq.Enumerable.Any(Features.Args, a => a.StartsWith("--screenshots=")))
         {
             ScreenshotTour();
             return;
         }
         if (_smokeStep < 0)
         {
-            if (!System.Linq.Enumerable.Contains(OS.GetCmdlineUserArgs(), "--smoke")) { SetProcess(false); return; }
+            if (!System.Linq.Enumerable.Contains(Features.Args, "--smoke")) { SetProcess(false); return; }
             _smokeStep = 0;
             StartNewGame(1960, "12345", choices: new NewGameOptions { CountryId = ArgCountry });
             return;
@@ -996,7 +1004,7 @@ public partial class Main : Control
     /// </summary>
     private void ScreenshotTour()
     {
-        _shotDir ??= System.Linq.Enumerable.First(OS.GetCmdlineUserArgs(), a => a.StartsWith("--screenshots="))["--screenshots=".Length..];
+        _shotDir ??= System.Linq.Enumerable.First(Features.Args, a => a.StartsWith("--screenshots="))["--screenshots=".Length..];
         _shotFrame++;
         void Shot(string name) => GetViewport().GetTexture().GetImage().SavePng($"{_shotDir}/{name}.png");
 

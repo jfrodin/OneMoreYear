@@ -21,7 +21,7 @@ public static class AchievementStore
 
     private static Dictionary<string, Earned>? _data;
 
-    private static bool Automated => System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
+    private static bool Automated => Features.Automated;
 
     private static Dictionary<string, Earned> Data
     {

@@ -19,7 +19,7 @@ public static class SaveSystem
 
     // Automated runs (smoke test, screenshot tour) get their own slot so they never touch the player's saves.
     private static readonly bool Automated =
-        OS.GetCmdlineUserArgs().Any(a => a == "--smoke" || a.StartsWith("--screenshots="));
+        Features.Automated;
 
     /// <summary>The slot the current game saves to.</summary>
     public static int CurrentSlot { get; set; } = 1;

@@ -198,9 +198,9 @@ public partial class GameScreen : Control
                 b.AddThemeColorOverride(c, new Color(1, 1, 1, open ? 1f : 0.92f));
             b.AddThemeConstantOverride("h_separation", 8);
             b.Pressed += () => _tabs.CurrentTab = tab;
-            // The ribbon tucks under the page: only the part beyond the edge shows, more when open.
+            // The ribbon tucks under the page; every one shows well clear of the edge, the open one a little more.
             var holder = new Control { CustomMinimumSize = new Vector2(172, 46) };
-            b.Position = new Vector2(open ? 0 : -16, 0);
+            b.Position = new Vector2(open ? 12 : 0, 0);
             holder.AddChild(b);
             _bookmarks.AddChild(holder);
         }
