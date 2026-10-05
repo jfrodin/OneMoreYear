@@ -191,11 +191,20 @@ static class MusicSketches
                 if (bassNote < 36) bassNote += 12;
 
                 // The tune, and the second voice a third under it or answering it.
-                var line = Line(p, s.Melody, s.Bridge, b);
+                var line = Line(p, s.Melody, s.Bridge, b).ToList();
                 foreach (var (at, note, len) in line)
-                {
                     melody.Add(t + at, note + s.Lift, len - 20, 84 * s.Loud);
-                    if (s.Second && len >= Tpq) second.Add(t + at, ThirdBelow(note, scale, p.Tonic) + s.Lift - (s.Lift > 0 ? 12 : 0), len - 20, 58 * s.Loud);
+                if (s.Second && line.Count > 0)
+                {
+                    // A third under the long notes, held over the short ones until the next long note,
+                    // and over the rest of the bar, so the second voice never drops out in the middle of a phrase.
+                    var held = line.Where((n, i) => i == 0 || n.Len >= Tpq).ToList();
+                    int lineEnd = Math.Max(bar, line[^1].At + line[^1].Len);
+                    for (int i = 0; i < held.Count; i++)
+                    {
+                        int until = i + 1 < held.Count ? held[i + 1].At : lineEnd;
+                        second.Add(t + held[i].At, ThirdBelow(held[i].Note, scale, p.Tonic) + s.Lift - (s.Lift > 0 ? 12 : 0), until - held[i].At - 20, 58 * s.Loud);
+                    }
                 }
                 foreach (var (at, note, len) in Line(p, s.SecondTune, s.Bridge, b))
                     second.Add(t + at, note - 12, len - 20, 56 * s.Loud);
