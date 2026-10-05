@@ -2,7 +2,8 @@
 
 Underlag för inspelning i Studio One, bara med det som följer med programmet. Till varje låt finns ett
 färdigt arrangemang i `docs/music/midi/`, 2,5 till 3,5 minuter långt, med ett spår per instrument:
-melodi, andrastämma, ackord, matta, bas och trummor där det passar. Spåren heter som instrumentet
+melodi, andrastämma, ackord, matta (stråkmattor uppdelade på violin, viola och cello), bas och
+trummor där det passar. Spåren heter som instrumentet
 de ska spelas på. Dra in filen i Studio One och välj ljuden; allt annat finns redan i filen.
 
 Skisserna görs om med `SimRunner --midi=docs/music/midi` om vi ändrar något.
@@ -51,7 +52,7 @@ arrangemanget så skapas ett spår med det.
 |---|---|---|---|
 | Piano | Presence XT | piano, grand, upright | Det finns i alla versioner |
 | Elpiano (Rhodes) | Presence XT | electric piano, e-piano, EP | Ett mjukt keys-preset i Mai Tai |
-| Stråkar | Presence XT | strings, ensemble | En långsam pad i Mai Tai |
+| Violin, viola (stråkarna) | Presence XT | violin, viola | En långsam pad i Mai Tai |
 | Cello | Presence XT | cello | Stråkarna, spelade lågt |
 | Klarinett | Presence XT | clarinet | Flöjt, eller ett mjukt lead i Mai Tai |
 | Flöjt | Presence XT | flute | Ett mjukt lead i Mai Tai |

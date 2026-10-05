@@ -96,32 +96,32 @@ static class MusicSketches
     private static readonly Piece[] Pieces =
     {
         new("title", 60, false, 72, 4, "broken", null,
-            P("Melody: Piano (Presence XT)", 0), P("Second voice: Strings (Presence XT)", 48), P("Chords: Piano (Presence XT)", 0),
-            P("Pad: Strings, soft (Presence XT)", 48), P("Bass: Piano, left hand (Presence XT)", 0), 12),
+            P("Melody: Piano (Presence XT)", 0), P("Second voice: Violin (Presence XT)", 40), P("Chords: Piano (Presence XT)", 0),
+            P("Pad: Strings, soft", 48), P("Bass: Piano, left hand (Presence XT)", 0), 12),
         new("memoriam", 57, true, 60, 4, "sparse", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Cello (Presence XT)", 42), P("Chords: Piano (Presence XT)", 0),
-            P("Pad: Strings, very soft (Presence XT)", 48), P("Bass: Cello (Presence XT)", 42), 0),
+            P("Pad: Strings, very soft", 48), P("Bass: Cello (Presence XT)", 42), 0),
         new("1950s", 65, false, 76, 3, "waltz", "brush",
             P("Melody: Clarinet (Presence XT)", 71), P("Second voice: Flute (Presence XT)", 73), P("Chords: Piano (Presence XT)", 0),
             null, P("Bass: Upright bass (Presence XT)", 32), 0),
         new("1960s", 67, false, 84, 4, "travis", null,
-            P("Melody: Flute (Presence XT)", 73), P("Second voice: Strings (Presence XT)", 48), P("Chords: Nylon or acoustic guitar (Presence XT)", 24),
-            P("Pad: Strings, soft (Presence XT)", 48), P("Bass: Upright bass (Presence XT)", 32), 0),
+            P("Melody: Flute (Presence XT)", 73), P("Second voice: Violin (Presence XT)", 40), P("Chords: Nylon or acoustic guitar (Presence XT)", 24),
+            P("Pad: Strings, soft", 48), P("Bass: Upright bass (Presence XT)", 32), 0),
         new("1970s", 62, false, 80, 4, "rhodes", "soft",
-            P("Melody: Flute (Presence XT)", 73), P("Second voice: Strings (Presence XT)", 48), P("Chords: Electric piano (Presence XT)", 4),
+            P("Melody: Flute (Presence XT)", 73), P("Second voice: Violin (Presence XT)", 40), P("Chords: Electric piano (Presence XT)", 4),
             null, P("Bass: Electric bass (Presence XT)", 33), 0),
         new("1980s", 57, true, 90, 4, "arp", "machine",
             P("Melody: Bell or soft lead (Presence XT Mallets, or Mojito)", 11), P("Second voice: Soft lead (Mai Tai)", 81),
             P("Chords: Arpeggio (Mai Tai)", 81), P("Pad: Wide pad (Mai Tai)", 89), P("Bass: Synth bass (Mojito)", 38), 0),
         new("1990s", 64, false, 78, 4, "strum", "rim",
-            P("Melody: Piano (Presence XT)", 0), P("Second voice: Strings (Presence XT)", 48), P("Chords: Acoustic guitar (Presence XT)", 25),
+            P("Melody: Piano (Presence XT)", 0), P("Second voice: Violin (Presence XT)", 40), P("Chords: Acoustic guitar (Presence XT)", 25),
             P("Pad: Thin pad (Mai Tai)", 89), P("Bass: Electric bass (Presence XT)", 33), 0),
         new("2000s", 60, false, 70, 4, "sparse", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Piano, high (Presence XT)", 0), P("Chords: Piano (Presence XT)", 0),
             null, P("Bass: Piano, left hand (Presence XT)", 0), 12),
         new("2010s", 58, false, 66, 4, "broken", null,
-            P("Melody: Piano (Presence XT)", 0), P("Second voice: Strings (Presence XT)", 48), P("Chords: Piano (Presence XT)", 0),
-            P("Pad: Strings, swelling (Presence XT)", 48), P("Bass: Cello (Presence XT)", 42), 0),
+            P("Melody: Piano (Presence XT)", 0), P("Second voice: Violin (Presence XT)", 40), P("Chords: Piano (Presence XT)", 0),
+            P("Pad: Strings, swelling", 48), P("Bass: Cello (Presence XT)", 42), 0),
         new("2020s", 62, false, 72, 4, "broken", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Soft lead (Mai Tai)", 81), P("Chords: Piano (Presence XT)", 0),
             P("Pad: Warm pad (Mai Tai)", 89), P("Bass: Electric bass (Presence XT)", 33), 12),
@@ -230,8 +230,28 @@ static class MusicSketches
 
         var tracks = new List<byte[]> { Conductor(p, tempo) };
         int channel = 0;
-        foreach (var (part, notes) in new (Part?, Notes)[] { (p.Melody, melody), (p.Second, second), (p.Chords, chords), (p.Pad, pad), (p.Bass, bass) })
-            if (part != null && notes.Count > 0) tracks.Add(Track(part.Name, channel++, part.Program, notes));
+        // A string pad is a string section: the top note to the violin, the middle to the viola, the lowest to the cello.
+        var parts = new List<(Part?, Notes)> { (p.Melody, melody), (p.Second, second), (p.Chords, chords) };
+        if (p.Pad != null && p.Pad.Name.StartsWith("Pad: Strings"))
+        {
+            string how = p.Pad.Name["Pad: Strings".Length..].TrimStart(',', ' ');
+            var violin = new Notes(); var viola = new Notes(); var cello = new Notes();
+            foreach (var chord in pad.GroupBy(n => n.Tick))
+            {
+                var sorted = chord.OrderBy(n => n.Note).ToList();
+                cello.Add(sorted[0]);
+                violin.Add(sorted[^1]);
+                foreach (var middle in sorted.Skip(1).Take(sorted.Count - 2)) viola.Add(middle);
+            }
+            string suffix = how.Length > 0 ? $", {how} (Presence XT)" : " (Presence XT)";
+            parts.Add((new Part("Pad: Violin" + suffix, 40), violin));
+            parts.Add((new Part("Pad: Viola" + suffix, 41), viola));
+            parts.Add((new Part("Pad: Cello" + suffix, 42), cello));
+        }
+        else parts.Add((p.Pad, pad));
+        parts.Add((p.Bass, bass));
+        foreach (var (part, notes) in parts)
+            if (part != null && notes.Count > 0) tracks.Add(Track(part.Name, channel == 9 ? ++channel : channel++, part.Program, notes));
         if (drums.Count > 0) tracks.Add(Track(DrumName(p.Drums!), 9, 0, drums));
 
         using var ms = new MemoryStream();
