@@ -54,7 +54,8 @@ public partial class GameScreen : Control
         AddChild(desk);
         _bookmarks = Ui.VBox(6);
         _bookmarks.SetAnchorsPreset(LayoutPreset.TopRight);
-        _bookmarks.OffsetLeft = -168;
+        _bookmarks.OffsetLeft = -196;
+        _bookmarks.OffsetRight = -24;
         _bookmarks.OffsetTop = 64;
         AddChild(_bookmarks);
         _book = new BookView();
@@ -62,7 +63,7 @@ public partial class GameScreen : Control
         _book.OffsetLeft = 26;
         _book.OffsetTop = 22;
         _book.OffsetBottom = -26;
-        _book.OffsetRight = -150;
+        _book.OffsetRight = -176;
         AddChild(_book);
 
         _sidebar = Ui.VBox(12);
@@ -150,6 +151,8 @@ public partial class GameScreen : Control
     /// Ribbons sticking out of the album's edge, one for each page. The open one sticks out the
     /// furthest. Each has its own colour, all from the decade's palette.
     /// </summary>
+    private static readonly string[] TabColours = { "b8644a", "b8923e", "6f8f50", "3f8580", "52699a", "7e5f92", "a85f72" };
+
     private void BuildBookmarks()
     {
         Ui.Clear(_bookmarks);
@@ -163,9 +166,10 @@ public partial class GameScreen : Control
         {
             int tab = i;
             bool open = _tabs.CurrentTab == tab;
-            // One family of colours: closed ribbons in a darker paper, the open one in the decade's accent.
-            var closed = UiTheme.Background.Darkened(0.1f).Lerp(accent, 0.12f);
-            var colour = open ? accent : closed;
+            // Old index tabs: a muted colour each, paler when closed, full when open.
+            var tabColour = new Color(TabColours[i % TabColours.Length]);
+            var closed = tabColour.Lerp(UiTheme.Background, 0.3f);
+            var colour = open ? tabColour : closed;
             var ribbon = new StyleBoxFlat { BgColor = colour, BorderColor = colour.Darkened(0.18f) };
             ribbon.BorderWidthBottom = 2;
             ribbon.CornerRadiusTopRight = ribbon.CornerRadiusBottomRight = 6;
@@ -178,27 +182,46 @@ public partial class GameScreen : Control
             var b = new Button
             {
                 Text = marks[i].Name, Alignment = HorizontalAlignment.Left, FocusMode = FocusModeEnum.None,
-                Icon = Icons.Get(marks[i].Icon, open ? new Color(1, 1, 1, 0.95f) : UiTheme.Text, 18),
-                CustomMinimumSize = new Vector2(open ? 168 : 150, 46), MouseDefaultCursorShape = CursorShape.PointingHand,
+                Icon = Icons.Get(marks[i].Icon, new Color(1, 1, 1, 0.95f), 18),
+                CustomMinimumSize = new Vector2(172, 46), ClipText = true, MouseDefaultCursorShape = CursorShape.PointingHand,
             };
             foreach (var state in new[] { "normal", "hover", "pressed", "hover_pressed", "focus" })
             {
                 var box = (StyleBoxFlat)ribbon.Duplicate();
-                if (state == "hover" && !open) box.BgColor = closed.Lerp(accent, 0.25f);
+                if (state == "hover" && !open) box.BgColor = tabColour.Lerp(UiTheme.Background, 0.12f);
                 b.AddThemeStyleboxOverride(state, box);
             }
             b.AddThemeFontOverride("font", UiTheme.Heading);
-            b.AddThemeFontSizeOverride("font_size", 16);
+            b.AddThemeFontSizeOverride("font_size", 15);
             foreach (var c in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color" })
-                b.AddThemeColorOverride(c, open ? new Color(1, 1, 1) : UiTheme.Text);
+                b.AddThemeColorOverride(c, new Color(1, 1, 1, open ? 1f : 0.92f));
             b.AddThemeConstantOverride("h_separation", 8);
             b.Pressed += () => _tabs.CurrentTab = tab;
             // The ribbon tucks under the page: only the part beyond the edge shows, more when open.
-            var holder = new Control { CustomMinimumSize = new Vector2(168, 46) };
-            b.Position = new Vector2(open ? 0 : -12, 0);
+            var holder = new Control { CustomMinimumSize = new Vector2(172, 46) };
+            b.Position = new Vector2(open ? 0 : -16, 0);
             holder.AddChild(b);
             _bookmarks.AddChild(holder);
         }
+    }
+
+    /// <summary>Escape: a small menu over the album, so settings and saving are never hard to find.</summary>
+    private void ShowMenu()
+    {
+        var box = Ui.VBox(10);
+        box.CustomMinimumSize = new Vector2(380, 0);
+        box.AddChild(UiTheme.HeadingLabel("The album", 30, UiTheme.Accent));
+        box.AddChild(UiTheme.HandLabel($"{S.Player.FirstName}, {S.Year}", 24, UiTheme.Muted));
+        box.AddChild(Ui.Spacer(4));
+        System.Action close = () => { };
+        var resume = Ui.Button("Go on living", () => close(), 50);
+        UiTheme.MakePrimary(resume);
+        box.AddChild(resume);
+        box.AddChild(Ui.Button("Settings", () => { close(); _main.ShowSettings(S); }, 46));
+        if (Features.Feedback) box.AddChild(Ui.Button("Write a playtest note (F1)", () => { close(); _main.ShowFeedback(); }, 46));
+        box.AddChild(Ui.Button("Save and close the album", () => { close(); _main.AutoSave(); _main.ShowTitle(); }, 46));
+        box.AddChild(Ui.Label("Everything is saved as you play.", 14, UiTheme.Faint));
+        close = _main.ShowDialog(box, resume);
     }
     public override void _UnhandledInput(InputEvent e)
     {
@@ -206,6 +229,11 @@ public partial class GameScreen : Control
         if (e.IsActionPressed("omy_next_year"))
         {
             OnNextYear();
+            GetViewport().SetInputAsHandled();
+        }
+        else if (e.IsActionPressed("ui_cancel"))
+        {
+            ShowMenu();
             GetViewport().SetInputAsHandled();
         }
         else if (e.IsActionPressed("omy_tab_next") || e.IsActionPressed("omy_tab_prev"))
@@ -385,6 +413,7 @@ public partial class GameScreen : Control
         RegisterHint(feedback, "Write a playtest note. It is saved with a screenshot and the current situation.");
         if (Features.Feedback) bottom.AddChild(feedback);
         var content = AlbumBits.Link("Settings", () => _main.ShowSettings(S));
+        content.TooltipText = "Or press Escape for the menu.";
         RegisterHint(content, "Screen, text size, sound, the newspaper, and how dark themes are handled.");
         bottom.AddChild(content);
         var menu = AlbumBits.Link("Save and close the album", () => { _main.AutoSave(); _main.ShowTitle(); });

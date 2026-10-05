@@ -34,10 +34,11 @@ public static partial class AlbumBits
         holder.AddChild(print);
         if (tape)
         {
-            var strip = new Tape { Size = new Vector2(size.X * 0.42f, 22), MouseFilter = Control.MouseFilterEnum.Ignore };
-            strip.Position = new Vector2(7 + size.X / 2 - strip.Size.X / 2, 0);
+            // Centred over the top edge of the print, turned only a little against it.
+            var strip = new Tape { Size = new Vector2(size.X * 0.38f, 20), MouseFilter = Control.MouseFilterEnum.Ignore };
+            strip.Position = new Vector2(7 + size.X / 2 - strip.Size.X / 2, 8 - strip.Size.Y / 2);
             strip.PivotOffset = strip.Size / 2;
-            strip.RotationDegrees = degrees * -1.6f + 2;
+            strip.RotationDegrees = degrees * 0.4f;
             holder.AddChild(strip);
         }
         return holder;
@@ -60,14 +61,14 @@ public static partial class AlbumBits
     }
 
     /// <summary>A link written in ink: no box, the accent colour and a line under it when pointed at.</summary>
-    public static Button Link(string text, Action pressed, int size = 15)
+    public static Button Link(string text, Action pressed, int size = 16)
     {
         var b = new Button { Text = text, Flat = true, FocusMode = Control.FocusModeEnum.All, MouseDefaultCursorShape = Control.CursorShape.PointingHand };
         var empty = new StyleBoxEmpty { ContentMarginLeft = 2, ContentMarginRight = 2, ContentMarginTop = 2, ContentMarginBottom = 2 };
         var under = new StyleBoxFlat { DrawCenter = false, BorderColor = UiTheme.Accent, BorderWidthBottom = 1, ContentMarginLeft = 2, ContentMarginRight = 2, ContentMarginTop = 2, ContentMarginBottom = 2 };
         foreach (var state in new[] { "normal", "pressed", "disabled" }) b.AddThemeStyleboxOverride(state, empty);
         foreach (var state in new[] { "hover", "focus", "hover_pressed" }) b.AddThemeStyleboxOverride(state, under);
-        b.AddThemeColorOverride("font_color", UiTheme.Muted);
+        b.AddThemeColorOverride("font_color", UiTheme.Text.Lerp(UiTheme.Muted, 0.35f));
         b.AddThemeColorOverride("font_hover_color", UiTheme.Accent);
         b.AddThemeColorOverride("font_focus_color", UiTheme.Accent);
         b.AddThemeColorOverride("font_pressed_color", UiTheme.AccentDark);
@@ -77,7 +78,7 @@ public static partial class AlbumBits
     }
 }
 
-/// <summary>A sheet of paper laid on top of everything (a dialog): a deep shadow and two strips of tape.</summary>
+/// <summary>A sheet of paper laid on top of everything (a dialog), with a deep shadow.</summary>
 public partial class PaperSheet : PanelContainer
 {
     public PaperSheet()
@@ -92,34 +93,16 @@ public partial class PaperSheet : PanelContainer
     /// <summary>What lies on the sheet.</summary>
     public Control Content { set => AddChild(value); }
 
-    public override void _Draw()
-    {
-        // Two strips of tape at the top corners, drawn over the paper's edge.
-        foreach (var (x, angle) in new[] { (34f, -0.5f), (Size.X - 34f, 0.5f) })
-        {
-            DrawSetTransform(new Vector2(x, 2), angle, Vector2.One);
-            var c = AlbumBits.TapeColor;
-            DrawColoredPolygon(new[] { new Vector2(-38, -11), new Vector2(38, -12), new Vector2(40, 0), new Vector2(37, 11), new Vector2(-37, 12), new Vector2(-40, 1) }, c);
-        }
-        DrawSetTransform(Vector2.Zero, 0, Vector2.One);
-    }
 }
 
 /// <summary>
-/// A slip of paper glued onto an album page, held by one strip of tape that sits a little
-/// differently on each slip. An open question is marked by a coloured edge on the left.
+/// A slip of paper glued onto an album page. An open question is marked by a coloured edge on the left.
 /// </summary>
 public partial class PaperSlip : PanelContainer
 {
-    private readonly float _tapeAt, _tapeAngle;
-
     public PaperSlip(bool open = false, int seed = 0)
     {
-        var rng = new System.Random(seed * 7919 + 13);
-        _tapeAt = 0.12f + (float)rng.NextDouble() * 0.7f;
-        _tapeAngle = ((float)rng.NextDouble() - 0.5f) * 0.18f;
         var paper = UiTheme.Box(UiTheme.Panel.Lerp(UiTheme.Background, 0.12f), 2, null, 0, 18);
-        paper.ContentMarginTop = 20;
         paper.ShadowColor = new Color(0.2f, 0.12f, 0.05f, 0.18f);
         paper.ShadowSize = 7;
         paper.ShadowOffset = new Vector2(1, 4);
@@ -133,13 +116,6 @@ public partial class PaperSlip : PanelContainer
 
     public Control Content { set => AddChild(value); }
 
-    public override void _Draw()
-    {
-        DrawSetTransform(new Vector2(Size.X * _tapeAt, 1), _tapeAngle, Vector2.One);
-        DrawColoredPolygon(new[] { new Vector2(-34, -9), new Vector2(34, -10), new Vector2(36, 0), new Vector2(33, 9), new Vector2(-33, 10), new Vector2(-36, 1) },
-            AlbumBits.TapeColor);
-        DrawSetTransform(Vector2.Zero, 0, Vector2.One);
-    }
 }
 
 /// <summary>A small medal on a ribbon, in the colour of how rare the achievement is.</summary>

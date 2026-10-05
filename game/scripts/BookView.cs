@@ -81,12 +81,12 @@ public partial class BookView : Control
         for (int i = 6; i >= 1; i--)
             DrawRect(new Rect2(new Vector2(4 + i, 8 + i), size + new Vector2(i * 2, i)), new Color(ink, 0.035f));
 
-        // The pages beneath, at the outer edges.
-        for (int i = 3; i >= 1; i--)
+        // The pages beneath: thin lines along the outer edges, so the corners stay square.
+        for (int i = 1; i <= 3; i++)
         {
-            var edge = page.Darkened(0.05f * i);
-            DrawRect(new Rect2(-i * 3, i * 2, 8, size.Y - i * 4), edge);
-            DrawRect(new Rect2(size.X - 8 + i * 3, i * 2, 8, size.Y - i * 4), edge);
+            var edge = page.Darkened(0.07f * i);
+            DrawRect(new Rect2(-i * 2.5f, 3 + i, 2.5f, size.Y - 6 - i * 2), edge);
+            DrawRect(new Rect2(size.X + (i - 1) * 2.5f, 3 + i, 2.5f, size.Y - 6 - i * 2), edge);
         }
 
         // The two pages.
@@ -139,6 +139,9 @@ public partial class BookView : Control
 /// <summary>The desk the album lies on: dark wood with a grain, darker towards the edges of the light.</summary>
 public partial class Desk : Control
 {
+    private static readonly ImageTexture Lamp = Radial.Make(128, new Vector2(0.5f, 0.45f), 0.75f, d =>
+        d < 0.55f ? new Color(1, 0.95f, 0.85f, 0.08f * (1 - d / 0.55f)) : new Color(0, 0, 0, 0.5f * Radial.Step(0.55f, 1.1f, d)));
+
     public override void _Ready()
     {
         MouseFilter = MouseFilterEnum.Ignore;
@@ -167,11 +170,28 @@ public partial class Desk : Control
             bool light = rng.NextDouble() < 0.4;
             DrawPolyline(pts, light ? new Color(1, 0.9f, 0.75f, 0.035f) : new Color(0.1f, 0.05f, 0.02f, 0.09f), 1 + (float)rng.NextDouble() * 2.5f, true);
         }
-        // A lamp somewhere above: lighter in the middle, dark in the corners.
-        var g = new Gradient();
-        g.Offsets = new[] { 0f, 0.55f, 1f };
-        g.Colors = new[] { new Color(1, 0.95f, 0.85f, 0.08f), new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.45f) };
-        var tex = new GradientTexture2D { Gradient = g, Width = 128, Height = 128, Fill = GradientTexture2D.FillEnum.Radial, FillFrom = new Vector2(0.5f, 0.45f), FillTo = new Vector2(1.15f, 0.45f) };
-        DrawTextureRect(tex, new Rect2(Vector2.Zero, size), false);
+        // A lamp somewhere above: lighter in the middle, dark in the corners. The texture is made once
+        // and kept: one made while drawing is not ready yet and would cover the desk in white.
+        DrawTextureRect(Lamp, new Rect2(Vector2.Zero, size), false);
     }
+}
+
+/// <summary>Radial textures computed at once, pixel by pixel, so they are ready the moment they are drawn.</summary>
+public static class Radial
+{
+    /// <summary>A square texture; <paramref name="colorAt"/> gets the distance from the centre (0 at the centre, 1 at <paramref name="radius"/>).</summary>
+    public static ImageTexture Make(int size, Vector2 centre, float radius, System.Func<float, Color> colorAt)
+    {
+        var image = Image.CreateEmpty(size, size, false, Image.Format.Rgba8);
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+            {
+                float d = new Vector2((x + 0.5f) / size - centre.X, (y + 0.5f) / size - centre.Y).Length() / radius;
+                image.SetPixel(x, y, colorAt(d));
+            }
+        return ImageTexture.CreateFromImage(image);
+    }
+
+    /// <summary>Smoothly from a to b as t goes from t0 to t1.</summary>
+    public static float Step(float t0, float t1, float t) => Mathf.SmoothStep(t0, t1, t);
 }

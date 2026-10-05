@@ -86,21 +86,10 @@ public partial class Portrait : Control
     }
 
     // A soft darkening towards the edge of the photograph: smooth, with no bands.
-    private static readonly Texture2D RoundVignette = Vignette(0.74f, 0.985f, 1f);
-    private static readonly Texture2D SquareVignette = Vignette(0.8f, 1.38f, 1.42f);
-
-    private static Texture2D Vignette(float clearTo, float darkAt, float end)
-    {
-        var g = new Gradient();
-        g.Offsets = new[] { 0f, clearTo / end, darkAt / end, 1f };
-        var dark = new Color(0.12f, 0.08f, 0.04f, 0.32f);
-        g.Colors = new[] { new Color(dark, 0), new Color(dark, 0), dark, new Color(dark, end > 1.05f ? 0.4f : 0) };
-        return new GradientTexture2D
-        {
-            Gradient = g, Width = 256, Height = 256, Fill = GradientTexture2D.FillEnum.Radial,
-            FillFrom = new Vector2(0.5f, 0.5f), FillTo = new Vector2(0.5f + 0.5f * end, 0.5f),
-        };
-    }
+    private static readonly Texture2D RoundVignette = Radial.Make(128, new Vector2(0.5f, 0.5f), 0.5f, d =>
+        d > 1 ? new Color(0, 0, 0, 0) : new Color(0.12f, 0.08f, 0.04f, 0.32f * Radial.Step(0.74f, 0.985f, d)));
+    private static readonly Texture2D SquareVignette = Radial.Make(128, new Vector2(0.5f, 0.5f), 0.5f, d =>
+        new Color(0.12f, 0.08f, 0.04f, 0.36f * Radial.Step(0.8f, 1.42f, d)));
 
     // --- Geometry helpers --------------------------------------------------------------------
 

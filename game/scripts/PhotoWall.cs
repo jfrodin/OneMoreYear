@@ -25,7 +25,7 @@ public partial class PhotoWall : Control
     public override void _Ready()
     {
         MouseFilter = MouseFilterEnum.Ignore;
-        ClipContents = true;
+        ClipContents = false;
         // A family of its own every time the game starts: no simulation, just who they are.
         var session = GameSession.NewGame(new NewGameOptions { Seed = (ulong)_rng.NextInt64(1, long.MaxValue), StartYear = 1950 + _rng.Next(4) * 10 });
         foreach (var p in session.World.People.Where(p => p.InFamily || p.Id == session.Player.Id).Take(12))
@@ -99,17 +99,19 @@ public partial class PhotoWall : Control
     private void Place()
     {
         if (Size.X < 10) return;
-        int cols = Size.X > 900 ? 4 : 3;
+        int cols = 3;
         int rows = (Count + cols - 1) / cols;
-        float cellW = Size.X / cols, cellH = Size.Y / rows;
+        // A margin all round, so no print is ever cut by the sheet beside it or the window edge.
+        const float pad = 36;
+        float cellW = (Size.X - pad * 2 - 180) / (cols - 1 + 0.35f), cellH = (Size.Y - pad * 2 - 230) / Math.Max(1, rows - 1);
         foreach (var frame in GetChildren().OfType<Control>())
         {
             if (!frame.HasMeta("slot")) continue;
             int slot = (int)frame.GetMeta("slot");
             var jitter = (Vector2)frame.GetMeta("jitter");
             // Every other row shifted, like photos hung by hand.
-            float x = (slot % cols + (slot / cols % 2) * 0.35f) * cellW + jitter.X;
-            float y = slot / cols * cellH + jitter.Y + 20;
+            float x = pad + (slot % cols + (slot / cols % 2) * 0.35f) * cellW + jitter.X * 0.6f + 12;
+            float y = pad + slot / cols * cellH + jitter.Y * 0.6f;
             frame.PivotOffset = frame.Size / 2;
             frame.Position = new Vector2(x, y);
         }
