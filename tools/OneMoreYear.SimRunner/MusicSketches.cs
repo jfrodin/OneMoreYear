@@ -151,10 +151,13 @@ static class MusicSketches
                 t += bar;
             }
         }
-        // The last chord rings on.
+        // The ending: the last chord rings on in the same register as the rest, softly, with the
+        // melody coming home to the tonic on top of it.
         var last = p.Form[^1].Chords[^1];
-        foreach (int n in Notes(last, p.Tonic - 12)) chords.Add((t, n, bar * 2, 60));
-        bass.Add((t, p.Tonic - 24 + last.Root < 36 ? p.Tonic - 12 + last.Root : p.Tonic - 24 + last.Root, bar * 2, 70));
+        foreach (int n in Notes(last, p.Tonic - 12)) chords.Add((t, n + 12, bar * 2, 44));
+        int lastBass = p.Tonic - 24 + last.Root;
+        bass.Add((t, lastBass < 36 ? lastBass + 12 : lastBass, bar * 2, 56));
+        melody.Add((t, p.Tonic, bar * 2, 64));
 
         var tracks = new List<byte[]>
         {
