@@ -39,6 +39,35 @@ ett vardagsrum, inte i en konserthall.
 **Effekter:** Room Reverb eller Open AIR för rummet, Analog Delay för 80-talet, Pro EQ för att ta bort
 mullret i botten.
 
+### Var hittar jag instrumenten?
+
+Öppna webbläsaren till höger (F5) och fliken **Instruments**. Under **PreSonus** finns Presence XT,
+Mai Tai, Mojito, Impact XT och Sample One XT. Fäll ut ett instrument för att se dess presets, eller
+skriv sökordet i sökrutan överst i webbläsaren: det är det säkraste sättet, eftersom mappar och
+presetnamn skiljer sig mellan versioner och ljudbibliotek. Dra presetet till ett tomt område i
+arrangemanget så skapas ett spår med det.
+
+| Instrument i underlaget | Insticksprogram | Sök efter | Om det saknas |
+|---|---|---|---|
+| Piano | Presence XT | piano, grand, upright | Det finns i alla versioner |
+| Elpiano (Rhodes) | Presence XT | electric piano, e-piano, EP | Ett mjukt keys-preset i Mai Tai |
+| Stråkar | Presence XT | strings, ensemble | En långsam pad i Mai Tai |
+| Cello | Presence XT | cello | Stråkarna, spelade lågt |
+| Klarinett | Presence XT | clarinet | Flöjt, eller ett mjukt lead i Mai Tai |
+| Flöjt | Presence XT | flute | Ett mjukt lead i Mai Tai |
+| Nylongitarr | Presence XT | nylon, classical guitar | Akustisk gitarr |
+| Akustisk gitarr | Presence XT | acoustic guitar, steel | Nylongitarr |
+| Kontrabas | Presence XT | upright bass, acoustic bass | Elbas, mjukt |
+| Elbas | Presence XT | bass, electric bass, finger bass | Bas i Mojito |
+| Klockspel, celesta, vibrafon | Presence XT | bell, celesta, vibraphone, mallet | Ett bell-preset i Mai Tai |
+| Kör | Presence XT | choir, voices, aah | En luftig pad i Mai Tai |
+| Mattor (pads) | Mai Tai | pad | |
+| Arpeggio | Mai Tai | arp | Spela in sextondelarna själv, se MIDI |
+| Syntbas | Mojito | bass | Bas i Mai Tai |
+| Syntmelodi (lead) | Mojito | lead | Ett lead i Mai Tai |
+| Vispar, mjukt trumset | Impact XT | brush, jazz kit, soft | Spela bara en mjuk kick |
+| Egna ljud (regn, rum, nynnande) | Sample One XT | | Spela in med mikrofonen, dra in ljudfilen |
+
 ---
 
 ## Familjetemat
