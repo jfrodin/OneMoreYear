@@ -1,6 +1,7 @@
 using System.Linq;
 using Godot;
 using OneMoreYear.Simulation;
+using OneMoreYear.Simulation.Model;
 using OneMoreYear.Simulation.Systems;
 
 namespace OneMoreYear.Game;
@@ -14,9 +15,9 @@ public partial class PortraitGallery : Control
     private readonly string _path;
     private int _frames;
 
-    private readonly bool _big;
+    private readonly bool _big, _eras;
 
-    public PortraitGallery(string path) { _path = path; _big = path.Contains("big"); }
+    public PortraitGallery(string path) { _path = path; _big = path.Contains("big"); _eras = path.Contains("eras"); }
 
     public override void _Ready()
     {
@@ -28,6 +29,8 @@ public partial class PortraitGallery : Control
         var col = Ui.VBox(8);
         col.Position = new Vector2(16, 16);
         AddChild(col);
+
+        if (_eras) { Eras(session, col); return; }
 
         // Blood relatives first, so resemblance is easy to see.
         var family = session.Family(includeDead: false).Take(_big ? 4 : 16).ToList();
@@ -61,6 +64,35 @@ public partial class PortraitGallery : Control
             ages.AddChild(cell);
         }
         col.AddChild(ages);
+    }
+
+    /// <summary>
+    /// The same grown-ups in every decade (a path with "eras"): a row per decade, men then women, so
+    /// what each decade wore is easy to compare.
+    /// </summary>
+    private void Eras(GameSession session, VBoxContainer col)
+    {
+        int n = _big ? 3 : 6;
+        var people = session.World.People.Where(p => p.Sex == Sex.Male).Take(n)
+            .Concat(session.World.People.Where(p => p.Sex == Sex.Female).Take(n)).ToList();
+        foreach (int year in _big ? new[] { 1955, 1975, 1995, 2015 } : new[] { 1955, 1965, 1975, 1985, 1995, 2005, 2015, 2025 })
+        {
+            var row = Ui.HBox(6);
+            row.AddChild(Ui.Label(year.ToString(), 14, UiTheme.Muted));
+            int i = 0;
+            foreach (var p in people)
+            {
+                var face = Faces.Of(session.World, p);
+                int age = 22 + (i++ * 7) % 30;
+                var view = session.Portrait(p.Id) with
+                {
+                    Age = age, Alive = true, Year = year, Mood = 0.4, Grey = Faces.GreyAt(face, age), Bald = Faces.BaldAt(face, p.Sex, age),
+                    Glasses = age >= face.GlassesFromAge, Outfit = i % 4 == 0 ? "smart" : "casual",
+                };
+                row.AddChild(Portrait.Create(view, false, _big ? 250 : 118, square: true));
+            }
+            col.AddChild(row);
+        }
     }
 
     public override void _Process(double delta)

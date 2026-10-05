@@ -2,6 +2,19 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.78.0 – 2026-10-05 · Dressed for the decade
+
+- **Clothes follow the decade.** Knitted pullovers over shirt collars and thin ties in the fifties,
+  turtlenecks and dresses with pearls in the sixties, big pointed collars in the seventies,
+  shoulder pads and polo shirts in the eighties, flannel and hoodies in the nineties, and the
+  colours each decade wore. Children get striped tops. Women in suits wear a blouse instead of a tie.
+- **Hair follows the decade too,** with new cuts: crew cuts, bouffants with a ribbon, sets of curls,
+  shags, big eighties hair, mullets that reach the neck, curtains, undercuts, top knots, man buns and
+  plaits. Short cuts leave the ears free, and a ponytail falls behind the shoulder.
+- **Beards and moustaches as the times wore them:** a pencil moustache in the fifties, full beards
+  and walrus moustaches in the seventies, a moustache in the eighties, goatees and stubble around
+  the turn of the century, full beards again in the twenty tens. Stubble looks like stubble.
+
 ## 0.77.0 – 2026-10-05 · Ready for the shelf
 
 - **Credits,** from the title menu: the music, a thank you to everyone who played early versions,
