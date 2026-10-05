@@ -6,7 +6,7 @@
 /// melody, the theme an octave up and fuller, a quiet bridge, the theme bare, and an ending that
 /// slows down and rings out.
 /// </summary>
-static class MusicSketches
+static partial class MusicSketches
 {
     private const int Tpq = 480;
 
@@ -157,7 +157,8 @@ static class MusicSketches
         Directory.CreateDirectory(dir);
         foreach (var piece in Pieces)
         {
-            File.WriteAllBytes(Path.Combine(dir, piece.File + ".mid"), Write(piece, out double seconds));
+            double seconds;
+            File.WriteAllBytes(Path.Combine(dir, piece.File + ".mid"), piece.File == "memoriam" ? WriteMemoriam(piece, out seconds) : Write(piece, out seconds));
             Console.WriteLine($"{piece.File}.mid  {(int)seconds / 60}:{(int)seconds % 60:00}");
         }
     }

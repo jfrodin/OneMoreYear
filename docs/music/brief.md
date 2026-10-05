@@ -123,13 +123,26 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 ## memoriam.wav: In memoriam
 
 - **När:** när en person dör och du väljer vem som går vidare.
-- **Känsla:** stilla sorg, men med värme. Ett tack, inte en tragedi.
-- **Tonart och tempo:** a-moll, 60 bpm, 4/4.
-- **Instrument:** piano och cello (Presence XT). Inget annat.
-- **Spela:** långa ackord, sparsamt. Cellon tar temat i andra varvet. Låt det finnas tystnad mellan
-  fraserna.
-- **Melodi (temat i moll):** C E A | G F E | F A C' B | A | C E A B | C' B G# | F A C' B | A
-- **Ackord:** Tema: Am, Em/G, F, Dm, Am, E, F, Am. Mellanspel: F, C, Dm, Am, Dm, Em/G, F, E.
+- **Känsla:** djup sorg. Inget tröstar, och det tar aldrig riktigt slut: sista ackordet är ett tomt D
+  utan ters.
+- **Tonart och tempo:** d-moll, **56 bpm**, 4/4. Sakta in mot 42 bpm genom de sista sju takterna
+  (cirka 3:08). Ställ in tempot för hand.
+- **Instrument, ett spår vardera:**
+  - **Solocello** (Presence XT, legato) bär temat. Spela det med mycket uttryck.
+  - **Solofiol** (legato, svag) kommer först i mellanspelet, högt och tunt.
+  - **Piano** med sustainpedal, svagt hela vägen. Det klämtar i introt och minns melodins början i slutet.
+  - **Viola** och **cellosektion** (legato) som en låg matta, långt bak i mixen.
+  - **Kontrabas** (legato) håller golvet från första till sista takten.
+  - **Kör** ("oohs") mycket långt bak, bara kring höjdpunkten.
+  Mycket reverb, en stor sal. Inget annat.
+- **Form (43 takter):** intro 4: piano, cellosektion, kontrabas. A1 8: cellon tar temat. A2 8: violorna
+  kommer in, pianot bryter ackorden. B 8: fiolen tar mellanspelets melodi högt, cellon går nedåt
+  under, kören smyger in. A3 8: cello och fiol spelar temat i oktaver, allt är med. Coda 7: pianot
+  minns början, cello och fiol faller steg för steg mot D, kören tystnar.
+- **Ackord:** Intro Dm, Bbmaj7, Gm, Asus4 A. Tema Dm, Dm/C, Bbmaj7, Asus4 A, Gm, Dm/F, Em7b5, Asus4 A.
+  Mellanspel Bbmaj7, F/A, Gm, Dm, Bbmaj7, Gm, Asus4, A. Coda Gm, Dm/F, Eb/G, Asus4 A, Dm, D (tomt).
+- **Melodi (cello):** D E | F E D | D C Bb | D C# | Bb A | A F G | G Bb A | A
+- Inga luckor: varje instrument spelar oavbrutet från att det kommer in.
 
 ## 1950s.wav: Femtiotalet
 
@@ -173,7 +186,7 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
   för syntbasen i åttondelar. Melodin på ett klockljud (Presence XT, Mallets) eller en mjuk
   Mojito-lead. Mycket reverb, och Analog Delay på arpeggiot.
 - **Spela:** mattan håller ackorden, arpeggiot går uppåt i sextondelar, basen pulserar.
-- **Melodi:** samma som In memoriam (temat i moll).
+- **Melodi (temat i moll):** C E A | G F E | F A C' B | A | C E A B | C' B G# | F A C' B | A
 - **Ackord:** Am, Em/G, F, Dm, Am, E, F, Am. Mellanspel: F, C, Dm, Am, Dm, Em/G, F, E.
 
 ## 1990s.wav: Nittiotalet
