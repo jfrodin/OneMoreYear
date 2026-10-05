@@ -158,7 +158,7 @@ static partial class MusicSketches
         foreach (var piece in Pieces)
         {
             double seconds;
-            File.WriteAllBytes(Path.Combine(dir, piece.File + ".mid"), piece.File == "memoriam" ? WriteMemoriam(piece, out seconds) : Write(piece, out seconds));
+            File.WriteAllBytes(Path.Combine(dir, piece.File + ".mid"), piece.File switch { "memoriam" => WriteMemoriam(piece, out seconds), "1980s" => WriteEighties(piece, out seconds), _ => Write(piece, out seconds) });
             Console.WriteLine($"{piece.File}.mid  {(int)seconds / 60}:{(int)seconds % 60:00}");
         }
     }

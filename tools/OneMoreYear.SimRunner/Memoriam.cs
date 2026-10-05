@@ -91,37 +91,8 @@ static partial class MusicSketches
         Tune(violin, StartOf("coda"), violinCoda, 80, loudAt: LoudAt);
         Tune(piano, StartOf("coda"), pianoRemembers, 72, loudAt: LoudAt);
 
-        // Voices that move as little as they can from chord to chord.
-        int[] Lead(int[] prev, int[] pcs, (int Lo, int Hi)[] ranges)
-        {
-            var result = new int[ranges.Length];
-            var used = new HashSet<int>();
-            for (int v = 0; v < ranges.Length; v++)
-            {
-                int best = -1; double bestScore = double.MaxValue;
-                for (int n = ranges[v].Lo; n <= ranges[v].Hi; n++)
-                {
-                    if (!pcs.Contains(n % 12)) continue;
-                    double score = Math.Abs(n - prev[v]) + (used.Contains(n % 12) ? 6 : 0);
-                    if (score < bestScore) { bestScore = score; best = n; }
-                }
-                result[v] = best;
-                used.Add(best % 12);
-            }
-            return result;
-        }
-
-        // Held notes: the same note in the next chord is tied over, not played again.
-        void Hold(Notes into, int tick, int note, int len, double vel)
-        {
-            for (int k = into.Count - 1; k >= 0; k--)
-            {
-                var n = into[k];
-                if (n.Note == note && n.Tick + n.Len == tick) { into[k] = n with { Len = n.Len + len }; return; }
-                if (n.Tick + n.Len < tick) break;
-            }
-            into.Add(tick, note, len, vel);
-        }
+        int[] Lead(int[] prev, int[] pcs, (int Lo, int Hi)[] ranges) => VoiceLead(prev, pcs, ranges);
+        void Hold(Notes into, int tick, int note, int len, double vel) => HoldNote(into, tick, note, len, vel);
 
         var violaRanges = new[] { (53, 62), (57, 67) };
         var celloRanges = new[] { (43, 55) };

@@ -180,14 +180,28 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 ## 1980s.wav: Åttiotalet
 
 - **När:** 1980 till 1989.
-- **Känsla:** neon, men stilla. En kväll vid ett fönster med stadens ljus.
-- **Tonart och tempo:** a-moll, 90 bpm, 4/4.
-- **Instrument:** Mai Tai för en bred matta med långsam attack och ett sextondelsarpeggio. Mojito
-  för syntbasen i åttondelar. Melodin på ett klockljud (Presence XT, Mallets) eller en mjuk
-  Mojito-lead. Mycket reverb, och Analog Delay på arpeggiot.
-- **Spela:** mattan håller ackorden, arpeggiot går uppåt i sextondelar, basen pulserar.
-- **Melodi (temat i moll):** C E A | G F E | F A C' B | A | C E A B | C' B G# | F A C' B | A
-- **Ackord:** Am, Em/G, F, Dm, Am, E, F, Am. Mellanspel: F, C, Dm, Am, Dm, Em/G, F, E.
+- **Känsla:** en riktig synthpoplåt. Neonljus, bilradio, en kväll som aldrig tar slut.
+- **Tonart och tempo:** a-moll, **116 bpm**, 4/4 (cirka 2:57). Sista refrängen går upp ett heltonssteg
+  till h-moll, och outrot stannar där.
+- **Instrument, ett spår vardera:**
+  - **Lead** (Mai Tai): ljus sågtand, lite glide. Versen, pre-chorus, hooken i refrängen.
+  - **Lead en oktav under** (Mai Tai): fyrkantsvåg, bara i refrängerna. Gör hooken stor.
+  - **Klockor** (Presence XT, FM-klockor eller ljust elpiano): hooken i breakdownen, och högt över
+    sista refrängen.
+  - **Arpeggio** (Mai Tai): kort pluck i sextondelar från första takten, med Analog Delay i
+    punkterade åttondelar.
+  - **Matta** (Mai Tai): bred och varm, långsam attack, hela vägen.
+  - **Stötar** (Mai Tai, synthbrass): tre slag per takt i refrängerna.
+  - **Bas** (Mojito): oktaver i åttondelar, punchig.
+  - **Trummor** (Impact XT): trummaskin. Lägg Room Reverb och sedan en Gate på virveln för den stora
+    80-talsvirveln. Handklapp med virveln i refrängen.
+- **Form (86 takter):** intro 8 (arpeggio och matta, trummor och bas från takt 5, virvelfill), vers 16,
+  pre-chorus 8 (bygger, virvelrulle i sista takten), refräng 16, breakdown 8 (halvtakt, klockorna tar
+  hooken), uppbyggnad 4 (virvelrulle som växer), sista refrängen 16 (ett heltonssteg upp), outro 8,
+  slutackord 2.
+- **Ackord:** Vers Am, F, C, G. Pre-chorus Dm, Em, F, G, Dm, Em, F, E. Refräng F, G, C, Am, F, G, Am,
+  Am. Uppbyggnad F, G, Esus4, E. Sista refrängen och outrot samma, ett heltonssteg upp.
+- **Hook (refrängen):** A C E D C | D B G | G C E D C | C B A | A C F E D | D E D B | C B A E | D C B A
 
 ## 1990s.wav: Nittiotalet
 
