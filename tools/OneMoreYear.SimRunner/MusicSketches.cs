@@ -97,16 +97,16 @@ static class MusicSketches
     {
         new("title", 60, false, 72, 4, "broken", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Violin (Presence XT)", 40), P("Chords: Piano (Presence XT)", 0),
-            P("Pad: Strings, soft", 48), P("Bass: Piano, left hand (Presence XT)", 0), 12),
+            P("Pad: Strings, legato, quiet in the mix", 48), P("Bass: Piano, left hand (Presence XT)", 0), 12),
         new("memoriam", 57, true, 60, 4, "sparse", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Cello (Presence XT)", 42), P("Chords: Piano (Presence XT)", 0),
-            P("Pad: Strings, very soft", 48), P("Bass: Cello (Presence XT)", 42), 0),
+            P("Pad: Strings, legato, very quiet", 48), P("Bass: Cello (Presence XT)", 42), 0),
         new("1950s", 65, false, 76, 3, "waltz", "brush",
             P("Melody: Clarinet (Presence XT)", 71), P("Second voice: Flute (Presence XT)", 73), P("Chords: Piano (Presence XT)", 0),
             null, P("Bass: Upright bass (Presence XT)", 32), 0),
         new("1960s", 67, false, 84, 4, "travis", null,
             P("Melody: Flute (Presence XT)", 73), P("Second voice: Violin (Presence XT)", 40), P("Chords: Nylon or acoustic guitar (Presence XT)", 24),
-            P("Pad: Strings, soft", 48), P("Bass: Upright bass (Presence XT)", 32), 0),
+            P("Pad: Strings, legato, quiet in the mix", 48), P("Bass: Upright bass (Presence XT)", 32), 0),
         new("1970s", 62, false, 80, 4, "rhodes", "soft",
             P("Melody: Flute (Presence XT)", 73), P("Second voice: Violin (Presence XT)", 40), P("Chords: Electric piano (Presence XT)", 4),
             null, P("Bass: Electric bass (Presence XT)", 33), 0),
@@ -121,7 +121,7 @@ static class MusicSketches
             null, P("Bass: Piano, left hand (Presence XT)", 0), 12),
         new("2010s", 58, false, 66, 4, "broken", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Violin (Presence XT)", 40), P("Chords: Piano (Presence XT)", 0),
-            P("Pad: Strings, swelling", 48), P("Bass: Cello (Presence XT)", 42), 0),
+            P("Pad: Strings, legato, slow swell", 48), P("Bass: Cello (Presence XT)", 42), 0),
         new("2020s", 62, false, 72, 4, "broken", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Soft lead (Mai Tai)", 81), P("Chords: Piano (Presence XT)", 0),
             P("Pad: Warm pad (Mai Tai)", 89), P("Bass: Electric bass (Presence XT)", 33), 12),
@@ -264,8 +264,8 @@ static class MusicSketches
     private static string DrumName(string kind) => kind switch
     {
         "brush" => "Drums: Brushes, very quiet (Impact XT)",
-        "soft" => "Drums: Soft kit (Impact XT)",
-        "machine" => "Drums: Drum machine, soft (Impact XT)",
+        "soft" => "Drums: Soft kit, quiet (Impact XT)",
+        "machine" => "Drums: Drum machine, quiet (Impact XT)",
         _ => "Drums: Rim and soft kick (Impact XT)",
     };
 
