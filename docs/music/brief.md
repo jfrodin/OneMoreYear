@@ -94,15 +94,17 @@ arrangemanget så skapas ett spår med det.
 **Mellanspelet (B)**, utan melodi eller med en fri improvisation över:
 Am, Em, F, C, Dm, G, Em, Gsus4
 
-**Form för alla låtar (så är MIDI-filerna byggda):**
+**Form för decenniernas låtar (så är MIDI-filerna byggda):**
 1. Intro, 4 takter, hållna ackord
 2. Temat, enkelt och glest
 3. Temat med små utsmyckningar och en andrastämma under
-4. Mellanspelet, med en egen melodi
+4. Mellanspelet, med en egen melodi (andrastämman fortsätter under)
 5. Temat igen, högre och fylligare, med matta där det finns
-6. Ett lugnt mellanspel, där andrastämman tar mellanspelets melodi
-7. Temat avskalat (de långsammaste låtarna hoppar över den här och/eller del 6)
-8. Avslut som saktar in, och ett slutackord som klingar ut
+6. Avslut: melodin håller långa toner, det saktar in, och ett slutackord klingar ut
+
+Korta låtar spelar mellanspelet och det stora temat två gånger (del 4 och 5 igen) innan avslutet.
+**Inget tystnar i mitten:** det som har kommit in spelar till avslutet. Titeln, In memoriam och
+åttiotalet är skrivna för sig och har egna former (se respektive avsnitt).
 
 Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel "Melody: Clarinet
 (Presence XT)". Tempot saktar in av sig självt på slutet (tempospåret följer med i filen).
@@ -160,8 +162,8 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 - **När:** 1960 till 1969.
 - **Känsla:** folkvisa, sommar, en gitarr på en trappa.
 - **Tonart och tempo:** G-dur, 84 bpm, 4/4.
-- **Instrument:** akustisk gitarr eller nylongitarr som fingerplockas (Presence XT, Guitars), flöjt
-  tar melodin, lätta stråkar i andra varvet.
+- **Instrument (4 spår):** akustisk gitarr eller nylongitarr som fingerplockas (Presence XT, Guitars),
+  flöjt på melodin, fiol på andrastämman, kontrabas. Inga stråkmattor.
 - **Spela:** "Travis-plock": växelbas med tummen på taktslagen, ackordtoner emellan (se MIDI).
 - **Melodi:** B D G | F# E D | E G B A | G | B D G A | B A F# | E G B A | G
 - **Ackord:** G, D/F#, Em, C, G, D, Cmaj7, G. Mellanspel: Em, Bm, C, G, Am, D, Bm, Dsus4.
@@ -171,8 +173,8 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 - **När:** 1970 till 1979.
 - **Känsla:** varmt och brunt, lite soul, en lugn kväll.
 - **Tonart och tempo:** D-dur, 80 bpm, 4/4.
-- **Instrument:** elpiano av Rhodes-typ (Presence XT, Electric Piano) med lite tremolo, elbas,
-  flöjt på melodin. Ett mjukt trumkomp i Impact XT går bra: kick på ettan, vispar, inget mer.
+- **Instrument (5 spår):** elpiano av Rhodes-typ (Presence XT, Electric Piano) med lite tremolo, elbas,
+  ren elgitarr på melodin (lite chorus), flöjt på andrastämman, ett mjukt trumkomp i Impact XT.
 - **Spela:** ackord på ettan och på "och" efter tvåan, bas som går grundton, kvint, oktav.
 - **Melodi:** F# A D | C# B A | B D F# E | D | F# A D E | F# E C# | B D F# E | D
 - **Ackord:** D, A/C#, Bm, G, D, A, Gmaj7, D. Mellanspel: Bm, F#m, G, D, Em, A, F#m, Asus4.
@@ -183,15 +185,13 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 - **Känsla:** en riktig synthpoplåt. Neonljus, bilradio, en kväll som aldrig tar slut.
 - **Tonart och tempo:** a-moll, **116 bpm**, 4/4 (cirka 2:57). Sista refrängen går upp ett heltonssteg
   till h-moll, och outrot stannar där.
-- **Instrument, ett spår vardera:**
+- **Instrument, sex spår:** (den livligaste låten, men den spelar fortfarande bakom spelet, så mixa den
+  inte högre än de andra)
   - **Lead** (Mai Tai): ljus sågtand, lite glide. Versen, pre-chorus, hooken i refrängen.
-  - **Lead en oktav under** (Mai Tai): fyrkantsvåg, bara i refrängerna. Gör hooken stor.
-  - **Klockor** (Presence XT, FM-klockor eller ljust elpiano): hooken i breakdownen, och högt över
-    sista refrängen.
+  - **Klockor** (Presence XT, FM-klockor eller ljust elpiano): hooken i breakdownen.
   - **Arpeggio** (Mai Tai): kort pluck i sextondelar från första takten, med Analog Delay i
     punkterade åttondelar.
   - **Matta** (Mai Tai): bred och varm, långsam attack, hela vägen.
-  - **Stötar** (Mai Tai, synthbrass): tre slag per takt i refrängerna.
   - **Bas** (Mojito): oktaver i åttondelar, punchig.
   - **Trummor** (Impact XT): trummaskin. Lägg Room Reverb och sedan en Gate på virveln för den stora
     80-talsvirveln. Handklapp med virveln i refrängen.
@@ -229,8 +229,9 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 - **När:** 2010 till 2019.
 - **Känsla:** filmiskt men stilla. En stad i skymning.
 - **Tonart och tempo:** Bb-dur, 66 bpm, 4/4.
-- **Instrument:** piano, stråkar som sväller långsamt in, cello på basen.
-- **Spela:** brutna ackord i pianot, stråkarna kommer först i mellanspelet och bär det sista temat.
+- **Instrument:** piano (melodi, ackord och bas), cello högt i sitt register på andrastämman,
+  stråkar (violin, viola, cello) som sväller långsamt in.
+- **Spela:** brutna ackord i pianot, stråkarna kommer i mellanspelet och stannar till slutet.
 - **Melodi:** D F Bb | A G F | G Bb D C | Bb | D F Bb C | D C A | G Bb D C | Bb
 - **Ackord:** Bb, F/A, Gm, Eb, Bb, F, Ebmaj7, Bb. Mellanspel: Gm, Dm, Eb, Bb, Cm, F, Dm, Fsus4.
 
@@ -251,7 +252,8 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 - **Tonart och tempo:** C-dur, 60 bpm, 4/4. Testa att höja F till F# här och var: det ger en
   drömsk, "lydisk" känsla.
 - **Instrument:** Mai Tai-mattor med lång attack och lång release, klockspel eller celesta (Presence
-  XT, Mallets) på temat i mycket långa toner, en kör (Presence XT, Choir) långt bak.
+  XT, Mallets) på temat i mycket långa toner, en kör (Presence XT, Choir) långt bak som matta, och ett mjukt glasartat lead (Mai Tai) på
+  andrastämman.
 - **Melodi och ackord:** som titellåten, men melodin i halva tempot.
 
 ---

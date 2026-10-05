@@ -1,7 +1,8 @@
 /// <summary>
 /// The eighties, written out on their own as a proper synth pop track: A minor at 116 beats a minute,
 /// a plucked arpeggio in sixteenths from the first bar, octave bass in eighths, a wide pad, a saw lead
-/// with a hook, synth brass stabs in the chorus, FM bells, and a drum machine with a big gated snare.
+/// with a hook, FM bells in the breakdown, and a drum machine with a big gated snare. Six tracks, like the
+/// other decades: it is the liveliest of them, but it still plays behind the game.
 /// Intro, verse, a pre chorus that builds, the chorus, a breakdown at half time, a snare roll, the last
 /// chorus a whole step up, and an outro that ends on a held chord.
 /// </summary>
@@ -65,8 +66,8 @@ static partial class MusicSketches
         int StartOf(string sec) => bars.FindIndex(b => b.Sec == sec) * bar;
         int end = bars.Count * bar;
 
-        var lead = new Notes(); var leadLow = new Notes(); var bells = new Notes(); var arp = new Notes();
-        var pad = new Notes(); var stabs = new Notes(); var bass = new Notes(); var drums = new Notes();
+        var lead = new Notes(); var bells = new Notes(); var arp = new Notes();
+        var pad = new Notes(); var bass = new Notes(); var drums = new Notes();
 
         void Tune(Notes into, int from, (int Note, double Beats)[] line, double vel, int shift = 0)
         {
@@ -112,21 +113,12 @@ static partial class MusicSketches
         Tune(lead, StartOf("chorus2") + 8 * bar, hook, 110, 2);
         Tune(lead, StartOf("outro"), verse, 80, 2);
         lead.Add(StartOf("end"), 69 + 2, 2 * bar - 30, 76);
-        foreach (string sec in new[] { "chorus", "chorus2" })
-        {
-            int key = sec == "chorus2" ? 2 : 0;
-            Tune(leadLow, StartOf(sec), hook, 90, key - 12);
-            Tune(leadLow, StartOf(sec) + 8 * bar, hook, 92, key - 12);
-        }
         Tune(bells, StartOf("breakdown"), hookFirstHalf, 82, 12);
         Tune(bells, StartOf("breakdown") + 4 * bar, hookFirstHalf, 88, 12);
-        Tune(bells, StartOf("chorus2"), hook, 70, 14);
-        Tune(bells, StartOf("chorus2") + 8 * bar, hook, 72, 14);
 
         // Harmony and rhythm, bar by bar.
-        int[] padPrev = { 57, 60, 64, 69 }, stabPrev = { 67, 72, 76 };
+        int[] padPrev = { 57, 60, 64, 69 };
         var padRanges = new[] { (52, 60), (57, 64), (60, 67), (64, 72) };
-        var stabRanges = new[] { (64, 71), (67, 74), (71, 79) };
         int t = 0;
         foreach (var (sec, i, chord, key) in bars)
         {
@@ -147,14 +139,6 @@ static partial class MusicSketches
                 int step = sec == "breakdown" ? e : s;
                 for (int k = 0; k < bar / step; k++)
                     arp.Add(t + k * step, tones[order[k % 8]] + (sec is "chorus" or "chorus2" or "build" ? 12 : 0), step - 20, (k % 4 == 0 ? 78 : 62) + (chorus ? 8 : 0));
-            }
-
-            // Synth brass on the chorus: three hits, three, three and two eighths.
-            if (chorus)
-            {
-                stabPrev = VoiceLead(stabPrev, chord.Pcs, stabRanges);
-                foreach (var (beat, len) in new[] { (0.0, 0.6), (1.5, 0.6), (3.0, 0.9) })
-                    foreach (int n in stabPrev) stabs.Add(t + (int)(beat * q), n, (int)(len * q), 96);
             }
 
             // The bass: octaves in eighths, roots in eighths when it builds, long notes when it rests.
@@ -252,11 +236,9 @@ static partial class MusicSketches
         var parts = new (string Name, int Program, Notes Notes)[]
         {
             ("Lead: bright saw lead, a touch of glide (Mai Tai)", 81, lead),
-            ("Lead, an octave under: square lead, chorus only (Mai Tai)", 80, leadLow),
-            ("Bells: FM bells or bright e-piano (Presence XT)", 11, bells),
+            ("Bells: FM bells or bright e-piano, breakdown only (Presence XT)", 11, bells),
             ("Arpeggio: short pluck, 16ths, with delay (Mai Tai)", 84, arp),
             ("Pad: wide warm pad, slow attack (Mai Tai)", 89, pad),
-            ("Stabs: synth brass, chorus only (Mai Tai)", 62, stabs),
             ("Bass: punchy octave bass (Mojito)", 38, bass),
         };
         int channel = 0;

@@ -106,9 +106,9 @@ static partial class MusicSketches
             null, P("Bass: Upright bass (Presence XT)", 32), 0),
         new("1960s", 67, false, 84, 4, "travis", null,
             P("Melody: Flute (Presence XT)", 73), P("Second voice: Violin (Presence XT)", 40), P("Chords: Nylon or acoustic guitar (Presence XT)", 24),
-            P("Pad: Strings, legato, quiet in the mix", 48), P("Bass: Upright bass (Presence XT)", 32), 0),
+            null, P("Bass: Upright bass (Presence XT)", 32), 0),
         new("1970s", 62, false, 80, 4, "rhodes", "soft",
-            P("Melody: Flute (Presence XT)", 73), P("Second voice: Violin (Presence XT)", 40), P("Chords: Electric piano (Presence XT)", 4),
+            P("Melody: Clean electric guitar (Presence XT)", 27), P("Second voice: Flute (Presence XT)", 73), P("Chords: Electric piano (Presence XT)", 4),
             null, P("Bass: Electric bass (Presence XT)", 33), 0),
         new("1980s", 57, true, 90, 4, "arp", "machine",
             P("Melody: Bell or soft lead (Presence XT Mallets, or Mojito)", 11), P("Second voice: Soft lead (Mai Tai)", 81),
@@ -120,13 +120,13 @@ static partial class MusicSketches
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Piano, high (Presence XT)", 0), P("Chords: Piano (Presence XT)", 0),
             null, P("Bass: Piano, left hand (Presence XT)", 0), 12),
         new("2010s", 58, false, 66, 4, "broken", null,
-            P("Melody: Piano (Presence XT)", 0), P("Second voice: Violin (Presence XT)", 40), P("Chords: Piano (Presence XT)", 0),
-            P("Pad: Strings, legato, slow swell", 48), P("Bass: Cello (Presence XT)", 42), 0),
+            P("Melody: Piano (Presence XT)", 0), P("Second voice: Cello, in its high register (Presence XT)", 42), P("Chords: Piano (Presence XT)", 0),
+            P("Pad: Strings, legato, slow swell", 48), P("Bass: Piano, left hand (Presence XT)", 0), 0),
         new("2020s", 62, false, 72, 4, "broken", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Soft lead (Mai Tai)", 81), P("Chords: Piano (Presence XT)", 0),
             P("Pad: Warm pad (Mai Tai)", 89), P("Bass: Electric bass (Presence XT)", 33), 12),
         new("future", 60, false, 60, 4, "pad", null,
-            P("Melody: Celesta or bells (Presence XT Mallets)", 8), P("Second voice: Choir (Presence XT)", 91), P("Chords: Pad, slow attack (Mai Tai)", 89),
+            P("Melody: Celesta or bells (Presence XT Mallets)", 8), P("Second voice: Soft glassy lead (Mai Tai)", 81), P("Chords: Pad, slow attack (Mai Tai)", 89),
             P("Pad: Choir, far back (Presence XT)", 91), P("Bass: Soft synth bass (Mojito)", 38), 12),
     };
 
@@ -137,10 +137,29 @@ static partial class MusicSketches
     /// <summary>One part of a piece: its chords, what the melody does, how full the rest is, how loud.</summary>
     private record Section(string Name, bool Bridge, Tune Melody, int Lift, bool Second, bool Pad, string Density, bool Drums, double Loud, Tune SecondTune = Tune.None);
 
-    // Slow pieces leave out a part or two, so nothing runs much past three minutes.
-    private static Section[] Form(Piece p) => FullForm(p).Where(s => !(p.Bpm <= 66 && s.Name == "A, bare") && !(p.Bpm <= 60 && s.Name == "Quiet bridge")).ToArray();
+    /// <summary>
+    /// The form: an intro, the theme, the theme with a second voice, the bridge, the theme higher and
+    /// fuller, and an ending that rings out. Whatever has come in stays until the ending, so nothing
+    /// drops out in the middle. A short piece plays the bridge and the big theme twice.
+    /// The title keeps the form it was recorded from.
+    /// </summary>
+    private static Section[] Form(Piece p)
+    {
+        if (p.File == "title") return RecordedTitleForm(p).Where(s => !(p.Bpm <= 66 && s.Name == "A, bare")).ToArray();
+        var intro = new Section("Intro", false, Tune.None, 0, false, false, "held", false, 0.75);
+        var a = new Section("A", false, Tune.Theme, 0, false, false, "light", false, 0.85);
+        var a2 = new Section("A with a second voice", false, Tune.Embellished, 0, true, false, "full", true, 0.92);
+        var bridge = new Section("Bridge", true, Tune.Bridge, 0, true, p.Pad != null, "full", true, 0.96);
+        var big = new Section("A, higher and fuller", false, Tune.Theme, p.Lift, true, p.Pad != null, "full", true, 1.06);
+        var end = new Section("Ending", false, Tune.None, 0, false, p.Pad != null, "held", false, 0.72);
+        var form = new List<Section> { intro, a, a2, bridge, big };
+        double barSeconds = p.BeatsPerBar * 60.0 / p.Bpm;
+        if ((form.Count * 8 - 4) * barSeconds < 130) form.AddRange(new[] { bridge with { Loud = 0.92 }, big with { Loud = 1.1 } });
+        form.Add(end);
+        return form.ToArray();
+    }
 
-    private static Section[] FullForm(Piece p) => new[]
+    private static Section[] RecordedTitleForm(Piece p) => new[]
     {
         new Section("Intro", false, Tune.None, 0, false, false, "held", false, 0.75),
         new Section("A", false, Tune.Theme, 0, false, false, "light", false, 0.85),
@@ -209,6 +228,12 @@ static partial class MusicSketches
                 }
                 foreach (var (at, note, len) in Line(p, s.SecondTune, s.Bridge, b))
                     second.Add(t + at, note - 12, len - 20, 56 * s.Loud);
+                // Through the ending the melody holds a note of each chord, so it never leaves before the last one.
+                if (s.Name == "Ending" && p.File != "title")
+                {
+                    var near = ChordTones(chord, p.Tonic).Concat(ChordTones(chord, p.Tonic + 12)).OrderBy(n => Math.Abs(n - (p.Tonic + 4))).First();
+                    melody.Add(t, near, bar - 20, 62 * s.Loud);
+                }
 
                 Accompany(p, s.Density, tones, bassNote, t, bar, s.Loud, chords, bass, rng);
                 if (s.Pad && p.Pad != null)
