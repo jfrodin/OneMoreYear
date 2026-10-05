@@ -96,7 +96,7 @@ static class MusicSketches
     private static readonly Piece[] Pieces =
     {
         new("title", 60, false, 72, 4, "broken", null,
-            P("Melody: Piano (Presence XT)", 0), P("Second voice: Violin (Presence XT)", 40), P("Chords: Piano (Presence XT)", 0),
+            P("Melody: Clarinet (Presence XT)", 71), P("Second voice: French horn, quiet (Presence XT)", 60), P("Chords: Piano (Presence XT)", 0),
             P("Pad: Strings, legato, quiet in the mix", 48), P("Bass: Piano, left hand (Presence XT)", 0), 12),
         new("memoriam", 57, true, 60, 4, "sparse", null,
             P("Melody: Piano (Presence XT)", 0), P("Second voice: Cello (Presence XT)", 42), P("Chords: Piano (Presence XT)", 0),

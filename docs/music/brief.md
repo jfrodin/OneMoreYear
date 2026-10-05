@@ -58,6 +58,7 @@ arrangemanget så skapas ett spår med det.
 | Cello | Presence XT | cello | Stråkarna, spelade lågt |
 | Klarinett | Presence XT | clarinet | Flöjt, eller ett mjukt lead i Mai Tai |
 | Flöjt | Presence XT | flute | Ett mjukt lead i Mai Tai |
+| Valthorn | Presence XT | horn, french horn | Cello, spelad svagt |
 | Nylongitarr | Presence XT | nylon, classical guitar | Akustisk gitarr |
 | Akustisk gitarr | Presence XT | acoustic guitar, steel | Nylongitarr |
 | Kontrabas | Presence XT | upright bass, acoustic bass | Elbas, mjukt |
@@ -113,8 +114,8 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
 - **När:** på titelskärmen och första gången spelet startar. Spelets "ansikte".
 - **Känsla:** varmt och hoppfullt, som att öppna ett album man inte sett på länge.
 - **Tonart och tempo:** C-dur, 72 bpm, 4/4.
-- **Instrument:** piano (Presence XT) bär allt. Stråkar (Presence XT, Strings) kommer in mjukt i andra
-  temat, långt bak i mixen.
+- **Instrument:** klarinett tar melodin, valthorn spelar andrastämman svagt under den, piano bär
+  ackorden och basen. Stråkar (violin, viola, cello) kommer in mjukt i andra temat, långt bak i mixen.
 - **Spela:** vänster hand grundton, höger hand brutna ackord i åttondelar (se MIDI). Temat i andra
   varvet en oktav upp, med stråkarna som håller ackorden under.
 - **Ackord:** Intro C, F, C, Gsus4. Tema: C, G/B, Am, F, C, G, Fmaj7, C. Avslut F, Gsus4, C (håll).
