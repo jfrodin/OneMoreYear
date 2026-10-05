@@ -2,6 +2,20 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.77.0 – 2026-10-05 · Ready for the shelf
+
+- **Credits,** from the title menu: the music, a thank you to everyone who played early versions,
+  the typefaces and the engine with their licences, and the full licence texts one click away.
+  The names of the makers go in one place and appear once they are decided.
+- **A start image** with the title on the album's paper while the game loads, instead of a blank
+  colour.
+- **Saves cannot break.** Each save is written to a temporary file first, the save before it is
+  kept as a backup, and a save that cannot be read is restored from its backup.
+- **When something goes wrong,** the details are written to a log in the user folder, the last save
+  is reopened (so nothing half done is kept), and a calm message says so, instead of a frozen
+  screen.
+- **Window size and vertical sync** in the settings.
+
 ## 0.76.0 – 2026-10-05 · Faces of their own
 
 - **People look more like themselves.** New features that are inherited: the length of the face,

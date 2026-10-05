@@ -30,6 +30,9 @@ public static class Settings
         public bool Fullscreen { get; set; }
         /// <summary>0 small, 1 normal, 2 large, 3 extra large.</summary>
         public int TextSize { get; set; } = 1;
+        /// <summary>The window's size when not in fullscreen: an index into Settings.WindowSizes; -1 = leave it as it is.</summary>
+        public int WindowSize { get; set; } = -1;
+        public bool VSync { get; set; } = true;
         /// <summary>A decade whose look is always used; null = the look follows the years.</summary>
         public int? FixedLook { get; set; }
         public double MasterVolume { get; set; } = 0.8;
@@ -89,6 +92,11 @@ public static class Settings
 
     public static bool Fullscreen => Current.Fullscreen;
     public static int TextSize => Current.TextSize;
+    public static readonly Vector2I[] WindowSizes = { new(1280, 720), new(1600, 900), new(1920, 1080), new(2560, 1440) };
+    public static int WindowSize => Current.WindowSize;
+    public static bool VSync => Current.VSync;
+    public static void SetWindowSize(int i) { Current.WindowSize = i; Save(); Apply(); }
+    public static void SetVSync(bool on) { Current.VSync = on; Save(); Apply(); }
     public static int? FixedLook => Current.FixedLook;
     public static void SetFixedLook(int? year) { Current.FixedLook = year; Save(); }
     public static double MasterVolume => Current.MasterVolume;
@@ -103,7 +111,19 @@ public static class Settings
     public static void Apply()
     {
         if (DisplayServer.GetName() != "headless")
+        {
             DisplayServer.WindowSetMode(Current.Fullscreen ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Windowed);
+            DisplayServer.WindowSetVsyncMode(Current.VSync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
+            // A window of the chosen size, centred on the screen, never bigger than the screen.
+            if (!Current.Fullscreen && Current.WindowSize >= 0 && Current.WindowSize < WindowSizes.Length)
+            {
+                var screen = DisplayServer.ScreenGetUsableRect(DisplayServer.WindowGetCurrentScreen());
+                var size = WindowSizes[Current.WindowSize];
+                size = new Vector2I(Math.Min(size.X, screen.Size.X), Math.Min(size.Y, screen.Size.Y));
+                DisplayServer.WindowSetSize(size);
+                DisplayServer.WindowSetPosition(screen.Position + (screen.Size - size) / 2);
+            }
+        }
         if (Engine.GetMainLoop() is SceneTree tree)
             tree.Root.ContentScaleFactor = Current.TextSize switch { 0 => 0.9f, 2 => 1.12f, 3 => 1.25f, _ => 1f };
         AudioServer.SetBusVolumeDb(0, (float)Mathf.LinearToDb(Current.MasterVolume));

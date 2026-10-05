@@ -1383,7 +1383,7 @@ public partial class GameScreen : Control
 
     private void OnChoose(int uid, int index)
     {
-        S.Choose(uid, index);
+        if (!ErrorReport.Try(_main, "Choosing", () => S.Choose(uid, index))) return;
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
         // The page stays where it was: the answered card shows what happened, in place.
@@ -1407,7 +1407,8 @@ public partial class GameScreen : Control
             }
             return;
         }
-        var report = S.AdvanceYear();
+        YearReport report = null!;
+        if (!ErrorReport.Try(_main, "A new year", () => report = S.AdvanceYear())) return;
 
         _main.AutoSave();
         if (S.NeedsSuccession) { _main.ShowSuccession(); return; }
@@ -1478,7 +1479,8 @@ public partial class GameScreen : Control
     {
         var title = S.Actions(targetId).FirstOrDefault(a => a.Id == actionId)?.Title ?? "";
         bool wishKept = S.Wish() is { Kept: true };
-        var result = S.PerformAction(actionId, targetId);
+        string result = "";
+        if (!ErrorReport.Try(_main, "Doing something", () => result = S.PerformAction(actionId, targetId))) return;
         if (result.Length == 0)
         {
             // A choice to make: it waits in the year's list.

@@ -54,6 +54,13 @@ public partial class Main : Control
             SetProcess(false);
             return;
         }
+        var splash = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--splash="));
+        if (splash != null && OS.IsDebugBuild())
+        {
+            AddChild(new SplashMaker(splash["--splash=".Length..]));
+            SetProcess(false);
+            return;
+        }
         var brand = System.Linq.Enumerable.FirstOrDefault(OS.GetCmdlineUserArgs(), a => a.StartsWith("--brand="));
         if (brand != null && OS.IsDebugBuild())
         {
@@ -267,6 +274,13 @@ public partial class Main : Control
     /// <summary>Starts a new life. <paramref name="choices"/> carries the optional start choices (sex, circumstances, city).</summary>
     public void StartNewGame(int startYear, string? seedCode, string? scenarioId = null, int? slot = null, NewGameOptions? choices = null) =>
         Begin((choices ?? new NewGameOptions()) with { StartYear = startYear, SeedCode = seedCode, ScenarioId = scenarioId, ContentSettings = Settings.Content }, slot);
+
+    public void ShowCredits()
+    {
+        var screen = new CreditsScreen();
+        screen.Init(this);
+        SetScreen(screen);
+    }
 
     /// <summary>The character creator (see Features.CharacterCreator).</summary>
     public void ShowCharacterCreator()
@@ -568,6 +582,8 @@ public partial class Main : Control
 
         var screen = Options(new[] { "Window", "Fullscreen" }, Settings.Fullscreen ? 1 : 0, i => Settings.SetFullscreen(i == 1));
         box.AddChild(Row("Screen", screen));
+        box.AddChild(Row("Window size", Options(new[] { "As it is" }.Concat(Settings.WindowSizes.Select(v => $"{v.X} × {v.Y}")).ToArray(), Settings.WindowSize + 1, i => Settings.SetWindowSize(i - 1))));
+        box.AddChild(Row("Vertical sync", Options(new[] { "Off", "On" }, Settings.VSync ? 1 : 0, i => Settings.SetVSync(i == 1))));
         box.AddChild(Row("Text size", Options(new[] { "Small", "Normal", "Large", "Extra large" }, Settings.TextSize, Settings.SetTextSize)));
         // The look: changing with the decades (as intended), or one you like and keep.
         var lookYears = UiTheme.LookYears;
@@ -987,7 +1003,8 @@ public partial class Main : Control
         switch (_shotFrame)
         {
             case 3: ShowCharacterCreator(); break;
-            case 6: Shot("00_creator"); ShowTitle(); break;
+            case 5: Shot("00_creator"); ShowCredits(); break;
+            case 7: Shot("00b_credits"); ShowTitle(); break;
             case 9: Shot("01a_title"); if (_screen is TitleScreen title) title.ShowNewLife(); break;
             case 10: Shot("01_title"); StartNewGame(1970, "777", choices: new NewGameOptions { CountryId = ArgCountry }); break;
             case 20:

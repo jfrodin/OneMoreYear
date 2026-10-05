@@ -10,7 +10,7 @@ namespace OneMoreYear.Game;
 public sealed record SlotInfo(int Slot, string Family, string Player, int Age, int Year, string SeedCode, DateTime SavedAt, bool GameOver);
 
 /// <summary>
-/// Three save slots in the user data folder. Each game lives in one slot and autosaves there; a
+/// Save slots in the user data folder, each with a backup of the save before. Each game lives in one slot and autosaves there; a
 /// small summary file per slot lets the menus show what is in it without loading the whole world.
 /// </summary>
 public static class SaveSystem
@@ -42,13 +42,32 @@ public static class SaveSystem
 
     public static void Save(GameSession session)
     {
-        using (var file = FileAccess.Open(SavePath(CurrentSlot), FileAccess.ModeFlags.Write))
-            file?.StoreString(session.Save());
+        WriteSafely(SavePath(CurrentSlot), session.Save());
         var p = session.Player;
         var info = new SlotInfo(CurrentSlot, session.World.FamilyName, p.FullName, p.Age(session.Year), session.Year, session.SeedCode,
             DateTime.Now, session.GameOver);
         using var infoFile = FileAccess.Open(InfoPath(CurrentSlot), FileAccess.ModeFlags.Write);
         infoFile?.StoreString(JsonSerializer.Serialize(info));
+    }
+
+    /// <summary>
+    /// Writes a save so that a crash or a power cut half way can never leave it broken: first to a
+    /// temporary file, then the old save becomes the backup, then the new one takes its place.
+    /// </summary>
+    private static void WriteSafely(string userPath, string text)
+    {
+        string path = ProjectSettings.GlobalizePath(userPath);
+        string tmp = path + ".tmp", backup = path + ".bak";
+        try
+        {
+            System.IO.File.WriteAllText(tmp, text);
+            if (System.IO.File.Exists(path)) System.IO.File.Copy(path, backup, overwrite: true);
+            System.IO.File.Move(tmp, path, overwrite: true);
+        }
+        catch (Exception e)
+        {
+            GD.PushError($"Could not save to {userPath}: {e.Message}");
+        }
     }
 
     public static SlotInfo? Info(int slot)
@@ -81,13 +100,28 @@ public static class SaveSystem
         catch (Exception e)
         {
             GD.PushError($"Could not load slot {slot}: {e.Message}");
-            return null;
         }
+        // The save is broken: the one before it is kept for exactly this.
+        string backup = ProjectSettings.GlobalizePath(SavePath(slot)) + ".bak";
+        try
+        {
+            if (System.IO.File.Exists(backup))
+            {
+                var restored = GameSession.Load(System.IO.File.ReadAllText(backup));
+                GD.Print($"Slot {slot} was restored from its backup.");
+                return restored;
+            }
+        }
+        catch (Exception e)
+        {
+            GD.PushError($"The backup of slot {slot} could not be loaded either: {e.Message}");
+        }
+        return null;
     }
 
     public static void Delete(int slot)
     {
-        foreach (var path in new[] { SavePath(slot), InfoPath(slot) })
+        foreach (var path in new[] { SavePath(slot), InfoPath(slot), SavePath(slot) + ".bak", SavePath(slot) + ".tmp" })
             if (FileAccess.FileExists(path)) DirAccess.RemoveAbsolute(ProjectSettings.GlobalizePath(path));
     }
 }

@@ -105,6 +105,7 @@ public partial class TitleScreen : Control
         MenuItem("Achievements", () => _main.ShowAchievements());
         if (FamilyArchive.All.Count > 0) MenuItem("Families", () => _main.ShowFamilies());
         MenuItem("Settings", () => _main.ShowSettings(null));
+        MenuItem("Credits", () => _main.ShowCredits());
         MenuItem("Quit", () => GetTree().Quit());
 
         _left.AddChild(Ui.Spacer(36));
