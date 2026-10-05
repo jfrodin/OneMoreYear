@@ -23,6 +23,8 @@ When the game is ready for outside testers. Ask the producer before starting.
 
 ## Before release
 
+- [ ] **The soundtrack as a digital release** (the producer's idea): Steam soundtrack DLC and/or Bandcamp.
+  Needs WAV or FLAC masters, MP3s, cover art and a track list. Decide free with the game, a bundle, or paid.
 - [ ] **Strip the testing tools** from the release build.
   - Test scenarios are already hidden outside development builds; also leave `scenarios.json` out.
   - The F1 playtest notes, `--load`, `--smoke` and `--screenshots`.
