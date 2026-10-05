@@ -2,6 +2,11 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## Unreleased
+
+- **In memoriam has its own recorded music:** a solo cello and a lone violin over low strings, a
+  double bass, a far choir and a piano, in D minor, ending on a bare D.
+
 ## 0.79.0 – 2026-10-05 · The title theme
 
 - **The title screen has its own recorded music,** written for the game and played on clarinet,
