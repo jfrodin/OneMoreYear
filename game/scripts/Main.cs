@@ -986,7 +986,7 @@ public partial class Main : Control
         }
         if (_smokeStep >= 1500)
         {
-            GD.Print($"SMOKE TEST DONE: year {Session?.Year}, player {Session?.Player.FullName}, generations {Session?.Stats().Generations}");
+            GD.Print($"SMOKE TEST DONE: year {Session?.Year}, player {Session?.Player.FullName}, generations {Session?.Stats().Generations}, licences {CreditsScreen.LicenceText().Length} characters");
             GetTree().Quit();
         }
     }

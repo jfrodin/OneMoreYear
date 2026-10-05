@@ -79,6 +79,8 @@ public partial class CreditsScreen : Control
         Ui.FocusLater(back);
     }
 
+    private void ShowLicences() => ShowLicencesBox(LicenceText());
+
     public override void _UnhandledInput(InputEvent e)
     {
         if (_main.HasModal || !e.IsActionPressed("ui_cancel")) return;
@@ -87,21 +89,39 @@ public partial class CreditsScreen : Control
     }
 
     /// <summary>The full texts: the engine's licence and its parts, and each typeface's.</summary>
-    private void ShowLicences()
+    public static System.Text.StringBuilder LicenceText()
     {
         var text = new System.Text.StringBuilder();
         text.AppendLine("GODOT ENGINE").AppendLine().AppendLine(Engine.GetLicenseText()).AppendLine();
-        foreach (var part in Engine.GetCopyrightInfo())
+        // Each part of the engine: who holds the copyright and under which licence, then the licences in full.
+        text.AppendLine("THE PARTS OF THE ENGINE").AppendLine();
+        foreach (var component in Engine.GetCopyrightInfo())
         {
-            var info = (Godot.Collections.Dictionary)part;
-            text.AppendLine(info["name"].ToString());
+            text.AppendLine(component["name"].ToString());
+            foreach (var p in component["parts"].AsGodotArray())
+            {
+                var part = (Godot.Collections.Dictionary)p;
+                foreach (var line in part["copyright"].AsStringArray()) text.AppendLine($"  © {line}");
+                text.AppendLine($"  License: {part["license"]}");
+            }
+            text.AppendLine();
         }
+        var licences = Engine.GetLicenseInfo();
+        foreach (var name in licences.Keys)
+            text.AppendLine().AppendLine($"LICENSE: {name}").AppendLine().AppendLine(licences[name].ToString());
+        string dotnet = "res://fonts/LICENSE-dotnet.txt";
+        if (FileAccess.FileExists(dotnet)) text.AppendLine().AppendLine(".NET").AppendLine().AppendLine(FileAccess.GetFileAsString(dotnet));
         foreach (var t in Typefaces)
         {
             string path = $"res://fonts/{t.File}";
             if (!FileAccess.FileExists(path)) continue;
             text.AppendLine().AppendLine(t.Name.ToUpperInvariant()).AppendLine().AppendLine(FileAccess.GetFileAsString(path));
         }
+        return text;
+    }
+
+    private void ShowLicencesBox(System.Text.StringBuilder text)
+    {
 
         var box = Ui.VBox(10);
         box.CustomMinimumSize = new Vector2(860, 0);
