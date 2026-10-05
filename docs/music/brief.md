@@ -4,7 +4,9 @@ Underlag för inspelning i Studio One, bara med det som följer med programmet. 
 färdigt arrangemang i `docs/music/midi/`, 2,5 till 3,5 minuter långt, med ett spår per instrument:
 melodi, andrastämma, ackord, matta (stråkmattor uppdelade på violin, viola och cello), bas och
 trummor där det passar. Spåren heter som instrumentet
-de ska spelas på. Dra in filen i Studio One och välj ljuden; allt annat finns redan i filen.
+de ska spelas på. Efter instrumentet står ibland två saker: först artikulationen (legato = långa
+sammanbundna toner, välj ett legato- eller sustainljud), sedan styrkan (quiet, very quiet = lågt i mixen,
+slow swell = sväller långsamt in med volymen). Dra in filen i Studio One och välj ljuden; allt annat finns redan i filen.
 
 Skisserna görs om med `SimRunner --midi=docs/music/midi` om vi ändrar något.
 
