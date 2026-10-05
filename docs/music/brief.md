@@ -1,9 +1,9 @@
 # Musiken i One More Year
 
-Underlag för inspelning i Studio One, bara med det som följer med programmet. Till varje låt finns en
-MIDI-skiss i `docs/music/midi/` med tre spår: **Melody** (familjetemat), **Chords** (ackorden i
-epokens stil) och **Bass**. Dra in filen i Studio One, lägg dina egna instrument på spåren och
-bygg vidare. MIDI:n är en ritning, inte facit: ändra fritt.
+Underlag för inspelning i Studio One, bara med det som följer med programmet. Till varje låt finns ett
+färdigt arrangemang i `docs/music/midi/`, 2,5 till 3,5 minuter långt, med ett spår per instrument:
+melodi, andrastämma, ackord, matta, bas och trummor där det passar. Spåren heter som instrumentet
+de ska spelas på. Dra in filen i Studio One och välj ljuden; allt annat finns redan i filen.
 
 Skisserna görs om med `SimRunner --midi=docs/music/midi` om vi ändrar något.
 
