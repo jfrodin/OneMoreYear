@@ -16,6 +16,7 @@ public partial class SuccessionScreen : Control
 
     public override void _Ready()
     {
+        Music.SetPlace("memoriam");
         var s = _main.Session!;
         var dead = s.Player;
         var life = s.SummarizeLife(dead.Id);

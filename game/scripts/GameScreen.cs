@@ -138,6 +138,7 @@ public partial class GameScreen : Control
         _tabs.AddChild(chronicle);
         _tabs.SetTabTitle(TabChronicle, "Chronicle");
 
+        Music.SetPlace(null);
         BuildBookmarks();
         _tabs.TabChanged += _ => BuildBookmarks();
         _tabs.TabChanged += OnTabChanged;

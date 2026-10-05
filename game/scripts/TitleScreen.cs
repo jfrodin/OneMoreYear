@@ -66,6 +66,7 @@ public partial class TitleScreen : Control
         _left.SizeFlagsVertical = SizeFlags.ExpandFill;
         margin.AddChild(_left);
 
+        Music.SetPlace("title");
         ShowMenu();
         // The first time the game starts, ask about dark themes before anything else.
         bool automated = System.Linq.Enumerable.Any(OS.GetCmdlineUserArgs(), a => a == "--smoke" || a.StartsWith("--screenshots="));
@@ -78,6 +79,7 @@ public partial class TitleScreen : Control
     {
         if (!_onNewLife || _main.HasModal || !e.IsActionPressed("ui_cancel")) return;
         GetViewport().SetInputAsHandled();
+        Music.SetPlace("title");
         ShowMenu();
     }
 

@@ -59,6 +59,30 @@ public static class Music
                 .SaveToWav($"{dir}/music_{decade}.wav");
     }
 
+    private static string? _place;
+
+    /// <summary>A screen with music of its own ("title", "memoriam"); null plays the decade's.</summary>
+    public static void SetPlace(string? place)
+    {
+        if (_place == place) return;
+        _place = place;
+        // Moving to a screen with its own piece: let it begin now rather than after the silence.
+        if (place != null && _player != null && !_player.Playing && Recorded(place) != null) PlayNext();
+    }
+
+    private static string DecadeName(int decade) => decade is >= 1950 and < 2030 ? $"{decade}s" : decade < 1950 ? "1950s" : "future";
+
+    private static readonly Dictionary<string, AudioStream?> RecordedCache = new();
+
+    private static AudioStream? Recorded(string name)
+    {
+        if (RecordedCache.TryGetValue(name, out var cached)) return cached;
+        string path = $"res://music/{name}.ogg";
+        var stream = ResourceLoader.Exists(path) ? GD.Load<AudioStream>(path) : null;
+        RecordedCache[name] = stream;
+        return stream;
+    }
+
     private static void Later(double seconds)
     {
         if (_root?.GetTree() is { } tree) tree.CreateTimer(seconds).Timeout += PlayNext;
@@ -68,6 +92,13 @@ public static class Music
     {
         if (_player == null) return;
         if (Settings.MusicVolume <= 0.001) { Later(30); return; }
+        // A recorded piece, when there is one (docs/music/brief.md): res://music/title.ogg, 1970s.ogg and so on.
+        if (Recorded(_place ?? DecadeName(_decade)) is { } recorded)
+        {
+            _player.Stream = recorded;
+            _player.Play();
+            return;
+        }
         // Three pieces per decade, in turn, so the same one is not heard twice in a row.
         int decade = _decade, key = _decade * 10 + _played % 3;
         if (Tracks.TryGetValue(key, out var track))
