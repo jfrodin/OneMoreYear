@@ -16,12 +16,9 @@ public partial class CreditsScreen : Control
     private static readonly (string Name, string Who, string Licence, string File)[] Typefaces =
     {
         ("Lora", "The Lora Project Authors", "SIL Open Font License 1.1", "OFL-lora.txt"),
-        ("Caveat", "The Caveat Project Authors", "SIL Open Font License 1.1", "OFL-caveat.txt"),
+        ("Libre Caslon Text", "The Libre Caslon Text Project Authors", "SIL Open Font License 1.1", "OFL-librecaslontext.txt"),
         ("Playfair Display", "The Playfair Display Project Authors", "SIL Open Font License 1.1", "OFL-playfairdisplay.txt"),
-        ("Fraunces", "The Fraunces Project Authors", "SIL Open Font License 1.1", "OFL-fraunces.txt"),
-        ("Inter", "The Inter Project Authors", "SIL Open Font License 1.1", "OFL-inter.txt"),
-        ("Rajdhani", "Indian Type Foundry", "SIL Open Font License 1.1", "OFL-rajdhani.txt"),
-        ("Special Elite", "Astigmatic", "Apache License 2.0", "LICENSE-SpecialElite.txt"),
+        ("Cedarville Cursive", "Kimberly Geswein", "SIL Open Font License 1.1", "OFL-cedarvillecursive.txt"),
     };
 
     public override void _Ready()

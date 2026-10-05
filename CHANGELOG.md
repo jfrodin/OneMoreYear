@@ -2,8 +2,12 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
-## Unreleased
+## 0.80.0 – 2026-10-05 · One hand
 
+- **New typefaces, the same in every decade:** Libre Caslon for headings, Lora to read, its italic
+  for notes in the margins, Playfair for the title, and a real pen (Cedarville Cursive) for what is
+  written on photographs: names and years, captions, your age. The handwriting that looked like
+  Comic Sans is gone, and so are the typewriter and the computer fonts some decades had.
 - **Music moves with you:** the piece that is playing fades out when you leave the title screen or
   the choice of heir, and the right one begins after a breath. The pause between pieces is now
   under half a minute.

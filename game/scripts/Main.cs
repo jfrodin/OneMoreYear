@@ -61,13 +61,6 @@ public partial class Main : Control
             SetProcess(false);
             return;
         }
-        var brand = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--brand="));
-        if (brand != null && OS.IsDebugBuild())
-        {
-            AddChild(new BrandSheet(brand["--brand=".Length..]));
-            SetProcess(false);
-            return;
-        }
         // --audio=DIR saves every decade's music and the sounds as WAV files (development aid).
         var audio = System.Linq.Enumerable.FirstOrDefault(Features.Args, a => a.StartsWith("--audio="));
         if (audio != null && OS.IsDebugBuild())

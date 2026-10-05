@@ -14,10 +14,3 @@ _Handled notes are moved to [playtest-archive.md](playtest-archive.md). Everythi
 
 
 
-### 2026-10-05 15:07 · Screen: TitleScreen
-
-Oggilalr skrivstilen/hanskriften. Ser ut som comic sans. Mycket av typsnitten behöver nog bytes ut känner jag?
-
-_playtest-saves/2026-10-05_150728.png_
-
-_Waiting for a choice of typefaces: see docs/design/typefaces.png._

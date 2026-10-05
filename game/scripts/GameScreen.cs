@@ -212,7 +212,7 @@ public partial class GameScreen : Control
         var box = Ui.VBox(10);
         box.CustomMinimumSize = new Vector2(380, 0);
         box.AddChild(UiTheme.HeadingLabel("The album", 30, UiTheme.Accent));
-        box.AddChild(UiTheme.HandLabel($"{S.Player.FirstName}, {S.Year}", 24, UiTheme.Muted));
+        box.AddChild(UiTheme.CaptionLabel($"{S.Player.FirstName}, {S.Year}", 24, UiTheme.Muted));
         box.AddChild(Ui.Spacer(4));
         System.Action close = () => { };
         var resume = Ui.Button("Go on living", () => close(), 50);
@@ -320,7 +320,7 @@ public partial class GameScreen : Control
         nameCol.SizeFlagsVertical = SizeFlags.ShrinkCenter;
         nameCol.AddChild(UiTheme.HeadingLabel(p.Name, 26, UiTheme.Text));
         nameCol.GetChild<Label>(0).AutowrapMode = TextServer.AutowrapMode.WordSmart;
-        nameCol.AddChild(UiTheme.HandLabel($"Age {p.Age}, {S.Year}", 26, UiTheme.Accent));
+        nameCol.AddChild(UiTheme.CaptionLabel($"Age {p.Age}, {S.Year}", 25, UiTheme.Accent));
         nameCol.AddChild(Ui.Label(p.Occupation, 15, UiTheme.Muted, wrap: true));
         if (p.Fame != null) nameCol.AddChild(Ui.Label(p.Fame, 15, UiTheme.Accent));
         top.AddChild(nameCol);

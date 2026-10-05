@@ -902,3 +902,12 @@ Pausen i musiken känns ltie för lång just nu. Plsu att nu körde den igång m
 _playtest-saves/2026-10-05_151041.png · playtest-saves/2026-10-05_151041.json_
 
 _Notes above were processed on 2026-10-05 (playtest 10): no strip of cloth across the throat on the photographs; the credits as a centred page with the buttons always in view; every bookmark sticks out well clear of the album, the open one a little more; a short pause between pieces of music, and the title music fades out when a life begins. The typefaces are waiting for a choice (docs/design/typefaces.png)._
+
+### 2026-10-05 15:07 · Screen: TitleScreen
+
+Oggilalr skrivstilen/hanskriften. Ser ut som comic sans. Mycket av typsnitten behöver nog bytes ut känner jag?
+
+_playtest-saves/2026-10-05_150728.png_
+
+
+_Note above was processed on 2026-10-05 (playtest 10): new typefaces, chosen by the producer from docs/design/typefaces.png (B, a warm book), the same in every decade. See CHANGELOG 0.80.0._

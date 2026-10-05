@@ -35,7 +35,7 @@ public partial class FontSheet : Control
 
         var sets = new List<TypeSet>
         {
-            new("Now", Load("res://fonts/PlayfairDisplay.ttf"), Load("res://fonts/Fraunces.ttf"), Load("res://fonts/Lora.ttf"), Load("res://fonts/Caveat.ttf"), Load("res://fonts/Caveat.ttf"), true),
+            new("Now", UiTheme.Masthead, UiTheme.Heading, UiTheme.Body, UiTheme.Hand, UiTheme.Caption, false),
             new("A · Old album", Load("CormorantGaramond.ttf", 600), Load("CormorantGaramond.ttf", 700), Load("EBGaramond.ttf", 420), Load("EBGaramond-Italic.ttf", 420), Load("LaBelleAurore.ttf"), true),
             new("B · Warm book", Load("res://fonts/PlayfairDisplay.ttf"), Load("LibreCaslonText.ttf", 700), Load("res://fonts/Lora.ttf"), Load("res://fonts/Lora-Italic.ttf"), Load("Cedarville-Cursive.ttf"), false),
             new("C · Quiet modern", Load("LibreCaslonText.ttf", 400), Load("SourceSerif4.ttf", 620), Load("SourceSerif4.ttf", 400), Load("SourceSerif4-Italic.ttf", 400), Load("HomemadeApple-Regular.ttf"), true),

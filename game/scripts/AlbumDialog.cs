@@ -10,7 +10,7 @@ public static class AlbumDialog
     {
         var box = Ui.VBox(12);
         box.CustomMinimumSize = new Vector2(980, 0);
-        box.AddChild(UiTheme.HandLabel($"{name}'s album", 34, UiTheme.Accent));
+        box.AddChild(UiTheme.CaptionLabel($"{name}'s album", 36, UiTheme.Accent));
         var grid = new GridContainer { Columns = 4 };
         grid.AddThemeConstantOverride("h_separation", 14);
         grid.AddThemeConstantOverride("v_separation", 14);
@@ -35,7 +35,7 @@ public static class AlbumDialog
             string who = photo.WithName != null ? $"{photo.Name} and {photo.WithName}" : photo.Name;
             string when = photo.Age == 0 ? $"{photo.Year}" : $"{photo.Year}  ·  {photo.Name} {photo.Age}";
             frame.AddChild(Ui.Label(photo.WithName != null ? $"{when}  ·  {who}" : when, 13, UiTheme.Faint, wrap: true));
-            frame.AddChild(UiTheme.HandLabel(photo.Caption, 20, UiTheme.Text, wrap: true));
+            frame.AddChild(UiTheme.CaptionLabel(photo.Caption, 20, UiTheme.Text, wrap: true));
             grid.AddChild(Ui.Card(frame));
         }
         var scroll = Ui.Scroll(grid);

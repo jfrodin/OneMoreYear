@@ -78,7 +78,7 @@ public partial class PhotoWall : Control
         var portrait = Portrait.Create(view, false, 150, square: true);
         portrait.Modulate = UiTheme.PhotoTintFor(year);
         box.AddChild(portrait);
-        var caption = UiTheme.HandLabel($"{person.FirstName}, {year}", 18, new Color("5a4a3a"));
+        var caption = UiTheme.CaptionLabel($"{person.FirstName}, {year}", 19, new Color("4a3a2a"));
         caption.HorizontalAlignment = HorizontalAlignment.Center;
         box.AddChild(caption);
         frame.AddChild(box);
