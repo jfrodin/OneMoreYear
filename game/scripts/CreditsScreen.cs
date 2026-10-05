@@ -53,6 +53,7 @@ public partial class CreditsScreen : Control
         }
 
         Heading("Music");
+        if (Studio.Composer != "") Line(Studio.Composer, 22);
         Line("Written for the game, one piece for every decade.", 17, UiTheme.Muted);
 
         Heading("Thank you");

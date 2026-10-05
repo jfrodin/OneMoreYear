@@ -2,6 +2,13 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## 0.79.0 – 2026-10-05 · The title theme
+
+- **The title screen has its own recorded music,** written for the game and played on clarinet,
+  French horn, piano and strings. The composer is in the credits.
+- **The licences in full:** every part of the engine with who holds its copyright and its licence
+  text, and the .NET licence, alongside the typefaces.
+
 ## 0.78.0 – 2026-10-05 · Dressed for the decade
 
 - **Clothes follow the decade.** Knitted pullovers over shirt collars and thin ties in the fifties,
