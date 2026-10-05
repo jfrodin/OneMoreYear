@@ -133,12 +133,12 @@ Varje spår i MIDI-filen heter som instrumentet du ska lägga på, till exempel 
   - **Piano** med sustainpedal, svagt hela vägen. Det klämtar i introt och minns melodins början i slutet.
   - **Viola** och **cellosektion** (legato) som en låg matta, långt bak i mixen.
   - **Kontrabas** (legato) håller golvet från första till sista takten.
-  - **Kör** ("oohs") mycket långt bak, bara kring höjdpunkten.
+  - **Kör** ("oohs") mycket långt bak, från mitten av mellanspelet till slutet.
   Mycket reverb, en stor sal. Inget annat.
 - **Form (43 takter):** intro 4: piano, cellosektion, kontrabas. A1 8: cellon tar temat. A2 8: violorna
   kommer in, pianot bryter ackorden. B 8: fiolen tar mellanspelets melodi högt, cellon går nedåt
   under, kören smyger in. A3 8: cello och fiol spelar temat i oktaver, allt är med. Coda 7: pianot
-  minns början, cello och fiol faller steg för steg mot D, kören tystnar.
+  minns början, cello och fiol faller steg för steg mot D, kören tonar ut och slutar med de andra.
 - **Ackord:** Intro Dm, Bbmaj7, Gm, Asus4 A. Tema Dm, Dm/C, Bbmaj7, Asus4 A, Gm, Dm/F, Em7b5, Asus4 A.
   Mellanspel Bbmaj7, F/A, Gm, Dm, Bbmaj7, Gm, Asus4, A. Coda Gm, Dm/F, Eb/G, Asus4 A, Dm, D (tomt).
 - **Melodi (cello):** D E | F E D | D C Bb | D C# | Bb A | A F G | G Bb A | A

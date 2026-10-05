@@ -6,7 +6,7 @@
 ///
 /// Nothing drops out once it has come in: the piano tolls from the first bar to the last, the low
 /// strings and the double bass hold the floor, a solo cello sings the theme, a solo violin takes the
-/// bridge high and thin, a choir is heard far off at the height of it, and in the coda the cello and
+/// bridge high and thin, a choir comes in far off at the height of it and fades with the end, and in the coda the cello and
 /// the violin fall step by step to the D while the piano remembers the first bars of the tune.
 /// </summary>
 static partial class MusicSketches
@@ -150,8 +150,8 @@ static partial class MusicSketches
                     foreach (int n in violaPrev) Hold(viola, at, n, len, 54 * loud);
                 }
 
-                // The choir, far back, from the middle of the bridge into the coda.
-                if ((sec == "b" && index >= 4) || sec == "a3" || (sec == "coda" && index < 2))
+                // The choir, far back, from the middle of the bridge to the end, fading with the coda.
+                if ((sec == "b" && index >= 4) || sec == "a3" || sec == "coda")
                 {
                     choirPrev = Lead(choirPrev, chord.Pcs, choirRanges);
                     foreach (int n in choirPrev) Hold(choir, at, n, len, 46 * loud);
