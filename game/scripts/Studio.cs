@@ -7,13 +7,13 @@ namespace OneMoreYear.Game;
 public static class Studio
 {
     /// <summary>The developer's name in the store and on the start screen (a studio name or a person).</summary>
-    public const string Developer = "";
+    public static readonly string Developer = "";
 
     /// <summary>The person behind it, for the credits ("Made by ...").</summary>
-    public const string MadeBy = "";
+    public static readonly string MadeBy = "";
 
     /// <summary>Who wrote and recorded the music, for the credits.</summary>
-    public const string Composer = "Joakim Frödin";
+    public static readonly string Composer = "Joakim Frödin";
 
     /// <summary>People to thank by name in the credits; empty thanks everyone who played early versions.</summary>
     public static readonly string[] Thanks = { };
