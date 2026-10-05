@@ -2,6 +2,11 @@
 
 What changed in each version of One More Year. Newest first. Versions are tagged in git (`v0.5.0`).
 
+## Unreleased
+
+- **An intro:** once the maker's name is set, the game opens on "... presents" in light letters on
+  dark, before the tree rings grow and the name of the game appears. Any key or click skips it.
+
 ## 0.80.0 – 2026-10-05 · One hand
 
 - **New typefaces, the same in every decade:** Libre Caslon for headings, Lora to read, its italic
